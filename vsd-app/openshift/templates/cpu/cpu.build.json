@@ -100,14 +100,14 @@
       "displayName": "Name",
       "description": "The name assigned to all of the resources defined in this template.",
       "required": true,
-      "value": "vsd-app"
+      "value": "cpu-app"
     },
     {
       "name": "GIT_REPO_URL",
       "displayName": "Git Repo URL",
       "description": "The URL to your GIT repo.",
       "required": true,
-      "value": "https://github.com/WillWeinzettl/pssg-cscp-vsd/"
+      "value": "https://github.com/JonTaylorBCGov/pssg-cscp-cpu"
     },
     {
       "name": "GIT_REF",
@@ -149,7 +149,7 @@
       "displayName": "DotNet Startup Project",
       "description": "The path to the startup project for the .Net application.",
       "required": true,
-      "value": "vsd-app/vsd-app.csproj"
+      "value": "cpu-app/cpu-app.csproj"
     },
     {
       "name": "OUTPUT_IMAGE_TAG",
