@@ -55,8 +55,8 @@ import { SignPadDialog } from './sign-dialog/sign-dialog.component';
 import { SummaryOfBenefitsDialog } from './summary-of-benefits/summary-of-benefits.component';
 import { CancelApplicationDialog } from './shared/cancel-dialog/cancel-dialog.component';
 import { DeactivateGuardDialog } from './shared/guard-dialog/guard-dialog.component';
-import { VictimApplicationComponent } from './victim-application/victim-application.component';
-import { VictimReviewComponent } from './victim-application/victim-review.component';
+import { RenewApplicationComponent } from './renew-application/renew-application.component';
+import { RenewReviewComponent } from './renew-application/renew-review.component';
 import { IfmApplicationComponent } from './ifm-application/ifm-application.component';
 import { IfmReviewComponent } from './ifm-application/ifm-review.component';
 import { WitnessApplicationComponent } from './witness-application/witness-application.component';
@@ -82,8 +82,6 @@ import { QuickExitComponent } from './quick-exit/quick-exit.component';
 import { ToolTipTriggerComponent } from './shared/tool-tip/tool-tip.component';
 import { VersionInfoDialog } from './version-info/version-info.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
-import { TestComponent } from './test/test.component';
-import { FileUploaderBoxComponent } from './file-uploader-box/file-uploader-box.component';
 
 @NgModule({
   declarations: [
@@ -93,8 +91,8 @@ import { FileUploaderBoxComponent } from './file-uploader-box/file-uploader-box.
     SummaryOfBenefitsDialog,
     CancelApplicationDialog,
     DeactivateGuardDialog,
-    VictimApplicationComponent,
-    VictimReviewComponent,
+    RenewApplicationComponent,
+    RenewReviewComponent,
     IfmApplicationComponent,
     IfmReviewComponent,
     WitnessApplicationComponent,
@@ -115,9 +113,7 @@ import { FileUploaderBoxComponent } from './file-uploader-box/file-uploader-box.
     QuickExitComponent,
     ToolTipTriggerComponent,
     TermsAndConditionsComponent,
-    VersionInfoDialog,
-    TestComponent,
-    FileUploaderBoxComponent,    
+    VersionInfoDialog,    
   ],
   imports: [
     BrowserModule,

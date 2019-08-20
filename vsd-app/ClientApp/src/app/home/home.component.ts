@@ -28,12 +28,10 @@ export class HomeComponent extends FormBase implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle('Home - Crime Victim Assistance Program');
+    this.titleService.setTitle('Home - Crime Prevention Unit');
 
     this.form = this.fb.group({
       applicationType: ['0', Validators.required],
-      completingOnBehalfOf: ['', Validators.required],
-      wasCrimeInBC: ['', Validators.required],
     });
   }
 
@@ -49,20 +47,26 @@ export class HomeComponent extends FormBase implements OnInit {
 
   canProceedWithApplication() : boolean {
     let applicationType = parseInt(this.form.get('applicationType').value) > 0; 
-    let behalfOf = parseInt(this.form.get('completingOnBehalfOf').value) > 0;
-    let isInBc = this.form.get('wasCrimeInBC').value === true;
 
-    return applicationType && behalfOf && isInBc;
+    return applicationType;
   }
 
   getApplicationName(applicationNumber: number) : string {
     switch (applicationNumber) {
+      case 100000006:
+        return 'Submit Annual Budget Proposal';
+      case 100000005:
+        return 'Submit Annual Report';
+      case 100000004:
+        return 'Schedule H';
+      case 100000003:
+        return 'Schedule G';
       case 100000002:
-        return 'Victim Application';
+        return 'Monthly Statistics';
       case 100000001:
-        return 'Family Member Application';
+        return 'Renew Contract Application';
       case 100000000:
-        return 'Witness Application';
+        return 'New Service Provider Application';
     }
     return '';
   }
@@ -73,10 +77,10 @@ export class HomeComponent extends FormBase implements OnInit {
   }
 
   gotoApplication() : void {
-    if (this.form.valid && this.form.get('wasCrimeInBC').value === true) {
+    if (this.form.valid) {
       this.showValidationMessage = false;
       let applicationType = parseInt(this.form.get('applicationType').value);
-      let behalfOf = parseInt(this.form.get('completingOnBehalfOf').value);
+      //let behalfOf = parseInt(this.form.get('completingOnBehalfOf').value);
 
       // Possibly a more correct way to do this.. NG Routing?
       let routeUrl = '';
@@ -85,7 +89,7 @@ export class HomeComponent extends FormBase implements OnInit {
           routeUrl = '/victim-application';
           break;
         case 100000001:
-          routeUrl = '/ifm-application';
+          routeUrl = '/renew-application';
           break;
         case 100000000:
           routeUrl = '/witness-application';
@@ -93,11 +97,11 @@ export class HomeComponent extends FormBase implements OnInit {
       }
 
       console.log(applicationType);
-      let navigationExtras: NavigationExtras = {
-        queryParams: { 'ob': behalfOf }
-      };
+      //let navigationExtras: NavigationExtras = {
+      //  queryParams: { 'ob': behalfOf }
+      //};
 
-      this.router.navigate([routeUrl], navigationExtras);
+      this.router.navigate([routeUrl]);//, navigationExtras);
     } else {
       this.showValidationMessage = true;
       console.log("form not validated");

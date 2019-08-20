@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CanDeactivateGuard } from './services/can-deactivate-guard.service';
 import { HomeComponent } from './home/home.component';
-import { VictimApplicationComponent } from './victim-application/victim-application.component';
+import { RenewApplicationComponent } from './renew-application/renew-application.component';
 import { IfmApplicationComponent } from './ifm-application/ifm-application.component';
 import { WitnessApplicationComponent } from './witness-application/witness-application.component';
 import { SubmitInvoiceComponent } from './submit-invoice/submit-invoice.component';
@@ -11,7 +11,6 @@ import { OffenderRestitutionComponent } from './offender-restitution/offender-re
 import { ApplicationSuccessComponent } from './application-success/application-success.component';
 import { ApplicationCancelledComponent } from './application-cancelled/application-cancelled.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
   {
@@ -19,8 +18,8 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'victim-application',
-    component: VictimApplicationComponent,
+    path: 'renew-application',
+    component: RenewApplicationComponent,
     //canDeactivate: [CanDeactivateGuard]
   },
   {
@@ -55,10 +54,6 @@ const routes: Routes = [
   {
     path: 'application-success',
     component: ApplicationSuccessComponent,
-  },
-  {
-    path: 'test',
-    component: TestComponent,
   },
   { path: '**', component: NotFoundComponent }
 ];
