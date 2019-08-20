@@ -65,7 +65,7 @@ EOF
 # -----------------------------------------------------------------------------------------------------------------
 # Default Settings:
 # -----------------------------------------------------------------------------------------------------------------
-DEFAULT_CONTAINERS="vsd-app"
+DEFAULT_CONTAINERS="cpu-app"
 # -----------------------------------------------------------------------------------------------------------------
 # Functions:
 # -----------------------------------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ DEFAULT_CONTAINERS="vsd-app"
 
 build-app() {
   #
-  # vsd-app
+  # cpu-app
   #
   BASE_IMAGE="registry.access.redhat.com/dotnet/dotnet-21-rhel7:latest"
   BASE_IMAGE_NAME="dotnet-21-rhel7:latest"
@@ -83,10 +83,10 @@ build-app() {
   docker tag $BASE_IMAGE $BASE_IMAGE_NAME
  
   ${S2I_EXE} build \
-    -e "DOTNET_STARTUP_PROJECT=vsd-app/vsd-app.csproj" \
+    -e "DOTNET_STARTUP_PROJECT=cpu-app/cpu-app.csproj" \
     '.' \
     "$BASE_IMAGE_NAME" \
-    'vsd-app'
+    'cpu-app'
 }
 
 buildImages() {
