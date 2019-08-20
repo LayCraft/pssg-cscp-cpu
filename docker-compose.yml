@@ -1,8 +1,8 @@
 version: '3'
 services:
-  vsd-app:
-    container_name: vsd-app
-    image: vsd-app
+  cpu-app:
+    container_name: cpu-app
+    image: cpu-app
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - BASE_PATH=/victimservices
