@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cpu-app", "cpu-app.csproj",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cpu-interfaces", "cpu-interfaces", "{0584B916-A0B9-44B4-97D3-1E9DBF16220E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCeID", "..\vsd-interfaces\BCeID\BCeID.csproj", "{9B63A69E-E3C6-44BD-A24B-C6EC3A499E64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BCeID", "..\cpu-interfaces\BCeID\BCeID.csproj", "{9B63A69E-E3C6-44BD-A24B-C6EC3A499E64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicsAutorest", "..\vsd-interfaces\Dynamics-Autorest\DynamicsAutorest.csproj", "{309D775B-CF5B-4194-9E63-3410A95D20F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicsAutorest", "..\cpu-interfaces\Dynamics-Autorest\DynamicsAutorest.csproj", "{309D775B-CF5B-4194-9E63-3410A95D20F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
