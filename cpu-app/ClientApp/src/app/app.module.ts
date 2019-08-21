@@ -113,7 +113,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     QuickExitComponent,
     ToolTipTriggerComponent,
     TermsAndConditionsComponent,
-    VersionInfoDialog,    
+    VersionInfoDialog,
   ],
   imports: [
     BrowserModule,

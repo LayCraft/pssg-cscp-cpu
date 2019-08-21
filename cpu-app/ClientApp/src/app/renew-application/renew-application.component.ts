@@ -586,14 +586,14 @@ export class RenewApplicationComponent extends FormBase implements OnInit, CanDe
   }
 
   addCourtInfo(): void {
-    this.courtFileItems = this.form.get('crimeInformation.courtFiles') as FormArray;
+    this.courtFileItems = this.form.get('administrativeInformation.courtFiles') as FormArray;
     this.courtFileItems.push(this.createCourtInfoItem());
     this.showAddCourtInfo = this.courtFileItems.length < 3;
     this.showRemoveCourtInfo = this.courtFileItems.length > 1;
   }
 
   removeCourtInfo(index: number): void {
-    this.courtFileItems = this.form.get('crimeInformation.courtFiles') as FormArray;
+    this.courtFileItems = this.form.get('administrativeInformation.courtFiles') as FormArray;
     this.courtFileItems.removeAt(index);
     this.showAddCourtInfo = this.courtFileItems.length < 3;
     this.showRemoveCourtInfo = this.courtFileItems.length > 1;
@@ -607,14 +607,14 @@ export class RenewApplicationComponent extends FormBase implements OnInit, CanDe
   }
   
   addCrimeLocation(): void {
-    this.crimeLocationItems = this.form.get('crimeInformation.crimeLocations') as FormArray;
+    this.crimeLocationItems = this.form.get('administrativeInformation.crimeLocations') as FormArray;
     this.crimeLocationItems.push(this.createCrimeLocationItem());
     this.showAddCrimeLocation = this.crimeLocationItems.length < 5;
     this.showRemoveCrimeLocation = this.crimeLocationItems.length > 1;
   }
 
   removeCrimeLocation(index: number): void {
-    this.crimeLocationItems = this.form.get('crimeInformation.crimeLocations') as FormArray;
+    this.crimeLocationItems = this.form.get('administrativeInformation.crimeLocations') as FormArray;
     this.crimeLocationItems.removeAt(index);
     this.showAddCrimeLocation = this.crimeLocationItems.length < 5;
     this.showRemoveCrimeLocation = this.crimeLocationItems.length > 1;
@@ -627,14 +627,14 @@ export class RenewApplicationComponent extends FormBase implements OnInit, CanDe
   }
 
   addPoliceReport(): void {
-    this.policeReportItems = this.form.get('crimeInformation.policeReports') as FormArray;
+    this.policeReportItems = this.form.get('administrativeInformation.policeReports') as FormArray;
     this.policeReportItems.push(this.createPoliceReport());
     this.showAddPoliceReport = this.policeReportItems.length < 5;
     this.showRemovePoliceReport = this.policeReportItems.length > 1;
   }
 
   removePoliceReport(index: number): void {
-    this.policeReportItems = this.form.get('crimeInformation.policeReports') as FormArray;
+    this.policeReportItems = this.form.get('administrativeInformation.policeReports') as FormArray;
     this.policeReportItems.removeAt(index);
     this.showAddPoliceReport = this.policeReportItems.length < 5;
     this.showRemovePoliceReport = this.policeReportItems.length > 1;
@@ -718,7 +718,7 @@ export class RenewApplicationComponent extends FormBase implements OnInit, CanDe
     let formData = <DynamicsApplicationModel> {
       Introduction: this.form.get('overview').value,
       ContactInformation: this.form.get('contactInformation').value,
-      CrimeInformation: this.form.get('crimeInformation').value,
+      CrimeInformation: this.form.get('administrativeInformation').value,
       MedicalInformation: this.form.get('medicalInformation').value,
       ExpenseInformation: this.form.get('expenseInformation').value,
       EmploymentIncomeInformation: this.form.get('employmentIncomeInformation').value,
@@ -735,7 +735,7 @@ export class RenewApplicationComponent extends FormBase implements OnInit, CanDe
     const formData = <DynamicsApplicationModel>{
       Introduction: this.form.get('overview').value,
       ContactInformation: this.form.get('contactInformation').value,
-      CrimeInformation: this.form.get('crimeInformation').value,
+      CrimeInformation: this.form.get('administrativeInformation').value,
       MedicalInformation: this.form.get('medicalInformation').value,
       ExpenseInformation: this.form.get('expenseInformation').value,
       EmploymentIncomeInformation: this.form.get('employmentIncomeInformation').value,
@@ -812,7 +812,7 @@ export class RenewApplicationComponent extends FormBase implements OnInit, CanDe
         //  country: [{ value: 'Canada', disabled: false }],
         //}),
       }),
-      crimeInformation: this.fb.group({
+      administrativeInformation: this.fb.group({
         typeOfCrime: ['', Validators.required],
 
         unsureOfCrimeDates: [''],
