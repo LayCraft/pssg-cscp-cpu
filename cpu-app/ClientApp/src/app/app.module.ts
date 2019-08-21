@@ -68,6 +68,8 @@ import { ApplicationCancelledComponent } from './application-cancelled/applicati
 import { SubmitInvoiceComponent } from './submit-invoice/submit-invoice.component';
 import { VictimRestitutionComponent } from './victim-restitution/victim-restitution.component';
 import { VictimRestitutionReviewComponent } from './victim-restitution/victim-restitution-review.component';
+import { FileUploaderBoxComponent } from './file-uploader-box/file-uploader-box.component';
+import { TestComponent } from './test/test.component';
 import { OffenderRestitutionComponent } from './offender-restitution/offender-restitution.component';
 import { OffenderRestitutionReviewComponent } from './offender-restitution/offender-restitution-review.component';
 import { FileDropModule } from 'ngx-file-drop';
@@ -97,6 +99,8 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     RenewReviewComponent,
     VictimApplicationComponent,
     VictimReviewComponent,
+    FileUploaderBoxComponent,
+    TestComponent,
     IfmApplicationComponent,
     IfmReviewComponent,
     WitnessApplicationComponent,
