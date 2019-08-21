@@ -57,6 +57,8 @@ import { CancelApplicationDialog } from './shared/cancel-dialog/cancel-dialog.co
 import { DeactivateGuardDialog } from './shared/guard-dialog/guard-dialog.component';
 import { RenewApplicationComponent } from './renew-application/renew-application.component';
 import { RenewReviewComponent } from './renew-application/renew-review.component';
+import { VictimApplicationComponent } from './victim-application/victim-application.component';
+import { VictimReviewComponent } from './victim-application/victim-review.component';
 import { IfmApplicationComponent } from './ifm-application/ifm-application.component';
 import { IfmReviewComponent } from './ifm-application/ifm-review.component';
 import { WitnessApplicationComponent } from './witness-application/witness-application.component';
@@ -93,6 +95,8 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     DeactivateGuardDialog,
     RenewApplicationComponent,
     RenewReviewComponent,
+    VictimApplicationComponent,
+    VictimReviewComponent,
     IfmApplicationComponent,
     IfmReviewComponent,
     WitnessApplicationComponent,
