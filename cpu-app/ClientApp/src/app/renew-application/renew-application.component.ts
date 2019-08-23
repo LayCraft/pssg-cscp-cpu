@@ -28,11 +28,6 @@ export class RenewApplicationComponent implements OnInit {
     this.currentFormPage = this.combinedPageList[0];
   }
 
-  // gotoPageIndex(stepper: MatStepper, selectPage: number): void {
-  //   window.scroll(0, 0);
-  //   stepper.selectedIndex = selectPage;
-  //   this.currentFormPage = this.combinedPageList[selectPage];
-  // }
   gotoPage(selectPage: MatStepper): void {
     window.scroll(0, 0);
     this.currentFormPage = this.combinedPageList[selectPage.selectedIndex];
