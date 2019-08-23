@@ -22,8 +22,7 @@ export class HomeComponent extends FormBase implements OnInit {
   constructor(
     private titleService: Title,
     private fb: FormBuilder,
-    private router: Router)
-  {
+    private router: Router) {
     super();
   }
 
@@ -45,13 +44,13 @@ export class HomeComponent extends FormBase implements OnInit {
     this.form.get('wasCrimeInBC').setValue('');
   }
 
-  canProceedWithApplication() : boolean {
-    let applicationType = parseInt(this.form.get('applicationType').value) > 0; 
+  canProceedWithApplication(): boolean {
+    let applicationType = parseInt(this.form.get('applicationType').value) > 0;
 
     return applicationType;
   }
 
-  getApplicationName(applicationNumber: number) : string {
+  getApplicationName(applicationNumber: number): string {
     switch (applicationNumber) {
       case 100000006:
         return 'Submit Annual Budget Proposal';
@@ -76,35 +75,12 @@ export class HomeComponent extends FormBase implements OnInit {
     this.form.markAsTouched();
   }
 
-  gotoApplication() : void {
-    if (this.form.valid) {
-      this.showValidationMessage = false;
-      let applicationType = parseInt(this.form.get('applicationType').value);
-      //let behalfOf = parseInt(this.form.get('completingOnBehalfOf').value);
+  gotoApplication(): void {
+    this.showValidationMessage = false;
+    // let applicationType = parseInt(this.form.get('applicationType').value);
 
-      // Possibly a more correct way to do this.. NG Routing?
-      let routeUrl = '';
-      switch (applicationType) {
-        case 100000002:
-          routeUrl = '/victim-application';
-          break;
-        case 100000001:
-          routeUrl = '/renew-application';
-          break;
-        case 100000000:
-          routeUrl = '/witness-application';
-          break;
-      }
-
-      console.log(applicationType);
-      //let navigationExtras: NavigationExtras = {
-      //  queryParams: { 'ob': behalfOf }
-      //};
-
-      this.router.navigate([routeUrl]);//, navigationExtras);
-    } else {
-      this.showValidationMessage = true;
-      console.log("form not validated");
-    }
+    // Possibly a more correct way to do this.. NG Routing?
+    let routeUrl = '/renew-application';
+    this.router.navigate([routeUrl]);//, navigationExtras);
   }
 }

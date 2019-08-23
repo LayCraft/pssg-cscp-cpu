@@ -22,39 +22,39 @@ const routes: Routes = [
     component: RenewApplicationComponent,
     //canDeactivate: [CanDeactivateGuard]
   },
-  {
-    path: 'ifm-application',
-    component: IfmApplicationComponent,
-    //canDeactivate: [CanDeactivateGuard]
-  },
-  {
-    path: 'witness-application',
-    component: WitnessApplicationComponent,
-    //canDeactivate: [CanDeactivateGuard]
-  },
-  {
-    path: 'submit-invoice',
-    component: SubmitInvoiceComponent,
-    //canDeactivate: [CanDeactivateGuard]
-  },
-  {
-    path: 'victim-restitution',
-    component: VictimRestitutionComponent,
-    //canDeactivate: [CanDeactivateGuard]
-  },
-  {
-    path: 'offender-restitution',
-    component: OffenderRestitutionComponent,
-    //canDeactivate: [CanDeactivateGuard]
-  },
-  {
-    path: 'application-cancelled',
-    component: ApplicationCancelledComponent,
-  },
-  {
-    path: 'application-success',
-    component: ApplicationSuccessComponent,
-  },
+  // {
+  //   path: 'ifm-application',
+  //   component: IfmApplicationComponent,
+  //   //canDeactivate: [CanDeactivateGuard]
+  // },
+  // {
+  //   path: 'witness-application',
+  //   component: WitnessApplicationComponent,
+  //   //canDeactivate: [CanDeactivateGuard]
+  // },
+  // {
+  //   path: 'submit-invoice',
+  //   component: SubmitInvoiceComponent,
+  //   //canDeactivate: [CanDeactivateGuard]
+  // },
+  // {
+  //   path: 'victim-restitution',
+  //   component: VictimRestitutionComponent,
+  //   //canDeactivate: [CanDeactivateGuard]
+  // },
+  // {
+  //   path: 'offender-restitution',
+  //   component: OffenderRestitutionComponent,
+  //   //canDeactivate: [CanDeactivateGuard]
+  // },
+  // {
+  //   path: 'application-cancelled',
+  //   component: ApplicationCancelledComponent,
+  // },
+  // {
+  //   path: 'application-success',
+  //   component: ApplicationSuccessComponent,
+  // },
   { path: '**', component: NotFoundComponent }
 ];
 
