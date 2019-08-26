@@ -33,6 +33,13 @@
             <h1>{{item}}</h1>
           </div>
           {{item}} component
+
+          <div *ngIf="item === 'Applicant Contact Information'">
+            <app-applicant-contact-information [(contactInformation)]="contactInformation"></app-applicant-contact-information>
+            <pre>
+              {{contactInformation|json}}
+            </pre>
+          </div>
         </div>
       </div>
       <div *ngFor="let item of programs">
