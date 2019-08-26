@@ -16,15 +16,17 @@ export class ContactInformation implements iContactInformation {
   boardContact: Person;
 
   constructor(info?: iContactInformation) {
-    this.organizationName = info.organizationName || null;
-    this.contractNumber = info.organizationName || null;
-    this.emailAddress = info.emailAddress || null;
-    this.phoneNumber = info.phoneNumber || null;
-    this.faxNumber = info.faxNumber || null;
-    this.address = new Address(info.address) || new Address();
-    this.mailingAddress = new Address(info.mailingAddress) || new Address();
-    this.executiveContact = new Person(info.executiveContact) || new Person();
-    this.boardContact = new Person(info.boardContact) || new Person();
+    if (info) {
+      this.organizationName = info.organizationName || null;
+      this.contractNumber = info.organizationName || null;
+      this.emailAddress = info.emailAddress || null;
+      this.phoneNumber = info.phoneNumber || null;
+      this.faxNumber = info.faxNumber || null;
+      this.address = new Address(info.address) || new Address();
+      this.mailingAddress = new Address(info.mailingAddress) || new Address();
+      this.executiveContact = new Person(info.executiveContact) || new Person();
+      this.boardContact = new Person(info.boardContact) || new Person();
+    }
   }
   toDynamics(): object {
     // this isn't real dynamics stuff. Surprise! Just an example of data massaging

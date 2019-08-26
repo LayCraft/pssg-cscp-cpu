@@ -24,6 +24,8 @@ export class ApplicantContactInformationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.contactInformation = new ContactInformation();
+
     // this should be a service call
     this.applicantInfoService.getApplicantContactInfo().subscribe((info: iContactInformation) => {
       // when the component loads make a new working contact information object to do the form work in

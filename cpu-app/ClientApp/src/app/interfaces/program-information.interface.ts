@@ -20,7 +20,6 @@ export interface iProgramInformation {
   operationHours: iHours[];
   standbyHours: iHours[];
   personnel: iPerson[];
-
 }
 
 export interface iHours {

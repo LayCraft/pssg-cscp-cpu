@@ -22,22 +22,24 @@ export class ProgramInformation implements iProgramInformation {
   personnel: Person[];
 
   constructor(prog?: iProgramInformation) {
-    this.organizationName = prog.organizationName || null;
-    this.contractNumber = prog.contractNumber || null;
-    this.emailAddress = prog.emailAddress || null;
-    this.programLocation = prog.programLocation || null;
-    this.serviceArea = prog.serviceArea || null;
-    this.phoneNumber = prog.phoneNumber || null;
-    this.faxNumber = prog.faxNumber || null;
-    this.mainAddress = new Address(prog.mainAddress) || new Address();
-    this.mailingAddress = new Address(prog.mailingAddress) || new Address();
-    this.programContact = new Person(prog.programContact) || new Person();
-    // populate arrays if they are included
-    prog.additionalStaff ? prog.additionalStaff.forEach(s => this.additionalStaff.push(new Person(s))) : this.additionalStaff = [];
-    prog.revenueSources ? prog.revenueSources.forEach(r => this.revenueSources.push(new RevenueSource(r))) : this.revenueSources = [];
-    prog.operationHours ? prog.operationHours.forEach(o => this.operationHours.push(new Hours(o))) : this.operationHours = [];
-    prog.standbyHours ? prog.standbyHours.forEach(s => this.standbyHours.push(new Hours(s))) : this.standbyHours = [];
-    prog.personnel ? prog.personnel.forEach(p => this.personnel.push(new Person(p))) : this.personnel = [];
+    if (prog) {
+      this.organizationName = prog.organizationName || null;
+      this.contractNumber = prog.contractNumber || null;
+      this.emailAddress = prog.emailAddress || null;
+      this.programLocation = prog.programLocation || null;
+      this.serviceArea = prog.serviceArea || null;
+      this.phoneNumber = prog.phoneNumber || null;
+      this.faxNumber = prog.faxNumber || null;
+      this.mainAddress = new Address(prog.mainAddress) || new Address();
+      this.mailingAddress = new Address(prog.mailingAddress) || new Address();
+      this.programContact = new Person(prog.programContact) || new Person();
+      // populate arrays if they are included
+      prog.additionalStaff ? prog.additionalStaff.forEach(s => this.additionalStaff.push(new Person(s))) : this.additionalStaff = [];
+      prog.revenueSources ? prog.revenueSources.forEach(r => this.revenueSources.push(new RevenueSource(r))) : this.revenueSources = [];
+      prog.operationHours ? prog.operationHours.forEach(o => this.operationHours.push(new Hours(o))) : this.operationHours = [];
+      prog.standbyHours ? prog.standbyHours.forEach(s => this.standbyHours.push(new Hours(s))) : this.standbyHours = [];
+      prog.personnel ? prog.personnel.forEach(p => this.personnel.push(new Person(p))) : this.personnel = [];
+    }
   }
   toDynamics(): object {
     return {}
@@ -59,15 +61,17 @@ export class Hours implements iHours {
   open: Date; // just used for the hour representation
   closed: Date;
   constructor(hours?: iHours) {
-    this.monday = hours.monday || false;
-    this.tuesday = hours.tuesday || false;
-    this.wednesday = hours.wednesday || false;
-    this.thursday = hours.thursday || false;
-    this.friday = hours.friday || false;
-    this.saturday = hours.saturday || false;
-    this.sunday = hours.sunday || false;
-    this.open = new Date(hours.open) || null;
-    this.closed = new Date(hours.closed) || null;
+    if (hours) {
+      this.monday = hours.monday || null;
+      this.tuesday = hours.tuesday || null;
+      this.wednesday = hours.wednesday || null;
+      this.thursday = hours.thursday || null;
+      this.friday = hours.friday || null;
+      this.saturday = hours.saturday || null;
+      this.sunday = hours.sunday || null;
+      this.open = new Date(hours.open) || null;
+      this.closed = new Date(hours.closed) || null;
+    }
   }
   toDynamics(): object {
     return {}
@@ -80,9 +84,11 @@ export class RevenueSource implements iRevenueSource {
   cash: number;
   inKindContribution: number;
   constructor(rs?: iRevenueSource) {
-    this.revenueSourceName = rs.revenueSourceName || null;
-    this.cash = rs.cash || null;
-    this.inKindContribution = rs.inKindContribution || null;
+    if (rs) {
+      this.revenueSourceName = rs.revenueSourceName || null;
+      this.cash = rs.cash || null;
+      this.inKindContribution = rs.inKindContribution || null;
+    }
   }
   toDynamics(): object {
     return {}
