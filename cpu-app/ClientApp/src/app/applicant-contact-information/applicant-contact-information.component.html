@@ -8,6 +8,7 @@
     <input [(ngModel)]="contactInformation.contractNumber" type="text" class="form-control" placeholder="" id="contractNumber" name="contractNumber" #contractNumber="ngModel" disabled>
   </div>
   <h2 class="blue-header">Primary Contact Information</h2>
+
   <div class="form-group">
     <label for="emailAddress" class="required">Email Address</label>
     <input [(ngModel)]="contactInformation.emailAddress" type="text" class="form-control" placeholder="" id="emailAddress" name="emailAddress" #emailAddress="ngModel" [pattern]="emailValidRegex" required>
@@ -18,6 +19,7 @@
       Email address is required and must be valid.
     </div>
   </div>
+
   <!-- Submit button and validation note -->
   <div class="form-group">
     <div class="invalid-feedback" [hidden]="contactInfoForm.form.valid || contactInfoForm.form.pristine">

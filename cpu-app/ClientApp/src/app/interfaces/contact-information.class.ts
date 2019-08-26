@@ -1,4 +1,6 @@
-export class ContactInformation {
+import { iContactInformation } from "./contact-information.interface";
+
+export class ContactInformation implements iContactInformation {
   // this interface is very much incomplete.
   organizationName: string;
   contractNumber: string;
