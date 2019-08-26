@@ -42,5 +42,8 @@ export class RenewApplicationComponent implements OnInit {
   }
   cancel() { }
   showSummaryOfBenefits() { }
-  gotoNextStep() { }
+  gotoNextStep(event?: string) {
+    //if this is handling an event we allow an optional parameter
+    alert(event);
+  }
 }
