@@ -87,6 +87,7 @@ import { ToolTipTriggerComponent } from './shared/tool-tip/tool-tip.component';
 import { VersionInfoDialog } from './version-info/version-info.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { ApplicantContactInformationComponent } from './applicant-contact-information/applicant-contact-information.component';
+import { ProgramPlannerComponent } from './program-planner/program-planner.component';
 
 @NgModule({
   declarations: [
@@ -124,6 +125,7 @@ import { ApplicantContactInformationComponent } from './applicant-contact-inform
     TermsAndConditionsComponent,
     VersionInfoDialog,
     ApplicantContactInformationComponent,
+    ProgramPlannerComponent,
   ],
   imports: [
     BrowserModule,
