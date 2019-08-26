@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { iContactInformation } from '../interfaces/contact-information.interface';
-import { ProgramInformation } from '../interfaces/program-information.class';
+import { ProgramInformation } from '../classes/program-information.class';
 import { ApplicantInfoService } from '../services/applicant-info.service';
-import { Address } from '../interfaces/address.class';
-import { Person } from '../interfaces/person.class';
+import { Address } from '../classes/address.class';
+import { iContactInformation } from '../classes/contact-information.class';
 @Component({
   selector: 'app-program-planner',
   templateUrl: './program-planner.component.html',

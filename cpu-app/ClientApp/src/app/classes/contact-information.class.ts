@@ -1,6 +1,19 @@
-import { iContactInformation } from "./contact-information.interface";
-import { Address } from "./address.class";
-import { Person } from "./person.class";
+import { Address, iAddress } from "./address.class";
+import { Person, iPerson } from "./person.class";
+
+export interface iContactInformation {
+  organizationName: string;
+  contractNumber: string;
+
+  emailAddress: string;
+  phoneNumber: string;
+  faxNumber: string;
+  mainAddress: iAddress;
+  mailingAddress: iAddress;
+
+  executiveContact: iPerson;
+  boardContact: iPerson;
+}
 
 export class ContactInformation implements iContactInformation {
   // this class is very much incomplete.

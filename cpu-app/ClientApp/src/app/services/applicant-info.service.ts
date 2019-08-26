@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
-import { iContactInformation } from '../interfaces/contact-information.interface';
+import { iContactInformation } from '../classes/contact-information.class';
 
 @Injectable({
   providedIn: 'root'
