@@ -32,13 +32,10 @@
           <div class="page-header">
             <h1>{{item}}</h1>
           </div>
-          {{item}} component
-
+          {{item}} component <br>
+          <!-- These are both strings. I'm not sure why linting is flagging this -->
           <div *ngIf="item === 'Applicant Contact Information'">
-            <app-applicant-contact-information [(contactInformation)]="contactInformation"></app-applicant-contact-information>
-            <pre>
-              {{contactInformation|json}}
-            </pre>
+            <app-applicant-contact-information></app-applicant-contact-information>
           </div>
         </div>
       </div>
