@@ -1,4 +1,11 @@
-import { iAddress } from "./address.interface";
+export interface iAddress {
+  line1: string;
+  line2: string;
+  city: string;
+  postalCode: string;
+  province: string;
+  // country: string;
+}
 
 export class Address implements iAddress {
   line1: string;

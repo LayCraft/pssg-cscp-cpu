@@ -1,8 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { ContactInformation } from '../interfaces/contact-information.class';
+import { ContactInformation, iContactInformation } from '../classes/contact-information.class';
 import { RenewApplicationService } from '../services/renew-application.service';
 import { ApplicantInfoService } from '../services/applicant-info.service';
-import { iContactInformation } from '../interfaces/contact-information.interface';
 import { emailValidRegex } from '../constants/validators';
 
 @Component({
