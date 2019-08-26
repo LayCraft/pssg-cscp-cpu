@@ -1,10 +1,12 @@
 import { iContactInformation } from "./contact-information.interface";
+import { iAddress } from "./address.interface";
 
 export class ContactInformation implements iContactInformation {
-  // this interface is very much incomplete.
+  // this class is very much incomplete.
   organizationName: string;
   contractNumber: string;
   emailAddress: string;
+  address: iAddress;
 
   toDynamics(): object {
     // this isn't real dynamics stuff. Surprise! Just an example of data massaging
