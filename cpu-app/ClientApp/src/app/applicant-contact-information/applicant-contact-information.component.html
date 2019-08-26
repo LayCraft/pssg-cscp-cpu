@@ -1,0 +1,35 @@
+<form #contactInfoForm="ngForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="organizationName">Legal Name of Organization</label>
+    <input [(ngModel)]="contactInformation.organizationName" type="text" class="form-control" placeholder="" id="organizationName" name="organizationName" #organizationName="ngModel" disabled>
+  </div>
+  <div class="form-group">
+    <label for="contractNumber">Contract Number</label>
+    <input [(ngModel)]="contactInformation.contractNumber" type="text" class="form-control" placeholder="" id="contractNumber" name="contractNumber" #contractNumber="ngModel" disabled>
+  </div>
+  <h2 class="blue-header">Primary Contact Information</h2>
+
+  <div class="form-group">
+    <label for="emailAddress" class="required">Email Address</label>
+    <input [(ngModel)]="contactInformation.emailAddress" type="text" class="form-control" placeholder="" id="emailAddress" name="emailAddress" #emailAddress="ngModel" [pattern]="emailValidRegex" required>
+    <div class="valid-feedback" [hidden]="!emailAddress.valid" style="display: inherit">
+      Looks good!
+    </div>
+    <div class="invalid-feedback" [hidden]="emailAddress.valid || !emailAddress.touched" style="display: inherit">
+      Email address is required and must be valid.
+    </div>
+  </div>
+
+  <!-- Submit button and validation note -->
+  <div class="form-group">
+    <div class="invalid-feedback" [hidden]="contactInfoForm.form.valid || contactInfoForm.form.pristine">
+      One or more required fields is missing from the submission.
+    </div>
+    <!-- Button states for the form: Can submit, Can't submit, (TODO: in process of submitting) -->
+    <button *ngIf="contactInfoForm.form.valid" class="btn btn-primary" type="submit">Submit</button>
+    <button *ngIf="!contactInfoForm.form.valid" class="btn btn-primary" type="submit" disabled>Submit</button>
+
+  </div>
+</form>
+<pre>Form Valid: {{contactInfoForm.form.valid}}
+{{contactInformation|json}}</pre>

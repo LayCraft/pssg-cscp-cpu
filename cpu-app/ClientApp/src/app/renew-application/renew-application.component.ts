@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
+import { iContactInformation } from '../interfaces/contact-information.interface';
 
 export const postalRegex = '(^\\d{5}([\-]\\d{4})?$)|(^[A-Za-z][0-9][A-Za-z]\\s?[0-9][A-Za-z][0-9]$)';
 
@@ -22,6 +23,13 @@ export class RenewApplicationComponent implements OnInit {
 
   currentFormPage: string = '';
 
+
+  contactInformation: iContactInformation = {
+    organizationName: 'BC Social Work Societies',
+    contractNumber: '19052-FY20',
+    emailAddress: '',
+  };
+
   constructor() { }
   ngOnInit() {
     this.combinedPageList = [...this.upperItems, ...this.programs, ...this.lowerItems];
@@ -34,5 +42,8 @@ export class RenewApplicationComponent implements OnInit {
   }
   cancel() { }
   showSummaryOfBenefits() { }
-  gotoNextStep() { }
+  gotoNextStep(event?: string) {
+    //if this is handling an event we allow an optional parameter
+    alert(event);
+  }
 }

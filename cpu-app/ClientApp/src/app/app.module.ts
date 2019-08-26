@@ -86,6 +86,7 @@ import { QuickExitComponent } from './quick-exit/quick-exit.component';
 import { ToolTipTriggerComponent } from './shared/tool-tip/tool-tip.component';
 import { VersionInfoDialog } from './version-info/version-info.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { ApplicantContactInformationComponent } from './applicant-contact-information/applicant-contact-information.component';
 
 @NgModule({
   declarations: [
@@ -122,6 +123,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     ToolTipTriggerComponent,
     TermsAndConditionsComponent,
     VersionInfoDialog,
+    ApplicantContactInformationComponent,
   ],
   imports: [
     BrowserModule,
