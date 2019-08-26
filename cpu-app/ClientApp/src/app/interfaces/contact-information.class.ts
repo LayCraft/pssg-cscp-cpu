@@ -1,17 +1,30 @@
 import { iContactInformation } from "./contact-information.interface";
 import { Address } from "./address.class";
+import { Person } from "./person.class";
 
 export class ContactInformation implements iContactInformation {
   // this class is very much incomplete.
   organizationName: string;
   contractNumber: string;
   emailAddress: string;
+  phoneNumber: string;
+  faxNumber: string;
   address: Address;
+  mailingAddress: Address;
+
+  executiveContact: Person;
+  boardContact: Person;
+
   constructor(info?: iContactInformation) {
-    this.organizationName = info.organizationName;
-    this.contractNumber = info.organizationName;
-    this.emailAddress = info.emailAddress;
-    this.address = new Address(info.address);
+    this.organizationName = info.organizationName || null;
+    this.contractNumber = info.organizationName || null;
+    this.emailAddress = info.emailAddress || null;
+    this.phoneNumber = info.phoneNumber || null;
+    this.faxNumber = info.faxNumber || null;
+    this.address = new Address(info.address) || new Address();
+    this.mailingAddress = new Address(info.mailingAddress) || new Address();
+    this.executiveContact = new Person(info.executiveContact) || new Person();
+    this.boardContact = new Person(info.boardContact) || new Person();
   }
   toDynamics(): object {
     // this isn't real dynamics stuff. Surprise! Just an example of data massaging

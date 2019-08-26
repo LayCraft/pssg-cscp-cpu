@@ -8,11 +8,11 @@ export class Address implements iAddress {
   province: string;
   // country: string;
   constructor(address?: iAddress) {
-    this.line1 = address.line1;
-    this.line2 = address.line2;
-    this.postalCode = address.postalCode;
-    this.city = address.city;
-    this.province = address.province;
+    this.line1 = address.line1 || null;
+    this.line2 = address.line2 || null;
+    this.postalCode = address.postalCode || null;
+    this.city = address.city || null;
+    this.province = address.province || null;
   }
   toDynamics(): object {
     return {}

@@ -1,6 +1,6 @@
-import { iProgramInformation, iHours, iRevenueSource } from "./program-information.interface";
-import { iPerson } from "./person.interface";
 import { Address } from "./address.class";
+import { iProgramInformation, iHours, iRevenueSource } from "./program-information.interface";
+import { Person } from "./person.class";
 
 export class ProgramInformation implements iProgramInformation {
   organizationName: string;
@@ -22,22 +22,22 @@ export class ProgramInformation implements iProgramInformation {
   personnel: Person[];
 
   constructor(prog?: iProgramInformation) {
-    this.organizationName = prog.organizationName;
-    this.contractNumber = prog.contractNumber;
-    this.emailAddress = prog.emailAddress;
-    this.programLocation = prog.programLocation;
-    this.serviceArea = prog.serviceArea;
-    this.phoneNumber = prog.phoneNumber;
-    this.faxNumber = prog.faxNumber;
-    this.mainAddress = new Address(prog.mainAddress);
-    this.mailingAddress = new Address(prog.mailingAddress);
-    this.programContact = new Person(prog.programContact);
-    // populate arrays with objects
-    prog.additionalStaff.forEach(s => this.additionalStaff.push(new Person(s)));
-    prog.revenueSources.forEach(r => this.revenueSources.push(new RevenueSource(r)))
-    prog.operationHours.forEach(o => this.operationHours.push(new Hours(o)));
-    prog.standbyHours.forEach(s => this.standbyHours.push(new Hours(s)));
-    prog.personnel.forEach(p => this.personnel.push(new Person(p)));
+    this.organizationName = prog.organizationName || null;
+    this.contractNumber = prog.contractNumber || null;
+    this.emailAddress = prog.emailAddress || null;
+    this.programLocation = prog.programLocation || null;
+    this.serviceArea = prog.serviceArea || null;
+    this.phoneNumber = prog.phoneNumber || null;
+    this.faxNumber = prog.faxNumber || null;
+    this.mainAddress = new Address(prog.mainAddress) || new Address();
+    this.mailingAddress = new Address(prog.mailingAddress) || new Address();
+    this.programContact = new Person(prog.programContact) || new Person();
+    // populate arrays if they are included
+    prog.additionalStaff ? prog.additionalStaff.forEach(s => this.additionalStaff.push(new Person(s))) : this.additionalStaff = [];
+    prog.revenueSources ? prog.revenueSources.forEach(r => this.revenueSources.push(new RevenueSource(r))) : this.revenueSources = [];
+    prog.operationHours ? prog.operationHours.forEach(o => this.operationHours.push(new Hours(o))) : this.operationHours = [];
+    prog.standbyHours ? prog.standbyHours.forEach(s => this.standbyHours.push(new Hours(s))) : this.standbyHours = [];
+    prog.personnel ? prog.personnel.forEach(p => this.personnel.push(new Person(p))) : this.personnel = [];
   }
   toDynamics(): object {
     return {}
@@ -47,43 +47,7 @@ export class ProgramInformation implements iProgramInformation {
 }
 
 
-export class Person implements iPerson {
-  typeOfEmployee: string; // frontline, regular,
-  firstName: string;
-  middleName?: string;
-  lastName: string;
-  title: string;
-  email: string;
-  phone?: string;
-  fax?: string;
-  address?: Address;
-  baseHourlyWage?: number;
-  hoursWorkedPerWeek?: number;
-  annualSalary?: number;
-  benefits?: number;
-  fundedFromVCSP: number;
-  constructor(person: iPerson) {
-    this.typeOfEmployee = person.typeOfEmployee; // frontline, regular,
-    this.firstName = person.firstName;
-    this.middleName = person.middleName;
-    this.lastName = person.lastName;
-    this.title = person.title;
-    this.email = person.email;
-    this.phone = person.phone;
-    this.fax = person.fax;
-    this.address = new Address(person.address);
-    this.baseHourlyWage = person.baseHourlyWage;
-    this.hoursWorkedPerWeek = person.hoursWorkedPerWeek;
-    this.annualSalary = person.annualSalary;
-    this.benefits = person.benefits;
-    this.fundedFromVCSP = person.fundedFromVCSP;
-  }
-  toDynamics(): object {
-    return {}
-  }
-  fromDynamics(dynamicsObject) {
-  }
-}
+
 export class Hours implements iHours {
   monday: boolean;
   tuesday: boolean;
@@ -95,15 +59,15 @@ export class Hours implements iHours {
   open: Date; // just used for the hour representation
   closed: Date;
   constructor(hours?: iHours) {
-    this.monday = hours.monday;
-    this.tuesday = hours.tuesday;
-    this.wednesday = hours.wednesday;
-    this.thursday = hours.thursday;
-    this.friday = hours.friday;
-    this.saturday = hours.saturday;
-    this.sunday = hours.sunday;
-    this.open = new Date(hours.open);
-    this.closed = new Date(hours.closed);
+    this.monday = hours.monday || false;
+    this.tuesday = hours.tuesday || false;
+    this.wednesday = hours.wednesday || false;
+    this.thursday = hours.thursday || false;
+    this.friday = hours.friday || false;
+    this.saturday = hours.saturday || false;
+    this.sunday = hours.sunday || false;
+    this.open = new Date(hours.open) || null;
+    this.closed = new Date(hours.closed) || null;
   }
   toDynamics(): object {
     return {}
@@ -116,9 +80,9 @@ export class RevenueSource implements iRevenueSource {
   cash: number;
   inKindContribution: number;
   constructor(rs?: iRevenueSource) {
-    this.revenueSourceName = rs.revenueSourceName;
-    this.cash = rs.cash;
-    this.inKindContribution = rs.inKindContribution;
+    this.revenueSourceName = rs.revenueSourceName || null;
+    this.cash = rs.cash || null;
+    this.inKindContribution = rs.inKindContribution || null;
   }
   toDynamics(): object {
     return {}

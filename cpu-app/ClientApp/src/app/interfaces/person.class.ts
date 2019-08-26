@@ -16,21 +16,21 @@ export class Person implements iPerson {
   annualSalary?: number;
   benefits?: number;
   fundedFromVCSP: number;
-  constructor(person: iPerson) {
-    this.typeOfEmployee = person.typeOfEmployee
-    this.firstName = person.firstName
-    this.middleName = person.middleName
-    this.lastName = person.lastName
-    this.title = person.title
-    this.email = person.email
-    this.phone = person.phone
-    this.fax = person.fax
-    this.address = new Address(person.address)
-    this.baseHourlyWage = person.baseHourlyWage
-    this.hoursWorkedPerWeek = person.hoursWorkedPerWeek
-    this.annualSalary = person.annualSalary
-    this.benefits = person.benefits
-    this.fundedFromVCSP = person.fundedFromVCSP
+  constructor(person?: iPerson) {
+    this.typeOfEmployee = person.typeOfEmployee || null; // frontline, regular,
+    this.firstName = person.firstName || null;
+    this.middleName = person.middleName || null;
+    this.lastName = person.lastName || null;
+    this.title = person.title || null;
+    this.email = person.email || null;
+    this.phone = person.phone || null;
+    this.fax = person.fax || null;
+    this.address = new Address(person.address) || new Address();
+    this.baseHourlyWage = person.baseHourlyWage || null;
+    this.hoursWorkedPerWeek = person.hoursWorkedPerWeek || null;
+    this.annualSalary = person.annualSalary || null;
+    this.benefits = person.benefits || null;
+    this.fundedFromVCSP = person.fundedFromVCSP || null;
   }
   toDynamics(): object {
     return {}
