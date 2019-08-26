@@ -1,5 +1,5 @@
 import { iAddress } from "./address.interface";
-import { Person } from "./person.class";
+import { iPerson } from "./person.interface";
 
 export interface iContactInformation {
   // this interface is very much incomplete.
@@ -9,9 +9,9 @@ export interface iContactInformation {
   emailAddress: string;
   phoneNumber: string;
   faxNumber: string;
-  address: iAddress;
+  mainAddress: iAddress;
   mailingAddress: iAddress;
 
-  executiveContact: Person;
-  boardContact: Person;
+  executiveContact: iPerson;
+  boardContact: iPerson;
 }

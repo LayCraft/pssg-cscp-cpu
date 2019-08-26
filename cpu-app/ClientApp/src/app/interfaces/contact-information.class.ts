@@ -9,7 +9,7 @@ export class ContactInformation implements iContactInformation {
   emailAddress: string;
   phoneNumber: string;
   faxNumber: string;
-  address: Address;
+  mainAddress: Address;
   mailingAddress: Address;
 
   executiveContact: Person;
@@ -22,7 +22,7 @@ export class ContactInformation implements iContactInformation {
       this.emailAddress = info.emailAddress || null;
       this.phoneNumber = info.phoneNumber || null;
       this.faxNumber = info.faxNumber || null;
-      this.address = new Address(info.address) || new Address();
+      this.mainAddress = new Address(info.mainAddress) || new Address();
       this.mailingAddress = new Address(info.mailingAddress) || new Address();
       this.executiveContact = new Person(info.executiveContact) || new Person();
       this.boardContact = new Person(info.boardContact) || new Person();
