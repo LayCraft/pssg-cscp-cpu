@@ -20,6 +20,29 @@
     </div>
   </div>
 
+  <div class="form-row">
+    <div class="col">
+      <label for="phoneNumber">Phone Number</label>
+      <input [(ngModel)]="contactInformation.phoneNumber" type="text" class="form-control" placeholder="" id="phoneNumber" name="phoneNumber" [pattern]="phoneValidRegex" #phoneNumber="ngModel">
+      <div class="valid-feedback" [hidden]="!phoneNumber.valid" style="display: inherit">
+        Looks good!
+      </div>
+      <div class="invalid-feedback" [hidden]="phoneNumber.valid || !phoneNumber.touched" style="display: inherit">
+        Phone number is required and must be valid.
+      </div>
+    </div>
+    <div class="col">
+      <label for="faxNumber">Fax Number</label>
+      <input [(ngModel)]="contactInformation.faxNumber" type="text" class="form-control" placeholder="" id="faxNumber" name="faxNumber" [pattern]="phoneValidRegex" #faxNumber="ngModel">
+      <div class="valid-feedback" [hidden]="!faxNumber.valid" style="display: inherit">
+        Looks good!
+      </div>
+      <div class="invalid-feedback" [hidden]="faxNumber.valid || !faxNumber.touched" style="display: inherit">
+        Fax number is required and must be valid.
+      </div>
+    </div>
+  </div>
+
   <!-- Submit button and validation note -->
   <div class="form-group">
     <div class="invalid-feedback" [hidden]="contactInfoForm.form.valid || contactInfoForm.form.pristine">
@@ -28,7 +51,6 @@
     <!-- Button states for the form: Can submit, Can't submit, (TODO: in process of submitting) -->
     <button *ngIf="contactInfoForm.form.valid" class="btn btn-primary" type="submit">Submit</button>
     <button *ngIf="!contactInfoForm.form.valid" class="btn btn-primary" type="submit" disabled>Submit</button>
-
   </div>
 </form>
 <pre>Form Valid: {{contactInfoForm.form.valid}}

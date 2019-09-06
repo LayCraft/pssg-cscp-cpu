@@ -73,7 +73,6 @@ import { VersionInfoDialog } from './version-info/version-info.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { ApplicantContactInformationComponent } from './applicant-contact-information/applicant-contact-information.component';
 import { ProgramPlannerComponent } from './program-planner/program-planner.component';
-import { AddressBlockComponent } from './address-block/address-block.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +80,6 @@ import { AddressBlockComponent } from './address-block/address-block.component';
     SignPadDialog,
     CancelApplicationDialog,
     DeactivateGuardDialog,
-    AddressBlockComponent,
     RenewApplicationComponent,
     RenewReviewComponent,
     FileUploaderBoxComponent,

@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { ContactInformation, iContactInformation } from '../classes/contact-information.class';
 import { RenewApplicationService } from '../services/renew-application.service';
 import { ApplicantInfoService } from '../services/applicant-info.service';
-import { emailValidRegex } from '../constants/validators';
+import { emailValidRegex, phoneValidRegex } from '../constants/validators';
 
 @Component({
   selector: 'app-applicant-contact-information',
@@ -15,6 +15,7 @@ export class ApplicantContactInformationComponent implements OnInit {
   @Output() pageTurn = new EventEmitter<string>();
 
   emailValidRegex = emailValidRegex;
+  phoneValidRegex = phoneValidRegex;
 
   // the form object
   contactInformation: ContactInformation;
@@ -32,6 +33,7 @@ export class ApplicantContactInformationComponent implements OnInit {
       this.contactInformation = new ContactInformation(info);
     });
   }
+  isHidden(): boolean { return true; }
   onSubmit() {
     // submit data
     this.renewApplicationService.submitContactInformation(this.contactInformation).subscribe(
