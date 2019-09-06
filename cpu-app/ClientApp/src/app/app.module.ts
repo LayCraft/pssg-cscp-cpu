@@ -43,7 +43,6 @@ import {
 import { CdkTableModule } from '@angular/cdk/table';
 import { JusticeApplicationDataService } from './services/justice-application-data.service';
 import { AppComponent } from './app.component';
-import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 //import { DynamicsDataService } from './services/dynamics-data.service';
 import { CanDeactivateGuard } from './services/can-deactivate-guard.service';
 import { StaticComponent } from './static/static.component';
@@ -52,33 +51,20 @@ import { VersionInfoDataService } from './services/version-info-data.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AddressComponent } from './shared/address/address.component';
 import { SignPadDialog } from './sign-dialog/sign-dialog.component';
-import { SummaryOfBenefitsDialog } from './summary-of-benefits/summary-of-benefits.component';
 import { CancelApplicationDialog } from './shared/cancel-dialog/cancel-dialog.component';
 import { DeactivateGuardDialog } from './shared/guard-dialog/guard-dialog.component';
 import { RenewApplicationComponent } from './renew-application/renew-application.component';
 import { RenewReviewComponent } from './renew-application/renew-review.component';
-import { VictimApplicationComponent } from './victim-application/victim-application.component';
-import { VictimReviewComponent } from './victim-application/victim-review.component';
-import { IfmApplicationComponent } from './ifm-application/ifm-application.component';
-import { IfmReviewComponent } from './ifm-application/ifm-review.component';
-import { WitnessApplicationComponent } from './witness-application/witness-application.component';
-import { WitnessReviewComponent } from './witness-application/witness-review.component';
 import { ApplicationSuccessComponent } from './application-success/application-success.component';
 import { ApplicationCancelledComponent } from './application-cancelled/application-cancelled.component';
 import { SubmitInvoiceComponent } from './submit-invoice/submit-invoice.component';
-import { VictimRestitutionComponent } from './victim-restitution/victim-restitution.component';
-import { VictimRestitutionReviewComponent } from './victim-restitution/victim-restitution-review.component';
 import { FileUploaderBoxComponent } from './file-uploader-box/file-uploader-box.component';
 import { TestComponent } from './test/test.component';
-import { OffenderRestitutionComponent } from './offender-restitution/offender-restitution.component';
-import { OffenderRestitutionReviewComponent } from './offender-restitution/offender-restitution-review.component';
 import { FileDropModule } from 'ngx-file-drop';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FileUploaderComponent } from './shared/file-uploader/file-uploader.component';
 import { NgBusyModule } from 'ng-busy';
 import { BsDatepickerModule, AlertModule, BsDropdownModule } from 'ngx-bootstrap';
-//import { IntlTelInputNgModule } from 'intl-tel-input-ng';
-//import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { TermsAndConditionsComponent } from './lite/terms-and-conditions/terms-and-conditions.component';
 import { AliasDataService } from './services/alias-data.service';
 import { FieldComponent } from './shared/field/field.component';
@@ -94,27 +80,15 @@ import { ProgramPlannerComponent } from './program-planner/program-planner.compo
     AppComponent,
     AddressComponent,
     SignPadDialog,
-    SummaryOfBenefitsDialog,
     CancelApplicationDialog,
     DeactivateGuardDialog,
     RenewApplicationComponent,
     RenewReviewComponent,
-    VictimApplicationComponent,
-    VictimReviewComponent,
     FileUploaderBoxComponent,
     TestComponent,
-    IfmApplicationComponent,
-    IfmReviewComponent,
-    WitnessApplicationComponent,
-    WitnessReviewComponent,
     ApplicationSuccessComponent,
     ApplicationCancelledComponent,
     SubmitInvoiceComponent,
-    VictimRestitutionComponent,
-    VictimRestitutionReviewComponent,
-    OffenderRestitutionComponent,
-    OffenderRestitutionReviewComponent,
-    BreadcrumbComponent,
     HomeComponent,
     NotFoundComponent,
     StaticComponent,
@@ -171,10 +145,7 @@ import { ProgramPlannerComponent } from './program-planner/program-planner.compo
     MatTooltipModule,
     FileDropModule,
     SignaturePadModule,
-    //IntlTelInputNgModule.forRoot(),
-    //NgxIntlTelInputModule,
     TooltipModule.forRoot(),
-//    BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     AlertModule.forRoot()
   ],
@@ -233,7 +204,6 @@ import { ProgramPlannerComponent } from './program-planner/program-planner.compo
   entryComponents: [
     VersionInfoDialog,
     SignPadDialog,
-    SummaryOfBenefitsDialog,
     CancelApplicationDialog,
     DeactivateGuardDialog
   ],
