@@ -49,7 +49,6 @@ import { StaticComponent } from './static/static.component';
 import { HomeComponent } from './home/home.component';
 import { VersionInfoDataService } from './services/version-info-data.service';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { AddressComponent } from './shared/address/address.component';
 import { SignPadDialog } from './sign-dialog/sign-dialog.component';
 import { CancelApplicationDialog } from './shared/cancel-dialog/cancel-dialog.component';
 import { DeactivateGuardDialog } from './shared/guard-dialog/guard-dialog.component';
@@ -64,7 +63,7 @@ import { FileDropModule } from 'ngx-file-drop';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FileUploaderComponent } from './shared/file-uploader/file-uploader.component';
 import { NgBusyModule } from 'ng-busy';
-import { BsDatepickerModule, AlertModule, BsDropdownModule } from 'ngx-bootstrap';
+import { BsDatepickerModule, AlertModule } from 'ngx-bootstrap';
 import { TermsAndConditionsComponent } from './lite/terms-and-conditions/terms-and-conditions.component';
 import { AliasDataService } from './services/alias-data.service';
 import { FieldComponent } from './shared/field/field.component';
@@ -74,14 +73,15 @@ import { VersionInfoDialog } from './version-info/version-info.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { ApplicantContactInformationComponent } from './applicant-contact-information/applicant-contact-information.component';
 import { ProgramPlannerComponent } from './program-planner/program-planner.component';
+import { AddressBlockComponent } from './address-block/address-block.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddressComponent,
     SignPadDialog,
     CancelApplicationDialog,
     DeactivateGuardDialog,
+    AddressBlockComponent,
     RenewApplicationComponent,
     RenewReviewComponent,
     FileUploaderBoxComponent,

@@ -4,7 +4,7 @@ export interface iAddress {
   city: string;
   postalCode: string;
   province: string;
-  // country: string;
+  country: string;
 }
 
 export class Address implements iAddress {
@@ -13,7 +13,7 @@ export class Address implements iAddress {
   city: string;
   postalCode: string;
   province: string;
-  // country: string;
+  country: string;
   constructor(address?: iAddress) {
     if (address) {
       this.line1 = address.line1 || null;
@@ -21,6 +21,7 @@ export class Address implements iAddress {
       this.postalCode = address.postalCode || null;
       this.city = address.city || null;
       this.province = address.province || null;
+      this.country = address.country || null;
     }
   }
   toDynamics(): object {
