@@ -14,7 +14,7 @@ import { Address } from '../classes/address.class';
 })
 export class ApplicantContactInformationComponent implements OnInit {
   // this would be some kind of object or string we can look up the contact information from an API.
-  @Input() contactInformationLookupId = null;
+  @Input() contractId = null;
   @Output() pageTurn = new EventEmitter<string>();
 
   emailValidRegex = emailValidRegex;
@@ -40,6 +40,11 @@ export class ApplicantContactInformationComponent implements OnInit {
     this.applicantInfoService.getApplicantContactInfo().subscribe((info: iContactInformation) => {
       // when the component loads make a new working contact information object to do the form work in
       this.contactInformation = new ContactInformation(info);
+
+      // if there is something returned in the mailing address then we should show the section
+      if (info.mailingAddress) {
+        this.hasMailingAddress = true;
+      }
     });
   }
   showValidFeedback(control: AbstractControl): boolean { return !(control.valid && (control.dirty || control.touched)) }
@@ -58,16 +63,21 @@ export class ApplicantContactInformationComponent implements OnInit {
       data => {
         // log the data. The submission was successful and now this prints in the browser console.
         console.log(data);
-        // // request a page turn from the parent
-        this.pageTurn.emit('applicant-contact-information turned the page!');
+
+        // turn the component's page
+        this.page++;
+        // if the page is the final page request a page turn from the parent
+        // this.pageTurn.emit('applicant-contact-information turned the page!');
       },
       err => {
         // oops an error
         console.log(`There was an error submitting the contact information.`);
         console.log(err);
 
+        // turn the component's page
+        this.page++;
         // TODO: turn the page anyhow even though the API isn't fully baked. Get rid of this
-        this.pageTurn.emit('applicant-contact-information turned the page!');
+        // this.pageTurn.emit('applicant-contact-information turned the page!');
       },
     )
   }
