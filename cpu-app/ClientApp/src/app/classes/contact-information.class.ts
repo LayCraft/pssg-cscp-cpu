@@ -31,7 +31,7 @@ export class ContactInformation implements iContactInformation {
   constructor(info?: iContactInformation) {
     if (info) {
       this.organizationName = info.organizationName || null;
-      this.contractNumber = info.organizationName || null;
+      this.contractNumber = info.contractNumber || null;
       this.emailAddress = info.emailAddress || null;
       this.phoneNumber = info.phoneNumber || null;
       this.faxNumber = info.faxNumber || null;
@@ -39,6 +39,11 @@ export class ContactInformation implements iContactInformation {
       this.mailingAddress = new Address(info.mailingAddress) || new Address();
       this.executiveContact = new Person(info.executiveContact) || new Person();
       this.boardContact = new Person(info.boardContact) || new Person();
+    } else {
+      this.mainAddress = new Address();
+      this.mailingAddress = new Address();
+      this.executiveContact = new Person();
+      this.boardContact = new Person();
     }
   }
   toDynamics(): object {
