@@ -12,11 +12,11 @@
   <div class="form-group">
     <label for="emailAddress" class="required">Email Address</label>
     <input [(ngModel)]="contactInformation.emailAddress" type="text" class="form-control" placeholder="" id="emailAddress" name="emailAddress" #emailAddress="ngModel" [pattern]="emailValidRegex" required>
-    <div class="valid-feedback" [hidden]="!emailAddress.valid" style="display: inherit">
-      Looks good!
+    <div class="valid-feedback" [hidden]="showValidFeedback(emailAddress)" style="display: inherit">
+      Ok
     </div>
-    <div class="invalid-feedback" [hidden]="emailAddress.valid || !emailAddress.touched" style="display: inherit">
-      Email address is required and must be valid.
+    <div class="invalid-feedback" [hidden]="showInvalidFeedback(emailAddress)" style="display: inherit">
+      Try Again
     </div>
   </div>
 
@@ -24,24 +24,48 @@
     <div class="col">
       <label for="phoneNumber">Phone Number</label>
       <input [(ngModel)]="contactInformation.phoneNumber" type="text" class="form-control" placeholder="" id="phoneNumber" name="phoneNumber" [pattern]="phoneValidRegex" #phoneNumber="ngModel">
-      <div class="valid-feedback" [hidden]="!phoneNumber.valid" style="display: inherit">
-        Looks good!
+      <div class="valid-feedback" [hidden]="showValidFeedback(phoneNumber)" style="display: inherit">
+        Ok
       </div>
-      <div class="invalid-feedback" [hidden]="phoneNumber.valid || !phoneNumber.touched" style="display: inherit">
-        Phone number is required and must be valid.
+      <div class="invalid-feedback" [hidden]="showInvalidFeedback(phoneNumber)" style="display: inherit">
+        Try Again
       </div>
     </div>
     <div class="col">
       <label for="faxNumber">Fax Number</label>
       <input [(ngModel)]="contactInformation.faxNumber" type="text" class="form-control" placeholder="" id="faxNumber" name="faxNumber" [pattern]="phoneValidRegex" #faxNumber="ngModel">
-      <div class="valid-feedback" [hidden]="!faxNumber.valid" style="display: inherit">
-        Looks good!
+      <div class="valid-feedback" [hidden]="showValidFeedback(faxNumber)" style="display: inherit">
+        Ok
       </div>
-      <div class="invalid-feedback" [hidden]="faxNumber.valid || !faxNumber.touched" style="display: inherit">
-        Fax number is required and must be valid.
+      <div class="invalid-feedback" [hidden]="showInvalidFeedback(faxNumber)" style="display: inherit">
+        Try Again
       </div>
     </div>
   </div>
+
+  <div class="form-row">
+    <!-- <div class="col">
+      <label for="line1">Address Line 1</label>
+      <input [(ngModel)]="contactInformation.mainAddress.line1" type="text" class="form-control" placeholder="" id="line1" name="line1" #line1="ngModel" required>
+      <div class="valid-feedback" [hidden]="showValidFeedback(line1)" style="display: inherit">
+        Ok
+      </div>
+      <div class="invalid-feedback" [hidden]="showInvalidFeedback(line1)" style="display: inherit">
+        Try Again
+      </div>
+    </div> -->
+    <!-- <div class="col">
+      <label for="line2">Address Line 2</label>
+      <input [(ngModel)]="contactInformation.mainAddress.line2" type="text" class="form-control" placeholder="" id="line2" name="line2" #line2="ngModel">
+      <div class="valid-feedback" [hidden]="showValidFeedback(line2)" style="display: inherit">
+        Ok
+      </div>
+      <div class="invalid-feedback" [hidden]="showInvalidFeedback(line2)" style="display: inherit">
+        Try Again
+      </div>
+    </div> -->
+  </div>
+
 
   <!-- Submit button and validation note -->
   <div class="form-group">

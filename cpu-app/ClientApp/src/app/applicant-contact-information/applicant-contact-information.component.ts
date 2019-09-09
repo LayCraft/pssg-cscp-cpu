@@ -3,6 +3,7 @@ import { ContactInformation, iContactInformation } from '../classes/contact-info
 import { RenewApplicationService } from '../services/renew-application.service';
 import { ApplicantInfoService } from '../services/applicant-info.service';
 import { emailValidRegex, phoneValidRegex } from '../constants/validators';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-applicant-contact-information',
@@ -27,13 +28,14 @@ export class ApplicantContactInformationComponent implements OnInit {
   ngOnInit() {
     this.contactInformation = new ContactInformation();
 
-    // this should be a service call
-    this.applicantInfoService.getApplicantContactInfo().subscribe((info: iContactInformation) => {
-      // when the component loads make a new working contact information object to do the form work in
-      this.contactInformation = new ContactInformation(info);
-    });
+    // // this should be a service call
+    // this.applicantInfoService.getApplicantContactInfo().subscribe((info: iContactInformation) => {
+    //   // when the component loads make a new working contact information object to do the form work in
+    //   this.contactInformation = new ContactInformation(info);
+    // });
   }
-  isHidden(): boolean { return true; }
+  showValidFeedback(control: AbstractControl): boolean { return !(control.valid && (control.dirty || control.touched)) }
+  showInvalidFeedback(control: AbstractControl): boolean { return !(control.invalid && (control.dirty || control.touched)) }
   onSubmit() {
     // submit data
     this.renewApplicationService.submitContactInformation(this.contactInformation).subscribe(
