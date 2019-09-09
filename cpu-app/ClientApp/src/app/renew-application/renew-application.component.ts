@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 
-export const postalRegex = '(^\\d{5}([\-]\\d{4})?$)|(^[A-Za-z][0-9][A-Za-z]\\s?[0-9][A-Za-z][0-9]$)';
-
 @Component({
   selector: 'app-renew-application',
   templateUrl: './renew-application.component.html',
@@ -13,10 +11,11 @@ export const postalRegex = '(^\\d{5}([\-]\\d{4})?$)|(^[A-Za-z][0-9][A-Za-z]\\s?[
 export class RenewApplicationComponent implements OnInit {
   upperItems: string[] = ['Overview',
     'Applicant Contact Information',
+    'Executive Contact Information',
     'Applicant Administrative Information',
     'Commercial General Liability Insurance'
   ];
-  programs: string[] = ['Social Work East Van', 'Social Work Tri-cities', 'Social Work Burnaby', 'Social Work New West', 'Bork program'];
+  programs: string[] = ['Social Work East Van', 'Social Work Tri-cities', 'Social Work Burnaby', 'Social Work New West'];
   lowerItems: string[] = ['Review Program Application', 'Authorization'];
   combinedPageList: string[];
 

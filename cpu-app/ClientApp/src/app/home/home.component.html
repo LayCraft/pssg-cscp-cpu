@@ -1,5 +1,24 @@
-<div class="container mt-4">
-  <div class="row">
+<div class="container">
+  <div class="row mt-4">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          Organization Profile
+        </div>
+        <div class="card-body">
+          <div class="card-title">
+            BC Social Work Societies
+          </div>
+          <p class="card-tex"><strong>Business Phone:</strong> <a href="tel:6046224321">604-622-4321</a></p>
+          <p class="card-text"><strong>Business Email:</strong> <a href="mailto:fake@fake.com">fake@fake.com</a></p>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn btn-primary">Edit Organization Profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
     <div class="col">
       <div class="card mb-4">
         <div class="card-header">
@@ -17,8 +36,8 @@
           <table class="table table-sm table-striped">
             <thead class="thead">
               <tr>
+                <th scope="col"></th>
                 <th scope="col">Status</th>
-                <th scope="col">For Period</th>
                 <th scope="col">Form</th>
                 <th scope="col">Deadline</th>
                 <th scope="col">Action</th>
@@ -36,11 +55,11 @@
                   <!-- "Missed" -->
                   <i *ngIf="line.formStatus === 'Missed'" class="fas fa-times-circle text-danger"></i>
                   <!-- "Late" -->
-                  <i *ngIf="line.formStatus === 'Late'" class="fas fa-clock text-warning"></i> {{line.formStatus}}
+                  <i *ngIf="line.formStatus === 'Late'" class="fas fa-clock text-warning"></i>
                 </th>
-                <td>{{line.forDateRangeStart |date:'yyyy-MM-dd'}} - {{line.forDateRangeEnd |date:'yyyy-MM-dd'}}</td>
-                <td>{{line.formName}} - {{line.frequency | titlecase}}</td>
-                <td>{{line.formDeadline |date:'yyyy-MM-dd'}}</td>
+                <td> {{line.formStatus}} </td>
+                <td>{{line.formName}} - ({{line.frequency | titlecase}} {{line.forDateRangeStart |date:'yyyy-MM-dd'}} - {{line.forDateRangeEnd |date:'yyyy-MM-dd'}})</td>
+                <td> {{line.formDeadline |date:'yyyy-MM-dd'}}</td>
                 <td><a href="#" routerLink="renew-application">Start Application</a></td>
                 <td>{{line.note}}</td>
               </tr>
@@ -55,23 +74,6 @@
             <li class="page-item"><a class="page-link" href="#">3</a></li>
             <li class="page-item"><a class="page-link" href="#">Next</a></li>
           </ul>
-        </div>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="card">
-        <div class="card-header">
-          Organization Profile
-        </div>
-        <div class="card-body">
-          <div class="card-title">
-            BC Social Work Societies
-          </div>
-          <p class="card-tex"><strong>Business Phone:</strong> <a href="tel:6046224321">604-622-4321</a></p>
-          <p class="card-text"><strong>Business Email:</strong> <a href="mailto:fake@fake.com">fake@fake.com</a></p>
-        </div>
-        <div class="card-footer">
-          <a href="#" class="btn btn-primary">Edit Organization Profile</a>
         </div>
       </div>
     </div>

@@ -26,8 +26,6 @@ export class ApplicantContactInformationComponent implements OnInit {
   hasMailingAddress = false;
   country: iCountry;
 
-  page = 1;
-
   constructor(
     private renewApplicationService: RenewApplicationService,
     private applicantInfoService: ApplicantInfoService,
@@ -47,6 +45,7 @@ export class ApplicantContactInformationComponent implements OnInit {
       }
     });
   }
+
   showValidFeedback(control: AbstractControl): boolean { return !(control.valid && (control.dirty || control.touched)) }
   showInvalidFeedback(control: AbstractControl): boolean { return !(control.invalid && (control.dirty || control.touched)) }
   setMailingAddress(hasMailingAddress: boolean) {
@@ -64,10 +63,8 @@ export class ApplicantContactInformationComponent implements OnInit {
         // log the data. The submission was successful and now this prints in the browser console.
         console.log(data);
 
-        // turn the component's page
-        this.page++;
-        // if the page is the final page request a page turn from the parent
-        // this.pageTurn.emit('applicant-contact-information turned the page!');
+        // request a page turn from the parent
+        this.pageTurn.emit('applicant-contact-information turned the page!');
       },
       err => {
         // oops an error
@@ -75,9 +72,8 @@ export class ApplicantContactInformationComponent implements OnInit {
         console.log(err);
 
         // turn the component's page
-        this.page++;
         // TODO: turn the page anyhow even though the API isn't fully baked. Get rid of this
-        // this.pageTurn.emit('applicant-contact-information turned the page!');
+        this.pageTurn.emit('applicant-contact-information turned the page!');
       },
     )
   }
