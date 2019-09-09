@@ -26,6 +26,8 @@ export class ApplicantContactInformationComponent implements OnInit {
   hasMailingAddress = false;
   country: iCountry;
 
+  page = 1;
+
   constructor(
     private renewApplicationService: RenewApplicationService,
     private applicantInfoService: ApplicantInfoService,
@@ -48,7 +50,9 @@ export class ApplicantContactInformationComponent implements OnInit {
       this.contactInformation.mailingAddress = new Address();
     }
   }
+
   onSubmit() {
+    // if a record exists and we are updating we should use a different service call than on a new creation
     // submit data
     this.renewApplicationService.submitContactInformation(this.contactInformation).subscribe(
       data => {
