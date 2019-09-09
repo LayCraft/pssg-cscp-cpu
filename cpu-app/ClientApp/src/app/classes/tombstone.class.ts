@@ -8,6 +8,7 @@ export interface iTombstone {
   note: string; // for communication notes or automatically generated notes.
   contractNumber: string; // This item appears on which contract number
   organizationId: string; // BCeID number for lookup
+  frequency: string; // annual, biannual, quarter, month,
 }
 export class Tombstone implements iTombstone {
   // this class may be useful because it can offer a way to convert dates.
@@ -20,6 +21,7 @@ export class Tombstone implements iTombstone {
   note: string;
   contractNumber: string;
   organizationId: string;
+  frequency: string;
   constructor(tombstone: iTombstone) {
     if (tombstone) {
       this.formName = tombstone.formName || null;
@@ -31,6 +33,7 @@ export class Tombstone implements iTombstone {
       this.note = tombstone.note || null;
       this.contractNumber = tombstone.contractNumber || null;
       this.organizationId = tombstone.organizationId || null;
+      this.frequency = tombstone.frequency || null;
     }
   }
 }

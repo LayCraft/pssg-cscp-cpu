@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBase } from '../shared/form-base';
-import { CanDeactivateGuard } from '../services/can-deactivate-guard.service';
+import { iTombstone } from '../classes/tombstone.class';
+import { TombstoneService } from '../services/tombstone.service';
 
 @Component({
   selector: 'app-home',
@@ -19,10 +20,14 @@ export class HomeComponent extends FormBase implements OnInit {
   public selectedApplicationName: string;
   showValidationMessage: boolean;
 
+  tombstones: iTombstone[];
+
   constructor(
     private titleService: Title,
     private fb: FormBuilder,
-    private router: Router) {
+    private router: Router,
+    private tombstoneService: TombstoneService
+  ) {
     super();
   }
 
@@ -32,6 +37,9 @@ export class HomeComponent extends FormBase implements OnInit {
     this.form = this.fb.group({
       applicationType: ['0', Validators.required],
     });
+
+    // collect BCEIDs for the organization
+    this.tombstoneService.getTombstones('FAKE BCEID').subscribe(t => this.tombstones = t);
   }
 
   updateForm(event) {

@@ -3,7 +3,7 @@
     <div class="col">
       <div class="card mb-4">
         <div class="card-header">
-          <h1 class="h3">Contract: #1097583</h1>
+          <h1 class="h2">Contract: #1097583</h1>
         </div>
         <div class="card-body">
           <ul class="nav nav-tabs card-header-tabs" role="tablist">
@@ -26,49 +26,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Program Application</td>
-                <td>Not Started</td>
-                <td>2019-06-11</td>
+              <tr *ngFor="let line of tombstones; let i=index">
+                <th scope="row">{{i+1}}</th>
+                <td>{{line.frequency | titlecase}} {{line.formName}}</td>
+                <td>{{line.formStatus}}</td>
+                <td>{{line.formDeadline |date:'yyyy-MM-dd'}}</td>
                 <td><a href="#" routerLink="renew-application">Start Application</a></td>
-                <td>Please submit your annual Program Application by the Due Date</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>FY19 Q3 Schedule G</td>
-                <td>Not Started</td>
-                <td>2019-06-11</td>
-                <td><a href="#">Complete Form</a></td>
-                <td>Please submit your annual Program Application by the Due Date</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>FY19 Q3 Schedule M</td>
-                <td>Not Started</td>
-                <td>2019-06-11</td>
-                <td><a href="#">Complete Form</a></td>
-                <td>Please submit your annual Program Application by the Due Date</td>
-              </tr>
-              <tr class="table-success">
-                <th scope="row">3</th>
-                <td>FY19 Q3 Schedule G</td>
-                <td>Submitted</td>
-                <td>2019-06-11</td>
-                <td><a href="#">Update Contact Information</a></td>
-                <td>Please submit your annual Program Application by the Due Date</td>
-              </tr>
-              <tr class="table-danger">
-                <th scope="row">4</th>
-                <td>Update Contact Information</td>
-                <td>Late</td>
-                <td>2019-06-11</td>
-                <td><a href="#">Complete Form</a></td>
-                <td>Please submit your annual Program Application by the Due Date</td>
+                <td>{{line.note}}</td>
               </tr>
             </tbody>
           </table>
-          <ul class="pagination">
+        </div>
+        <div class="card-footer">
+          <ul class="pagination my-0">
             <li class="page-item"><a class="page-link" href="#">Previous</a></li>
             <li class="page-item"><a class="page-link" href="#">1</a></li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
