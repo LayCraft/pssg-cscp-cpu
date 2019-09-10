@@ -7,12 +7,14 @@ import { iTombstone } from '../classes/tombstone.class';
 })
 export class TombstoneService {
   getTombstones(bceid: string): Observable<iTombstone[]> {
+    // <!-- 'Missed', 'Late', 'Submitted', 'Started', 'Action Required' -->
+
     const t = [
       {
         formName: 'Program Application',
         formType: 'program_app',
         formDeadline: new Date('2019-12-31'),
-        formStatus: 'Not Started',
+        formStatus: 'Action Required',
         forDateRangeStart: new Date('2019-01-01'),
         forDateRangeEnd: new Date('2019-12-31'),
         note: 'Please submit your annual Program Application by the Due Date',
@@ -36,7 +38,7 @@ export class TombstoneService {
         formName: 'Schedule G',
         formType: 'sched_g',
         formDeadline: new Date('2019-12-31'),
-        formStatus: 'Late',
+        formStatus: 'Submitted',
         forDateRangeStart: new Date('2019-01-01'),
         forDateRangeEnd: new Date('2019-12-31'),
         note: 'Please submit your Schedule F by the Due Date',
@@ -48,7 +50,7 @@ export class TombstoneService {
         formName: 'Program Application',
         formType: 'program_app',
         formDeadline: new Date('2019-12-31'),
-        formStatus: 'Awaiting Approval',
+        formStatus: 'Late',
         forDateRangeStart: new Date('2019-01-01'),
         forDateRangeEnd: new Date('2019-12-31'),
         note: 'Please submit your annual Program Application by the Due Date',
@@ -60,7 +62,7 @@ export class TombstoneService {
         formName: 'Program Application',
         formType: 'program_app',
         formDeadline: new Date('2019-12-31'),
-        formStatus: 'Submitted',
+        formStatus: 'Missed',
         forDateRangeStart: new Date('2019-01-01'),
         forDateRangeEnd: new Date('2019-12-31'),
         note: 'Please submit your annual Program Application by the Due Date',

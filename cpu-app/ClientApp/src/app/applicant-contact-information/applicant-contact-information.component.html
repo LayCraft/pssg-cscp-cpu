@@ -22,7 +22,7 @@
   </div>
 
   <div class="form-row">
-    <div class="col">
+    <div class="col-md">
       <div class="form-group">
         <label for="phoneNumber">Phone Number</label>
         <input [(ngModel)]="contactInformation.phoneNumber" type="text" class="form-control" id="phoneNumber" name="phoneNumber" [pattern]="phoneValidRegex" #phoneNumber="ngModel">
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col-md">
       <div class="form-group">
         <label for="faxNumber">Fax Number</label>
         <input [(ngModel)]="contactInformation.faxNumber" type="text" class="form-control" id="faxNumber" name="faxNumber" [pattern]="phoneValidRegex" #faxNumber="ngModel">
@@ -49,7 +49,7 @@
   </div>
 
   <div class="form-row">
-    <div class="col">
+    <div class="col-md">
       <div class="form-group">
         <label for="line1" class="required">Address Line 1</label>
         <input [(ngModel)]="contactInformation.mainAddress.line1" type="text" class="form-control" id="line1" name="line1" #line1="ngModel" required>
@@ -61,7 +61,7 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col-md">
       <div class="form-group">
         <label for="line2">Address Line 2</label>
         <input [(ngModel)]="contactInformation.mainAddress.line2" type="text" class="form-control" id="line2" name="line2" #line2="ngModel">
@@ -75,7 +75,7 @@
     </div>
   </div>
   <div class="form-row">
-    <div class="col">
+    <div class="col-md">
       <div class="form-group">
         <label for="city" class="required">City</label>
         <input [(ngModel)]="contactInformation.mainAddress.city" type="text" class="form-control" id="city" name="city" #city="ngModel" required>
@@ -87,7 +87,7 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col-md">
       <div class="form-group">
         <label for="province" class="required">Province</label>
         <select class="form-control" [(ngModel)]="contactInformation.mainAddress.province" name="province" id="province" #province="ngModel" required>
@@ -104,7 +104,7 @@
   </div>
 
   <div class="form-row">
-    <div class="col">
+    <div class="col-md">
       <div class="form-group">
         <label for="postalCode" class="required">Postal Code</label>
         <input [(ngModel)]="contactInformation.mainAddress.postalCode" type="text" class="form-control" id="postalCode" [pattern]="postalCodeValidRegex" name="postalCode" #postalCode="ngModel" required>
@@ -116,7 +116,7 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col-md">
       <div class="form-group">
         <label for="hasMailingAddress">Different Mailing Address</label>
         <div class="form-group form-check">
@@ -141,7 +141,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-md">
         <div class="form-group">
           <div class="form-group">
             <label for="mailProvince" class="required">Province</label>
@@ -160,7 +160,7 @@
     </div>
 
     <div class="form-row">
-      <div class="col-6">
+      <div class="col-md-6">
         <div class="form-group">
           <label for="mailPostalCode" class="required">Postal Code</label>
           <input [(ngModel)]="contactInformation.mailingAddress.postalCode" type="text" class="form-control" id="mailPostalCode" [pattern]="postalCodeValidRegex" name="mailPostalCode" #mailPostalCode="ngModel" required>

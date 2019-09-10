@@ -23,7 +23,8 @@ export class HomeComponent implements OnInit {
   ) {
     this.tabs = ['Current Tasks', 'Completed', 'Programs'];
     this.currentTab = this.tabs[0];
-    this.statuses = ['Not Started', 'Started', 'Submitted', 'Awaiting Approval', 'Missed', 'Late'];
+    this.statuses = ['Missed', 'Late', 'Submitted', 'Started', 'Action Required'];
+
   }
 
   ngOnInit() {
