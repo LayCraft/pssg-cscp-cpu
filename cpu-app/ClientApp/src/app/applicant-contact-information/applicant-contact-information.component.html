@@ -1,4 +1,4 @@
-<form #contactInfoForm="ngForm" (ngSubmit)="onSubmit()">
+<form #contactInfoForm="ngForm" (ngSubmit)="onSubmit(contactInfoForm.form.valid)">
   <h2 class="blue-header">Primary Contact Information</h2>
   <div class="form-group">
     <label for="emailAddress" class="required">Email Address</label>
@@ -170,8 +170,8 @@
       One or more required fields is missing from the submission.
     </div>
     <!-- Button states for the form: Can submit, Can't submit, (TODO: in process of submitting) -->
-    <button *ngIf="contactInfoForm.form.valid" class="btn btn-primary" type="submit">Continue</button>
-    <button *ngIf="!contactInfoForm.form.valid" class="btn btn-primary" type="submit" disabled>Continue</button>
+    <button *ngIf="contactInfoForm.form.valid" class="btn btn-primary" type="submit">Save</button>
+    <button *ngIf="!contactInfoForm.form.valid" class="btn btn-primary" type="submit" disabled>Save</button>
   </div>
 </form>
 <pre>Form Valid: {{contactInfoForm?.form.valid}}

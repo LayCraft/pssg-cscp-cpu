@@ -14,8 +14,8 @@ import { BoilerplateService } from '../services/boilerplate.service';
 })
 export class ApplicantContactInformationComponent implements OnInit {
   // this would be some kind of object or string we can look up the contact information from an API.
-  @Input() contractId = null;
-  @Output() pageTurn = new EventEmitter<string>();
+  @Input() bceid = null;
+  @Output() pageTurn = new EventEmitter<iContactInformation>();
 
   emailValidRegex = emailValidRegex;
   phoneValidRegex = phoneValidRegex;
@@ -27,7 +27,6 @@ export class ApplicantContactInformationComponent implements OnInit {
   country: iCountry;
 
   constructor(
-    private renewApplicationService: RenewApplicationService,
     private boilerplateService: BoilerplateService,
   ) { }
 
@@ -35,7 +34,7 @@ export class ApplicantContactInformationComponent implements OnInit {
     this.contactInformation = new ContactInformation();
     // set to canada
     this.country = COUNTRIES_ADDRESS_2.Canada;
-    this.boilerplateService.getOrganizationBoilerplate('bceid goes here').subscribe((info: iContactInformation) => {
+    this.boilerplateService.getOrganizationBoilerplate(this.bceid).subscribe((info: iContactInformation) => {
       // when the component loads make a new working contact information object to do the form work in
       this.contactInformation = new ContactInformation(info);
 
@@ -60,26 +59,12 @@ export class ApplicantContactInformationComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    // if a record exists and we are updating we should use a different service call than on a new creation
-    // submit data
-    this.renewApplicationService.submitContactInformation(this.contactInformation).subscribe(
-      data => {
-        // log the data. The submission was successful and now this prints in the browser console.
-        console.log(data);
-
-        // request a page turn from the parent
-        this.pageTurn.emit('applicant-contact-information turned the page!');
-      },
-      err => {
-        // oops an error
-        console.log(`There was an error submitting the contact information.`);
-        console.log(err);
-
-        // turn the component's page
-        // TODO: turn the page anyhow even though the API isn't fully baked. Get rid of this
-        this.pageTurn.emit('applicant-contact-information turned the page!');
-      },
-    )
+  onSubmit(valid: boolean) {
+    // if the form is valid we emit.
+    if (valid) {
+      this.pageTurn.emit(this.contactInformation);
+    } else {
+      alert('This form is not valid.');
+    }
   }
 }

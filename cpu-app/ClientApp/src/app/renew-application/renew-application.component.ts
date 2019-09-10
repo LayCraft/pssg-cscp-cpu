@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
+import { iContactInformation } from '../classes/contact-information.class';
 
 @Component({
   selector: 'app-renew-application',
@@ -33,8 +34,8 @@ export class RenewApplicationComponent implements OnInit {
   }
   cancel() { }
   showSummaryOfBenefits() { }
-  gotoNextStep(event?: string) {
+  gotoNextStep(event?: iContactInformation) {
     //if this is handling an event we allow an optional parameter
-    alert(event);
+    // alert(event);
   }
 }
