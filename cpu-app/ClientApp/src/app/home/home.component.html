@@ -124,16 +124,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let tombstone of tombstones; let i=index">
+              <tr *ngFor="let tombstone of programTombstones; let i=index">
                 <th scope="row">
                   {{i+1}}
                 </th>
-                <td>{{tombstone.formName}}
+                <td>{{tombstone.programName}}
                 </td>
                 <td>
-                  <strong>Name:</strong>Bill<br>
-                  <strong>Title:</strong>CEO<br>
-                  <strong>Email:</strong>bill@ceo.com
+                  <strong>Name:</strong>{{tombstone.programContact.firstName}} {{tombstone.programContact.lastName}}<br>
+                  <strong>Title:</strong>{{tombstone.programContact.title}}<br>
+                  <strong>Email:</strong>{{tombstone.programContact.email}}
                 </td>
                 <td><a href="#" routerLink="renew-application">Update Contact</a></td>
               </tr>

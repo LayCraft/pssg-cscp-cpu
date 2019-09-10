@@ -54,7 +54,7 @@ export class ProgramTombstone implements iProgramTombstone {
   programName: string;
   contractNumber: string;
   organizationId: string;
-  constructor(tombstone: iProgramTombstone) {
+  constructor(tombstone?: iProgramTombstone) {
     if (tombstone) {
       this.programContact = new Person(tombstone.programContact) || null;
       this.programName = tombstone.programName || null;
@@ -65,5 +65,10 @@ export class ProgramTombstone implements iProgramTombstone {
     }
   }
   toDynamics() { }
-  fromDynamics(dynamics: DynamicsBlob) { }
+  fromDynamics(dynamics: DynamicsBlob) {
+    this.programContact = new Person(dynamics['programContact']) || null;
+    this.programName = dynamics['programName'] || null;
+    this.contractNumber = dynamics['contractNumber'] || null;
+    this.organizationId = dynamics['organizationId'] || null;
+  }
 }
