@@ -10,6 +10,7 @@ import { iContactInformation } from '../classes/contact-information.class';
 })
 
 export class RenewApplicationComponent implements OnInit {
+  bceid: string = 'bceid goes here';
   upperItems: string[] = ['Overview',
     'Applicant Contact Information',
     'Executive Contact Information',
@@ -36,6 +37,5 @@ export class RenewApplicationComponent implements OnInit {
   showSummaryOfBenefits() { }
   gotoNextStep(event?: iContactInformation) {
     //if this is handling an event we allow an optional parameter
-    // alert(event);
   }
 }

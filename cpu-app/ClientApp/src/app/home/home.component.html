@@ -33,46 +33,56 @@
         <div class="card-body">
           <ul class="nav nav-tabs card-header-tabs" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Current Tasks</a>
+              <a class="nav-link" (click)="setCurrentTab('Current Tasks')" [class.active]="currentTab===tabs[0]">Current Tasks</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Completed</a>
+              <a class="nav-link" (click)="setCurrentTab('Completed')" [class.active]="currentTab===tabs[1]">Completed</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="setCurrentTab('Programs')" [class.active]="currentTab===tabs[2]">Programs</a>
             </li>
           </ul>
-          <table class="table table-sm table-striped">
-            <thead class="thead">
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">Status</th>
-                <th scope="col">Deadline</th>
-                <th scope="col">Form</th>
-                <th scope="col">Action</th>
-                <th scope="col">Note</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let line of tombstones; let i=index">
-                <th scope="row">
-                  <i *ngIf="line.formStatus === 'Not Started'" class="far fa-circle text-secondary"></i>
-                  <i *ngIf="line.formStatus === 'Started'" class="far fa-circle text-success"></i>
-                  <i *ngIf="line.formStatus === 'Submitted'" class="fas fa-check-circle text-success"></i>
-                  <!-- "Awaiting Approval" -->
-                  <i *ngIf="line.formStatus === 'Awaiting Approval'" class="far fa-comment-dots text-secondary"></i>
-                  <!-- "Missed" -->
-                  <i *ngIf="line.formStatus === 'Missed'" class="fas fa-times-circle text-danger"></i>
-                  <!-- "Late" -->
-                  <i *ngIf="line.formStatus === 'Late'" class="fas fa-clock text-warning"></i>
-                </th>
-                <td> {{line.formStatus}} </td>
-                <td> {{line.formDeadline |date:'yyyy-MM-dd'}}</td>
-                <td>{{line.formName}} - ({{line.frequency | titlecase}} {{line.forDateRangeStart |date:'yyyy-MM-dd'}} - {{line.forDateRangeEnd |date:'yyyy-MM-dd'}})</td>
-                <td><a href="#" routerLink="renew-application">Start Application</a></td>
-                <td>{{line.note}}</td>
-              </tr>
-            </tbody>
-          </table>
+          <span *ngIf="currentTab===tabs[0]">
+            <table class="table table-sm table-striped">
+              <thead class="thead">
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Deadline</th>
+                  <th scope="col">Form</th>
+                  <th scope="col">Action</th>
+                  <th scope="col">Note</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tombstone of tombstones; let i=index">
+                  <th scope="row">
+                    <i *ngIf="tombstone.formStatus === statuses[0]" class="far fa-circle text-secondary"></i>
+                    <i *ngIf="tombstone.formStatus === statuses[1]" class="far fa-circle text-success"></i>
+                    <i *ngIf="tombstone.formStatus === statuses[2]" class="fas fa-check-circle text-success"></i>
+                    <i *ngIf="tombstone.formStatus === statuses[3]" class="far fa-comment-dots text-secondary"></i>
+                    <i *ngIf="tombstone.formStatus === statuses[4]" class="fas fa-times-circle text-danger"></i>
+                    <i *ngIf="tombstone.formStatus === statuses[5]" class="fas fa-clock text-warning"></i>
+                  </th>
+                  <td> {{tombstone.formStatus}} </td>
+                  <td> {{tombstone.formDeadline |date:'yyyy-MM-dd'}}</td>
+                  <td>{{tombstone.formName}} - ({{tombstone.frequency | titlecase}} {{tombstone.forDateRangeStart |date:'yyyy-MM-dd'}} - {{tombstone.forDateRangeEnd |date:'yyyy-MM-dd'}})</td>
+                  <td><a href="#" routerLink="renew-application">Start Application</a></td>
+                  <td>{{tombstone.note}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <ul class="pagination my-0">
+              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </span>
         </div>
-        <div class="card-footer">
+        <span *ngIf="currentTab===tabs[1]">
+          <h1>Completed</h1>
           <ul class="pagination my-0">
             <li class="page-item"><a class="page-link" href="#">Previous</a></li>
             <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -80,8 +90,19 @@
             <li class="page-item"><a class="page-link" href="#">3</a></li>
             <li class="page-item"><a class="page-link" href="#">Next</a></li>
           </ul>
-        </div>
+        </span>
+        <span *ngIf="currentTab===tabs[2]">
+          <h1>Programs</h1>
+          <ul class="pagination my-0">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </span>
       </div>
+
     </div>
   </div>
 </div>

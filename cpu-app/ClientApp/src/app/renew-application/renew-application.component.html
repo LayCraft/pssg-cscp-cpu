@@ -33,9 +33,8 @@
             <h1>{{item}}</h1>
           </div>
           {{item}} component <br>
-          <!-- These are both strings. I'm not sure why linting is flagging this -->
-          <div *ngIf="item === 'Applicant Contact Information'">
-            <app-applicant-contact-information (pageTurn)="gotoNextStep($event)"></app-applicant-contact-information>
+          <div *ngIf="item === upperItems[1]">
+            <app-applicant-contact-information [bceid]='bceid' (pageTurn)="gotoNextStep($event)"></app-applicant-contact-information>
           </div>
 
         </div>
