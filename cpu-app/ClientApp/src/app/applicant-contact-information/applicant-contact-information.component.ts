@@ -1,11 +1,11 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { ContactInformation, iContactInformation } from '../classes/contact-information.class';
 import { RenewApplicationService } from '../services/renew-application.service';
-import { ApplicantInfoService } from '../services/applicant-info.service';
 import { emailValidRegex, phoneValidRegex, postalCodeValidRegex } from '../constants/validators';
 import { AbstractControl } from '@angular/forms';
 import { iCountry, COUNTRIES_ADDRESS_2 } from '../constants/country-list';
 import { Address } from '../classes/address.class';
+import { BoilerplateService } from '../services/boilerplate.service';
 
 @Component({
   selector: 'app-applicant-contact-information',
@@ -28,16 +28,21 @@ export class ApplicantContactInformationComponent implements OnInit {
 
   constructor(
     private renewApplicationService: RenewApplicationService,
-    private applicantInfoService: ApplicantInfoService,
+    private boilerplateService: BoilerplateService,
   ) { }
 
   ngOnInit() {
     this.contactInformation = new ContactInformation();
     // set to canada
     this.country = COUNTRIES_ADDRESS_2.Canada;
-    this.applicantInfoService.getApplicantContactInfo().subscribe((info: iContactInformation) => {
+    this.boilerplateService.getOrganizationBoilerplate('bceid goes here').subscribe((info: iContactInformation) => {
       // when the component loads make a new working contact information object to do the form work in
       this.contactInformation = new ContactInformation(info);
+
+      // TODO: In the future we can convert the dynamics junk data into a useful collection.
+      // const ci: ContactInformation = new ContactInformation();
+      // ci.fromDynamics(info);
+      // this.contactInformation = ci;
 
       // if there is something returned in the mailing address then we should show the section
       if (info.mailingAddress) {

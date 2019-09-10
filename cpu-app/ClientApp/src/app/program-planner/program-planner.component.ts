@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProgramInformation } from '../classes/program-information.class';
-import { ApplicantInfoService } from '../services/applicant-info.service';
 import { Address } from '../classes/address.class';
 import { iContactInformation } from '../classes/contact-information.class';
+import { BoilerplateService } from '../services/boilerplate.service';
 @Component({
   selector: 'app-program-planner',
   templateUrl: './program-planner.component.html',
@@ -15,13 +15,14 @@ export class ProgramPlannerComponent implements OnInit {
   // the form object
   programInfo: ProgramInformation;
   constructor(
-    private applicantInfoService: ApplicantInfoService
+
+    private boilerplateService: BoilerplateService
   ) { }
 
   ngOnInit() {
     // query the api for an existing record return a 204 of not found?
     //if 204 query applicant info service to fill in boilerplate data
-    this.applicantInfoService.getApplicantContactInfo().subscribe((info: iContactInformation) => {
+    this.boilerplateService.getOrganizationBoilerplate('bceid goes here').subscribe((info: iContactInformation) => {
       // when the component loads make a new working contact information object to do the form work in
       this.programInfo = new ProgramInformation();
 

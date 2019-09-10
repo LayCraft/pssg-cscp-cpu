@@ -38,8 +38,8 @@
               <tr>
                 <th scope="col"></th>
                 <th scope="col">Status</th>
-                <th scope="col">Form</th>
                 <th scope="col">Deadline</th>
+                <th scope="col">Form</th>
                 <th scope="col">Action</th>
                 <th scope="col">Note</th>
               </tr>
@@ -58,8 +58,8 @@
                   <i *ngIf="line.formStatus === 'Late'" class="fas fa-clock text-warning"></i>
                 </th>
                 <td> {{line.formStatus}} </td>
-                <td>{{line.formName}} - ({{line.frequency | titlecase}} {{line.forDateRangeStart |date:'yyyy-MM-dd'}} - {{line.forDateRangeEnd |date:'yyyy-MM-dd'}})</td>
                 <td> {{line.formDeadline |date:'yyyy-MM-dd'}}</td>
+                <td>{{line.formName}} - ({{line.frequency | titlecase}} {{line.forDateRangeStart |date:'yyyy-MM-dd'}} - {{line.forDateRangeEnd |date:'yyyy-MM-dd'}})</td>
                 <td><a href="#" routerLink="renew-application">Start Application</a></td>
                 <td>{{line.note}}</td>
               </tr>
