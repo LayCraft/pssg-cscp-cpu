@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { iTombstone } from '../classes/tombstone.class';
+import { iTombstone, iProgramTombstone, ProgramTombstone } from '../classes/tombstone.class';
+import { DynamicsBlob } from '../classes/dynamics-blob';
+import { Person, iPerson } from '../classes/person.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TombstoneService {
   getTombstones(bceid: string): Observable<iTombstone[]> {
-    // <!-- 'Missed', 'Late', 'Submitted', 'Started', 'Action Required' -->
-
     const t = [
       {
         formName: 'Program Application',
@@ -83,7 +83,33 @@ export class TombstoneService {
         frequency: 'annual',
       } as iTombstone,
     ];
-
+    return of(t);
+  }
+  getProgramTombstones(bceid: string): Observable<DynamicsBlob> {
+    const t: iProgramTombstone[] = [{
+      programContact: {
+        firstName: 'Tony',
+        middleName: 'Eugene',
+        lastName: 'Stark',
+        title: 'Man of Iron',
+        email: 'tonystark67@hotmail.com',
+      } as iPerson,
+      programName: 'Marvel Compassion Club',
+      contractNumber: 'PDA-12345',
+      organizationId: 'BCEID goes here',
+    },
+    {
+      programContact: {
+        firstName: 'Dick',
+        middleName: 'Pete',
+        lastName: 'Grayson',
+        title: 'The Robin',
+        email: 'trickydickgrayson@yahoo.com.cn',
+      } as iPerson,
+      programName: 'Social Work Metropolis',
+      contractNumber: 'PDF-91191',
+      organizationId: 'BCEID goes here',
+    }];
     return of(t);
   }
 }

@@ -13,7 +13,7 @@ export interface iPerson {
   hoursWorkedPerWeek?: number;
   annualSalary?: number;
   benefits?: number;
-  fundedFromVCSP: number;
+  fundedFromVCSP?: number;
 }
 
 export class Person implements iPerson {
@@ -30,7 +30,7 @@ export class Person implements iPerson {
   hoursWorkedPerWeek?: number;
   annualSalary?: number;
   benefits?: number;
-  fundedFromVCSP: number;
+  fundedFromVCSP?: number;
   constructor(person?: iPerson) {
     if (person) {
       this.typeOfEmployee = person.typeOfEmployee || null; // frontline, regular,

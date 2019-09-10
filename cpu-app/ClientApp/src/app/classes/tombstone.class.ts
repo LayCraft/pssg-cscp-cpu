@@ -1,3 +1,6 @@
+import { iPerson, Person } from "./person.class";
+import { DynamicsBlob } from "./dynamics-blob";
+
 export interface iTombstone {
   formName: string;
   formType: string; // Differentiates which component we use to set the data
@@ -36,4 +39,31 @@ export class Tombstone implements iTombstone {
       this.frequency = tombstone.frequency || null;
     }
   }
+  toDynamics() { }
+  fromDynamics(dynamics: DynamicsBlob) { }
+}
+
+export interface iProgramTombstone {
+  programContact: iPerson;
+  programName: string;
+  contractNumber: string;
+  organizationId: string;
+}
+export class ProgramTombstone implements iProgramTombstone {
+  programContact: iPerson;
+  programName: string;
+  contractNumber: string;
+  organizationId: string;
+  constructor(tombstone: iProgramTombstone) {
+    if (tombstone) {
+      this.programContact = new Person(tombstone.programContact) || null;
+      this.programName = tombstone.programName || null;
+      this.contractNumber = tombstone.contractNumber || null;
+      this.organizationId = tombstone.organizationId || null;
+    } else {
+      this.programContact = new Person();
+    }
+  }
+  toDynamics() { }
+  fromDynamics(dynamics: DynamicsBlob) { }
 }
