@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { iContactInformation } from '../classes/contact-information.class';
 
 @Component({
   selector: 'app-organization-profile-maker',
@@ -11,5 +12,7 @@ export class OrganizationProfileMakerComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  onPageTurn(event: iContactInformation) {
+    alert(event);
+  }
 }
