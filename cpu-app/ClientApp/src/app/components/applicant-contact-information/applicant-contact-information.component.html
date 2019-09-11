@@ -1,13 +1,13 @@
 <form #contactInfoForm="ngForm" (ngSubmit)="onSubmit(contactInfoForm.form.valid)">
-  <h2 class="blue-header">Organization</h2>
-  <div class="form-group">
+  <!-- <h2 class="blue-header">Organization</h2> -->
+  <!-- <div class="form-group">
     <label for="organizationName">Legal Name of Organization</label>
     <input [(ngModel)]="contactInformation.organizationName" type="text" class="form-control" placeholder="" id="organizationName" name="organizationName" #organizationName="ngModel" disabled>
-  </div>
-  <div *ngIf="contactInformation.contractNumber" class="form-group">
+  </div> -->
+  <!-- <div *ngIf="contactInformation.contractNumber" class="form-group">
     <label for="contractNumber">Contract Number</label>
     <input [(ngModel)]="contactInformation.contractNumber" type="text" class="form-control" placeholder="" id="contractNumber" name="contractNumber" #contractNumber="ngModel" disabled>
-  </div>
+  </div> -->
 
   <h2 class="blue-header">Primary Contact Information</h2>
   <div class="form-group">

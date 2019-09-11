@@ -9,7 +9,7 @@ import { iContactInformation } from '../../classes/contact-information.class';
   styleUrls: ['./program-page.component.scss']
 })
 export class ProgramPageComponent implements OnInit {
-  programId: string;
+  contractId: string;
   organizationId: string;
   currentPage: string = '';
   pageList: string[];
@@ -34,7 +34,7 @@ export class ProgramPageComponent implements OnInit {
   ngOnInit() {
     // collect the ids for looking up the program from the route.
     this.organizationId = this.route.snapshot.paramMap.get('orgid');
-    this.programId = this.route.snapshot.paramMap.get('id');
+    this.contractId = this.route.snapshot.paramMap.get('id');
 
     this.combinedPageList = [...this.upperItems, ...this.programs, ...this.lowerItems];
     this.currentFormPage = this.combinedPageList[0];
@@ -46,7 +46,13 @@ export class ProgramPageComponent implements OnInit {
   }
   cancel() { }
   showSummaryOfBenefits() { }
-  gotoNextStep(event?: iContactInformation) {
-    //if this is handling an event we allow an optional parameter
+  gotoNextStep(event?) {
+    // this just sends the user along to the next page.
+    console.log(event)
+  }
+
+  saveContactInfo(event?: iContactInformation) {
+    // when the user confirms the contact info we save it as partial data.
+    console.log(event);
   }
 }
