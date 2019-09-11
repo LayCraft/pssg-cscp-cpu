@@ -17,8 +17,7 @@ export class ProgramPageComponent implements OnInit {
 
   ngOnInit() {
     // collect the ids for looking up the program from the route.
-    this.programId = this.route.snapshot.paramMap.get('progid');
     this.organizationId = this.route.snapshot.paramMap.get('orgid');
+    this.programId = this.route.snapshot.paramMap.get('id');
   }
-
 }
