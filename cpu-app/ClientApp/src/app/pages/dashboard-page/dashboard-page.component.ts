@@ -20,6 +20,7 @@ export class DashboardPageComponent implements OnInit {
   tabs: string[];
   currentTab: string;
   statuses: string[];
+  formTypes: string[];
 
   constructor(
     private tombstoneService: TombstoneService,
@@ -28,7 +29,7 @@ export class DashboardPageComponent implements OnInit {
     this.tabs = ['Current Tasks', 'Completed', 'Programs'];
     this.currentTab = this.tabs[0];
     this.statuses = ['Missed', 'Late', 'Submitted', 'Started', 'Action Required', 'Complete'];
-
+    this.formTypes = ['program_application', 'budget_proposal', 'monthly_update', 'expense_report'];
   }
 
   ngOnInit() {

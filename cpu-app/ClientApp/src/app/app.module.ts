@@ -46,7 +46,7 @@ import { AppComponent } from './app.component';
 import { CanDeactivateGuard } from './services/can-deactivate-guard.service';
 import { HomeComponent } from './home/home.component';
 import { VersionInfoDataService } from './services/version-info-data.service';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { SignPadDialog } from './sign-dialog/sign-dialog.component';
 import { CancelApplicationDialog } from './shared/cancel-dialog/cancel-dialog.component';
 import { DeactivateGuardDialog } from './shared/guard-dialog/guard-dialog.component';
@@ -67,6 +67,9 @@ import { ProgramPlannerComponent } from './components/program-planner/program-pl
 import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { ProgramPageComponent } from './pages/program-page/program-page.component';
+import { BudgetPageComponent } from './pages/budget-page/budget-page.component';
+import { MonthlyUpdatePageComponent } from './pages/monthly-update-page/monthly-update-page.component';
+import { ExpensePageComponent } from './pages/expense-page/expense-page.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +91,9 @@ import { ProgramPageComponent } from './pages/program-page/program-page.componen
     OrganizationProfilePageComponent,
     DashboardPageComponent,
     ProgramPageComponent,
+    BudgetPageComponent,
+    MonthlyUpdatePageComponent,
+    ExpensePageComponent,
   ],
   imports: [
     BrowserModule,

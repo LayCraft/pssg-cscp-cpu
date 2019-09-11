@@ -112,12 +112,7 @@
                   </td>
                   <td> {{tombstone.formDeadline |date:'yyyy-MM-dd'}}</td>
                   <td>
-                    <span *ngIf="tombstone.formType === 'program_app'">
-                      <a routerLink="/program/{{tombstone.organizationId}}/{{tombstone.programId}}">Fill application</a>
-                    </span>
-                    <span *ngIf="tombstone.formType !== 'program_app'">
-                      Unimplemented
-                    </span>
+                    <a routerLink="/{{formTypes[0]}}/{{tombstone.organizationId}}/{{tombstone.programId}}">Complete {{tombstone.formName}}</a>
                   </td>
                   <td>{{tombstone.note}}</td>
                 </tr>
