@@ -13,8 +13,8 @@ import { BoilerplateService } from '../../services/boilerplate.service';
 })
 export class ApplicantContactInformationComponent implements OnInit {
   // this would be some kind of object or string we can look up the contact information from an API.
-  @Input() bceid = null;
-  @Output() pageTurn = new EventEmitter<iContactInformation>();
+  @Input() organizationId = null;
+  @Output() save = new EventEmitter<iContactInformation>();
 
   emailValidRegex = emailValidRegex;
   phoneValidRegex = phoneValidRegex;
@@ -33,7 +33,7 @@ export class ApplicantContactInformationComponent implements OnInit {
     this.contactInformation = new ContactInformation();
     // set to canada
     this.country = COUNTRIES_ADDRESS_2.Canada;
-    this.boilerplateService.getOrganizationBoilerplate(this.bceid).subscribe((info: iContactInformation) => {
+    this.boilerplateService.getOrganizationBoilerplate(this.organizationId).subscribe((info: iContactInformation) => {
       // when the component loads make a new working contact information object to do the form work in
       this.contactInformation = new ContactInformation(info);
 
@@ -61,7 +61,7 @@ export class ApplicantContactInformationComponent implements OnInit {
   onSubmit(valid: boolean) {
     // if the form is valid we emit.
     if (valid) {
-      this.pageTurn.emit(this.contactInformation);
+      this.save.emit(this.contactInformation);
     } else {
       alert('This form is not valid.');
     }

@@ -49,7 +49,6 @@ import { VersionInfoDataService } from './services/version-info-data.service';
 import { SignPadDialog } from './shared/components/sign-dialog/sign-dialog.component';
 import { CancelApplicationDialog } from './shared/components/cancel-dialog/cancel-dialog.component';
 import { DeactivateGuardDialog } from './shared/components/guard-dialog/guard-dialog.component';
-import { RenewApplicationComponent } from './pages/renew-application/renew-application.component';
 import { FileUploaderBoxComponent } from './shared/components/file-uploader-box/file-uploader-box.component';
 import { TestComponent } from './test/test.component';
 import { FileDropModule } from 'ngx-file-drop';
@@ -77,7 +76,6 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
     SignPadDialog,
     CancelApplicationDialog,
     DeactivateGuardDialog,
-    RenewApplicationComponent,
     FileUploaderBoxComponent,
     TestComponent,
     HomeComponent,

@@ -9,7 +9,7 @@ import { BoilerplateService } from '../../services/boilerplate.service';
   styleUrls: ['./organization-profile-page.component.css']
 })
 export class OrganizationProfilePageComponent implements OnInit {
-  bceid: string = 'bceid goes here';
+  organizationId: string = 'bceid goes here';
 
   constructor(
     private boilerplateService: BoilerplateService,
@@ -18,8 +18,8 @@ export class OrganizationProfilePageComponent implements OnInit {
 
   ngOnInit() {
   }
-  onPageTurn(event: iContactInformation) {
-    this.boilerplateService.setOrganizationBoilerplate(this.bceid, event).subscribe(
+  onSave(event: iContactInformation) {
+    this.boilerplateService.setOrganizationBoilerplate(this.organizationId, event).subscribe(
       res => this.router.navigate(['/dashboard']),
       err => {
         alert('An error has occured. Please try submitting again.');
