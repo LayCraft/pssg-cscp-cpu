@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
-import { iContactInformation } from '../classes/contact-information.class';
+import { iContactInformation } from '../../classes/contact-information.class';
 
 @Component({
   selector: 'app-renew-application',
@@ -10,6 +10,9 @@ import { iContactInformation } from '../classes/contact-information.class';
 })
 
 export class RenewApplicationComponent implements OnInit {
+
+  // TODO: This renew application form is the old version that we made
+
   bceid: string = 'bceid goes here';
   upperItems: string[] = ['Overview',
     'Applicant Contact Information',

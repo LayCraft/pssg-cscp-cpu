@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { RenewApplicationComponent } from './renew-application/renew-application.component';
+import { RenewApplicationComponent } from './pages/renew-application/renew-application.component';
 import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { ProgramPageComponent } from './pages/program-page/program-page.component';

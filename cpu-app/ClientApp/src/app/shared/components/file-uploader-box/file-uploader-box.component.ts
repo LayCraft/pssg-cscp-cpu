@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
-import { FileBundle } from '../models/file-bundle';
+import { FileBundle } from '../../../models/file-bundle';
 
 @Component({
   selector: 'app-file-uploader-box',
