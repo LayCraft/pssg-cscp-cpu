@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { iContactInformation } from '../classes/contact-information.class';
+import { iContactInformation } from '../../classes/contact-information.class';
 import { Router } from '@angular/router';
-import { BoilerplateService } from '../services/boilerplate.service';
+import { BoilerplateService } from '../../services/boilerplate.service';
 
 @Component({
   selector: 'app-organization-profile-page',

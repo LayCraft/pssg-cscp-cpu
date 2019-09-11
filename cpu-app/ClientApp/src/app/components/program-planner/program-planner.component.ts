@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ProgramInformation } from '../classes/program-information.class';
-import { Address } from '../classes/address.class';
-import { iContactInformation } from '../classes/contact-information.class';
-import { BoilerplateService } from '../services/boilerplate.service';
+import { ProgramInformation } from '../../classes/program-information.class';
+import { Address } from '../../classes/address.class';
+import { iContactInformation } from '../../classes/contact-information.class';
+import { BoilerplateService } from '../../services/boilerplate.service';
 @Component({
   selector: 'app-program-planner',
   templateUrl: './program-planner.component.html',

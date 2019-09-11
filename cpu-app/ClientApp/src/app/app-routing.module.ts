@@ -3,12 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { RenewApplicationComponent } from './renew-application/renew-application.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { OrganizationProfilePageComponent } from './organization-profile-page/organization-profile-page.component';
+import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
+import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'dashboard',
+    component: DashboardPageComponent
   },
   {
     path: 'renew-application',

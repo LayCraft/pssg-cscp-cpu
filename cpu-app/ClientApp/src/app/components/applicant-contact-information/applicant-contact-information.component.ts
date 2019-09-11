@@ -1,10 +1,10 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { ContactInformation, iContactInformation } from '../classes/contact-information.class';
-import { emailValidRegex, phoneValidRegex, postalCodeValidRegex } from '../constants/validators';
+import { ContactInformation, iContactInformation } from '../../classes/contact-information.class';
+import { emailValidRegex, phoneValidRegex, postalCodeValidRegex } from '../../constants/validators';
 import { AbstractControl } from '@angular/forms';
-import { iCountry, COUNTRIES_ADDRESS_2 } from '../constants/country-list';
-import { Address } from '../classes/address.class';
-import { BoilerplateService } from '../services/boilerplate.service';
+import { iCountry, COUNTRIES_ADDRESS_2 } from '../../constants/country-list';
+import { Address } from '../../classes/address.class';
+import { BoilerplateService } from '../../services/boilerplate.service';
 
 @Component({
   selector: 'app-applicant-contact-information',

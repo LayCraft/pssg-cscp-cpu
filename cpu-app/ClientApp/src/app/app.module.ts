@@ -62,9 +62,10 @@ import { FieldComponent } from './shared/field/field.component';
 import { QuickExitComponent } from './quick-exit/quick-exit.component';
 import { VersionInfoDialog } from './version-info/version-info.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
-import { ApplicantContactInformationComponent } from './applicant-contact-information/applicant-contact-information.component';
-import { ProgramPlannerComponent } from './program-planner/program-planner.component';
-import { OrganizationProfilePageComponent } from './organization-profile-page/organization-profile-page.component';
+import { ApplicantContactInformationComponent } from './components/applicant-contact-information/applicant-contact-information.component';
+import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
+import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
+import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { OrganizationProfilePageComponent } from './organization-profile-page/or
     ApplicantContactInformationComponent,
     ProgramPlannerComponent,
     OrganizationProfilePageComponent,
+    DashboardPageComponent,
   ],
   imports: [
     BrowserModule,
