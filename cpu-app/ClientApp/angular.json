@@ -26,8 +26,7 @@
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles-font.scss"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -130,7 +129,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "styleext": "css"
+      "styleext": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "app"

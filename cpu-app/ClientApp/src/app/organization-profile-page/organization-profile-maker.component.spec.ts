@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrganizationProfileMakerComponent } from './organization-profile-maker.component';
+import { OrganizationProfileMakerComponent } from './organization-profile-page.component';
 
 describe('OrganizationProfileMakerComponent', () => {
   let component: OrganizationProfileMakerComponent;

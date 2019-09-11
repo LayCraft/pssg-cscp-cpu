@@ -64,7 +64,7 @@ import { VersionInfoDialog } from './version-info/version-info.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { ApplicantContactInformationComponent } from './applicant-contact-information/applicant-contact-information.component';
 import { ProgramPlannerComponent } from './program-planner/program-planner.component';
-import { OrganizationProfileMakerComponent } from './organization-profile-maker/organization-profile-maker.component';
+import { OrganizationProfilePageComponent } from './organization-profile-page/organization-profile-page.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +83,7 @@ import { OrganizationProfileMakerComponent } from './organization-profile-maker/
     VersionInfoDialog,
     ApplicantContactInformationComponent,
     ProgramPlannerComponent,
-    OrganizationProfileMakerComponent,
+    OrganizationProfilePageComponent,
   ],
   imports: [
     BrowserModule,

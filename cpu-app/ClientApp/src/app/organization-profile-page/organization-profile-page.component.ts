@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { BoilerplateService } from '../services/boilerplate.service';
 
 @Component({
-  selector: 'app-organization-profile-maker',
-  templateUrl: './organization-profile-maker.component.html',
-  styleUrls: ['./organization-profile-maker.component.css']
+  selector: 'app-organization-profile-page',
+  templateUrl: './organization-profile-page.component.html',
+  styleUrls: ['./organization-profile-page.component.css']
 })
-export class OrganizationProfileMakerComponent implements OnInit {
+export class OrganizationProfilePageComponent implements OnInit {
   bceid: string = 'bceid goes here';
 
   constructor(
