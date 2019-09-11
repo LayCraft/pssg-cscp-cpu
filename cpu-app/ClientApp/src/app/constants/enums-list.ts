@@ -9,7 +9,7 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
-
+// these are not confirmed and likely match the numbers found in Victims.
 export class EnumHelper {
 
   public Gender = {
@@ -63,7 +63,7 @@ export class EnumHelper {
     100000000: 'No',
     100000001: 'Yes',
   }
-    
+
   public IntendToSueOffender = {
     0: '--',
     100000000: 'Yes',
@@ -84,13 +84,13 @@ export class EnumHelper {
     100000001: 'No',
     100000002: 'Unsure',
   }
-    
+
   public WereYouEmployedAtTimeOfCrime = {
     0: '--',
     100000000: 'Yes',
     100000001: 'No',
   }
-      
+
   public CompletingOnBehalfOf = {
     0: '--',
     100000000: 'Completing this application for myself',
