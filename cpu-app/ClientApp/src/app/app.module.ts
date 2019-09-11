@@ -66,6 +66,7 @@ import { ApplicantContactInformationComponent } from './components/applicant-con
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
 import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
+import { ProgramPageComponent } from './pages/program-page/program-page.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.co
     ProgramPlannerComponent,
     OrganizationProfilePageComponent,
     DashboardPageComponent,
+    ProgramPageComponent,
   ],
   imports: [
     BrowserModule,

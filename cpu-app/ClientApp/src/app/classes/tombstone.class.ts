@@ -12,6 +12,7 @@ export interface iTombstone {
   note: string; // for communication notes or automatically generated notes.
   contractNumber: string; // This item appears on which contract number
   organizationId: string; // BCeID number for lookup
+  programId: string; // the id of the program to look up
   frequency: string; // annual, biannual, quarter, month,
   lastUpdated: Date;
 }
@@ -26,6 +27,7 @@ export class Tombstone implements iTombstone {
   note: string;
   contractNumber: string;
   organizationId: string;
+  programId: string;
   frequency: string;
   internalNote: string;
   lastUpdated: Date;
@@ -43,6 +45,7 @@ export class Tombstone implements iTombstone {
       this.frequency = tombstone.frequency || null;
       this.lastUpdated = tombstone.lastUpdated || null;
       this.internalNote = tombstone.internalNote || null;
+      this.programId = tombstone.programId || null;
     }
   }
   toDynamics() { }
@@ -52,18 +55,21 @@ export class Tombstone implements iTombstone {
 export interface iProgramTombstone {
   programContact: iPerson;
   programName: string;
+  programId: string;
   contractNumber: string;
   organizationId: string;
 }
 export class ProgramTombstone implements iProgramTombstone {
   programContact: iPerson;
   programName: string;
+  programId: string;
   contractNumber: string;
   organizationId: string;
   constructor(tombstone?: iProgramTombstone) {
     if (tombstone) {
       this.programContact = new Person(tombstone.programContact) || null;
       this.programName = tombstone.programName || null;
+      this.programId = tombstone.programId || null;
       this.contractNumber = tombstone.contractNumber || null;
       this.organizationId = tombstone.organizationId || null;
     } else {
@@ -74,6 +80,7 @@ export class ProgramTombstone implements iProgramTombstone {
   fromDynamics(dynamics: DynamicsBlob) {
     this.programContact = new Person(dynamics['programContact']) || null;
     this.programName = dynamics['programName'] || null;
+    this.programId = dynamics['programName'] || null;
     this.contractNumber = dynamics['contractNumber'] || null;
     this.organizationId = dynamics['organizationId'] || null;
   }

@@ -5,6 +5,7 @@ import { RenewApplicationComponent } from './renew-application/renew-application
 import { NotFoundComponent } from './not-found/not-found.component';
 import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
+import { ProgramPageComponent } from './pages/program-page/program-page.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
     path: 'renew-application',
     component: RenewApplicationComponent,
     //canDeactivate: [CanDeactivateGuard]
+  },
+  {
+    path: 'program/:orgid/:progid', //organization id and program id (GUIDs?)
+    component: ProgramPageComponent
   },
   {
     path: 'profile',
