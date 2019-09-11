@@ -68,8 +68,8 @@ import { OrganizationProfilePageComponent } from './pages/organization-profile-p
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { ProgramPageComponent } from './pages/program-page/program-page.component';
 import { BudgetPageComponent } from './pages/budget-page/budget-page.component';
-import { MonthlyUpdatePageComponent } from './pages/monthly-update-page/monthly-update-page.component';
 import { ExpensePageComponent } from './pages/expense-page/expense-page.component';
+import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
 
 @NgModule({
   declarations: [
@@ -92,8 +92,8 @@ import { ExpensePageComponent } from './pages/expense-page/expense-page.componen
     DashboardPageComponent,
     ProgramPageComponent,
     BudgetPageComponent,
-    MonthlyUpdatePageComponent,
     ExpensePageComponent,
+    StatusReportPageComponent,
   ],
   imports: [
     BrowserModule,

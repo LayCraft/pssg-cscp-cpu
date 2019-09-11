@@ -29,7 +29,7 @@ export class DashboardPageComponent implements OnInit {
     this.tabs = ['Current Tasks', 'Completed', 'Programs'];
     this.currentTab = this.tabs[0];
     this.statuses = ['Missed', 'Late', 'Submitted', 'Started', 'Action Required', 'Complete'];
-    this.formTypes = ['program_application', 'budget_proposal', 'monthly_update', 'expense_report'];
+    this.formTypes = ['program_application', 'budget_proposal', 'status_report', 'expense_report'];
   }
 
   ngOnInit() {

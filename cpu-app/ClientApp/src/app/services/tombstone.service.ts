@@ -8,11 +8,13 @@ import { Person, iPerson } from '../classes/person.class';
   providedIn: 'root'
 })
 export class TombstoneService {
+  // ['program_applicationlication', 'budget_proposal', 'status_report', 'expense_report']
+
   getTombstones(bceid: string): Observable<iTombstone[]> {
     const t = [
       {
-        formName: 'Program Application',
-        formType: 'program_app',
+        formName: 'Monthly Update',
+        formType: 'status_report',
         formDeadline: new Date('2019-12-31'),
         formStatus: 'Action Required',
         forDateRangeStart: new Date('2019-01-01'),
@@ -24,26 +26,39 @@ export class TombstoneService {
         frequency: 'annual',
       } as iTombstone,
       {
-        formName: 'Schedule F',
-        formType: 'sched_f',
+        formName: 'Program Application',
+        formType: 'program_application',
+        formDeadline: new Date('2019-12-31'),
+        formStatus: 'Action Required',
+        forDateRangeStart: new Date('2019-01-01'),
+        forDateRangeEnd: new Date('2019-12-31'),
+        note: 'Please submit your annual Program Application by the Due Date',
+        contractNumber: '1097583',
+        organizationId: 'aacb8575ac5acb363a64ca',
+        programId: 'qwer',
+        frequency: 'annual',
+      } as iTombstone,
+      {
+        formName: 'Budget Proposal',
+        formType: 'budget_proposal',
         formDeadline: new Date('2019-12-31'),
         formStatus: 'Started',
         forDateRangeStart: new Date('2019-01-01'),
         forDateRangeEnd: new Date('2019-12-31'),
-        note: 'Please submit your Schedule F by the Due Date',
+        note: 'Please submit your Budget Proposal by the Due Date',
         contractNumber: '1097583',
         organizationId: 'aacb8575ac5acb363a64ca',
         programId: 'wert',
         frequency: 'quarterly',
       } as iTombstone,
       {
-        formName: 'Schedule G',
-        formType: 'sched_g',
+        formName: 'Expense Report',
+        formType: 'expense_report',
         formDeadline: new Date('2019-12-31'),
         formStatus: 'Submitted',
         forDateRangeStart: new Date('2019-01-01'),
         forDateRangeEnd: new Date('2019-12-31'),
-        note: 'Please submit your Schedule F by the Due Date',
+        note: 'Please submit your Budget Proposal by the Due Date',
         contractNumber: '1097583',
         organizationId: 'aacb8575ac5acb363a64ca',
         programId: 'erty',
@@ -51,7 +66,7 @@ export class TombstoneService {
       } as iTombstone,
       {
         formName: 'Program Application',
-        formType: 'program_app',
+        formType: 'program_application',
         formDeadline: new Date('2019-12-31'),
         formStatus: 'Late',
         forDateRangeStart: new Date('2019-01-01'),
@@ -64,7 +79,7 @@ export class TombstoneService {
       } as iTombstone,
       {
         formName: 'Program Application',
-        formType: 'program_app',
+        formType: 'program_application',
         formDeadline: new Date('2019-12-31'),
         formStatus: 'Missed',
         forDateRangeStart: new Date('2019-01-01'),
@@ -77,7 +92,7 @@ export class TombstoneService {
       } as iTombstone,
       {
         formName: 'Program Application',
-        formType: 'program_app',
+        formType: 'program_application',
         formDeadline: new Date('2019-12-31'),
         formStatus: 'Missed',
         forDateRangeStart: new Date('2019-01-01'),
@@ -90,7 +105,7 @@ export class TombstoneService {
       } as iTombstone,
       {
         formName: 'Program Application',
-        formType: 'program_app',
+        formType: 'program_application',
         formDeadline: new Date('2019-12-31'),
         formStatus: 'Complete',
         forDateRangeStart: new Date('2019-01-01'),
@@ -105,7 +120,7 @@ export class TombstoneService {
       } as iTombstone,
       {
         formName: 'Program Application',
-        formType: 'program_app',
+        formType: 'program_application',
         formDeadline: new Date('2019-12-31'),
         formStatus: 'Complete',
         forDateRangeStart: new Date('2019-01-01'),

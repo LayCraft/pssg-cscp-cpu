@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MonthlyUpdatePageComponent } from './monthly-update-page.component';
+import { StatusReportPageComponent } from './status-report-page.component';
 
-describe('MonthlyUpdatePageComponent', () => {
-  let component: MonthlyUpdatePageComponent;
-  let fixture: ComponentFixture<MonthlyUpdatePageComponent>;
+describe('StatusReportPageComponent', () => {
+  let component: StatusReportPageComponent;
+  let fixture: ComponentFixture<StatusReportPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MonthlyUpdatePageComponent ]
+      declarations: [ StatusReportPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MonthlyUpdatePageComponent);
+    fixture = TestBed.createComponent(StatusReportPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

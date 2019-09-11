@@ -112,7 +112,7 @@
                   </td>
                   <td> {{tombstone.formDeadline |date:'yyyy-MM-dd'}}</td>
                   <td>
-                    <a routerLink="/{{formTypes[0]}}/{{tombstone.organizationId}}/{{tombstone.programId}}">Complete {{tombstone.formName}}</a>
+                    <a routerLink="/{{tombstone.formType}}/{{tombstone.organizationId}}/{{tombstone.programId}}">Complete {{tombstone.formName}}</a>
                   </td>
                   <td>{{tombstone.note}}</td>
                 </tr>

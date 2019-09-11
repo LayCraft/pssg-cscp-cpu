@@ -7,8 +7,8 @@ import { OrganizationProfilePageComponent } from './pages/organization-profile-p
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { ProgramPageComponent } from './pages/program-page/program-page.component';
 import { ExpensePageComponent } from './pages/expense-page/expense-page.component';
-import { MonthlyUpdatePageComponent } from './pages/monthly-update-page/monthly-update-page.component';
 import { BudgetPageComponent } from './pages/budget-page/budget-page.component';
+import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
 
 const routes: Routes = [
   {
@@ -25,19 +25,19 @@ const routes: Routes = [
     //canDeactivate: [CanDeactivateGuard]
   },
   {
-    path: 'program_application/:orgid/:progid', //organization id and program id (GUIDs?)
+    path: 'program_application/:orgid/:id',
     component: ProgramPageComponent
   },
   {
-    path: 'budget_proposal/:orgid/:progid', //organization id and program id (GUIDs?)
+    path: 'budget_proposal/:orgid/:id',
     component: BudgetPageComponent
   },
   {
-    path: 'monthly_update/:orgid/:progid', //organization id and program id (GUIDs?)
-    component: MonthlyUpdatePageComponent
+    path: 'status_report/:orgid/:id',
+    component: StatusReportPageComponent
   },
   {
-    path: 'expense_report/:orgid/:progid', //organization id and program id (GUIDs?)
+    path: 'expense_report/:orgid/:id',
     component: ExpensePageComponent
   },
   {
