@@ -14,6 +14,7 @@ export class DashboardPageComponent implements OnInit {
 
   contactInformation: iContactInformation;
   tombstones: iTombstone[];
+  completedTombstones: iTombstone[];
   programTombstones: iProgramTombstone[];
 
   tabs: string[];
@@ -24,16 +25,19 @@ export class DashboardPageComponent implements OnInit {
     private tombstoneService: TombstoneService,
     private boilerplateService: BoilerplateService,
   ) {
-    this.tabs = ['Current Tasks', 'Programs'];
+    this.tabs = ['Current Tasks', 'Completed', 'Programs'];
     this.currentTab = this.tabs[0];
-    this.statuses = ['Missed', 'Late', 'Submitted', 'Started', 'Action Required'];
+    this.statuses = ['Missed', 'Late', 'Submitted', 'Started', 'Action Required', 'Complete'];
 
   }
 
   ngOnInit() {
     // collect BCEIDs for the organization
     this.boilerplateService.getOrganizationBoilerplate('FAKE BCEID').subscribe(bp => this.contactInformation = bp);
-    this.tombstoneService.getTombstones('FAKE BCEID').subscribe(t => this.tombstones = t);
+    this.tombstoneService.getTombstones('FAKE BCEID').subscribe(t => {
+      this.tombstones = t.filter(tombstone => tombstone.formStatus !== this.statuses[5]);
+      this.completedTombstones = t.filter(tombstone => tombstone.formStatus === this.statuses[5]);
+    });
     this.tombstoneService.getProgramTombstones('Whatever').subscribe((dynamics: DynamicsBlob) => {
       // clear tombstones
       this.programTombstones = [];

@@ -20,7 +20,7 @@ export class OrganizationProfilePageComponent implements OnInit {
   }
   onPageTurn(event: iContactInformation) {
     this.boilerplateService.setOrganizationBoilerplate(this.bceid, event).subscribe(
-      res => this.router.navigate(['']),
+      res => this.router.navigate(['/dashboard']),
       err => {
         alert('An error has occured. Please try submitting again.');
         console.log(err);

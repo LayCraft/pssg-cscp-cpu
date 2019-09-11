@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col">
       <h1>
@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="row mt-4">
-    <div class="col">
+    <div class="col-md-8">
       <div class="card">
         <div class="card-header">
           Organization Profile
@@ -30,6 +30,29 @@
         </div>
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          Ministry Contact
+        </div>
+        <div class="card-body">
+          <div class="card-title">
+            Carol Albatross
+          </div>
+          <p class="card-text">
+            <strong>Phone</strong><br>
+            <a href="tel:12505552323">1(250)555-2323</a>
+          </p>
+          <p class="card-text">
+            <strong>Email</strong><br>
+            <a href="mailto:{{contactInformation.emailAddress}}">Carol.Albatross@gov.bc.ca</a>
+          </p>
+        </div>
+        <!-- <div class="card-footer">
+          <a routerLink="/profile" class="btn btn-primary">Edit Organization Profile</a>
+        </div> -->
+      </div>
+    </div>
   </div>
   <div class="row mt-4">
     <div class="col">
@@ -40,10 +63,13 @@
         <div class="card-body">
           <ul class="nav nav-tabs card-header-tabs" role="tablist">
             <li class="nav-item">
-              <a class="nav-link" (click)="setCurrentTab('Current Tasks')" [class.active]="currentTab===tabs[0]">Current Tasks</a>
+              <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Current</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" (click)="setCurrentTab('Programs')" [class.active]="currentTab===tabs[1]">Programs</a>
+              <a class="nav-link" (click)="setCurrentTab(tabs[1])" [class.active]="currentTab===tabs[1]">Completed</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="setCurrentTab(tabs[2])" [class.active]="currentTab===tabs[2]">Programs</a>
             </li>
           </ul>
           <span *ngIf="currentTab===tabs[0]">
@@ -85,7 +111,7 @@
                     </span>
                   </td>
                   <td> {{tombstone.formDeadline |date:'yyyy-MM-dd'}}</td>
-                  <td><a href="#" routerLink="renew-application">Start Application</a></td>
+                  <td><a href="#" routerLink="/renew-application">Start Application</a></td>
                   <td>{{tombstone.note}}</td>
                 </tr>
               </tbody>
@@ -98,42 +124,77 @@
               <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
           </span>
-        </div>
-        <span *ngIf="currentTab===tabs[1]">
-          <table class="table table-sm table-striped">
-            <thead class="thead">
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">Programs</th>
-                <th scope="col">Program Contact</th>
-                <th scope="col">Update Contact</th>
+          <span *ngIf="currentTab===tabs[1]">
+            <!-- Show completed items -->
+            <!-- <input type="checkbox"> -->
+            <table class="table table-sm table-striped">
+              <thead class="thead">
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Form</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Finalized Date</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tombstone of completedTombstones; let i=index">
+                  <th scope="row">
+                    {{i+1}}
+                  </th>
+                  <td><strong>{{tombstone.frequency | titlecase}} {{tombstone.formName}}</strong><br>
+                    <small>({{tombstone.forDateRangeStart |date:'yyyy-MM-dd'}} - {{tombstone.forDateRangeEnd |date:'yyyy-MM-dd'}})</small>
+                  </td>
+                  <td> {{tombstone.formStatus}} </td>
+                  <td> {{tombstone.lastUpdated |date:'yyyy-MM-dd'}}</td>
+                  <td><a routerLink="/renew-application">View PDF</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <ul class="pagination my-0">
+              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </span>
+          <span *ngIf="currentTab===tabs[2]">
+            <table class="table table-sm table-striped">
+              <thead class="thead">
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Programs</th>
+                  <th scope="col">Program Contact</th>
+                  <th scope="col">Update Contact</th>
 
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let tombstone of programTombstones; let i=index">
-                <th scope="row">
-                  {{i+1}}
-                </th>
-                <td>{{tombstone.programName}}
-                </td>
-                <td>
-                  <strong>Name:</strong>{{tombstone.programContact.firstName}} {{tombstone.programContact.lastName}}<br>
-                  <strong>Title:</strong>{{tombstone.programContact.title}}<br>
-                  <strong>Email:</strong>{{tombstone.programContact.email}}
-                </td>
-                <td><a href="#" routerLink="renew-application">Update Contact</a></td>
-              </tr>
-            </tbody>
-          </table>
-          <ul class="pagination my-0">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul>
-        </span>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tombstone of programTombstones; let i=index">
+                  <th scope="row">
+                    {{i+1}}
+                  </th>
+                  <td>{{tombstone.programName}}
+                  </td>
+                  <td>
+                    <strong>Name:</strong>{{tombstone.programContact.firstName}} {{tombstone.programContact.lastName}}<br>
+                    <strong>Title:</strong>{{tombstone.programContact.title}}<br>
+                    <strong>Email:</strong>{{tombstone.programContact.email}}
+                  </td>
+                  <td><a href="#" routerLink="/renew-application">Update Contact</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <ul class="pagination my-0">
+              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </span>
+        </div>
       </div>
 
     </div>

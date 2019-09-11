@@ -8,10 +8,12 @@ export interface iTombstone {
   formStatus: string; // "Not Started", "Awaiting Approval", "Submitted", "Late", "Missed"
   forDateRangeStart: Date; // start of applicable period for form
   forDateRangeEnd: Date; // end of applicable period for form
+  internalNote: string; // for internal note
   note: string; // for communication notes or automatically generated notes.
   contractNumber: string; // This item appears on which contract number
   organizationId: string; // BCeID number for lookup
   frequency: string; // annual, biannual, quarter, month,
+  lastUpdated: Date;
 }
 export class Tombstone implements iTombstone {
   // this class may be useful because it can offer a way to convert dates.
@@ -25,6 +27,8 @@ export class Tombstone implements iTombstone {
   contractNumber: string;
   organizationId: string;
   frequency: string;
+  internalNote: string;
+  lastUpdated: Date;
   constructor(tombstone: iTombstone) {
     if (tombstone) {
       this.formName = tombstone.formName || null;
@@ -37,6 +41,8 @@ export class Tombstone implements iTombstone {
       this.contractNumber = tombstone.contractNumber || null;
       this.organizationId = tombstone.organizationId || null;
       this.frequency = tombstone.frequency || null;
+      this.lastUpdated = tombstone.lastUpdated || null;
+      this.internalNote = tombstone.internalNote || null;
     }
   }
   toDynamics() { }
