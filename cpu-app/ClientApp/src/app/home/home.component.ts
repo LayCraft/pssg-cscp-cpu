@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
     private tombstoneService: TombstoneService,
     private boilerplateService: BoilerplateService,
   ) {
-    this.tabs = ['Current Tasks', 'Completed', 'Programs'];
+    this.tabs = ['Current Tasks', 'Programs'];
     this.currentTab = this.tabs[0];
     this.statuses = ['Missed', 'Late', 'Submitted', 'Started', 'Action Required'];
 
