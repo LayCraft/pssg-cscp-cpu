@@ -6,7 +6,7 @@ import { VersionInfo } from './models/version-info.model';
 import { isDevMode } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import 'rxjs/add/operator/filter';
-import { VersionInfoDialog } from './version-info/version-info.component';
+import { VersionInfoDialog } from './shared/components/version-info/version-info.component';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   public versionInfo: VersionInfo;
   public isNewUser: boolean;
   public isDevMode: boolean;
-  
+
   constructor(
     private renderer: Renderer2,
     private router: Router,

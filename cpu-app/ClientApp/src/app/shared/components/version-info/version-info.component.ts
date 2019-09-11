@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { VersionInfo } from '../models/version-info.model';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { VersionInfo } from '../../../models/version-info.model';
 import * as moment from 'moment';
 
 @Component({
@@ -12,11 +12,11 @@ export class VersionInfoDialog implements OnInit {
   public versionInfo: VersionInfo;
 
   constructor(public dialogRef: MatDialogRef<VersionInfoDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: VersionInfo) { 
-      this.versionInfo = data;
-      this.versionInfo.fileCreationTime = moment(this.versionInfo.fileCreationTime, 'YYYY-MM-DDTHH:mm:ss.SSSSSZ')
-        .format('DD-MMM-YYYY hh:mm:ss')
-    }
+    @Inject(MAT_DIALOG_DATA) public data: VersionInfo) {
+    this.versionInfo = data;
+    this.versionInfo.fileCreationTime = moment(this.versionInfo.fileCreationTime, 'YYYY-MM-DDTHH:mm:ss.SSSSSZ')
+      .format('DD-MMM-YYYY hh:mm:ss')
+  }
 
   closeDialog() {
     this.dialogRef.close();

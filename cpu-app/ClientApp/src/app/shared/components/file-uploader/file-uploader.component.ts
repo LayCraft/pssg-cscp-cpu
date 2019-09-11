@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { UploadEvent, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { Http, Headers, Response } from '@angular/http';
-import { FileSystemItem } from '../../models/file-system-item.model';
+import { FileSystemItem } from '../../../models/file-system-item.model';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatDialogRef } from '@angular/material';

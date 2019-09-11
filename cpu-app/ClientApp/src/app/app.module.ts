@@ -46,21 +46,20 @@ import { AppComponent } from './app.component';
 import { CanDeactivateGuard } from './services/can-deactivate-guard.service';
 import { HomeComponent } from './home/home.component';
 import { VersionInfoDataService } from './services/version-info-data.service';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { SignPadDialog } from './sign-dialog/sign-dialog.component';
-import { CancelApplicationDialog } from './shared/cancel-dialog/cancel-dialog.component';
-import { DeactivateGuardDialog } from './shared/guard-dialog/guard-dialog.component';
+import { SignPadDialog } from './shared/components/sign-dialog/sign-dialog.component';
+import { CancelApplicationDialog } from './shared/components/cancel-dialog/cancel-dialog.component';
+import { DeactivateGuardDialog } from './shared/components/guard-dialog/guard-dialog.component';
 import { RenewApplicationComponent } from './renew-application/renew-application.component';
 import { FileUploaderBoxComponent } from './file-uploader-box/file-uploader-box.component';
 import { TestComponent } from './test/test.component';
 import { FileDropModule } from 'ngx-file-drop';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { FileUploaderComponent } from './shared/file-uploader/file-uploader.component';
+import { FileUploaderComponent } from './shared/components/file-uploader/file-uploader.component';
 import { NgBusyModule } from 'ng-busy';
 import { BsDatepickerModule, AlertModule } from 'ngx-bootstrap';
-import { FieldComponent } from './shared/field/field.component';
-import { QuickExitComponent } from './quick-exit/quick-exit.component';
-import { VersionInfoDialog } from './version-info/version-info.component';
+import { FieldComponent } from './shared/components/field/field.component';
+import { QuickExitComponent } from './shared/components/quick-exit/quick-exit.component';
+import { VersionInfoDialog } from './shared/components/version-info/version-info.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { ApplicantContactInformationComponent } from './components/applicant-contact-information/applicant-contact-information.component';
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
@@ -70,6 +69,7 @@ import { ProgramPageComponent } from './pages/program-page/program-page.componen
 import { BudgetPageComponent } from './pages/budget-page/budget-page.component';
 import { ExpensePageComponent } from './pages/expense-page/expense-page.component';
 import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
+import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +81,7 @@ import { StatusReportPageComponent } from './pages/status-report-page/status-rep
     FileUploaderBoxComponent,
     TestComponent,
     HomeComponent,
-    NotFoundComponent,
+    NotFoundPageComponent,
     FileUploaderComponent,
     FieldComponent,
     QuickExitComponent,
