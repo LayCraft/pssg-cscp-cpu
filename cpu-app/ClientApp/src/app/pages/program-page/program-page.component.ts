@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatStepper } from '@angular/material';
 import { iContactInformation } from '../../classes/contact-information.class';
+import { BoilerplateService } from '../../services/boilerplate.service';
 
 @Component({
   selector: 'app-program-page',
@@ -26,9 +27,11 @@ export class ProgramPageComponent implements OnInit {
 
   currentFormPage: string = '';
 
+  contactInformation: iContactInformation;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private boilerplateService: BoilerplateService,
   ) { }
 
   ngOnInit() {
@@ -38,6 +41,11 @@ export class ProgramPageComponent implements OnInit {
 
     this.combinedPageList = [...this.upperItems, ...this.programs, ...this.lowerItems];
     this.currentFormPage = this.combinedPageList[0];
+
+    // get the boilerplate contact information if there is none included (resuming the forms.)
+    // TODO: eventually we need to get the current forms from the service
+    if (!this.contactInformation) this.boilerplateService.getOrganizationBoilerplate(this.organizationId)
+      .subscribe(ci => this.contactInformation = ci);
   }
 
   gotoPage(selectPage: MatStepper): void {

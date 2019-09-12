@@ -33,11 +33,13 @@ export class ApplicantContactInformationComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.contactInformationForm = new ContactInformation();
     // set country to canada
     this.country = COUNTRIES_ADDRESS_2.Canada;
-    // initialize the contact information
-    this.contactInformationForm = new ContactInformation(this.contactInformation);
+    // initialize the contact information if it is supplied else make a new object
+    this.contactInformation ? this.contactInformationForm = new ContactInformation(this.contactInformation) : new ContactInformation();
+    // the mailing address should be shown on init when the contact information is not empty
+    this.hasMailingAddress = !!this.contactInformation && !!this.contactInformation.mailingAddress;
+
     // now that the form is initialized we emit it to send the validity to the parent. Otherwise we have to wait for the user to change something.
     this.onInput();
   }
@@ -58,6 +60,8 @@ export class ApplicantContactInformationComponent implements OnInit {
       // replace the filled mailing address with a fresh one
       this.contactInformationForm.mailingAddress = new Address();
     }
+    // emit the form validity because we have added or removed new fields that require validity checking
+    this.valid.emit(this.ciForm.valid);
   }
 
   onInput() {
