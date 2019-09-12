@@ -1,4 +1,4 @@
-<form #contactInfoForm="ngForm" (change)="onChange(contactInfoForm.form.valid)">
+<form #ciForm="ngForm" (input)="onInput()">
   <!-- <h2 class="blue-header">Organization</h2> -->
   <!-- <div class="form-group">
     <label for="organizationName">Legal Name of Organization</label>
@@ -176,7 +176,7 @@
   </div>
   <!-- Submit button and validation note -->
   <div class="form-group">
-    <div class="invalid-feedback" [hidden]="contactInfoForm.form.valid || contactInfoForm.form.pristine">
+    <div class="invalid-feedback" [hidden]="ciForm.form.valid || ciForm.form.pristine">
       One or more required fields is missing from the submission.
     </div>
   </div>
