@@ -1,7 +1,17 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <app-applicant-contact-information [organizationId]='organizationId' (save)="onSave($event)"></app-applicant-contact-information>
+      <app-applicant-contact-information [(contactInformation)]="contactInformation" (valid)="onValid($event)"></app-applicant-contact-information>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <!-- Button states for the form: Can submit, Can't submit, (TODO: in process of submitting) -->
+      <button *ngIf="validContactInformation" class="btn btn-primary" type="submit">Save</button>
+      <button *ngIf="!validContactInformation" class="btn btn-primary" type="submit" disabled>Save</button>
     </div>
   </div>
 </div>
+<!-- <pre>Valid: {{validContactInformation}}
+{{contactInformation|json}}
+</pre> -->

@@ -1,18 +1,18 @@
-<form #contactInfoForm="ngForm" (ngSubmit)="onSubmit(contactInfoForm.form.valid)">
+<form #contactInfoForm="ngForm" (change)="onChange(contactInfoForm.form.valid)">
   <!-- <h2 class="blue-header">Organization</h2> -->
   <!-- <div class="form-group">
     <label for="organizationName">Legal Name of Organization</label>
-    <input [(ngModel)]="contactInformation.organizationName" type="text" class="form-control" placeholder="" id="organizationName" name="organizationName" #organizationName="ngModel" disabled>
+    <input [(ngModel)]="contactInformationForm.organizationName" type="text" class="form-control" placeholder="" id="organizationName" name="organizationName" #organizationName="ngModel" disabled>
   </div> -->
-  <!-- <div *ngIf="contactInformation.contractNumber" class="form-group">
+  <!-- <div *ngIf="contactInformationForm.contractNumber" class="form-group">
     <label for="contractNumber">Contract Number</label>
-    <input [(ngModel)]="contactInformation.contractNumber" type="text" class="form-control" placeholder="" id="contractNumber" name="contractNumber" #contractNumber="ngModel" disabled>
+    <input [(ngModel)]="contactInformationForm.contractNumber" type="text" class="form-control" placeholder="" id="contractNumber" name="contractNumber" #contractNumber="ngModel" disabled>
   </div> -->
 
   <h2 class="blue-header">Primary Contact Information</h2>
   <div class="form-group">
     <label for="emailAddress" class="required">Email Address</label>
-    <input [(ngModel)]="contactInformation.emailAddress" type="text" class="form-control" id="emailAddress" name="emailAddress" #emailAddress="ngModel" [pattern]="emailValidRegex" required>
+    <input [(ngModel)]="contactInformationForm.emailAddress" type="text" class="form-control" id="emailAddress" name="emailAddress" #emailAddress="ngModel" [pattern]="emailValidRegex" required>
     <div class="valid-feedback" [hidden]="showValidFeedback(emailAddress)" style="display: inherit">
       Ok
     </div>
@@ -25,7 +25,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="phoneNumber">Phone Number</label>
-        <input [(ngModel)]="contactInformation.phoneNumber" type="text" class="form-control" id="phoneNumber" name="phoneNumber" [pattern]="phoneValidRegex" #phoneNumber="ngModel">
+        <input [(ngModel)]="contactInformationForm.phoneNumber" type="text" class="form-control" id="phoneNumber" name="phoneNumber" [pattern]="phoneValidRegex" #phoneNumber="ngModel">
         <div class="valid-feedback" [hidden]="showValidFeedback(phoneNumber)" style="display: inherit">
           Ok
         </div>
@@ -37,7 +37,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="faxNumber">Fax Number</label>
-        <input [(ngModel)]="contactInformation.faxNumber" type="text" class="form-control" id="faxNumber" name="faxNumber" [pattern]="phoneValidRegex" #faxNumber="ngModel">
+        <input [(ngModel)]="contactInformationForm.faxNumber" type="text" class="form-control" id="faxNumber" name="faxNumber" [pattern]="phoneValidRegex" #faxNumber="ngModel">
         <div class="valid-feedback" [hidden]="showValidFeedback(faxNumber)" style="display: inherit">
           Ok
         </div>
@@ -52,7 +52,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="line1" class="required">Address Line 1</label>
-        <input [(ngModel)]="contactInformation.mainAddress.line1" type="text" class="form-control" id="line1" name="line1" #line1="ngModel" required>
+        <input [(ngModel)]="contactInformationForm.mainAddress.line1" type="text" class="form-control" id="line1" name="line1" #line1="ngModel" required>
         <div class="valid-feedback" [hidden]="showValidFeedback(line1)" style="display: inherit">
           Ok
         </div>
@@ -64,7 +64,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="line2">Address Line 2</label>
-        <input [(ngModel)]="contactInformation.mainAddress.line2" type="text" class="form-control" id="line2" name="line2" #line2="ngModel">
+        <input [(ngModel)]="contactInformationForm.mainAddress.line2" type="text" class="form-control" id="line2" name="line2" #line2="ngModel">
         <div class="valid-feedback" [hidden]="showValidFeedback(line2)" style="display: inherit">
           Ok
         </div>
@@ -78,7 +78,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="city" class="required">City</label>
-        <input [(ngModel)]="contactInformation.mainAddress.city" type="text" class="form-control" id="city" name="city" #city="ngModel" required>
+        <input [(ngModel)]="contactInformationForm.mainAddress.city" type="text" class="form-control" id="city" name="city" #city="ngModel" required>
         <div class="valid-feedback" [hidden]="showValidFeedback(city)" style="display: inherit">
           Ok
         </div>
@@ -90,7 +90,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="province" class="required">Province</label>
-        <select class="form-control" [(ngModel)]="contactInformation.mainAddress.province" name="province" id="province" #province="ngModel" required>
+        <select class="form-control" [(ngModel)]="contactInformationForm.mainAddress.province" name="province" id="province" #province="ngModel" required>
           <option *ngFor="let area of country.areas" [value]="area">{{area}}</option>
         </select>
         <div class="valid-feedback" [hidden]="showValidFeedback(province)" style="display: inherit">
@@ -107,7 +107,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="postalCode" class="required">Postal Code</label>
-        <input [(ngModel)]="contactInformation.mainAddress.postalCode" type="text" class="form-control" id="postalCode" [pattern]="postalCodeValidRegex" name="postalCode" #postalCode="ngModel" required>
+        <input [(ngModel)]="contactInformationForm.mainAddress.postalCode" type="text" class="form-control" id="postalCode" [pattern]="postalCodeValidRegex" name="postalCode" #postalCode="ngModel" required>
         <div class="valid-feedback" [hidden]="showValidFeedback(postalCode)" style="display: inherit">
           Ok
         </div>
@@ -132,7 +132,7 @@
       <div class="col">
         <div class="form-group">
           <label for="mailCity" class="required">City</label>
-          <input [(ngModel)]="contactInformation.mailingAddress.city" type="text" class="form-control" id="mailCity" name="mailCity" #mailCity="ngModel" required>
+          <input [(ngModel)]="contactInformationForm.mailingAddress.city" type="text" class="form-control" id="mailCity" name="mailCity" #mailCity="ngModel" required>
           <div class="valid-feedback" [hidden]="showValidFeedback(mailCity)" style="display: inherit">
             Ok
           </div>
@@ -145,7 +145,7 @@
         <div class="form-group">
           <div class="form-group">
             <label for="mailProvince" class="required">Province</label>
-            <select class="form-control" [(ngModel)]="contactInformation.mailingAddress.province" name="mailProvince" id="mailProvince" #mailProvince="ngModel" required>
+            <select class="form-control" [(ngModel)]="contactInformationForm.mailingAddress.province" name="mailProvince" id="mailProvince" #mailProvince="ngModel" required>
               <option *ngFor="let area of country.areas" [value]="area">{{area}}</option>
             </select>
             <div class="valid-feedback" [hidden]="showValidFeedback(mailProvince)" style="display: inherit">
@@ -163,7 +163,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="mailPostalCode" class="required">Postal Code</label>
-          <input [(ngModel)]="contactInformation.mailingAddress.postalCode" type="text" class="form-control" id="mailPostalCode" [pattern]="postalCodeValidRegex" name="mailPostalCode" #mailPostalCode="ngModel" required>
+          <input [(ngModel)]="contactInformationForm.mailingAddress.postalCode" type="text" class="form-control" id="mailPostalCode" [pattern]="postalCodeValidRegex" name="mailPostalCode" #mailPostalCode="ngModel" required>
           <div class="valid-feedback" [hidden]="showValidFeedback(mailPostalCode)" style="display: inherit">
             Ok
           </div>
@@ -179,10 +179,5 @@
     <div class="invalid-feedback" [hidden]="contactInfoForm.form.valid || contactInfoForm.form.pristine">
       One or more required fields is missing from the submission.
     </div>
-    <!-- Button states for the form: Can submit, Can't submit, (TODO: in process of submitting) -->
-    <button *ngIf="contactInfoForm.form.valid" class="btn btn-primary" type="submit">Save</button>
-    <button *ngIf="!contactInfoForm.form.valid" class="btn btn-primary" type="submit" disabled>Save</button>
   </div>
 </form>
-<pre>Form Valid: {{contactInfoForm?.form.valid}}
-{{contactInformation|json}}</pre>
