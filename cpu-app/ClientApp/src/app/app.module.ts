@@ -74,6 +74,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { OrganizationProfileBoxComponent } from './components/organization-profile-box/organization-profile-box.component';
 import { MinistryContactBoxComponent } from './components/ministry-contact-box/ministry-contact-box.component';
 import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
+import { AdministrativeInformationComponent } from './components/administrative-information/administrative-information.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.co
     OrganizationProfileBoxComponent,
     MinistryContactBoxComponent,
     PersonnelPageComponent,
+    AdministrativeInformationComponent,
   ],
   imports: [
     BrowserModule,

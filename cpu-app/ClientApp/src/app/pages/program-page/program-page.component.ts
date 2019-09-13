@@ -28,6 +28,7 @@ export class ProgramPageComponent implements OnInit {
 
   currentFormPage: string = '';
   contactInformation: iContactInformation;
+  // administrativeInformation: iAdministrativeInformation;
 
   constructor(
     private route: ActivatedRoute,
@@ -77,4 +78,16 @@ export class ProgramPageComponent implements OnInit {
     }
     // todo: this should save the form information to a service.
   }
-}
+
+  administrativeInformationValid: boolean;
+  administrativeInformationIsValid(valid: boolean) {
+    // track the state of validity
+    this.administrativeInformationValid = valid;
+  }
+  administrativeInformationSave() {
+    if (this.administrativeInformationIsValid) {
+      // just print to console for now
+      // console.log(this.administrativeInformation);
+    }
+    // todo: this should save the form information to a service.  }
+  }

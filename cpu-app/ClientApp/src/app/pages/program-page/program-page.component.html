@@ -1,36 +1,23 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-4">
-              <p class="col-form-label text-nowrap">
-                Organization ID
-              </p>
-            </div>
-            <div class="col-8">
-              <p class="col-form-label text-nowrap">
-                <strong>
-                  {{organizationId}}
-                </strong>
-              </p>
-            </div>
-            <div class="col-4">
-              <p class="col-form-label text-nowrap">
-                Contract ID
-              </p>
-            </div>
-            <div class="col-8">
-              <p class="col-form-label text-nowrap">
-                <strong>
-                  {{contractId}}
-                </strong>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <span>
+        <p class="h2">
+          <small>
+            Organization ID:
+          </small>
+          <br>
+          {{organizationId}}
+        </p>
+        <p class="h2">
+          <small>
+            Contract ID:
+          </small>
+          <br>
+          {{contractId}}
+        </p>
+      </span>
+
       <section class="application-nav sticky-top">
         <h3>Renew Application</h3>
         <mat-vertical-stepper (selectionChange)="gotoPage($event)" #stepper>
@@ -52,10 +39,14 @@
           <div class="page-header">
             <h1>{{item}}</h1>
           </div>
-          {{item}} component <br>
+          {{item}}<br>
           <div *ngIf="item === upperItems[1]">
             <app-applicant-contact-information [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-applicant-contact-information>
             <button (click)="contactInformationSave()">Save</button>
+          </div>
+          <div *ngIf="item === upperItems[2]">
+            <app-administrative-information></app-administrative-information>
+            <button (click)="administrativeInformationSave()">Save</button>
           </div>
         </div>
       </div>
