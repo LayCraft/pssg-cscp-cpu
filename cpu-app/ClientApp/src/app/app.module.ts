@@ -72,6 +72,7 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { OrganizationProfileBoxComponent } from './components/organization-profile-box/organization-profile-box.component';
+import { MinistryContactBoxComponent } from './components/ministry-contact-box/ministry-contact-box.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { OrganizationProfileBoxComponent } from './components/organization-profi
     HeaderComponent,
     FooterComponent,
     OrganizationProfileBoxComponent,
+    MinistryContactBoxComponent,
   ],
   imports: [
     BrowserModule,
