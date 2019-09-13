@@ -1,9 +1,9 @@
 import { Component, OnInit, EventEmitter, Output, Input, ViewChild } from '@angular/core';
-import { ContactInformation, iContactInformation } from '../../classes/contact-information.class';
-import { emailValidRegex, phoneValidRegex, postalCodeValidRegex } from '../../constants/validators';
 import { AbstractControl, NgForm } from '@angular/forms';
-import { iCountry, COUNTRIES_ADDRESS_2 } from '../../constants/country-list';
+import { emailValidRegex, phoneValidRegex, postalCodeValidRegex } from '../../constants/validators';
+import { ContactInformation, iContactInformation } from '../../classes/contact-information.class';
 import { Address } from '../../classes/address.class';
+import { iCountry, COUNTRIES_ADDRESS_2 } from '../../constants/country-list';
 
 @Component({
   selector: 'app-applicant-contact-information',

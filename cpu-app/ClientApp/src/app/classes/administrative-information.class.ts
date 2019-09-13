@@ -1,23 +1,23 @@
 export interface iAdministrativeInformation {
-  compliantEmploymentStandardsAct?: boolean;
-  compliantHumanRights?: boolean;
-  compliantWorkersCompensation?: boolean;
-  staffUnionized?: boolean;
-  staffUnion?: string;
-  ccseaMember?: boolean;
-  ccseaMemberType?: string;
-  staffSubcontracted?: boolean;
+  compliantEmploymentStandardsAct: boolean;
+  compliantHumanRights: boolean;
+  compliantWorkersCompensation: boolean;
+  staffUnionized: boolean;
+  staffUnion: string;
+  ccseaMember: boolean;
+  ccseaMemberType: string;
+  staffSubcontracted: boolean;
 }
 
 export class AdministrativeInformation implements iAdministrativeInformation {
-  compliantEmploymentStandardsAct?: boolean;
-  compliantHumanRights?: boolean;
-  compliantWorkersCompensation?: boolean;
-  staffUnionized?: boolean;
-  staffUnion?: string;
-  ccseaMember?: boolean;
-  ccseaMemberType?: string;
-  staffSubcontracted?: boolean;
+  compliantEmploymentStandardsAct: boolean;
+  compliantHumanRights: boolean;
+  compliantWorkersCompensation: boolean;
+  staffUnionized: boolean;
+  staffUnion: string;
+  ccseaMember: boolean;
+  ccseaMemberType: string;
+  staffSubcontracted: boolean;
   constructor(ai?: iAdministrativeInformation) {
     if (ai) {
       this.compliantEmploymentStandardsAct = ai.compliantEmploymentStandardsAct || null;

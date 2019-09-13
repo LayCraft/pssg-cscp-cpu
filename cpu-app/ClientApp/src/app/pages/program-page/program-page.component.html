@@ -45,7 +45,7 @@
             <button (click)="contactInformationSave()">Save</button>
           </div>
           <div *ngIf="item === upperItems[2]">
-            <app-administrative-information></app-administrative-information>
+            <app-administrative-information [(administrativeInformation)]="administrativeInformation" (valid)="administrativeInformationIsValid($event)"></app-administrative-information>
             <button (click)="administrativeInformationSave()">Save</button>
           </div>
         </div>

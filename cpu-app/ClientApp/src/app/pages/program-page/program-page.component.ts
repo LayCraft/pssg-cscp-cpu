@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatStepper } from '@angular/material';
 import { iContactInformation } from '../../classes/contact-information.class';
 import { BoilerplateService } from '../../services/boilerplate.service';
+import { iAdministrativeInformation, AdministrativeInformation } from '../../classes/administrative-information.class';
 
 @Component({
   selector: 'app-program-page',
@@ -27,7 +28,7 @@ export class ProgramPageComponent implements OnInit {
 
   currentFormPage: string = '';
   contactInformation: iContactInformation;
-  // administrativeInformation: iAdministrativeInformation;
+  administrativeInformation: iAdministrativeInformation;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +47,7 @@ export class ProgramPageComponent implements OnInit {
     // TODO: eventually we need to get the current forms from the service
     if (!this.contactInformation) this.boilerplateService.getOrganizationBoilerplate(this.organizationId)
       .subscribe(ci => this.contactInformation = ci);
+    this.administrativeInformation = new AdministrativeInformation();
   }
 
   gotoPage(selectPage: MatStepper): void {
