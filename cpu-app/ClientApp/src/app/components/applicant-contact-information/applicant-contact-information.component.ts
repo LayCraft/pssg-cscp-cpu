@@ -38,7 +38,7 @@ export class ApplicantContactInformationComponent implements OnInit {
     // initialize the contact information if it is supplied else make a new object
     this.contactInformation ? this.contactInformationForm = new ContactInformation(this.contactInformation) : new ContactInformation();
     // the mailing address should be shown on init when the contact information is not empty
-    this.hasMailingAddress = !!this.contactInformation && !!this.contactInformation.mailingAddress;
+    this.hasMailingAddress = !!this.contactInformation && !!this.contactInformation.mailingAddress && !!this.contactInformation.mailingAddress.city;
 
     // now that the form is initialized we emit it to send the validity to the parent. Otherwise we have to wait for the user to change something.
     this.onInput();
