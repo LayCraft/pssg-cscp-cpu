@@ -14,45 +14,17 @@ import { VersionInfoDialog } from './shared/components/version-info/version-info
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = '';
-  previousUrl: string;
-  public currentUser: User;  // PROBABLY DON'T NEED
   public versionInfo: VersionInfo;
   public isNewUser: boolean;
   public isDevMode: boolean;
 
-  constructor(
-    private renderer: Renderer2,
-    private router: Router,
-    private versionInfoDataService: VersionInfoDataService,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.isDevMode = isDevMode();
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        let prevSlug = this.previousUrl;
-        let nextSlug = event.url.slice(1);
-        if (!nextSlug) nextSlug = 'home';
-        if (prevSlug) {
-          this.renderer.removeClass(document.body, 'ctx-' + prevSlug);
-        }
-        if (nextSlug) {
-          this.renderer.addClass(document.body, 'ctx-' + nextSlug);
-        }
-        this.previousUrl = nextSlug;
-      }
-    });
   }
 
   ngOnInit(): void {
   }
 
-  loadVersionInfo() {
-    this.versionInfoDataService.getVersionInfo()
-      .subscribe((versionInfo: VersionInfo) => {
-        this.versionInfo = versionInfo;
-      });
-  }
 
   isIE10orLower() {
     let result, jscriptVersion;
@@ -64,11 +36,5 @@ export class AppComponent implements OnInit {
       result = true;
     }
     return result;
-  }
-
-  showVersionInfo(): void {
-    this.dialog.open(VersionInfoDialog, {
-      data: this.versionInfo
-    });
   }
 }
