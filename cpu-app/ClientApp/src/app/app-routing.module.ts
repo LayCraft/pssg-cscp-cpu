@@ -8,6 +8,7 @@ import { ExpensePageComponent } from './pages/expense-page/expense-page.componen
 import { BudgetPageComponent } from './pages/budget-page/budget-page.component';
 import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
   {
     path: 'profile',
     component: OrganizationProfilePageComponent,
+    //canDeactivate: [CanDeactivateGuard]
+  },
+  {
+    path: 'personnel',
+    component: PersonnelPageComponent,
     //canDeactivate: [CanDeactivateGuard]
   },
   { path: '**', component: NotFoundPageComponent }
