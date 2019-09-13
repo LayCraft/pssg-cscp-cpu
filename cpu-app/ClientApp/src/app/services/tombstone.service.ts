@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { iTombstone, iProgramTombstone, ProgramTombstone } from '../classes/tombstone.class';
-import { DynamicsBlob } from '../classes/dynamics-blob';
-import { Person, iPerson } from '../classes/person.class';
+import { iPerson } from '../classes/person.class';
 
 @Injectable({
   providedIn: 'root'
@@ -175,7 +174,7 @@ export class TombstoneService {
     ];
     return of(t);
   }
-  getProgramTombstones(bceid: string): Observable<DynamicsBlob> {
+  getProgramTombstones(bceid: string): Observable<iProgramTombstone[]> {
     const t: iProgramTombstone[] = [{
       programContact: {
         firstName: 'Tony',
@@ -201,7 +200,7 @@ export class TombstoneService {
       programId: 'wert',
       contractNumber: 'PDF-91191',
       organizationId: 'BCEID goes here',
-    }];
+    }] as iProgramTombstone[];
     return of(t);
   }
 }

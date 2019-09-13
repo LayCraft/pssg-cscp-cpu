@@ -3,8 +3,6 @@ import { iTombstone, iProgramTombstone, Tombstone, ProgramTombstone } from '../c
 import { TombstoneService } from '../services/tombstone.service';
 import { iContactInformation } from '../classes/contact-information.class';
 import { BoilerplateService } from '../services/boilerplate.service';
-import { DynamicsBlob } from '../classes/dynamics-blob';
-import { iProgramInformation } from '../classes/program-information.class';
 
 @Component({
   selector: 'app-home',
@@ -34,14 +32,9 @@ export class HomeComponent implements OnInit {
     // collect BCEIDs for the organization
     this.boilerplateService.getOrganizationBoilerplate('FAKE BCEID').subscribe(bp => this.contactInformation = bp);
     this.tombstoneService.getTombstones('FAKE BCEID').subscribe(t => this.tombstones = t);
-    this.tombstoneService.getProgramTombstones('Whatever').subscribe((dynamics: DynamicsBlob) => {
+    this.tombstoneService.getProgramTombstones('Whatever').subscribe((tombstones: iProgramTombstone[]) => {
       // clear tombstones
-      this.programTombstones = [];
-      for (let key in dynamics) {
-        const converter: ProgramTombstone = new ProgramTombstone();
-        converter.fromDynamics(dynamics[key]);
-        this.programTombstones.push(converter);
-      }
+      this.programTombstones = tombstones;
     });
   }
   setCurrentTab(tabname: string) {

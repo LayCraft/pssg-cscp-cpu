@@ -3,7 +3,6 @@ import { iContactInformation } from '../../classes/contact-information.class';
 import { iTombstone, iProgramTombstone, ProgramTombstone } from '../../classes/tombstone.class';
 import { TombstoneService } from '../../services/tombstone.service';
 import { BoilerplateService } from '../../services/boilerplate.service';
-import { DynamicsBlob } from '../../classes/dynamics-blob';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -39,14 +38,9 @@ export class DashboardPageComponent implements OnInit {
       this.tombstones = t.filter(tombstone => tombstone.formStatus !== this.statuses[5]);
       this.completedTombstones = t.filter(tombstone => tombstone.formStatus === this.statuses[5]);
     });
-    this.tombstoneService.getProgramTombstones('Whatever').subscribe((dynamics: DynamicsBlob) => {
+    this.tombstoneService.getProgramTombstones('Whatever').subscribe((tombstones: ProgramTombstone[]) => {
       // clear tombstones
-      this.programTombstones = [];
-      for (let key in dynamics) {
-        const converter: ProgramTombstone = new ProgramTombstone();
-        converter.fromDynamics(dynamics[key]);
-        this.programTombstones.push(converter);
-      }
+      this.programTombstones = tombstones;
     });
   }
   setCurrentTab(tabname: string) {

@@ -1,5 +1,4 @@
 import { iPerson, Person } from "./person.class";
-import { DynamicsBlob } from "./dynamics-blob";
 
 export interface iTombstone {
   formName: string;
@@ -51,8 +50,6 @@ export class Tombstone implements iTombstone {
       this.programName = tombstone.programName || null;
     }
   }
-  toDynamics() { }
-  fromDynamics(dynamics: DynamicsBlob) { }
 }
 
 export interface iProgramTombstone {
@@ -78,13 +75,5 @@ export class ProgramTombstone implements iProgramTombstone {
     } else {
       this.programContact = new Person();
     }
-  }
-  toDynamics() { }
-  fromDynamics(dynamics: DynamicsBlob) {
-    this.programContact = new Person(dynamics['programContact']) || null;
-    this.programName = dynamics['programName'] || null;
-    this.programId = dynamics['programName'] || null;
-    this.contractNumber = dynamics['contractNumber'] || null;
-    this.organizationId = dynamics['organizationId'] || null;
   }
 }
