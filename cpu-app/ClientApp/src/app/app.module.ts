@@ -50,9 +50,7 @@ import { CancelApplicationDialog } from './shared/components/cancel-dialog/cance
 import { DeactivateGuardDialog } from './shared/components/guard-dialog/guard-dialog.component';
 import { FileUploaderBoxComponent } from './shared/components/file-uploader-box/file-uploader-box.component';
 import { TestComponent } from './test/test.component';
-import { FileDropModule } from 'ngx-file-drop';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { FileUploaderComponent } from './shared/components/file-uploader/file-uploader.component';
 import { NgBusyModule } from 'ng-busy';
 import { BsDatepickerModule, AlertModule } from 'ngx-bootstrap';
 import { FieldComponent } from './shared/components/field/field.component';
@@ -85,7 +83,6 @@ import { AdministrativeInformationComponent } from './components/administrative-
     TestComponent,
     HomeComponent,
     NotFoundPageComponent,
-    FileUploaderComponent,
     FieldComponent,
     QuickExitComponent,
     VersionInfoDialog,
@@ -145,7 +142,6 @@ import { AdministrativeInformationComponent } from './components/administrative-
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    FileDropModule,
     SignaturePadModule,
     TooltipModule.forRoot(),
     BsDatepickerModule.forRoot(),
@@ -190,7 +186,6 @@ import { AdministrativeInformationComponent } from './components/administrative-
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    FileDropModule,
     TooltipModule,
     MatTooltipModule
   ],
