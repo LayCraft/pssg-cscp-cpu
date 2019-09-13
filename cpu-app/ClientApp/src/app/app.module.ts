@@ -69,6 +69,7 @@ import { BudgetPageComponent } from './pages/budget-page/budget-page.component';
 import { ExpensePageComponent } from './pages/expense-page/expense-page.component';
 import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { HeaderComponent } from './shared/header/header.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
     BudgetPageComponent,
     ExpensePageComponent,
     StatusReportPageComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
