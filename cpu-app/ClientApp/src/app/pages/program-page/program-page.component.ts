@@ -18,7 +18,6 @@ export class ProgramPageComponent implements OnInit {
 
   upperItems: string[] = ['Overview',
     'Applicant Contact Information',
-    'Executive Contact Information',
     'Applicant Administrative Information',
     'Commercial General Liability Insurance'
   ];
@@ -91,3 +90,4 @@ export class ProgramPageComponent implements OnInit {
     }
     // todo: this should save the form information to a service.  }
   }
+}
