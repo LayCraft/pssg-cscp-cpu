@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatStepper } from '@angular/material';
 import { iContactInformation } from '../../classes/contact-information.class';
@@ -10,6 +10,7 @@ import { BoilerplateService } from '../../services/boilerplate.service';
   styleUrls: ['./program-page.component.scss']
 })
 export class ProgramPageComponent implements OnInit {
+
   contractId: string;
   organizationId: string;
   currentPage: string = '';
@@ -26,7 +27,6 @@ export class ProgramPageComponent implements OnInit {
   combinedPageList: string[];
 
   currentFormPage: string = '';
-
   contactInformation: iContactInformation;
 
   constructor(
@@ -63,4 +63,19 @@ export class ProgramPageComponent implements OnInit {
     // when the user confirms the contact info we save it as partial data.
     console.log(event);
   }
+
+  // Methods and
+  contactValid: boolean;
+  contactIsValid(valid: boolean) {
+    // track the state of validity
+    this.contactValid = valid;
+  }
+  contactInformationSave() {
+    if (this.contactValid) {
+      // just print to console for now
+      console.log(this.contactInformation);
+    }
+    // todo: this should save the form information to a service.
+  }
+
 }

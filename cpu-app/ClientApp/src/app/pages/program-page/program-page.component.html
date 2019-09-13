@@ -2,8 +2,34 @@
   <div class="row">
     <div class="col-md-4">
       <div class="card">
-        Organization ID: {{organizationId}}
-        Contract ID: {{contractId}}
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4">
+              <p class="col-form-label text-nowrap">
+                Organization ID
+              </p>
+            </div>
+            <div class="col-8">
+              <p class="col-form-label text-nowrap">
+                <strong>
+                  {{organizationId}}
+                </strong>
+              </p>
+            </div>
+            <div class="col-4">
+              <p class="col-form-label text-nowrap">
+                Contract ID
+              </p>
+            </div>
+            <div class="col-8">
+              <p class="col-form-label text-nowrap">
+                <strong>
+                  {{contractId}}
+                </strong>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
       <section class="application-nav sticky-top">
         <h3>Renew Application</h3>
@@ -28,7 +54,8 @@
           </div>
           {{item}} component <br>
           <div *ngIf="item === upperItems[1]">
-            <app-applicant-contact-information [(contactInformation)]='contactInformation'></app-applicant-contact-information>
+            <app-applicant-contact-information [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-applicant-contact-information>
+            <button (click)="contactInformationSave()">Save</button>
           </div>
         </div>
       </div>
