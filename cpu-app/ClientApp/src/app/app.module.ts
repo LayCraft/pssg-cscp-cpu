@@ -69,7 +69,8 @@ import { BudgetPageComponent } from './pages/budget-page/budget-page.component';
 import { ExpensePageComponent } from './pages/expense-page/expense-page.component';
 import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
-import { HeaderComponent } from './shared/header/header.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { HeaderComponent } from './shared/header/header.component';
     ExpensePageComponent,
     StatusReportPageComponent,
     HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
