@@ -1,7 +1,6 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { AppRoutingModule } from './app-routing.module';
@@ -109,7 +108,6 @@ import { AdministrativeInformationComponent } from './components/administrative-
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -157,7 +155,6 @@ import { AdministrativeInformationComponent } from './components/administrative-
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
