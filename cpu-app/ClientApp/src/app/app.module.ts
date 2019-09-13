@@ -71,6 +71,7 @@ import { StatusReportPageComponent } from './pages/status-report-page/status-rep
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { OrganizationProfileBoxComponent } from './components/organization-profile-box/organization-profile-box.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
     StatusReportPageComponent,
     HeaderComponent,
     FooterComponent,
+    OrganizationProfileBoxComponent,
   ],
   imports: [
     BrowserModule,

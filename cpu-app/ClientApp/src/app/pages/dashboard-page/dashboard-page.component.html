@@ -8,27 +8,7 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">
-          Organization Profile
-        </div>
-        <div class="card-body">
-          <div class="card-title">
-            {{contactInformation.organizationName}}
-          </div>
-          <p class="card-text">
-            <strong>Phone</strong><br>
-            <a href="tel:{{contactInformation.phoneNumber}}">{{contactInformation.phoneNumber}}</a>
-          </p>
-          <p class="card-text">
-            <strong>Email</strong><br>
-            <a href="mailto:{{contactInformation.emailAddress}}">{{contactInformation.emailAddress}}</a>
-          </p>
-        </div>
-        <div class="card-footer">
-          <a routerLink="/profile" class="btn btn-primary">Edit Organization Profile</a>
-        </div>
-      </div>
+      <app-organization-profile-box [contactInformation]="contactInformation"></app-organization-profile-box>
     </div>
     <div class="col-md-4">
       <div class="card">
