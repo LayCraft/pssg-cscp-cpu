@@ -15,6 +15,7 @@ export interface iTombstone {
   programId: string; // the id of the program to look up
   frequency: string; // annual, biannual, quarter, month,
   lastUpdated: Date;
+  programName: string;
 }
 export class Tombstone implements iTombstone {
   // this class may be useful because it can offer a way to convert dates.
@@ -31,6 +32,7 @@ export class Tombstone implements iTombstone {
   frequency: string;
   internalNote: string;
   lastUpdated: Date;
+  programName: string;
   constructor(tombstone: iTombstone) {
     if (tombstone) {
       this.formName = tombstone.formName || null;
@@ -46,6 +48,7 @@ export class Tombstone implements iTombstone {
       this.lastUpdated = tombstone.lastUpdated || null;
       this.internalNote = tombstone.internalNote || null;
       this.programId = tombstone.programId || null;
+      this.programName = tombstone.programName || null;
     }
   }
   toDynamics() { }

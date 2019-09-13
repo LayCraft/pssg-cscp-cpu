@@ -38,43 +38,48 @@
             <table class="table table-sm table-striped">
               <thead class="thead">
                 <tr>
-                  <th scope="col"></th>
-                  <th scope="col">Form</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Deadline</th>
                   <th scope="col">Action</th>
-                  <th scope="col">Note</th>
+                  <th scope="col">Frequency</th>
+                  <th scope="col">Form</th>
+                  <th scope="col">For Range</th>
+                  <th scope="col">Deadline</th>
+                  <th scope="col" width="20%">Note</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let tombstone of tombstones; let i=index">
-                  <th scope="row">
-                    {{i+1}}
-                  </th>
-                  <td><strong>{{tombstone.frequency | titlecase}} {{tombstone.formName}}</strong><br>
-                    <small>({{tombstone.forDateRangeStart |date:'yyyy-MM-dd'}} - {{tombstone.forDateRangeEnd |date:'yyyy-MM-dd'}})</small>
-                  </td>
                   <td>
                     <!-- Missed -->
-                    <!-- <i *ngIf="tombstone.formStatus === statuses[0]" class="fas fa-times-circle text-danger"></i> -->
+                    <i *ngIf="tombstone.formStatus === statuses[0]" class="fas fa-times-circle text-danger"></i>
                     <!-- Late -->
-                    <!-- <i *ngIf="tombstone.formStatus === statuses[1]" class="fas fa-clock text-warning"></i> -->
+                    <i *ngIf="tombstone.formStatus === statuses[1]" class="fas fa-clock text-warning"></i>
                     <!-- Submitted -->
-                    <!-- <i *ngIf="tombstone.formStatus === statuses[2]" class="fas fa-check-circle text-success"></i> -->
+                    <i *ngIf="tombstone.formStatus === statuses[2]" class="fas fa-check-circle text-success"></i>
                     <!-- Started -->
-                    <!-- <i *ngIf="tombstone.formStatus === statuses[3]" class="far fa-file text-success"></i> -->
+                    <i *ngIf="tombstone.formStatus === statuses[3]" class="far fa-file text-success"></i>
                     <!-- Action Required -->
-                    <!-- <i *ngIf="tombstone.formStatus === statuses[4]" class="far fa-comment-dots text-info"></i> -->
-                    <!-- coulour the text the same -->
+                    <i *ngIf="tombstone.formStatus === statuses[4]" class="far fa-comment-dots text-info"></i>
+                    <!-- colour the text the same -->
                     <span [class.text-info]='tombstone.formStatus === statuses[4]' [class.text-secondary]='tombstone.formStatus === statuses[3]' [class.text-success]='tombstone.formStatus === statuses[2]' [class.text-warning]='tombstone.formStatus === statuses[1]' [class.text-danger]='tombstone.formStatus === statuses[0]'>
                       {{tombstone.formStatus}}
                     </span>
                   </td>
+                  <td>
+                    <a routerLink="/{{tombstone.formType}}/{{tombstone.organizationId}}/{{tombstone.programId}}">Complete</a>
+                  </td>
+                  <td>{{tombstone.frequency | titlecase}}</td>
+                  <td>{{tombstone.formName}}<br>
+                  </td>
+                  <td>
+                    {{tombstone.forDateRangeStart |date:'yyyy-MM-dd'}} &mdash; {{tombstone.forDateRangeEnd |date:'yyyy-MM-dd'}}
+                  </td>
                   <td> {{tombstone.formDeadline |date:'yyyy-MM-dd'}}</td>
                   <td>
-                    <a routerLink="/{{tombstone.formType}}/{{tombstone.organizationId}}/{{tombstone.programId}}">Complete {{tombstone.formName}}</a>
+                    <div>
+                      {{tombstone.note}}
+                    </div>
                   </td>
-                  <td>{{tombstone.note}}</td>
                 </tr>
               </tbody>
             </table>
@@ -105,7 +110,7 @@
                     {{i+1}}
                   </th>
                   <td><strong>{{tombstone.frequency | titlecase}} {{tombstone.formName}}</strong><br>
-                    <small>({{tombstone.forDateRangeStart |date:'yyyy-MM-dd'}} - {{tombstone.forDateRangeEnd |date:'yyyy-MM-dd'}})</small>
+                    <small>{{tombstone.forDateRangeStart |date:'yyyy-MM-dd'}} - {{tombstone.forDateRangeEnd |date:'yyyy-MM-dd'}}</small>
                   </td>
                   <td> {{tombstone.formStatus}} </td>
                   <td> {{tombstone.lastUpdated |date:'yyyy-MM-dd'}}</td>

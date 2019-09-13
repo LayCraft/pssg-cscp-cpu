@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { VersionInfoDialog } from '../version-info/version-info.component';
-import { VersionInfo } from 'src/app/models/version-info.model';
+import { VersionInfo } from '../../../../app/models/version-info.model';
 import { VersionInfoDataService } from '../../../services/version-info-data.service';
 
 @Component({
