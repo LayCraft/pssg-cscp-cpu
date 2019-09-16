@@ -34,42 +34,53 @@
     </div>
 
     <div class="col-md-8">
-      <div *ngFor="let item of upperItems">
-        <!-- TODO: in retrospect this isn't a very efficient way to handle things. Why does it need a for loop? Kill it later.-->
-        <div *ngIf="currentFormPage === item">
-          <div class="page-header">
-            <h1>{{item}}</h1>
+      <!-- Section is not in programs list -->
+      <div *ngIf="programs.indexOf(currentFormPage)===-1">
+        <div class="page-header">
+          <h1>{{currentFormPage}}</h1>
+        </div>
+        <div *ngIf="currentFormPage === upperItems[0]">
+          <app-applicant-contact-information [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-applicant-contact-information>
+          <button (click)="contactInformationSave()">Save</button>
+        </div>
+        <div *ngIf="currentFormPage === upperItems[1]">
+          <app-administrative-information [(administrativeInformation)]="administrativeInformation" (valid)="administrativeInformationIsValid($event)"></app-administrative-information>
+          <button (click)="administrativeInformationSave()">Save</button>
+        </div>
+        <div *ngIf="currentFormPage === upperItems[2]">
+          <app-cg-liability></app-cg-liability>
+          <!-- Instead of passing values to the component this is a simpler approach for a one click form. It is different than the other forms. -->
+          <div class="form-group">
+            Please choose from ONE of the following options:
+            <div class="form-check form-check-inline">
+              <input #cglOption="ngModel" [(ngModel)]="cgLiability" class="form-check-input" type="radio" name="cglOption" id="cglOption1" value="Agency Carries own CGL coverage.">
+              <label class="form-check-label" for="cglOption1">
+                <strong> Option A: </strong> Your agency carries its own Commercial General Liability (CGL) coverage (as describe above) that covers the programs and services you are applying to provide.
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input #cglOption="ngModel" [(ngModel)]="cgLiability" class="form-check-input" type="radio" name="cglOption" id="cglOption2" value="Agency requesting Province's Master Insurance Program enrolment.">
+              <label class="form-check-label" for="cglOption2">
+                <strong> Option B: </strong> Your agency is requesting enrolment in the Province's Master Insurance Program.
+              </label>
+            </div>
           </div>
-          {{item}}<br>
-          <div *ngIf="item === upperItems[0]">
-            <app-applicant-contact-information [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-applicant-contact-information>
-            <button (click)="contactInformationSave()">Save</button>
-          </div>
-          <div *ngIf="item === upperItems[1]">
-            <app-administrative-information [(administrativeInformation)]="administrativeInformation" (valid)="administrativeInformationIsValid($event)"></app-administrative-information>
-            <button (click)="administrativeInformationSave()">Save</button>
-          </div>
-          <div *ngIf="item === upperItems[2]">
-            <app-cg-liability></app-cg-liability>
-            <button (click)="cgLiabilitySave()">Save</button>
-          </div>
+          <button (click)="cgLiabilitySave()">Save</button>
+        </div>
+        <div *ngIf="currentFormPage === lowerItems[0]">
+          Not yet made
+        </div>
+        <div *ngIf="currentFormPage === lowerItems[1]">
+          Not yet made
         </div>
       </div>
+
       <div *ngFor="let item of programs">
         <div *ngIf="currentFormPage === item">
           <div class="page-header">
             <h1>{{item}}</h1>
           </div>
           <app-program-planner [program]="item" (pageTurn)="gotoNextStep($event)"></app-program-planner>
-        </div>
-      </div>
-
-      <div *ngFor="let item of lowerItems">
-        <div *ngIf="currentFormPage === item">
-          <div class="page-header">
-            <h1>{{item}}</h1>
-          </div>
-          {{item}} component
         </div>
       </div>
     </div>

@@ -14,7 +14,6 @@ export class ProgramPageComponent implements OnInit {
 
   contractId: string;
   organizationId: string;
-  currentPage: string = '';
   pageList: string[];
 
   upperItems: string[] = ['Applicant Contact Information', 'Applicant Administrative Information', 'Commercial General Liability Insurance'];
@@ -23,9 +22,6 @@ export class ProgramPageComponent implements OnInit {
   combinedPageList: string[];
 
   currentFormPage: string = '';
-  contactInformation: iContactInformation;
-  administrativeInformation: iAdministrativeInformation;
-  cgLiability: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,6 +61,7 @@ export class ProgramPageComponent implements OnInit {
 
   // Methods and
   contactValid: boolean;
+  contactInformation: iContactInformation;
   contactIsValid(valid: boolean) {
     // track the state of validity
     this.contactValid = valid;
@@ -78,6 +75,7 @@ export class ProgramPageComponent implements OnInit {
   }
 
   administrativeInformationValid: boolean;
+  administrativeInformation: iAdministrativeInformation;
   administrativeInformationIsValid(valid: boolean) {
     // track the state of validity
     this.administrativeInformationValid = valid;
@@ -90,15 +88,13 @@ export class ProgramPageComponent implements OnInit {
     // todo: this should save the form information to a service.  }
   }
 
-  cgLiabilityValid: boolean;
-  cgLiabilityIsValid(valid: boolean) {
-    // track the state of validity
-    this.administrativeInformationValid = valid;
-  }
+  cgLiability: string = '';
   cgLiabilitySave() {
     if (this.cgLiability) {
       // just print to console for now
       console.log(this.cgLiability);
+    } else {
+      alert('Nothing was selected!')
     }
     // todo: this should save the form information to a service.  }
   }
