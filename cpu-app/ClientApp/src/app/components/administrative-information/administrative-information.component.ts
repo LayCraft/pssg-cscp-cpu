@@ -45,4 +45,12 @@ export class AdministrativeInformationComponent implements OnInit {
     // emit the form
     this.administrativeInformationChange.emit(this.administrativeInformationForm);
   }
+
+  changeStaffUnionized() {
+    // if the staff is unionized we show a form
+    // if not we remove the information from the form
+    if (!this.administrativeInformationForm.staffUnionized) {
+      this.administrativeInformationForm.staffUnion = null;
+    }
+  }
 }

@@ -13,8 +13,21 @@ $theme: mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
 
 
-
-
+// form validity styles
+.valid-feedback {
+  display: inherit;
+}
+.invalid-feedback {
+  display: inherit;
+}
+// a handy red asterisk for marking required fields
+.required {
+  &::after {
+    content: " *";
+    color: #d93e45;
+    font-weight: 700;
+  }
+}
 
 // .ctx-home {
 //   background: #f2f2f2;

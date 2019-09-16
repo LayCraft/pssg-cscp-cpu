@@ -57,11 +57,11 @@
                     <!-- Submitted -->
                     <i *ngIf="tombstone.formStatus === statuses[2]" class="fas fa-check-circle text-success"></i>
                     <!-- Started -->
-                    <i *ngIf="tombstone.formStatus === statuses[3]" class="far fa-file text-success"></i>
+                    <i *ngIf="tombstone.formStatus === statuses[3]" class="far fa-file text-secondary"></i>
                     <!-- Action Required -->
                     <i *ngIf="tombstone.formStatus === statuses[4]" class="far fa-comment-dots text-info"></i>
                     <!-- colour the text the same -->
-                    <span [class.text-info]='tombstone.formStatus === statuses[4]' [class.text-secondary]='tombstone.formStatus === statuses[3]' [class.text-success]='tombstone.formStatus === statuses[2]' [class.text-warning]='tombstone.formStatus === statuses[1]' [class.text-danger]='tombstone.formStatus === statuses[0]'>
+                    <span class="ml-1" [class.text-info]='tombstone.formStatus === statuses[4]' [class.text-secondary]='tombstone.formStatus === statuses[3]' [class.text-success]='tombstone.formStatus === statuses[2]' [class.text-warning]='tombstone.formStatus === statuses[1]' [class.text-danger]='tombstone.formStatus === statuses[0]'>
                       {{tombstone.formStatus}}
                     </span>
                   </td>
