@@ -1,7 +1,6 @@
 import { NgForm, AbstractControl } from '@angular/forms';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ProgramInformation, iProgramInformation, iProgramMeta } from '../../classes/program-information.class';
-import { ContactInformation, iContactInformation } from '../../classes/contact-information.class';
+import { ProgramInformation, iProgramMeta, iProgramInformation } from '../../classes/program-information.class';
 import { BoilerplateService } from '../../services/boilerplate.service';
 import { ProgramInformationService } from '../../services/program-information.service';
 @Component({
@@ -31,8 +30,9 @@ export class ProgramPlannerComponent implements OnInit {
 
   ngOnInit() {
     // initialize the program information if it is supplied else make a new object
-    // this.programInformationForm
-    // this.programInformationService.
+    this.programInformationService.getProgramInformation(this.programMeta.organizationId, this.programMeta.programId).subscribe((p: iProgramInformation) => {
+      this.programInformationForm = new ProgramInformation(p);
+    });
 
   }
 

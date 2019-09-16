@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { iTombstone, iProgramTombstone, ProgramTombstone } from '../classes/tombstone.class';
+import { iTombstone, iProgramTombstone } from '../classes/tombstone.class';
 import { iPerson } from '../classes/person.class';
 
 @Injectable({

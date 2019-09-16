@@ -37,30 +37,7 @@ export class ProgramPageComponent implements OnInit {
     this.contractId = this.route.snapshot.paramMap.get('id');
     // TODO: get the meta information about programs somehow. API?
     this.programMeta = [
-      {
-        organizationId: this.organizationId,
-        contractId: this.contractId,
-        programId: 'PROGRAM1',
-        programName: 'Social Work East Van'
-      },
-      {
-        organizationId: this.organizationId,
-        contractId: this.contractId,
-        programId: 'PROGRAM2',
-        programName: 'Social Work Tri-cities'
-      },
-      {
-        organizationId: this.organizationId,
-        contractId: this.contractId,
-        programId: 'PROGRAM3',
-        programName: 'Social Work Burnaby'
-      },
-      {
-        organizationId: this.organizationId,
-        contractId: this.contractId,
-        programId: 'PROGRAM4',
-        programName: 'Social Work New West'
-      },
+
     ];
     // save the program names
     this.programs = this.programMeta.map((p: iProgramMeta) => p.programName)
