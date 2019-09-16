@@ -35,18 +35,23 @@
 
     <div class="col-md-8">
       <div *ngFor="let item of upperItems">
+        <!-- TODO: in retrospect this isn't a very efficient way to handle things. Why does it need a for loop? Kill it later.-->
         <div *ngIf="currentFormPage === item">
           <div class="page-header">
             <h1>{{item}}</h1>
           </div>
           {{item}}<br>
-          <div *ngIf="item === upperItems[1]">
+          <div *ngIf="item === upperItems[0]">
             <app-applicant-contact-information [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-applicant-contact-information>
             <button (click)="contactInformationSave()">Save</button>
           </div>
-          <div *ngIf="item === upperItems[2]">
+          <div *ngIf="item === upperItems[1]">
             <app-administrative-information [(administrativeInformation)]="administrativeInformation" (valid)="administrativeInformationIsValid($event)"></app-administrative-information>
             <button (click)="administrativeInformationSave()">Save</button>
+          </div>
+          <div *ngIf="item === upperItems[2]">
+            <app-cg-liability></app-cg-liability>
+            <button (click)="cgLiabilitySave()">Save</button>
           </div>
         </div>
       </div>

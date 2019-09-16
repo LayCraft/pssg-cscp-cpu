@@ -17,11 +17,7 @@ export class ProgramPageComponent implements OnInit {
   currentPage: string = '';
   pageList: string[];
 
-  upperItems: string[] = ['Overview',
-    'Applicant Contact Information',
-    'Applicant Administrative Information',
-    'Commercial General Liability Insurance'
-  ];
+  upperItems: string[] = ['Applicant Contact Information', 'Applicant Administrative Information', 'Commercial General Liability Insurance'];
   programs: string[] = ['Social Work East Van', 'Social Work Tri-cities', 'Social Work Burnaby', 'Social Work New West'];
   lowerItems: string[] = ['Review Program Application', 'Authorization'];
   combinedPageList: string[];
@@ -29,6 +25,7 @@ export class ProgramPageComponent implements OnInit {
   currentFormPage: string = '';
   contactInformation: iContactInformation;
   administrativeInformation: iAdministrativeInformation;
+  cgLiability: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -88,7 +85,20 @@ export class ProgramPageComponent implements OnInit {
   administrativeInformationSave() {
     if (this.administrativeInformationIsValid) {
       // just print to console for now
-      // console.log(this.administrativeInformation);
+      console.log(this.administrativeInformation);
+    }
+    // todo: this should save the form information to a service.  }
+  }
+
+  cgLiabilityValid: boolean;
+  cgLiabilityIsValid(valid: boolean) {
+    // track the state of validity
+    this.administrativeInformationValid = valid;
+  }
+  cgLiabilitySave() {
+    if (this.cgLiability) {
+      // just print to console for now
+      console.log(this.cgLiability);
     }
     // todo: this should save the form information to a service.  }
   }

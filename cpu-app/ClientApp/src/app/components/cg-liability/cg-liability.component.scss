@@ -1,0 +1,15 @@
+// form validity styles
+.valid-feedback {
+  display: inherit;
+}
+.invalid-feedback {
+  display: inherit;
+}
+// a handy red asterisk for marking required fields
+.required {
+  &::after {
+    content: " *";
+    color: #d93e45;
+    font-weight: 700;
+  }
+}

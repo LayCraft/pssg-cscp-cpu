@@ -72,6 +72,7 @@ import { OrganizationProfileBoxComponent } from './components/organization-profi
 import { MinistryContactBoxComponent } from './components/ministry-contact-box/ministry-contact-box.component';
 import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
 import { AdministrativeInformationComponent } from './components/administrative-information/administrative-information.component';
+import { CgLiabilityComponent } from './components/cg-liability/cg-liability.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { AdministrativeInformationComponent } from './components/administrative-
     MinistryContactBoxComponent,
     PersonnelPageComponent,
     AdministrativeInformationComponent,
+    CgLiabilityComponent,
   ],
   imports: [
     BrowserModule,
