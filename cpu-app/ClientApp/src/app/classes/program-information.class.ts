@@ -1,6 +1,13 @@
 import { Address, iAddress } from "./address.class";
 import { Person, iPerson } from "./person.class";
 
+export interface iProgramMeta {
+  organizationId: string;
+  contractId: string;
+  programId: string;
+  programName: string;
+}
+
 export interface iProgramInformation {
 
   organizationName: string;

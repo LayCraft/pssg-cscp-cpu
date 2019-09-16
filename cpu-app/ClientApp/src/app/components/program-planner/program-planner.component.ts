@@ -1,43 +1,43 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ProgramInformation } from '../../classes/program-information.class';
-import { Address } from '../../classes/address.class';
-import { iContactInformation } from '../../classes/contact-information.class';
+import { NgForm, AbstractControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ProgramInformation, iProgramInformation, iProgramMeta } from '../../classes/program-information.class';
+import { ContactInformation, iContactInformation } from '../../classes/contact-information.class';
 import { BoilerplateService } from '../../services/boilerplate.service';
+import { ProgramInformationService } from '../../services/program-information.service';
 @Component({
   selector: 'app-program-planner',
   templateUrl: './program-planner.component.html',
   styleUrls: ['./program-planner.component.scss']
 })
 export class ProgramPlannerComponent implements OnInit {
-  @Input() program: string;
-  @Output() pageTurn = new EventEmitter<string>();
+  // a viewchild to check the validity of the template form
+  @ViewChild(NgForm) piForm;
+  // is the contents of the form valid?
+  @Output() valid = new EventEmitter<boolean>();
+  @Input() programMeta: iProgramMeta;
 
-  // the form object
-  programInfo: ProgramInformation;
+  // the form model
+  programInformationForm: ProgramInformation;
+
+  currentTab: string;
+  tabs: string[];
   constructor(
-
-    private boilerplateService: BoilerplateService
-  ) { }
+    private boilerplateService: BoilerplateService,
+    private programInformationService: ProgramInformationService,
+  ) {
+    this.tabs = ['Contact Information', 'Delivery Information', 'Reporting Requirements'];
+    this.currentTab = this.tabs[0];
+  }
 
   ngOnInit() {
-    // query the api for an existing record return a 204 of not found?
-    //if 204 query applicant info service to fill in boilerplate data
-    this.boilerplateService.getOrganizationBoilerplate('bceid goes here').subscribe((info: iContactInformation) => {
-      // when the component loads make a new working contact information object to do the form work in
-      this.programInfo = new ProgramInformation();
+    // initialize the program information if it is supplied else make a new object
+    // this.programInformationForm
+    // this.programInformationService.
 
-      // copy the shared properties
-      this.programInfo.organizationName = info.organizationName || null;
-      this.programInfo.contractNumber = info.contractNumber || null;
-      this.programInfo.emailAddress = info.emailAddress || null;
-      this.programInfo.phoneNumber = info.phoneNumber || null;
-      this.programInfo.faxNumber = info.faxNumber || null;
+  }
 
-      this.programInfo.mainAddress = new Address(info.mainAddress);
-      this.programInfo.mailingAddress = new Address(info.mailingAddress);
-    });
-  }
-  onSubmit() {
-    this.pageTurn.emit('The program planner component requested a page turn.');
-  }
+  // form helpers. Validity hints and hide/show toggles
+  showValidFeedback(control: AbstractControl): boolean { return !(control.valid && (control.dirty || control.touched)) }
+  showInvalidFeedback(control: AbstractControl): boolean { return !(control.invalid && (control.dirty || control.touched)) }
+
 }

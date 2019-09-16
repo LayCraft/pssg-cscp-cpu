@@ -4,6 +4,8 @@ import { MatStepper } from '@angular/material';
 import { iContactInformation } from '../../classes/contact-information.class';
 import { BoilerplateService } from '../../services/boilerplate.service';
 import { iAdministrativeInformation, AdministrativeInformation } from '../../classes/administrative-information.class';
+import { iProgramMeta } from '../../classes/program-information.class';
+
 
 @Component({
   selector: 'app-program-page',
@@ -17,7 +19,8 @@ export class ProgramPageComponent implements OnInit {
   pageList: string[];
 
   upperItems: string[] = ['Applicant Contact Information', 'Applicant Administrative Information', 'Commercial General Liability Insurance'];
-  programs: string[] = ['Social Work East Van', 'Social Work Tri-cities', 'Social Work Burnaby', 'Social Work New West'];
+  programs: string[];
+  programMeta: iProgramMeta[];
   lowerItems: string[] = ['Review Program Application', 'Authorization'];
   combinedPageList: string[];
 
@@ -32,8 +35,38 @@ export class ProgramPageComponent implements OnInit {
     // collect the ids for looking up the program from the route.
     this.organizationId = this.route.snapshot.paramMap.get('orgid');
     this.contractId = this.route.snapshot.paramMap.get('id');
-
+    // TODO: get the meta information about programs somehow. API?
+    this.programMeta = [
+      {
+        organizationId: this.organizationId,
+        contractId: this.contractId,
+        programId: 'PROGRAM1',
+        programName: 'Social Work East Van'
+      },
+      {
+        organizationId: this.organizationId,
+        contractId: this.contractId,
+        programId: 'PROGRAM2',
+        programName: 'Social Work Tri-cities'
+      },
+      {
+        organizationId: this.organizationId,
+        contractId: this.contractId,
+        programId: 'PROGRAM3',
+        programName: 'Social Work Burnaby'
+      },
+      {
+        organizationId: this.organizationId,
+        contractId: this.contractId,
+        programId: 'PROGRAM4',
+        programName: 'Social Work New West'
+      },
+    ];
+    // save the program names
+    this.programs = this.programMeta.map((p: iProgramMeta) => p.programName)
+    // make a complete page list
     this.combinedPageList = [...this.upperItems, ...this.programs, ...this.lowerItems];
+    // set the current page to the first page
     this.currentFormPage = this.combinedPageList[0];
 
     // get the boilerplate contact information if there is none included (resuming the forms.)
@@ -68,9 +101,10 @@ export class ProgramPageComponent implements OnInit {
   }
   contactInformationSave() {
     if (this.contactValid) {
-      // just print to console for now
+      // TODO: just print to console for now
+      console.log('Save the contact information to the contract service')
       console.log(this.contactInformation);
-    }
+    } else alert('This should not be clickable right now.')
     // todo: this should save the form information to a service.
   }
 
@@ -82,9 +116,10 @@ export class ProgramPageComponent implements OnInit {
   }
   administrativeInformationSave() {
     if (this.administrativeInformationIsValid) {
-      // just print to console for now
+      // TODO: just print to console for now
+      console.log('Save the administrative information to the contract service.')
       console.log(this.administrativeInformation);
-    }
+    } else alert('This should not be clickable right now.');
     // todo: this should save the form information to a service.  }
   }
 
@@ -92,10 +127,10 @@ export class ProgramPageComponent implements OnInit {
   cgLiabilitySave() {
     if (this.cgLiability) {
       // just print to console for now
+      console.log('Save the group liability information to the contract service')
       console.log(this.cgLiability);
-    } else {
-      alert('Nothing was selected!')
-    }
+    } else alert('Nothing was selected!');
+
     // todo: this should save the form information to a service.  }
   }
 }

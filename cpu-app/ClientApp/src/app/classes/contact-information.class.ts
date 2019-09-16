@@ -11,8 +11,8 @@ export interface iContactInformation {
   mainAddress: iAddress;
   mailingAddress: iAddress;
 
-  executiveContact: iPerson;
-  boardContact: iPerson;
+  executiveContact?: iPerson;
+  boardContact?: iPerson;
 }
 
 export class ContactInformation implements iContactInformation {
