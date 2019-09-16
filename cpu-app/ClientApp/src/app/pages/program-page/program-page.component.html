@@ -78,7 +78,7 @@
       <div *ngFor="let item of programMeta">
         <div *ngIf="currentFormPage === item.programName">
           <div class="page-header">
-            <h1>{{item}}</h1>
+            <h1>{{item.programName}}</h1>
           </div>
           <!-- This massive complex component handles itself instead of returning data -->
           <app-program-planner [programMeta]="item"></app-program-planner>

@@ -39,5 +39,5 @@ export class ProgramPlannerComponent implements OnInit {
   // form helpers. Validity hints and hide/show toggles
   showValidFeedback(control: AbstractControl): boolean { return !(control.valid && (control.dirty || control.touched)) }
   showInvalidFeedback(control: AbstractControl): boolean { return !(control.invalid && (control.dirty || control.touched)) }
-
+  onInput() { }
 }

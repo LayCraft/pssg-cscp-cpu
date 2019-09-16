@@ -1,15 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { iProgramInformation, iProgramMeta } from '../classes/program-information.class';
+import { iProgramInformation, iProgramMeta, ProgramInformation } from '../classes/program-information.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgramInformationService {
+  dummyProgram: iProgramInformation = {
+    organizationId: '',
+    programId: '',
+    contractId: '',
+    organizationName: "Foobar",
+    contractNumber: "baz",
+    emailAddress: "foo@fibble.ca",
+    programLocation: "Quxville",
+    serviceArea: "Metro Fibbletown",
+    phoneNumber: "12505551023",
+    faxNumber: "12505551023",
+    mainAddress: null,
+    mailingAddress: null,
+    programContact: null,
+    additionalStaff: [],
+    revenueSources: [],
+    operationHours: [],
+    standbyHours: null,
+    personnel: [],
+  };
 
-  constructor() { }
-  getProgramInformation(oranizationId: string, programId: string): Observable<iProgramInformation> {
-    return of({} as iProgramInformation);
+  constructor() {
+    this.dummyProgram.programLocation = "Bork"
+  }
+
+  getProgramInformation(organizationId: string, programId: string): Observable<iProgramInformation> {
+    const bork = { ...this.dummyProgram };
+    bork.organizationId = organizationId;
+    bork.programId = programId;
+    return of(bork);
   }
   getProgramInformationMeta(organizationId: string, contractId: string): Observable<iProgramMeta[]> {
     return of([

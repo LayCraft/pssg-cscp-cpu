@@ -5,6 +5,7 @@ import { iContactInformation } from '../../classes/contact-information.class';
 import { BoilerplateService } from '../../services/boilerplate.service';
 import { iAdministrativeInformation, AdministrativeInformation } from '../../classes/administrative-information.class';
 import { iProgramMeta } from '../../classes/program-information.class';
+import { ProgramInformationService } from '../../services/program-information.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class ProgramPageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private programInformationService: ProgramInformationService,
     private boilerplateService: BoilerplateService,
   ) { }
 
@@ -35,16 +37,16 @@ export class ProgramPageComponent implements OnInit {
     // collect the ids for looking up the program from the route.
     this.organizationId = this.route.snapshot.paramMap.get('orgid');
     this.contractId = this.route.snapshot.paramMap.get('id');
-    // TODO: get the meta information about programs somehow. API?
-    this.programMeta = [
-
-    ];
-    // save the program names
-    this.programs = this.programMeta.map((p: iProgramMeta) => p.programName)
-    // make a complete page list
-    this.combinedPageList = [...this.upperItems, ...this.programs, ...this.lowerItems];
-    // set the current page to the first page
-    this.currentFormPage = this.combinedPageList[0];
+    this.programInformationService.getProgramInformationMeta(this.organizationId, this.contractId).subscribe(
+      (pm: iProgramMeta[]) => {
+        this.programMeta = pm;
+        // save the program names
+        this.programs = this.programMeta.map((p: iProgramMeta) => p.programName)
+        // make a complete page list
+        this.combinedPageList = [...this.upperItems, ...this.programs, ...this.lowerItems];
+        // set the current page to the first page
+        this.currentFormPage = this.combinedPageList[0];
+      });
 
     // get the boilerplate contact information if there is none included (resuming the forms.)
     // TODO: eventually we need to get the current forms from the service
