@@ -4,7 +4,6 @@ export interface iAdministrativeInformation {
   compliantWorkersCompensation: boolean;
   staffUnionized: boolean;
   staffUnion: string;
-  ccseaMember: boolean;
   ccseaMemberType: string;
   staffSubcontracted: boolean;
 }
@@ -15,7 +14,6 @@ export class AdministrativeInformation implements iAdministrativeInformation {
   compliantWorkersCompensation: boolean;
   staffUnionized: boolean;
   staffUnion: string;
-  ccseaMember: boolean;
   ccseaMemberType: string;
   staffSubcontracted: boolean;
   constructor(ai?: iAdministrativeInformation) {
@@ -25,7 +23,6 @@ export class AdministrativeInformation implements iAdministrativeInformation {
       this.compliantWorkersCompensation = ai.compliantWorkersCompensation || null;
       this.staffUnionized = ai.staffUnionized || null;
       this.staffUnion = ai.staffUnion || null;
-      this.ccseaMember = ai.ccseaMember || null;
       this.ccseaMemberType = ai.ccseaMemberType || null;
       this.staffSubcontracted = ai.staffSubcontracted || null;
     }
