@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Person } from '../classes/person.class';
 
 @Component({
   selector: 'app-person-details',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./person-details.component.scss']
 })
 export class PersonDetailsComponent implements OnInit {
-
+  @Input() person: Person;
+  @Output() personChange = new EventEmitter<Person>();
+  editMode = true;
   constructor() { }
 
   ngOnInit() {

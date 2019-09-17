@@ -1,9 +1,18 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <p>
-        personnel-page works!
-      </p>
+      <h2 class="blue-header">Organization Personnel</h2>
+      <div *ngFor="let person of personList">
+        <app-person-details [(person)]="person"></app-person-details>
+      </div>
+      <button type="button" (click)="addPerson()">Add Person</button>
+      <button type="button" (click)="save()">Save and Close</button>
+      <button type="button" (click)="save(true)">Save and Close</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <pre>{{personList|json}}</pre>
     </div>
   </div>
 </div>
