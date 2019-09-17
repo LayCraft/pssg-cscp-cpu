@@ -115,6 +115,6 @@ export class ProgramPageComponent implements OnInit {
   }
   unlock(key: boolean) {
     // unlocks the whole set of forms for submission
-    this.canSubmit = key;
+    if (key) alert('All things are checked!');
   }
 }
