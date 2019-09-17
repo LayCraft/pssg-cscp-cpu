@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Person } from '../../classes/person.class';
 
 @Component({
   selector: 'app-personnel-page',
@@ -9,7 +10,12 @@ export class PersonnelPageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  personList: Person[] = [];
+  ngOnInit() { }
+  addPerson() {
+    this.personList.push(new Person());
   }
-
+  save(close = false) {
+    alert('Saved.');
+  }
 }

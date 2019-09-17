@@ -14,6 +14,7 @@ export interface iPerson {
   annualSalary?: number;
   benefits?: number;
   fundedFromVCSP?: number;
+  personId: string;
 }
 
 export class Person implements iPerson {
@@ -31,6 +32,7 @@ export class Person implements iPerson {
   annualSalary?: number;
   benefits?: number;
   fundedFromVCSP?: number;
+  personId: string;
   constructor(person?: iPerson) {
     if (person) {
       this.typeOfEmployee = person.typeOfEmployee || null; // frontline, regular,
@@ -47,11 +49,11 @@ export class Person implements iPerson {
       this.annualSalary = person.annualSalary || null;
       this.benefits = person.benefits || null;
       this.fundedFromVCSP = person.fundedFromVCSP || null;
+      // todo: this is basically a fake guid for mocking up the front end.
+      this.personId = person.personId || new Date().getMilliseconds().toString();
+    } else {
+
+      this.personId = new Date().getMilliseconds().toString();
     }
-  }
-  toDynamics(): object {
-    return {}
-  }
-  fromDynamics(dynamicsObject) {
   }
 }
