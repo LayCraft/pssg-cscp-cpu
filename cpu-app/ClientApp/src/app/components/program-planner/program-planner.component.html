@@ -73,18 +73,16 @@
     </div> -->
 </div>
 <div *ngIf="currentTab===tabs[1]">
-  <pre>Hours of operation
-      On call hours
-      Job titles, hours of pay.
-    </pre>
   <h2 class="blue-header">Program Schedule Hours of Operation (not including on-call / stand-by hours)</h2>
   <div *ngFor="let hours of operationHours">
-    <app-hours></app-hours>
+    <app-hours [(hours)]="hours"></app-hours>
   </div>
+  <button class="btn btn-secondary mt-2" (click)="addOperationHours()">Add Operation Hours</button>
   <h2 class="blue-header">Program On-call / Stand-by Hours of Operation</h2>
   <div *ngFor="let hours of standbyHours">
-    <app-hours></app-hours>
+    <app-hours [(hours)]="hours"></app-hours>
   </div>
+  <button class="btn btn-secondary mt-2" (click)="addStandbyHours()">Add On-call/Stand-by Hours</button>
 </div>
 <div *ngIf="currentTab===tabs[2]">
   <h2 class="blue-header">Reporting Requirements</h2>

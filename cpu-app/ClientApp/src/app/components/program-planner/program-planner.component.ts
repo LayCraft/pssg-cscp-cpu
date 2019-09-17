@@ -34,6 +34,8 @@ export class ProgramPlannerComponent implements OnInit {
   ngOnInit() {
     this.programInformationForm = new ProgramInformation();
     this.programContactForm = new ContactInformation();
+    this.addOperationHours();
+    this.addStandbyHours();
     // initialize the program information if it is supplied else make a new object
     // this.programInformationService.getProgramInformation(this.programMeta.organizationId, this.programMeta.programId).subscribe((p: iProgramInformation) => {
     //   this.programInformationForm = new ProgramInformation(p);

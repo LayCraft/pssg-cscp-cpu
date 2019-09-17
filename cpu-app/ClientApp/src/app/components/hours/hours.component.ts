@@ -9,6 +9,7 @@ import { Hours } from '../../classes/program-information.class';
 export class HoursComponent implements OnInit {
   @Input() hours: Hours;
   @Output() hoursChange = new EventEmitter<Hours>();
+  @Input() title: string = 'Hours (24hr)';
   constructor() { }
 
   ngOnInit() {
