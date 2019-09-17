@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Person } from '../../classes/person.class';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personnel-page',
@@ -8,7 +9,9 @@ import { Person } from '../../classes/person.class';
 })
 export class PersonnelPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   personList: Person[] = [];
   ngOnInit() { }
@@ -16,6 +19,6 @@ export class PersonnelPageComponent implements OnInit {
     this.personList.push(new Person());
   }
   save(close = false) {
-    alert('Saved.');
+    close ? this.router.navigate(['dashboard']) : alert('Saved!');
   }
 }
