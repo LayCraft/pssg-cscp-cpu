@@ -3,11 +3,10 @@
     <div class="col">
       <h2 class="blue-header">Organization Personnel</h2>
       <div *ngFor="let person of personList">
-        <app-person-details [(person)]="person"></app-person-details>
+        <app-person-details [(person)]="person" (write)="writePerson($event)"></app-person-details>
       </div>
       <button type="button" (click)="addPerson()">Add Person</button>
-      <button type="button" (click)="save()">Save</button>
-      <button type="button" (click)="save(true)">Save &amp; Close</button>
+      <button type="button" (click)="close()">Close</button>
     </div>
   </div>
   <div class="row">

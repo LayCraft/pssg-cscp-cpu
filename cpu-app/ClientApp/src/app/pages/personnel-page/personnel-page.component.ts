@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Person } from '../../classes/person.class';
 import { Router } from '@angular/router';
+import { Person } from '../../classes/person.class';
+import { PersonService } from '../../services/person.service';
 
 @Component({
   selector: 'app-personnel-page',
@@ -10,15 +11,23 @@ import { Router } from '@angular/router';
 export class PersonnelPageComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private personService: PersonService,
   ) { }
 
   personList: Person[] = [];
-  ngOnInit() { }
+  ngOnInit() {
+    // subscribe to the organization's person list
+    this.personService.getPersons('ORGID').subscribe((persons: Person[]) => {
+      this.personList = persons;
+      console.log(persons);
+    });
+  }
   addPerson() {
     this.personList.push(new Person());
   }
-  save(close = false) {
-    close ? this.router.navigate(['dashboard']) : alert('Saved!');
+  close() { this.router.navigate(['dashboard']); }
+  writePerson(person: Person) {
+    this.personService.setPerson('ORGID', person).subscribe(() => { });
   }
 }
