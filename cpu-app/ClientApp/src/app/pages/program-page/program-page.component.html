@@ -41,11 +41,11 @@
         </div>
         <div *ngIf="currentFormPage === upperItems[0]">
           <app-contact-information [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-contact-information>
-          <button (click)="contactInformationSave()">Save</button>
+          <button class="btn btn-primary" (click)="contactInformationSave()">Save</button>
         </div>
         <div *ngIf="currentFormPage === upperItems[1]">
           <app-administrative-information [(administrativeInformation)]="administrativeInformation" (valid)="administrativeInformationIsValid($event)"></app-administrative-information>
-          <button (click)="administrativeInformationSave()">Save</button>
+          <button class="btn btn-primary" (click)="administrativeInformationSave()">Save</button>
         </div>
         <div *ngIf="currentFormPage === upperItems[2]">
           <app-cg-liability></app-cg-liability>
@@ -65,7 +65,7 @@
               </label>
             </div>
           </div>
-          <button (click)="cgLiabilitySave()">Save</button>
+          <button class="btn btn-primary" (click)="cgLiabilitySave()">Save</button>
         </div>
         <div *ngIf="currentFormPage === lowerItems[0]">
           Not yet made

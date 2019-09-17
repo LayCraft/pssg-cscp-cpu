@@ -5,8 +5,8 @@
       <div *ngFor="let person of personList">
         <app-person-details [(person)]="person" (write)="writePerson($event)"></app-person-details>
       </div>
-      <button type="button" (click)="addPerson()">Add Person</button>
-      <button type="button" (click)="close()">Close</button>
+      <button class="btn btn-primary" type="button" (click)="addPerson()">Add Person</button>
+      <button class="btn btn-primary" type="button" (click)="close()">Close</button>
     </div>
   </div>
   <div class="row">
