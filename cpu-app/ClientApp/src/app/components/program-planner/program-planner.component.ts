@@ -50,4 +50,11 @@ export class ProgramPlannerComponent implements OnInit {
     this.programContactForm = new ContactInformation();
     this.differentProgramContact = !this.differentProgramContact;
   }
+
+  addOperationHours() {
+    this.operationHours.push(new Hours());
+  }
+  addStandbyHours() {
+    this.standbyHours.push(new Hours());
+  }
 }
