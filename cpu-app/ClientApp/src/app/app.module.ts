@@ -57,7 +57,6 @@ import { FieldComponent } from './shared/components/field/field.component';
 import { QuickExitComponent } from './shared/components/quick-exit/quick-exit.component';
 import { VersionInfoDialog } from './shared/components/version-info/version-info.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
-import { ApplicantContactInformationComponent } from './components/applicant-contact-information/applicant-contact-information.component';
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
 import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
@@ -73,6 +72,7 @@ import { MinistryContactBoxComponent } from './components/ministry-contact-box/m
 import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
 import { AdministrativeInformationComponent } from './components/administrative-information/administrative-information.component';
 import { CgLiabilityComponent } from './components/cg-liability/cg-liability.component';
+import { ContactInformationComponent } from './components/contact-information/contact-information.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +87,7 @@ import { CgLiabilityComponent } from './components/cg-liability/cg-liability.com
     FieldComponent,
     QuickExitComponent,
     VersionInfoDialog,
-    ApplicantContactInformationComponent,
+    ContactInformationComponent,
     ProgramPlannerComponent,
     OrganizationProfilePageComponent,
     DashboardPageComponent,

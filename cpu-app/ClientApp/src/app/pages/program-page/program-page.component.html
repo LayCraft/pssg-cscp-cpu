@@ -40,7 +40,7 @@
           <h1>{{currentFormPage}}</h1>
         </div>
         <div *ngIf="currentFormPage === upperItems[0]">
-          <app-applicant-contact-information [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-applicant-contact-information>
+          <app-contact-information [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-contact-information>
           <button (click)="contactInformationSave()">Save</button>
         </div>
         <div *ngIf="currentFormPage === upperItems[1]">

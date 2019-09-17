@@ -6,11 +6,11 @@ import { Address } from '../../classes/address.class';
 import { iCountry, COUNTRIES_ADDRESS_2 } from '../../constants/country-list';
 
 @Component({
-  selector: 'app-applicant-contact-information',
-  templateUrl: './applicant-contact-information.component.html',
-  styleUrls: ['./applicant-contact-information.component.scss']
+  selector: 'app-contact-information',
+  templateUrl: './contact-information.component.html',
+  styleUrls: ['./contact-information.component.scss']
 })
-export class ApplicantContactInformationComponent implements OnInit {
+export class ContactInformationComponent implements OnInit {
   // a viewchild to check the validity of the template form
   @ViewChild(NgForm) ciForm;
   // input a contact information properties to create this form
