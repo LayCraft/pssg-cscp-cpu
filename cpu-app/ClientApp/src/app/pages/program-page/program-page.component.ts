@@ -26,6 +26,7 @@ export class ProgramPageComponent implements OnInit {
   combinedPageList: string[];
 
   currentFormPage: string = '';
+  canSubmit: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -111,5 +112,8 @@ export class ProgramPageComponent implements OnInit {
     } else alert('Nothing was selected!');
 
     // todo: this should save the form information to a service.  }
+  }
+  unlock(key: boolean) {
+    this.
   }
 }
