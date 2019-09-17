@@ -77,6 +77,14 @@
       On call hours
       Job titles, hours of pay.
     </pre>
+  <h2 class="blue-header">Program Schedule Hours of Operation (not including on-call / stand-by hours)</h2>
+  <div *ngFor="let hours of operationHours">
+    <app-hours></app-hours>
+  </div>
+  <h2 class="blue-header">Program On-call / Stand-by Hours of Operation</h2>
+  <div *ngFor="let hours of standbyHours">
+    <app-hours></app-hours>
+  </div>
 </div>
 <div *ngIf="currentTab===tabs[2]">
   <h2 class="blue-header">Reporting Requirements</h2>

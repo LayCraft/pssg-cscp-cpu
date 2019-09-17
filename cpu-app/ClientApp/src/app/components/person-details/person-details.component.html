@@ -1,4 +1,4 @@
-<div *ngIf="editMode" class="card mb-2">
+<div class="card mb-2">
   <div class="card-body">
     <div class="form-row">
       <div class="col">
@@ -28,25 +28,5 @@
         <input type="text" [(ngModel)]="person.phone">
       </div>
     </div>
-  </div>
-  <div class="card-footer">
-    <button class="btn btn-primary" (click)="save()">Save</button>
-  </div>
-</div>
-
-<div *ngIf="!editMode" class="card mb-2">
-  <div class="card-body">
-    <div class="row">
-      <div class="col">
-        {{person.lastName}}, {{person.firstName}} {{person.middleName}} - {{person.title}}
-      </div>
-      <div class="col">
-      </div>
-      <div class="col">
-      </div>
-    </div>
-  </div>
-  <div class="card-footer">
-    <button class="btn btn-primary" (click)="editMode=!editMode">Edit</button>
   </div>
 </div>

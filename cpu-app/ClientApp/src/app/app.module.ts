@@ -74,6 +74,7 @@ import { AdministrativeInformationComponent } from './components/administrative-
 import { CgLiabilityComponent } from './components/cg-liability/cg-liability.component';
 import { ContactInformationComponent } from './components/contact-information/contact-information.component';
 import { PersonDetailsComponent } from './components/person-details/person-details.component';
+import { HoursComponent } from './components/hours/hours.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { PersonDetailsComponent } from './components/person-details/person-detai
     AdministrativeInformationComponent,
     CgLiabilityComponent,
     PersonDetailsComponent,
+    HoursComponent,
   ],
   imports: [
     BrowserModule,

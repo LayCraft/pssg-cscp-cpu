@@ -18,19 +18,27 @@ export class PersonService {
       personId: 'UNKNOWN',
     }
   ];
-  getfakePerson(personId: string): iPerson {
+  getfakePersonFromMockList(personId: string): iPerson {
     // remove everyone from the array besides the person we care about then return the person
-    return this.fakePeople.filter(p => p.personId)[0];
+    return this.fakePeople.filter(p => p.personId)[0] || null;
+  }
+  insertfakePersonFromMockList(person: Person): iPerson {
+    // if there is nobody in hte list with matching ID add them
+    if (this.fakePeople.filter(p => person.personId === p.personId).length === 0) {
+      this.fakePeople.push(person);
+    }
+    return person;
   }
 
   constructor() { }
   getPersons(organizationId: string): Observable<iPerson[]> {
     return of(this.fakePeople);
   }
+
   setPerson(organizationId: string, person: Person): Observable<iPerson> {
-    return of(this.getfakePerson(person.personId));
+    return of(this.insertfakePersonFromMockList(person));
   }
   getPerson(organizationId: string, personId: string): Observable<iPerson> {
-    return of(this.getfakePerson(personId));
+    return of(this.getfakePersonFromMockList(personId));
   }
 }

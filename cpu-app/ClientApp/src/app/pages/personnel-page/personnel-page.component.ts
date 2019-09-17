@@ -16,18 +16,48 @@ export class PersonnelPageComponent implements OnInit {
   ) { }
 
   personList: Person[] = [];
+  currentPerson: Person;
+
   ngOnInit() {
     // subscribe to the organization's person list
     this.personService.getPersons('ORGID').subscribe((persons: Person[]) => {
-      this.personList = persons;
-      console.log(persons);
+      //if there are
+      if (persons.length > 0) {
+        // Add persons to person list
+        persons.forEach(p => this.personList.push(new Person(p)));
+        this.currentPerson = this.personList[0];
+      } else {
+        // add a dummy person
+        this.addPerson();
+      }
     });
   }
+
   addPerson() {
-    this.personList.push(new Person());
+    // must have at least added a firstname to the person
+    if (this.personList[this.personList.length - 1].firstName) {
+      const fakePerson = new Person();
+      this.personList.push(fakePerson);
+      this.navigateToPerson(this.personList[this.personList.length - 1]);
+    } else {
+      alert('Already added.');
+    }
   }
-  close() { this.router.navigate(['dashboard']); }
-  writePerson(person: Person) {
-    this.personService.setPerson('ORGID', person).subscribe(() => { });
+  savePerson() {
+    // set the person in the service
+    this.personService.setPerson('ORGID', this.currentPerson).subscribe(p => { });
+  }
+  close() {
+    if (confirm("Saving the changes to current person. Click cancel to go back to the dashboard without saving.")) {
+      this.savePerson();
+    }
+    this.router.navigate(['dashboard']);
+  }
+
+  navigateToPerson(person: Person) {
+    if (person != this.currentPerson && confirm("Saving the changes. Click cancel to switch without saving.")) {
+      this.savePerson();
+      this.currentPerson = person;
+    }
   }
 }
