@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Person } from '../classes/person.class';
+import { Person } from '../../classes/person.class';
 
 @Component({
   selector: 'app-person-details',

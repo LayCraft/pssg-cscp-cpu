@@ -73,7 +73,7 @@ import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.co
 import { AdministrativeInformationComponent } from './components/administrative-information/administrative-information.component';
 import { CgLiabilityComponent } from './components/cg-liability/cg-liability.component';
 import { ContactInformationComponent } from './components/contact-information/contact-information.component';
-import { PersonDetailsComponent } from './person-details/person-details.component';
+import { PersonDetailsComponent } from './components/person-details/person-details.component';
 
 @NgModule({
   declarations: [
