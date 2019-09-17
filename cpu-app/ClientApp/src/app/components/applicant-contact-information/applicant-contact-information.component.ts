@@ -19,6 +19,7 @@ export class ApplicantContactInformationComponent implements OnInit {
   @Output() contactInformationChange = new EventEmitter<ContactInformation>();
   // is the contents of the form valid?
   @Output() valid = new EventEmitter<boolean>();
+  @Input() title: string = 'Contact Information';
 
   // patterns
   emailValidRegex = emailValidRegex;

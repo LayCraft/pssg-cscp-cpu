@@ -1,5 +1,5 @@
 <form #ciForm="ngForm" (input)="onInput()">
-  <h2 class="blue-header">Primary Contact Information</h2>
+  <h2 class="blue-header">{{title}}</h2>
   <div class="form-group">
     <label for="emailAddress" class="required">Email Address</label>
     <input [(ngModel)]="contactInformationForm.emailAddress" type="text" class="form-control" id="emailAddress" name="emailAddress" #emailAddress="ngModel" [pattern]="emailValidRegex" required>
