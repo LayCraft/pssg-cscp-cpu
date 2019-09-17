@@ -114,6 +114,7 @@ export class ProgramPageComponent implements OnInit {
     // todo: this should save the form information to a service.  }
   }
   unlock(key: boolean) {
-    this.
+    // unlocks the whole set of forms for submission
+    this.canSubmit = key;
   }
 }

@@ -75,6 +75,7 @@ import { CgLiabilityComponent } from './components/cg-liability/cg-liability.com
 import { ContactInformationComponent } from './components/contact-information/contact-information.component';
 import { PersonDetailsComponent } from './components/person-details/person-details.component';
 import { HoursComponent } from './components/hours/hours.component';
+import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { HoursComponent } from './components/hours/hours.component';
     CgLiabilityComponent,
     PersonDetailsComponent,
     HoursComponent,
+    ProgramAuthorizerComponent,
   ],
   imports: [
     BrowserModule,

@@ -68,10 +68,11 @@
           <button class="btn btn-primary" (click)="cgLiabilitySave()">Save</button>
         </div>
         <div *ngIf="currentFormPage === lowerItems[0]">
-          Not yet made
+          Unimplemented
         </div>
         <div *ngIf="currentFormPage === lowerItems[1]">
-          Not yet made
+          <app-program-authorizer (unlock)="unlock($event)"></app-program-authorizer>
+          The user can sign and submit: {{canSubmit}}
         </div>
       </div>
 
