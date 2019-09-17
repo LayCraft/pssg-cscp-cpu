@@ -35,7 +35,7 @@ export class ProgramInformationService {
     const bork = { ...this.dummyProgram };
     bork.organizationId = organizationId;
     bork.programId = programId;
-    return of(bork);
+    return of(bork as iProgramInformation);
   }
   getProgramInformationMeta(organizationId: string, contractId: string): Observable<iProgramMeta[]> {
     return of([

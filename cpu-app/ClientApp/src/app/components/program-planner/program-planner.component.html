@@ -6,12 +6,103 @@
   </ul>
 
   <div *ngIf="currentTab===tabs[0]">
-    {{tabs[0]}} </div>
-  <div *ngIf="currentTab===tabs[1]">
-    {{tabs[1]}} </div>
-  <div *ngIf="currentTab===tabs[2]">
-    {{tabs[2]}} </div>
+    <h2 class="blue-header">Main Program Information</h2>
+    <div class="form-group">
+      <label for="programLocation" class="required">Program Location</label>
+      <input class="form-control" type="text" [(ngModel)]="programInformationForm.programLocation" id="programLocation" name="programLocation" #programLocation="ngModel">
+      <div class="valid-feedback" [hidden]="showValidFeedback(programLocation)" style="display: inherit">
+        Ok
+      </div>
+      <div class="invalid-feedback" [hidden]="showInvalidFeedback(programLocation)" style="display: inherit">
+        Try Again
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="serviceArea" class="required">Service Area</label>
+      <input class="form-control" type="text" [(ngModel)]="programInformationForm.serviceArea" id="serviceArea" name="serviceArea" #serviceArea="ngModel">
+      <div class="valid-feedback" [hidden]="showValidFeedback(serviceArea)" style="display: inherit">
+        Ok
+      </div>
+      <div class="invalid-feedback" [hidden]="showInvalidFeedback(serviceArea)" style="display: inherit">
+        Try Again
+      </div>
+    </div>
+    <!-- Program Location -->
+    <!-- Service Area -->
+    <!-- Generic Address component to collect program address -->
+    <!-- Program Contact -->
 
+    <!-- <div class="form-group">
+      <label for="phoneNumber">Phone Number</label>
+      <input [(ngModel)]="programInformationForm.phoneNumber" type="text" class="form-control" id="phoneNumber" name="phoneNumber" #phoneNumber="ngModel">
+      <div class="valid-feedback" [hidden]="showValidFeedback(phoneNumber)" style="display: inherit">
+        Ok
+      </div>
+      <div class="invalid-feedback" [hidden]="showInvalidFeedback(phoneNumber)" style="display: inherit">
+        Try Again
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="line1" class="required">Address Line 1</label>
+      <input [(ngModel)]="programInformationForm.programId" type="text" class="form-control" id="line1" name="line1" #line1="ngModel" required>
+      <div class="valid-feedback" [hidden]="showValidFeedback(line1)" style="display: inherit">
+        Ok
+      </div>
+      <div class="invalid-feedback" [hidden]="showInvalidFeedback(line1)" style="display: inherit">
+        Try Again
+      </div>
+    </div> -->
+  </div>
+  <div *ngIf="currentTab===tabs[1]">
+    <pre>Hours of operation
+      On call hours
+      Job titles, hours of pay.
+    </pre>
+  </div>
+  <div *ngIf="currentTab===tabs[2]">
+    <h2 class="blue-header">Reporting Requirements</h2>
+    <div class="form-group">
+
+      <pre>If not set from the system are these CYA questions? Can we turn them into a TOS?
+We need to know what year is the previous year.
+We need to know if this is a renewal.
+We need to know if this is a victim's service program.
+We need to know if this is a Violence Against Women Program.</pre>
+
+      Have you submitted Schedule H Descriptive report for first six months of FY 2019-20
+      Have you submitted Schedule G Financial report for the first two quarters of FY 2019-20
+      For Victims Service Programs only Have you submitted monthly OPRA reports
+      to the end of Nov 2019
+      For Violence Against Women Programs only Have you submitted monthly STV-DES reports
+      to the end of Nov 2019
+
+
+      <!-- <div class="form-check">
+        <input #compliantEmploymentStandardsAct="ngModel" [(ngModel)]="programInformationForm.compliantEmploymentStandardsAct" class="form-check-input" type="checkbox" value="" id="compliantEmploymentStandardsAct" name="compliantEmploymentStandardsAct">
+        <label class="form-check-label" for="compliantEmploymentStandardsAct">
+          Employment Standards Act of BC?
+        </label>
+      </div> -->
+      <!-- <div class="form-check">
+        <input #compliantHumanRights="ngModel" [(ngModel)]="administrativeInformationForm.compliantHumanRights" class="form-check-input" type="checkbox" value="" id="compliantHumanRights" name="compliantHumanRights">
+        <label class="form-check-label" for="compliantHumanRights">
+          BC's Human Rights Code?
+        </label>
+      </div>
+      <div class="form-check">
+        <input #compliantWorkersCompensation="ngModel" [(ngModel)]="administrativeInformationForm.compliantWorkersCompensation" class="form-check-input" type="checkbox" value="" id="compliantWorkersCompensation" name="compliantWorkersCompensation"> <label class="form-check-label" for="compliantWorkersCompensation">
+          Worker's Compensation Act (WorkSafe BC)?
+        </label>
+      </div>
+      <div class="form-check">
+          <input #compliantWorkersCompensation="ngModel" [(ngModel)]="administrativeInformationForm.compliantWorkersCompensation" class="form-check-input" type="checkbox" value="" id="compliantWorkersCompensation" name="compliantWorkersCompensation"> <label class="form-check-label" for="compliantWorkersCompensation">
+            Worker's Compensation Act (WorkSafe BC)?
+          </label>
+        </div> -->
+    </div>
+
+  </div>
 </form>
+
 <pre>Form Valid: {{piForm.form.valid}}
 {{programInformationForm|json}}</pre>

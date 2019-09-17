@@ -12,7 +12,6 @@ export class ProgramPlannerComponent implements OnInit {
   // a viewchild to check the validity of the template form
   @ViewChild(NgForm) piForm;
   // is the contents of the form valid?
-  @Output() valid = new EventEmitter<boolean>();
   @Input() programMeta: iProgramMeta;
 
   // the form model
@@ -21,18 +20,19 @@ export class ProgramPlannerComponent implements OnInit {
   currentTab: string;
   tabs: string[];
   constructor(
-    private boilerplateService: BoilerplateService,
-    private programInformationService: ProgramInformationService,
+    // private boilerplateService: BoilerplateService,
+    // private programInformationService: ProgramInformationService,
   ) {
     this.tabs = ['Contact Information', 'Delivery Information', 'Reporting Requirements'];
     this.currentTab = this.tabs[0];
   }
 
   ngOnInit() {
+    this.programInformationForm = new ProgramInformation();
     // initialize the program information if it is supplied else make a new object
-    this.programInformationService.getProgramInformation(this.programMeta.organizationId, this.programMeta.programId).subscribe((p: iProgramInformation) => {
-      this.programInformationForm = new ProgramInformation(p);
-    });
+    // this.programInformationService.getProgramInformation(this.programMeta.organizationId, this.programMeta.programId).subscribe((p: iProgramInformation) => {
+    //   this.programInformationForm = new ProgramInformation(p);
+    // });
 
   }
 
