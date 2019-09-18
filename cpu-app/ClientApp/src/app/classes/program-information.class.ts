@@ -1,8 +1,17 @@
 import { Address, iAddress } from "./address.class";
 import { Person, iPerson } from "./person.class";
 
-export interface iProgramInformation {
+export interface iProgramMeta {
+  organizationId: string;
+  contractId: string;
+  programId: string;
+  programName: string;
+}
 
+export interface iProgramInformation {
+  organizationId: string;
+  programId: string;
+  contractId: string;
   organizationName: string;
   contractNumber: string;
   emailAddress: string;
@@ -41,6 +50,9 @@ export interface iRevenueSource {
 }
 
 export class ProgramInformation implements iProgramInformation {
+  organizationId: string;
+  programId: string;
+  contractId: string;
   organizationName: string;
   contractNumber: string;
   emailAddress: string;
@@ -61,6 +73,9 @@ export class ProgramInformation implements iProgramInformation {
 
   constructor(prog?: iProgramInformation) {
     if (prog) {
+      this.organizationId = prog.organizationId || null;
+      this.programId = prog.programId || null;
+      this.contractId = prog.contractId || null;
       this.organizationName = prog.organizationName || null;
       this.contractNumber = prog.contractNumber || null;
       this.emailAddress = prog.emailAddress || null;
@@ -79,14 +94,7 @@ export class ProgramInformation implements iProgramInformation {
       prog.personnel ? prog.personnel.forEach(p => this.personnel.push(new Person(p))) : this.personnel = [];
     }
   }
-  toDynamics(): object {
-    return {}
-  }
-  fromDynamics(dynamicsObject) {
-  }
 }
-
-
 
 export class Hours implements iHours {
   monday: boolean;

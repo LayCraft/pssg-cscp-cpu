@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <app-contact-information [(contactInformation)]="contactInformation" [title]="'Primary Contact Information'" (valid)="onValid($event)"></app-contact-information>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <!-- Button states for the form: Can submit, Can't submit, (TODO: in process of submitting) -->
+      <button *ngIf="validContactInformation" (click)="onSave()" class="btn btn-primary">Save</button>
+      <button *ngIf="!validContactInformation" class="btn btn-primary" disabled>Save</button>
+    </div>
+  </div>
+</div>
+<!-- <pre>Valid: {{validContactInformation}}
+{{contactInformation|json}}
+</pre> -->

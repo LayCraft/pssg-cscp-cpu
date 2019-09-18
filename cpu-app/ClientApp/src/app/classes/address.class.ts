@@ -24,9 +24,4 @@ export class Address implements iAddress {
       this.country = address.country || null;
     }
   }
-  toDynamics(): object {
-    return {}
-  }
-  fromDynamics(dynamicsObject) {
-  }
 }
