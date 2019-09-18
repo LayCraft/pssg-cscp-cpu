@@ -55,7 +55,9 @@ export class PersonnelPageComponent implements OnInit {
   }
 
   navigateToPerson(person: Person) {
-    if (person != this.currentPerson && confirm("Saving the changes. Click cancel to switch without saving.")) {
+    // if (person != this.currentPerson && confirm("Saving the changes. Click cancel to switch without saving.")) {
+    if (person != this.currentPerson) {
+
       this.savePerson();
       this.currentPerson = person;
     }

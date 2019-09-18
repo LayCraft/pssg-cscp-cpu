@@ -23,10 +23,12 @@ export class ProgramAuthorizerComponent implements OnInit {
   }
   get state() {
     // are all flags true?
-    return this.terms.map(t => t[1]).reduce((prev: boolean, curr: boolean) => prev && curr);
+    return this.terms.map(term => term[1]).reduce((prev: boolean, curr: boolean) => prev && curr);
   }
   unlockIt(state: boolean) {
     // emit the state of all fo the checkboxes
+    console.log(typeof state);
+    console.log(state);
     this.unlock.emit(state);
   }
 }

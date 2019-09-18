@@ -114,6 +114,7 @@ export class ProgramPageComponent implements OnInit {
     // todo: this should save the form information to a service.  }
   }
   unlock(key: boolean) {
+    // console.log(key);
     // unlocks the whole set of forms for submission
     if (key) alert('All things are checked!');
   }
