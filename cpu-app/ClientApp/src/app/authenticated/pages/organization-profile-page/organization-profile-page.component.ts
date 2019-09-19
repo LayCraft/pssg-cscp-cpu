@@ -6,7 +6,7 @@ import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
 @Component({
   selector: 'app-organization-profile-page',
   templateUrl: './organization-profile-page.component.html',
-  styleUrls: ['./organization-profile-page.component.css']
+  styleUrls: ['./organization-profile-page.component.scss']
 })
 export class OrganizationProfilePageComponent implements OnInit {
   organizationId: string = 'bceid goes here';
