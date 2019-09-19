@@ -10,7 +10,7 @@ import { ContactInformation } from 'src/app/core/models/contact-information.clas
 })
 export class ProgramPlannerComponent implements OnInit {
   // a viewchild to check the validity of the template form
-  @ViewChild(NgForm, { static: false }) piForm;
+  @ViewChild(NgForm, { static: true }) piForm;
   // is the contents of the form valid?
   @Input() programMeta: iProgramMeta;
 

@@ -40,13 +40,11 @@
           <h1>{{currentFormPage}}</h1>
         </div>
         <div *ngIf="currentFormPage === upperItems[0]">
-          TODO: must test app-contact-information
-          <!-- <app-contact-information [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-contact-information> -->
+          <app-contact-information [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-contact-information>
           <button class="btn btn-primary" (click)="contactInformationSave()">Save</button>
         </div>
         <div *ngIf="currentFormPage === upperItems[1]">
-          TODO: must debug app-administrative-information
-          <!-- <app-administrative-information [(administrativeInformation)]="administrativeInformation" (valid)="administrativeInformationIsValid($event)"></app-administrative-information> -->
+          <app-administrative-information [(administrativeInformation)]="administrativeInformation" (valid)="administrativeInformationIsValid($event)"></app-administrative-information>
           <button class="btn btn-primary" (click)="administrativeInformationSave()">Save</button>
         </div>
         <div *ngIf="currentFormPage === upperItems[2]">

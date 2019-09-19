@@ -13,7 +13,7 @@ import { Address } from 'src/app/core/models/address.class';
 })
 export class ContactInformationComponent implements OnInit {
   // a viewchild to check the validity of the template form
-  @ViewChild(NgForm, { static: false }) ciForm;
+  @ViewChild(NgForm, { static: true }) ciForm;
   // input a contact information properties to create this form
   @Input() contactInformation: iContactInformation;
   // output a contact on change

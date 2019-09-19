@@ -9,7 +9,7 @@ import { AdministrativeInformation, iAdministrativeInformation } from 'src/app/c
 })
 export class AdministrativeInformationComponent implements OnInit {
   // a viewchild to check the validity of the template form
-  @ViewChild(NgForm, { static: false }) aiForm;
+  @ViewChild(NgForm, { static: true }) aiForm;
   // input a contact information properties to create this form
   @Input() administrativeInformation: iAdministrativeInformation;
   // output a contact on change
