@@ -1,68 +1,74 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <span>
-                <p class="h3">
-                    <small>
-                        Organization ID:
-                    </small>
-                    <br>
-                    {{organizationId}}
-                </p>
-                <p class="h3">
-                    <small>
-                        Contract ID:
-                    </small>
-                    <br>
-                    {{contractId}}
-                </p>
-            </span>
+	<div class="row">
+		<div class="col-md-4">
+			<span>
+				<p class="h3">
+					<small>
+						Organization ID:
+					</small>
+					<br>
+					{{organizationId}}
+				</p>
+				<p class="h3">
+					<small>
+						Contract ID:
+					</small>
+					<br>
+					{{contractId}}
+				</p>
+			</span>
 
-            <section class="application-nav sticky-top">
-                <p class="h4">Renew Application</p>
-                <mat-vertical-stepper (selectionChange)="gotoPage($event)" #stepper>
-                    <ng-template matStepperIcon="edit">
-                        <mat-icon>done</mat-icon>
-                    </ng-template>
-                    <ng-template matStepperIcon="number">
-                    </ng-template>
-                    <mat-step *ngFor="let item of upperItems" label="{{item}}"></mat-step>
-                    <mat-step *ngFor="let item of programs" label="Program: {{item}}"></mat-step>
-                    <mat-step *ngFor="let item of lowerItems" label="{{item}}"></mat-step>
-                </mat-vertical-stepper>
-            </section>
-        </div>
+			<section class="application-nav sticky-top">
+				<p class="h4">Renew Application</p>
+				<mat-vertical-stepper (selectionChange)="gotoPage($event)" #stepper>
+					<ng-template matStepperIcon="edit">
+						<mat-icon>done</mat-icon>
+					</ng-template>
+					<ng-template matStepperIcon="number">
+					</ng-template>
+					<mat-step *ngFor="let item of upperItems" label="{{item}}"></mat-step>
+					<mat-step *ngFor="let item of programs" label="Program: {{item}}"></mat-step>
+					<mat-step *ngFor="let item of lowerItems" label="{{item}}"></mat-step>
+				</mat-vertical-stepper>
+			</section>
+		</div>
 
-        <div class="col-md-8">
-            <!-- Section is not in programs list -->
-            <div *ngIf="programs.indexOf(currentFormPage)===-1">
-                <div class="page-header">
-                    <h1>{{currentFormPage}}</h1>
-                </div>
-                <div *ngIf="currentFormPage === upperItems[0]">
-                    <h2 class="blue-header">
-                        Programs
-                    </h2>
-                </div>
+		<div class="col-md-8">
+			<!-- Section is not in programs list -->
+			<div *ngIf="programs.indexOf(currentFormPage)===-1">
+				<div class="page-header">
+					<h1>{{currentFormPage}}</h1>
+				</div>
+				<div *ngIf="currentFormPage === upperItems[0]">
+					<h2 class="blue-header">
+						Program Overview
+					</h2>
+					<h4>Programs for Review</h4>
+					<div *ngFor="let program of programs" class="card mb-2 mr-2">
+						<div class="card-body">
+							{{program}}
+						</div>
+					</div>
+				</div>
 
-                <div *ngIf="currentFormPage === lowerItems[0]">
-                    lower items 1
-                </div>
-                <div *ngIf="currentFormPage === lowerItems[1]">
-                    lower items 2
-                </div>
-            </div>
+				<div *ngIf="currentFormPage === lowerItems[0]">
+					lower items 1
+				</div>
+				<div *ngIf="currentFormPage === lowerItems[1]">
+					lower items 2
+				</div>
+			</div>
 
-            <div *ngFor="let item of programMeta">
-                <div *ngIf="currentFormPage === item.programName">
-                    <div class="page-header">
-                        <h1>{{item.programName}}</h1>
-                    </div>
-                    <!-- This massive complex component handles itself instead of returning data -->
-                    <!-- <app-program-planner [programMeta]="item"></app-program-planner> -->
-                    {{item|json}}
-                </div>
-            </div>
-        </div>
-    </div>
+			<div *ngFor="let item of programMeta">
+				<div *ngIf="currentFormPage === item.programName">
+					<div class="page-header">
+						<h1>{{item.programName}}</h1>
+					</div>
+					<!-- This massive complex component handles itself instead of returning data -->
+					<!-- <app-program-planner [programMeta]="item"></app-program-planner> -->
+					{{item|json}}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
