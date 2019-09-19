@@ -29,7 +29,7 @@ export class ProgramBudgetComponent implements OnInit {
 		// private boilerplateService: BoilerplateService,
 		// private programInformationService: ProgramInformationService,
 	) {
-		this.tabs = ['Contact Information', 'Delivery Information', 'Reporting Requirements'];
+		this.tabs = ['Program Revenue Information', 'Program Expense'];
 		this.currentTab = this.tabs[0];
 	}
 
