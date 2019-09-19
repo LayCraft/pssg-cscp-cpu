@@ -1,56 +1,30 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
-import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
-import { ProgramPageComponent } from './pages/program-page/program-page.component';
-import { ExpensePageComponent } from './pages/expense-page/expense-page.component';
-import { BudgetPageComponent } from './pages/budget-page/budget-page.component';
-import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
-import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
-import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { AuthenticationGuard } from './core/guards/authentication.guard';
+import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
+  { path: '', component: LandingPageComponent, pathMatch: 'full' },
+  { path: 'test', component: TestComponent },
   {
-    path: '',
-    component: HomeComponent
+    path: 'anonymous',
+    loadChildren: () => import('./anonymous/anonymous.module').then(mod => mod.AnonymousModule)
   },
   {
-    path: 'dashboard',
-    component: DashboardPageComponent
+    path: 'authenticated',
+    // canActivate: [AuthenticationGuard],// TODO: re-enable this
+    loadChildren: () => import('./authenticated/authenticated.module').then(mod => mod.AuthenticatedModule)
   },
   {
-    path: 'program_application/:orgid/:id',
-    component: ProgramPageComponent
-  },
-  {
-    path: 'budget_proposal/:orgid/:id',
-    component: BudgetPageComponent
-  },
-  {
-    path: 'status_report/:orgid/:id',
-    component: StatusReportPageComponent
-  },
-  {
-    path: 'expense_report/:orgid/:id',
-    component: ExpensePageComponent
-  },
-  {
-    path: 'profile',
-    component: OrganizationProfilePageComponent,
-    //canDeactivate: [CanDeactivateGuard]
-  },
-  {
-    path: 'personnel',
-    component: PersonnelPageComponent,
-    //canDeactivate: [CanDeactivateGuard]
-  },
-  { path: '**', component: NotFoundPageComponent }
+    path: '**',
+    component: NotFoundComponent,
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
-  exports: [RouterModule],
-  providers: []
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

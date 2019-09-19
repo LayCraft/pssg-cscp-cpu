@@ -1,11 +1,20 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+class DummyForm {
+  postal: string;
+}
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
-  styleUrls: ['./test.component.css']
+  styleUrls: ['./test.component.scss']
 })
 export class TestComponent implements OnInit {
-  constructor() { }
-  ngOnInit() { }
+  form: DummyForm;
+  postalPattern = /^[A-Za-z][0-9][A-Za-z][ ]?[0-9][A-Za-z][0-9]$/;
+  constructor() {
+    this.form = new DummyForm();
+  }
 
+  ngOnInit() {
+
+  }
 }

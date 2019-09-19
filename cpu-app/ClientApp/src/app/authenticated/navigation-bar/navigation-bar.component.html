@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary-nav">
+  <div class="container">
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" #navbarSupportedContent>
+      <ul class="navbar-nav mr-auto" (click)="closeMenu()">
+        <li class="nav-item">
+          <a [class.active]="router.url==='/authenticated'" class="nav-link" [routerLink]="['/authenticated']" title="Go Home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a [class.active]="router.url==='/authenticated/secret-page'" class="nav-link" [routerLink]="['/authenticated/secret-page']" title="Go to secret page ">Secret Page</a>
+        </li>
+        <li class="nav-item">
+          <a [class.active]="router.url==='/authenticated/secret-form'" class="nav-link" [routerLink]="['/authenticated/secret-form']" title="Go to secret form ">Secret Form</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

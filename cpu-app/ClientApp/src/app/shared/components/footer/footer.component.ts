@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { VersionInfoDialog } from '../version-info/version-info.component';
-import { VersionInfo } from '../../../../app/models/version-info.model';
-import { VersionInfoDataService } from '../../../services/version-info-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -11,24 +8,15 @@ import { VersionInfoDataService } from '../../../services/version-info-data.serv
 })
 export class FooterComponent implements OnInit {
 
-  public versionInfo: VersionInfo;
-
   constructor(
-    private dialog: MatDialog,
-    private versionInfoDataService: VersionInfoDataService,
+    private router: Router
   ) { }
 
   ngOnInit() {
   }
-  loadVersionInfo() {
-    this.versionInfoDataService.getVersionInfo()
-      .subscribe((versionInfo: VersionInfo) => {
-        this.versionInfo = versionInfo;
-      });
-  }
-  showVersionInfo(): void {
-    this.dialog.open(VersionInfoDialog, {
-      data: this.versionInfo
-    });
+  homeButton() {
+    // this is done without a routerlink because you will want to route the user back to a place
+    // that is appropriate for their role. So check their logged in state and etc before deciding which route they go to.
+    this.router.navigate(['']);
   }
 }
