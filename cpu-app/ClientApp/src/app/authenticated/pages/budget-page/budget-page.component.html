@@ -65,7 +65,7 @@
 						<h1>{{item.programName}}</h1>
 					</div>
 					<!-- This massive complex component handles itself instead of returning data -->
-					<!-- <app-program-planner [programMeta]="item"></app-program-planner> -->
+					<app-program-budget [programMeta]="item"></app-program-budget>
 					{{item|json}}
 				</div>
 			</div>
