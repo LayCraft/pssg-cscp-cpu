@@ -19,9 +19,7 @@
       <div class="card mb-4">
         <div class="card-header">
           <h1 class="h2">Contract: #1097583</h1>
-        </div>
-        <div class="card-body">
-          <ul class="nav nav-tabs card-header-tabs" role="tablist">
+          <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
               <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Current</a>
             </li>
@@ -32,6 +30,8 @@
               <a class="nav-link" (click)="setCurrentTab(tabs[2])" [class.active]="currentTab===tabs[2]">Programs</a>
             </li>
           </ul>
+        </div>
+        <div class="card-body">
           <span *ngIf="currentTab===tabs[0]">
             <!-- Show completed items -->
             <!-- <input type="checkbox"> -->

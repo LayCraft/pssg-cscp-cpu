@@ -2,14 +2,14 @@
   <div class="row">
     <div class="col-md-4">
       <span>
-        <p class="h2">
+        <p class="h3">
           <small>
             Organization ID:
           </small>
           <br>
           {{organizationId}}
         </p>
-        <p class="h2">
+        <p class="h3">
           <small>
             Contract ID:
           </small>
@@ -19,7 +19,7 @@
       </span>
 
       <section class="application-nav sticky-top">
-        <h3>Renew Application</h3>
+        <p class="h4">Renew Application</p>
         <mat-vertical-stepper (selectionChange)="gotoPage($event)" #stepper>
           <ng-template matStepperIcon="edit">
             <mat-icon>done</mat-icon>

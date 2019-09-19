@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'authenticated',
-    canActivate: [AuthenticationGuard],// TODO: re-enable this
+    // canActivate: [AuthenticationGuard],// TODO: re-enable this
     loadChildren: () => import('./authenticated/authenticated.module').then(mod => mod.AuthenticatedModule)
   },
   {
