@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bcgov-angular-starter-pack": {
+    "vsd-public-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -71,18 +71,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "bcgov-angular-starter-pack:build"
+            "browserTarget": "vsd-public-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "bcgov-angular-starter-pack:build:production"
+              "browserTarget": "vsd-public-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bcgov-angular-starter-pack:build"
+            "browserTarget": "vsd-public-app:build"
           }
         },
         "test": {
@@ -119,16 +119,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "bcgov-angular-starter-pack:serve"
+            "devServerTarget": "vsd-public-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "bcgov-angular-starter-pack:serve:production"
+              "devServerTarget": "vsd-public-app:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "bcgov-angular-starter-pack"
+  "defaultProject": "vsd-public-app"
 }

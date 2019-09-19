@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthenticatedRoutingModule } from './authenticated-routing.module';
 import { AuthenticatedComponent } from '../authenticated/authenticated.component';
-import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';

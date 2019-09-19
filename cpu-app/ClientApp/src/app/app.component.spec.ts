@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'bcgov-angular-starter-pack'`, () => {
+  it(`should have as title 'vsd-public-app'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('bcgov-angular-starter-pack');
+    expect(app.title).toEqual('vsd-public-app');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to bcgov-angular-starter-pack!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to vsd-public-app!');
   });
 });

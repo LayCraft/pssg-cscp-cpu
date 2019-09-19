@@ -9,7 +9,6 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { UnauthorizedInterceptor } from './core/interceptors/unauthorized.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TestComponent } from './test/test.component';
-import { AuthenticatedModule } from './authenticated/authenticated.module';
 
 @NgModule({
   declarations: [
@@ -22,8 +21,7 @@ import { AuthenticatedModule } from './authenticated/authenticated.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
-    FormsModule,
-    AuthenticatedModule //TODO THIS ABOSOLUTELY SHOULD NOT MAKE IT TO PROD.
+    FormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },

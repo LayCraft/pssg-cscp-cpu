@@ -1,14 +1,15 @@
 {
-  "name": "bcgov-festarter-pack",
+  "name": "vsd-public-app",
   "version": "0.0.0",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --source-map --host 0.0.0.0",
     "build": "ng build --extract-css --base-href / --deploy-url /",
+    "buildprep": "ng build --source-map --extract-css --base-href / --deploy-url /",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build.prod": "ng build --aot --prod --progress false --base-href \"https://laycraft.github.io/bcgov-angular-starter-pack/\""
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {

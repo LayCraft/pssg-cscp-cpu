@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to bcgov-angular-starter-pack!');
+    expect(page.getTitleText()).toEqual('Welcome to vsd-public-app!');
   });
 
   afterEach(async () => {
