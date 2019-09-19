@@ -20,7 +20,7 @@ const routes: Routes = [
       {
         // set the default component to route to for this user
         path: '',
-        redirectTo: 'secret-page',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
       },
       {
