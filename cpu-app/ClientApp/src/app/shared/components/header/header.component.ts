@@ -10,6 +10,7 @@ import { NotificationQueueService } from 'src/app/core/services/notification-que
 })
 export class HeaderComponent implements OnInit {
   user: string = '';
+  title: string = 'Community Programs Unit';
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
