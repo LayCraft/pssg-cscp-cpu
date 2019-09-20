@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./test.component.scss']
 })
 export class TestComponent implements OnInit {
+	nav: string;
 	constructor() { }
 
 	ngOnInit() { }

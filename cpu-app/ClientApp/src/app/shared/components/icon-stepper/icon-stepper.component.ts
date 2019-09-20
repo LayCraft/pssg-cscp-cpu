@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 export interface iIconStepperElement {
 	itemName: string; // This is the show name
@@ -12,6 +12,10 @@ export interface iIconStepperElement {
 	styleUrls: ['./icon-stepper.component.scss']
 })
 export class IconStepperComponent implements OnInit {
+	@Input() iconStepperElements: iIconStepperElement[];
+	@Input() navigationName: string;
+	@Output() navigationNameChange = new EventEmitter<string>();
+
 	// this object gives us keys to draw on to get classnames and messages
 	levels: {} = {
 		// message , colour class, icon class
@@ -43,15 +47,15 @@ export class IconStepperComponent implements OnInit {
 			level: 'complete'
 		}
 	];
-	// which one is active?
-	activeNavigationName: string;
 
 	constructor() { }
 
-	ngOnInit() {
-	}
-	onClick(navigationName: string) {
+	ngOnInit() { }
+
+	onClick(navigateTo: string) {
+		// set the internal state of this component
+		this.navigationName = navigateTo;
 		// emit the event for navigation
-		this.activeNavigationName = navigationName;
+		this.navigationNameChange.emit(navigateTo);
 	}
 }

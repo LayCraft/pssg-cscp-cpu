@@ -1,17 +1,17 @@
 <ul class="list-group">
-	<li *ngFor="let item of data" class="list-group-item d-flex justify-content-between align-items-center" [class.active]="item.navigationName === activeNavigationName" (click)="onClick(item.navigationName)">
+	<li *ngFor="let item of data" class="list-group-item d-flex justify-content-between align-items-center" [class.active]="item.navigationName === navigationName" (click)="onClick(item.navigationName)">
 		<span>
 			{{item.itemName}}<br>
-			<small *ngIf="item.navigationName !== activeNavigationName" [class]="levels[item.level][1]">
+			<small *ngIf="item.navigationName !== navigationName" [class]="levels[item.level][1]">
 				{{levels[item.level][0]}}
 			</small>
-			<small *ngIf="item.navigationName === activeNavigationName">
+			<small *ngIf="item.navigationName === navigationName">
 				{{levels[item.level][0]}}
 			</small>
 		</span>
 
-		<i *ngIf="item.navigationName !== activeNavigationName " [class]="levels[item.level][1] +' '+levels[item.level][2]"></i>
-		<span *ngIf=" item.navigationName === activeNavigationName" class="badge badge-light">
+		<i *ngIf="item.navigationName !== navigationName " [class]="levels[item.level][1] +' '+levels[item.level][2]"></i>
+		<span *ngIf=" item.navigationName === navigationName" class="badge badge-light">
 			<i [class]="levels[item.level][1] +' '+levels[item.level][2]"></i>
 		</span>
 	</li>
