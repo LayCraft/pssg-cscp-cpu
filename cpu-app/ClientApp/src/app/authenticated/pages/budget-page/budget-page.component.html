@@ -1,22 +1,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-4">
-			<div>
-				<p class="h3">
-					<small>
-						Organization ID:
-					</small>
-					<br>
-					{{organizationId}}
-				</p>
-				<p class="h3">
-					<small>
-						Contract ID:
-					</small>
-					<br>
-					{{contractId}}
-				</p>
-			</div>
+			<app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone>
 
 			<section class="application-nav sticky-top">
 				<app-icon-stepper [iconStepperElements]="iconStepperElements" [(navigationName)]="currentFormPage"></app-icon-stepper>
