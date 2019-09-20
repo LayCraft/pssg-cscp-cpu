@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-4">
-			<span>
+			<div>
 				<p class="h3">
 					<small>
 						Organization ID:
@@ -16,20 +16,10 @@
 					<br>
 					{{contractId}}
 				</p>
-			</span>
+			</div>
 
 			<section class="application-nav sticky-top">
-				<p class="h4">Renew Application</p>
-				<mat-vertical-stepper (selectionChange)="gotoPage($event)" #stepper>
-					<ng-template matStepperIcon="edit">
-						<mat-icon>done</mat-icon>
-					</ng-template>
-					<ng-template matStepperIcon="number">
-					</ng-template>
-					<mat-step *ngFor="let item of upperItems" label="{{item}}"></mat-step>
-					<mat-step *ngFor="let item of programs" label="Program: {{item}}"></mat-step>
-					<mat-step *ngFor="let item of lowerItems" label="{{item}}"></mat-step>
-				</mat-vertical-stepper>
+				<app-icon-stepper [iconStepperElements]="iconStepperElements" [(navigationName)]="currentFormPage"></app-icon-stepper>
 			</section>
 		</div>
 

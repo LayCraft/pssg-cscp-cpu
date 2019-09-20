@@ -2,7 +2,6 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 export interface iIconStepperElement {
 	itemName: string; // This is the show name
-	navigationName: string; // this is the key to route to or whatever
 	level: string; // untouched incomplete invalid complete
 }
 
@@ -25,28 +24,25 @@ export class IconStepperComponent implements OnInit {
 		'complete': ['This form is saved and valid.', 'text-success', 'fas fa-check-circle'],
 	}
 
-	data: iIconStepperElement[] = [
-		{
-			itemName: 'This is the zero form',
-			navigationName: 'untouched-item',
-			level: 'untouched'
-		},
-		{
-			itemName: 'This is the first form',
-			navigationName: 'incomplete-item',
-			level: 'incomplete'
-		},
-		{
-			itemName: 'This is the second form',
-			navigationName: 'invalid-item',
-			level: 'invalid'
-		},
-		{
-			itemName: 'This is the third form',
-			navigationName: 'treefer-item',
-			level: 'complete'
-		}
-	];
+	// THIS IS AN EXAMPLE INPUT
+	// @Input() iconStepperElements: iIconStepperElement[] = [
+	// 	{
+	// 		itemName: 'This is the zero form',
+	// 		level: 'untouched'
+	// 	},
+	// 	{
+	// 		itemName: 'This is the first form',
+	// 		level: 'incomplete'
+	// 	},
+	// 	{
+	// 		itemName: 'This is the second form',
+	// 		level: 'invalid'
+	// 	},
+	// 	{
+	// 		itemName: 'This is the third form',
+	// 		level: 'complete'
+	// 	}
+	// ];
 
 	constructor() { }
 
