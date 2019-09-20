@@ -4,7 +4,7 @@ import { iRevenueSource } from './revenue-source.class';
 export interface iBudgetProposal {
 	programs: iProgramBudget[];
 }
-interface iProgramBudget {
+export interface iProgramBudget {
 	name: string;
 	type: string;
 	email: string;
