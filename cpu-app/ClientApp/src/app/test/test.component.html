@@ -1,34 +1,62 @@
 <main class="container">
-  <div class="row">
-    <div class="col">
-      <form #testForm="ngForm">
-        <!--
-          <label for="firstName" class="required">First name</label>
-          <input
-          [(ngModel)]="model.firstName"
-          type="text"
-          class="form-control"
-          placeholder="First name"
-          id="firstName"
-          name="firstName"
-          #firstName="ngModel"
-          required>
-          <div class="valid-feedback" [hidden]="!firstName.valid">
-            Looks good!
-          </div>
-          <div class="invalid-feedback" [hidden]="firstName.valid || !firstName.touched">
-            First name is required.
-          </div>
-         -->
-        <input [(ngModel)]="form.postal" type="text" class="form-control" placeholder="V9V9V9" id="postal" name="postal" #postal="ngModel" [pattern]="postalPattern" required>
-        <div class="valid-feedback" [hidden]="!postal.valid">
-          Looks good!
-        </div>
-        <div class="invalid-feedback" [hidden]="postal.valid || !postal.touched">
-          First name is required.
-        </div>
-      </form>
-      {{form.postal}}
-    </div>
-  </div>
+	<div class="row">
+		<div class="col-4">
+			<app-icon-stepper></app-icon-stepper>
+		</div>
+		<div class="col-4">
+			<ul class="list-group">
+				<!-- <i class="far fa-circle"></i> -->
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					<span>
+						Untouched<br>
+						<small class="text-secondary">Secondary</small>
+					</span>
+					<i class="far fa-circle text-secondary"></i>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center" [class.active]="true">
+					<span>
+						Active Item<br>
+						<small>Danger</small>
+					</span>
+					<i class="fas fa-times-circle text-danger"></i>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					<span>
+						Applicant Contact Information<br>
+						<small class=" text-danger">Danger</small>
+					</span>
+					<i class="fas fa-times-circle text-danger"></i>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					<span>
+						Commercial General Liability Insurance<br>
+						<small class=" text-warning">Warning</small>
+					</span>
+					<i class="fas fa-clock text-warning"></i>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					<span>
+						Program Summary<br>
+						<small class=" text-success">Success</small>
+					</span>
+					<i class="fas fa-check-circle text-success"></i>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					<span>
+						Program: Social Work East Vancouver<br>
+						<small class=" text-secondary">Secondary</small>
+					</span>
+					<i class="far fa-file text-secondary"></i>
+				</li>
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+					<span>
+						Summary<br>
+						<small class=" text-info">Info</small>
+					</span>
+					<i class="far fa-comment-dots text-info"></i>
+				</li>
+			</ul>
+		</div>
+	</div>
+
 </main>
