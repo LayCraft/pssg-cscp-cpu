@@ -1,2 +1,49 @@
-<h1>Annual Budget Proposal Page (Schedule F)</h1>
-<a routerLink="/authenticated/dashboard">Dashboard</a>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone>
+
+			<section class="application-nav sticky-top">
+				<app-icon-stepper [iconStepperElements]="iconStepperElements" [(navigationName)]="currentFormPage"></app-icon-stepper>
+			</section>
+		</div>
+
+		<div class="col-md-8">
+			<!-- Section is not in programs list -->
+			<div *ngIf="programs.indexOf(currentFormPage)===-1">
+				<div class="page-header">
+					<h1>{{currentFormPage}}</h1>
+				</div>
+				<div *ngIf="currentFormPage === upperItems[0]">
+					<h2 class="blue-header">
+						Program Overview
+					</h2>
+					<h4>Programs for Review</h4>
+					<div *ngFor="let program of programs" class="card mb-2 mr-2">
+						<div class="card-body">
+							{{program}}
+						</div>
+					</div>
+				</div>
+
+				<div *ngIf="currentFormPage === lowerItems[0]">
+					lower items 1
+				</div>
+				<div *ngIf="currentFormPage === lowerItems[1]">
+					lower items 2
+				</div>
+			</div>
+
+			<div *ngFor="let item of programMeta">
+				<div *ngIf="currentFormPage === item.programName">
+					<div class="page-header">
+						<h1>{{item.programName}}</h1>
+					</div>
+					<!-- This massive complex component handles itself instead of returning data -->
+					<app-program-budget [programMeta]="item"></app-program-budget>
+					{{item|json}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

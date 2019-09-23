@@ -22,6 +22,8 @@ import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.co
 import { ProgramPageComponent } from './pages/program-page/program-page.component';
 import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
 import { SharedModule } from '../shared/shared.module';
+import { ProgramBudgetComponent } from './components/program-budget/program-budget.component';
+import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
 
 @NgModule({
   imports: [
@@ -52,6 +54,8 @@ import { SharedModule } from '../shared/shared.module';
     PersonnelPageComponent,
     ProgramPageComponent,
     StatusReportPageComponent,
+    ProgramBudgetComponent,
+    ContractTombstoneComponent,
   ]
 })
 export class AuthenticatedModule { }

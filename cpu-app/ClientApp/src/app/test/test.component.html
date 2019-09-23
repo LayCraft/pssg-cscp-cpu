@@ -1,34 +1,9 @@
 <main class="container">
-  <div class="row">
-    <div class="col">
-      <form #testForm="ngForm">
-        <!--
-          <label for="firstName" class="required">First name</label>
-          <input
-          [(ngModel)]="model.firstName"
-          type="text"
-          class="form-control"
-          placeholder="First name"
-          id="firstName"
-          name="firstName"
-          #firstName="ngModel"
-          required>
-          <div class="valid-feedback" [hidden]="!firstName.valid">
-            Looks good!
-          </div>
-          <div class="invalid-feedback" [hidden]="firstName.valid || !firstName.touched">
-            First name is required.
-          </div>
-         -->
-        <input [(ngModel)]="form.postal" type="text" class="form-control" placeholder="V9V9V9" id="postal" name="postal" #postal="ngModel" [pattern]="postalPattern" required>
-        <div class="valid-feedback" [hidden]="!postal.valid">
-          Looks good!
-        </div>
-        <div class="invalid-feedback" [hidden]="postal.valid || !postal.touched">
-          First name is required.
-        </div>
-      </form>
-      {{form.postal}}
-    </div>
-  </div>
+	<div class="row">
+		<div class="col-4">
+			<app-icon-stepper [(navigationName)]="nav"></app-icon-stepper>
+			{{nav}}
+		</div>
+	</div>
+
 </main>
