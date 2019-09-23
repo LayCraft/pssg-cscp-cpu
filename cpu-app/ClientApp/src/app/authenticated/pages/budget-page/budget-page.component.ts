@@ -16,28 +16,31 @@ import { iBudgetProposal, iProgramBudget } from 'src/app/core/models/budget-prop
 	styleUrls: ['./budget-page.component.scss']
 })
 export class BudgetPageComponent implements OnInit {
-
-
 	contractId: string;
 	organizationId: string;
-	pageList: string[];
 
-	upperItems: string[] = ['Program Overview'];
-	programs: string[] = [];
-	programMeta: iProgramMeta[];
-	lowerItems: string[] = ['Program Budget Summary', 'Authorization'];
-	combinedPageList: string[];
-
+	iconStepperElements: iIconStepperElement[] = [
+		{
+			itemName: 'Program Overview',
+			formState: 'info' // Calculate these somehow?
+		},
+		{
+			itemName: 'Program Budget Summary',
+			formState: 'info' // Calculate these somehow?
+		},
+		{
+			itemName: 'Authorization',
+			formState: 'untouched' // Calculate these somehow?
+		},
+	];
 	currentFormPage: string = '';
-
-	iconStepperElements: iIconStepperElement[];
+	formPages: string[] = [];
 	budgetProposal: iBudgetProposal;
 
 
 	constructor(
 		private route: ActivatedRoute,
 		private budgetProposalService: BudgetProposalService,
-		private boilerplateService: BoilerplateService,
 	) { }
 
 	ngOnInit() {
@@ -47,26 +50,13 @@ export class BudgetPageComponent implements OnInit {
 		this.organizationId = this.route.snapshot.paramMap.get('orgid');
 		this.contractId = this.route.snapshot.paramMap.get('id');
 
-		this.iconStepperElements = [
-			{
-				itemName: 'Program Overview',
-				formState: 'untouched' // Calculate these somehow?
-			},
-			{
-				itemName: 'Program Budget Summary',
-				formState: 'untouched' // Calculate these somehow?
-			},
-			{
-				itemName: 'Authorization',
-				formState: 'untouched' // Calculate these somehow?
-			},
-		];
+
 		// insert list of programs at stepper 2
 		this.budgetProposalService.getBudgetProposal(this.organizationId, this.contractId).subscribe((bp: iBudgetProposal) => {
 			// save the budget proposal object
 			this.budgetProposal = bp;
-
-
+			//set the state of the form overall
+			this.changeIconStepperState('Authorization', bp.formState);
 			// Many other ways to do this. Most hassle free is split the array, put the items in, concat
 			const top: iIconStepperElement[] = this.iconStepperElements.slice(0, 1);
 			// map the programs into the right shape
@@ -80,6 +70,8 @@ export class BudgetPageComponent implements OnInit {
 			const bottom: iIconStepperElement[] = this.iconStepperElements.slice(1, 3);
 			// save the work
 			this.iconStepperElements = top.concat(middle).concat(bottom);
+			// handy string list for navigating
+			this.formPages = this.iconStepperElements.map(e => e.itemName);
 		});
 	}
 	changeIconStepperState(itemName: string, formState) {

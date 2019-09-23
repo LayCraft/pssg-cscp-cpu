@@ -5,13 +5,13 @@ export interface iBudgetProposal {
 	organizationId: string;
 	contractId: string;
 	programs: iProgramBudget[];
-	formState: string; // untouched	incomplete	invalid	complete
+	formState: string; // untouched	incomplete	invalid	complete info
 }
 export interface iProgramBudget {
 	programId: string;
 	name: string;
 	type: string;
-	formState: string; // untouched	incomplete	invalid	complete
+	formState: string; // untouched	incomplete	invalid	complete info
 	email: string;
 	revenueSources: iRevenueSource[];
 	salariesAndBenefits: iPerson[];

@@ -9,7 +9,7 @@ export class BudgetProposalService {
 	dummyBudget = {
 		organizationId: 'StarFleet',
 		contractId: 'ncc-1701',
-		formState: 'incomplete',
+		formState: 'untouched',
 		programs: [
 			{
 				formState: 'complete',

@@ -10,42 +10,24 @@
 
 		<div class="col-md-8">
 			<!-- Section is not in programs list -->
-			<div *ngIf="programs.indexOf(currentFormPage)===-1">
-				<div class="page-header">
-					<h1>{{currentFormPage}}</h1>
-				</div>
-				<div *ngIf="currentFormPage === upperItems[0]">
-					<h2 class="blue-header">
-						Program Overview
-					</h2>
-					<h4>Programs for Review</h4>
-					<div *ngFor="let program of programs" class="card mb-2 mr-2">
-						<div class="card-body">
-							{{program}}
-						</div>
-					</div>
-				</div>
-
-				<div *ngIf="currentFormPage === lowerItems[0]">
-					lower items 1
-				</div>
-				<div *ngIf="currentFormPage === lowerItems[1]">
-					lower items 2
-				</div>
+			<div class="page-header">
+				<h1>{{currentFormPage}}</h1>
+			</div>
+			<div *ngIf="currentFormPage === formPages[0]">
+				Program Overview Here
 			</div>
 
-			<div *ngFor="let item of programMeta">
-				<div *ngIf="currentFormPage === item.programName">
-					<div class="page-header">
-						<h1>{{item.programName}}</h1>
-					</div>
-					<!-- This massive complex component handles itself instead of returning data -->
-					<app-program-budget [programMeta]="item"></app-program-budget>
-					{{item|json}}
-				</div>
+			<div *ngIf="currentFormPage !== formPages[0] && currentFormPage !== formPages[formPages.length-1] && currentFormPage !== formPages[formPages.length-2]">
+				This must be a program
+			</div>
+
+			<div *ngIf="currentFormPage === formPages[formPages.length-2]">
+				Program Budget Summary Here
+			</div>
+			<div *ngIf="currentFormPage === formPages[formPages.length-1]">
+				Authorization Form Here
 			</div>
 		</div>
 	</div>
 	<!-- <pre>{{budgetProposal|json}}</pre> -->
-	{{iconStepperElements|json}}
 </div>
