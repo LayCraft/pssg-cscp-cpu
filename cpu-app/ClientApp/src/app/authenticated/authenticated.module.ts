@@ -22,40 +22,40 @@ import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.co
 import { ProgramPageComponent } from './pages/program-page/program-page.component';
 import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
 import { SharedModule } from '../shared/shared.module';
-import { ProgramBudgetComponent } from './components/program-budget/program-budget.component';
+import { ProgramBudgetComponent } from './pages/budget-page/program-budget/program-budget.component';
 import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AuthenticatedRoutingModule,
-    SharedModule, // For material components
-    FormsModule,
-    NgbModule,
-  ],
-  declarations: [
-    AuthenticatedComponent,
-    NavigationBarComponent,
-    DashboardPageComponent,
-    AdministrativeInformationComponent,
-    CgLiabilityComponent,
-    ContactInformationComponent,
-    HoursComponent,
-    MinistryContactBoxComponent,
-    OrganizationProfileBoxComponent,
-    PersonDetailsComponent,
-    ProgramAuthorizerComponent,
-    ProgramPlannerComponent,
-    ////////////////////////
-    BudgetPageComponent,
-    DashboardPageComponent,
-    ExpensePageComponent,
-    OrganizationProfilePageComponent,
-    PersonnelPageComponent,
-    ProgramPageComponent,
-    StatusReportPageComponent,
-    ProgramBudgetComponent,
-    ContractTombstoneComponent,
-  ]
+	imports: [
+		CommonModule,
+		AuthenticatedRoutingModule,
+		SharedModule, // For material components
+		FormsModule,
+		NgbModule,
+	],
+	declarations: [
+		AuthenticatedComponent,
+		NavigationBarComponent,
+		DashboardPageComponent,
+		AdministrativeInformationComponent,
+		CgLiabilityComponent,
+		ContactInformationComponent,
+		HoursComponent,
+		MinistryContactBoxComponent,
+		OrganizationProfileBoxComponent,
+		PersonDetailsComponent,
+		ProgramAuthorizerComponent,
+		ProgramPlannerComponent,
+		////////////////////////
+		BudgetPageComponent,
+		DashboardPageComponent,
+		ExpensePageComponent,
+		OrganizationProfilePageComponent,
+		PersonnelPageComponent,
+		ProgramPageComponent,
+		StatusReportPageComponent,
+		ProgramBudgetComponent,
+		ContractTombstoneComponent,
+	]
 })
 export class AuthenticatedModule { }
