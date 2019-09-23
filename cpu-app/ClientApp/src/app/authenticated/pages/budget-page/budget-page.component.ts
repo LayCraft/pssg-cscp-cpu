@@ -7,6 +7,8 @@ import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
 import { ProgramInformationService } from 'src/app/core/services/program-information.service';
 import { ActivatedRoute } from '@angular/router';
 import { iIconStepperElement } from 'src/app/shared/components/icon-stepper/icon-stepper.component';
+import { BudgetProposalService } from 'src/app/core/services/budget-proposal.service';
+import { iBudgetProposal, iProgramBudget } from 'src/app/core/models/budget-proposal.class';
 
 @Component({
 	selector: 'app-budget-page',
@@ -26,36 +28,15 @@ export class BudgetPageComponent implements OnInit {
 	lowerItems: string[] = ['Program Budget Summary', 'Authorization'];
 	combinedPageList: string[];
 
-	iconStepperElements: iIconStepperElement[];
-	// 	= [
-	// 	{
-	// 		itemName: 'Program Overview',
-	// 		navigationName: 'program-overview',
-	// 		level: 'untouched'
-	// 	},
-	// 	{
-	// 		itemName: 'Program Budget Summary',
-	// 		navigationName: 'incomplete-item',
-	// 		level: 'incomplete'
-	// 	},
-	// 	{
-	// 		itemName: 'Authorization',
-	// 		navigationName: 'invalid-item',
-	// 		level: 'invalid'
-	// 	},
-	// 	{
-	// 		itemName: 'This is the third form',
-	// 		navigationName: 'treefer-item',
-	// 		level: 'complete'
-	// 	}
-	// ];
-
 	currentFormPage: string = '';
-	canSubmit: boolean = false;
+
+	iconStepperElements: iIconStepperElement[];
+	budgetProposal: iBudgetProposal;
+
 
 	constructor(
 		private route: ActivatedRoute,
-		private programInformationService: ProgramInformationService,
+		private budgetProposalService: BudgetProposalService,
 		private boilerplateService: BoilerplateService,
 	) { }
 
@@ -69,20 +50,45 @@ export class BudgetPageComponent implements OnInit {
 		this.iconStepperElements = [
 			{
 				itemName: 'Program Overview',
-				level: 'untouched'
+				formState: 'untouched' // Calculate these somehow?
 			},
 			{
 				itemName: 'Program Budget Summary',
-				level: 'incomplete'
+				formState: 'untouched' // Calculate these somehow?
 			},
 			{
 				itemName: 'Authorization',
-				level: 'invalid'
+				formState: 'untouched' // Calculate these somehow?
 			},
-			{
-				itemName: 'This is the third form',
-				level: 'complete'
-			}
 		];
+		// insert list of programs at stepper 2
+		this.budgetProposalService.getBudgetProposal(this.organizationId, this.contractId).subscribe((bp: iBudgetProposal) => {
+			// save the budget proposal object
+			this.budgetProposal = bp;
+
+
+			// Many other ways to do this. Most hassle free is split the array, put the items in, concat
+			const top: iIconStepperElement[] = this.iconStepperElements.slice(0, 1);
+			// map the programs into the right shape
+			const middle = bp.programs.map((p: iProgramBudget) => {
+				return {
+					itemName: p.name,
+					formState: p.formState || 'untouched', //default is untouched
+				}
+			});
+			// bottom of the list
+			const bottom: iIconStepperElement[] = this.iconStepperElements.slice(1, 3);
+			// save the work
+			this.iconStepperElements = top.concat(middle).concat(bottom);
+		});
+	}
+	changeIconStepperState(itemName: string, formState) {
+		// finds the item and switches the state
+		this.iconStepperElements = this.iconStepperElements.map(e => {
+			if (e.itemName === itemName) {
+				e.formState = formState;
+			}
+			return e;
+		})
 	}
 }

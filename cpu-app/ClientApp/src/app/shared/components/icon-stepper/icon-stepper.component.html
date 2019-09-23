@@ -2,17 +2,17 @@
 	<li *ngFor="let item of iconStepperElements" class="list-group-item d-flex justify-content-between align-items-center" [class.active]="item.itemName === navigationName" (click)="onClick(item.itemName)">
 		<span>
 			{{item.itemName}}<br>
-			<small *ngIf="item.itemName !== navigationName" [class]="levels[item.level][1]">
-				{{levels[item.level][0]}}
+			<small *ngIf="item.itemName !== navigationName" [class]="levels[item.formState][1]">
+				{{levels[item.formState][0]}}
 			</small>
 			<small *ngIf="item.itemName === navigationName">
-				{{levels[item.level][0]}}
+				{{levels[item.formState][0]}}
 			</small>
 		</span>
 
-		<i *ngIf="item.itemName !== navigationName " [class]="levels[item.level][1] +' '+levels[item.level][2]"></i>
+		<i *ngIf="item.itemName !== navigationName " [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
 		<span *ngIf=" item.itemName === navigationName" class="badge badge-light">
-			<i [class]="levels[item.level][1] +' '+levels[item.level][2]"></i>
+			<i [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
 		</span>
 	</li>
 </ul>
