@@ -1,4 +1,5 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
+# this file is not ignoring thhe node modules folder. Why?
 
 # compiled output
 /dist
