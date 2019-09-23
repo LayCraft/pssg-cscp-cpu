@@ -19,6 +19,9 @@
 
 			<div *ngIf="currentFormPage !== formPages[0] && currentFormPage !== formPages[formPages.length-1] && currentFormPage !== formPages[formPages.length-2]">
 				This must be a program
+				<div *ngFor="let program of iconStepperElements">
+					<app-program-budget></app-program-budget>
+				</div>
 			</div>
 
 			<div *ngIf="currentFormPage === formPages[formPages.length-2]">

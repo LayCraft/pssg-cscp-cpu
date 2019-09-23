@@ -62,6 +62,7 @@ export class ProgramInformationService {
 				contractId: contractId,
 				programId: 'PROGRAM4',
 				programName: 'Social Work New West'
-			},]);
+			}
+		]);
 	}
 }

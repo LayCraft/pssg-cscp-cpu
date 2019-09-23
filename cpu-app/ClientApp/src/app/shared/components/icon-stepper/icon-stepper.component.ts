@@ -3,6 +3,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 export interface iIconStepperElement {
 	itemName: string; // This is the show name
 	formState: string; // untouched incomplete invalid complete
+	id?: string;
 }
 
 @Component({
@@ -22,8 +23,7 @@ export class IconStepperComponent implements OnInit {
 		'incomplete': ['This form is unsaved but valid.', 'text-warning', 'fas fa-circle'],
 		'invalid': ['This form is saved but invalid.', 'text-danger', 'fas fa-times-circle'],
 		'complete': ['This form is saved and valid.', 'text-success', 'fas fa-check-circle'],
-		'info': ['', 'text-info', 'fas fa-info-circle'],
-
+		'info': ['', 'text-info', 'fas fa-info-circle']
 	}
 
 
