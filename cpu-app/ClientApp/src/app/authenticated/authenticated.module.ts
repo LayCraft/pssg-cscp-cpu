@@ -24,6 +24,8 @@ import { StatusReportPageComponent } from './pages/status-report-page/status-rep
 import { SharedModule } from '../shared/shared.module';
 import { ProgramBudgetComponent } from './pages/budget-page/program-budget/program-budget.component';
 import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
+import { ProgramOverviewComponent } from './pages/budget-page/program-overview/program-overview.component';
+import { ProgramBudgetSummaryComponent } from './pages/budget-page/program-budget-summary/program-budget-summary.component';
 
 @NgModule({
 	imports: [
@@ -56,6 +58,8 @@ import { ContractTombstoneComponent } from './components/contract-tombstone/cont
 		StatusReportPageComponent,
 		ProgramBudgetComponent,
 		ContractTombstoneComponent,
+		ProgramOverviewComponent,
+		ProgramBudgetSummaryComponent,
 	]
 })
 export class AuthenticatedModule { }

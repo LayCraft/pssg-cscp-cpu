@@ -47,9 +47,8 @@ export class BudgetPageComponent implements OnInit {
 		// TODO: the majority of the work here is too figure out how to get the data back from dynamics.
 
 		// collect the ids for looking up the program from the route.
-		this.organizationId = this.route.snapshot.paramMap.get('orgid');
-		this.contractId = this.route.snapshot.paramMap.get('id');
-
+		this.organizationId = this.route.snapshot.paramMap.get('organizationId');
+		this.contractId = this.route.snapshot.paramMap.get('contractId');
 
 		// insert list of programs at stepper 2
 		this.budgetProposalService.getBudgetProposal(this.organizationId, this.contractId).subscribe((bp: iBudgetProposal) => {
@@ -72,14 +71,19 @@ export class BudgetPageComponent implements OnInit {
 			this.iconStepperElements = top.concat(middle).concat(bottom);
 			// handy string list for navigating
 			this.formPages = this.iconStepperElements.map(e => e.itemName);
+
+			// set the first page to be the program overview so it isn't blank when they see the page the first time
+			this.currentFormPage = this.formPages[0];
 		});
 	}
 	changeIconStepperState(itemName: string, formState) {
 		// finds the item and switches the state
-		this.iconStepperElements = this.iconStepperElements.map(e => {
+		this.iconStepperElements = this.iconStepperElements.map((e: iIconStepperElement) => {
 			if (e.itemName === itemName) {
+				// formstate is updated to the requested string because it matches
 				e.formState = formState;
 			}
+			// when the global updates the view will update.
 			return e;
 		})
 	}

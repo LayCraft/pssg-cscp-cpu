@@ -14,18 +14,15 @@
 				<h1>{{currentFormPage}}</h1>
 			</div>
 			<div *ngIf="currentFormPage === formPages[0]">
-				Program Overview Here
+				<app-program-overview></app-program-overview>
 			</div>
 
-			<div *ngIf="currentFormPage !== formPages[0] && currentFormPage !== formPages[formPages.length-1] && currentFormPage !== formPages[formPages.length-2]">
-				This must be a program
-				<div *ngFor="let program of iconStepperElements">
-					<app-program-budget></app-program-budget>
-				</div>
+			<div *ngIf="currentFormPage && currentFormPage !== formPages[0] && currentFormPage !== formPages[formPages.length-1] && currentFormPage !== formPages[formPages.length-2]">
+				<app-program-budget></app-program-budget>
 			</div>
 
 			<div *ngIf="currentFormPage === formPages[formPages.length-2]">
-				Program Budget Summary Here
+				<app-program-budget-summary></app-program-budget-summary>
 			</div>
 			<div *ngIf="currentFormPage === formPages[formPages.length-1]">
 				Authorization Form Here

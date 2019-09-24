@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-// import { SecretPageComponent } from './secret-page/secret-page.component';
-// import { SecretFormComponent } from './secret-form/secret-form.component';
 import { AuthenticatedComponent } from './authenticated.component';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
@@ -13,59 +11,50 @@ import { ExpensePageComponent } from './pages/expense-page/expense-page.componen
 
 
 const routes: Routes = [
-  {
-    path: '',
-    component: AuthenticatedComponent,
-    children: [
-      {
-        // set the default component to route to for this user
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full'
-      },
-      {
-        path: 'dashboard',
-        component: DashboardPageComponent,
-      },
-      {
-        path: 'profile',
-        component: OrganizationProfilePageComponent,
-      },
-      {
-        path: 'personnel',
-        component: PersonnelPageComponent
-      },
-      {
-        path: 'program_application/:orgid/:id',
-        component: ProgramPageComponent
-      },
-      {
-        path: 'budget_proposal/:orgid/:id',
-        component: BudgetPageComponent
-      },
-      {
-        path: 'status_report/:orgid/:id',
-        component: StatusReportPageComponent
-      },
-      {
-        path: 'expense_report/:orgid/:id',
-        component: ExpensePageComponent
-      },
-
-      // {
-      //   path: 'secret-page',
-      //   component: SecretPageComponent
-      // },
-      // {
-      //   path: 'secret-form',
-      //   component: SecretFormComponent
-      // }
-    ]
-  },
+	{
+		path: '',
+		component: AuthenticatedComponent,
+		children: [
+			{
+				// set the default component to route to for this user
+				path: '',
+				redirectTo: 'dashboard',
+				pathMatch: 'full'
+			},
+			{
+				path: 'dashboard',
+				component: DashboardPageComponent,
+			},
+			{
+				path: 'profile',
+				component: OrganizationProfilePageComponent,
+			},
+			{
+				path: 'personnel',
+				component: PersonnelPageComponent
+			},
+			{
+				path: 'program_application/:organizationId/:contractId',
+				component: ProgramPageComponent
+			},
+			{
+				path: 'budget_proposal/:organizationId/:contractId',
+				component: BudgetPageComponent
+			},
+			{
+				path: 'status_report/:organizationId/:contractId',
+				component: StatusReportPageComponent
+			},
+			{
+				path: 'expense_report/:organizationId/:contractId',
+				component: ExpensePageComponent
+			},
+		]
+	},
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
 })
 export class AuthenticatedRoutingModule { }
