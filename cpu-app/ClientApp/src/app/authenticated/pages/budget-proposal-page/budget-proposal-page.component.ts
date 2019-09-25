@@ -5,11 +5,11 @@ import { iBudgetProposal, iProgramBudget } from 'src/app/core/models/budget-prop
 import { iStepperElement } from 'src/app/core/models/stepper-element';
 
 @Component({
-	selector: 'app-budget-page',
-	templateUrl: './budget-page.component.html',
-	styleUrls: ['./budget-page.component.scss']
+	selector: 'app-budget-proposal-page',
+	templateUrl: './budget-proposal-page.component.html',
+	styleUrls: ['./budget-proposal-page.component.scss']
 })
-export class BudgetPageComponent implements OnInit {
+export class BudgetProposalPageComponent implements OnInit {
 	contractId: string;
 	organizationId: string;
 

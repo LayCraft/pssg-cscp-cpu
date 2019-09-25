@@ -15,18 +15,18 @@ import { OrganizationProfileBoxComponent } from './components/organization-profi
 import { PersonDetailsComponent } from './components/person-details/person-details.component';
 import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
-import { BudgetPageComponent } from './pages/budget-page/budget-page.component';
 import { ExpensePageComponent } from './pages/expense-page/expense-page.component';
 import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
 import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
 import { ProgramPageComponent } from './pages/program-page/program-page.component';
 import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
 import { SharedModule } from '../shared/shared.module';
-import { ProgramBudgetComponent } from './pages/budget-page/program-budget/program-budget.component';
 import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
-import { ProgramOverviewComponent } from './pages/budget-page/program-overview/program-overview.component';
-import { ProgramBudgetSummaryComponent } from './pages/budget-page/program-budget-summary/program-budget-summary.component';
 import { ProgramApplicationComponent } from './pages/program-application/program-application.component';
+import { BudgetProposalPageComponent } from './pages/budget-proposal-page/budget-proposal-page.component';
+import { ProgramBudgetSummaryComponent } from './pages/budget-proposal-page/program-budget-summary/program-budget-summary.component';
+import { ProgramOverviewComponent } from './pages/budget-proposal-page/program-overview/program-overview.component';
+import { ProgramBudgetComponent } from './pages/budget-proposal-page/program-budget/program-budget.component';
 
 @NgModule({
 	imports: [
@@ -50,15 +50,15 @@ import { ProgramApplicationComponent } from './pages/program-application/program
 		ProgramAuthorizerComponent,
 		ProgramPlannerComponent,
 		////////////////////////
-		BudgetPageComponent,
 		DashboardPageComponent,
 		ExpensePageComponent,
 		OrganizationProfilePageComponent,
 		PersonnelPageComponent,
 		ProgramPageComponent,
 		StatusReportPageComponent,
-		ProgramBudgetComponent,
 		ContractTombstoneComponent,
+		BudgetProposalPageComponent,
+		ProgramBudgetComponent,
 		ProgramOverviewComponent,
 		ProgramBudgetSummaryComponent,
 		ProgramApplicationComponent,
