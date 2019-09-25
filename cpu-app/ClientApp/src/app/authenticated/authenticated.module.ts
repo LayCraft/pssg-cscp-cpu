@@ -26,6 +26,7 @@ import { ProgramBudgetComponent } from './pages/budget-page/program-budget/progr
 import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
 import { ProgramOverviewComponent } from './pages/budget-page/program-overview/program-overview.component';
 import { ProgramBudgetSummaryComponent } from './pages/budget-page/program-budget-summary/program-budget-summary.component';
+import { ProgramApplicationComponent } from './pages/program-application/program-application.component';
 
 @NgModule({
 	imports: [
@@ -60,6 +61,7 @@ import { ProgramBudgetSummaryComponent } from './pages/budget-page/program-budge
 		ContractTombstoneComponent,
 		ProgramOverviewComponent,
 		ProgramBudgetSummaryComponent,
+		ProgramApplicationComponent,
 	]
 })
 export class AuthenticatedModule { }

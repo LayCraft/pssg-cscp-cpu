@@ -8,6 +8,7 @@ import { ProgramPageComponent } from './pages/program-page/program-page.componen
 import { BudgetPageComponent } from './pages/budget-page/budget-page.component';
 import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
 import { ExpensePageComponent } from './pages/expense-page/expense-page.component';
+import { ProgramApplicationComponent } from './pages/program-application/program-application.component';
 
 
 const routes: Routes = [
@@ -34,8 +35,12 @@ const routes: Routes = [
 				component: PersonnelPageComponent
 			},
 			{
-				path: 'program_application/:organizationId/:contractId',
+				path: 'program_application',
 				component: ProgramPageComponent
+			},
+			{
+				path: 'program_application/:organizationId/:contractId',
+				component: ProgramApplicationComponent
 			},
 			{
 				path: 'budget_proposal/:organizationId/:contractId',

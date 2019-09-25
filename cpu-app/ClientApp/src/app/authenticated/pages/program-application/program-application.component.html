@@ -19,10 +19,13 @@
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
 					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[0].itemName">
-						<app-program-overview [stepperElement]="stepperElementsTop[0]"></app-program-overview>
+						Contact information here
 					</span>
 					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[1].itemName">
-						<app-program-budget-summary [stepperElement]="stepperElementsTop[1]"></app-program-budget-summary>
+						Administrative information goes here
+					</span>
+					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[2].itemName">
+						Commercial insurance things
 					</span>
 				</div>
 			</div>
@@ -30,14 +33,18 @@
 			<div *ngFor="let item of stepperElementsPrograms">
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
-					<app-program-budget [stepperElement]="item"></app-program-budget>
+					Program stuff here
+					<!-- <app-program-budget [stepperElement]="item"></app-program-budget> -->
 				</div>
 			</div>
 			<!-- Loop through items -->
 			<div *ngFor="let item of stepperElementsBottom">
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
-					<span *ngIf="currentStepperElement.itemName === 'Authorization'">
+					<span *ngIf="currentStepperElement.itemName === stepperElementsBottom[0].itemName">
+						Do some review here
+					</span>
+					<span *ngIf="currentStepperElement.itemName === stepperElementsBottom[1].itemName">
 						<app-program-authorizer></app-program-authorizer>
 					</span>
 				</div>
