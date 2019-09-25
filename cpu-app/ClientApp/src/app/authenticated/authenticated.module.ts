@@ -26,6 +26,10 @@ import { BudgetProposalModule } from './pages/budget-proposal/budget-proposal.mo
 import { ExpenseReportModule } from './pages/expense-report/expense-report.module';
 import { ProgramApplicationModule } from './pages/program-application/program-application.module';
 import { StatusReportModule } from './pages/status-report/status-report.module';
+import { PersonnelComponent } from './pages/personnel/personnel.component';
+import { OrganizationProfileComponent } from './pages/organization-profile/organization-profile.component';
+import { OrganizationProfileModule } from './pages/organization-profile/organization-profile.module';
+import { PersonnelModule } from './pages/personnel/personnel.module';
 
 
 @NgModule({
@@ -36,10 +40,13 @@ import { StatusReportModule } from './pages/status-report/status-report.module';
 		FormsModule,
 		NgbModule,
 
+		// modules for this application
 		BudgetProposalModule,
 		ExpenseReportModule,
 		ProgramApplicationModule,
 		StatusReportModule,
+		OrganizationProfileModule,
+		PersonnelModule,
 	],
 	declarations: [
 		AuthenticatedComponent,
@@ -62,6 +69,8 @@ import { StatusReportModule } from './pages/status-report/status-report.module';
 		ProgramPageComponent,
 		StatusReportComponent,
 		ProgramApplicationComponent,
+		PersonnelComponent,
+		OrganizationProfileComponent,
 	]
 })
 export class AuthenticatedModule { }
