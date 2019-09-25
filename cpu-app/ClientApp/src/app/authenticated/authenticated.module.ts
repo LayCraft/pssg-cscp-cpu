@@ -15,8 +15,8 @@ import { OrganizationProfileBoxComponent } from './components/organization-profi
 import { PersonDetailsComponent } from './components/person-details/person-details.component';
 import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
-import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
-import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
+import { OrganizationProfilePageComponent } from './pages/organization-profile-page-DELETEME/organization-profile-page.component';
+import { PersonnelPageComponent } from './pages/personnel-page-DELETEME/personnel-page.component';
 import { ProgramPageComponent } from './pages/program-page-DELETEME/program-page.component';
 import { StatusReportComponent } from './pages/status-report/status-report.component';
 import { SharedModule } from '../shared/shared.module';
