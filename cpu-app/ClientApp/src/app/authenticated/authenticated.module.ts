@@ -5,7 +5,7 @@ import { AuthenticatedComponent } from '../authenticated/authenticated.component
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { ContactInformationComponent } from './components/contact-information/contact-information.component';
 import { AdministrativeInformationComponent } from './components/administrative-information/administrative-information.component';
 import { CgLiabilityComponent } from './components/cg-liability/cg-liability.component';
@@ -15,21 +15,21 @@ import { OrganizationProfileBoxComponent } from './components/organization-profi
 import { PersonDetailsComponent } from './components/person-details/person-details.component';
 import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
-import { OrganizationProfilePageComponent } from './pages/organization-profile-page-DELETEME/organization-profile-page.component';
-import { PersonnelPageComponent } from './pages/personnel-page-DELETEME/personnel-page.component';
-import { ProgramPageComponent } from './pages/program-page-DELETEME/program-page.component';
-import { StatusReportComponent } from './pages/status-report/status-report.component';
+import { OrganizationProfilePageComponent } from './modules/organization-profile-page-DELETEME/organization-profile-page.component';
+import { PersonnelPageComponent } from './modules/personnel-page-DELETEME/personnel-page.component';
+import { ProgramPageComponent } from './modules/program-page-DELETEME/program-page.component';
+import { StatusReportComponent } from './modules/status-report/status-report.component';
 import { SharedModule } from '../shared/shared.module';
-import { ProgramApplicationComponent } from './pages/program-application/program-application.component';
-import { ExpenseReportComponent } from './pages/expense-report/expense-report.component';
-import { BudgetProposalModule } from './pages/budget-proposal/budget-proposal.module';
-import { ExpenseReportModule } from './pages/expense-report/expense-report.module';
-import { ProgramApplicationModule } from './pages/program-application/program-application.module';
-import { StatusReportModule } from './pages/status-report/status-report.module';
-import { PersonnelComponent } from './pages/personnel/personnel.component';
-import { OrganizationProfileComponent } from './pages/organization-profile/organization-profile.component';
-import { OrganizationProfileModule } from './pages/organization-profile/organization-profile.module';
-import { PersonnelModule } from './pages/personnel/personnel.module';
+import { ProgramApplicationComponent } from './modules/program-application/program-application.component';
+import { ExpenseReportComponent } from './modules/expense-report/expense-report.component';
+import { BudgetProposalModule } from './modules/budget-proposal/budget-proposal.module';
+import { ExpenseReportModule } from './modules/expense-report/expense-report.module';
+import { ProgramApplicationModule } from './modules/program-application/program-application.module';
+import { StatusReportModule } from './modules/status-report/status-report.module';
+import { PersonnelComponent } from './modules/personnel/personnel.component';
+import { OrganizationProfileComponent } from './modules/organization-profile/organization-profile.component';
+import { OrganizationProfileModule } from './modules/organization-profile/organization-profile.module';
+import { PersonnelModule } from './modules/personnel/personnel.module';
 
 
 @NgModule({

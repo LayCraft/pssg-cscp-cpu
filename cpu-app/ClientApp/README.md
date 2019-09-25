@@ -22,7 +22,7 @@ When adding or removing packages to the docker container it adds the additional 
 
 > `docker-clean.sh` Removes old and dead containers.
 
-> `docker-shell.sh` Opens a shell into the vsd-public-app-frontend. This allows you to inspect installed dependencies in the npm directory or make changes to packages without rebuilding the container.
+> `docker-shell.sh` Opens a shell into the cpu-public-app-frontend. This allows you to inspect installed dependencies in the npm directory or make changes to packages without rebuilding the container.
 
 > `docker-rebuild.sh` Rebuild the docker container after making a change to the node packages. Takes time and only needs to be done to initialize docker or update after module change.
 

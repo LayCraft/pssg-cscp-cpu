@@ -1,2 +1,2 @@
 #!/bin/bash
-docker exec -it vsd-public-app-frontend sh
+docker exec -it cpu-public-app-frontend sh
