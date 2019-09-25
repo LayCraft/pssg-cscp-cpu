@@ -30,7 +30,7 @@
 			<div *ngFor="let item of stepperElementsPrograms">
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
-					<app-program-budget></app-program-budget>
+					<app-program-budget [stepperElement]="item"></app-program-budget>
 				</div>
 			</div>
 			<!-- Loop through items -->
