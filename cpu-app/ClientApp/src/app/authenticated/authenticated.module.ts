@@ -15,7 +15,6 @@ import { OrganizationProfileBoxComponent } from './components/organization-profi
 import { PersonDetailsComponent } from './components/person-details/person-details.component';
 import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
-import { ExpensePageComponent } from './pages/expense-page/expense-page.component';
 import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
 import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
 import { ProgramPageComponent } from './pages/program-page/program-page.component';
@@ -27,6 +26,7 @@ import { BudgetProposalComponent } from './pages/budget-proposal/budget-proposal
 import { ProgramBudgetComponent } from './pages/budget-proposal/program-budget/program-budget.component';
 import { ProgramOverviewComponent } from './pages/budget-proposal/program-overview/program-overview.component';
 import { ProgramBudgetSummaryComponent } from './pages/budget-proposal/program-budget-summary/program-budget-summary.component';
+import { ExpenseReportComponent } from './pages/expense-report/expense-report.component';
 
 
 @NgModule({
@@ -52,7 +52,7 @@ import { ProgramBudgetSummaryComponent } from './pages/budget-proposal/program-b
 		ProgramPlannerComponent,
 		////////////////////////
 		DashboardPageComponent,
-		ExpensePageComponent,
+		ExpenseReportComponent,
 		OrganizationProfilePageComponent,
 		PersonnelPageComponent,
 		ProgramPageComponent,

@@ -6,9 +6,9 @@ import { OrganizationProfilePageComponent } from './pages/organization-profile-p
 import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
 import { ProgramPageComponent } from './pages/program-page/program-page.component';
 import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
-import { ExpensePageComponent } from './pages/expense-page/expense-page.component';
 import { ProgramApplicationComponent } from './pages/program-application/program-application.component';
 import { BudgetProposalComponent } from './pages/budget-proposal/budget-proposal.component';
+import { ExpenseReportComponent } from './pages/expense-report/expense-report.component';
 
 
 const routes: Routes = [
@@ -52,7 +52,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'expense_report/:organizationId/:contractId',
-				component: ExpensePageComponent
+				component: ExpenseReportComponent
 			},
 		]
 	},
