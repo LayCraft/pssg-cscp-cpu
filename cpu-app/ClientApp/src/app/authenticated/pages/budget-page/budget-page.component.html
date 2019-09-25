@@ -4,29 +4,59 @@
 			<app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone>
 
 			<section class="application-nav sticky-top">
-				<app-icon-stepper [iconStepperElements]="iconStepperElements" [(navigationName)]="currentFormPage"></app-icon-stepper>
+				<app-icon-stepper [iconStepperElements]="iconStepperElementsCombined" [(iconStepperElement)]="currentStepperElement"></app-icon-stepper>
 			</section>
 		</div>
 
 		<div class="col-md-8">
 			<!-- Section is not in programs list -->
+
 			<div class="page-header">
-				<h1>{{currentFormPage}}</h1>
+				<h1>{{currentStepperElement.itemName}}</h1>
 			</div>
-			<div *ngIf="currentFormPage === formPages[0]">
+			<!-- Loop through items -->
+			<div *ngFor="let item of iconStepperElementsTop">
+				<!-- if the item name matches show this section -->
+				<div *ngIf="isCurrentStepperElement(item)">
+					<span *ngIf="currentStepperElement.itemName === iconStepperElementsTop[0].itemName">
+						<app-program-overview></app-program-overview>
+					</span>
+					<span *ngIf="currentStepperElement.itemName === iconStepperElementsTop[1].itemName">
+						<app-program-budget-summary></app-program-budget-summary>
+					</span>
+				</div>
+			</div>
+			<!-- Loop through items -->
+			<div *ngFor="let item of iconStepperElementsPrograms">
+				<!-- if the item name matches show this section -->
+				<div *ngIf="isCurrentStepperElement(item)">
+					<app-program-budget></app-program-budget>
+				</div>
+			</div>
+			<!-- Loop through items -->
+			<div *ngFor="let item of iconStepperElementsBottom">
+				<!-- if the item name matches show this section -->
+				<div *ngIf="isCurrentStepperElement(item)">
+					<span *ngIf="currentStepperElement.itemName === 'Authorization'">
+						<app-program-authorizer></app-program-authorizer>
+					</span>
+				</div>
+			</div>
+			<!-- 
+			<div *ngIf="currentStepperElement === iconStepperElementsCombined[0]">
 				<app-program-overview></app-program-overview>
 			</div>
 
-			<div *ngIf="currentFormPage && currentFormPage !== formPages[0] && currentFormPage !== formPages[formPages.length-1] && currentFormPage !== formPages[formPages.length-2]">
+			<div *ngIf="currentStepperElement && currentStepperElement !== iconStepperElementsCombined[0] && currentStepperElement !== iconStepperElementsCombined[iconStepperElementsCombined.length-1] && currentStepperElement !== iconStepperElementsCombined[iconStepperElementsCombined.length-2]">
 				<app-program-budget></app-program-budget>
 			</div>
 
-			<div *ngIf="currentFormPage === formPages[formPages.length-2]">
+			<div *ngIf="currentStepperElement === iconStepperElementsCombined[iconStepperElementsCombined.length-2]">
 				<app-program-budget-summary></app-program-budget-summary>
 			</div>
-			<div *ngIf="currentFormPage === formPages[formPages.length-1]">
+			<div *ngIf="currentStepperElement === iconStepperElementsCombined[iconStepperElementsCombined.length-1]">
 				Authorization Form Here
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<!-- <pre>{{budgetProposal|json}}</pre> -->

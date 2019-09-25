@@ -1,7 +1,5 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { NgForm, AbstractControl } from '@angular/forms';
-import { iProgramMeta, ProgramInformation, Hours } from 'src/app/core/models/program-information.class';
-import { ContactInformation } from 'src/app/core/models/contact-information.class';
+import { Component, OnInit } from '@angular/core';
+
 
 @Component({
 	selector: 'app-program-budget',
@@ -9,9 +7,6 @@ import { ContactInformation } from 'src/app/core/models/contact-information.clas
 	styleUrls: ['./program-budget.component.scss']
 })
 export class ProgramBudgetComponent implements OnInit {
-	// is the contents of the form valid?
-	@Input() programMeta: iProgramMeta;
-
 
 	currentTab: string;
 	tabs: string[];

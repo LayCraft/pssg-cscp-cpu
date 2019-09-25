@@ -3,7 +3,9 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 export interface iIconStepperElement {
 	itemName: string; // This is the show name
 	formState: string; // untouched incomplete invalid complete
-	id?: string;
+	organizationId: string;
+	contractId: string;
+	programId?: string;
 }
 
 @Component({
@@ -13,8 +15,8 @@ export interface iIconStepperElement {
 })
 export class IconStepperComponent implements OnInit {
 	@Input() iconStepperElements: iIconStepperElement[];
-	@Input() navigationName: string;
-	@Output() navigationNameChange = new EventEmitter<string>();
+	@Input() iconStepperElement: iIconStepperElement;
+	@Output() iconStepperElementChange = new EventEmitter<iIconStepperElement>();
 
 	// this object gives us keys to draw on to get classnames and messages
 	levels: {} = {
@@ -51,10 +53,10 @@ export class IconStepperComponent implements OnInit {
 
 	ngOnInit() { }
 
-	onClick(navigateTo: string) {
+	onClick(navigateTo: iIconStepperElement) {
 		// set the internal state of this component
-		this.navigationName = navigateTo;
+		this.iconStepperElement = navigateTo;
 		// emit the event for navigation
-		this.navigationNameChange.emit(navigateTo);
+		this.iconStepperElementChange.emit(navigateTo);
 	}
 }
