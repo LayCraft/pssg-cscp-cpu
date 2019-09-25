@@ -1,17 +1,17 @@
 <ul class="list-group">
-	<li *ngFor="let item of iconStepperElements" class="list-group-item d-flex justify-content-between align-items-center" [class.active]="item.itemName === iconStepperElement.itemName" (click)="onClick(item)">
+	<li *ngFor="let item of stepperElements" class="list-group-item d-flex justify-content-between align-items-center" [class.active]="item.itemName === stepperElement.itemName" (click)="onClick(item)">
 		<span>
 			{{item.itemName}}<br>
-			<small *ngIf="item.itemName !== iconStepperElement.itemName" [class]="levels[item.formState][1]">
+			<small *ngIf="item.itemName !== stepperElement.itemName" [class]="levels[item.formState][1]">
 				{{levels[item.formState][0]}}
 			</small>
-			<small *ngIf="item.itemName === iconStepperElement.itemName">
+			<small *ngIf="item.itemName === stepperElement.itemName">
 				{{levels[item.formState][0]}}
 			</small>
 		</span>
 
-		<i *ngIf="item.itemName !== iconStepperElement.itemName " [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
-		<span *ngIf=" item.itemName === iconStepperElement.itemName" class="badge badge-light">
+		<i *ngIf="item.itemName !== stepperElement.itemName " [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
+		<span *ngIf=" item.itemName === stepperElement.itemName" class="badge badge-light">
 			<i [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
 		</span>
 	</li>

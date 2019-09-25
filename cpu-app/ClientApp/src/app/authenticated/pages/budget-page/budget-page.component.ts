@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { iStepperElement } from 'src/app/shared/components/icon-stepper/icon-stepper.component';
 import { BudgetProposalService } from 'src/app/core/services/budget-proposal.service';
 import { iBudgetProposal, iProgramBudget } from 'src/app/core/models/budget-proposal.class';
+import { iStepperElement } from 'src/app/core/models/stepper-element';
 
 @Component({
 	selector: 'app-budget-page',
@@ -14,12 +14,12 @@ export class BudgetPageComponent implements OnInit {
 	organizationId: string;
 
 	// used for building the template
-	iconStepperElementsTop: iStepperElement[];
-	iconStepperElementsPrograms: iStepperElement[];
-	iconStepperElementsBottom: iStepperElement[];
+	stepperElementsTop: iStepperElement[];
+	stepperElementsPrograms: iStepperElement[];
+	stepperElementsBottom: iStepperElement[];
 
 	// used for the stepper component
-	iconStepperElementsCombined: iStepperElement[];
+	stepperElementsCombined: iStepperElement[];
 	currentStepperElement: iStepperElement;
 
 	constructor(
@@ -33,14 +33,14 @@ export class BudgetPageComponent implements OnInit {
 		this.contractId = this.route.snapshot.paramMap.get('contractId');
 
 		// set the default top and bottom list
-		this.constructDefaultIconStepperElements(this.organizationId, this.contractId);
+		this.constructDefaultstepperElements(this.organizationId, this.contractId);
 
 		// get the budget proposal for this org and contract
 		this.budgetProposalService.getBudgetProposal(this.organizationId, this.contractId)
 			.subscribe((bp: iBudgetProposal) => {
 				// Many other ways to do this. Most hassle free is split the array, put the items in, concat
 				// map the programs into the right shape
-				this.iconStepperElementsPrograms = bp.programs.map((p: iProgramBudget) => {
+				this.stepperElementsPrograms = bp.programs.map((p: iProgramBudget) => {
 					return {
 						itemName: p.name,
 						formState: p.formState || 'untouched', //default is untouched
@@ -50,12 +50,12 @@ export class BudgetPageComponent implements OnInit {
 					}
 				});
 				// make a complete list of all items
-				this.iconStepperElementsCombined = this.iconStepperElementsTop
-					.concat(this.iconStepperElementsPrograms)
-					.concat(this.iconStepperElementsBottom);
+				this.stepperElementsCombined = this.stepperElementsTop
+					.concat(this.stepperElementsPrograms)
+					.concat(this.stepperElementsBottom);
 
 				// set the first page to be the program overview so it isn't blank when they see the page the first time
-				this.currentStepperElement = this.iconStepperElementsCombined[0];
+				this.currentStepperElement = this.stepperElementsCombined[0];
 			});
 	}
 
@@ -71,9 +71,9 @@ export class BudgetPageComponent implements OnInit {
 		}
 		return false;
 	}
-	constructDefaultIconStepperElements(organizationId: string, contractId: string) {
+	constructDefaultstepperElements(organizationId: string, contractId: string) {
 		// this is just a constructor
-		this.iconStepperElementsTop = [
+		this.stepperElementsTop = [
 			{
 				itemName: 'Program Overview',
 				formState: 'info',
@@ -87,7 +87,7 @@ export class BudgetPageComponent implements OnInit {
 				contractId
 			}
 		];
-		this.iconStepperElementsBottom = [
+		this.stepperElementsBottom = [
 			{
 				itemName: 'Authorization',
 				formState: 'untouched',
