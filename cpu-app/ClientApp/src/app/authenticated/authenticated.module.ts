@@ -25,6 +25,7 @@ import { ExpenseReportComponent } from './pages/expense-report/expense-report.co
 import { BudgetProposalModule } from './pages/budget-proposal/budget-proposal.module';
 import { ExpenseReportModule } from './pages/expense-report/expense-report.module';
 import { ProgramApplicationModule } from './pages/program-application/program-application.module';
+import { StatusReportModule } from './pages/status-report/status-report.module';
 
 
 @NgModule({
@@ -34,9 +35,11 @@ import { ProgramApplicationModule } from './pages/program-application/program-ap
 		SharedModule, // For material components
 		FormsModule,
 		NgbModule,
+
 		BudgetProposalModule,
 		ExpenseReportModule,
 		ProgramApplicationModule,
+		StatusReportModule,
 	],
 	declarations: [
 		AuthenticatedComponent,
