@@ -21,9 +21,9 @@ import { ProgramPageComponent } from './pages/program-page/program-page.componen
 import { StatusReportComponent } from './pages/status-report/status-report.component';
 import { SharedModule } from '../shared/shared.module';
 import { ProgramApplicationComponent } from './pages/program-application/program-application.component';
-import { BudgetProposalComponent } from './pages/budget-proposal/budget-proposal.component';
 import { ExpenseReportComponent } from './pages/expense-report/expense-report.component';
 import { BudgetProposalModule } from './pages/budget-proposal/budget-proposal.module';
+import { ExpenseReportModule } from './pages/expense-report/expense-report.module';
 
 
 @NgModule({
@@ -34,6 +34,7 @@ import { BudgetProposalModule } from './pages/budget-proposal/budget-proposal.mo
 		FormsModule,
 		NgbModule,
 		BudgetProposalModule,
+		ExpenseReportModule,
 	],
 	declarations: [
 		AuthenticatedComponent,
