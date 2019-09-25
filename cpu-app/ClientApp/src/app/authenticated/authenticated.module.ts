@@ -24,6 +24,7 @@ import { ProgramApplicationComponent } from './pages/program-application/program
 import { ExpenseReportComponent } from './pages/expense-report/expense-report.component';
 import { BudgetProposalModule } from './pages/budget-proposal/budget-proposal.module';
 import { ExpenseReportModule } from './pages/expense-report/expense-report.module';
+import { ProgramApplicationModule } from './pages/program-application/program-application.module';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { ExpenseReportModule } from './pages/expense-report/expense-report.modul
 		NgbModule,
 		BudgetProposalModule,
 		ExpenseReportModule,
+		ProgramApplicationModule,
 	],
 	declarations: [
 		AuthenticatedComponent,
