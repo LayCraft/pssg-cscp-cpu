@@ -23,10 +23,11 @@ import { StatusReportPageComponent } from './pages/status-report-page/status-rep
 import { SharedModule } from '../shared/shared.module';
 import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
 import { ProgramApplicationComponent } from './pages/program-application/program-application.component';
-import { BudgetProposalPageComponent } from './pages/budget-proposal-page/budget-proposal-page.component';
-import { ProgramBudgetSummaryComponent } from './pages/budget-proposal-page/program-budget-summary/program-budget-summary.component';
-import { ProgramOverviewComponent } from './pages/budget-proposal-page/program-overview/program-overview.component';
-import { ProgramBudgetComponent } from './pages/budget-proposal-page/program-budget/program-budget.component';
+import { BudgetProposalComponent } from './pages/budget-proposal/budget-proposal.component';
+import { ProgramBudgetComponent } from './pages/budget-proposal/program-budget/program-budget.component';
+import { ProgramOverviewComponent } from './pages/budget-proposal/program-overview/program-overview.component';
+import { ProgramBudgetSummaryComponent } from './pages/budget-proposal/program-budget-summary/program-budget-summary.component';
+
 
 @NgModule({
 	imports: [
@@ -57,7 +58,7 @@ import { ProgramBudgetComponent } from './pages/budget-proposal-page/program-bud
 		ProgramPageComponent,
 		StatusReportPageComponent,
 		ContractTombstoneComponent,
-		BudgetProposalPageComponent,
+		BudgetProposalComponent,
 		ProgramBudgetComponent,
 		ProgramOverviewComponent,
 		ProgramBudgetSummaryComponent,
