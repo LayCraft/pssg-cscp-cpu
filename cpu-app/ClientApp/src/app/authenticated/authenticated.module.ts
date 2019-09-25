@@ -18,7 +18,7 @@ import { ProgramPlannerComponent } from './components/program-planner/program-pl
 import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
 import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
 import { ProgramPageComponent } from './pages/program-page/program-page.component';
-import { StatusReportPageComponent } from './pages/status-report-page/status-report-page.component';
+import { StatusReportComponent } from './pages/status-report/status-report.component';
 import { SharedModule } from '../shared/shared.module';
 import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
 import { ProgramApplicationComponent } from './pages/program-application/program-application.component';
@@ -56,7 +56,7 @@ import { ExpenseReportComponent } from './pages/expense-report/expense-report.co
 		OrganizationProfilePageComponent,
 		PersonnelPageComponent,
 		ProgramPageComponent,
-		StatusReportPageComponent,
+		StatusReportComponent,
 		ContractTombstoneComponent,
 		BudgetProposalComponent,
 		ProgramBudgetComponent,
