@@ -19,7 +19,7 @@
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
 					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[0].itemName">
-						<app-program-overview></app-program-overview>
+						<app-program-overview [stepperElement]="stepperElementsTop[0]"></app-program-overview>
 					</span>
 					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[1].itemName">
 						<app-program-budget-summary></app-program-budget-summary>
