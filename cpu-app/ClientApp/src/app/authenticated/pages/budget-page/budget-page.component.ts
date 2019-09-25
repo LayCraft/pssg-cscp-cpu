@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { iIconStepperElement } from 'src/app/shared/components/icon-stepper/icon-stepper.component';
+import { iStepperElement } from 'src/app/shared/components/icon-stepper/icon-stepper.component';
 import { BudgetProposalService } from 'src/app/core/services/budget-proposal.service';
 import { iBudgetProposal, iProgramBudget } from 'src/app/core/models/budget-proposal.class';
 
@@ -14,13 +14,13 @@ export class BudgetPageComponent implements OnInit {
 	organizationId: string;
 
 	// used for building the template
-	iconStepperElementsTop: iIconStepperElement[];
-	iconStepperElementsPrograms: iIconStepperElement[];
-	iconStepperElementsBottom: iIconStepperElement[];
+	iconStepperElementsTop: iStepperElement[];
+	iconStepperElementsPrograms: iStepperElement[];
+	iconStepperElementsBottom: iStepperElement[];
 
 	// used for the stepper component
-	iconStepperElementsCombined: iIconStepperElement[];
-	currentStepperElement: iIconStepperElement;
+	iconStepperElementsCombined: iStepperElement[];
+	currentStepperElement: iStepperElement;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -28,8 +28,6 @@ export class BudgetPageComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-
-
 		// collect the ids for looking up the program from the route.
 		this.organizationId = this.route.snapshot.paramMap.get('organizationId');
 		this.contractId = this.route.snapshot.paramMap.get('contractId');
@@ -66,7 +64,7 @@ export class BudgetPageComponent implements OnInit {
 		console.log(programBudget);
 	}
 
-	isCurrentStepperElement(item: iIconStepperElement): boolean {
+	isCurrentStepperElement(item: iStepperElement): boolean {
 		if (item.itemName === this.currentStepperElement.itemName) {
 			// names match? must be the same. Makes the assumption that all names are unique.
 			return true;

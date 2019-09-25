@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
-export interface iIconStepperElement {
+export interface iStepperElement {
 	itemName: string; // This is the show name
 	formState: string; // untouched incomplete invalid complete
 	organizationId: string;
@@ -14,9 +14,9 @@ export interface iIconStepperElement {
 	styleUrls: ['./icon-stepper.component.scss']
 })
 export class IconStepperComponent implements OnInit {
-	@Input() iconStepperElements: iIconStepperElement[];
-	@Input() iconStepperElement: iIconStepperElement;
-	@Output() iconStepperElementChange = new EventEmitter<iIconStepperElement>();
+	@Input() iconStepperElements: iStepperElement[];
+	@Input() iconStepperElement: iStepperElement;
+	@Output() iconStepperElementChange = new EventEmitter<iStepperElement>();
 
 	// this object gives us keys to draw on to get classnames and messages
 	levels: {} = {
@@ -30,7 +30,7 @@ export class IconStepperComponent implements OnInit {
 
 
 	// THIS IS AN EXAMPLE INPUT
-	// @Input() iconStepperElements: iIconStepperElement[] = [
+	// @Input() iconStepperElements: iStepperElement[] = [
 	// 	{
 	// 		itemName: 'This is the zero form',
 	// 		formState: 'untouched'
@@ -53,7 +53,7 @@ export class IconStepperComponent implements OnInit {
 
 	ngOnInit() { }
 
-	onClick(navigateTo: iIconStepperElement) {
+	onClick(navigateTo: iStepperElement) {
 		// set the internal state of this component
 		this.iconStepperElement = navigateTo;
 		// emit the event for navigation
