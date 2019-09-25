@@ -20,13 +20,10 @@ import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.co
 import { ProgramPageComponent } from './pages/program-page/program-page.component';
 import { StatusReportComponent } from './pages/status-report/status-report.component';
 import { SharedModule } from '../shared/shared.module';
-import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
 import { ProgramApplicationComponent } from './pages/program-application/program-application.component';
 import { BudgetProposalComponent } from './pages/budget-proposal/budget-proposal.component';
-import { ProgramBudgetComponent } from './pages/budget-proposal/program-budget/program-budget.component';
-import { ProgramOverviewComponent } from './pages/budget-proposal/program-overview/program-overview.component';
-import { ProgramBudgetSummaryComponent } from './pages/budget-proposal/program-budget-summary/program-budget-summary.component';
 import { ExpenseReportComponent } from './pages/expense-report/expense-report.component';
+import { BudgetProposalModule } from './pages/budget-proposal/budget-proposal.module';
 
 
 @NgModule({
@@ -36,6 +33,7 @@ import { ExpenseReportComponent } from './pages/expense-report/expense-report.co
 		SharedModule, // For material components
 		FormsModule,
 		NgbModule,
+		BudgetProposalModule,
 	],
 	declarations: [
 		AuthenticatedComponent,
@@ -57,11 +55,6 @@ import { ExpenseReportComponent } from './pages/expense-report/expense-report.co
 		PersonnelPageComponent,
 		ProgramPageComponent,
 		StatusReportComponent,
-		ContractTombstoneComponent,
-		BudgetProposalComponent,
-		ProgramBudgetComponent,
-		ProgramOverviewComponent,
-		ProgramBudgetSummaryComponent,
 		ProgramApplicationComponent,
 	]
 })

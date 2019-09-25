@@ -7,6 +7,7 @@ import { NotificationBannerComponent } from './components/notification-banner/no
 import { MatStepperModule, MatCheckboxModule, MatSlideToggleModule, MatIconModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { IconStepperComponent } from './components/icon-stepper/icon-stepper.component';
+import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
 
 @NgModule({
 	declarations: [
@@ -15,6 +16,7 @@ import { IconStepperComponent } from './components/icon-stepper/icon-stepper.com
 		NotFoundComponent,
 		NotificationBannerComponent,
 		IconStepperComponent,
+		ContractTombstoneComponent,
 	],
 	imports: [
 		CommonModule,
@@ -30,6 +32,7 @@ import { IconStepperComponent } from './components/icon-stepper/icon-stepper.com
 		NotFoundComponent,
 		NotificationBannerComponent,
 		IconStepperComponent,
+		ContractTombstoneComponent,
 
 		// Material exports
 		MatStepperModule,
