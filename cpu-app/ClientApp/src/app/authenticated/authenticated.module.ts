@@ -5,7 +5,7 @@ import { AuthenticatedComponent } from '../authenticated/authenticated.component
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ContactInformationComponent } from './components/contact-information/contact-information.component';
 import { AdministrativeInformationComponent } from './components/administrative-information/administrative-information.component';
 import { CgLiabilityComponent } from './components/cg-liability/cg-liability.component';
@@ -44,7 +44,7 @@ import { StatusReportModule } from './pages/status-report/status-report.module';
 	declarations: [
 		AuthenticatedComponent,
 		NavigationBarComponent,
-		DashboardPageComponent,
+		DashboardComponent,
 		AdministrativeInformationComponent,
 		CgLiabilityComponent,
 		ContactInformationComponent,
@@ -55,7 +55,7 @@ import { StatusReportModule } from './pages/status-report/status-report.module';
 		ProgramAuthorizerComponent,
 		ProgramPlannerComponent,
 		////////////////////////
-		DashboardPageComponent,
+		DashboardComponent,
 		ExpenseReportComponent,
 		OrganizationProfilePageComponent,
 		PersonnelPageComponent,

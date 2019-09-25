@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthenticatedComponent } from './authenticated.component';
-import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
 import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
 import { ProgramPageComponent } from './pages/program-page/program-page.component';
@@ -24,7 +24,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'dashboard',
-				component: DashboardPageComponent,
+				component: DashboardComponent,
 			},
 			{
 				path: 'profile',
