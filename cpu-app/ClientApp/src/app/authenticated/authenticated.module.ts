@@ -17,7 +17,7 @@ import { ProgramAuthorizerComponent } from './components/program-authorizer/prog
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
 import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
 import { PersonnelPageComponent } from './pages/personnel-page/personnel-page.component';
-import { ProgramPageComponent } from './pages/program-page/program-page.component';
+import { ProgramPageComponent } from './pages/program-page-DELETEME/program-page.component';
 import { StatusReportComponent } from './pages/status-report/status-report.component';
 import { SharedModule } from '../shared/shared.module';
 import { ProgramApplicationComponent } from './pages/program-application/program-application.component';
