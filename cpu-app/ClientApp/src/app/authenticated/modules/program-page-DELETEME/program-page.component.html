@@ -24,7 +24,7 @@
 					<h1>{{currentFormPage}}</h1>
 				</div>
 				<div *ngIf="currentFormPage === upperItems[0]">
-					<app-contact-information [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-contact-information>
+					<app-contact-information-DELETEME [(contactInformation)]='contactInformation' (valid)="contactIsValid($event)"></app-contact-information-DELETEME>
 					<button class="btn btn-primary" (click)="contactInformationSave()">Save</button>
 				</div>
 				<div *ngIf="currentFormPage === upperItems[1]">
