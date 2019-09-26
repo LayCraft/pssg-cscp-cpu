@@ -3,8 +3,9 @@
 		<div class="col">
 			<app-contact-information-DELETEME [(contactInformation)]="contactInformation" [title]="'Primary Contact Information'" (valid)="onValid($event)"></app-contact-information-DELETEME>
 		</div>
-		<div class="col">
-			<app-address></app-address>
+		<div [formGroup]="testAddress" class="col">
+			<app-address formControlName='address'></app-address>
+			<pre>Valid:{{testAddress.valid}}{{testAddress.value|json}}</pre>
 		</div>
 	</div>
 	<div class="row">

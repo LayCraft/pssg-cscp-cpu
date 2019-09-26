@@ -4,6 +4,7 @@ import { iContactInformation } from 'src/app/core/models/contact-information.cla
 import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
 import { Subject } from 'rxjs';
 import { iAddress } from 'src/app/core/models/address.class';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
 	selector: 'app-organization-profile-page',
@@ -15,7 +16,9 @@ export class OrganizationProfilePageComponent implements OnInit {
 	contactInformation: iContactInformation;
 	validContactInformation: boolean = false;
 
-	public address$: Subject<iAddress> = new Subject();
+
+	testAddress: FormGroup;
+
 	public addressUpdated(address: iAddress) {
 		console.log(address);
 	}
@@ -26,6 +29,11 @@ export class OrganizationProfilePageComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
+		this.testAddress = new FormGroup({
+			'address': new FormControl()
+		})
+
+
 		this.boilerplateService.getOrganizationBoilerplate(this.organizationId)
 			.subscribe(ci => {
 				// save the boilerplate information into a place that we can edit it
