@@ -4,9 +4,12 @@
 			<app-contact-information-DELETEME [(contactInformation)]="contactInformation" [title]="'Primary Contact Information'" (valid)="onValid($event)"></app-contact-information-DELETEME>
 		</div>
 		<div [formGroup]="testAddress" class="col">
+			<h2 class="blue-header">Primary Contact Information</h2>
 			<app-address formControlName='mainAddress'></app-address>
-			<input type="checkbox" formControlName="hasMailingAddress">{{hasMailingAddress.value}}
+			<!--TODO: MAKE THIS PRETTY -->
+			<input type="checkbox" formControlName="hasMailingAddress">HAS A MAILING ADDRESS
 			<div *ngIf="hasMailingAddress.value===true">
+				<h2 class="blue-header">Mailing Address</h2>
 				<app-address formControlName='mailingAddress'></app-address>
 			</div>
 
