@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthenticatedRoutingModule } from './authenticated-routing.module';
 import { AuthenticatedComponent } from '../authenticated/authenticated.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { ContactInformationDeletemeComponent } from './components/contact-information-DELETEME/contact-information-DELETEME.component';
@@ -31,6 +31,7 @@ import { OrganizationProfileComponent } from './modules/organization-profile/org
 import { OrganizationProfileModule } from './modules/organization-profile/organization-profile.module';
 import { PersonnelModule } from './modules/personnel/personnel.module';
 import { ContactInformationComponent } from './components/contact-information/contact-information.component';
+import { AddressComponent } from './components/address/address.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { ContactInformationComponent } from './components/contact-information/co
 		CommonModule,
 		AuthenticatedRoutingModule,
 		SharedModule, // For material components
+		ReactiveFormsModule,
 		FormsModule,
 		NgbModule,
 
@@ -73,6 +75,7 @@ import { ContactInformationComponent } from './components/contact-information/co
 		ProgramApplicationComponent,
 		PersonnelComponent,
 		OrganizationProfileComponent,
+		AddressComponent,
 	]
 })
 export class AuthenticatedModule { }
