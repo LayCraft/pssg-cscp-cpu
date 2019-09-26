@@ -2,7 +2,7 @@ import { Component, forwardRef, Input, Output, EventEmitter, OnInit, ViewChild }
 import { iAddress } from 'src/app/core/models/address.class';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl, FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { COUNTRIES_ADDRESS_2, iCountry } from 'src/app/core/constants/country-list';
-import { POSTAL_CODE } from 'src/app/core/constants/regex.constants';
+import { POSTAL_CODE, WORD } from 'src/app/core/constants/regex.constants';
 
 @Component({
 	selector: 'app-address',
@@ -19,8 +19,7 @@ import { POSTAL_CODE } from 'src/app/core/constants/regex.constants';
 export class AddressComponent implements ControlValueAccessor, OnInit {
 	// a viewchild to check the validity of the template form
 	@Input() disabled: boolean = false;
-	@Input() required: boolean = true;
-
+	@Input() required: boolean = false;
 	@Input() address: iAddress;
 	@Output() addressChange = new EventEmitter<iAddress>();
 
@@ -33,12 +32,15 @@ export class AddressComponent implements ControlValueAccessor, OnInit {
 	// this AddressComponent is not a form only part of a form. This needs
 	country: iCountry; // currently selected country
 	postalCodeRegex: RegExp;
+	hasCharactersRegex: RegExp;
 
 	constructor() {
 		// set country to canada
 		this.country = COUNTRIES_ADDRESS_2.Canada;
 		// save validation pattern for regex
 		this.postalCodeRegex = POSTAL_CODE;
+		//has to have at least a character or two
+		this.hasCharactersRegex = WORD;
 	}
 
 	get line1() { return this.addressForm.get('line1') }
@@ -54,23 +56,30 @@ export class AddressComponent implements ControlValueAccessor, OnInit {
 	showInvalidFeedback(control: AbstractControl): boolean {
 		return !(control.invalid && (control.dirty || control.touched));
 	}
+	isRequired(control: AbstractControl) {
+		if (this.required && (control.dirty || control.touched)) {
+			return true;
+		} else {
+			return null;
+		}
+	}
 
 	buildForm(address: iAddress) {
 		// note this form is missing a country dropdown because i don't need it in the wireframes. The address oobject supports it
 		if (this.required) {
 			this.addressForm = new FormGroup({
-				'line1': new FormControl('', [Validators.required]),
+				'line1': new FormControl('', [Validators.required, Validators.pattern(this.hasCharactersRegex)]),
 				'line2': new FormControl(''),
-				'city': new FormControl('', [Validators.required]),
-				'province': new FormControl('British Columbia', [Validators.required]),
-				'postalCode': new FormControl('', [Validators.required, Validators.pattern(this.postalCodeRegex)]),
+				'city': new FormControl('', [Validators.required, Validators.pattern(this.hasCharactersRegex)]),
+				'province': new FormControl('British Columbia', [Validators.required, Validators.pattern(this.hasCharactersRegex)]),
+				'postalCode': new FormControl('', [Validators.required, Validators.pattern(this.postalCodeRegex), Validators.pattern(this.hasCharactersRegex)]),
 			});
 		} else {
 			this.addressForm = new FormGroup({
-				'line1': new FormControl(),
-				'line2': new FormControl(),
-				'city': new FormControl(),
-				'province': new FormControl(),
+				'line1': new FormControl(''),
+				'line2': new FormControl(''),
+				'city': new FormControl(''),
+				'province': new FormControl(''),
 				'postalCode': new FormControl('', Validators.pattern(this.postalCodeRegex)),
 			});
 		}

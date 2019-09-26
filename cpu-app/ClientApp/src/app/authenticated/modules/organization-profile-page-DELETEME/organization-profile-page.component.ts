@@ -4,7 +4,7 @@ import { iContactInformation } from 'src/app/core/models/contact-information.cla
 import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
 import { Subject } from 'rxjs';
 import { iAddress } from 'src/app/core/models/address.class';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-organization-profile-page',
@@ -19,6 +19,7 @@ export class OrganizationProfilePageComponent implements OnInit {
 
 	testAddress: FormGroup;
 
+
 	public addressUpdated(address: iAddress) {
 		console.log(address);
 	}
@@ -28,9 +29,12 @@ export class OrganizationProfilePageComponent implements OnInit {
 		private router: Router
 	) { }
 
+	get hasMailingAddress() { return this.testAddress.get('hasMailingAddress') }
 	ngOnInit() {
 		this.testAddress = new FormGroup({
-			'address': new FormControl()
+			'mainAddress': new FormControl(null, Validators.required),
+			'hasMailingAddress': new FormControl(false),
+			'mailingAddress': new FormControl()
 		})
 
 
@@ -61,6 +65,8 @@ export class OrganizationProfilePageComponent implements OnInit {
 		//   this.contactInformation = new ContactInformation();
 		// }
 	}
+
+
 	onSave() {
 		this.boilerplateService.setOrganizationBoilerplate(this.organizationId, this.contactInformation).subscribe(
 			res => this.router.navigate(['/dashboard']),
