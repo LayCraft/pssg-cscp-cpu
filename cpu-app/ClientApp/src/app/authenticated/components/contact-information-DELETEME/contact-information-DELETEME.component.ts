@@ -11,7 +11,7 @@ import { Address } from 'src/app/core/models/address.class';
 	templateUrl: './contact-information-DELETEME.component.html',
 	styleUrls: ['./contact-information-DELETEME.component.scss']
 })
-export class ContactInformationComponent implements OnInit {
+export class ContactInformationDeletemeComponent implements OnInit {
 	// a viewchild to check the validity of the template form
 	@ViewChild(NgForm, { static: true }) ciForm;
 	// input a contact information properties to create this form

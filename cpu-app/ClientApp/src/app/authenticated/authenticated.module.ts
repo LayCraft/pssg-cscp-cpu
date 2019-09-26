@@ -6,7 +6,7 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { ContactInformationComponent } from './components/contact-information-DELETEME/contact-information-DELETEME.component';
+import { ContactInformationDeletemeComponent } from './components/contact-information-DELETEME/contact-information-DELETEME.component';
 import { AdministrativeInformationComponent } from './components/administrative-information/administrative-information.component';
 import { CgLiabilityComponent } from './components/cg-liability/cg-liability.component';
 import { HoursComponent } from './components/hours/hours.component';
@@ -30,6 +30,7 @@ import { PersonnelComponent } from './modules/personnel/personnel.component';
 import { OrganizationProfileComponent } from './modules/organization-profile/organization-profile.component';
 import { OrganizationProfileModule } from './modules/organization-profile/organization-profile.module';
 import { PersonnelModule } from './modules/personnel/personnel.module';
+import { ContactInformationComponent } from './components/contact-information/contact-information.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { PersonnelModule } from './modules/personnel/personnel.module';
 		DashboardComponent,
 		AdministrativeInformationComponent,
 		CgLiabilityComponent,
+		ContactInformationDeletemeComponent,
 		ContactInformationComponent,
 		HoursComponent,
 		MinistryContactBoxComponent,
