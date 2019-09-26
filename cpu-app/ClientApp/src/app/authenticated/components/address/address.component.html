@@ -38,10 +38,11 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div class="col-md">
+		<div class="col-md">
 			<div class="form-group">
-				<label for="province" class="required">Province</label>
-				<select class="form-control" name="province" id="province" #province required>
+				<label for="province" [class.required]="required">Province</label>
+				<select #province class="form-control" name="province" id="province" [formControlName]="formControlNames.province" [required]="required">
+					<option value="" disabled></option>
 					<option *ngFor="let area of country.areas" [value]="area">{{area}}</option>
 				</select>
 				<div class="valid-feedback" [hidden]="showValidFeedback(province)" style="display: inherit">
@@ -51,7 +52,7 @@
 					Try Again
 				</div>
 			</div>
-		</div> -->
+		</div>
 	</div>
 	{{formGroup.valid}}
 	{{formGroup.value|json}}
