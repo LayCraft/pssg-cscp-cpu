@@ -34,7 +34,8 @@ export class OrganizationProfilePageComponent implements OnInit {
 		this.testAddress = new FormGroup({
 			'mainAddress': new FormControl(null, Validators.required),
 			'hasMailingAddress': new FormControl(false),
-			'mailingAddress': new FormControl()
+			'mailingAddress': new FormControl(),
+			'phone': new FormControl(),
 		})
 
 

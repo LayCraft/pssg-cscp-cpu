@@ -5,6 +5,8 @@
 		</div>
 		<div [formGroup]="testAddress" class="col">
 			<h2 class="blue-header">Primary Contact Information</h2>
+			<app-phone formControlName='phone' [required]="true"></app-phone>
+
 			<!-- Main address block -->
 			<app-address formControlName='mainAddress' [required]="true"></app-address>
 
