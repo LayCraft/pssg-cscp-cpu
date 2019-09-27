@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { iContactInformation } from 'src/app/core/models/contact-information.class';
 
 @Component({
 	selector: 'app-organization-profile-page',
@@ -27,6 +28,11 @@ export class OrganizationProfilePageComponent implements OnInit {
 			});
 			this.contactInformationForm.controls['contactInformation'].setValue(ci);
 		});
+	}
+	hasCriticalParts(): boolean {
+		// TODO: this isn't the place to get the validity of the form overall but I want a cheat for the required info
+		const c = this.contactInformationForm.value.contactInformation as iContactInformation;
+		return !!c.emailAddress && !!c.phoneNumber && !!c.mainAddress.line1 && !!c.mainAddress.city && !!c.mainAddress.province && !!c.mainAddress.postalCode;
 	}
 	onSave(): void {
 		this.boilerplateService.setOrganizationBoilerplate(this.organizationId, this.contactInformationForm.value.contactInformation).subscribe(

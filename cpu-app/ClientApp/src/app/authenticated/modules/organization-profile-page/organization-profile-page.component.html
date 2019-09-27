@@ -4,13 +4,13 @@
 			<app-contact-information formControlName="contactInformation"></app-contact-information>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row mt-4">
 		<div class="col">
 			<!-- Button states for the form: Can submit, Can't submit, (TODO: in process of submitting) -->
-			<button *ngIf="contactInformationForm.value" (click)="onSave()" class="btn btn-primary">Save</button>
-			<button *ngIf="!contactInformationForm.value" class="btn btn-primary" disabled>Save</button>
+			<button *ngIf="hasCriticalParts()" (click)="onSave()" class="btn btn-primary">Save</button>
+			<button *ngIf="!hasCriticalParts()" class="btn btn-primary" disabled>Save</button>
 		</div>
 	</div>
 </div>
-<!-- <pre>{{contactInformationForm.value|json}}</pre> -->
-<pre>{{boilerplate}}</pre>
+<!-- <pre>Valid:{{contactInformationForm.valid}}{{contactInformationForm.value |json}}</pre> -->
+<!-- <pre>{{boilerplate}}</pre> -->
