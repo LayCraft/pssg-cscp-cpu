@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { iContactInformation } from 'src/app/core/models/contact-information.class';
 import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
@@ -13,7 +13,7 @@ import { FormHelper } from 'src/app/core/form-helper'
 })
 export class ContactInformationComponent implements OnInit {
 	@Input() contactInformation: iContactInformation;
-	@Input() contactInformationChange = new EventEmitter<iContactInformation>();
+	@Output() contactInformationChange = new EventEmitter<iContactInformation>();
 
 	contactInformationForm: FormGroup;
 
@@ -60,6 +60,10 @@ export class ContactInformationComponent implements OnInit {
 	}
 	emitContactInformation() {
 		// only emit the contact information if this form is valid.
-		console.log(this.getTidyFormData());
+		if (this.contactInformationForm.valid) {
+			this.contactInformationChange.emit(this.getTidyFormData());
+		} else {
+			this.contactInformationChange.emit(null);
+		}
 	}
 }

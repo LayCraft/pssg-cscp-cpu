@@ -6,7 +6,6 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { ContactInformationDeletemeComponent } from './components/contact-information-DELETEME/contact-information-DELETEME.component';
 import { AdministrativeInformationComponent } from './components/administrative-information/administrative-information.component';
 import { CgLiabilityComponent } from './components/cg-liability/cg-liability.component';
 import { HoursComponent } from './components/hours/hours.component';
@@ -55,7 +54,6 @@ import { AddressComponent } from './components/address/address.component';
 		DashboardComponent,
 		AdministrativeInformationComponent,
 		CgLiabilityComponent,
-		ContactInformationDeletemeComponent,
 		ContactInformationComponent,
 		HoursComponent,
 		MinistryContactBoxComponent,

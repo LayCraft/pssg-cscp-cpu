@@ -1,6 +1,8 @@
 <div class="container">
 	<div class="row">
-		<app-contact-information></app-contact-information>
+		<div class="col">
+			<app-contact-information [(contactInformation)]="contactInformation"></app-contact-information>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col">
@@ -10,6 +12,6 @@
 		</div>
 	</div>
 </div>
-<!-- <pre>Valid: {{validContactInformation}}
+<pre>Valid: {{validContactInformation}}
 {{contactInformation|json}}
-</pre> -->
+</pre>
