@@ -15,7 +15,7 @@ import { OrganizationProfileBoxComponent } from './components/organization-profi
 import { PersonDetailsComponent } from './components/person-details/person-details.component';
 import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
-import { OrganizationProfilePageComponent } from './modules/organization-profile-page-DELETEME/organization-profile-page.component';
+import { OrganizationProfilePageComponent } from './modules/organization-profile-page/organization-profile-page.component';
 import { PersonnelPageComponent } from './modules/personnel-page-DELETEME/personnel-page.component';
 import { ProgramPageComponent } from './modules/program-page-DELETEME/program-page.component';
 import { StatusReportComponent } from './modules/status-report/status-report.component';
@@ -27,8 +27,7 @@ import { ExpenseReportModule } from './modules/expense-report/expense-report.mod
 import { ProgramApplicationModule } from './modules/program-application/program-application.module';
 import { StatusReportModule } from './modules/status-report/status-report.module';
 import { PersonnelComponent } from './modules/personnel/personnel.component';
-import { OrganizationProfileComponent } from './modules/organization-profile/organization-profile.component';
-import { OrganizationProfileModule } from './modules/organization-profile/organization-profile.module';
+
 import { PersonnelModule } from './modules/personnel/personnel.module';
 import { ContactInformationComponent } from './components/contact-information/contact-information.component';
 import { AddressComponent } from './components/address/address.component';
@@ -48,7 +47,7 @@ import { AddressComponent } from './components/address/address.component';
 		ExpenseReportModule,
 		ProgramApplicationModule,
 		StatusReportModule,
-		OrganizationProfileModule,
+
 		PersonnelModule,
 	],
 	declarations: [
@@ -74,7 +73,7 @@ import { AddressComponent } from './components/address/address.component';
 		StatusReportComponent,
 		ProgramApplicationComponent,
 		PersonnelComponent,
-		OrganizationProfileComponent,
+		OrganizationProfilePageComponent,
 		AddressComponent,
 	]
 })

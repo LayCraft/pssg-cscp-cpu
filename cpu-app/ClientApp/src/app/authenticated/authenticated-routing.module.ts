@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthenticatedComponent } from './authenticated.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { OrganizationProfilePageComponent } from './modules/organization-profile-page-DELETEME/organization-profile-page.component';
+import { OrganizationProfilePageComponent } from './modules/organization-profile-page/organization-profile-page.component';
 import { PersonnelPageComponent } from './modules/personnel-page-DELETEME/personnel-page.component';
 import { ProgramPageComponent } from './modules/program-page-DELETEME/program-page.component';
 import { StatusReportComponent } from './modules/status-report/status-report.component';

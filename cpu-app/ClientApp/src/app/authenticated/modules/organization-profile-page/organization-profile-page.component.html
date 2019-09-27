@@ -5,11 +5,20 @@
 		</div>
 		<div [formGroup]="testAddress" class="col">
 			<h2 class="blue-header">Primary Contact Information</h2>
-			<app-address formControlName='mainAddress'></app-address>
-			<!--TODO: MAKE THIS PRETTY -->
-			<input type="checkbox" formControlName="hasMailingAddress">HAS A MAILING ADDRESS
-			<div *ngIf="hasMailingAddress.value===true">
+			<!-- Main address block -->
+			<app-address formControlName='mainAddress' [required]="true"></app-address>
+
+			<div class="form-check">
+				<!-- Mailing address checkbox -->
+				<input formControlName="hasMailingAddress" class="form-check-input" type="checkbox" id="mailingAddressCheckbox">
+				<label class="form-check-label" for="mailingAddressCheckbox">
+					Different mailing address from main address.
+				</label>
+			</div>
+
+			<div *ngIf="hasMailingAddress.value===true" class="mt-4">
 				<h2 class="blue-header">Mailing Address</h2>
+				<!-- Mailing Address Block -->
 				<app-address formControlName='mailingAddress'></app-address>
 			</div>
 
