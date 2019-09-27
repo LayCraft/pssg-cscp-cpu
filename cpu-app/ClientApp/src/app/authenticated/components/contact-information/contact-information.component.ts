@@ -69,7 +69,6 @@ export class ContactInformationComponent implements ControlValueAccessor, OnInit
 		});
 	}
 
-
 	// ******************ControlValueAccessor interface stuff below *************************
 	writeValue(contactInformation: iContactInformation): void {
 		// every time this form control is updated from the parent

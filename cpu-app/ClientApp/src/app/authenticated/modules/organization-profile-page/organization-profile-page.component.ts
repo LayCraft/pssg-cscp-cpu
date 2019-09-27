@@ -12,7 +12,7 @@ export class OrganizationProfilePageComponent implements OnInit {
 	// TODO: collect this from the route
 	organizationId: string = 'bceid goes here';
 	contactInformationForm: FormGroup;
-
+	boilerplate;
 	constructor(
 		private boilerplateService: BoilerplateService,
 		private router: Router
@@ -27,9 +27,9 @@ export class OrganizationProfilePageComponent implements OnInit {
 		});
 	}
 	onSave(): void {
-		this.boilerplateService.setOrganizationBoilerplate(this.organizationId, this.contactInformationForm.value).subscribe(
+		this.boilerplateService.setOrganizationBoilerplate(this.organizationId, this.contactInformationForm.value.contactInformation).subscribe(
 			res => {
-				console.log(res);
+				this.boilerplate = res;
 				this.router.navigate(['/authenticated/dashboard']);
 			},
 			err => {
