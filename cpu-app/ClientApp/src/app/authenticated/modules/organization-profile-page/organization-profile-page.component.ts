@@ -28,7 +28,10 @@ export class OrganizationProfilePageComponent implements OnInit {
 	}
 	onSave(): void {
 		this.boilerplateService.setOrganizationBoilerplate(this.organizationId, this.contactInformationForm.value).subscribe(
-			res => this.router.navigate(['/authenticated/dashboard']),
+			res => {
+				console.log(res);
+				this.router.navigate(['/authenticated/dashboard']);
+			},
 			err => {
 				alert('An error has occured. Please try submitting again.');
 				console.log(err);

@@ -24,7 +24,7 @@ export class BoilerplateService {
 		// 		line2: '',
 		// 		province: 'British Columbia',
 		// 	}
-	};
+	} as iContactInformation;
 
 	constructor() { }
 	getOrganizationBoilerplate(bceid: string): Observable<iContactInformation> {
