@@ -1,17 +1,15 @@
 <div class="container">
 	<div class="row">
-		<div class="col">
-			<app-contact-information [(contactInformation)]="contactInformation"></app-contact-information>
+		<div class="col" [formGroup]="contactInformationForm">
+			<app-contact-information formControlName="contactInformation"></app-contact-information>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col">
 			<!-- Button states for the form: Can submit, Can't submit, (TODO: in process of submitting) -->
-			<button *ngIf="validContactInformation" (click)="onSave()" class="btn btn-primary">Save</button>
-			<button *ngIf="!validContactInformation" class="btn btn-primary" disabled>Save</button>
+			<button *ngIf="contactInformation" (click)="onSave()" class="btn btn-primary">Save</button>
+			<button *ngIf="!contactInformation" class="btn btn-primary" disabled>Save</button>
 		</div>
 	</div>
 </div>
-<pre>Valid: {{validContactInformation}}
-{{contactInformation|json}}
-</pre>
+<pre>{{contactInformationForm.value|json}}</pre>

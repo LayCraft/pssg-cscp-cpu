@@ -1,8 +1,9 @@
-import { Component, forwardRef, Input, Output, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { Component, forwardRef, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
 import { iAddress } from 'src/app/core/models/address.class';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl, FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, Validators } from '@angular/forms';
 import { COUNTRIES_ADDRESS_2, iCountry } from 'src/app/core/constants/country-list';
 import { POSTAL_CODE, WORD } from 'src/app/core/constants/regex.constants';
+import { FormHelper } from 'src/app/core/form-helper';
 
 @Component({
 	selector: 'app-address',
@@ -16,18 +17,17 @@ import { POSTAL_CODE, WORD } from 'src/app/core/constants/regex.constants';
 		}
 	]
 })
-export class AddressComponent implements ControlValueAccessor, OnInit {
+export class AddressComponent implements ControlValueAccessor, OnInit, OnChanges {
 	// a viewchild to check the validity of the template form
 	@Input() disabled: boolean = false;
 	@Input() required: boolean = false;
 	@Input() address: iAddress;
 	@Output() addressChange = new EventEmitter<iAddress>();
 
-	ngOnInit() {
-		this.buildForm(this.address);
-	}
-
 	addressForm: FormGroup;
+
+	// helpers for setting form state
+	public formHelper = new FormHelper();
 
 	// this AddressComponent is not a form only part of a form. This needs
 	country: iCountry; // currently selected country
@@ -42,27 +42,21 @@ export class AddressComponent implements ControlValueAccessor, OnInit {
 		//has to have at least a character or two
 		this.hasCharactersRegex = WORD;
 	}
+	ngOnInit() {
+		this.buildForm(this.address);
+		console.log('address init', this.address)
+	}
+	ngOnChanges(changes: any) {
+		this.buildForm(changes);
+		console.log('address change', changes)
+	}
 
+	// getters for the template syntax to collect the form fields
 	get line1() { return this.addressForm.get('line1') }
 	get line2() { return this.addressForm.get('line2') }
 	get city() { return this.addressForm.get('city') }
 	get province() { return this.addressForm.get('province') }
 	get postalCode() { return this.addressForm.get('postalCode') }
-
-	// form helpers. Validity hints and hide/show toggles
-	showValidFeedback(control: AbstractControl): boolean {
-		return !(control.valid && (control.dirty || control.touched));
-	}
-	showInvalidFeedback(control: AbstractControl): boolean {
-		return !(control.invalid && (control.dirty || control.touched));
-	}
-	isRequired(control: AbstractControl) {
-		if (this.required && (control.dirty || control.touched)) {
-			return true;
-		} else {
-			return null;
-		}
-	}
 
 	buildForm(address: iAddress) {
 		// note this form is missing a country dropdown because i don't need it in the wireframes. The address oobject supports it

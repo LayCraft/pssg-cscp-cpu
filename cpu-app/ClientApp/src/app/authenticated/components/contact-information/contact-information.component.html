@@ -1,4 +1,4 @@
-<div [formGroup]="contactInformationForm" class="col" (input)="emitContactInformation()">
+<div [formGroup]="contactInformationForm" class="col" (input)="onInput()">
 	<h2 class="blue-header">Primary Contact Information</h2>
 	<!-- Email box -->
 	<div class="form-row">
@@ -58,6 +58,5 @@
 		<!-- Mailing Address Block -->
 		<app-address formControlName='mailingAddress'></app-address>
 	</div>
-
-	<!-- <pre>Valid:{{contactInformationForm.valid}}{{contactInformationForm.value|json}}</pre> -->
+	<pre>contact-information:{{contactInformationForm.valid}}{{contactInformationForm.value|json}}</pre>
 </div>

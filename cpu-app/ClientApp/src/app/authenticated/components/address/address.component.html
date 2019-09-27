@@ -3,12 +3,12 @@
 		<div class="col-md">
 			<div class="form-group">
 				<label for="line1" [class.required]="required">Address Line 1</label>
-				<input type="text" class="form-control required" id="line1" name="line1" formControlName="line1" [required]="isRequired(line1)">
+				<input type="text" class="form-control required" id="line1" name="line1" formControlName="line1" [required]="formHelper.isRequired(line1)">
 
-				<div class="valid-feedback" [hidden]="showValidFeedback(line1)" style="display: inherit">
+				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(line1)" style="display: inherit">
 					Ok
 				</div>
-				<div class="invalid-feedback" [hidden]="showInvalidFeedback(line1)" style="display: inherit">
+				<div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(line1)" style="display: inherit">
 					Try Again
 				</div>
 			</div>
@@ -17,10 +17,10 @@
 			<div class="form-group">
 				<label for="line2">Address Line 2</label>
 				<input type="text" class="form-control" id="line2" name="line2" formControlName="line2">
-				<div class="valid-feedback" [hidden]="showValidFeedback(line2)" style="display: inherit">
+				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(line2)" style="display: inherit">
 					Ok
 				</div>
-				<div class="invalid-feedback" [hidden]="showInvalidFeedback(line2)" style="display: inherit">
+				<div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(line2)" style="display: inherit">
 					Try Again
 				</div>
 			</div>
@@ -30,11 +30,11 @@
 		<div class="col-md">
 			<div class="form-group">
 				<label for="city" [class.required]="required">City</label>
-				<input type="text" class="form-control" id="city" name="city" formControlName="city" [required]="isRequired(city)">
-				<div class="valid-feedback" [hidden]="showValidFeedback(city)" style="display: inherit">
+				<input type="text" class="form-control" id="city" name="city" formControlName="city" [required]="formHelper.isRequired(city)">
+				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(city)" style="display: inherit">
 					Ok
 				</div>
-				<div class="invalid-feedback" [hidden]="showInvalidFeedback(city)" style="display: inherit">
+				<div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(city)" style="display: inherit">
 					Try Again
 				</div>
 			</div>
@@ -42,13 +42,13 @@
 		<div class="col-md">
 			<div class="form-group">
 				<label for="province" [class.required]="required">Province</label>
-				<select class="form-control" [class.required]="required" name="province" id="province" formControlName="province" [required]="isRequired(province)">
+				<select class="form-control" [class.required]="required" name="province" id="province" formControlName="province" [required]="formHelper.isRequired(province)">
 					<option *ngFor="let area of country.areas" [value]="area">{{area}}</option>
 				</select>
-				<div class="valid-feedback" [hidden]="showValidFeedback(province)" style="display: inherit">
+				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(province)" style="display: inherit">
 					Ok
 				</div>
-				<div class="invalid-feedback" [hidden]="showInvalidFeedback(province)" style="display: inherit">
+				<div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(province)" style="display: inherit">
 					Try Again
 				</div>
 			</div>
@@ -59,15 +59,15 @@
 		<div class="col-md">
 			<div class="form-group">
 				<label for="postalCode" [class.required]="required">Postal Code</label>
-				<input type="text" class="form-control" id="postalCode" name="postalCode" formControlName="postalCode" [required]="isRequired(postalCode)">
-				<div class="valid-feedback" [hidden]="showValidFeedback(postalCode)" style="display: inherit">
+				<input type="text" class="form-control" id="postalCode" name="postalCode" formControlName="postalCode" [required]="formHelper.isRequired(postalCode)">
+				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(postalCode)" style="display: inherit">
 					Ok
 				</div>
-				<div class="invalid-feedback" [hidden]="showInvalidFeedback(postalCode)" style="display: inherit">
+				<div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(postalCode)" style="display: inherit">
 					Try Again
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- <pre>Valid:{{addressForm.valid}}{{addressForm.value|json}}</pre> -->
+	<pre>address:{{addressForm.valid}}{{addressForm.value|json}}</pre>
 </fieldset>
