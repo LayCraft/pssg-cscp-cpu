@@ -4,7 +4,8 @@ import { iContactInformation } from 'src/app/core/models/contact-information.cla
 import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
 import { Subject } from 'rxjs';
 import { iAddress } from 'src/app/core/models/address.class';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { PHONE_NUMBER } from 'src/app/core/constants/regex.constants';
 
 @Component({
 	selector: 'app-organization-profile-page',
@@ -24,19 +25,24 @@ export class OrganizationProfilePageComponent implements OnInit {
 		console.log(address);
 	}
 
+
 	constructor(
 		private boilerplateService: BoilerplateService,
 		private router: Router
 	) { }
 
 	get hasMailingAddress() { return this.testAddress.get('hasMailingAddress') }
+	get phoneNumber() { return this.testAddress.get('phoneNumber') }
+	get faxNumber() { return this.testAddress.get('faxNumber') }
+
 	ngOnInit() {
 		this.testAddress = new FormGroup({
 			'mainAddress': new FormControl(null, Validators.required),
 			'hasMailingAddress': new FormControl(false),
 			'mailingAddress': new FormControl(),
-			'phone': new FormControl(),
-		})
+			'phoneNumber': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
+			'faxNumber': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
+		});
 
 
 		this.boilerplateService.getOrganizationBoilerplate(this.organizationId)
@@ -67,6 +73,20 @@ export class OrganizationProfilePageComponent implements OnInit {
 		// }
 	}
 
+	// form helpers. Validity hints and hide/show toggles
+	showValidFeedback(control: AbstractControl): boolean {
+		return !(control.valid && (control.dirty || control.touched));
+	}
+	showInvalidFeedback(control: AbstractControl): boolean {
+		return !(control.invalid && (control.dirty || control.touched));
+	}
+	isDirtyOrTouched(control: AbstractControl) {
+		if (control.dirty || control.touched) {
+			return true;
+		} else {
+			return null;
+		}
+	}
 
 	onSave() {
 		this.boilerplateService.setOrganizationBoilerplate(this.organizationId, this.contactInformation).subscribe(

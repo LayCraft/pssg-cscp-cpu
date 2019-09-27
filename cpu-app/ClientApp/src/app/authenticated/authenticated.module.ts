@@ -31,7 +31,6 @@ import { PersonnelComponent } from './modules/personnel/personnel.component';
 import { PersonnelModule } from './modules/personnel/personnel.module';
 import { ContactInformationComponent } from './components/contact-information/contact-information.component';
 import { AddressComponent } from './components/address/address.component';
-import { PhoneComponent } from './components/phone/phone.component';
 
 
 @NgModule({
@@ -48,7 +47,6 @@ import { PhoneComponent } from './components/phone/phone.component';
 		ExpenseReportModule,
 		ProgramApplicationModule,
 		StatusReportModule,
-
 		PersonnelModule,
 	],
 	declarations: [
@@ -76,7 +74,6 @@ import { PhoneComponent } from './components/phone/phone.component';
 		PersonnelComponent,
 		OrganizationProfilePageComponent,
 		AddressComponent,
-		PhoneComponent,
 	]
 })
 export class AuthenticatedModule { }

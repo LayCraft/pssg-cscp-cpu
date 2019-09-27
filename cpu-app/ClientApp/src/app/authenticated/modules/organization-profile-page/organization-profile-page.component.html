@@ -5,8 +5,33 @@
 		</div>
 		<div [formGroup]="testAddress" class="col">
 			<h2 class="blue-header">Primary Contact Information</h2>
-			<app-phone formControlName='phone' [required]="true"></app-phone>
 
+			<div class="form-row">
+				<div class="col-md">
+					<div class="form-group">
+						<label class="required" for="city">Phone Number</label>
+						<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" formControlName="phoneNumber" [required]="isDirtyOrTouched(phoneNumber)">
+						<div class="valid-feedback" [hidden]="showValidFeedback(phoneNumber)" style="display: inherit">
+							Ok
+						</div>
+						<div class="invalid-feedback" [hidden]="showInvalidFeedback(phoneNumber)" style="display: inherit">
+							Try Again
+						</div>
+					</div>
+				</div>
+				<div class="col-md">
+					<div class="form-group">
+						<label for="city">Fax Number</label>
+						<input type="text" class="form-control" id="faxNumber" name="faxNumber" formControlName="faxNumber" [required]="isDirtyOrTouched(faxNumber)">
+						<div class="valid-feedback" [hidden]="showValidFeedback(faxNumber)" style="display: inherit">
+							Ok
+						</div>
+						<div class="invalid-feedback" [hidden]="showInvalidFeedback(faxNumber)" style="display: inherit">
+							Try Again
+						</div>
+					</div>
+				</div>
+			</div>
 			<!-- Main address block -->
 			<app-address formControlName='mainAddress' [required]="true"></app-address>
 

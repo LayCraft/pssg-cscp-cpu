@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input, ViewChild } from '@angular/core';
 import { AbstractControl, NgForm } from '@angular/forms';
-import { emailValidRegex, phoneValidRegex, postalCodeValidRegex } from 'src/app/core/constants/validators';
+import { EMAIL, PHONE_NUMBER, POSTAL_CODE } from 'src/app/core/constants/regex.constants';
 import { iContactInformation, ContactInformation } from 'src/app/core/models/contact-information.class';
 import { iCountry, COUNTRIES_ADDRESS_2 } from 'src/app/core/constants/country-list';
 import { Address } from 'src/app/core/models/address.class';
@@ -23,9 +23,9 @@ export class ContactInformationDeletemeComponent implements OnInit {
 	@Input() title: string = 'Contact Information';
 
 	// patterns
-	emailValidRegex = emailValidRegex;
-	phoneValidRegex = phoneValidRegex;
-	postalCodeValidRegex = postalCodeValidRegex;
+	emailValidRegex = EMAIL;
+	phoneValidRegex = PHONE_NUMBER;
+	postalCodeValidRegex = POSTAL_CODE;
 	// form state
 	hasMailingAddress = false;
 	country: iCountry;
