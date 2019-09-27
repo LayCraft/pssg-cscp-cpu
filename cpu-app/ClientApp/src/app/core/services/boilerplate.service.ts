@@ -7,20 +7,23 @@ import { iContactInformation } from '../models/contact-information.class';
 })
 export class BoilerplateService {
 	boilerplate = {
-		emailAddress: 'foo@bar.baz',
-		phoneNumber: '2502502500',
-		mainAddress: {
-			city: 'Victoria',
-			postalCode: 'v8v3b3',
-			line1: '1234 Douglas St',
-			province: 'British Columbia',
-		},
-		mailingAddress: {
-			city: 'Saanich',
-			postalCode: 'v8v3b3',
-			line1: 'Box 430',
-			province: 'British Columbia',
-		}
+		// 	emailAddress: 'foo@bar.baz',
+		// 	faxNumber: '1234567890',
+		// 	phoneNumber: '2502502500',
+		// 	mainAddress: {
+		// 		city: 'Victoria',
+		// 		postalCode: 'v8v3b3',
+		// 		line1: '1234 Douglas St',
+		// 		line2: '',
+		// 		province: 'British Columbia',
+		// 	},
+		// 	mailingAddress: {
+		// 		city: 'Saanich',
+		// 		postalCode: 'v8v3b3',
+		// 		line1: 'Box 430',
+		// 		line2: '',
+		// 		province: 'British Columbia',
+		// 	}
 	};
 
 	constructor() { }

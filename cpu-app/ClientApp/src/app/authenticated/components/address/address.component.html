@@ -1,9 +1,9 @@
-<fieldset [formGroup]="addressForm" (input)="onInput()">
+<fieldset [formGroup]="internalFormGroup">
 	<div class="form-row">
 		<div class="col-md">
 			<div class="form-group">
 				<label for="line1" [class.required]="required">Address Line 1</label>
-				<input type="text" class="form-control required" id="line1" name="line1" formControlName="line1" [required]="formHelper.isRequired(line1)">
+				<input type="text" class="form-control required" id="line1" name="line1" formControlName="line1" [required]="formHelper.isRequired(line1,required)">
 
 				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(line1)" style="display: inherit">
 					Ok
@@ -69,5 +69,5 @@
 			</div>
 		</div>
 	</div>
-	<pre>address:{{addressForm.valid}}{{addressForm.value|json}}</pre>
+	<!-- <pre>address:{{internalFormGroup.valid}}{{internalFormGroup.value|json}}</pre> -->
 </fieldset>

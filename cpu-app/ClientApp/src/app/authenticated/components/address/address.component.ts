@@ -1,9 +1,11 @@
-import { Component, forwardRef, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
+import { Component, forwardRef, Input, OnInit, OnDestroy } from '@angular/core';
 import { iAddress } from 'src/app/core/models/address.class';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, Validators } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, Validators, NG_VALIDATORS } from '@angular/forms';
 import { COUNTRIES_ADDRESS_2, iCountry } from 'src/app/core/constants/country-list';
 import { POSTAL_CODE, WORD } from 'src/app/core/constants/regex.constants';
 import { FormHelper } from 'src/app/core/form-helper';
+import { Subject } from 'rxjs';
+import { tap, takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-address',
@@ -17,17 +19,15 @@ import { FormHelper } from 'src/app/core/form-helper';
 		}
 	]
 })
-export class AddressComponent implements ControlValueAccessor, OnInit, OnChanges {
-	// a viewchild to check the validity of the template form
-	@Input() disabled: boolean = false;
+export class AddressComponent implements ControlValueAccessor, OnInit, OnDestroy {
 	@Input() required: boolean = false;
-	@Input() address: iAddress;
-	@Output() addressChange = new EventEmitter<iAddress>();
 
-	addressForm: FormGroup;
+	private _onChange = (_: any) => { };
+	private _onTouched = () => { };
+	private onDestroy$: Subject<void> = new Subject();
 
-	// helpers for setting form state
-	public formHelper = new FormHelper();
+	// main form for collecting
+	public internalFormGroup: FormGroup;
 
 	// this AddressComponent is not a form only part of a form. This needs
 	country: iCountry; // currently selected country
@@ -41,27 +41,39 @@ export class AddressComponent implements ControlValueAccessor, OnInit, OnChanges
 		this.postalCodeRegex = POSTAL_CODE;
 		//has to have at least a character or two
 		this.hasCharactersRegex = WORD;
-	}
-	ngOnInit() {
-		this.buildForm(this.address);
-		console.log('address init', this.address)
-	}
-	ngOnChanges(changes: any) {
-		this.buildForm(changes);
-		console.log('address change', changes)
+		this.buildForm();
 	}
 
+	ngOnInit(): void {
+		//watch for any value changes in the form
+		this.internalFormGroup.valueChanges
+			.pipe(
+				tap(value => {
+					this._onChange(value);
+					this._onTouched();
+				}),
+				takeUntil(this.onDestroy$),
+			).subscribe();
+	}
+	ngOnDestroy(): void {
+		// shut this subject down on destroy
+		this.onDestroy$.next();
+		this.onDestroy$.complete();
+	}
+
+	// helpers for setting form state
+	public formHelper = new FormHelper();
 	// getters for the template syntax to collect the form fields
-	get line1() { return this.addressForm.get('line1') }
-	get line2() { return this.addressForm.get('line2') }
-	get city() { return this.addressForm.get('city') }
-	get province() { return this.addressForm.get('province') }
-	get postalCode() { return this.addressForm.get('postalCode') }
+	get line1() { return this.internalFormGroup.get('line1') }
+	get line2() { return this.internalFormGroup.get('line2') }
+	get city() { return this.internalFormGroup.get('city') }
+	get province() { return this.internalFormGroup.get('province') }
+	get postalCode() { return this.internalFormGroup.get('postalCode') }
 
-	buildForm(address: iAddress) {
+	buildForm() {
 		// note this form is missing a country dropdown because i don't need it in the wireframes. The address oobject supports it
 		if (this.required) {
-			this.addressForm = new FormGroup({
+			this.internalFormGroup = new FormGroup({
 				'line1': new FormControl('', [Validators.required, Validators.pattern(this.hasCharactersRegex)]),
 				'line2': new FormControl(''),
 				'city': new FormControl('', [Validators.required, Validators.pattern(this.hasCharactersRegex)]),
@@ -69,7 +81,7 @@ export class AddressComponent implements ControlValueAccessor, OnInit, OnChanges
 				'postalCode': new FormControl('', [Validators.required, Validators.pattern(this.postalCodeRegex), Validators.pattern(this.hasCharactersRegex)]),
 			});
 		} else {
-			this.addressForm = new FormGroup({
+			this.internalFormGroup = new FormGroup({
 				'line1': new FormControl(''),
 				'line2': new FormControl(''),
 				'city': new FormControl(''),
@@ -77,32 +89,23 @@ export class AddressComponent implements ControlValueAccessor, OnInit, OnChanges
 				'postalCode': new FormControl('', Validators.pattern(this.postalCodeRegex)),
 			});
 		}
-		// write previous values into address
+	}
+
+	// ******************ControlValueAccessor interface stuff below *************************
+	writeValue(address: iAddress): void {
 		if (address) {
-			this.addressForm.controls['line1'].setValue(address.line1);
-			this.addressForm.controls['line2'].setValue(address.line2);
-			this.addressForm.controls['city'].setValue(address.city);
-			this.addressForm.controls['province'].setValue(address.province);
-			this.addressForm.controls['postalCode'].setValue(address.postalCode);
+			// every time this form control is updated from the parent
+			const addressCleaned = {
+				line1: address.line1 || '',
+				line2: address.line2 || '',
+				city: address.city || '',
+				province: address.province || '',
+				postalCode: address.postalCode || '',
+			};
+			this.internalFormGroup.setValue(addressCleaned, { emitEvent: false });
 		}
 	}
 
-	onInput() {
-		if (this.addressForm.valid) {
-			// if valid we write back to the parent
-			this.writeValue(this.addressForm.value);
-		} else {
-			// otherwise we clear the parent so that the parent form knows if this area is valid
-			this.writeValue(null);
-		}
-	}
-	// ******************ControlValueAccessor interface stuff below *************************
-	writeValue(address: iAddress): void {
-		// every time this form control is updated from the parent
-		this._onChange(address);
-	}
-	_onChange = (_: any) => { };
-	_onTouched = (_: any) => { };
 	registerOnChange(fn: any): void {
 		// when we want to let the parent know that the value of the form control should be updated
 		this._onChange = fn;
@@ -113,6 +116,6 @@ export class AddressComponent implements ControlValueAccessor, OnInit, OnChanges
 	}
 	setDisabledState?(isDisabled: boolean): void {
 		// when the parent updates the state of the form control
-		this.disabled = isDisabled;
+		isDisabled ? this.internalFormGroup.disable() : this.internalFormGroup.enable();
 	}
 }
