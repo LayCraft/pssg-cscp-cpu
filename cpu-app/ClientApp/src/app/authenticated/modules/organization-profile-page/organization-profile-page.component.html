@@ -1,56 +1,6 @@
 <div class="container">
 	<div class="row">
-		<div class="col">
-			<app-contact-information-DELETEME [(contactInformation)]="contactInformation" [title]="'Primary Contact Information'" (valid)="onValid($event)"></app-contact-information-DELETEME>
-		</div>
-		<div [formGroup]="testAddress" class="col">
-			<h2 class="blue-header">Primary Contact Information</h2>
-
-			<div class="form-row">
-				<div class="col-md">
-					<div class="form-group">
-						<label class="required" for="city">Phone Number</label>
-						<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" formControlName="phoneNumber" [required]="isDirtyOrTouched(phoneNumber)">
-						<div class="valid-feedback" [hidden]="showValidFeedback(phoneNumber)" style="display: inherit">
-							Ok
-						</div>
-						<div class="invalid-feedback" [hidden]="showInvalidFeedback(phoneNumber)" style="display: inherit">
-							Try Again
-						</div>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="form-group">
-						<label for="city">Fax Number</label>
-						<input type="text" class="form-control" id="faxNumber" name="faxNumber" formControlName="faxNumber" [required]="isDirtyOrTouched(faxNumber)">
-						<div class="valid-feedback" [hidden]="showValidFeedback(faxNumber)" style="display: inherit">
-							Ok
-						</div>
-						<div class="invalid-feedback" [hidden]="showInvalidFeedback(faxNumber)" style="display: inherit">
-							Try Again
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Main address block -->
-			<app-address formControlName='mainAddress' [required]="true"></app-address>
-
-			<div class="form-check">
-				<!-- Mailing address checkbox -->
-				<input formControlName="hasMailingAddress" class="form-check-input" type="checkbox" id="mailingAddressCheckbox">
-				<label class="form-check-label" for="mailingAddressCheckbox">
-					Different mailing address from main address.
-				</label>
-			</div>
-
-			<div *ngIf="hasMailingAddress.value===true" class="mt-4">
-				<h2 class="blue-header">Mailing Address</h2>
-				<!-- Mailing Address Block -->
-				<app-address formControlName='mailingAddress'></app-address>
-			</div>
-
-			<pre>Valid:{{testAddress.valid}}{{testAddress.value|json}}</pre>
-		</div>
+		<app-contact-information></app-contact-information>
 	</div>
 	<div class="row">
 		<div class="col">
