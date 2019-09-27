@@ -27,11 +27,11 @@ const routes: Routes = [
 				component: DashboardComponent,
 			},
 			{
-				path: 'profile',
+				path: 'profile/:organizationId',
 				component: OrganizationProfilePageComponent,
 			},
 			{
-				path: 'personnel',
+				path: 'personnel/:organizationId',
 				component: PersonnelPageComponent
 			},
 			{

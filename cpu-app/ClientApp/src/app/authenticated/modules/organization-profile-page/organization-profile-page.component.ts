@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -15,10 +15,12 @@ export class OrganizationProfilePageComponent implements OnInit {
 	boilerplate;
 	constructor(
 		private boilerplateService: BoilerplateService,
-		private router: Router
+		private router: Router,
+		private route: ActivatedRoute,
 	) { }
 
 	ngOnInit() {
+		this.route.snapshot.paramMap.get('organizationId');
 		this.boilerplateService.getOrganizationBoilerplate(this.organizationId).subscribe(ci => {
 			this.contactInformationForm = new FormGroup({
 				'contactInformation': new FormControl()
