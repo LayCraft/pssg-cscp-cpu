@@ -24,7 +24,7 @@ export class OrganizationProfilePageComponent implements OnInit {
 		this.route.snapshot.paramMap.get('organizationId');
 		this.boilerplateService.getOrganizationBoilerplate(this.organizationId).subscribe(ci => {
 			this.contactInformationForm = new FormGroup({
-				'contactInformation': new FormControl()
+				'contactInformation': new FormControl('', Validators.required)
 			});
 			this.contactInformationForm.controls['contactInformation'].setValue(ci);
 		});

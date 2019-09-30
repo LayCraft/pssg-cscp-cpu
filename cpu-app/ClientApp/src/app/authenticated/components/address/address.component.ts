@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnInit, OnDestroy } from '@angular/core';
 import { iAddress } from 'src/app/core/models/address.class';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, Validators, NG_VALIDATORS } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormControl, Validators } from '@angular/forms';
 import { COUNTRIES_ADDRESS_2, iCountry } from 'src/app/core/constants/country-list';
 import { POSTAL_CODE, WORD } from 'src/app/core/constants/regex.constants';
 import { FormHelper } from 'src/app/core/form-helper';

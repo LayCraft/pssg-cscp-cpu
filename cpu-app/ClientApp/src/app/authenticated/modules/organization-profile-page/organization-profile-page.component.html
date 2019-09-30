@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col" [formGroup]="contactInformationForm">
-			<app-contact-information formControlName="contactInformation"></app-contact-information>
+			<app-contact-information formControlName="contactInformation" [required]="true"></app-contact-information>
 		</div>
 	</div>
 	<div class="row mt-4">
@@ -12,5 +12,5 @@
 		</div>
 	</div>
 </div>
-<!-- <pre>Valid:{{contactInformationForm.valid}}{{contactInformationForm.value |json}}</pre> -->
+<!-- <pre>Valid:{{contactInformationForm.get('contactInformation').valid}}{{contactInformationForm.value |json}}</pre> -->
 <!-- <pre>{{boilerplate}}</pre> -->

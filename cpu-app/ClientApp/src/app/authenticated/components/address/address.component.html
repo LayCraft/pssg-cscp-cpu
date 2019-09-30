@@ -30,7 +30,7 @@
 		<div class="col-md">
 			<div class="form-group">
 				<label for="city" [class.required]="required">City</label>
-				<input type="text" class="form-control" id="city" name="city" formControlName="city" [required]="formHelper.isRequired(city)">
+				<input type="text" class="form-control" id="city" name="city" formControlName="city" [required]="formHelper.isRequired(city, required)">
 				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(city)" style="display: inherit">
 					Ok
 				</div>
@@ -42,7 +42,7 @@
 		<div class="col-md">
 			<div class="form-group">
 				<label for="province" [class.required]="required">Province</label>
-				<select class="form-control" [class.required]="required" name="province" id="province" formControlName="province" [required]="formHelper.isRequired(province)">
+				<select class="form-control" [class.required]="required" name="province" id="province" formControlName="province" [required]="formHelper.isRequired(province, required)">
 					<option *ngFor="let area of country.areas" [value]="area">{{area}}</option>
 				</select>
 				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(province)" style="display: inherit">
@@ -59,7 +59,7 @@
 		<div class="col-md">
 			<div class="form-group">
 				<label for="postalCode" [class.required]="required">Postal Code</label>
-				<input type="text" class="form-control" id="postalCode" name="postalCode" formControlName="postalCode" [required]="formHelper.isRequired(postalCode)">
+				<input type="text" class="form-control" id="postalCode" name="postalCode" formControlName="postalCode" [required]="formHelper.isRequired(postalCode, required)">
 				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(postalCode)" style="display: inherit">
 					Ok
 				</div>
