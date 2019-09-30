@@ -5,7 +5,7 @@ import { ProgramOverviewComponent } from './program-overview/program-overview.co
 import { ProgramBudgetSummaryComponent } from './program-budget-summary/program-budget-summary.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BudgetProposalComponent } from './budget-proposal.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,6 +19,8 @@ import { FormsModule } from '@angular/forms';
 		CommonModule,
 		SharedModule, // For stepper
 		FormsModule,
+		SharedModule, // For material components
+		ReactiveFormsModule,
 	]
 })
 export class BudgetProposalModule { }

@@ -30,6 +30,7 @@ import { PersonnelComponent } from './modules/personnel/personnel.component';
 import { PersonnelModule } from './modules/personnel/personnel.module';
 import { ContactInformationComponent } from './components/contact-information/contact-information.component';
 import { AddressComponent } from './components/address/address.component';
+import { RevenueSourceComponent } from './budget-proposal/revenue-source/revenue-source.component';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { AddressComponent } from './components/address/address.component';
 		PersonnelComponent,
 		OrganizationProfilePageComponent,
 		AddressComponent,
+		RevenueSourceComponent,
 	]
 })
 export class AuthenticatedModule { }

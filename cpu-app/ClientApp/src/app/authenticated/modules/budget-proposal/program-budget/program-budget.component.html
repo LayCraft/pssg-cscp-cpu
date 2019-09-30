@@ -26,9 +26,19 @@
 		</li>
 	</ol>
 	<h2 class="blue-header">Program Revenue Sources</h2>
+	<div *ngFor="let source of revenueSources">
+		<input type="text" [(ngModel)]="source.revenueSourceName">
+		<input type="number" [(ngModel)]="source.cash">
+		<input type="number" [(ngModel)]="source.inKindContribution">
+		{{source|json}}
+		Total:{{source.cash + source.inKindContribution||0}}
+	</div>
+	<button (click)="addRevenueSource()">Add revenue</button>
+	<p>Tota</p>
 </div>
 <div *ngIf="currentTab===tabs[1]">
 	<!-- Program Expense -->
 	<h2 class="blue-header">{{currentTab}}</h2>
 </div>
-<pre>{{stepperElement|json}}</pre>
+<pre>RevenueSources{{revenueSources|json}}</pre>
+<!-- <pre>StepperJson{{stepperElement|json}}</pre> -->
