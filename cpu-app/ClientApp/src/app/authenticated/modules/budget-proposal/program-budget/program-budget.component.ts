@@ -15,6 +15,7 @@ export class ProgramBudgetComponent implements OnInit {
 	revenueSources: RevenueSource[] = [];
 	totalCash: number = 0;
 	totalInKind: number = 0;
+	totalGrand: number = 0;
 	constructor(
 	) {
 		this.tabs = ['Program Revenue Information', 'Program Expense'];
@@ -35,8 +36,9 @@ export class ProgramBudgetComponent implements OnInit {
 			return prev + curr;
 		}
 		// totalCash
-		this.totalCash = this.revenueSources.map(rs => rs.cash).reduce(reducer);
+		this.totalCash = this.revenueSources.map(rs => rs.cash).reduce(reducer) || 0;
 		// totalInKind
-		this.totalInKind = this.revenueSources.map(rs => rs.inKindContribution).reduce(reducer)
+		this.totalInKind = this.revenueSources.map(rs => rs.inKindContribution).reduce(reducer) || 0;
+		this.totalGrand = this.totalCash + this.totalGrand;
 	}
 }
