@@ -15,8 +15,7 @@ export class RevenueSourceTableComponent implements OnInit {
 	totalInKind: number = 0;
 	totalGrand: number = 0;
 
-	constructor(
-	) { }
+	constructor() { }
 	ngOnInit() {
 		this.revenueSources.forEach(r => {
 			this.revenueSourcesForm.push(new RevenueSource(r));

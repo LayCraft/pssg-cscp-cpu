@@ -19,6 +19,8 @@ export class ProgramBudgetComponent implements OnInit {
 		this.tabs = ['Program Revenue Information', 'Program Expense'];
 		this.currentTab = this.tabs[0];
 	}
-	ngOnInit() { }
+	ngOnInit() {
+		this.revenueSources.push(new RevenueSource());
+	}
 
 }
