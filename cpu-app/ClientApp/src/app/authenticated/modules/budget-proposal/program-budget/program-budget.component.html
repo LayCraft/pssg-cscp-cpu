@@ -27,11 +27,11 @@
 	</ol>
 	<h2 class="blue-header">Program Revenue Sources</h2>
 	<app-revenue-source-table [(revenueSources)]="revenueSources"></app-revenue-source-table>
-	<!-- <pre>RevenueSources{{revenueSources|json}}</pre> -->
+	<pre>RevenueSources{{revenueSources|json}}</pre>
 </div>
 <div *ngIf="currentTab===tabs[1]">
 	<!-- Program Expense -->
 	<h2 class="blue-header">Program Revenue Sources</h2>
-	<app-expense-table></app-expense-table>
+	<app-expense-table [(defaultExpenseItems)]="defaultExpenseItems" [(expenseItems)]="expenseItems"></app-expense-table>
 </div>
 <!-- <pre>StepperJson{{stepperElement|json}}</pre> -->
