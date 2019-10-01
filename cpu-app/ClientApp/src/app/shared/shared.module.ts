@@ -8,6 +8,7 @@ import { MatStepperModule, MatCheckboxModule, MatSlideToggleModule, MatIconModul
 import { FormsModule } from '@angular/forms';
 import { IconStepperComponent } from './components/icon-stepper/icon-stepper.component';
 import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
+import { RevenueSourceTableComponent } from './components/revenue-source-table/revenue-source-table.component';
 
 @NgModule({
 	declarations: [
@@ -17,6 +18,7 @@ import { ContractTombstoneComponent } from './components/contract-tombstone/cont
 		NotificationBannerComponent,
 		IconStepperComponent,
 		ContractTombstoneComponent,
+		RevenueSourceTableComponent,
 	],
 	imports: [
 		CommonModule,
@@ -33,6 +35,7 @@ import { ContractTombstoneComponent } from './components/contract-tombstone/cont
 		NotificationBannerComponent,
 		IconStepperComponent,
 		ContractTombstoneComponent,
+		RevenueSourceTableComponent,
 
 		// Material exports
 		MatStepperModule,
