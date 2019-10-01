@@ -26,6 +26,7 @@ export class ProgramBudgetComponent implements OnInit {
 		{ itemName: 'Volunteer appreciation / honorariums' } as iExpenseItem,
 		{ itemName: 'Property maintenance' } as iExpenseItem,
 	];
+	employees: iExpenseItem[] = [];
 
 	adminExpenseItems: iExpenseItem[] = [];
 	defaultAdminExpenseItems: iExpenseItem[] = [
@@ -41,12 +42,13 @@ export class ProgramBudgetComponent implements OnInit {
 		this.tabs = ['Program Revenue Information', 'Program Expense'];
 		this.currentTab = this.tabs[0];
 	}
+
 	ngOnInit() {
 		this.revenueSources.push(new RevenueSource());
 		this.expenseItems.push(new ExpenseItem());
 		this.adminExpenseItems.push(new ExpenseItem());
+		this.employees.push(new ExpenseItem());
 	}
-
 }
 
 
