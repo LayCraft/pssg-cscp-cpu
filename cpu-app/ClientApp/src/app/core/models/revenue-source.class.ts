@@ -13,9 +13,9 @@ export class RevenueSource implements iRevenueSource {
 	constructor(rs?: iRevenueSource) {
 		if (rs) {
 			this.revenueSourceName = rs.revenueSourceName || null;
-			this.cash = rs.cash || 0;
-			this.inKindContribution = rs.inKindContribution || 0;
-			this.other = rs.other || '';
+			this.cash = rs.cash || null;
+			this.inKindContribution = rs.inKindContribution || null;
+			this.other = rs.other || null;
 		}
 	}
 }
