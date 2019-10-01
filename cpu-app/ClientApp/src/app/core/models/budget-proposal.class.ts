@@ -22,9 +22,23 @@ export interface iProgramBudget {
 	administrationOtherExpenses: iExpenseItem[];
 }
 
-interface iExpenseItem {
+export interface iExpenseItem {
 	itemName: string;
 	tooltip?: string;
 	totalCost: number;
 	fundedFromVCSP: number;
+}
+export class ExpenseItem {
+	itemName: string;
+	tooltip: string;
+	totalCost: number;
+	fundedFromVCSP: number;
+	constructor(xi?: iExpenseItem) {
+		if (xi) {
+			this.itemName = xi.itemName || null;
+			this.tooltip = xi.tooltip || null;
+			this.totalCost = xi.totalCost || null;
+			this.fundedFromVCSP = xi.fundedFromVCSP || null;
+		}
+	}
 }

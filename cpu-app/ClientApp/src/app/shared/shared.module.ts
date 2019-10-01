@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { IconStepperComponent } from './components/icon-stepper/icon-stepper.component';
 import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
 import { RevenueSourceTableComponent } from './components/revenue-source-table/revenue-source-table.component';
+import { ExpenseTableComponent } from './components/expense-table/expense-table.component';
 
 @NgModule({
 	declarations: [
@@ -19,6 +20,7 @@ import { RevenueSourceTableComponent } from './components/revenue-source-table/r
 		IconStepperComponent,
 		ContractTombstoneComponent,
 		RevenueSourceTableComponent,
+		ExpenseTableComponent,
 	],
 	imports: [
 		CommonModule,
@@ -36,6 +38,7 @@ import { RevenueSourceTableComponent } from './components/revenue-source-table/r
 		IconStepperComponent,
 		ContractTombstoneComponent,
 		RevenueSourceTableComponent,
+		ExpenseTableComponent,
 
 		// Material exports
 		MatStepperModule,
