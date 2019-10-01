@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iExpenseItem, ExpenseItem } from 'src/app/core/models/budget-proposal.class';
 
 @Component({
@@ -7,6 +7,10 @@ import { iExpenseItem, ExpenseItem } from 'src/app/core/models/budget-proposal.c
 	styleUrls: ['./expense-table.component.scss']
 })
 export class ExpenseTableComponent implements OnInit {
+	@Input() defaultExpenseItems: iExpenseItem[] = [];
+	@Output() defaultExpenseItemsChange = new EventEmitter<iExpenseItem[]>();
+	@Input() expenseItems: iExpenseItem[] = [];
+	@Output() expenseItemsChange = new EventEmitter<iExpenseItem[]>();
 
 	defaultExpenseItemsForm: iExpenseItem[] = [];
 	expenseItemsForm: iExpenseItem[] = [];
@@ -18,22 +22,13 @@ export class ExpenseTableComponent implements OnInit {
 	constructor() { }
 
 	ngOnInit() {
+		this.defaultExpenseItems.forEach(e => {
+			this.defaultExpenseItemsForm.push(e);
+		});
+		this.expenseItems.forEach(e => {
+			this.expenseItemsForm.push(e);
+		});
 	}
-	// addRevenueSource() {
-	// 	this.revenueSourcesForm.push(new RevenueSource());
-	// 	this.calculateTotals();
-	// }
-	// removeRevenueSource(index: number): void {
-	// 	// splice is acting unpredictably so I'm doing it with a for loop
-	// 	const newArray = [];
-	// 	for (let i = 0; i < this.revenueSourcesForm.length; i++) {
-	// 		if (i !== index) {
-	// 			newArray.push(this.revenueSourcesForm[i]);
-	// 		}
-	// 	}
-	// 	this.revenueSourcesForm = newArray;
-	// 	this.calculateTotals();
-	// }
 
 	addExpenseItem(): void {
 		this.expenseItemsForm.push(new ExpenseItem());
@@ -59,7 +54,6 @@ export class ExpenseTableComponent implements OnInit {
 				return prev;
 			}
 		}
-
 		// total of totalCost
 		let totalCostDefaults = 0;
 		let totalCostCustom = 0;
@@ -83,6 +77,7 @@ export class ExpenseTableComponent implements OnInit {
 		this.totalVscp = totalVscpDefaults + totalVscpCustom;
 
 		// after every calculate, output the json to the parent.
-		// this.revenueSourcesChange.emit(this.revenueSourcesForm);
+		this.defaultExpenseItemsChange.emit(this.defaultExpenseItemsForm);
+		this.expenseItemsChange.emit(this.expenseItemsForm);
 	}
 }
