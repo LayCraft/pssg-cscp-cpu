@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { iStepperElement } from 'src/app/core/models/stepper-element';
 import { RevenueSource, iRevenueSource } from 'src/app/core/models/revenue-source.class';
-import { iExpenseItem } from 'src/app/core/models/budget-proposal.class';
+import { iExpenseItem, ExpenseItem } from 'src/app/core/models/budget-proposal.class';
 
 @Component({
 	selector: 'app-program-budget',
@@ -27,6 +27,15 @@ export class ProgramBudgetComponent implements OnInit {
 		{ itemName: 'Property maintenance' } as iExpenseItem,
 	];
 
+	adminExpenseItems: iExpenseItem[] = [];
+	defaultAdminExpenseItems: iExpenseItem[] = [
+		{ itemName: 'Management salary/benefits' } as iExpenseItem,
+		{ itemName: 'Administrative support wages/benefits' } as iExpenseItem,
+		{ itemName: 'Administration-related' } as iExpenseItem,
+		{ itemName: 'Administrative-related utilities' } as iExpenseItem,
+		{ itemName: 'Bookeeping/bank fees' } as iExpenseItem,
+	];
+
 	constructor(
 	) {
 		this.tabs = ['Program Revenue Information', 'Program Expense'];
@@ -34,6 +43,8 @@ export class ProgramBudgetComponent implements OnInit {
 	}
 	ngOnInit() {
 		this.revenueSources.push(new RevenueSource());
+		this.expenseItems.push(new ExpenseItem());
+		this.adminExpenseItems.push(new ExpenseItem());
 	}
 
 }

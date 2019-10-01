@@ -11,6 +11,7 @@ export class ExpenseTableComponent implements OnInit {
 	@Output() defaultExpenseItemsChange = new EventEmitter<iExpenseItem[]>();
 	@Input() expenseItems: iExpenseItem[] = [];
 	@Output() expenseItemsChange = new EventEmitter<iExpenseItem[]>();
+	@Input() otherDescription: string;
 
 	defaultExpenseItemsForm: iExpenseItem[] = [];
 	expenseItemsForm: iExpenseItem[] = [];

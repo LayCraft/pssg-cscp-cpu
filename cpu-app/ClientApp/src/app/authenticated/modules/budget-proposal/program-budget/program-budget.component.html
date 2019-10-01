@@ -32,6 +32,11 @@
 <div *ngIf="currentTab===tabs[1]">
 	<!-- Program Expense -->
 	<h2 class="blue-header">Program Revenue Sources</h2>
-	<app-expense-table [(defaultExpenseItems)]="defaultExpenseItems" [(expenseItems)]="expenseItems"></app-expense-table>
+	<app-expense-table [(defaultExpenseItems)]="defaultExpenseItems" [(expenseItems)]="expenseItems" [otherDescription]="'Other program-related expenses. Please include memberships one per line.'"></app-expense-table>
+	<h2 class="blue-header">Administration Cost</h2>
+	<app-expense-table [(defaultExpenseItems)]="defaultAdminExpenseItems" [(expenseItems)]="adminExpenseItems" [otherDescription]="'Other administration expenses.'"></app-expense-table>
+	<h2 class="blue-header">Total Program Expenditures</h2>
+	<!-- <pre>{{defaultExpenseItems|json}}</pre>
+	<pre>{{expenseItems|json}}</pre> -->
 </div>
 <!-- <pre>StepperJson{{stepperElement|json}}</pre> -->

@@ -9,9 +9,9 @@
 	</thead>
 	<tbody>
 		<tr *ngFor="let line of defaultExpenseItemsForm; let i=index">
-			<th scope="col">
+			<td>
 				{{line.itemName}}
-			</th>
+			</td>
 			<td>
 				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.totalCost" min="0" id="total_cost_{{i}}">
 			</td>
@@ -22,10 +22,15 @@
 				<!-- For spacing only -->
 			</td>
 		</tr>
-		<tr *ngFor="let line of expenseItemsForm; let i=index">
-			<th scope="col">
-				<input class="form-control" type="text" [(ngModel)]="line.itemName" min="0" id="expense_name_{{i}}">
+		<tr *ngIf="otherDescription">
+			<th scope="col" colspan="4">
+				{{this.otherDescription}}
 			</th>
+		</tr>
+		<tr *ngFor="let line of expenseItemsForm; let i=index">
+			<td>
+				<input class="form-control" type="text" [(ngModel)]="line.itemName" min="0" id="expense_name_{{i}}">
+			</td>
 			<td>
 				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.totalCost" min="0" id="total_cost_{{i}}">
 			</td>
