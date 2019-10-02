@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { iStepperElement } from 'src/app/core/models/stepper-element';
 import { RevenueSource, iRevenueSource } from 'src/app/core/models/revenue-source.class';
 import { iExpenseItem, ExpenseItem } from 'src/app/core/models/budget-proposal.class';
+import { iExpenseTableMeta } from 'src/app/shared/components/expense-table/expense-table.component';
 
 @Component({
 	selector: 'app-program-budget',
@@ -12,6 +13,7 @@ export class ProgramBudgetComponent implements OnInit {
 	@Input() stepperElement: iStepperElement;
 	currentTab: string;
 	tabs: string[];
+	meta = {};
 
 	revenueSources: iRevenueSource[] = [];
 	expenseItems: iExpenseItem[] = [];
@@ -37,6 +39,12 @@ export class ProgramBudgetComponent implements OnInit {
 		{ itemName: 'Bookeeping/bank fees' } as iExpenseItem,
 	];
 
+	// these are programatically referenced so it is nice to have the constants
+	sections: string[] = [
+		'Salaries and Benefits',
+		'Program Delivery Costs',
+		'Administration Costs'
+	];
 	constructor(
 	) {
 		this.tabs = ['Program Revenue Information', 'Program Expense'];
@@ -48,6 +56,15 @@ export class ProgramBudgetComponent implements OnInit {
 		this.expenseItems.push(new ExpenseItem());
 		this.adminExpenseItems.push(new ExpenseItem());
 		this.employees.push(new ExpenseItem());
+	}
+	collectMeta(event: iExpenseTableMeta, name: string) {
+		function percentify(event: iExpenseTableMeta): number {
+			return Math.round((event.totalVscp / event.totalCost) * 100);
+		}
+		// save the event for display.
+		this.meta[name] = {
+			name, totalPercentFundedByVscp: percentify(event), ...event
+		};
 	}
 }
 

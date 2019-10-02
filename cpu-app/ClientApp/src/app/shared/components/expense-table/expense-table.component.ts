@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iExpenseItem, ExpenseItem } from 'src/app/core/models/budget-proposal.class';
-
+export interface iExpenseTableMeta {
+	totalCost: number;
+	totalVscp: number;
+}
 @Component({
 	selector: 'app-expense-table',
 	templateUrl: './expense-table.component.html',
@@ -12,6 +15,7 @@ export class ExpenseTableComponent implements OnInit {
 	@Input() expenseItems: iExpenseItem[] = [];
 	@Output() expenseItemsChange = new EventEmitter<iExpenseItem[]>();
 	@Input() otherDescription: string;
+	@Output() meta = new EventEmitter<iExpenseTableMeta>();
 
 	defaultExpenseItemsForm: iExpenseItem[] = [];
 	expenseItemsForm: iExpenseItem[] = [];
@@ -80,5 +84,9 @@ export class ExpenseTableComponent implements OnInit {
 		// after every calculate, output the json to the parent.
 		this.defaultExpenseItemsChange.emit(this.defaultExpenseItemsForm);
 		this.expenseItemsChange.emit(this.expenseItemsForm);
+		this.meta.emit({
+			totalCost: this.totalTotalCost,
+			totalVscp: this.totalVscp,
+		});
 	}
 }

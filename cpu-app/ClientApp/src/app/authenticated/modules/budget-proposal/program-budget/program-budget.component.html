@@ -31,12 +31,12 @@
 </div>
 <div *ngIf="currentTab===tabs[1]">
 	<!-- Program Expense -->
-	<h2 class="blue-header">Program Delivery Costs</h2>
-	<app-expense-table [(expenseItems)]="employees" [otherDescription]="'One employee per line'"></app-expense-table>
-	<h2 class="blue-header">Program Delivery Costs</h2>
-	<app-expense-table [(defaultExpenseItems)]="defaultExpenseItems" [(expenseItems)]="expenseItems" [otherDescription]="'Other program-related expenses. Please include memberships one per line.'"></app-expense-table>
-	<h2 class="blue-header">Administration Cost</h2>
-	<app-expense-table [(defaultExpenseItems)]="defaultAdminExpenseItems" [(expenseItems)]="adminExpenseItems" [otherDescription]="'Other administration expenses.'"></app-expense-table>
+	<h2 class="blue-header">{{sections[0]}}</h2>
+	<app-expense-table [(expenseItems)]="employees" [otherDescription]="'One employee per line'" (meta)="collectMeta( $event, sections[0])"></app-expense-table>
+	<h2 class="blue-header">{{sections[1]}}</h2>
+	<app-expense-table [(defaultExpenseItems)]="defaultExpenseItems" [(expenseItems)]="expenseItems" [otherDescription]="'Other program-related expenses. Please include memberships one per line.'" (meta)="collectMeta( $event, sections[1])"></app-expense-table>
+	<h2 class="blue-header">{{sections[2]}}</h2>
+	<app-expense-table [(defaultExpenseItems)]="defaultAdminExpenseItems" [(expenseItems)]="adminExpenseItems" [otherDescription]="'Other administration expenses.'" (meta)="collectMeta( $event, sections[2])"></app-expense-table>
 	<h2 class="blue-header">Total Program Expenditures</h2>
 	<table class="table table-striped">
 		<thead>
@@ -48,30 +48,30 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>Salaries and Benefits</td>
-				<td>${{1}}</td>
-				<td>${{1}}</td>
-				<td>{{1}}%</td>
+			<tr *ngIf="meta[sections[0]]">
+				<td>{{sections[0]}}</td>
+				<td>${{meta[sections[0]].totalCost}}</td>
+				<td>${{meta[sections[0]].totalVscp}}</td>
+				<td>{{meta[sections[0]].totalPercentFundedByVscp}}%</td>
 			</tr>
-			<tr>
-				<td>Program Delivery Costs</td>
-				<td>${{1}}</td>
-				<td>${{1}}</td>
-				<td>{{1}}%</td>
+			<tr *ngIf="meta[sections[1]]">
+				<td>{{sections[1]}}</td>
+				<td>${{meta[sections[1]].totalCost}}</td>
+				<td>${{meta[sections[1]].totalVscp}}</td>
+				<td>{{meta[sections[1]].totalPercentFundedByVscp}}%</td>
 			</tr>
-			<tr>
-				<td>Administration Costs</td>
-				<td>${{1}}</td>
-				<td>${{1}}</td>
-				<td>{{1}}%</td>
+			<tr *ngIf="meta[sections[2]]">
+				<td>{{sections[2]}}</td>
+				<td>${{meta[sections[2]].totalCost}}</td>
+				<td>${{meta[sections[2]].totalVscp}}</td>
+				<td>{{meta[sections[2]].totalPercentFundedByVscp}}%</td>
 			</tr>
-			<tr>
+			<!-- <tr *ngIf="meta[sections[0]]">
 				<td>Total Program Expenditures</td>
-				<td>${{1}}</td>
+				<td>${{meta[sections[0]].totalCost}}</td>
 				<td>${{1}}</td>
 				<td>{{1}}%</td>
-			</tr>
+			</tr> -->
 		</tbody>
 	</table>
 	<!-- <pre>{{defaultExpenseItems|json}}</pre>
