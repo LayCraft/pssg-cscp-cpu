@@ -11,21 +11,22 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TestComponent } from './test/test.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LandingPageComponent,
-    TestComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    SharedModule,
-    FormsModule
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
-  ],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		LandingPageComponent,
+		TestComponent,
+	],
+	imports: [
+		BrowserModule,
+		BrowserAnimationsModule,
+		AppRoutingModule,
+		SharedModule,
+
+		FormsModule
+	],
+	providers: [
+		{ provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
+	],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -12,7 +12,7 @@ import { ProgramApplicationComponent } from './program-application.component';
 	],
 	imports: [
 		CommonModule,
-		SharedModule, // For stepper
+		SharedModule,
 		FormsModule,
 		ReactiveFormsModule,
 	],
