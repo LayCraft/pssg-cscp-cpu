@@ -6,7 +6,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../shared/shared.module';
 import { AuthenticatedRoutingModule } from './authenticated-routing.module';
 import { ProgramApplicationModule } from '../modules/program-application/program-application.module';
-import { StatusReportModule } from './modules/status-report/status-report.module';
 import { PersonnelModule } from './modules/personnel/personnel.module';
 import { BudgetProposalModule } from '../modules/budget-proposal/budget-proposal.module';
 import { ExpenseReportModule } from '../modules/expense-report/expense-report.module';
@@ -23,8 +22,8 @@ import { ProgramPlannerComponent } from './components/program-planner/program-pl
 import { OrganizationProfilePageComponent } from './modules/organization-profile-page/organization-profile-page.component';
 import { PersonnelPageComponent } from './modules/personnel-page-DELETEME/personnel-page.component';
 import { ProgramPageComponent } from './modules/program-page-DELETEME/program-page.component';
-import { StatusReportComponent } from './modules/status-report/status-report.component';
 import { PersonnelComponent } from './modules/personnel/personnel.component';
+import { StatusReportModule } from '../modules/status-report/status-report.module';
 
 
 @NgModule({
@@ -58,7 +57,6 @@ import { PersonnelComponent } from './modules/personnel/personnel.component';
 		OrganizationProfilePageComponent,
 		PersonnelPageComponent,
 		ProgramPageComponent,
-		StatusReportComponent,
 		PersonnelComponent,
 		OrganizationProfilePageComponent,
 	]

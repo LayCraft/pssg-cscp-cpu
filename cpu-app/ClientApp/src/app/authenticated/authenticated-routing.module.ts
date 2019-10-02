@@ -5,10 +5,10 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { OrganizationProfilePageComponent } from './modules/organization-profile-page/organization-profile-page.component';
 import { PersonnelPageComponent } from './modules/personnel-page-DELETEME/personnel-page.component';
 import { ProgramPageComponent } from './modules/program-page-DELETEME/program-page.component';
-import { StatusReportComponent } from './modules/status-report/status-report.component';
 import { BudgetProposalComponent } from '../modules/budget-proposal/budget-proposal.component';
 import { ProgramApplicationComponent } from '../modules/program-application/program-application.component';
 import { ExpenseReportComponent } from '../modules/expense-report/expense-report.component';
+import { StatusReportComponent } from '../modules/status-report/status-report.component';
 
 
 const routes: Routes = [
