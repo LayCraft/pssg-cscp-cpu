@@ -28,7 +28,7 @@
 						<app-administrative-information [(administrativeInformation)]="administrativeInformationForm" (valid)="administrativeInformationIsValid($event)"></app-administrative-information>
 					</span>
 					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[2].itemName">
-						Commercial insurance things
+						<app-cg-liability [(cgLiability)]="cgLiability"></app-cg-liability>
 					</span>
 				</div>
 			</div>

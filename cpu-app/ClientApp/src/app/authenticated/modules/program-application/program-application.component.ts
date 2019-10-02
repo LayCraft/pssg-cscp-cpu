@@ -36,6 +36,10 @@ export class ProgramApplicationComponent implements OnInit {
 		this.administrativeInformationValid = valid;
 	}
 
+
+	// cg liability toggle
+	cgLiability: boolean = false;
+
 	constructor(
 		private route: ActivatedRoute,
 		private budgetProposalService: BudgetProposalService,
