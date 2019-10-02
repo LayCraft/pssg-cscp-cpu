@@ -11,7 +11,6 @@ import { ProgramApplicationModule } from '../modules/program-application/program
 import { SharedModule } from '../shared/shared.module';
 
 import { AuthenticatedComponent } from '../authenticated/authenticated.component';
-import { CgLiabilityComponent } from './components/cg-liability/cg-liability.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { HoursComponent } from './components/hours/hours.component';
 import { MinistryContactBoxComponent } from './components/ministry-contact-box/ministry-contact-box.component';
@@ -44,7 +43,6 @@ import { StatusReportModule } from '../modules/status-report/status-report.modul
 	],
 	declarations: [
 		AuthenticatedComponent,
-		CgLiabilityComponent,
 		DashboardComponent,
 		HoursComponent,
 		MinistryContactBoxComponent,
