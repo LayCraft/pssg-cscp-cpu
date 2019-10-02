@@ -20,7 +20,6 @@ import { StatusReportComponent } from './modules/status-report/status-report.com
 import { SharedModule } from '../shared/shared.module';
 import { ProgramApplicationComponent } from './modules/program-application/program-application.component';
 import { ExpenseReportComponent } from './modules/expense-report/expense-report.component';
-import { BudgetProposalModule } from './modules/budget-proposal/budget-proposal.module';
 import { ExpenseReportModule } from './modules/expense-report/expense-report.module';
 import { ProgramApplicationModule } from './modules/program-application/program-application.module';
 import { StatusReportModule } from './modules/status-report/status-report.module';
@@ -29,6 +28,7 @@ import { PersonnelComponent } from './modules/personnel/personnel.component';
 import { PersonnelModule } from './modules/personnel/personnel.module';
 import { ContactInformationComponent } from './components/contact-information/contact-information.component';
 import { AddressComponent } from './components/address/address.component';
+import { BudgetProposalModule } from '../modules/budget-proposal/budget-proposal.module';
 
 
 @NgModule({

@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 		FormsModule,
 		SharedModule, // For material components
 		ReactiveFormsModule,
-	]
+	],
+	exports: [BudgetProposalComponent]
 })
 export class BudgetProposalModule { }

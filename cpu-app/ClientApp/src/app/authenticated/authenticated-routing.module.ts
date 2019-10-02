@@ -7,8 +7,8 @@ import { PersonnelPageComponent } from './modules/personnel-page-DELETEME/person
 import { ProgramPageComponent } from './modules/program-page-DELETEME/program-page.component';
 import { StatusReportComponent } from './modules/status-report/status-report.component';
 import { ProgramApplicationComponent } from './modules/program-application/program-application.component';
-import { BudgetProposalComponent } from './modules/budget-proposal/budget-proposal.component';
 import { ExpenseReportComponent } from './modules/expense-report/expense-report.component';
+import { BudgetProposalComponent } from '../modules/budget-proposal/budget-proposal.component';
 
 
 const routes: Routes = [
