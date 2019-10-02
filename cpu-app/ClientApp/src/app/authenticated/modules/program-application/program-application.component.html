@@ -19,10 +19,13 @@
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
 					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[0].itemName">
-						Contact information here
+						<!-- Contact information here -->
+						<div class="col" [formGroup]="contactInformationForm">
+							<app-contact-information formControlName="contactInformation" [required]="true"></app-contact-information>
+						</div>
 					</span>
 					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[1].itemName">
-						Administrative information goes here
+						<app-administrative-information [(administrativeInformation)]="administrativeInformationForm" (valid)="administrativeInformationIsValid($event)"></app-administrative-information>
 					</span>
 					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[2].itemName">
 						Commercial insurance things

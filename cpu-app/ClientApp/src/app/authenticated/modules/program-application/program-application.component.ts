@@ -3,6 +3,9 @@ import { iStepperElement } from 'src/app/core/models/stepper-element';
 import { ActivatedRoute } from '@angular/router';
 import { BudgetProposalService } from 'src/app/core/services/budget-proposal.service';
 import { iBudgetProposal, iProgramBudget } from 'src/app/core/models/budget-proposal.class';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
+import { iAdministrativeInformation, AdministrativeInformation } from 'src/app/core/models/administrative-information.class';
 
 @Component({
 	selector: 'app-program-application',
@@ -22,9 +25,21 @@ export class ProgramApplicationComponent implements OnInit {
 	stepperElementsCombined: iStepperElement[];
 	currentStepperElement: iStepperElement;
 
+	// collection form for the contact information
+	contactInformationForm: FormGroup;
+
+	// collection and validiy for administrative information form
+	administrativeInformationForm: iAdministrativeInformation;
+	administrativeInformationValid: boolean;
+	administrativeInformationIsValid(valid: boolean) {
+		// track the state of validity
+		this.administrativeInformationValid = valid;
+	}
+
 	constructor(
 		private route: ActivatedRoute,
 		private budgetProposalService: BudgetProposalService,
+		private boilerplateService: BoilerplateService,
 	) { }
 
 	ngOnInit() {
@@ -57,6 +72,18 @@ export class ProgramApplicationComponent implements OnInit {
 				// set the first page to be the program overview so it isn't blank when they see the page the first time
 				this.currentStepperElement = this.stepperElementsCombined[0];
 			});
+
+		// collect information about the default contact information and prefill the form with it
+		// THE FORM FOR THE APPLICANT CONTACT INFORMATION
+		this.boilerplateService.getOrganizationBoilerplate(this.organizationId).subscribe(ci => {
+			this.contactInformationForm = new FormGroup({
+				'contactInformation': new FormControl('', Validators.required)
+			});
+			this.contactInformationForm.controls['contactInformation'].setValue(ci);
+		});
+
+		// THE FORM FOR THE ADMINISTRATIVE INFORMATION
+		this.administrativeInformationForm = new AdministrativeInformation();
 	}
 
 	programBudgetUpdated(programBudget: iProgramBudget): void {
