@@ -28,7 +28,7 @@
 						<app-administrative-information [(administrativeInformation)]="administrativeInformationForm" (valid)="administrativeInformationIsValid($event)"></app-administrative-information>
 					</span>
 					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[2].itemName">
-						<app-cg-liability [(cgLiability)]="cgLiability"></app-cg-liability>
+						<!-- <app-cg-liability></app-cg-liability> -->
 					</span>
 				</div>
 			</div>
@@ -37,7 +37,7 @@
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
 					Program stuff here
-					<app-program-planner [programMeta]="item"></app-program-planner>
+					<!-- <app-program-planner [programMeta]="item"></app-program-planner> -->
 					<!-- <app-program-budget [stepperElement]="item"></app-program-budget> -->
 				</div>
 			</div>

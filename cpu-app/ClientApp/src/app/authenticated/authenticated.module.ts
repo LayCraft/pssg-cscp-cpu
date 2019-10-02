@@ -6,7 +6,6 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { AdministrativeInformationComponent } from './components/administrative-information/administrative-information.component';
 import { CgLiabilityComponent } from './components/cg-liability/cg-liability.component';
 import { HoursComponent } from './components/hours/hours.component';
 import { MinistryContactBoxComponent } from './components/ministry-contact-box/ministry-contact-box.component';
@@ -18,16 +17,12 @@ import { PersonnelPageComponent } from './modules/personnel-page-DELETEME/person
 import { ProgramPageComponent } from './modules/program-page-DELETEME/program-page.component';
 import { StatusReportComponent } from './modules/status-report/status-report.component';
 import { SharedModule } from '../shared/shared.module';
-import { ProgramApplicationComponent } from './modules/program-application/program-application.component';
 import { ExpenseReportComponent } from './modules/expense-report/expense-report.component';
 import { ExpenseReportModule } from './modules/expense-report/expense-report.module';
-import { ProgramApplicationModule } from './modules/program-application/program-application.module';
+import { ProgramApplicationModule } from '../modules/program-application/program-application.module';
 import { StatusReportModule } from './modules/status-report/status-report.module';
 import { PersonnelComponent } from './modules/personnel/personnel.component';
-
 import { PersonnelModule } from './modules/personnel/personnel.module';
-import { ContactInformationComponent } from './components/contact-information/contact-information.component';
-import { AddressComponent } from './components/address/address.component';
 import { BudgetProposalModule } from '../modules/budget-proposal/budget-proposal.module';
 
 
@@ -51,9 +46,7 @@ import { BudgetProposalModule } from '../modules/budget-proposal/budget-proposal
 		AuthenticatedComponent,
 		NavigationBarComponent,
 		DashboardComponent,
-		AdministrativeInformationComponent,
 		CgLiabilityComponent,
-		ContactInformationComponent,
 		HoursComponent,
 		MinistryContactBoxComponent,
 		OrganizationProfileBoxComponent,
@@ -66,10 +59,8 @@ import { BudgetProposalModule } from '../modules/budget-proposal/budget-proposal
 		PersonnelPageComponent,
 		ProgramPageComponent,
 		StatusReportComponent,
-		ProgramApplicationComponent,
 		PersonnelComponent,
 		OrganizationProfilePageComponent,
-		AddressComponent,
 	]
 })
 export class AuthenticatedModule { }
