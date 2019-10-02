@@ -12,7 +12,6 @@ import { HoursComponent } from './components/hours/hours.component';
 import { MinistryContactBoxComponent } from './components/ministry-contact-box/ministry-contact-box.component';
 import { OrganizationProfileBoxComponent } from './components/organization-profile-box/organization-profile-box.component';
 import { PersonDetailsComponent } from './components/person-details/person-details.component';
-import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
 import { OrganizationProfilePageComponent } from './modules/organization-profile-page/organization-profile-page.component';
 import { PersonnelPageComponent } from './modules/personnel-page-DELETEME/personnel-page.component';
@@ -59,7 +58,6 @@ import { AddressComponent } from './components/address/address.component';
 		MinistryContactBoxComponent,
 		OrganizationProfileBoxComponent,
 		PersonDetailsComponent,
-		ProgramAuthorizerComponent,
 		ProgramPlannerComponent,
 		////////////////////////
 		DashboardComponent,

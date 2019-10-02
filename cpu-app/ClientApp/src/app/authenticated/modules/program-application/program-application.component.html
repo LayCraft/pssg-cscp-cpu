@@ -37,6 +37,7 @@
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
 					Program stuff here
+					<app-program-planner [programMeta]="item"></app-program-planner>
 					<!-- <app-program-budget [stepperElement]="item"></app-program-budget> -->
 				</div>
 			</div>

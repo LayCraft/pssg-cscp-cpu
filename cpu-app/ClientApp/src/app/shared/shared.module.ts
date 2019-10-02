@@ -10,6 +10,7 @@ import { IconStepperComponent } from './components/icon-stepper/icon-stepper.com
 import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
 import { RevenueSourceTableComponent } from './components/revenue-source-table/revenue-source-table.component';
 import { ExpenseTableComponent } from './components/expense-table/expense-table.component';
+import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
 
 @NgModule({
 	declarations: [
@@ -21,6 +22,7 @@ import { ExpenseTableComponent } from './components/expense-table/expense-table.
 		ContractTombstoneComponent,
 		RevenueSourceTableComponent,
 		ExpenseTableComponent,
+		ProgramAuthorizerComponent,
 	],
 	imports: [
 		CommonModule,
@@ -39,6 +41,7 @@ import { ExpenseTableComponent } from './components/expense-table/expense-table.
 		ContractTombstoneComponent,
 		RevenueSourceTableComponent,
 		ExpenseTableComponent,
+		ProgramAuthorizerComponent,
 
 		// Material exports
 		MatStepperModule,

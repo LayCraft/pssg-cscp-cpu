@@ -36,7 +36,6 @@ export class ProgramApplicationComponent implements OnInit {
 		this.administrativeInformationValid = valid;
 	}
 
-
 	// cg liability toggle
 	cgLiability: boolean = false;
 
