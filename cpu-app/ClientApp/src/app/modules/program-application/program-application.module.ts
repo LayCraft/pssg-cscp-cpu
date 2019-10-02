@@ -12,9 +12,9 @@ import { ProgramApplicationComponent } from './program-application.component';
 	],
 	imports: [
 		CommonModule,
-		SharedModule,
 		FormsModule,
 		ReactiveFormsModule,
+		SharedModule,
 	],
 	exports: [
 		ProgramApplicationComponent

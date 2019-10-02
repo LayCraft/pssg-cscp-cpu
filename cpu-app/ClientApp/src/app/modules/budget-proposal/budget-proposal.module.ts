@@ -12,15 +12,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 	declarations: [
 		BudgetProposalComponent,
 		ProgramBudgetComponent,
-		ProgramOverviewComponent,
 		ProgramBudgetSummaryComponent,
+		ProgramOverviewComponent,
 	],
 	imports: [
 		CommonModule,
-		SharedModule, // For stepper
 		FormsModule,
-		SharedModule, // For material components
 		ReactiveFormsModule,
+		SharedModule, // For material components
+		SharedModule, // For stepper
 	],
 	exports: [BudgetProposalComponent]
 })
