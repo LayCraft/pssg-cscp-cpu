@@ -19,7 +19,23 @@
 				<input formControlName="lastName" type="text" class="form-control" id="lastName">
 			</div>
 		</div>
-		<!-- <div class="col-md">
+	</div>
+	<div class="form-row">
+		<div class="col-md">
+			<div class="form-group">
+				<label [class.required]="required" for="city">Email</label>
+				<input type="text" class="form-control" id="email" name="email" formControlName="email" [required]="formHelper.isDirtyOrTouched(email)">
+				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(email)" style="display: inherit">
+					Ok
+				</div>
+				<div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(email)" style="display: inherit">
+					Try Again
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div class="col-md">
 			<div class="form-group">
 				<label for="middleName">Middle Name</label>
 				<input [(ngModel)]="person.middleName" (input)="onChanges()" type="text" class="form-control" id="middleName">
@@ -53,7 +69,6 @@
 				<input [(ngModel)]="person.fax" (input)="onChanges()" type="text" class="form-control" id="fax" [pattern]="phoneRegex">
 			</div>
 		</div>-->
-	</div>
 	<app-address formControlName="address"></app-address>
 </fieldset>
 
