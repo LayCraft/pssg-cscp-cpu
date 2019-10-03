@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Person } from 'src/app/core/models/person.class';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Person, iPerson } from 'src/app/core/models/person.class';
 import { iStepperElement } from 'src/app/shared/components/icon-stepper/icon-stepper.component';
 import { PersonService } from 'src/app/core/services/person.service';
+import { NotificationQueueService } from 'src/app/core/services/notification-queue.service';
 
 @Component({
 	selector: 'app-personnel',
@@ -19,7 +20,9 @@ export class PersonnelComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+		private router: Router,
 		private personService: PersonService,
+		private notificationQueueService: NotificationQueueService,
 	) { }
 
 	ngOnInit() {
@@ -43,7 +46,7 @@ export class PersonnelComponent implements OnInit {
 		this.personService.getPersons(organizationId).subscribe(persons => {
 			persons.forEach(person => {
 				const stepperElement: iStepperElement = {
-					itemName: `${person.lastName}, ${person.firstName}`,
+					itemName: this.nameAssemble(person.firstName, person.middleName, person.lastName),
 					formState: 'info',
 					organizationId,
 					object: new Person(person),
@@ -64,11 +67,31 @@ export class PersonnelComponent implements OnInit {
 		});
 
 	}
+	nameAssemble(first: string, middle: string, last: string): string {
+		let build = '';
+		if (first) build += first + ' ';
+		if (middle) build += middle[0].toUpperCase() + ' ';
+		if (last) build += last;
+		return build;
+	}
 	updateCurrent() {
-		const firstName = this.currentStepperElement.object['firstName'];
-		const lastName = this.currentStepperElement.object['lastName'];
-		const fullName = `${lastName},  ${firstName}`;
 		// make a current item
-		this.currentStepperElement.itemName = fullName;
+		this.currentStepperElement.itemName = this.nameAssemble(this.currentStepperElement.object['firstName'], this.currentStepperElement.object['middleName'], this.currentStepperElement.object['lastName']);
+	}
+	save(exit?: boolean) {
+		// make a person array to submit
+		const cleanup = this.stepperElements.map(s => s.object as iPerson);
+		this.personService.setPersons(this.organizationId, cleanup).subscribe(
+			() => {
+				// Go get the new people with whatever transformations happened.
+				this.constructDefaultstepperElements(this.organizationId);
+				this.notificationQueueService.addNotification('Personnel Saved', 'success');
+			},
+			err => this.notificationQueueService.addNotification(err, 'danger')
+		);
+		if (exit) {
+			// they chose to exit
+			this.router.navigate(['/authenticated/dashboard']);
+		}
 	}
 }

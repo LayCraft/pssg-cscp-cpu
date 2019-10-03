@@ -12,11 +12,12 @@ export class PersonService {
 		{
 			firstName: 'Blaine',
 			middleName: 'Alan',
-			lastName: 'Milne',
+			lastName: 'Megaman',
 			typeOfEmployee: 'regular',
 			title: 'Photographer',
 			email: 'foobar@baz.qux',
 			personId: 'UNKNOWN',
+			phone: '1(250)891-5376 ext 3',
 			address: {
 				line1: 'foo',
 				city: 'bar',
@@ -53,7 +54,10 @@ export class PersonService {
 		return of(this.fakePeople);
 	}
 	setPersons(organizationId: string, persons: iPerson[]): Observable<iPerson[]> {
-		this.fakePeople = persons;
+		this.fakePeople = [];
+		persons.forEach(p => {
+			this.fakePeople.push({ ...p });
+		});
 		return of(this.fakePeople);
 	}
 

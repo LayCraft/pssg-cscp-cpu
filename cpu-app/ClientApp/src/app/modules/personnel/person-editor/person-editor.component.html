@@ -60,6 +60,7 @@
 			</div>
 		</div>
 	</div>
+	<h2 class="blue-header">Employment Information</h2>
 	<div class="form-row">
 		<div class="col-md">
 			<div class="form-group">
@@ -71,7 +72,7 @@
 	<div class="form-row">
 		<div class="col-md">
 			<div class="form-group">
-				<label for="annualSalary">Annual Salary</label>
+				<label for="annualSalary">Annual Salary ($)</label>
 				<input formControlName="annualSalary" type="number" class="form-control" id="annualSalary">
 			</div>
 		</div>
@@ -82,57 +83,6 @@
 			</div>
 		</div>
 	</div>
-
-
-	<!-- <div class="col-md">
-			<div class="form-group">
-				<label for="middleName">Middle Name</label>
-				<input [(ngModel)]="person.middleName" (input)="onChanges()" type="text" class="form-control" id="middleName">
-			</div>
-		</div>
-		<div class="col-md">
-			<div class="form-group">
-				<label for="lastName" [class.required]="required">Last Name</label>
-				<input [(ngModel)]="person.lastName" (input)="onChanges()" type="text" class="form-control" id="lastName">
-			</div>
-		</div>
-	</div>
-	<div class="form-row">
-		<div class="col-md">
-			<div class="form-group">
-				<label for="beef" [class.required]="required">Email</label>
-				<input [(ngModel)]="person.email" (input)="onChanges()" type="text" class="form-control" id="beef" [pattern]="emailRegex">
-			</div>
-		</div>
-	</div>
-	<div class="form-row">
-		<div class="col-md">
-			<div class="form-group">
-				<label for="phone" [class.required]="required">Phone</label>
-				<input [(ngModel)]="person.phone" (input)="onChanges()" type="text" class="form-control" id="phone" [pattern]="phoneRegex">
-			</div>
-		</div>
-		<div class="col-md">
-			<div class="form-group">
-				<label for="fax">Fax</label>
-				<input [(ngModel)]="person.fax" (input)="onChanges()" type="text" class="form-control" id="fax" [pattern]="phoneRegex">
-			</div>
-		</div>-->
+	<h2 class="blue-header">Mailing Address</h2>
 	<app-address formControlName="address"></app-address>
 </fieldset>
-
-<!-- typeOfEmployee: string;<br>
-firstName: string;<br>
-middleName: string;<br>
-lastName: string;<br>
-title: string;<br>
-email: string;<br>
-phone: string;<br>
-fax: string;<br>
-address: iAddress;<br>
-baseHourlyWage: number;<br>
-hoursWorkedPerWeek: number;<br>
-annualSalary: number;<br>
-benefits: number;<br>
-fundedFromVCSP: number;<br>
-personId: string;<br> -->
