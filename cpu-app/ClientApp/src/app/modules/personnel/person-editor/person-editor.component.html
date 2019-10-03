@@ -23,6 +23,14 @@
 	<div class="form-row">
 		<div class="col-md">
 			<div class="form-group">
+				<label for="title">Title</label>
+				<input formControlName="title" type="text" class="form-control" id="title">
+			</div>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="col-md">
+			<div class="form-group">
 				<label [class.required]="required" for="city">Email</label>
 				<input type="text" class="form-control" id="email" name="email" formControlName="email" [required]="formHelper.isDirtyOrTouched(email)">
 				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(email)" style="display: inherit">
