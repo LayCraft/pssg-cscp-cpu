@@ -25,6 +25,7 @@ export class ContactInformationComponent implements ControlValueAccessor, OnInit
 	private _onTouched = () => { };
 	private onDestroy$: Subject<void> = new Subject();
 
+	private contactInformation: iContactInformation;
 	// main form for collecting
 	public internalFormGroup: FormGroup;
 
@@ -80,8 +81,14 @@ export class ContactInformationComponent implements ControlValueAccessor, OnInit
 				'hasMailingAddress': new FormControl(false), // we don't care about this. It is untracked
 			});
 		}
+		// fill it with whatever we have if we have it
+		if (this.contactInformation) this.setValue();
 	}
 
+	setValue() {
+		// write the value into the form
+		this.internalFormGroup.setValue(this.contactInformation, { emitEvent: false });
+	}
 	// ******************ControlValueAccessor interface stuff below *************************
 	writeValue(contactInformation: iContactInformation): void {
 		// every time this form control is updated from the parent
@@ -94,7 +101,9 @@ export class ContactInformationComponent implements ControlValueAccessor, OnInit
 				mailingAddress: contactInformation.mailingAddress || null,
 				hasMailingAddress: contactInformation.mailingAddress ? true : false,
 			};
-			this.internalFormGroup.setValue(contactInformationCleaned, { emitEvent: false });
+			// save this for later.
+			this.contactInformation = contactInformationCleaned;
+			this.setValue();
 		}
 	}
 

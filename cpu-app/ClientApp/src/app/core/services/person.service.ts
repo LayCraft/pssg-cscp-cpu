@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { iPerson, Person } from '../models/person.class';
+import { iAddress } from '../models/address.class';
 
 @Injectable({
 	providedIn: 'root'
@@ -16,6 +17,13 @@ export class PersonService {
 			title: 'Photographer',
 			email: 'foobar@baz.qux',
 			personId: 'UNKNOWN',
+			address: {
+				line1: 'foo',
+				city: 'bar',
+				country: 'Canada',
+				postalCode: 'V8V 3E9',
+				province: 'Alberta',
+			} as iAddress
 		},
 		{
 			firstName: 'Curtis',

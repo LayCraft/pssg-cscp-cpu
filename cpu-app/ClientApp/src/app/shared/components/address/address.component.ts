@@ -85,7 +85,7 @@ export class AddressComponent implements ControlValueAccessor, OnInit, OnDestroy
 				'line1': new FormControl(''),
 				'line2': new FormControl(''),
 				'city': new FormControl(''),
-				'province': new FormControl(''),
+				'province': new FormControl('British Columbia'),
 				'postalCode': new FormControl('', Validators.pattern(this.postalCodeRegex)),
 			});
 		}

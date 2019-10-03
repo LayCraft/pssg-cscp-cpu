@@ -53,7 +53,7 @@ export class PersonnelComponent implements OnInit {
 			// maybe there is no employees attached to the organization? Make one and add it.
 			if (this.stepperElements.length === 0) {
 				this.stepperElements.push({
-					itemName: ``,
+					itemName: 'New Contact',
 					formState: 'info',
 					organizationId,
 					object: new Person()

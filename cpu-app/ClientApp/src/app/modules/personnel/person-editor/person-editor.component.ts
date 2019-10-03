@@ -18,7 +18,8 @@ export class PersonEditorComponent implements OnInit {
 	public formHelper = new FormHelper();
 	constructor() { }
 	internalFormGroup: FormGroup;
-
+	addressFormGroup: FormGroup;
+	mailingAddressFormGroup: FormGroup;
 	ngOnInit() {
 		this.buildForm();
 	}
@@ -28,21 +29,24 @@ export class PersonEditorComponent implements OnInit {
 	}
 	buildForm() {
 		this.internalFormGroup = new FormGroup({
-			'firstName': new FormControl(),
-			'middleName': new FormControl(),
-			'lastName': new FormControl(),
-			'title': new FormControl(),
-			'email': new FormControl(),
-			'phone': new FormControl(),
-			'fax': new FormControl(),
+			'typeOfEmployee': new FormControl(),
 			'address': new FormControl(),
-			'baseHourlyWage': new FormControl(),
-			'hoursWorkedPerWeek': new FormControl(),
 			'annualSalary': new FormControl(),
+			'baseHourlyWage': new FormControl(),
 			'benefits': new FormControl(),
+			'email': new FormControl(),
+			'fax': new FormControl(),
+			'firstName': new FormControl(),
+			'hoursWorkedPerWeek': new FormControl(),
+			'lastName': new FormControl(),
+			'middleName': new FormControl(),
 			'personId': new FormControl(),
-
+			'phone': new FormControl(),
+			'title': new FormControl(),
+			'fundedFromVCSP': new FormControl(),
 		});
+		// set the values into the form
+		this.internalFormGroup.setValue(this.person, { emitEvent: false });
 	}
 }
 
