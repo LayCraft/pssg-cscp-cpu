@@ -1,1 +1,19 @@
-<pre>PersonForm{{personForm|json}}</pre>
+<input type="text" [(ngModel)]="person.firstName" (input)="onChanges()">
+
+typeOfEmployee: string;<br>
+firstName: string;<br>
+middleName: string;<br>
+lastName: string;<br>
+title: string;<br>
+email: string;<br>
+phone: string;<br>
+fax: string;<br>
+address: iAddress;<br>
+baseHourlyWage: number;<br>
+hoursWorkedPerWeek: number;<br>
+annualSalary: number;<br>
+benefits: number;<br>
+fundedFromVCSP: number;<br>
+personId: string;<br>
+
+<pre>PersonForm{{person|json}}</pre>

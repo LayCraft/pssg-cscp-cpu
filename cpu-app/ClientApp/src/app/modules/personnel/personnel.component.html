@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-4">
-			<app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone>
+			<app-contract-tombstone [organizationId]="organizationId"></app-contract-tombstone>
 
 			<section class="application-nav sticky-top">
 				<app-icon-stepper [stepperElements]="stepperElements" [(stepperElement)]="currentStepperElement"></app-icon-stepper>
@@ -12,20 +12,14 @@
 			<!-- Section is not in programs list -->
 
 			<div class="page-header">
-				<h1>{{currentStepperElement.itemName}}</h1>
+				<h1>{{currentStepperElement.object['firstName']}}</h1>
 			</div>
 			<!-- Loop through items -->
 			<div *ngFor="let item of stepperElements">
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
-					<span *ngIf="currentStepperElement.itemName === stepperElements[0].itemName">
-						Whoa. Hello world.<br>
-						{{item|json}}
-						<app-person-editor></app-person-editor>
-					</span>
-					<span *ngIf="currentStepperElement.itemName === stepperElements[1].itemName">
-						Dude. Hello Universe.
-					</span>
+					{{item|json}}
+					<app-person-editor [(person)]="item.object" (personChange)="updateCurrent()"></app-person-editor>
 				</div>
 			</div>
 		</div>

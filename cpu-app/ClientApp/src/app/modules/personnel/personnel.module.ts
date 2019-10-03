@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PersonnelComponent } from './personnel.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PersonEditorComponent } from './person-editor/person-editor.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -14,6 +15,7 @@ import { PersonEditorComponent } from './person-editor/person-editor.component';
 	imports: [
 		CommonModule,
 		SharedModule,
+		FormsModule,
 	],
 	exports: [
 		PersonnelComponent

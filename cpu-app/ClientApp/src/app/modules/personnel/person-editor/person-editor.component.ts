@@ -10,16 +10,13 @@ export class PersonEditorComponent implements OnInit {
 	@Input() person: iPerson;
 	@Output() personChange = new EventEmitter<iPerson>();
 
-	// main collection
-	personForm: Person;
-
 	constructor() { }
 
 	ngOnInit() {
-		this.personForm = new Person(this.person);
+		this.person = new Person(this.person);
 	}
 	onChanges() {
-		this.personChange.emit(this.personForm);
+		this.personChange.emit(this.person);
 	}
 
 }

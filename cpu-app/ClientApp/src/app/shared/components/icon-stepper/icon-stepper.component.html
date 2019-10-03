@@ -1,18 +1,20 @@
 <ul class="list-group">
-	<li *ngFor="let item of stepperElements" class="list-group-item d-flex justify-content-between align-items-center" [class.active]="item.itemName === stepperElement.itemName" (click)="onClick(item)">
+	<li *ngFor="let item of stepperElements" class="list-group-item d-flex justify-content-between align-items-center" [class.active]="item.uniqueIdentifier === stepperElement.uniqueIdentifier" (click)="onClick(item)">
 		<span>
 			{{item.itemName}}<br>
-			<small *ngIf="item.itemName !== stepperElement.itemName" [class]="levels[item.formState][1]">
+			<small *ngIf="item.uniqueIdentifier !== stepperElement.uniqueIdentifier" [class]="levels[item.formState][1]">
 				{{levels[item.formState][0]}}
 			</small>
-			<small *ngIf="item.itemName === stepperElement.itemName">
+			<small *ngIf="item.uniqueIdentifier === stepperElement.uniqueIdentifier">
 				{{levels[item.formState][0]}}
 			</small>
 		</span>
 
-		<i *ngIf="item.itemName !== stepperElement.itemName " [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
-		<span *ngIf=" item.itemName === stepperElement.itemName" class="badge badge-light">
+		<i *ngIf="item.uniqueIdentifier !== stepperElement.uniqueIdentifier " [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
+
+		<span *ngIf=" item.uniqueIdentifier === stepperElement.uniqueIdentifier" class="badge badge-light">
 			<i [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
 		</span>
 	</li>
 </ul>
+{{stepperElements|json}}

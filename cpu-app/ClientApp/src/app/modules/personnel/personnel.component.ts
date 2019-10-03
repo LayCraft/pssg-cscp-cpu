@@ -29,7 +29,7 @@ export class PersonnelComponent implements OnInit {
 	}
 
 	isCurrentStepperElement(item: iStepperElement): boolean {
-		if (item.itemName === this.currentStepperElement.itemName) {
+		if (item.uniqueIdentifier === this.currentStepperElement.uniqueIdentifier) {
 			// names match? must be the same. Makes the assumption that all names are unique.
 			return true;
 		}
@@ -44,16 +44,25 @@ export class PersonnelComponent implements OnInit {
 				itemName: 'Alan',
 				formState: 'info',
 				organizationId,
+				uniqueIdentifier: '',
 				object: new Person()
 			},
 			{
 				itemName: 'Betty',
 				formState: 'info',
 				organizationId,
+				uniqueIdentifier: '',
 				object: new Person()
 			}
 		];
 		// save the first one
 		this.currentStepperElement = this.stepperElements[0];
+	}
+	updateCurrent() {
+		const firstName = this.currentStepperElement.object['firstName'];
+		const lastName = this.currentStepperElement.object['lastName'];
+		const fullName = (firstName ? firstName : '' + lastName ? lastName : '') || 'New user';
+		// make a current item
+		this.currentStepperElement.itemName = fullName;
 	}
 }

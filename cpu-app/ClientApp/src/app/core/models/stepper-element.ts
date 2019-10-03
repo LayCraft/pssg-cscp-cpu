@@ -5,4 +5,5 @@ export interface iStepperElement {
 	contractId?: string;
 	programId?: string;
 	object?: object; // a generic place to save an object into the stepper
+	uniqueIdentifier: string;
 }

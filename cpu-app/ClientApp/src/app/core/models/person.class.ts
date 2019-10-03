@@ -49,11 +49,9 @@ export class Person implements iPerson {
 			this.annualSalary = person.annualSalary || null;
 			this.benefits = person.benefits || null;
 			this.fundedFromVCSP = person.fundedFromVCSP || null;
-			// todo: this is basically a fake guid for mocking up the front end.
-			this.personId = person.personId || new Date().getMilliseconds().toString();
+			this.personId = person.personId || null;
 		} else {
-
-			this.personId = new Date().getMilliseconds().toString();
+			this.address = new Address();
 		}
 	}
 }
