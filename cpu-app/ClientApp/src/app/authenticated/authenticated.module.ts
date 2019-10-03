@@ -13,7 +13,6 @@ import { StatusReportModule } from '../modules/status-report/status-report.modul
 
 import { AuthenticatedComponent } from '../authenticated/authenticated.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { HoursComponent } from './components/hours/hours.component';
 import { MinistryContactBoxComponent } from './components/ministry-contact-box/ministry-contact-box.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { OrganizationProfileBoxComponent } from './components/organization-profile-box/organization-profile-box.component';
@@ -44,7 +43,6 @@ import { MaterialModule } from '../shared/material.module';
 	declarations: [
 		AuthenticatedComponent,
 		DashboardComponent,
-		HoursComponent,
 		MinistryContactBoxComponent,
 		NavigationBarComponent,
 		OrganizationProfileBoxComponent,
