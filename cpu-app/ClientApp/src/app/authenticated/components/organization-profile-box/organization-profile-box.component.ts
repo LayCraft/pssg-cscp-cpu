@@ -1,6 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { iContactInformation } from 'src/app/core/models/contact-information.class';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { iOrganizationMeta, BoilerplateService } from 'src/app/core/services/boilerplate.service';
 
 @Component({
@@ -10,15 +8,12 @@ import { iOrganizationMeta, BoilerplateService } from 'src/app/core/services/boi
 })
 export class OrganizationProfileBoxComponent implements OnInit {
 	organizationMeta: iOrganizationMeta;
-	organizationId: string;
 	constructor(
 		private boilerplateService: BoilerplateService,
-		private route: ActivatedRoute
 	) { }
 
 	ngOnInit() {
-		this.organizationId = this.route.snapshot.paramMap.get('organizationId');
-		this.boilerplateService.getOrganizationMeta(this.organizationId).subscribe(m => this.organizationMeta = m);
+		this.boilerplateService.getOrganizationMeta('TODO').subscribe(m => this.organizationMeta = m);
 	}
 
 }
