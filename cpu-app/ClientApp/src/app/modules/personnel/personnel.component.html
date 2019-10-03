@@ -1,1 +1,31 @@
-<p>personnel works!</p>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone>
+
+			<section class="application-nav sticky-top">
+				<app-icon-stepper [stepperElements]="stepperElements" [(stepperElement)]="currentStepperElement"></app-icon-stepper>
+			</section>
+		</div>
+
+		<div class="col-md-8">
+			<!-- Section is not in programs list -->
+
+			<div class="page-header">
+				<h1>{{currentStepperElement.itemName}}</h1>
+			</div>
+			<!-- Loop through items -->
+			<div *ngFor="let item of stepperElements">
+				<!-- if the item name matches show this section -->
+				<div *ngIf="isCurrentStepperElement(item)">
+					<span *ngIf="currentStepperElement.itemName === stepperElements[0].itemName">
+						Whoa. Hello world.
+					</span>
+					<span *ngIf="currentStepperElement.itemName === stepperElements[1].itemName">
+						Dude. Hello Universe.
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

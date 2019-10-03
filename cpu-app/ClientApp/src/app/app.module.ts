@@ -19,7 +19,7 @@ import { UnauthorizedInterceptor } from './core/interceptors/unauthorized.interc
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		BrowserModule,
-		SharedModule
+		SharedModule,
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },

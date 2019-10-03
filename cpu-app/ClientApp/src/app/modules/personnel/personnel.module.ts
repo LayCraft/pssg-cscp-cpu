@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PersonnelComponent } from './personnel.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -9,7 +10,8 @@ import { PersonnelComponent } from './personnel.component';
 		PersonnelComponent
 	],
 	imports: [
-		CommonModule
+		CommonModule,
+		SharedModule,
 	],
 	exports: [
 		PersonnelComponent

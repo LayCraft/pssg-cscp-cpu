@@ -9,6 +9,7 @@ import { BudgetProposalComponent } from '../modules/budget-proposal/budget-propo
 import { ProgramApplicationComponent } from '../modules/program-application/program-application.component';
 import { ExpenseReportComponent } from '../modules/expense-report/expense-report.component';
 import { StatusReportComponent } from '../modules/status-report/status-report.component';
+import { PersonnelComponent } from '../modules/personnel/personnel.component';
 
 
 const routes: Routes = [
@@ -32,9 +33,10 @@ const routes: Routes = [
 			},
 			{
 				path: 'personnel/:organizationId',
-				component: PersonnelPageComponent
+				component: PersonnelComponent
 			},
 			{
+				// DEPRECATED FOR LOOKING AT ONLY
 				path: 'program_application',
 				component: ProgramPageComponent
 			},
