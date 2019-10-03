@@ -19,7 +19,9 @@
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
 					<span *ngIf="currentStepperElement.itemName === stepperElements[0].itemName">
-						Whoa. Hello world.
+						Whoa. Hello world.<br>
+						{{item|json}}
+						<app-person-editor></app-person-editor>
 					</span>
 					<span *ngIf="currentStepperElement.itemName === stepperElements[1].itemName">
 						Dude. Hello Universe.

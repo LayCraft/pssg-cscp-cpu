@@ -9,7 +9,7 @@ import { Person } from 'src/app/core/models/person.class';
 	styleUrls: ['./personnel.component.scss']
 })
 export class PersonnelComponent implements OnInit {
-	contractId: string;
+	// this is an organization level component
 	organizationId: string;
 
 	// used for the stepper component
@@ -23,11 +23,9 @@ export class PersonnelComponent implements OnInit {
 	ngOnInit() {
 		// collect the ids for looking up the program from the route.
 		this.organizationId = this.route.snapshot.paramMap.get('organizationId');
-		this.contractId = this.route.snapshot.paramMap.get('contractId');
 
 		// set the default top and bottom list
 		this.constructDefaultstepperElements(this.organizationId);
-
 	}
 
 	isCurrentStepperElement(item: iStepperElement): boolean {
