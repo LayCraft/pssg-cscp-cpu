@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Person } from 'src/app/core/models/person.class';
 import { iStepperElement } from 'src/app/shared/components/icon-stepper/icon-stepper.component';
+import { PersonService } from 'src/app/core/services/person.service';
 
 @Component({
 	selector: 'app-personnel',
@@ -13,11 +14,12 @@ export class PersonnelComponent implements OnInit {
 	organizationId: string;
 
 	// used for the stepper component
-	stepperElements: iStepperElement[];
+	stepperElements: iStepperElement[] = [];
 	currentStepperElement: iStepperElement;
 
 	constructor(
 		private route: ActivatedRoute,
+		private personService: PersonService,
 	) { }
 
 	ngOnInit() {
@@ -38,25 +40,29 @@ export class PersonnelComponent implements OnInit {
 	constructDefaultstepperElements(organizationId: string) {
 		// this is just a constructor
 		// get the personnel list from Dynamics and shove it in here
-
-		this.stepperElements = [
-			{
-				itemName: 'Alan',
-				formState: 'info',
-				organizationId,
-				uniqueIdentifier: '',
-				object: new Person()
-			},
-			{
-				itemName: 'Betty',
-				formState: 'info',
-				organizationId,
-				uniqueIdentifier: '',
-				object: new Person()
+		this.personService.getPersons(organizationId).subscribe(persons => {
+			persons.forEach(person => {
+				const stepperElement: iStepperElement = {
+					itemName: `${person.lastName}, ${person.firstName}`,
+					formState: 'info',
+					organizationId,
+					object: new Person(person),
+				}
+				this.stepperElements.push(stepperElement);
+			})
+			// maybe there is no employees attached to the organization? Make one and add it.
+			if (this.stepperElements.length === 0) {
+				this.stepperElements.push({
+					itemName: ``,
+					formState: 'info',
+					organizationId,
+					object: new Person()
+				});
 			}
-		];
-		// save the first one
-		this.currentStepperElement = this.stepperElements[0];
+			// save the first one as the selected stepper element
+			this.currentStepperElement = this.stepperElements[0];
+		});
+
 	}
 	updateCurrent() {
 		const firstName = this.currentStepperElement.object['firstName'];
