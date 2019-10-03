@@ -18,6 +18,8 @@ export class PersonEditorComponent implements OnInit {
 	internalFormGroup: FormGroup;
 
 	get email() { return this.internalFormGroup.get('email') }
+	get phone() { return this.internalFormGroup.get('phone') }
+	get fax() { return this.internalFormGroup.get('fax') }
 
 	ngOnInit() {
 		this.buildForm();
