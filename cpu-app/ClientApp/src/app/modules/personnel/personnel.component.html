@@ -18,7 +18,6 @@
 			<div *ngFor="let item of stepperElements">
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
-					{{item|json}}
 					<app-person-editor [(person)]="item.object" (personChange)="updateCurrent()"></app-person-editor>
 				</div>
 			</div>

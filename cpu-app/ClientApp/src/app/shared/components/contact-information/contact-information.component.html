@@ -1,10 +1,10 @@
 <div [formGroup]="internalFormGroup">
-	<h2 class="blue-header">Primary Contact Information</h2>
+	<h2 class="blue-header">{{title}}</h2>
 	<!-- Email box -->
 	<div class="form-row">
 		<div class="col-md">
 			<div class="form-group">
-				<label class="required" for="city">Email</label>
+				<label [class.required]="required" for="city">Email</label>
 				<input type="text" class="form-control" id="emailAddress" name="emailAddress" formControlName="emailAddress" [required]="formHelper.isDirtyOrTouched(emailAddress)">
 				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)" style="display: inherit">
 					Ok
@@ -19,7 +19,7 @@
 	<div class="form-row">
 		<div class="col-md">
 			<div class="form-group">
-				<label class="required" for="city">Phone Number</label>
+				<label [class.required]="required" for="city">Phone Number</label>
 				<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" formControlName="phoneNumber" [required]="formHelper.isDirtyOrTouched(phoneNumber)">
 				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber)" style="display: inherit">
 					Ok
@@ -43,7 +43,7 @@
 		</div>
 	</div>
 	<!-- Main address block -->
-	<app-address formControlName='mainAddress' [required]="true"></app-address>
+	<app-address formControlName='mainAddress' [required]="required"></app-address>
 
 	<div class="form-check">
 		<!-- Mailing address checkbox -->

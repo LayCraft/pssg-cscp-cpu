@@ -67,7 +67,7 @@ export class PersonnelComponent implements OnInit {
 	updateCurrent() {
 		const firstName = this.currentStepperElement.object['firstName'];
 		const lastName = this.currentStepperElement.object['lastName'];
-		const fullName = (firstName ? firstName : '' + lastName ? lastName : '') || 'New user';
+		const fullName = `${lastName},  ${firstName}`;
 		// make a current item
 		this.currentStepperElement.itemName = fullName;
 	}

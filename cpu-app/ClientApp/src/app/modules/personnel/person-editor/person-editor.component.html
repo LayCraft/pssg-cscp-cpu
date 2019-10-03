@@ -1,6 +1,63 @@
-<input type="text" [(ngModel)]="person.firstName" (input)="onChanges()">
+<fieldset [formGroup]="internalFormGroup" (input)="onChanges()">
+	<h2 class="blue-header">Personal Information</h2>
+	<div class="form-row">
+		<div class="col-md">
+			<div class="form-group">
+				<label for="firstName" [class.required]="required">First Name</label>
+				<input formControlName="firstName" type="text" class="form-control" id="firstName">
+			</div>
+		</div>
+		<div class="col-md">
+			<div class="form-group">
+				<label for="middleName">Middle Name</label>
+				<input formControlName="middleName" type="text" class="form-control" id="middleName">
+			</div>
+		</div>
+		<div class="col-md">
+			<div class="form-group">
+				<label for="lastName" [class.required]="required">Last Name</label>
+				<input formControlName="lastName" type="text" class="form-control" id="lastName">
+			</div>
+		</div>
+		<!-- <div class="col-md">
+			<div class="form-group">
+				<label for="middleName">Middle Name</label>
+				<input [(ngModel)]="person.middleName" (input)="onChanges()" type="text" class="form-control" id="middleName">
+			</div>
+		</div>
+		<div class="col-md">
+			<div class="form-group">
+				<label for="lastName" [class.required]="required">Last Name</label>
+				<input [(ngModel)]="person.lastName" (input)="onChanges()" type="text" class="form-control" id="lastName">
+			</div>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="col-md">
+			<div class="form-group">
+				<label for="beef" [class.required]="required">Email</label>
+				<input [(ngModel)]="person.email" (input)="onChanges()" type="text" class="form-control" id="beef" [pattern]="emailRegex">
+			</div>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="col-md">
+			<div class="form-group">
+				<label for="phone" [class.required]="required">Phone</label>
+				<input [(ngModel)]="person.phone" (input)="onChanges()" type="text" class="form-control" id="phone" [pattern]="phoneRegex">
+			</div>
+		</div>
+		<div class="col-md">
+			<div class="form-group">
+				<label for="fax">Fax</label>
+				<input [(ngModel)]="person.fax" (input)="onChanges()" type="text" class="form-control" id="fax" [pattern]="phoneRegex">
+			</div>
+		</div>-->
+	</div>
+	<app-contact-information formControlName="address" [required]="false" [title]="'Contact Information'"></app-contact-information>
+</fieldset>
 
-typeOfEmployee: string;<br>
+<!-- typeOfEmployee: string;<br>
 firstName: string;<br>
 middleName: string;<br>
 lastName: string;<br>
@@ -14,6 +71,6 @@ hoursWorkedPerWeek: number;<br>
 annualSalary: number;<br>
 benefits: number;<br>
 fundedFromVCSP: number;<br>
-personId: string;<br>
+personId: string;<br> -->
 
-<pre>PersonForm{{person|json}}</pre>
+<pre>PersonForm{{internalFormGroup.value|json}}</pre>

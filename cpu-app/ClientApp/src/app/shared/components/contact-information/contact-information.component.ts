@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, forwardRef, OnInit, OnDestroy, Input } from '@angular/core';
 import { iContactInformation } from 'src/app/core/models/contact-information.class';
 import { FormControl, FormGroup, Validators, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { PHONE_NUMBER, EMAIL } from 'src/app/core/constants/regex.constants';
@@ -19,6 +19,8 @@ import { tap, takeUntil } from 'rxjs/operators';
 	]
 })
 export class ContactInformationComponent implements ControlValueAccessor, OnInit, OnDestroy {
+	@Input() title: string = 'Primary Contact Information';
+	@Input() required: boolean = false;
 	private _onChange = (_: any) => { };
 	private _onTouched = () => { };
 	private onDestroy$: Subject<void> = new Subject();
@@ -58,15 +60,26 @@ export class ContactInformationComponent implements ControlValueAccessor, OnInit
 
 
 	buildForm() {
-		// build the form
-		this.internalFormGroup = new FormGroup({
-			'emailAddress': new FormControl('', [Validators.required, Validators.pattern(EMAIL)]),
-			'mainAddress': new FormControl('', Validators.required),
-			'mailingAddress': new FormControl(),
-			'phoneNumber': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
-			'faxNumber': new FormControl('', [Validators.pattern(PHONE_NUMBER)]),
-			'hasMailingAddress': new FormControl(false), // we don't care about this. It is untracked
-		});
+		if (this.required) {
+			// build the form
+			this.internalFormGroup = new FormGroup({
+				'emailAddress': new FormControl('', [Validators.required, Validators.pattern(EMAIL)]),
+				'mainAddress': new FormControl('', Validators.required),
+				'mailingAddress': new FormControl(),
+				'phoneNumber': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
+				'faxNumber': new FormControl('', [Validators.pattern(PHONE_NUMBER)]),
+				'hasMailingAddress': new FormControl(false), // we don't care about this. It is untracked
+			});
+		} else {
+			this.internalFormGroup = new FormGroup({
+				'emailAddress': new FormControl('', [Validators.pattern(EMAIL)]),
+				'mainAddress': new FormControl(''),
+				'mailingAddress': new FormControl(),
+				'phoneNumber': new FormControl('', [Validators.pattern(PHONE_NUMBER)]),
+				'faxNumber': new FormControl('', [Validators.pattern(PHONE_NUMBER)]),
+				'hasMailingAddress': new FormControl(false), // we don't care about this. It is untracked
+			});
+		}
 	}
 
 	// ******************ControlValueAccessor interface stuff below *************************
