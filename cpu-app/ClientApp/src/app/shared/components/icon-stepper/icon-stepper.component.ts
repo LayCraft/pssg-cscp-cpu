@@ -1,12 +1,19 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { iStepperElement } from 'src/app/core/models/stepper-element';
-
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
+export interface iStepperElement {
+	itemName: string; // This is the show name
+	formState: string; // untouched incomplete invalid complete
+	organizationId: string;
+	contractId?: string;
+	programId?: string;
+	object?: object; // a generic place to save an object into the stepper
+	uniqueIdentifier?: string;
+}
 @Component({
 	selector: 'app-icon-stepper',
 	templateUrl: './icon-stepper.component.html',
 	styleUrls: ['./icon-stepper.component.scss']
 })
-export class IconStepperComponent implements OnInit {
+export class IconStepperComponent implements OnInit, OnChanges {
 	@Input() stepperElements: iStepperElement[];
 	@Input() stepperElement: iStepperElement;
 	@Output() stepperElementChange = new EventEmitter<iStepperElement>();
@@ -21,27 +28,8 @@ export class IconStepperComponent implements OnInit {
 		'info': ['', 'text-info', 'fas fa-info-circle']
 	}
 
-
-	// THIS IS AN EXAMPLE INPUT
-	// @Input() stepperElements: iStepperElement[] = [
-	// 	{
-	// 		itemName: 'This is the zero form',
-	// 		formState: 'untouched'
-	// 	},
-	// 	{
-	// 		itemName: 'This is the first form',
-	// 		formState: 'incomplete'
-	// 	},
-	// 	{
-	// 		itemName: 'This is the second form',
-	// 		formState: 'invalid'
-	// 	},
-	// 	{
-	// 		itemName: 'This is the third form',
-	// 		formState: 'complete'
-	// 	}
-	// ];
 	uuidv4(): string {
+		// replace x or y with randoms and other unique identifier stuff
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
 			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
 			return v.toString(16);
@@ -50,11 +38,15 @@ export class IconStepperComponent implements OnInit {
 
 	constructor() { }
 
-	ngOnInit() {
+	ngOnInit() { }
 
+	ngOnChanges(changes: SimpleChanges): void {
+		// any time we have a new list of 
 		this.stepperElements = this.stepperElements.map(s => {
-			// assign a unique identifier
-			s.uniqueIdentifier = this.uuidv4();
+			// assign a unique identifier if it is missing.
+			if (!s.uniqueIdentifier) {
+				s.uniqueIdentifier = this.uuidv4();
+			}
 			return s;
 		});
 	}

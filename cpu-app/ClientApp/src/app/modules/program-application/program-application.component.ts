@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { iStepperElement } from 'src/app/core/models/stepper-element';
 import { ActivatedRoute } from '@angular/router';
 import { BudgetProposalService } from 'src/app/core/services/budget-proposal.service';
 import { iBudgetProposal, iProgramBudget } from 'src/app/core/models/budget-proposal.class';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
 import { iAdministrativeInformation, AdministrativeInformation } from 'src/app/core/models/administrative-information.class';
+import { iStepperElement } from 'src/app/shared/components/icon-stepper/icon-stepper.component';
 
 @Component({
 	selector: 'app-program-application',

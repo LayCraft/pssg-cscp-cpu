@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { iStepperElement } from 'src/app/core/models/stepper-element';
 import { ActivatedRoute } from '@angular/router';
 import { Person } from 'src/app/core/models/person.class';
+import { iStepperElement } from 'src/app/shared/components/icon-stepper/icon-stepper.component';
 
 @Component({
 	selector: 'app-personnel',
