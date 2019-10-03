@@ -34,10 +34,6 @@ import { RevenueSourceTableComponent } from './components/revenue-source-table/r
 		ReactiveFormsModule,
 		FormsModule,
 		CommonModule,
-		MatCheckboxModule,
-		MatIconModule,
-		MatSlideToggleModule,
-		MatStepperModule,
 	],
 	exports: [
 		AddressComponent,
@@ -52,12 +48,6 @@ import { RevenueSourceTableComponent } from './components/revenue-source-table/r
 		NotificationBannerComponent,
 		ProgramAuthorizerComponent,
 		RevenueSourceTableComponent,
-
-		// Material exports
-		MatCheckboxModule,
-		MatIconModule,
-		MatSlideToggleModule,
-		MatStepperModule,
 	]
 })
 export class SharedModule { }

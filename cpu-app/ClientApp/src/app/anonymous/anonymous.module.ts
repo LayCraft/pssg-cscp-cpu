@@ -6,15 +6,17 @@ import { AnonymousComponent } from '../anonymous/anonymous.component';
 import { MatDemoComponent } from './mat-demo/mat-demo.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../shared/material.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AnonymousRoutingModule,
-    SharedModule, // need this for the material components
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  declarations: [AnonymousFormComponent, AnonymousComponent, MatDemoComponent]
+	imports: [
+		CommonModule,
+		AnonymousRoutingModule,
+		SharedModule,
+		FormsModule,
+		ReactiveFormsModule,
+		MaterialModule,
+	],
+	declarations: [AnonymousFormComponent, AnonymousComponent, MatDemoComponent]
 })
 export class AnonymousModule { }

@@ -22,7 +22,7 @@ import { PersonDetailsComponent } from './components/person-details/person-detai
 import { PersonnelPageComponent } from './modules/personnel-page-DELETEME/personnel-page.component';
 import { ProgramPageComponent } from './modules/program-page-DELETEME/program-page.component';
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
-
+import { MaterialModule } from '../shared/material.module';
 
 @NgModule({
 	imports: [
@@ -31,7 +31,8 @@ import { ProgramPlannerComponent } from './components/program-planner/program-pl
 		FormsModule,
 		NgbModule,
 		ReactiveFormsModule,
-		SharedModule, // For material components
+		SharedModule,
+		MaterialModule,
 
 		// modules for this application
 		BudgetProposalModule,

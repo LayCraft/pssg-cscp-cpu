@@ -2,7 +2,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { NgModule } from '@angular/core';
@@ -20,7 +19,6 @@ import { UnauthorizedInterceptor } from './core/interceptors/unauthorized.interc
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		BrowserModule,
-		FormsModule,
 		SharedModule
 	],
 	providers: [
