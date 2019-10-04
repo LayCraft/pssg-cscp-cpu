@@ -1,23 +1,15 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
-export interface iStepperElement {
-	itemName: string; // This is the show name
-	formState: string; // untouched incomplete invalid complete
-	organizationId: string;
-	contractId?: string;
-	programId?: string;
-	object?: object; // a generic place to save an object into the stepper
-	uniqueIdentifier?: string;
-}
+import { StepperService, iStepperElement } from 'src/app/core/services/stepper.service';
+
 @Component({
 	selector: 'app-icon-stepper',
 	templateUrl: './icon-stepper.component.html',
 	styleUrls: ['./icon-stepper.component.scss']
 })
-export class IconStepperComponent implements OnInit, OnChanges {
-	@Input() stepperElements: iStepperElement[];
-	@Input() stepperElement: iStepperElement;
-	@Output() stepperElementChange = new EventEmitter<iStepperElement>();
+export class IconStepperComponent implements OnInit {
 
+	// master list
+	stepperElements: iStepperElement[] = [];
 	// this object gives us keys to draw on to get classnames and messages
 	levels: {} = {
 		// message , colour class, icon class
@@ -36,25 +28,16 @@ export class IconStepperComponent implements OnInit, OnChanges {
 		});
 	}
 
-	constructor() { }
+	constructor(
+		private stepperService: StepperService
+	) { }
 
-	ngOnInit() { }
-
-	ngOnChanges(changes: SimpleChanges): void {
-		// any time we have a new list of 
-		this.stepperElements = this.stepperElements.map(s => {
-			// assign a unique identifier if it is missing.
-			if (!s.uniqueIdentifier) {
-				s.uniqueIdentifier = this.uuidv4();
-			}
-			return s;
-		});
+	ngOnInit() {
+		this.stepperService.stepperElements.subscribe(s => this.stepperElements = s);
 	}
 
 	onClick(navigateTo: iStepperElement) {
 		// set the internal state of this component
-		this.stepperElement = navigateTo;
-		// emit the event for navigation
-		this.stepperElementChange.emit(navigateTo);
+		this.stepperService.setCurrentStepperElement(navigateTo.id);
 	}
 }

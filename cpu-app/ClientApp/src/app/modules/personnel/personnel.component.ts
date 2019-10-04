@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person, iPerson } from 'src/app/core/models/person.class';
-import { iStepperElement } from 'src/app/shared/components/icon-stepper/icon-stepper.component';
 import { PersonService } from 'src/app/core/services/person.service';
 import { NotificationQueueService } from 'src/app/core/services/notification-queue.service';
+import { iStepperElement } from 'src/app/core/services/stepper.service';
 
 @Component({
 	selector: 'app-personnel',

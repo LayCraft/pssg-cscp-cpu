@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { RevenueSource, iRevenueSource } from 'src/app/core/models/revenue-source.class';
 import { iExpenseItem, ExpenseItem } from 'src/app/core/models/budget-proposal.class';
 import { iExpenseTableMeta } from 'src/app/shared/components/expense-table/expense-table.component';
-import { iStepperElement } from 'src/app/shared/components/icon-stepper/icon-stepper.component';
+import { iStepperElement } from 'src/app/core/services/stepper.service';
 
 @Component({
 	selector: 'app-program-budget',
