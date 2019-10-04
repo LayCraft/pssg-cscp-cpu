@@ -6,6 +6,7 @@ export interface iStepperElement {
 	formState: string; // untouched incomplete invalid complete
 	id?: string; // optional because it may not be set yet
 	object?: object; // a generic place to save an object into the stepper
+	discriminator?: string; // an optional way to state what kind of object we are supplying
 
 	organizationId?: string;
 	contractId?: string;
@@ -24,12 +25,12 @@ export class StepperService {
 
 	formStates: string[] = ['untouched', 'incomplete', 'invalid', 'complete'];
 
-	addStepperElement(object: object, itemName: string, formState: string = this.formStates[0]): iStepperElement {
+	addStepperElement(object: object, itemName: string, formState: string = this.formStates[0], discriminator?: string): iStepperElement {
 		if (this.logging) { console.log('addStepperElement()') }
 		// collect the current stepper elements
 		const stepperElements: iStepperElement[] = this.stepperElements.getValue();
 		// put the elements into the stepper
-		const stepperElement: iStepperElement = { itemName, formState, object, id: uuidv4() };
+		const stepperElement: iStepperElement = { itemName, formState, object, id: uuidv4(), discriminator };
 		// add the new one into the 
 		stepperElements.push(stepperElement);
 		this.stepperElements.next(stepperElements);

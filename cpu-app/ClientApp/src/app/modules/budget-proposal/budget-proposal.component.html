@@ -10,13 +10,31 @@
 
 		<div class="col-md-8">
 			<!-- Section is not in programs list -->
-
-			<div class="page-header">
-				<h1>{{currentStepperElement.itemName}}</h1>
+			<div *ngIf="stepperElements && currentStepperElement">
+				<div class="page-header">
+					<h1>{{currentStepperElement.itemName}}</h1>
+				</div>
+				<div *ngFor="let item of stepperElements">
+					<div *ngIf="isCurrentStepperElement(item)">
+						<div *ngIf="item.discriminator === 'program_overview'">
+							Program Overview
+						</div>
+						<div *ngIf="item.discriminator === 'program_budget_summary'">
+							Program Buget Summary
+						</div>
+						<div *ngIf="item.discriminator === 'program'">
+							Program Budget
+							<app-program-budget [stepperElement]="item"></app-program-budget>
+						</div>
+						<div *ngIf="item.discriminator === 'authorization'">
+							Authorization
+						</div>
+						<!-- <pre>{{item.object|json}}</pre> -->
+					</div>
+				</div>
+				<!-- <pre>{{currentStepperElement|json}}</pre> -->
 			</div>
-			<!-- Loop through items -->
-			<div *ngFor="let item of stepperElementsTop">
-				<!-- if the item name matches show this section -->
+			<!-- <div *ngFor="let item of stepperElementsTop">
 				<div *ngIf="isCurrentStepperElement(item)">
 					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[0].itemName">
 						<app-program-overview [stepperElement]="stepperElementsTop[0]"></app-program-overview>
@@ -26,22 +44,19 @@
 					</span>
 				</div>
 			</div>
-			<!-- Loop through items -->
 			<div *ngFor="let item of stepperElementsPrograms">
-				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
 					<app-program-budget [stepperElement]="item"></app-program-budget>
 				</div>
 			</div>
-			<!-- Loop through items -->
 			<div *ngFor="let item of stepperElementsBottom">
-				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
 					<span *ngIf="currentStepperElement.itemName === 'Authorization'">
 						<app-program-authorizer></app-program-authorizer>
 					</span>
 				</div>
-			</div>
+			</div> -->
+
 		</div>
 	</div>
 </div>
