@@ -24,7 +24,7 @@ export class StepperService {
 
 	formStates: string[] = ['untouched', 'incomplete', 'invalid', 'complete'];
 
-	addStepperElement(object: object, itemName: string, formState: string = this.formStates[0]): void {
+	addStepperElement(object: object, itemName: string, formState: string = this.formStates[0]): iStepperElement {
 		if (this.logging) { console.log('addStepperElement()') }
 		// collect the current stepper elements
 		const stepperElements: iStepperElement[] = this.stepperElements.getValue();
@@ -33,8 +33,14 @@ export class StepperService {
 		// add the new one into the 
 		stepperElements.push(stepperElement);
 		this.stepperElements.next(stepperElements);
+
+		//set the current stepper element to the new record so the user can start editing it immediately
+		this.currentStepperElement.next(stepperElement);
+
 		// be sure one is selected
 		this.checkForSelected();
+		// return
+		return stepperElement;
 	}
 	removeStepperElement(id: string): void {
 		if (this.logging) { console.log('removeStepperElement()') }
@@ -42,11 +48,14 @@ export class StepperService {
 		// collect the current stepper elements
 		const stepperElements: iStepperElement[] = this.stepperElements.getValue().filter(e => {
 			if (e.id === id) {
-				return true;
-			} else {
+				// do not return the matching item
 				return false;
+			} else {
+				// return all other items
+				return true;
 			}
 		});
+		if (this.currentStepperElement.getValue().id === id) { }
 		// replace the behaviourSubject
 		this.stepperElements.next(stepperElements);
 		this.checkForSelected();
@@ -66,14 +75,13 @@ export class StepperService {
 				return null;
 			}
 		}
-
 	}
-	setStepperElement(id: string, element: iStepperElement): void {
+	setStepperElement(element: iStepperElement): void {
 		if (this.logging) { console.log('setStepperElement()') }
 		// collect the elements
 		const stepperElements: iStepperElement[] = this.stepperElements.getValue().map(s => {
 			// if the id matches
-			if (s.id === id) {
+			if (s.id === element.id) {
 				// replace the element with the one supplied
 				s = element;
 			}
@@ -91,7 +99,7 @@ export class StepperService {
 		// set the property
 		element[property] = value;
 		// set the stepper element to our newly updated value
-		this.setStepperElement(id, element);
+		this.setStepperElement(element);
 	}
 	setFormState(id: string, formState: string) {
 		if (this.logging) { console.log('setFormState()') }
@@ -127,7 +135,10 @@ export class StepperService {
 		this.stepperElements.next(newStepperElements);
 		this.checkForSelected();
 	}
-
+	reset() {
+		this.currentStepperElement.next(null);
+		this.stepperElements.next([]);
+	}
 	private checkForSelected() {
 		if (this.logging) { console.log('checkForSelected()') }
 
@@ -142,11 +153,12 @@ export class StepperService {
 			this.currentStepperElement.next(null);
 		} else if (!c && se.length) {
 			// no currently selected and selectable items
-			// pick the first element in the list
+			// pick the first element in the list.
 			this.currentStepperElement.next(se[0]);
 		} else if (c && se.length) {
 			// currently selected item and non null length
-			// the item should be in the list. If not is it a remnant? Will this need checking?
+			// the item should be in the list. But it may not be if it was deleted from under us.
+			// there is still length so we set the item null and do this function over again and it gets fixed in the (!c && se.length).
 		}
 		else if (!c && !se.length) {
 			// nothing loaded? Fine. do nothing

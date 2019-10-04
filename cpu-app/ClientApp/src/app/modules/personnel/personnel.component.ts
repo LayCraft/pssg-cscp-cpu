@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person, iPerson } from 'src/app/core/models/person.class';
 import { PersonService } from 'src/app/core/services/person.service';
@@ -10,7 +10,7 @@ import { iStepperElement, StepperService } from 'src/app/core/services/stepper.s
 	templateUrl: './personnel.component.html',
 	styleUrls: ['./personnel.component.scss']
 })
-export class PersonnelComponent implements OnInit {
+export class PersonnelComponent implements OnInit, OnDestroy {
 	// this is an organization level component
 	organizationId: string;
 	reload = false;
@@ -32,22 +32,17 @@ export class PersonnelComponent implements OnInit {
 		this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
 		// collect the ids for looking up the program from the route.
 		this.organizationId = this.route.snapshot.paramMap.get('organizationId');
-
 		// set the default top and bottom list
 		this.constructDefaultstepperElements();
 	}
-
-	isCurrentStepperElement(item: iStepperElement): boolean {
-		if (item.uniqueIdentifier === this.currentStepperElement.uniqueIdentifier) {
-			// names match? must be the same. Makes the assumption that all names are unique.
-			return true;
-		}
-		return false;
+	ngOnDestroy() {
+		this.stepperService.reset();
 	}
 	constructDefaultstepperElements(): void {
 		// this is just a constructor
 		// get the personnel list from Dynamics and shove it in here
 		this.personService.getPersons('TODO: bork').subscribe(persons => {
+			this.stepperService.reset();
 			persons.forEach(person => {
 				this.stepperService.addStepperElement(new Person(person), this.nameAssemble(person.firstName, person.middleName, person.lastName));
 			})
@@ -80,8 +75,33 @@ export class PersonnelComponent implements OnInit {
 			this.router.navigate(['/authenticated/dashboard']);
 		}
 	}
-	add() { }
-	onInput() {
-		this.stepperService.setStepperElement(this.currentStepperElement.id, this.currentStepperElement);
+	add() {
+		const element: iPerson = {
+			typeOfEmployee: '',
+			address: null,
+			annualSalary: null,
+			baseHourlyWage: null,
+			benefits: null,
+			email: '',
+			fax: '',
+			firstName: '',
+			hoursWorkedPerWeek: null,
+			lastName: '',
+			middleName: '',
+			personId: '',
+			phone: '',
+			title: '',
+			fundedFromVscp: null,
+		};
+		this.stepperService.addStepperElement(element, 'New Person');
+	}
+	remove(id: string = this.currentStepperElement.id) {
+		// remove the element
+		this.stepperService.removeStepperElement(id);
+	}
+	onChange(element: iStepperElement) {
+		element.itemName = this.nameAssemble(element.object['firstName'], element.object['middleName'], element.object['lastName'])
+		// loop back to shove the new form into the service
+		this.stepperService.setStepperElement(element);
 	}
 }

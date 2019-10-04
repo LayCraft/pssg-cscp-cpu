@@ -54,10 +54,7 @@ export class PersonService {
 		return of(this.fakePeople);
 	}
 	setPersons(organizationId: string, persons: iPerson[]): Observable<iPerson[]> {
-		this.fakePeople = [];
-		persons.forEach(p => {
-			this.fakePeople.push({ ...p });
-		});
+		this.fakePeople = persons;
 		return of(this.fakePeople);
 	}
 
