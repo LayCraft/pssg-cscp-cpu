@@ -8,6 +8,7 @@ export interface iBudgetProposal {
 	formState: string; // untouched	incomplete	invalid	complete info
 }
 export interface iProgramBudget {
+	contractId: string;
 	programId: string;
 	name: string;
 	type: string;

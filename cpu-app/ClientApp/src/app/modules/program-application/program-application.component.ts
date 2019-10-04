@@ -36,7 +36,7 @@ export class ProgramApplicationComponent implements OnInit {
 		this.administrativeInformationValid = valid;
 	}
 
-	// cg liability toggle
+	// cg liability toggle value
 	cgLiability: boolean = false;
 
 	constructor(
@@ -60,12 +60,13 @@ export class ProgramApplicationComponent implements OnInit {
 				// map the programs into the right shape
 				this.stepperElementsPrograms = bp.programs.map((p: iProgramBudget) => {
 					return {
-						itemName: p.name,
+						// contractId: this.contractId,
+						// organizationId: this.organizationId,
+						// programId: p.programId,
 						formState: p.formState || 'untouched', //default is untouched
-						organizationId: this.organizationId,
-						contractId: this.contractId,
-						programId: p.programId
-					}
+						itemName: p.name,
+						object: p, // this iProgramBudget can be used for forms information
+					} as iStepperElement;
 				});
 				// make a complete list of all items
 				this.stepperElementsCombined = this.stepperElementsTop
