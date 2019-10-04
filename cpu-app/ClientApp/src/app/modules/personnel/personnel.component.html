@@ -11,20 +11,20 @@
 				<button class="btn btn-primary mt-2" (click)="save()">Save</button>
 				<button class="btn btn-primary mt-2 ml-2" (click)="save(true)">Save &amp; Exit</button>
 			</section>
-
 		</div>
 
 		<div class="col-md-8">
-			<div class="page-header">
-				<h1>{{currentStepperElement.object['firstName']}} {{currentStepperElement.object['lastName']}}</h1>
-			</div>
-			<!-- Loop through items -->
-			<div *ngFor="let item of stepperElements">
-				<!-- if the item name matches show this section -->
-				<div *ngIf="isCurrentStepperElement(item)">
-					<app-person-editor [(person)]="item.object" (personChange)="updateCurrent()"></app-person-editor>
+			<!-- <pre>Current:{{currentStepperElement|json}}</pre>
+			<pre>List:{{stepperElements|json}}</pre> -->
+			<div *ngIf="currentStepperElement">
+				<div class="page-header">
+					<h1>{{currentStepperElement.object['firstName']}} {{currentStepperElement.object['lastName']}}</h1>
+				</div>
+				<div *ngFor="let item of stepperElements">
+					<span *ngIf="item.id===currentStepperElement.id">
+						<app-person-editor [(person)]="item.object"></app-person-editor>
+					</span>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>

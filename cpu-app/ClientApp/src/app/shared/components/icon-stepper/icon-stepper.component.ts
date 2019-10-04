@@ -8,6 +8,7 @@ import { StepperService, iStepperElement } from 'src/app/core/services/stepper.s
 })
 export class IconStepperComponent implements OnInit {
 
+	currentStepperElement: iStepperElement;
 	// master list
 	stepperElements: iStepperElement[] = [];
 	// this object gives us keys to draw on to get classnames and messages
@@ -20,24 +21,18 @@ export class IconStepperComponent implements OnInit {
 		'info': ['', 'text-info', 'fas fa-info-circle']
 	}
 
-	uuidv4(): string {
-		// replace x or y with randoms and other unique identifier stuff
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-			return v.toString(16);
-		});
-	}
-
 	constructor(
 		private stepperService: StepperService
 	) { }
 
 	ngOnInit() {
+		// subscribe to all of the changes
+		this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
 		this.stepperService.stepperElements.subscribe(s => this.stepperElements = s);
 	}
 
-	onClick(navigateTo: iStepperElement) {
+	onNavigate(id: string) {
 		// set the internal state of this component
-		this.stepperService.setCurrentStepperElement(navigateTo.id);
+		this.stepperService.setCurrentStepperElement(id);
 	}
 }

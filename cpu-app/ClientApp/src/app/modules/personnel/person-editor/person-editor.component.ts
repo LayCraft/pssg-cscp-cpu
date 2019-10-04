@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { iPerson } from 'src/app/core/models/person.class';
 import { EMAIL, PHONE_NUMBER } from 'src/app/core/constants/regex.constants';
 import { FormHelper } from 'src/app/core/form-helper';
@@ -24,6 +24,7 @@ export class PersonEditorComponent implements OnInit {
 	ngOnInit() {
 		this.buildForm();
 	}
+
 	onChanges() {
 		// whenever the form changes this element emits
 		this.personChange.emit(this.internalFormGroup.value);

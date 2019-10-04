@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Person, iPerson } from 'src/app/core/models/person.class';
 import { PersonService } from 'src/app/core/services/person.service';
 import { NotificationQueueService } from 'src/app/core/services/notification-queue.service';
-import { iStepperElement } from 'src/app/core/services/stepper.service';
+import { iStepperElement, StepperService } from 'src/app/core/services/stepper.service';
 
 @Component({
 	selector: 'app-personnel',
@@ -13,24 +13,28 @@ import { iStepperElement } from 'src/app/core/services/stepper.service';
 export class PersonnelComponent implements OnInit {
 	// this is an organization level component
 	organizationId: string;
-
+	reload = false;
 	// used for the stepper component
-	stepperElements: iStepperElement[] = [];
 	currentStepperElement: iStepperElement;
+	stepperElements: iStepperElement[];
 
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
 		private personService: PersonService,
 		private notificationQueueService: NotificationQueueService,
+		private stepperService: StepperService,
 	) { }
 
 	ngOnInit() {
+		// stay up to date with the stepper
+		this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
+		this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
 		// collect the ids for looking up the program from the route.
 		this.organizationId = this.route.snapshot.paramMap.get('organizationId');
 
 		// set the default top and bottom list
-		this.constructDefaultstepperElements(this.organizationId);
+		this.constructDefaultstepperElements();
 	}
 
 	isCurrentStepperElement(item: iStepperElement): boolean {
@@ -40,27 +44,14 @@ export class PersonnelComponent implements OnInit {
 		}
 		return false;
 	}
-	constructDefaultstepperElements(organizationId: string) {
+	constructDefaultstepperElements(): void {
 		// this is just a constructor
 		// get the personnel list from Dynamics and shove it in here
-		this.personService.getPersons(organizationId).subscribe(persons => {
+		this.personService.getPersons('TODO: bork').subscribe(persons => {
 			persons.forEach(person => {
-				const stepperElement: iStepperElement = {
-					itemName: this.nameAssemble(person.firstName, person.middleName, person.lastName),
-					formState: 'info',
-					organizationId,
-					object: new Person(person),
-				}
-				this.stepperElements.push(stepperElement);
+				this.stepperService.addStepperElement(new Person(person), this.nameAssemble(person.firstName, person.middleName, person.lastName));
 			})
-			// maybe there is no employees attached to the organization? Make one and add it.
-			if (this.stepperElements.length === 0) {
-				this.add();
-			}
-			// save the first one as the selected stepper element
-			this.currentStepperElement = this.stepperElements[0];
 		});
-
 	}
 	nameAssemble(first: string, middle: string, last: string): string {
 		let build = '';
@@ -69,17 +60,17 @@ export class PersonnelComponent implements OnInit {
 		if (last) build += last;
 		return build;
 	}
-	updateCurrent() {
-		// make a current item
-		this.currentStepperElement.itemName = this.nameAssemble(this.currentStepperElement.object['firstName'], this.currentStepperElement.object['middleName'], this.currentStepperElement.object['lastName']);
-	}
+	// updateCurrent() {
+	// 	// make a current item
+	// 	this.currentStepperElement.itemName = this.nameAssemble(this.currentStepperElement.object['firstName'], this.currentStepperElement.object['middleName'], this.currentStepperElement.object['lastName']);
+	// }
 	save(exit?: boolean) {
 		// make a person array to submit
 		const cleanup = this.stepperElements.map(s => s.object as iPerson);
 		this.personService.setPersons(this.organizationId, cleanup).subscribe(
 			() => {
 				// Go get the new people with whatever transformations happened.
-				this.constructDefaultstepperElements(this.organizationId);
+				this.constructDefaultstepperElements();
 				this.notificationQueueService.addNotification('Personnel Saved', 'success');
 			},
 			err => this.notificationQueueService.addNotification(err, 'danger')
@@ -89,12 +80,8 @@ export class PersonnelComponent implements OnInit {
 			this.router.navigate(['/authenticated/dashboard']);
 		}
 	}
-	add() {
-		this.stepperElements.push({
-			itemName: 'New Contact',
-			formState: 'info',
-			organizationId: this.organizationId,
-			object: new Person(),
-		});
+	add() { }
+	onInput() {
+		this.stepperService.setStepperElement(this.currentStepperElement.id, this.currentStepperElement);
 	}
 }
