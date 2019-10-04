@@ -44,7 +44,7 @@ export class PersonEditorComponent implements OnInit {
 			'personId': new FormControl(''),
 			'phone': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
 			'title': new FormControl(''),
-			'fundedFromVCSP': new FormControl(''),
+			'fundedFromVscp': new FormControl(''),
 		});
 		// set the values into the form
 		this.internalFormGroup.setValue(this.person, { emitEvent: false });

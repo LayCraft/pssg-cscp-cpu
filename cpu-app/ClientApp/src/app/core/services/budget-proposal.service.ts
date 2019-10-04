@@ -19,7 +19,7 @@ export class BudgetProposalService {
 				email: 'JeanLuc@enterprise.com',
 				revenueSources: [
 					{
-						revenueSourceName: 'Ministry of PSSG-VSCP',
+						revenueSourceName: 'Ministry of PSSG-Vscp',
 						cash: 34000,
 						inKindContribution: 12350,
 					},
@@ -39,13 +39,13 @@ export class BudgetProposalService {
 						title: 'CEO',
 						annualSalary: 90010,
 						benefits: 2345,
-						fundedFromVCSP: 2345
+						fundedFromVscp: 2345
 					},
 					{
 						title: 'Helper',
 						annualSalary: 1234,
 						benefits: 38472,
-						fundedFromVCSP: 23
+						fundedFromVscp: 23
 					}
 				],
 				programDeliveryCosts: [
@@ -53,19 +53,19 @@ export class BudgetProposalService {
 						itemName: 'Management salary/benefits',
 						tooltip: 'This is what would be in a tooltip.',
 						totalCost: 293874,
-						fundedFromVCSP: 123432,
+						fundedFromVscp: 123432,
 					},
 					{
 						itemName: 'Other salary/benefits',
 						tooltip: 'This is what would be in a tooltip.',
 						totalCost: 293874,
-						fundedFromVCSP: 123432,
+						fundedFromVscp: 123432,
 					},
 					{
 						itemName: 'Employee salary/benefits',
 						tooltip: 'This is what would be in a tooltip.',
 						totalCost: 293874,
-						fundedFromVCSP: 123432,
+						fundedFromVscp: 123432,
 					},
 				],
 				programDeliveryMemberships: [
@@ -73,7 +73,7 @@ export class BudgetProposalService {
 						itemName: 'Employee membership',
 						tooltip: 'This is what would be in a tooltip.',
 						totalCost: 293874,
-						fundedFromVCSP: 1233,
+						fundedFromVscp: 1233,
 					},
 				],
 				programDeliveryOtherExpenses: [
@@ -81,7 +81,7 @@ export class BudgetProposalService {
 						itemName: 'Another Expense',
 						tooltip: 'This is what would be in a tooltip.',
 						totalCost: 634,
-						fundedFromVCSP: 1432,
+						fundedFromVscp: 1432,
 					},
 				],
 				administrationCosts: [
@@ -89,7 +89,7 @@ export class BudgetProposalService {
 						itemName: 'Another administrative cost',
 						tooltip: 'This is what would be in a tooltip.',
 						totalCost: 324,
-						fundedFromVCSP: 14312,
+						fundedFromVscp: 14312,
 					},
 				],
 				administrationOtherExpenses: [
@@ -97,7 +97,7 @@ export class BudgetProposalService {
 						itemName: 'Another Administrative Expense',
 						tooltip: 'This is what would be in a tooltip.',
 						totalCost: 6345764,
-						fundedFromVCSP: 475,
+						fundedFromVscp: 475,
 					},
 				],
 			},

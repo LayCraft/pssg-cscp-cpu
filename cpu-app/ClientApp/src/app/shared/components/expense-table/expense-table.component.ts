@@ -74,10 +74,10 @@ export class ExpenseTableComponent implements OnInit {
 		let totalVscpDefaults = 0;
 		let totalVscpCustom = 0;
 		if (this.defaultExpenseItemsForm.length > 0) {
-			totalVscpDefaults = this.defaultExpenseItemsForm.map(rs => rs.fundedFromVCSP).reduce(reducer) || 0;
+			totalVscpDefaults = this.defaultExpenseItemsForm.map(rs => rs.fundedFromVscp).reduce(reducer) || 0;
 		}
 		if (this.expenseItemsForm.length > 0) {
-			totalVscpCustom = this.expenseItemsForm.map(rs => rs.fundedFromVCSP).reduce(reducer) || 0;
+			totalVscpCustom = this.expenseItemsForm.map(rs => rs.fundedFromVscp).reduce(reducer) || 0;
 		}
 		this.totalVscp = totalVscpDefaults + totalVscpCustom;
 

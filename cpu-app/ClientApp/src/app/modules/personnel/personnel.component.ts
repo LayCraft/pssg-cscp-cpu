@@ -55,12 +55,7 @@ export class PersonnelComponent implements OnInit {
 			})
 			// maybe there is no employees attached to the organization? Make one and add it.
 			if (this.stepperElements.length === 0) {
-				this.stepperElements.push({
-					itemName: 'New Contact',
-					formState: 'info',
-					organizationId,
-					object: new Person()
-				});
+				this.add();
 			}
 			// save the first one as the selected stepper element
 			this.currentStepperElement = this.stepperElements[0];
@@ -93,5 +88,13 @@ export class PersonnelComponent implements OnInit {
 			// they chose to exit
 			this.router.navigate(['/authenticated/dashboard']);
 		}
+	}
+	add() {
+		this.stepperElements.push({
+			itemName: 'New Contact',
+			formState: 'info',
+			organizationId: this.organizationId,
+			object: new Person(),
+		});
 	}
 }
