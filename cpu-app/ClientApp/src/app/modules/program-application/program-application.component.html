@@ -25,7 +25,7 @@
 					<div *ngIf="isCurrentStepperElement(item)">
 						<!-- Check the discriminator -->
 						<div *ngIf="item.discriminator === 'contact_information'">
-							<app-program-contact-information></app-program-contact-information>
+							<app-program-contact-information [(contactInformation)]="item.object"></app-program-contact-information>
 						</div>
 						<div *ngIf="item.discriminator === 'administrative_information'">
 							<app-program-administrative-information></app-program-administrative-information>

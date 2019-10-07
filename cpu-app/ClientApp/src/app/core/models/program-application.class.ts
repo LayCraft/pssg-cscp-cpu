@@ -1,9 +1,11 @@
 import { Address, iAddress } from "./address.class";
 import { Person, iPerson } from "./person.class";
+import { iContactInformation } from './contact-information.class';
 
 export interface iAnnualProgramApplication {
 	organizationId: string;
 	contractId: string;
+	programContact: iContactInformation;
 	programs: iProgramApplication[];
 	formState: string; // untouched	incomplete	invalid	complete info
 }
