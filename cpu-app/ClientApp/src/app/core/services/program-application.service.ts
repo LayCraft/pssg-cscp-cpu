@@ -1,35 +1,57 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { iProgramApplication } from '../models/program-application.class';
+import { iProgramApplication, iAnnualProgramApplication } from '../models/program-application.class';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ProgramApplicationService {
-	dummyProgram: iProgramApplication = {
-		programId: 'qwreyturwqeyu',
-		contractId: '2768194124',
-		email: "foo@fibble.ca",
-		programLocation: "Quxville",
-		serviceArea: "Metro Fibbletown",
-		phoneNumber: "12505551023",
-		faxNumber: "12505551023",
-		mainAddress: null,
-		mailingAddress: null,
-		programContact: null,
-		additionalStaff: [],
-		revenueSources: [],
-		operationHours: [],
-		standbyHours: null,
+	dummyProgram: iAnnualProgramApplication = {
+		organizationId: 'asfdljjlkhasfd',
+		contractId: '712389327891',
+		formState: 'incomplete',
+		programs: [
+			{
+				name: 'Program name',
+				programId: 'qwreyturwqeyu',
+				contractId: '2768194124',
+				email: "foo@fibble.ca",
+				programLocation: "Quxville",
+				serviceArea: "Metro Fibbletown",
+				phoneNumber: "12505551023",
+				faxNumber: "12505551023",
+				mainAddress: null,
+				mailingAddress: null,
+				programContact: null,
+				additionalStaff: [],
+				revenueSources: [],
+				operationHours: [],
+				standbyHours: null,
+			} as iProgramApplication,
+			{
+				name: 'Program name',
+				programId: 'aafsdfasdfsda',
+				contractId: '547465745',
+				email: "baz@fibble.ca",
+				programLocation: "Quxville",
+				serviceArea: "Metro Fibbletown",
+				phoneNumber: "12505551023",
+				faxNumber: "12505551023",
+				mainAddress: null,
+				mailingAddress: null,
+				programContact: null,
+				additionalStaff: [],
+				revenueSources: [],
+				operationHours: [],
+				standbyHours: null,
+			} as iProgramApplication
+		]
 	};
 
-	constructor() {
-		this.dummyProgram.programLocation = "Bork"
-	}
+	constructor() { }
 
-	getProgramApplication(organizationId: string, programId: string): Observable<iProgramApplication> {
+	getProgramApplication(organizationId: string, contractId: string): Observable<iAnnualProgramApplication> {
 		const bork = { ...this.dummyProgram };
-		bork.programId = programId;
-		return of(bork as iProgramApplication);
+		return of(bork as iAnnualProgramApplication);
 	}
 }

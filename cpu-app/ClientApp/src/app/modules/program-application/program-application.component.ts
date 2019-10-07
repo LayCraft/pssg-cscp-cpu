@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { iStepperElement, StepperService } from 'src/app/core/services/stepper.service';
-import { iProgramApplication } from 'src/app/core/models/program-application.class';
+import { iProgramApplication, iAnnualProgramApplication } from 'src/app/core/models/program-application.class';
 import { ProgramApplicationService } from 'src/app/core/services/program-application.service';
 
 @Component({
@@ -54,41 +54,6 @@ export class ProgramApplicationComponent implements OnInit {
 		// set the default top and bottom of the list
 		this.constructDefaultstepperElements();
 
-		// // get the budget proposal for this org and contract
-		// this.budgetProposalService.getBudgetProposal(this.organizationId, this.contractId)
-		// 	.subscribe((bp: iBudgetProposal) => {
-		// 		// Many other ways to do this. Most hassle free is split the array, put the items in, concat
-		// 		// map the programs into the right shape
-		// 		this.stepperElementsPrograms = bp.programs.map((p: iProgramBudget) => {
-		// 			return {
-		// 				// contractId: this.contractId,
-		// 				// organizationId: this.organizationId,
-		// 				// programId: p.programId,
-		// 				formState: p.formState || 'untouched', //default is untouched
-		// 				itemName: p.name,
-		// 				object: p, // this iProgramBudget can be used for forms information
-		// 			} as iStepperElement;
-		// 		});
-		// 		// make a complete list of all items
-		// 		this.stepperElementsCombined = this.stepperElementsTop
-		// 			.concat(this.stepperElementsPrograms)
-		// 			.concat(this.stepperElementsBottom);
-
-		// 		// set the first page to be the program overview so it isn't blank when they see the page the first time
-		// 		this.currentStepperElement = this.stepperElementsCombined[0];
-		// 	});
-
-		// // collect information about the default contact information and prefill the form with it
-		// // THE FORM FOR THE APPLICANT CONTACT INFORMATION
-		// this.boilerplateService.getOrganizationBoilerplate(this.organizationId).subscribe(ci => {
-		// 	this.contactInformationForm = new FormGroup({
-		// 		'contactInformation': new FormControl('', Validators.required)
-		// 	});
-		// 	this.contactInformationForm.controls['contactInformation'].setValue(ci);
-		// });
-
-		// // THE FORM FOR THE ADMINISTRATIVE INFORMATION
-		// this.administrativeInformationForm = new AdministrativeInformation();
 	}
 
 	programApplicationUpdated(programApplication: iProgramApplication): void {
@@ -104,24 +69,24 @@ export class ProgramApplicationComponent implements OnInit {
 		return false;
 	}
 	constructDefaultstepperElements() {
-		this.programApplicationService.getProgramApplication('foo', 'bar').subscribe((pa: iProgramApplication) => {
+		this.programApplicationService.getProgramApplication('foo', 'bar').subscribe((pa: iAnnualProgramApplication) => {
 			// write the default beginning
 			[
 				{
 					itemName: 'Applicant Contact Information',
-					formState: 'info',
+					formState: 'untouched',
 					object: null,
 					discriminator: 'contact_information',
 				},
 				{
 					itemName: 'Applicant Administrative Information',
-					formState: 'info',
+					formState: 'untouched',
 					object: null,
 					discriminator: 'administrative_information',
 				},
 				{
 					itemName: 'Commercial General Liability Insurance',
-					formState: 'info',
+					formState: 'untouched',
 					object: null,
 					discriminator: 'commercial_general_liability_insurance',
 				},
@@ -130,7 +95,9 @@ export class ProgramApplicationComponent implements OnInit {
 			});
 
 			// TODO: add the programs to the list
-
+			pa.programs.forEach((p: iProgramApplication) => {
+				this.stepperService.addStepperElement(p, p.name, p.formState, 'program')
+			});
 			// Write the default end part
 			[
 				{

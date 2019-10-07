@@ -9,6 +9,8 @@ export interface iAnnualProgramApplication {
 }
 
 export interface iProgramApplication {
+	name: string;
+	formState: string;
 	contractId: string;
 	programId: string;
 
@@ -32,7 +34,8 @@ export class ProgramApplication implements iProgramApplication {
 
 	contractId: string;
 	programId: string;
-
+	name: string;
+	formState: string;
 	email: string;
 	programLocation: string;
 	serviceArea: string;
@@ -50,6 +53,8 @@ export class ProgramApplication implements iProgramApplication {
 
 	constructor(prog?: iProgramApplication) {
 		if (prog) {
+			this.name = prog.name || null;
+			this.formState = prog.formState || null;
 			this.programId = prog.programId || null;
 			this.contractId = prog.contractId || null;
 			this.programLocation = prog.programLocation || null;
