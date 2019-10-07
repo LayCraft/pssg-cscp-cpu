@@ -12,7 +12,7 @@ export class ProgramApplicationService {
 		formState: 'incomplete',
 		programs: [
 			{
-				name: 'Program name',
+				name: 'Program One',
 				programId: 'qwreyturwqeyu',
 				contractId: '2768194124',
 				email: "foo@fibble.ca",
@@ -29,7 +29,7 @@ export class ProgramApplicationService {
 				standbyHours: null,
 			} as iProgramApplication,
 			{
-				name: 'Program name',
+				name: 'Program Two',
 				programId: 'aafsdfasdfsda',
 				contractId: '547465745',
 				email: "baz@fibble.ca",

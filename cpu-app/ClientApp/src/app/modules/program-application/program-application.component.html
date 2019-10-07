@@ -9,42 +9,44 @@
 		</div>
 
 		<div class="col-md-8">
-			<!-- <div>
+			<!-- 
+				contact_information
+				administrative_information
+				commercial_general_liability_insurance
+				review_application
+				authorization 
+			-->
+			<div *ngIf="stepperElements && currentStepperElement">
 				<div class="page-header">
 					<h1>{{currentStepperElement.itemName}}</h1>
 				</div>
-				<div *ngFor="let item of stepperElementsTop">
+				<div *ngFor="let item of stepperElements">
+					<!-- remove the old stepper elements off of the dom -->
 					<div *ngIf="isCurrentStepperElement(item)">
-						<span *ngIf="currentStepperElement.itemName === stepperElementsTop[0].itemName">
-							<div class="col" [formGroup]="contactInformationForm">
-								<app-contact-information formControlName="contactInformation" [required]="true"></app-contact-information>
-							</div>
-						</span>
-						<span *ngIf="currentStepperElement.itemName === stepperElementsTop[1].itemName">
-							<app-administrative-information [(administrativeInformation)]="administrativeInformationForm" (valid)="administrativeInformationIsValid($event)"></app-administrative-information>
-						</span>
-						<span *ngIf="currentStepperElement.itemName === stepperElementsTop[2].itemName">
-							<app-cg-liability [(cgLiability)]="cgLiability"></app-cg-liability>
-						</span>
+						<!-- Check the discriminator -->
+						<div *ngIf="item.discriminator === 'contact_information'">
+							Contact Information
+						</div>
+						<div *ngIf="item.discriminator === 'administrative_information'">
+							Administrative information
+						</div>
+						<div *ngIf="item.discriminator === 'commercial_general_liability_insurance'">
+							Commercial General Liability Insurance
+						</div>
+						<div *ngIf="item.discriminator === 'program'">
+							Program
+							{{item.object|json}}
+							<!-- <app-program-budget [stepperElement]="item"></app-program-budget> -->
+						</div>
+						<div *ngIf="item.discriminator === 'review_application'">
+							review application
+						</div>
+						<div *ngIf="item.discriminator === 'authorization'">
+							Authorization
+						</div>
 					</div>
 				</div>
-				<div *ngFor="let item of stepperElementsPrograms">
-					<div *ngIf="isCurrentStepperElement(item)">
-						<pre>{{item.object|json}}</pre>
-
-					</div>
-				</div>
-				<div *ngFor="let item of stepperElementsBottom">
-					<div *ngIf="isCurrentStepperElement(item)">
-						<span *ngIf="currentStepperElement.itemName === stepperElementsBottom[0].itemName">
-							Do some review here
-						</span>
-						<span *ngIf="currentStepperElement.itemName === stepperElementsBottom[1].itemName">
-							<app-program-authorizer></app-program-authorizer>
-						</span>
-					</div>
-				</div>
-			</div> -->
+			</div>
 		</div>
 	</div>
 </div>
