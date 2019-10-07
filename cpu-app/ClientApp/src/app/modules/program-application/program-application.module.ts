@@ -5,6 +5,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ProgramApplicationComponent } from './program-application.component';
 import { CgLiabilityComponent } from './cg-liability/cg-liability.component';
 import { ContactInformationComponent } from './contact-information/contact-information.component';
+import { AdministrativeInformationComponent } from './administrative-information/administrative-information.component';
 
 
 
@@ -12,7 +13,8 @@ import { ContactInformationComponent } from './contact-information/contact-infor
 	declarations: [
 		ProgramApplicationComponent,
 		CgLiabilityComponent,
-		ContactInformationComponent
+		ContactInformationComponent,
+		AdministrativeInformationComponent
 	],
 	imports: [
 		CommonModule,
