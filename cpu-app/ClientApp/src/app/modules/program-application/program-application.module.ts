@@ -6,6 +6,7 @@ import { ProgramApplicationComponent } from './program-application.component';
 import { CgLiabilityComponent } from './cg-liability/cg-liability.component';
 import { ContactInformationComponent } from './contact-information/contact-information.component';
 import { AdministrativeInformationComponent } from './administrative-information/administrative-information.component';
+import { ReviewApplicationComponent } from './review-application/review-application.component';
 
 
 
@@ -14,7 +15,8 @@ import { AdministrativeInformationComponent } from './administrative-information
 		ProgramApplicationComponent,
 		CgLiabilityComponent,
 		ContactInformationComponent,
-		AdministrativeInformationComponent
+		AdministrativeInformationComponent,
+		ReviewApplicationComponent
 	],
 	imports: [
 		CommonModule,
