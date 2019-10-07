@@ -9,13 +9,7 @@
 		</div>
 
 		<div class="col-md-8">
-			<!-- 
-				contact_information
-				administrative_information
-				commercial_general_liability_insurance
-				review_application
-				authorization 
-			-->
+
 			<div *ngIf="stepperElements && currentStepperElement">
 				<div class="page-header">
 					<h1>{{currentStepperElement.itemName}}</h1>
@@ -28,12 +22,13 @@
 							<app-program-contact-information [(contactInformation)]="item.object"></app-program-contact-information>
 						</div>
 						<div *ngIf="item.discriminator === 'administrative_information'">
-							<app-program-administrative-information [(administrativeInformation)]="item.object"></app-program-administrative-information>
+							<app-administrative-information [(administrativeInformation)]="item.object"></app-administrative-information>
 						</div>
 						<div *ngIf="item.discriminator === 'commercial_general_liability_insurance'">
 							<app-cg-liability [(cgLiability)]="item.object"></app-cg-liability>
 						</div>
 						<div *ngIf="item.discriminator === 'program'">
+
 							<app-program [(programApplication)]="item.object"></app-program>
 						</div>
 						<div *ngIf="item.discriminator === 'review_application'">

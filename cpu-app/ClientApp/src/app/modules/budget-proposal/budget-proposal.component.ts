@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BudgetProposalService } from 'src/app/core/services/budget-proposal.service';
-import { iBudgetProposal, iProgramBudget } from 'src/app/core/models/budget-proposal.class';
+import { iBudgetProposal, iProgramBudget, ProgramBudget } from 'src/app/core/models/budget-proposal.class';
 import { iStepperElement, StepperService } from 'src/app/core/services/stepper.service';
 
 @Component({
@@ -64,7 +64,7 @@ export class BudgetProposalComponent implements OnInit {
 			});
 			// add the programs to the list
 			bp.programs.forEach((p: iProgramBudget) => {
-				this.stepperService.addStepperElement(p, p.name, p.formState, 'program');
+				this.stepperService.addStepperElement(new ProgramBudget(p), p.name, p.formState, 'program');
 			});
 			// Write the default end part
 			[

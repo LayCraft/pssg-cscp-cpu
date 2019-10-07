@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { iExpenseItem, ExpenseItem } from 'src/app/core/models/budget-proposal.class';
 import { iExpenseTableMeta } from 'src/app/shared/components/expense-table/expense-table.component';
 import { iStepperElement } from 'src/app/core/services/stepper.service';
@@ -10,7 +10,7 @@ import { iRevenueSource, RevenueSource } from 'src/app/core/models/program-appli
 	styleUrls: ['./program-budget.component.scss']
 })
 export class ProgramBudgetComponent implements OnInit {
-	@Input() stepperElement: iStepperElement;
+
 	currentTab: string;
 	tabs: string[];
 	meta: {} = {

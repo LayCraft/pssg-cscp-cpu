@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { iStepperElement, StepperService } from 'src/app/core/services/stepper.service';
-import { iProgramApplication, iAnnualProgramApplication } from 'src/app/core/models/program-application.class';
+import { iProgramApplication, iAnnualProgramApplication, ProgramApplication } from 'src/app/core/models/program-application.class';
 import { ProgramApplicationService } from 'src/app/core/services/program-application.service';
+import { AdministrativeInformation } from 'src/app/core/models/administrative-information.class';
+import { ContactInformation } from 'src/app/core/models/contact-information.class';
 
 @Component({
 	selector: 'app-program-application',
@@ -75,13 +77,13 @@ export class ProgramApplicationComponent implements OnInit {
 				{
 					itemName: 'Applicant Contact Information',
 					formState: 'untouched',
-					object: null,
+					object: new ContactInformation(),
 					discriminator: 'contact_information',
 				},
 				{
 					itemName: 'Applicant Administrative Information',
 					formState: 'untouched',
-					object: null,
+					object: new AdministrativeInformation(),
 					discriminator: 'administrative_information',
 				},
 				{
@@ -94,9 +96,9 @@ export class ProgramApplicationComponent implements OnInit {
 				this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
 			});
 
-			// TODO: add the programs to the list
+			// add the programs to the list
 			pa.programs.forEach((p: iProgramApplication) => {
-				this.stepperService.addStepperElement(p, p.name, p.formState, 'program')
+				this.stepperService.addStepperElement(new ProgramApplication(p), p.name, p.formState, 'program')
 			});
 			// Write the default end part
 			[
