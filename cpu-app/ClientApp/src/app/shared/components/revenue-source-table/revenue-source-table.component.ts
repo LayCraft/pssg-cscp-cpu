@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { RevenueSource, iRevenueSource } from 'src/app/core/models/revenue-source.class';
+import { RevenueSource, iRevenueSource } from 'src/app/core/models/program-application.class';
 
 @Component({
 	selector: 'app-revenue-source-table',

@@ -9,7 +9,7 @@ import { ProgramApplicationService } from 'src/app/core/services/program-applica
 	templateUrl: './program-application.component.html',
 	styleUrls: ['./program-application.component.scss']
 })
-export class ProgramApplicationComponent implements OnInit, OnDestroy {
+export class ProgramApplicationComponent implements OnInit {
 	contractId: string;
 	organizationId: string;
 
@@ -90,9 +90,6 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
 		// // THE FORM FOR THE ADMINISTRATIVE INFORMATION
 		// this.administrativeInformationForm = new AdministrativeInformation();
 	}
-	ngOnDestroy() {
-		this.stepperService.reset();
-	}
 
 	programApplicationUpdated(programApplication: iProgramApplication): void {
 		// handle the updates to the program budget. Write it out to a service or whatever
@@ -100,16 +97,61 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
 	}
 
 	isCurrentStepperElement(item: iStepperElement): boolean {
-		if (item.itemName === this.currentStepperElement.itemName) {
+		if (item.id === this.currentStepperElement.id) {
 			// names match? must be the same. Makes the assumption that all names are unique.
 			return true;
 		}
 		return false;
 	}
 	constructDefaultstepperElements() {
+		this.programApplicationService.getProgramApplication('foo', 'bar').subscribe((pa: iProgramApplication) => {
+			// write the default beginning
+			[
+				{
+					itemName: 'Applicant Contact Information',
+					formState: 'info',
+					object: null,
+					discriminator: 'contact_information',
+				},
+				{
+					itemName: 'Applicant Administrative Information',
+					formState: 'info',
+					object: null,
+					discriminator: 'administrative_information',
+				},
+				{
+					itemName: 'Commercial General Liability Insurance',
+					formState: 'info',
+					object: null,
+					discriminator: 'commercial_general_liability_insurance',
+				},
+			].forEach((f: iStepperElement) => {
+				this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
+			});
 
+			// TODO: add the programs to the list
+
+			// Write the default end part
+			[
+				{
+					itemName: 'Review Program Application',
+					formState: 'untouched',
+					object: null,
+					discriminator: 'review_application',
+				},
+				{
+					itemName: 'Authorization',
+					formState: 'untouched',
+					object: null,
+					discriminator: 'authorization',
+				},
+			].forEach((f: iStepperElement) => {
+				this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
+			});
+
+		});
 		// // this is just a constructor
-		// this.stepperElementsTop = [
+		// [
 		// 	{
 		// 		itemName: 'Applicant Contact Information',
 		// 		formState: 'info',

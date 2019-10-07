@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatStepper } from '@angular/material';
-import { iProgramMeta } from 'src/app/core/models/program-application.class';
 import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
 import { AdministrativeInformation, iAdministrativeInformation } from 'src/app/core/models/administrative-information.class';
 import { iContactInformation } from 'src/app/core/models/contact-information.class';
@@ -22,7 +21,6 @@ export class ProgramPageComponent implements OnInit {
 
 	upperItems: string[] = ['Applicant Contact Information', 'Applicant Administrative Information', 'Commercial General Liability Insurance'];
 	programs: string[];
-	programMeta: iProgramMeta[];
 	lowerItems: string[] = ['Review Program Application', 'Authorization'];
 	combinedPageList: string[];
 
@@ -39,16 +37,16 @@ export class ProgramPageComponent implements OnInit {
 		// collect the ids for looking up the program from the route.
 		this.organizationId = this.route.snapshot.paramMap.get('orgid');
 		this.contractId = this.route.snapshot.paramMap.get('id');
-		this.programInformationService.getProgramInformationMeta(this.organizationId, this.contractId).subscribe(
-			(pm: iProgramMeta[]) => {
-				this.programMeta = pm;
-				// save the program names
-				this.programs = this.programMeta.map((p: iProgramMeta) => p.programName)
-				// make a complete page list
-				this.combinedPageList = [...this.upperItems, ...this.programs, ...this.lowerItems];
-				// set the current page to the first page
-				this.currentFormPage = this.combinedPageList[0];
-			});
+		// this.programInformationService.getProgramInformationMeta(this.organizationId, this.contractId).subscribe(
+		// 	(pm: iProgramMeta[]) => {
+		// 		this.programMeta = pm;
+		// 		// save the program names
+		// 		this.programs = this.programMeta.map((p: iProgramMeta) => p.programName)
+		// 		// make a complete page list
+		// 		this.combinedPageList = [...this.upperItems, ...this.programs, ...this.lowerItems];
+		// 		// set the current page to the first page
+		// 		this.currentFormPage = this.combinedPageList[0];
+		// 	});
 
 		// get the boilerplate contact information if there is none included (resuming the forms.)
 		// TODO: eventually we need to get the current forms from the service

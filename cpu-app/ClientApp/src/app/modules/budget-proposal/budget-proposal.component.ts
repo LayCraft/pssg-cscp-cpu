@@ -13,7 +13,6 @@ export class BudgetProposalComponent implements OnInit {
 	contractId: string;
 	organizationId: string;
 
-	programUuids: string[]; // a place to store all of the program uuids
 	// used for the stepper component
 	currentStepperElement: iStepperElement;
 	stepperElements: iStepperElement[];
@@ -38,7 +37,7 @@ export class BudgetProposalComponent implements OnInit {
 	}
 
 	isCurrentStepperElement(item: iStepperElement): boolean {
-		if (item.itemName === this.currentStepperElement.itemName) {
+		if (item.id === this.currentStepperElement.id) {
 			// names match? must be the same. Makes the assumption that all names are unique.
 			return true;
 		}
@@ -63,11 +62,10 @@ export class BudgetProposalComponent implements OnInit {
 			].forEach((f: iStepperElement) => {
 				this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
 			});
-
+			// add the programs to the list
 			bp.programs.forEach((p: iProgramBudget) => {
 				this.stepperService.addStepperElement(p, p.name, p.formState, 'program');
 			});
-
 			// Write the default end part
 			[
 				{

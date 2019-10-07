@@ -1,6 +1,6 @@
 import { NgForm, AbstractControl } from '@angular/forms';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { iProgramMeta, Hours, ProgramApplication } from 'src/app/core/models/program-application.class';
+import { Hours, ProgramApplication } from 'src/app/core/models/program-application.class';
 import { ContactInformation } from 'src/app/core/models/contact-information.class';
 
 @Component({
@@ -12,7 +12,7 @@ export class ProgramPlannerComponent implements OnInit {
 	// a viewchild to check the validity of the template form
 	@ViewChild(NgForm, { static: true }) piForm;
 	// is the contents of the form valid?
-	@Input() programMeta: iProgramMeta;
+	@Input() programMeta: any;
 
 	// the form model
 	programInformationForm: ProgramApplication;
