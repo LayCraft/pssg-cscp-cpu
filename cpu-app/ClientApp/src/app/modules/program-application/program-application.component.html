@@ -25,7 +25,7 @@
 					<div *ngIf="isCurrentStepperElement(item)">
 						<!-- Check the discriminator -->
 						<div *ngIf="item.discriminator === 'contact_information'">
-							Contact Information
+							<app-program-contact-information></app-program-contact-information>
 						</div>
 						<div *ngIf="item.discriminator === 'administrative_information'">
 							Administrative information
@@ -34,13 +34,13 @@
 							<app-cg-liability [(cgLiability)]="item.object"></app-cg-liability>
 						</div>
 						<div *ngIf="item.discriminator === 'program'">
-
+							<app-program></app-program>
 						</div>
 						<div *ngIf="item.discriminator === 'review_application'">
-							review application
+							<app-review-application></app-review-application>
 						</div>
 						<div *ngIf="item.discriminator === 'authorization'">
-							Authorization
+							<app-program-authorizer></app-program-authorizer>
 						</div>
 					</div>
 				</div>

@@ -4,9 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProgramApplicationComponent } from './program-application.component';
 import { CgLiabilityComponent } from './cg-liability/cg-liability.component';
-import { ContactInformationComponent } from './contact-information/contact-information.component';
 import { AdministrativeInformationComponent } from './administrative-information/administrative-information.component';
 import { ReviewApplicationComponent } from './review-application/review-application.component';
+import { ProgramComponent } from './program/program.component';
+import { ProgramContactInformationComponent } from './program-contact-information/program-contact-information.component';
 
 
 
@@ -14,9 +15,10 @@ import { ReviewApplicationComponent } from './review-application/review-applicat
 	declarations: [
 		ProgramApplicationComponent,
 		CgLiabilityComponent,
-		ContactInformationComponent,
 		AdministrativeInformationComponent,
-		ReviewApplicationComponent
+		ReviewApplicationComponent,
+		ProgramComponent,
+		ProgramContactInformationComponent
 	],
 	imports: [
 		CommonModule,
