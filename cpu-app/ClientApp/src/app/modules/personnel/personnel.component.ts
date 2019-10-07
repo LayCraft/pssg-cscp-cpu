@@ -44,7 +44,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
 		this.personService.getPersons('TODO: bork').subscribe(persons => {
 			this.stepperService.reset();
 			persons.forEach(person => {
-				this.stepperService.addStepperElement(new Person(person), this.nameAssemble(person.firstName, person.middleName, person.lastName));
+				this.stepperService.addStepperElement(new Person(person), this.nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
 			})
 		});
 	}
@@ -93,7 +93,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
 			title: '',
 			fundedFromVscp: null,
 		};
-		this.stepperService.addStepperElement(element, 'New Person');
+		this.stepperService.addStepperElement(element, 'New Person', null, 'person');
 	}
 	remove(id: string = this.currentStepperElement.id) {
 		// remove the element

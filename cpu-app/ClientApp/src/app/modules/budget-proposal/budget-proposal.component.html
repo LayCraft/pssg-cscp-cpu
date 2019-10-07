@@ -15,7 +15,9 @@
 					<h1>{{currentStepperElement.itemName}}</h1>
 				</div>
 				<div *ngFor="let item of stepperElements">
+					<!-- remove the old stepper elements off of the dom -->
 					<div *ngIf="isCurrentStepperElement(item)">
+						<!-- Check the discriminator -->
 						<div *ngIf="item.discriminator === 'program_overview'">
 							Program Overview
 						</div>
@@ -29,34 +31,9 @@
 						<div *ngIf="item.discriminator === 'authorization'">
 							Authorization
 						</div>
-						<!-- <pre>{{item.object|json}}</pre> -->
 					</div>
 				</div>
-				<!-- <pre>{{currentStepperElement|json}}</pre> -->
 			</div>
-			<!-- <div *ngFor="let item of stepperElementsTop">
-				<div *ngIf="isCurrentStepperElement(item)">
-					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[0].itemName">
-						<app-program-overview [stepperElement]="stepperElementsTop[0]"></app-program-overview>
-					</span>
-					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[1].itemName">
-						<app-program-budget-summary [stepperElement]="stepperElementsTop[1]"></app-program-budget-summary>
-					</span>
-				</div>
-			</div>
-			<div *ngFor="let item of stepperElementsPrograms">
-				<div *ngIf="isCurrentStepperElement(item)">
-					<app-program-budget [stepperElement]="item"></app-program-budget>
-				</div>
-			</div>
-			<div *ngFor="let item of stepperElementsBottom">
-				<div *ngIf="isCurrentStepperElement(item)">
-					<span *ngIf="currentStepperElement.itemName === 'Authorization'">
-						<app-program-authorizer></app-program-authorizer>
-					</span>
-				</div>
-			</div> -->
-
 		</div>
 	</div>
 </div>

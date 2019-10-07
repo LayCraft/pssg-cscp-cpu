@@ -25,7 +25,11 @@ export class StepperService {
 
 	formStates: string[] = ['untouched', 'incomplete', 'invalid', 'complete'];
 
-	addStepperElement(object: object, itemName: string, formState: string = this.formStates[0], discriminator?: string): iStepperElement {
+	addStepperElement(object: object, itemName: string, formState: string, discriminator?: string): iStepperElement {
+		if (!formState) {
+			// be sure that if the formstate parameter is null we set it
+			formState = this.formStates[0];
+		}
 		if (this.logging) { console.log('addStepperElement()') }
 		// collect the current stepper elements
 		const stepperElements: iStepperElement[] = this.stepperElements.getValue();
