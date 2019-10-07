@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Hours } from 'src/app/core/models/program-information.class';
+import { Hours } from 'src/app/core/models/program-application.class';
 
 @Component({
 	selector: 'app-hours',

@@ -1,6 +1,6 @@
 import { NgForm, AbstractControl } from '@angular/forms';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { iProgramMeta, ProgramInformation, Hours } from 'src/app/core/models/program-information.class';
+import { iProgramMeta, Hours, ProgramApplication } from 'src/app/core/models/program-application.class';
 import { ContactInformation } from 'src/app/core/models/contact-information.class';
 
 @Component({
@@ -15,7 +15,7 @@ export class ProgramPlannerComponent implements OnInit {
 	@Input() programMeta: iProgramMeta;
 
 	// the form model
-	programInformationForm: ProgramInformation;
+	programInformationForm: ProgramApplication;
 	differentProgramContact: boolean = false;
 	programContactForm: ContactInformation;
 	operationHours: Hours[] = [];
@@ -33,7 +33,7 @@ export class ProgramPlannerComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.programInformationForm = new ProgramInformation();
+		this.programInformationForm = new ProgramApplication();
 		this.programContactForm = new ContactInformation();
 		this.addOperationHours();
 		this.addStandbyHours();

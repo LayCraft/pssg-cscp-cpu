@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { iProgramInformation, iProgramMeta } from '../models/program-information.class';
+import { iProgramMeta, iProgramApplication } from '../models/program-application.class';
 
 @Injectable({
 	providedIn: 'root'
 })
-export class ProgramInformationService {
-	dummyProgram: iProgramInformation = {
+export class ProgramApplicationService {
+	dummyProgram: iProgramApplication = {
 		organizationId: '',
 		programId: '',
 		contractId: '',
@@ -31,11 +31,11 @@ export class ProgramInformationService {
 		this.dummyProgram.programLocation = "Bork"
 	}
 
-	getProgramInformation(organizationId: string, programId: string): Observable<iProgramInformation> {
+	getProgramInformation(organizationId: string, programId: string): Observable<iProgramApplication> {
 		const bork = { ...this.dummyProgram };
 		bork.organizationId = organizationId;
 		bork.programId = programId;
-		return of(bork as iProgramInformation);
+		return of(bork as iProgramApplication);
 	}
 	getProgramInformationMeta(organizationId: string, contractId: string): Observable<iProgramMeta[]> {
 		return of([

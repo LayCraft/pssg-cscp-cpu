@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatStepper } from '@angular/material';
-import { iProgramMeta } from 'src/app/core/models/program-information.class';
-import { ProgramInformationService } from 'src/app/core/services/program-information.service';
+import { iProgramMeta } from 'src/app/core/models/program-application.class';
 import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
 import { AdministrativeInformation, iAdministrativeInformation } from 'src/app/core/models/administrative-information.class';
 import { iContactInformation } from 'src/app/core/models/contact-information.class';
+import { ProgramApplicationService } from 'src/app/core/services/program-application.service';
 
 
 
@@ -31,7 +31,7 @@ export class ProgramPageComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private programInformationService: ProgramInformationService,
+		private programInformationService: ProgramApplicationService,
 		private boilerplateService: BoilerplateService,
 	) { }
 

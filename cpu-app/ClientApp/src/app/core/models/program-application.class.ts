@@ -9,7 +9,7 @@ export interface iProgramMeta {
 	programName: string;
 }
 
-export interface iProgramInformation {
+export interface iProgramApplication {
 	organizationId: string;
 	programId: string;
 	contractId: string;
@@ -46,7 +46,7 @@ export interface iHours {
 
 
 
-export class ProgramInformation implements iProgramInformation {
+export class ProgramApplication implements iProgramApplication {
 	organizationId: string;
 	programId: string;
 	contractId: string;
@@ -68,7 +68,7 @@ export class ProgramInformation implements iProgramInformation {
 	standbyHours: Hours[];
 	personnel: Person[];
 
-	constructor(prog?: iProgramInformation) {
+	constructor(prog?: iProgramApplication) {
 		if (prog) {
 			this.organizationId = prog.organizationId || null;
 			this.programId = prog.programId || null;

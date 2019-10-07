@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { BudgetProposalService } from 'src/app/core/services/budget-proposal.service';
 import { iBudgetProposal, iProgramBudget } from 'src/app/core/models/budget-proposal.class';
 import { iStepperElement, StepperService } from 'src/app/core/services/stepper.service';
-import { iProgramInformation } from 'src/app/core/models/program-information.class';
 
 @Component({
 	selector: 'app-budget-proposal',
@@ -30,6 +29,8 @@ export class BudgetProposalComponent implements OnInit {
 		this.organizationId = this.route.snapshot.paramMap.get('organizationId');
 		this.contractId = this.route.snapshot.paramMap.get('contractId');
 
+		// clear all of the old ones out before subscribing to the new ones.
+		this.stepperService.reset();
 		this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
 		this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
 		// set the default top and bottom list
