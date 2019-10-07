@@ -31,12 +31,10 @@
 							Administrative information
 						</div>
 						<div *ngIf="item.discriminator === 'commercial_general_liability_insurance'">
-							Commercial General Liability Insurance
+							<app-cg-liability [(cgLiability)]="item.object"></app-cg-liability>
 						</div>
 						<div *ngIf="item.discriminator === 'program'">
-							Program
-							{{item.object|json}}
-							<!-- <app-program-budget [stepperElement]="item"></app-program-budget> -->
+
 						</div>
 						<div *ngIf="item.discriminator === 'review_application'">
 							review application
