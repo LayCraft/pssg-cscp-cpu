@@ -8,6 +8,7 @@ import { AdministrativeInformationComponent } from './administrative-information
 import { ReviewApplicationComponent } from './review-application/review-application.component';
 import { ProgramComponent } from './program/program.component';
 import { ProgramContactInformationComponent } from './program-contact-information/program-contact-information.component';
+import { ProgramAdministrativeInformationComponent } from './program-administrative-information/program-administrative-information.component';
 
 
 
@@ -18,7 +19,8 @@ import { ProgramContactInformationComponent } from './program-contact-informatio
 		AdministrativeInformationComponent,
 		ReviewApplicationComponent,
 		ProgramComponent,
-		ProgramContactInformationComponent
+		ProgramContactInformationComponent,
+		ProgramAdministrativeInformationComponent
 	],
 	imports: [
 		CommonModule,

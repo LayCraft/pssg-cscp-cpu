@@ -28,7 +28,7 @@
 							<app-program-contact-information></app-program-contact-information>
 						</div>
 						<div *ngIf="item.discriminator === 'administrative_information'">
-							Administrative information
+							<app-program-administrative-information></app-program-administrative-information>
 						</div>
 						<div *ngIf="item.discriminator === 'commercial_general_liability_insurance'">
 							<app-cg-liability [(cgLiability)]="item.object"></app-cg-liability>
