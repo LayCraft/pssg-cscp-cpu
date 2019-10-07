@@ -4,42 +4,34 @@
 			<app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone>
 
 			<section class="application-nav sticky-top">
-				<app-icon-stepper [stepperElements]="stepperElementsCombined" [(stepperElement)]="currentStepperElement"></app-icon-stepper>
+				<app-icon-stepper></app-icon-stepper>
 			</section>
 		</div>
 
 		<div class="col-md-8">
 			<!-- Section is not in programs list -->
-
-			<div class="page-header">
-				<h1>{{currentStepperElement.itemName}}</h1>
-			</div>
-			<!-- Loop through items -->
-			<div *ngFor="let item of stepperElementsTop">
-				<!-- if the item name matches show this section -->
-				<div *ngIf="isCurrentStepperElement(item)">
-					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[0].itemName">
-						<app-program-overview [stepperElement]="stepperElementsTop[0]"></app-program-overview>
-					</span>
-					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[1].itemName">
-						<app-program-budget-summary [stepperElement]="stepperElementsTop[1]"></app-program-budget-summary>
-					</span>
+			<div *ngIf="stepperElements && currentStepperElement">
+				<div class="page-header">
+					<h1>{{currentStepperElement.itemName}}</h1>
 				</div>
-			</div>
-			<!-- Loop through items -->
-			<div *ngFor="let item of stepperElementsPrograms">
-				<!-- if the item name matches show this section -->
-				<div *ngIf="isCurrentStepperElement(item)">
-					<app-program-budget [stepperElement]="item"></app-program-budget>
-				</div>
-			</div>
-			<!-- Loop through items -->
-			<div *ngFor="let item of stepperElementsBottom">
-				<!-- if the item name matches show this section -->
-				<div *ngIf="isCurrentStepperElement(item)">
-					<span *ngIf="currentStepperElement.itemName === 'Authorization'">
-						<app-program-authorizer></app-program-authorizer>
-					</span>
+				<div *ngFor="let item of stepperElements">
+					<!-- remove the old stepper elements off of the dom -->
+					<div *ngIf="isCurrentStepperElement(item)">
+						<!-- Check the discriminator -->
+						<div *ngIf="item.discriminator === 'program_overview'">
+							Program Overview
+						</div>
+						<div *ngIf="item.discriminator === 'program_budget_summary'">
+							Program Buget Summary
+						</div>
+						<div *ngIf="item.discriminator === 'program'">
+							Program Budget
+							<app-program-budget [stepperElement]="item"></app-program-budget>
+						</div>
+						<div *ngIf="item.discriminator === 'authorization'">
+							Authorization
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

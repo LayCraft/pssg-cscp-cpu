@@ -1,0 +1,30 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<app-contract-tombstone [organizationId]="organizationId"></app-contract-tombstone>
+
+			<section class="application-nav sticky-top">
+				<div style="max-height: 90%;">
+					<app-icon-stepper></app-icon-stepper>
+				</div>
+				<button class="btn btn-primary mt-2 mr-2" (click)="add()">Add</button>
+				<button class="btn btn-primary mt-2 mr-2" (click)="remove()">Remove</button>
+				<button class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
+				<button class="btn btn-primary mt-2" (click)="save(true)">Save &amp; Exit</button>
+			</section>
+		</div>
+
+		<div class="col-md-8">
+			<div *ngIf="currentStepperElement">
+				<div class="page-header">
+					<h1>{{currentStepperElement.object['firstName']}} {{currentStepperElement.object['lastName']}}</h1>
+				</div>
+				<div *ngFor="let item of stepperElements">
+					<span *ngIf="item.id===currentStepperElement.id">
+						<app-person-editor [(person)]="item.object" (change)="onChange(item)"></app-person-editor>
+					</span>
+				</div>
+			</div>
+			<!-- <pre>List:{{stepperElements|json}}</pre> -->
+		</div>
+	</div>

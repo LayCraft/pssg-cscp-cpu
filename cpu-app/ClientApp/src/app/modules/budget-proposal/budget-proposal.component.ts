@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BudgetProposalService } from 'src/app/core/services/budget-proposal.service';
 import { iBudgetProposal, iProgramBudget } from 'src/app/core/models/budget-proposal.class';
-import { iStepperElement } from 'src/app/core/models/stepper-element';
+import { iStepperElement, StepperService } from 'src/app/core/services/stepper.service';
+import { iProgramInformation } from 'src/app/core/models/program-information.class';
 
 @Component({
 	selector: 'app-budget-proposal',
@@ -13,18 +14,15 @@ export class BudgetProposalComponent implements OnInit {
 	contractId: string;
 	organizationId: string;
 
-	// used for building the template
-	stepperElementsTop: iStepperElement[];
-	stepperElementsPrograms: iStepperElement[];
-	stepperElementsBottom: iStepperElement[];
-
+	programUuids: string[]; // a place to store all of the program uuids
 	// used for the stepper component
-	stepperElementsCombined: iStepperElement[];
 	currentStepperElement: iStepperElement;
+	stepperElements: iStepperElement[];
 
 	constructor(
 		private route: ActivatedRoute,
 		private budgetProposalService: BudgetProposalService,
+		private stepperService: StepperService
 	) { }
 
 	ngOnInit() {
@@ -32,36 +30,10 @@ export class BudgetProposalComponent implements OnInit {
 		this.organizationId = this.route.snapshot.paramMap.get('organizationId');
 		this.contractId = this.route.snapshot.paramMap.get('contractId');
 
+		this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
+		this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
 		// set the default top and bottom list
-		this.constructDefaultstepperElements(this.organizationId, this.contractId);
-
-		// get the budget proposal for this org and contract
-		this.budgetProposalService.getBudgetProposal(this.organizationId, this.contractId)
-			.subscribe((bp: iBudgetProposal) => {
-				// Many other ways to do this. Most hassle free is split the array, put the items in, concat
-				// map the programs into the right shape
-				this.stepperElementsPrograms = bp.programs.map((p: iProgramBudget) => {
-					return {
-						itemName: p.name,
-						formState: p.formState || 'untouched', //default is untouched
-						organizationId: this.organizationId,
-						contractId: this.contractId,
-						programId: p.programId
-					}
-				});
-				// make a complete list of all items
-				this.stepperElementsCombined = this.stepperElementsTop
-					.concat(this.stepperElementsPrograms)
-					.concat(this.stepperElementsBottom);
-
-				// set the first page to be the program overview so it isn't blank when they see the page the first time
-				this.currentStepperElement = this.stepperElementsCombined[0];
-			});
-	}
-
-	programBudgetUpdated(programBudget: iProgramBudget): void {
-		// handle the updates to the program budget. Write it out to a service or whatever
-		console.log(programBudget);
+		this.constructDefaultstepperElements();
 	}
 
 	isCurrentStepperElement(item: iStepperElement): boolean {
@@ -71,29 +43,41 @@ export class BudgetProposalComponent implements OnInit {
 		}
 		return false;
 	}
-	constructDefaultstepperElements(organizationId: string, contractId: string) {
-		// this is just a constructor
-		this.stepperElementsTop = [
-			{
-				itemName: 'Program Overview',
-				formState: 'info',
-				organizationId,
-				contractId
-			},
-			{
-				itemName: 'Program Budget Summary',
-				formState: 'info',
-				organizationId,
-				contractId
-			}
-		];
-		this.stepperElementsBottom = [
-			{
-				itemName: 'Authorization',
-				formState: 'untouched',
-				organizationId,
-				contractId
-			},
-		];
+	constructDefaultstepperElements() {
+		this.budgetProposalService.getBudgetProposal('foo', 'bar').subscribe((bp: iBudgetProposal) => {
+			// write the default beginning
+			[
+				{
+					itemName: 'Program Overview',
+					formState: 'info',
+					object: null,
+					discriminator: 'program_overview',
+				},
+				{
+					itemName: 'Program Budget Summary',
+					formState: 'info',
+					object: null,
+					discriminator: 'program_budget_summary',
+				}
+			].forEach((f: iStepperElement) => {
+				this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
+			});
+
+			bp.programs.forEach((p: iProgramBudget) => {
+				this.stepperService.addStepperElement(p, p.name, p.formState, 'program');
+			});
+
+			// Write the default end part
+			[
+				{
+					itemName: 'Authorization',
+					formState: 'untouched',
+					object: null,
+					discriminator: 'authorization'
+				},
+			].forEach((f: iStepperElement) => {
+				this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
+			});
+		});
 	}
 }

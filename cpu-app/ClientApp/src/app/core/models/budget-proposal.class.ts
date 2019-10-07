@@ -8,6 +8,7 @@ export interface iBudgetProposal {
 	formState: string; // untouched	incomplete	invalid	complete info
 }
 export interface iProgramBudget {
+	contractId: string;
 	programId: string;
 	name: string;
 	type: string;
@@ -26,19 +27,19 @@ export interface iExpenseItem {
 	itemName: string;
 	tooltip?: string;
 	totalCost: number;
-	fundedFromVCSP: number;
+	fundedFromVscp: number;
 }
 export class ExpenseItem {
 	itemName: string;
 	tooltip: string;
 	totalCost: number;
-	fundedFromVCSP: number;
+	fundedFromVscp: number;
 	constructor(xi?: iExpenseItem) {
 		if (xi) {
 			this.itemName = xi.itemName || null;
 			this.tooltip = xi.tooltip || null;
 			this.totalCost = xi.totalCost || null;
-			this.fundedFromVCSP = xi.fundedFromVCSP || null;
+			this.fundedFromVscp = xi.fundedFromVscp || null;
 		}
 	}
 }

@@ -16,7 +16,7 @@
 				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.totalCost" min="0" id="total_cost_{{i}}">
 			</td>
 			<td>
-				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVCSP" min="0" id="vscp_{{i}}">
+				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{i}}">
 			</td>
 			<td>
 				<!-- For spacing only -->
@@ -35,7 +35,7 @@
 				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.totalCost" min="0" id="total_cost_{{i}}">
 			</td>
 			<td>
-				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVCSP" min="0" id="vscp_{{i}}">
+				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{i}}">
 			</td>
 			<td (click)="removeExpenseItem(i)" class="align-middle">
 				<i class="fas fa-times-circle text-danger"></i>

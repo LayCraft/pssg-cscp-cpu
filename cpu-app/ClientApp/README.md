@@ -26,9 +26,10 @@ Within the `ClientApp/src/app` folder there are some key locations.
 │   ├───models (Classes and interfaces)
 │   └───services (All API calls in here)
 ├───landing-page (the front page)
-├───modules (Not lazy loaded but each represents a singule form.)
+├───modules (Not lazy loaded but each represents a single form.)
 │   ├───budget-proposal
 │   ├───expense-report
+│   ├───personnel
 │   └───program-application
 ├───shared
 │   └───components (General purpose components)

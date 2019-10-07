@@ -4,7 +4,7 @@
 			<app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone>
 
 			<section class="application-nav sticky-top">
-				<app-icon-stepper [stepperElements]="stepperElementsCombined" [(stepperElement)]="currentStepperElement"></app-icon-stepper>
+				<app-icon-stepper></app-icon-stepper>
 			</section>
 		</div>
 
@@ -28,7 +28,7 @@
 						<app-administrative-information [(administrativeInformation)]="administrativeInformationForm" (valid)="administrativeInformationIsValid($event)"></app-administrative-information>
 					</span>
 					<span *ngIf="currentStepperElement.itemName === stepperElementsTop[2].itemName">
-						<!-- <app-cg-liability></app-cg-liability> -->
+						<app-cg-liability [(cgLiability)]="cgLiability"></app-cg-liability>
 					</span>
 				</div>
 			</div>
@@ -36,7 +36,7 @@
 			<div *ngFor="let item of stepperElementsPrograms">
 				<!-- if the item name matches show this section -->
 				<div *ngIf="isCurrentStepperElement(item)">
-					Program stuff here
+					<pre>{{item.object|json}}</pre>
 					<!-- <app-program-planner [programMeta]="item"></app-program-planner> -->
 					<!-- <app-program-budget [stepperElement]="item"></app-program-budget> -->
 				</div>

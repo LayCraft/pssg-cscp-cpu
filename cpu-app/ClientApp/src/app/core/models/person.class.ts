@@ -13,7 +13,7 @@ export interface iPerson {
 	hoursWorkedPerWeek?: number;
 	annualSalary?: number;
 	benefits?: number;
-	fundedFromVCSP?: number;
+	fundedFromVscp?: number;
 	personId: string;
 }
 
@@ -31,7 +31,7 @@ export class Person implements iPerson {
 	hoursWorkedPerWeek?: number;
 	annualSalary?: number;
 	benefits?: number;
-	fundedFromVCSP?: number;
+	fundedFromVscp?: number;
 	personId: string;
 	constructor(person?: iPerson) {
 		if (person) {
@@ -48,12 +48,10 @@ export class Person implements iPerson {
 			this.hoursWorkedPerWeek = person.hoursWorkedPerWeek || null;
 			this.annualSalary = person.annualSalary || null;
 			this.benefits = person.benefits || null;
-			this.fundedFromVCSP = person.fundedFromVCSP || null;
-			// todo: this is basically a fake guid for mocking up the front end.
-			this.personId = person.personId || new Date().getMilliseconds().toString();
+			this.fundedFromVscp = person.fundedFromVscp || null;
+			this.personId = person.personId || null;
 		} else {
-
-			this.personId = new Date().getMilliseconds().toString();
+			this.address = new Address();
 		}
 	}
 }

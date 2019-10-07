@@ -1,0 +1,88 @@
+<fieldset [formGroup]="internalFormGroup" (input)="onChanges()">
+	<h2 class="blue-header">Personal Information {{person.firstName}}</h2>
+	<div class="form-row">
+		<div class="col-md">
+			<div class="form-group">
+				<label for="firstName" [class.required]="required">First Name</label>
+				<input formControlName="firstName" type="text" class="form-control" id="firstName">
+			</div>
+		</div>
+		<div class="col-md">
+			<div class="form-group">
+				<label for="middleName">Middle Name</label>
+				<input formControlName="middleName" type="text" class="form-control" id="middleName">
+			</div>
+		</div>
+		<div class="col-md">
+			<div class="form-group">
+				<label for="lastName" [class.required]="required">Last Name</label>
+				<input formControlName="lastName" type="text" class="form-control" id="lastName">
+			</div>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="col-md">
+			<div class="form-group">
+				<label [class.required]="required" for="city">Email</label>
+				<input type="text" class="form-control" id="email" name="email" formControlName="email" [required]="formHelper.isDirtyOrTouched(email)">
+				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(email)" style="display: inherit">
+					Ok
+				</div>
+				<div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(email)" style="display: inherit">
+					Try Again
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="col-md">
+			<div class="form-group">
+				<label [class.required]="required" for="city">Phone Number</label>
+				<input type="text" class="form-control" id="phone" name="phone" formControlName="phone" [required]="formHelper.isDirtyOrTouched(phone)">
+				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phone)" style="display: inherit">
+					Ok
+				</div>
+				<div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(phone)" style="display: inherit">
+					Try Again
+				</div>
+			</div>
+		</div>
+		<div class="col-md">
+			<div class="form-group">
+				<label for="fax">Fax Number</label>
+				<input type="text" class="form-control" id="fax" name="fax" formControlName="fax">
+				<div class="valid-feedback" [hidden]="formHelper.showValidFeedback(fax)" style="display: inherit">
+					Ok
+				</div>
+				<div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(fax)" style="display: inherit">
+					Try Again
+				</div>
+			</div>
+		</div>
+	</div>
+	<h2 class="blue-header">Employment Information</h2>
+	<div class="form-row">
+		<div class="col-md">
+			<div class="form-group">
+				<label for="title">Title</label>
+				<input formControlName="title" type="text" class="form-control" id="title">
+			</div>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="col-md">
+			<div class="form-group">
+				<label for="annualSalary">Annual Salary ($)</label>
+				<input formControlName="annualSalary" type="number" class="form-control" id="annualSalary">
+			</div>
+		</div>
+		<div class="col-md">
+			<div class="form-group">
+				<label for="hoursWorkedPerWeek">Hours Worked Per Week</label>
+				<input formControlName="hoursWorkedPerWeek" type="number" class="form-control" id="hoursWorkedPerWeek">
+			</div>
+		</div>
+	</div>
+	<h2 class="blue-header">Mailing Address</h2>
+	<app-address formControlName="address"></app-address>
+</fieldset>

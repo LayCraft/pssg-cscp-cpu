@@ -14,6 +14,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NotificationBannerComponent } from './components/notification-banner/notification-banner.component';
 import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
 import { RevenueSourceTableComponent } from './components/revenue-source-table/revenue-source-table.component';
+import { HoursComponent } from './components/hours/hours.component';
 
 @NgModule({
 	declarations: [
@@ -24,6 +25,7 @@ import { RevenueSourceTableComponent } from './components/revenue-source-table/r
 		ExpenseTableComponent,
 		FooterComponent,
 		HeaderComponent,
+		HoursComponent,
 		IconStepperComponent,
 		NotFoundComponent,
 		NotificationBannerComponent,
@@ -34,10 +36,6 @@ import { RevenueSourceTableComponent } from './components/revenue-source-table/r
 		ReactiveFormsModule,
 		FormsModule,
 		CommonModule,
-		MatCheckboxModule,
-		MatIconModule,
-		MatSlideToggleModule,
-		MatStepperModule,
 	],
 	exports: [
 		AddressComponent,
@@ -47,17 +45,12 @@ import { RevenueSourceTableComponent } from './components/revenue-source-table/r
 		ExpenseTableComponent,
 		FooterComponent,
 		HeaderComponent,
+		HoursComponent,
 		IconStepperComponent,
 		NotFoundComponent,
 		NotificationBannerComponent,
 		ProgramAuthorizerComponent,
 		RevenueSourceTableComponent,
-
-		// Material exports
-		MatCheckboxModule,
-		MatIconModule,
-		MatSlideToggleModule,
-		MatStepperModule,
 	]
 })
 export class SharedModule { }

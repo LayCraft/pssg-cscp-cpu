@@ -1,18 +1,21 @@
-<ul class="list-group">
-	<li *ngFor="let item of stepperElements" class="list-group-item d-flex justify-content-between align-items-center" [class.active]="item.itemName === stepperElement.itemName" (click)="onClick(item)">
+<!-- If the component has no elements don't render it even if requested -->
+<ul *ngIf="stepperElements && currentStepperElement" class="list-group">
+	<li *ngFor="let item of stepperElements" class="list-group-item d-flex justify-content-between align-items-center" [class.active]="item.id === currentStepperElement.id" (click)="onNavigate(item.id)">
 		<span>
 			{{item.itemName}}<br>
-			<small *ngIf="item.itemName !== stepperElement.itemName" [class]="levels[item.formState][1]">
+			<small *ngIf="item.id !== currentStepperElement.id" [class]="levels[item.formState][1]">
 				{{levels[item.formState][0]}}
 			</small>
-			<small *ngIf="item.itemName === stepperElement.itemName">
+			<small *ngIf="item.id === currentStepperElement.id">
 				{{levels[item.formState][0]}}
 			</small>
 		</span>
 
-		<i *ngIf="item.itemName !== stepperElement.itemName " [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
-		<span *ngIf=" item.itemName === stepperElement.itemName" class="badge badge-light">
+		<i *ngIf="item.id !== currentStepperElement.id " [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
+
+		<span *ngIf=" item.id === currentStepperElement.id" class="badge badge-light">
 			<i [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
 		</span>
 	</li>
 </ul>
+<!-- <pre>{{stepperElements|json}}</pre> -->

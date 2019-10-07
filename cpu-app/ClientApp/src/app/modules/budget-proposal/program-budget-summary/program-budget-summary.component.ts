@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { iStepperElement } from 'src/app/core/models/stepper-element';
+import { iStepperElement } from 'src/app/core/services/stepper.service';
 
 @Component({
 	selector: 'app-program-budget-summary',

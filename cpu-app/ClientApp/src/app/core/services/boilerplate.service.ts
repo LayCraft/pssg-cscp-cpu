@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { iContactInformation } from '../models/contact-information.class';
 export interface iOrganizationMeta {
+	organizationId: string;
 	organizationName: string;
 	contracts: string[];
 	emailAddress: string;
@@ -32,7 +33,8 @@ export class BoilerplateService {
 	} as iContactInformation;
 	meta = {
 		organizationName: 'BC Social',
-		contracts: ['179898-asa', '1230941-qux']
+		contracts: ['179898-asa', '1230941-qux'],
+		organizationId: '32989678532'
 	} as iOrganizationMeta;
 
 	constructor() { }

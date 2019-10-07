@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, forwardRef, OnInit, OnDestroy, Input } from '@angular/core';
 import { iContactInformation } from 'src/app/core/models/contact-information.class';
 import { FormControl, FormGroup, Validators, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { PHONE_NUMBER, EMAIL } from 'src/app/core/constants/regex.constants';
@@ -19,10 +19,13 @@ import { tap, takeUntil } from 'rxjs/operators';
 	]
 })
 export class ContactInformationComponent implements ControlValueAccessor, OnInit, OnDestroy {
+	@Input() title: string = 'Primary Contact Information';
+	@Input() required: boolean = false;
 	private _onChange = (_: any) => { };
 	private _onTouched = () => { };
 	private onDestroy$: Subject<void> = new Subject();
 
+	private contactInformation: iContactInformation;
 	// main form for collecting
 	public internalFormGroup: FormGroup;
 
@@ -58,17 +61,34 @@ export class ContactInformationComponent implements ControlValueAccessor, OnInit
 
 
 	buildForm() {
-		// build the form
-		this.internalFormGroup = new FormGroup({
-			'emailAddress': new FormControl('', [Validators.required, Validators.pattern(EMAIL)]),
-			'mainAddress': new FormControl('', Validators.required),
-			'mailingAddress': new FormControl(),
-			'phoneNumber': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
-			'faxNumber': new FormControl('', [Validators.pattern(PHONE_NUMBER)]),
-			'hasMailingAddress': new FormControl(false), // we don't care about this. It is untracked
-		});
+		if (this.required) {
+			// build the form
+			this.internalFormGroup = new FormGroup({
+				'emailAddress': new FormControl('', [Validators.required, Validators.pattern(EMAIL)]),
+				'mainAddress': new FormControl('', Validators.required),
+				'mailingAddress': new FormControl(),
+				'phoneNumber': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
+				'faxNumber': new FormControl('', [Validators.pattern(PHONE_NUMBER)]),
+				'hasMailingAddress': new FormControl(false), // we don't care about this. It is untracked
+			});
+		} else {
+			this.internalFormGroup = new FormGroup({
+				'emailAddress': new FormControl('', [Validators.pattern(EMAIL)]),
+				'mainAddress': new FormControl(''),
+				'mailingAddress': new FormControl(),
+				'phoneNumber': new FormControl('', [Validators.pattern(PHONE_NUMBER)]),
+				'faxNumber': new FormControl('', [Validators.pattern(PHONE_NUMBER)]),
+				'hasMailingAddress': new FormControl(false), // we don't care about this. It is untracked
+			});
+		}
+		// fill it with whatever we have if we have it
+		if (this.contactInformation) this.setValue();
 	}
 
+	setValue() {
+		// write the value into the form
+		this.internalFormGroup.setValue(this.contactInformation, { emitEvent: false });
+	}
 	// ******************ControlValueAccessor interface stuff below *************************
 	writeValue(contactInformation: iContactInformation): void {
 		// every time this form control is updated from the parent
@@ -81,7 +101,9 @@ export class ContactInformationComponent implements ControlValueAccessor, OnInit
 				mailingAddress: contactInformation.mailingAddress || null,
 				hasMailingAddress: contactInformation.mailingAddress ? true : false,
 			};
-			this.internalFormGroup.setValue(contactInformationCleaned, { emitEvent: false });
+			// save this for later.
+			this.contactInformation = contactInformationCleaned;
+			this.setValue();
 		}
 	}
 
