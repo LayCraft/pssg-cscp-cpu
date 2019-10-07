@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { iProgramApplication, iAnnualProgramApplication } from '../models/program-application.class';
-import { iAddress } from '../models/address.class';
 
 @Injectable({
 	providedIn: 'root'
