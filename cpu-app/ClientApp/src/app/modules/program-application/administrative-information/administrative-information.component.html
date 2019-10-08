@@ -29,22 +29,22 @@
 	</label>
 	<div class="form-group">
 		<div class="form-check form-check-inline">
-			<input #staffUnionized="ngModel" [(ngModel)]="administrativeInformationForm.staffUnionized" (change)="changeStaffUnionized()" class="form-check-input" type="radio" name="staffUnionized" id="staffUnionized1" [value]="true" required>
+			<input #staffUnionized="ngModel" [(ngModel)]="administrativeInformationForm.staffUnionized" (change)="changeStaffUnionized()" class="form-check-input" type="radio" name="staffUnionized" id="staffUnionized1" [value]="true">
 			<label class="form-check-label" for="staffUnionized1">Yes</label>
 		</div>
 		<div class="form-check form-check-inline">
-			<input #staffUnionized="ngModel" [(ngModel)]="administrativeInformationForm.staffUnionized" (change)="changeStaffUnionized()" class="form-check-input" type="radio" name="staffUnionized" id="staffUnionized2" [value]="false" required>
+			<input #staffUnionized="ngModel" [(ngModel)]="administrativeInformationForm.staffUnionized" (change)="changeStaffUnionized()" class="form-check-input" type="radio" name="staffUnionized" id="staffUnionized2" [value]="false">
 			<label class="form-check-label" for="staffUnionized2">No</label>
 		</div>
 	</div>
 	<div *ngIf="administrativeInformationForm.staffUnionized" class="form-group">
 		<label for="staffUnion" class="required">Which union?</label>
-		<input #staffUnion="ngModel" [(ngModel)]="administrativeInformationForm.staffUnion" type="text" class="form-control" id="staffUnion" name="staffUnion" #staffUnion="ngModel" placeholder="i.e. CUPE" required>
+		<input #staffUnion="ngModel" [(ngModel)]="administrativeInformationForm.staffUnion" type="text" class="form-control" id="staffUnion" name="staffUnion" #staffUnion="ngModel" placeholder="i.e. CUPE">
 		<div class="valid-feedback" [hidden]="showValidFeedback(staffUnion)" style="display: inherit">
 			Ok
 		</div>
 		<div class="invalid-feedback" [hidden]="showInvalidFeedback(staffUnion)" style="display: inherit">
-			Union name is required
+			Union name is
 		</div>
 	</div>
 	<label class="required">
@@ -52,19 +52,19 @@
 	</label>
 	<div class="form-group">
 		<div class="form-check form-check-inline">
-			<input #ccseaMemberType="ngModel" [(ngModel)]="administrativeInformationForm.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType1" id="ccseaMemberType1" value="Member" required>
+			<input #ccseaMemberType="ngModel" [(ngModel)]="administrativeInformationForm.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType1" id="ccseaMemberType1" value="Member">
 			<label class="form-check-label" for="ccseaMemberType1">
 				Member
 			</label>
 		</div>
 		<div class="form-check form-check-inline">
-			<input #ccseaMemberType="ngModel" [(ngModel)]="administrativeInformationForm.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType2" id="ccseaMemberType2" value="Associate Member" required>
+			<input #ccseaMemberType="ngModel" [(ngModel)]="administrativeInformationForm.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType2" id="ccseaMemberType2" value="Associate Member">
 			<label class="form-check-label" for="ccseaMemberType2">
 				Associate member
 			</label>
 		</div>
 		<div class="form-check form-check-inline">
-			<input #ccseaMemberType="ngModel" [(ngModel)]="administrativeInformationForm.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType3" id="ccseaMemberType3" value="Non-member" required>
+			<input #ccseaMemberType="ngModel" [(ngModel)]="administrativeInformationForm.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType3" id="ccseaMemberType3" value="Non-member">
 			<label class="form-check-label" for="ccseaMemberType3">
 				Non-member
 			</label>
@@ -76,13 +76,13 @@
 	</label>
 	<div class="form-group">
 		<div class="form-check form-check-inline">
-			<input #staffSubcontracted="ngModel" [(ngModel)]="administrativeInformationForm.staffSubcontracted" class="form-check-input" type="radio" name="staffSubcontracted1" id="staffSubcontracted1" [value]="true" required>
+			<input #staffSubcontracted="ngModel" [(ngModel)]="administrativeInformationForm.staffSubcontracted" class="form-check-input" type="radio" name="staffSubcontracted1" id="staffSubcontracted1" [value]="true">
 			<label class="form-check-label" for="staffSubcontracted1">
 				Yes
 			</label>
 		</div>
 		<div class="form-check form-check-inline">
-			<input #staffSubcontracted="ngModel" [(ngModel)]="administrativeInformationForm.staffSubcontracted" class="form-check-input" type="radio" name="staffSubcontracted2" id="staffSubcontracted2" [value]="false" required>
+			<input #staffSubcontracted="ngModel" [(ngModel)]="administrativeInformationForm.staffSubcontracted" class="form-check-input" type="radio" name="staffSubcontracted2" id="staffSubcontracted2" [value]="false">
 			<label class="form-check-label" for="staffSubcontracted2">
 				No
 			</label>
@@ -93,7 +93,7 @@
 	</div>
 	<!-- <div class="form-group">
     <div class="invalid-feedback" [hidden]="aiForm.form.valid || aiForm.form.pristine">
-      One or more required fields is missing from the submission.
+      One or more fields is missing from the submission.
     </div>
   </div> -->
 </form>
