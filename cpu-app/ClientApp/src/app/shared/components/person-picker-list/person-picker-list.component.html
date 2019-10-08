@@ -1,0 +1,6 @@
+<div *ngFor="let person of personList">
+	{{person.firstName}} {{person.middleName[0]|uppercase}} {{person.lastName}}
+	<button (click)="addPerson(person.personId)">Add</button>
+	<button (click)="removePerson(person.personId)">Remove</button>
+</div>
+<pre>{{personIdList|json}}</pre>

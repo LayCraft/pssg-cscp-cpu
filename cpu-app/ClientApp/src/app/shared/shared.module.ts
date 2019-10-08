@@ -13,7 +13,8 @@ import { NotificationBannerComponent } from './components/notification-banner/no
 import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
 import { RevenueSourceTableComponent } from './components/revenue-source-table/revenue-source-table.component';
 import { HoursComponent } from './components/hours/hours.component';
-import { PersonPickerComponent } from './person-picker/person-picker.component';
+import { PersonPickerComponent } from './components/person-picker/person-picker.component';
+import { PersonPickerListComponent } from './components/person-picker-list/person-picker-list.component';
 
 @NgModule({
 	declarations: [
@@ -30,6 +31,7 @@ import { PersonPickerComponent } from './person-picker/person-picker.component';
 		ProgramAuthorizerComponent,
 		RevenueSourceTableComponent,
 		PersonPickerComponent,
+		PersonPickerListComponent,
 	],
 	imports: [
 		ReactiveFormsModule,
@@ -50,6 +52,7 @@ import { PersonPickerComponent } from './person-picker/person-picker.component';
 		ProgramAuthorizerComponent,
 		RevenueSourceTableComponent,
 		PersonPickerComponent,
+		PersonPickerListComponent,
 	]
 })
 export class SharedModule { }
