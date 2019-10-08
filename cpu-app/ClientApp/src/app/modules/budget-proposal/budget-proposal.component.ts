@@ -45,38 +45,26 @@ export class BudgetProposalComponent implements OnInit {
 	}
 	constructDefaultstepperElements() {
 		this.budgetProposalService.getBudgetProposal('foo', 'bar').subscribe((bp: iBudgetProposal) => {
-			// write the default beginning
-			[
-				{
-					itemName: 'Program Overview',
-					formState: 'info',
-					object: null,
-					discriminator: 'program_overview',
-				},
-				{
-					itemName: 'Program Budget Summary',
-					formState: 'info',
-					object: null,
-					discriminator: 'program_budget_summary',
-				}
-			].forEach((f: iStepperElement) => {
-				this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
-			});
+			// write the default top element
+			const topper = {
+				itemName: 'Program Overview',
+				formState: 'info',
+				object: null,
+				discriminator: 'program_overview',
+			};
+			this.stepperService.addStepperElement(topper.object, topper.itemName, topper.formState, topper.discriminator);
 			// add the programs to the list
 			bp.programs.forEach((p: iProgramBudget) => {
 				this.stepperService.addStepperElement(new ProgramBudget(p), p.name, p.formState, 'program');
 			});
 			// Write the default end part
-			[
-				{
-					itemName: 'Authorization',
-					formState: 'untouched',
-					object: null,
-					discriminator: 'authorization'
-				},
-			].forEach((f: iStepperElement) => {
-				this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
-			});
+			const bottom = {
+				itemName: 'Authorization',
+				formState: 'untouched',
+				object: null,
+				discriminator: 'authorization'
+			};
+			this.stepperService.addStepperElement(bottom.object, bottom.itemName, bottom.formState, bottom.discriminator);
 		});
 	}
 }

@@ -35,7 +35,7 @@
 							<app-review-application></app-review-application>
 						</div>
 						<div *ngIf="item.discriminator === 'authorization'">
-							<app-program-authorizer></app-program-authorizer>
+							<app-program-authorizer [(signature)]="item.object"></app-program-authorizer>
 						</div>
 					</div>
 				</div>

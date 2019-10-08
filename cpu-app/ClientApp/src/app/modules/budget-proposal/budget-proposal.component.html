@@ -20,15 +20,11 @@
 						<div *ngIf="item.discriminator === 'program_overview'">
 							Program Overview
 						</div>
-						<div *ngIf="item.discriminator === 'program_budget_summary'">
-							Program Buget Summary
-						</div>
 						<div *ngIf="item.discriminator === 'program'">
-							Program Budget
 							<app-program-budget></app-program-budget>
 						</div>
 						<div *ngIf="item.discriminator === 'authorization'">
-							Authorization
+							<app-program-authorizer [(signature)]="item.object"></app-program-authorizer>
 						</div>
 					</div>
 				</div>

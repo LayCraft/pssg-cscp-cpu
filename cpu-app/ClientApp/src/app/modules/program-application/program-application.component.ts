@@ -119,41 +119,6 @@ export class ProgramApplicationComponent implements OnInit {
 			});
 
 		});
-		// // this is just a constructor
-		// [
-		// 	{
-		// 		itemName: 'Applicant Contact Information',
-		// 		formState: 'info',
-		// 		organizationId,
-		// 		contractId
-		// 	},
-		// 	{
-		// 		itemName: 'Applicant Administrative Information',
-		// 		formState: 'info',
-		// 		organizationId,
-		// 		contractId
-		// 	},
-		// 	{
-		// 		itemName: 'Commercial General Liability Insurance',
-		// 		formState: 'info',
-		// 		organizationId,
-		// 		contractId
-		// 	},
-		// ];
-		// this.stepperElementsBottom = [
-		// 	{
-		// 		itemName: 'Review Program Application',
-		// 		formState: 'untouched',
-		// 		organizationId,
-		// 		contractId
-		// 	},
-		// 	{
-		// 		itemName: 'Authorization',
-		// 		formState: 'untouched',
-		// 		organizationId,
-		// 		contractId
-		// 	},
-		// ];
 	}
 
 }
