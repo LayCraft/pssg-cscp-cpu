@@ -1,6 +1,15 @@
-<div *ngFor="let person of personList">
-	{{person.firstName}} {{person.middleName[0]|uppercase}} {{person.lastName}}
-	<button (click)="addPerson(person.personId)">Add</button>
-	<button (click)="removePerson(person.personId)">Remove</button>
-</div>
+<ul class="list-group">
+	<li *ngFor="let person of personList" class="list-group-item d-flex justify-content-between align-items-center">
+		{{person.firstName}} {{person.middleName[0]|uppercase}} {{person.lastName}}
+		<span *ngIf="personIdList.indexOf(person.personId)>=0" (click)="removePerson(person.personId)">
+			<i class="fas fa-times-circle text-danger"></i>
+		</span>
+		<span *ngIf="personIdList.indexOf(person.personId)<0" (click)="addPerson(person.personId)">
+			<i class="fas fa-check-circle text-success"></i>
+		</span>
+	</li>
+</ul>
+
+
+<!-- <button (click)="addPerson(person.personId)">Add</button> -->
 <pre>{{personIdList|json}}</pre>
