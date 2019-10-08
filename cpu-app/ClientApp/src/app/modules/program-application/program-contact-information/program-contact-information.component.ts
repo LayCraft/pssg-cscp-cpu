@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { iAnnualProgramApplication } from 'src/app/core/models/program-application.class';
-import { iContactInformation, ContactInformation } from 'src/app/core/models/contact-information.class';
-import { FormGroup, FormControl } from '@angular/forms';
+import { iContactInformation } from 'src/app/core/models/contact-information.class';
+import { FormHelper } from 'src/app/core/form-helper';
+import { EMAIL } from 'src/app/core/constants/regex.constants'
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
 
 @Component({
 	selector: 'app-program-contact-information',
@@ -13,8 +15,26 @@ export class ProgramContactInformationComponent implements OnInit {
 	// we should patch it into the data on change
 	@Input() contactInformation: iContactInformation;
 	@Output() contactInformationChange = new EventEmitter<iContactInformation>();
-	constructor() { }
+	@Input() required = true;
+	@Input() title = 'Primary Program Contact Information';
 
-	ngOnInit() { }
+	formHelper = new FormHelper();
+	contactInformationForm: FormGroup;
+	constructor(
+		private boilerplateService: BoilerplateService
+	) { }
 
+	ngOnInit() {
+		this.boilerplateService.getOrganizationBoilerplate('foobazqux').subscribe(ci => {
+			this.contactInformationForm = new FormGroup({
+				'contactInformation': new FormControl('', Validators.required)
+			});
+			this.contactInformationForm.controls['contactInformation'].setValue(ci);
+		});
+	}
+	onInput() {
+		console.log(this.contactInformationForm.value['contactInformation'])
+		// emit the information
+		this.contactInformationChange.emit(this.contactInformationForm.value['contactInformation']);
+	}
 }

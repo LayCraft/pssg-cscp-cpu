@@ -27,7 +27,8 @@ import { AdministrativeInformationComponent } from './administrative-information
 		SharedModule,
 	],
 	exports: [
-		ProgramApplicationComponent
+		ProgramApplicationComponent,
+		ProgramContactInformationComponent, // TODO: remove it
 	]
 })
 export class ProgramApplicationModule { }

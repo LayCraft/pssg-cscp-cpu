@@ -1,1 +1,4 @@
-<pre>{{contactInformation|json}}</pre>
+<div class="col" [formGroup]="contactInformationForm" (input)="onInput()">
+	<app-contact-information formControlName="contactInformation"></app-contact-information>
+</div>
+<!-- <pre>{{contactInformationForm.value|json}}</pre> -->
