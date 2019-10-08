@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iAnnualProgramApplication } from 'src/app/core/models/program-application.class';
-import { iContactInformation } from 'src/app/core/models/contact-information.class';
+import { iContactInformation, ContactInformation } from 'src/app/core/models/contact-information.class';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-program-contact-information',
@@ -14,7 +15,6 @@ export class ProgramContactInformationComponent implements OnInit {
 	@Output() contactInformationChange = new EventEmitter<iContactInformation>();
 	constructor() { }
 
-	ngOnInit() {
-	}
+	ngOnInit() { }
 
 }
