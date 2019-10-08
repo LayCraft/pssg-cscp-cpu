@@ -19,7 +19,7 @@ import { OrganizationProfileBoxComponent } from './components/organization-profi
 import { OrganizationProfilePageComponent } from './modules/organization-profile-page/organization-profile-page.component';
 import { PersonDetailsComponent } from './components/person-details/person-details.component';
 import { ProgramPlannerComponent } from './components/program-planner/program-planner.component';
-import { MaterialModule } from '../shared/material.module';
+import { MaterialModule } from '../modules/material.module';
 
 @NgModule({
 	imports: [
