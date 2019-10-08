@@ -29,9 +29,6 @@
 		</div>
 	</form>
 
-	<!-- These have been replaced with new contact information forms -->
-	<!-- <app-contact-information-DELETEME [(contactInformation)]='programContactForm' [title]="'Program Address'"></app-contact-information-DELETEME> -->
-
 	<div class="form-group">
 		<div class="form-check">
 			<input class="form-check-input" id="differentProgramContact" name="differentProgramContact" type="checkbox" [(ngModel)]='differentProgramContact' (click)="showProgramContact()">
@@ -43,8 +40,6 @@
 		<p>
 			Contact selector here. All contact information is set from there. (Pick the contact from a list. This information is set at an organization level.)
 		</p>
-		<!-- These have been replaced with new contact information forms -->
-		<!-- <app-contact-information-DELETEME [(contactInformation)]='programContactForm' [title]="'Program Contact Information'"></app-contact-information-DELETEME> -->
 	</span>
 	<h2 class="blue-header">Additional Paid Staff</h2>
 	<p>Contact selector here. All staff can be added by name and set at an organizational level.</p>
@@ -53,26 +48,6 @@
 	<!-- Generic Address component to collect program address -->
 	<!-- Program Contact -->
 
-	<!-- <div class="form-group">
-      <label for="phoneNumber">Phone Number</label>
-      <input [(ngModel)]="programInformationForm.phoneNumber" type="text" class="form-control" id="phoneNumber" name="phoneNumber" #phoneNumber="ngModel">
-      <div class="valid-feedback" [hidden]="showValidFeedback(phoneNumber)" style="display: inherit">
-        Ok
-      </div>
-      <div class="invalid-feedback" [hidden]="showInvalidFeedback(phoneNumber)" style="display: inherit">
-        Try Again
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="line1" class="required">Address Line 1</label>
-      <input [(ngModel)]="programInformationForm.programId" type="text" class="form-control" id="line1" name="line1" #line1="ngModel" required>
-      <div class="valid-feedback" [hidden]="showValidFeedback(line1)" style="display: inherit">
-        Ok
-      </div>
-      <div class="invalid-feedback" [hidden]="showInvalidFeedback(line1)" style="display: inherit">
-        Try Again
-      </div>
-    </div> -->
 </div>
 <div *ngIf="currentTab===tabs[1]">
 	<h2 class="blue-header">Program Schedule Hours of Operation (not including on-call / stand-by hours)</h2>

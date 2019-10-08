@@ -4,6 +4,8 @@ import { FormHelper } from 'src/app/core/form-helper';
 import { EMAIL } from 'src/app/core/constants/regex.constants'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
+import { Person } from 'src/app/core/models/person.class';
+import { PersonService } from 'src/app/core/services/person.service';
 
 @Component({
 	selector: 'app-program-contact-information',
@@ -20,21 +22,29 @@ export class ProgramContactInformationComponent implements OnInit {
 
 	formHelper = new FormHelper();
 	contactInformationForm: FormGroup;
+	persons: Person[] = [];
 	constructor(
-		private boilerplateService: BoilerplateService
+		private boilerplateService: BoilerplateService,
+		private personService: PersonService,
 	) { }
 
 	ngOnInit() {
+		// get the boilerplate from the service
 		this.boilerplateService.getOrganizationBoilerplate('foobazqux').subscribe(ci => {
 			this.contactInformationForm = new FormGroup({
 				'contactInformation': new FormControl('', Validators.required)
 			});
 			this.contactInformationForm.controls['contactInformation'].setValue(ci);
 		});
+		// set the persons list
+		this.personService.getPersons('borkityfoobar').subscribe(p => this.persons = p);
 	}
 	onInput() {
 		console.log(this.contactInformationForm.value['contactInformation'])
 		// emit the information
 		this.contactInformationChange.emit(this.contactInformationForm.value['contactInformation']);
+	}
+	pickExecutive(event) {
+		console.log(event);
 	}
 }

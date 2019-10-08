@@ -1,4 +1,5 @@
-<div class="col" [formGroup]="contactInformationForm" (input)="onInput()">
+<app-person-picker [persons]="persons" (person)="pickExecutive($event)"></app-person-picker>
+<div [formGroup]="contactInformationForm" (input)="onInput()">
 	<app-contact-information formControlName="contactInformation"></app-contact-information>
 </div>
 <!-- <pre>{{contactInformationForm.value|json}}</pre> -->

@@ -49,6 +49,7 @@ import { PersonPickerComponent } from './person-picker/person-picker.component';
 		NotificationBannerComponent,
 		ProgramAuthorizerComponent,
 		RevenueSourceTableComponent,
+		PersonPickerComponent,
 	]
 })
 export class SharedModule { }

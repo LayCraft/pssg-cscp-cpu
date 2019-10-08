@@ -1,1 +1,6 @@
-<p>person-picker works!</p>
+<div class="form-group">
+	<label for="personPicker">{{title}}</label>
+	<select class="form-control" [(ngModel)]="personId" (change)="onChange()" name="personPicker" id="personPicker">
+		<option *ngFor="let person of persons" [value]="person.personId">{{person.firstName}} {{person.middleName[0]|uppercase}} {{person.lastName}}</option>
+	</select>
+</div>
