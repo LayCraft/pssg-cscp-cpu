@@ -8,7 +8,7 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class TestService {
 	// this should query the test api
-	apiUrl = 'api/test';
+	apiUrl = 'api/justice/test';
 
 	constructor(private http: HttpClient) { }
 
