@@ -4,7 +4,7 @@ import { FormHelper } from 'src/app/core/form-helper';
 import { EMAIL } from 'src/app/core/constants/regex.constants'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BoilerplateService } from 'src/app/core/services/boilerplate.service';
-import { Person } from 'src/app/core/models/person.class';
+import { Person, iPerson } from 'src/app/core/models/person.class';
 import { PersonService } from 'src/app/core/services/person.service';
 
 @Component({
@@ -23,6 +23,11 @@ export class ProgramContactInformationComponent implements OnInit {
 	formHelper = new FormHelper();
 	contactInformationForm: FormGroup;
 	persons: Person[] = [];
+	hasBoardOfDirectors: boolean = false;
+
+	executive: iPerson;
+	boardContact: iPerson;
+
 	constructor(
 		private boilerplateService: BoilerplateService,
 		private personService: PersonService,
@@ -44,7 +49,16 @@ export class ProgramContactInformationComponent implements OnInit {
 		// emit the information
 		this.contactInformationChange.emit(this.contactInformationForm.value['contactInformation']);
 	}
-	pickExecutive(event) {
-		console.log(event);
+	pickExecutive(event: iPerson) {
+		this.executive = event;
+	}
+	pickBoardContact(event: iPerson) {
+		this.boardContact = event;
+	}
+	cleanBoardContact() {
+		// if the board of directors is false we need to remove the object.
+		if (!this.hasBoardOfDirectors) {
+			this.boardContact = null;
+		}
 	}
 }
