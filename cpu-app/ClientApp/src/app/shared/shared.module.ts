@@ -13,6 +13,7 @@ import { NotificationBannerComponent } from './components/notification-banner/no
 import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
 import { RevenueSourceTableComponent } from './components/revenue-source-table/revenue-source-table.component';
 import { HoursComponent } from './components/hours/hours.component';
+import { PersonPickerComponent } from './person-picker/person-picker.component';
 
 @NgModule({
 	declarations: [
@@ -28,6 +29,7 @@ import { HoursComponent } from './components/hours/hours.component';
 		NotificationBannerComponent,
 		ProgramAuthorizerComponent,
 		RevenueSourceTableComponent,
+		PersonPickerComponent,
 	],
 	imports: [
 		ReactiveFormsModule,
