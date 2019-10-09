@@ -7,49 +7,33 @@ import { iPerson } from 'src/app/core/models/person.class';
 	styleUrls: ['./person-picker-list.component.scss']
 })
 export class PersonPickerListComponent implements OnInit {
+	@Input() label = "Select all people who apply."
 	@Input() persons: iPerson[];
 	@Output() personsChange = new EventEmitter<iPerson[]>();
 	constructor() { }
 
 	personList: iPerson[] = [];
-	personIdList: string[] = []; // this is all of the selected elements
 
-	ngOnInit() {
-		// collect the properties of the person but not the object itself (Spread syntax)
-		for (let person of this.persons) {
-			this.personList.push({ ...person });
-		}
-	}
+	ngOnInit() { }
 	onInput() {
-		// use let to prevent overwriting
-		let collectPersons = this.personList.filter(p => {
-			// if the person's id is in the personIdList we keep it otherwise we omit it.
-			if (this.personIdList.indexOf(p.personId) >= 0) {
-				return true;
-			} else {
-				return false;
-			}
-		});
-		this.personsChange.emit(collectPersons);
+		// build a list for outputting.
+
 	}
 	addPerson(id: string) {
-		// if the item is not in the list we add it
-		if (this.personIdList.indexOf(id) === -1) {
-			this.personIdList.push(id);
-		}
-		this.onInput();
+		// if there is a matching person the length is positive and truthy. ! makes it false then ! again makes it true.
+		// if there is no matching person the lenght is 0 and falsy. ! makes it true then ! again makes it false.
+		const matchingPersons: boolean = !!this.personList.filter(p => p.personId === id).length;
+		console.log(matchingPersons);
+		// only add someone if they are not in there already
+		if (!matchingPersons)
+			// if the item is not in the list we add it
+			for (let person of this.persons) {
+				if (person.personId === id) {
+					this.personList.push(person);
+				}
+			}
 	}
 	removePerson(id: string) {
-		// even doing a check for the value in the array is O(n) so I'll just filter it.
-		// filter out any matching values
-		this.personIdList = this.personIdList.filter(p => {
-			if (p === id) {
-				// we do not want a matching one
-				return false;
-			} else {
-				return true;
-			}
-		});
-		this.onInput();
+		this.personList = this.personList.filter(p => !(p.personId === id));
 	}
 }

@@ -1,15 +1,17 @@
-<ul class="list-group">
+<ul class="list-group mb-2">
+	<!-- Only show the entry if they are in the list -->
 	<li *ngFor="let person of personList" class="list-group-item d-flex justify-content-between align-items-center">
 		{{person.firstName}} {{person.middleName[0]|uppercase}} {{person.lastName}}
-		<span *ngIf="personIdList.indexOf(person.personId)>=0" (click)="removePerson(person.personId)">
+		<span (click)="removePerson(person.personId)">
 			<i class="fas fa-times-circle text-danger"></i>
-		</span>
-		<span *ngIf="personIdList.indexOf(person.personId)<0" (click)="addPerson(person.personId)">
-			<i class="fas fa-check-circle text-success"></i>
 		</span>
 	</li>
 </ul>
-
-
-<!-- <button (click)="addPerson(person.personId)">Add</button> -->
-<pre>{{personIdList|json}}</pre>
+<div class="form-group">
+	<label for="personPicker">{{label}}</label>
+	<select class="form-control" name="personPicker" id="personPicker">
+		<option *ngFor="let person of persons" (click)="addPerson(person.personId)" [value]="person.personId">{{person.firstName}} {{person.middleName[0]|uppercase}} {{person.lastName}}</option>
+	</select>
+</div>
+<!-- <pre>{{personList|json}}</pre> -->
+<!-- <pre>{{persons|json}}</pre> -->
