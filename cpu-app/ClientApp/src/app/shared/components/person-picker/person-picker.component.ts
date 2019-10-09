@@ -12,12 +12,15 @@ export class PersonPickerComponent implements OnInit {
 	@Input() title = 'Select Person';
 	@Input() persons: iPerson[] = [];
 	@Output() person = new EventEmitter<iPerson>();
+	@Input() showCard = true;
 	personId: string; // assumed that all persons have unique ids
+	currentPerson: iPerson;
 
 	constructor() { }
 	ngOnInit() { }
 
 	onChange() {
+		this.currentPerson = this.persons.filter(p => p.personId === this.personId)[0];
 		// emit the first person that the selected ID matches 
 		this.person.emit(this.persons.filter(p => p.personId === this.personId)[0])
 	}

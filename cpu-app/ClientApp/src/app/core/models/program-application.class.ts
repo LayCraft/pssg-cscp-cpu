@@ -43,15 +43,15 @@ export class ProgramApplication implements iProgramApplication {
 	serviceArea: string;
 	phoneNumber: string;
 	faxNumber: string;
-	revenueSources: iRevenueSource[];
 
 	mainAddress: iAddress; // should be a class
 	mailingAddress: iAddress; // should be a class (for building forms from )
 	programContact: iPerson;
-	additionalStaff: iPerson[];
 
-	operationHours: iHours[];
-	standbyHours: iHours[];
+	revenueSources: iRevenueSource[] = [];
+	additionalStaff: iPerson[] = [];
+	operationHours: iHours[] = [];
+	standbyHours: iHours[] = [];
 
 	constructor(prog?: iProgramApplication) {
 		if (prog) {

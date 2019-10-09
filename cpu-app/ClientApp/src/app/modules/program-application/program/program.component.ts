@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iProgramApplication, ProgramApplication, Hours } from 'src/app/core/models/program-application.class';
-import { ContactInformation } from 'src/app/core/models/contact-information.class';
 import { AbstractControl } from '@angular/forms';
+import { iPerson } from 'src/app/core/models/person.class';
+import { PersonService } from 'src/app/core/services/person.service';
 
 @Component({
 	selector: 'app-program',
@@ -11,18 +12,17 @@ import { AbstractControl } from '@angular/forms';
 export class ProgramComponent implements OnInit {
 	@Input() programApplication: iProgramApplication;
 	@Output() programApplicationChange = new EventEmitter<iProgramApplication>();
-
+	required = false;
 	// the form model
 	programInformationForm: ProgramApplication;
 	differentProgramContact: boolean = false;
-	programContactForm: ContactInformation;
-	operationHours: Hours[] = [];
-	standbyHours: Hours[] = [];
 
 	currentTab: string;
 	tabs: string[];
+	persons: iPerson[] = [];
 
 	constructor(
+		private personService: PersonService,
 		// private boilerplateService: BoilerplateService,
 		// private programInformationService: ProgramInformationService,
 	) {
@@ -31,8 +31,8 @@ export class ProgramComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.personService.getPersons('foobarbazqux').subscribe(p => this.persons = p);
 		this.programInformationForm = new ProgramApplication();
-		this.programContactForm = new ContactInformation();
 		this.addOperationHours();
 		this.addStandbyHours();
 		// initialize the program information if it is supplied else make a new object
@@ -48,14 +48,20 @@ export class ProgramComponent implements OnInit {
 
 	showProgramContact() {
 		// Whether turned off or on we wipe out the contact information
-		this.programContactForm = new ContactInformation();
 		this.differentProgramContact = !this.differentProgramContact;
 	}
 
 	addOperationHours() {
-		this.operationHours.push(new Hours());
+		this.programInformationForm.operationHours.push(new Hours());
 	}
 	addStandbyHours() {
-		this.standbyHours.push(new Hours());
+		this.programInformationForm.standbyHours.push(new Hours());
+	}
+
+	onProgramContactChange(event: iPerson) {
+		this.programInformationForm.programContact = event;
+	}
+	onPaidStaffChange(event: iPerson[]) {
+		this.programInformationForm.additionalStaff = event;
 	}
 }

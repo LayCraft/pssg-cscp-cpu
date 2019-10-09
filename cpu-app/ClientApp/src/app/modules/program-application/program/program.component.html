@@ -8,7 +8,7 @@
 	<form #piForm="ngForm" (input)="onInput()">
 		<h2 class="blue-header">Main Program Information</h2>
 		<div class="form-group">
-			<label for="programLocation" class="required">Program Location</label>
+			<label for="programLocation" [class.required]="required">Program Location</label>
 			<input class="form-control" type="text" [(ngModel)]="programInformationForm.programLocation" id="programLocation" name="programLocation" #programLocation="ngModel">
 			<div class="valid-feedback" [hidden]="showValidFeedback(programLocation)" style="display: inherit">
 				Ok
@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="serviceArea" class="required">Service Area</label>
+			<label for="serviceArea" [class.required]="required">Service Area</label>
 			<input class="form-control" type="text" [(ngModel)]="programInformationForm.serviceArea" id="serviceArea" name="serviceArea" #serviceArea="ngModel">
 			<div class="valid-feedback" [hidden]="showValidFeedback(serviceArea)" style="display: inherit">
 				Ok
@@ -29,59 +29,30 @@
 		</div>
 	</form>
 
-	<!-- These have been replaced with new contact information forms -->
-	<!-- <app-contact-information-DELETEME [(contactInformation)]='programContactForm' [title]="'Program Address'"></app-contact-information-DELETEME> -->
-
 	<div class="form-group">
 		<div class="form-check">
 			<input class="form-check-input" id="differentProgramContact" name="differentProgramContact" type="checkbox" [(ngModel)]='differentProgramContact' (click)="showProgramContact()">
 			<label class="form-check-label" for="differentProgramContact"> The main program contact is different from the executive contact.</label>
 		</div>
 	</div>
-	<span *ngIf="differentProgramContact">
+	<span class="mb-4" *ngIf="differentProgramContact">
 		<h2 class="blue-header">Program Contact</h2>
-		<p>
-			Contact selector here. All contact information is set from there. (Pick the contact from a list. This information is set at an organization level.)
-		</p>
-		<!-- These have been replaced with new contact information forms -->
-		<!-- <app-contact-information-DELETEME [(contactInformation)]='programContactForm' [title]="'Program Contact Information'"></app-contact-information-DELETEME> -->
+		<app-person-picker [title]="'Please select a program contact.'" [persons]="persons" (person)="onProgramContactChange($event)"></app-person-picker>
+		<!-- {{programInformationForm.programContact|json}} -->
 	</span>
-	<h2 class="blue-header">Additional Paid Staff</h2>
-	<p>Contact selector here. All staff can be added by name and set at an organizational level.</p>
-	<!-- Program Location -->
-	<!-- Service Area -->
-	<!-- Generic Address component to collect program address -->
-	<!-- Program Contact -->
+	<h2 class="blue-header mt-2">Program Staff</h2>
+	<p>Missing staff can be added by name and set at an organizational level.</p>
+	<app-person-picker-list [persons]="persons" (personsChange)="onPaidStaffChange($event)"></app-person-picker-list>
 
-	<!-- <div class="form-group">
-      <label for="phoneNumber">Phone Number</label>
-      <input [(ngModel)]="programInformationForm.phoneNumber" type="text" class="form-control" id="phoneNumber" name="phoneNumber" #phoneNumber="ngModel">
-      <div class="valid-feedback" [hidden]="showValidFeedback(phoneNumber)" style="display: inherit">
-        Ok
-      </div>
-      <div class="invalid-feedback" [hidden]="showInvalidFeedback(phoneNumber)" style="display: inherit">
-        Try Again
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="line1" class="required">Address Line 1</label>
-      <input [(ngModel)]="programInformationForm.programId" type="text" class="form-control" id="line1" name="line1" #line1="ngModel" required>
-      <div class="valid-feedback" [hidden]="showValidFeedback(line1)" style="display: inherit">
-        Ok
-      </div>
-      <div class="invalid-feedback" [hidden]="showInvalidFeedback(line1)" style="display: inherit">
-        Try Again
-      </div>
-    </div> -->
 </div>
 <div *ngIf="currentTab===tabs[1]">
 	<h2 class="blue-header">Program Schedule Hours of Operation (not including on-call / stand-by hours)</h2>
-	<div *ngFor="let hours of operationHours">
+	<div *ngFor="let hours of programInformationForm.operationHours">
 		<app-hours [(hours)]="hours"></app-hours>
 	</div>
 	<button class="btn btn-secondary mt-2" (click)="addOperationHours()">Add Operation Hours</button>
 	<h2 class="blue-header">Program On-call / Stand-by Hours of Operation</h2>
-	<div *ngFor="let hours of standbyHours">
+	<div *ngFor="let hours of programInformationForm.standbyHours">
 		<app-hours [(hours)]="hours"></app-hours>
 	</div>
 	<button class="btn btn-secondary mt-2" (click)="addStandbyHours()">Add On-call/Stand-by Hours</button>
@@ -101,29 +72,6 @@ We need to know if this is a Violence Against Women Program.</pre>
 		<p>For Victims Service Programs only Have you submitted monthly OPRA reports to the end of Nov 2019</p>
 		<p>For Violence Against Women Programs only Have you submitted monthly STV-DES reports to the end of Nov 2019</p>
 
-
-		<!-- <div class="form-check">
-        <input #compliantEmploymentStandardsAct="ngModel" [(ngModel)]="programInformationForm.compliantEmploymentStandardsAct" class="form-check-input" type="checkbox" value="" id="compliantEmploymentStandardsAct" name="compliantEmploymentStandardsAct">
-        <label class="form-check-label" for="compliantEmploymentStandardsAct">
-          Employment Standards Act of BC?
-        </label>
-      </div> -->
-		<!-- <div class="form-check">
-        <input #compliantHumanRights="ngModel" [(ngModel)]="administrativeInformationForm.compliantHumanRights" class="form-check-input" type="checkbox" value="" id="compliantHumanRights" name="compliantHumanRights">
-        <label class="form-check-label" for="compliantHumanRights">
-          BC's Human Rights Code?
-        </label>
-      </div>
-      <div class="form-check">
-        <input #compliantWorkersCompensation="ngModel" [(ngModel)]="administrativeInformationForm.compliantWorkersCompensation" class="form-check-input" type="checkbox" value="" id="compliantWorkersCompensation" name="compliantWorkersCompensation"> <label class="form-check-label" for="compliantWorkersCompensation">
-          Worker's Compensation Act (WorkSafe BC)?
-        </label>
-      </div>
-      <div class="form-check">
-          <input #compliantWorkersCompensation="ngModel" [(ngModel)]="administrativeInformationForm.compliantWorkersCompensation" class="form-check-input" type="checkbox" value="" id="compliantWorkersCompensation" name="compliantWorkersCompensation"> <label class="form-check-label" for="compliantWorkersCompensation">
-            Worker's Compensation Act (WorkSafe BC)?
-          </label>
-        </div> -->
 	</div>
 
 </div>
