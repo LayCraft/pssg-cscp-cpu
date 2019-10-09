@@ -17,23 +17,27 @@ export class PersonPickerListComponent implements OnInit {
 	ngOnInit() { }
 	onInput() {
 		// build a list for outputting.
-
+		this.personsChange.emit(this.personList);
 	}
 	addPerson(id: string) {
 		// if there is a matching person the length is positive and truthy. ! makes it false then ! again makes it true.
 		// if there is no matching person the lenght is 0 and falsy. ! makes it true then ! again makes it false.
 		const matchingPersons: boolean = !!this.personList.filter(p => p.personId === id).length;
-		console.log(matchingPersons);
+
 		// only add someone if they are not in there already
-		if (!matchingPersons)
+		if (!matchingPersons) {
 			// if the item is not in the list we add it
 			for (let person of this.persons) {
 				if (person.personId === id) {
 					this.personList.push(person);
 				}
 			}
+			// emit
+			this.onInput();
+		}
 	}
 	removePerson(id: string) {
 		this.personList = this.personList.filter(p => !(p.personId === id));
+		this.onInput();
 	}
 }

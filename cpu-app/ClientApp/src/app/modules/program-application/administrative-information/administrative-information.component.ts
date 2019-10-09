@@ -18,7 +18,7 @@ export class AdministrativeInformationComponent implements OnInit {
 	@Output() administrativeInformationChange = new EventEmitter<AdministrativeInformation>();
 	// is the contents of the form valid?
 	@Output() valid = new EventEmitter<boolean>();
-
+	required = false;
 	// form model
 	administrativeInformationForm: AdministrativeInformation;
 
@@ -60,5 +60,9 @@ export class AdministrativeInformationComponent implements OnInit {
 		if (!this.administrativeInformationForm.staffUnionized) {
 			this.administrativeInformationForm.staffUnion = null;
 		}
+	}
+	onSubcontractedStaffChange(event: iPerson[]) {
+		// assign the array to the form
+		this.administrativeInformationForm.staffSubcontractedPersons = event;
 	}
 }
