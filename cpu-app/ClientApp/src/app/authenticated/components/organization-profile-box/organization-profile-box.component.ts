@@ -1,17 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { iContactInformation } from 'src/app/core/models/contact-information.class';
+import { Component, OnInit } from '@angular/core';
+import { iOrganizationMeta, BoilerplateService } from 'src/app/core/services/boilerplate.service';
 
 @Component({
-  selector: 'app-organization-profile-box',
-  templateUrl: './organization-profile-box.component.html',
-  styleUrls: ['./organization-profile-box.component.scss']
+	selector: 'app-organization-profile-box',
+	templateUrl: './organization-profile-box.component.html',
+	styleUrls: ['./organization-profile-box.component.scss']
 })
 export class OrganizationProfileBoxComponent implements OnInit {
-  @Input() contactInformation: iContactInformation;
-  constructor() { }
+	organizationMeta: iOrganizationMeta;
+	constructor(
+		private boilerplateService: BoilerplateService,
+	) { }
 
-  ngOnInit() {
-
-  }
+	ngOnInit() {
+		this.boilerplateService.getOrganizationMeta('TODO').subscribe(m => this.organizationMeta = m);
+	}
 
 }

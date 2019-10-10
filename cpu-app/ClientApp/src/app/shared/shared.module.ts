@@ -1,38 +1,58 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './components/header/header.component';
+import { AddressComponent } from './components/address/address.component';
+import { ContactInformationComponent } from './components/contact-information/contact-information.component';
+import { ContractTombstoneComponent } from './components/contract-tombstone/contract-tombstone.component';
+import { ExpenseTableComponent } from './components/expense-table/expense-table.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
+import { IconStepperComponent } from './components/icon-stepper/icon-stepper.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NotificationBannerComponent } from './components/notification-banner/notification-banner.component';
-import { MatStepperModule, MatCheckboxModule, MatSlideToggleModule, MatIconModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { ProgramAuthorizerComponent } from './components/program-authorizer/program-authorizer.component';
+import { RevenueSourceTableComponent } from './components/revenue-source-table/revenue-source-table.component';
+import { HoursComponent } from './components/hours/hours.component';
+import { PersonPickerComponent } from './components/person-picker/person-picker.component';
+import { PersonPickerListComponent } from './components/person-picker-list/person-picker-list.component';
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    FooterComponent,
-    NotFoundComponent,
-    NotificationBannerComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatStepperModule,
-    MatCheckboxModule,
-    MatSlideToggleModule,
-    MatIconModule,
-  ],
-  exports: [
-    HeaderComponent,
-    FooterComponent,
-    NotFoundComponent,
-    NotificationBannerComponent,
-
-    // Material exports
-    MatStepperModule,
-    MatCheckboxModule,
-    MatSlideToggleModule,
-    MatIconModule,
-  ]
+	declarations: [
+		AddressComponent,
+		ContactInformationComponent,
+		ContractTombstoneComponent,
+		ExpenseTableComponent,
+		FooterComponent,
+		HeaderComponent,
+		HoursComponent,
+		IconStepperComponent,
+		NotFoundComponent,
+		NotificationBannerComponent,
+		ProgramAuthorizerComponent,
+		RevenueSourceTableComponent,
+		PersonPickerComponent,
+		PersonPickerListComponent,
+	],
+	imports: [
+		ReactiveFormsModule,
+		FormsModule,
+		CommonModule,
+	],
+	exports: [
+		AddressComponent,
+		ContactInformationComponent,
+		ContractTombstoneComponent,
+		ExpenseTableComponent,
+		FooterComponent,
+		HeaderComponent,
+		HoursComponent,
+		IconStepperComponent,
+		NotFoundComponent,
+		NotificationBannerComponent,
+		ProgramAuthorizerComponent,
+		RevenueSourceTableComponent,
+		PersonPickerComponent,
+		PersonPickerListComponent,
+	]
 })
 export class SharedModule { }

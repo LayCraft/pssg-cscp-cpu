@@ -1,0 +1,34 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone>
+
+			<section class="application-nav sticky-top">
+				<app-icon-stepper></app-icon-stepper>
+			</section>
+		</div>
+
+		<div class="col-md-8">
+			<div *ngIf="stepperElements && currentStepperElement">
+				<div class="page-header">
+					<h1>{{currentStepperElement.itemName}}</h1>
+				</div>
+				<div *ngFor="let item of stepperElements">
+					<!-- remove the old stepper elements off of the dom -->
+					<div *ngIf="isCurrentStepperElement(item)">
+						<!-- Check the discriminator -->
+						<div *ngIf="item.discriminator === 'program_overview'">
+							Program Overview
+						</div>
+						<div *ngIf="item.discriminator === 'program'">
+							<app-program-budget></app-program-budget>
+						</div>
+						<div *ngIf="item.discriminator === 'authorization'">
+							<app-program-authorizer [(signature)]="item.object"></app-program-authorizer>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

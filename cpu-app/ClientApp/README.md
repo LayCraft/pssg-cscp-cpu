@@ -6,9 +6,35 @@ What it has:
 - Angular Material style sheet to make the components match government colours.
 - Angular Material Stepper and a few other components loaded into the unauthenticated area.
 
-# Community Programs Unit
+# Victims Services Community Programs Unit
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.1.
+## Angular Structure
+
+Within the `ClientApp/src/app` folder there are some key locations.
+
+```
+├───anonymous (Logged out page module for lazy loading)
+│   ├───anonymous-form
+│   └───mat-demo
+├───authenticated (Route guarded lazy loaded module)
+│   ├───components (subcomponents shared across pages)
+│   └───modules (components that represent a page or collection of components)
+├───core (Models and other data related elements)
+│   ├───constants (Regex validation)
+│   ├───guards (Check for authentication/authorization)
+│   ├───interceptors (If we get a particular response code from BE we catch it here.)
+│   ├───models (Classes and interfaces)
+│   └───services (All API calls in here)
+├───landing-page (the front page)
+├───modules (Not lazy loaded but each represents a single form.)
+│   ├───budget-proposal
+│   ├───expense-report
+│   ├───personnel
+│   └───program-application
+├───shared
+│   └───components (General purpose components)
+└───test (This is a component for experimentation.)
+```
 
 ## Development server
 
@@ -22,7 +48,7 @@ When adding or removing packages to the docker container it adds the additional 
 
 > `docker-clean.sh` Removes old and dead containers.
 
-> `docker-shell.sh` Opens a shell into the embc-app-frontend. This allows you to inspect installed dependencies in the npm directory or make changes to packages without rebuilding the container.
+> `docker-shell.sh` Opens a shell into the cpu-public-app-frontend. This allows you to inspect installed dependencies in the npm directory or make changes to packages without rebuilding the container.
 
 > `docker-rebuild.sh` Rebuild the docker container after making a change to the node packages. Takes time and only needs to be done to initialize docker or update after module change.
 
@@ -31,6 +57,8 @@ When adding or removing packages to the docker container it adds the additional 
 > `docker-halt.sh` If a window crashed or closed and left the docker container running it can generate errors about port 4200 being in-use it can be helpful to manually stop the docker container and ensure that the port is available. (Halt for tab completion.)
 
 ## Code scaffolding
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.1.
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 

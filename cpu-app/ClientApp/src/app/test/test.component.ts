@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-class DummyForm {
-  postal: string;
-}
+import { TestService } from '../core/services/test.service';
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.scss']
+	selector: 'app-test',
+	templateUrl: './test.component.html',
+	styleUrls: ['./test.component.scss']
 })
 export class TestComponent implements OnInit {
-  form: DummyForm;
-  postalPattern = /^[A-Za-z][0-9][A-Za-z][ ]?[0-9][A-Za-z][0-9]$/;
-  constructor() {
-    this.form = new DummyForm();
-  }
+	test: any;
+	constructor(
+		private testService: TestService
+	) { }
 
-  ngOnInit() {
-
-  }
+	ngOnInit() { }
+	onClick() {
+		this.testService.getTest().subscribe(
+			x => this.test = x,
+			err => console.log(err),
+			() => console.log('Finished')
+		);
+	}
 }

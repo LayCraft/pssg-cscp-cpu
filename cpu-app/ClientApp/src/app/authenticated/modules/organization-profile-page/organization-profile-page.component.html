@@ -1,0 +1,16 @@
+<div class="container">
+	<div class="row">
+		<div class="col" [formGroup]="contactInformationForm">
+			<app-contact-information formControlName="contactInformation" [required]="true"></app-contact-information>
+		</div>
+	</div>
+	<div class="row mt-4">
+		<div class="col">
+			<!-- Button states for the form: Can submit, Can't submit, (TODO: in process of submitting) -->
+			<button *ngIf="hasCriticalParts()" (click)="onSave()" class="btn btn-primary">Save</button>
+			<button *ngIf="!hasCriticalParts()" class="btn btn-primary" disabled>Save</button>
+		</div>
+	</div>
+</div>
+<!-- <pre>Valid:{{contactInformationForm.get('contactInformation').valid}}{{contactInformationForm.value |json}}</pre> -->
+<!-- <pre>{{boilerplate}}</pre> -->

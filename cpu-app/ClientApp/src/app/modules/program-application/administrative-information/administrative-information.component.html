@@ -1,0 +1,104 @@
+<form #aiForm="ngForm" (input)="onInput()">
+	<h2 class="blue-header">Labour Compliance</h2>
+
+	<div class="form-group">
+		<label for="hrPolicies" [class.required]="required">
+			Do your organization's human resource policies and procedures comply with the
+		</label>
+		<div class="form-check">
+			<input #compliantEmploymentStandardsAct="ngModel" [(ngModel)]="administrativeInformationForm.compliantEmploymentStandardsAct" class="form-check-input" type="checkbox" value="" id="compliantEmploymentStandardsAct" name="compliantEmploymentStandardsAct">
+			<label class="form-check-label" for="compliantEmploymentStandardsAct">
+				Employment Standards Act of BC?
+			</label>
+		</div>
+		<div class="form-check">
+			<input #compliantHumanRights="ngModel" [(ngModel)]="administrativeInformationForm.compliantHumanRights" class="form-check-input" type="checkbox" value="" id="compliantHumanRights" name="compliantHumanRights">
+			<label class="form-check-label" for="compliantHumanRights">
+				BC's Human Rights Code?
+			</label>
+		</div>
+		<div class="form-check">
+			<input #compliantWorkersCompensation="ngModel" [(ngModel)]="administrativeInformationForm.compliantWorkersCompensation" class="form-check-input" type="checkbox" value="" id="compliantWorkersCompensation" name="compliantWorkersCompensation"> <label class="form-check-label" for="compliantWorkersCompensation">
+				Worker's Compensation Act (WorkSafe BC)?
+			</label>
+		</div>
+	</div>
+
+	<label [class.required]="required">
+		Are the staff of the program for which you are applying unionized?
+	</label>
+	<div class="form-group">
+		<div class="form-check form-check-inline">
+			<input #staffUnionized="ngModel" [(ngModel)]="administrativeInformationForm.staffUnionized" (change)="changeStaffUnionized()" class="form-check-input" type="radio" name="staffUnionized" id="staffUnionized1" [value]="true">
+			<label class="form-check-label" for="staffUnionized1">Yes</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input #staffUnionized="ngModel" [(ngModel)]="administrativeInformationForm.staffUnionized" (change)="changeStaffUnionized()" class="form-check-input" type="radio" name="staffUnionized" id="staffUnionized2" [value]="false">
+			<label class="form-check-label" for="staffUnionized2">No</label>
+		</div>
+	</div>
+	<div *ngIf="administrativeInformationForm.staffUnionized" class="form-group">
+		<label for="staffUnion" [class.required]="required">Which union?</label>
+		<input #staffUnion="ngModel" [(ngModel)]="administrativeInformationForm.staffUnion" type="text" class="form-control" id="staffUnion" name="staffUnion" #staffUnion="ngModel" placeholder="i.e. CUPE">
+		<div class="valid-feedback" [hidden]="showValidFeedback(staffUnion)" style="display: inherit">
+			Ok
+		</div>
+		<div class="invalid-feedback" [hidden]="showInvalidFeedback(staffUnion)" style="display: inherit">
+			Union name is
+		</div>
+	</div>
+	<label [class.required]="required">
+		What is your organization's membership status with the Community Social Services Employers Association of BC (CSSEA)?
+	</label>
+	<div class="form-group">
+		<div class="form-check form-check-inline">
+			<input #ccseaMemberType="ngModel" [(ngModel)]="administrativeInformationForm.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType1" id="ccseaMemberType1" value="Member">
+			<label class="form-check-label" for="ccseaMemberType1">
+				Member
+			</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input #ccseaMemberType="ngModel" [(ngModel)]="administrativeInformationForm.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType2" id="ccseaMemberType2" value="Associate Member">
+			<label class="form-check-label" for="ccseaMemberType2">
+				Associate member
+			</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input #ccseaMemberType="ngModel" [(ngModel)]="administrativeInformationForm.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType3" id="ccseaMemberType3" value="Non-member">
+			<label class="form-check-label" for="ccseaMemberType3">
+				Non-member
+			</label>
+		</div>
+	</div>
+
+	<label [class.required]="required">
+		Are any of your program staff sub-contracted to provide services?
+	</label>
+	<div class="form-group">
+		<div class="form-check form-check-inline">
+			<input #staffSubcontracted="ngModel" [(ngModel)]="administrativeInformationForm.staffSubcontracted" class="form-check-input" type="radio" name="staffSubcontracted1" id="staffSubcontracted1" [value]="true">
+			<label class="form-check-label" for="staffSubcontracted1">
+				Yes
+			</label>
+		</div>
+		<div class="form-check form-check-inline">
+			<input #staffSubcontracted="ngModel" [(ngModel)]="administrativeInformationForm.staffSubcontracted" class="form-check-input" type="radio" name="staffSubcontracted2" id="staffSubcontracted2" [value]="false">
+			<label class="form-check-label" for="staffSubcontracted2">
+				No
+			</label>
+		</div>
+	</div>
+	<div class="form-group" *ngIf="administrativeInformationForm.staffSubcontracted">
+		<h2 class="blue-header">Subcontracted Staff</h2>
+		<app-person-picker-list [persons]="persons" (personsChange)="onSubcontractedStaffChange($event)"></app-person-picker-list>
+	</div>
+	<!-- <div class="form-group">
+    <div class="invalid-feedback" [hidden]="aiForm.form.valid || aiForm.form.pristine">
+      One or more fields is missing from the submission.
+    </div>
+  </div> -->
+</form>
+
+<!-- Please upload your organization's program application a copy of your
+      Society's current Annual Report, or minutes from the last Annual General
+      Meeting? -->

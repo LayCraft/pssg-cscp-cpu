@@ -1,0 +1,53 @@
+<table class="table table-striped">
+	<thead>
+		<th scope="row"></th>
+		<th scope="row">Total Cost</th>
+		<th scope="row">Funded From VSCP</th>
+		<th scope="row">
+			<!-- For spacing only -->
+		</th>
+	</thead>
+	<tbody>
+		<tr *ngFor="let line of defaultExpenseItemsForm; let i=index">
+			<td>
+				{{line.itemName}}
+			</td>
+			<td>
+				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.totalCost" min="0" id="total_cost_{{i}}">
+			</td>
+			<td>
+				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{i}}">
+			</td>
+			<td>
+				<!-- For spacing only -->
+			</td>
+		</tr>
+		<tr *ngIf="otherDescription">
+			<th scope="col" colspan="4">
+				{{this.otherDescription}}
+			</th>
+		</tr>
+		<tr *ngFor="let line of expenseItemsForm; let i=index">
+			<td>
+				<input class="form-control" type="text" [(ngModel)]="line.itemName" min="0" id="expense_name_{{i}}">
+			</td>
+			<td>
+				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.totalCost" min="0" id="total_cost_{{i}}">
+			</td>
+			<td>
+				<input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{i}}">
+			</td>
+			<td (click)="removeExpenseItem(i)" class="align-middle">
+				<i class="fas fa-times-circle text-danger"></i>
+			</td>
+		</tr>
+		<tr>
+			<th scope="col">Total</th>
+			<td>${{totalTotalCost}}</td>
+			<td>${{totalVscp}}</td>
+			<td (click)="addExpenseItem()" class="align-middle">
+				<i class="fas fa-plus-circle text-success"></i>
+			</td>
+		</tr>
+	</tbody>
+</table>

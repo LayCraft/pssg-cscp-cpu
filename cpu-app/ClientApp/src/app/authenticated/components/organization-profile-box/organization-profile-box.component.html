@@ -1,22 +1,19 @@
 <div class="card">
-  <div class="card-header">
-    Organization Profile
-  </div>
-  <div class="card-body">
-    <div class="card-title">
-      {{contactInformation.organizationName}}
-    </div>
-    <p class="card-text">
-      <strong>Phone</strong><br>
-      <a href="tel:{{contactInformation.phoneNumber}}">{{contactInformation.phoneNumber}}</a>
-    </p>
-    <p class="card-text">
-      <strong>Email</strong><br>
-      <a href="mailto:{{contactInformation.emailAddress}}">{{contactInformation.emailAddress}}</a>
-    </p>
-  </div>
-  <div class="card-footer">
-    <a routerLink="/authenticated/profile" class="btn btn-primary">Edit Organization Profile</a>
-    <a routerLink="/authenticated/personnel" class="btn btn-primary ml-2">Edit Personnel</a>
-  </div>
+	<div class="card-header">
+		{{ organizationMeta.organizationName ||'Organization'}} Profile
+	</div>
+	<div class="card-body">
+		<p class="card-text">
+			<strong>Phone</strong><br>
+			<a href="tel:{{organizationMeta.phoneNumber}}">{{organizationMeta.phoneNumber}}</a>
+		</p>
+		<p class="card-text">
+			<strong>Email</strong><br>
+			<a href="mailto:{{organizationMeta.emailAddress}}">{{organizationMeta.emailAddress}}</a>
+		</p>
+	</div>
+	<div class="card-footer">
+		<a [routerLink]="'/authenticated/profile/'+ organizationMeta.organizationId" class="btn btn-primary">Edit Organization Profile</a>
+		<a [routerLink]="'/authenticated/personnel/'+ organizationMeta.organizationId" class="btn btn-primary ml-2">Edit Personnel</a>
+	</div>
 </div>

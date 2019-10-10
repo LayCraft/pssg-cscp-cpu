@@ -1,0 +1,72 @@
+<div class="card mb-2">
+	<div class="card-body">
+		<div class="form-row">
+			<div class="col">
+				<label for="monday_{{uuid}}">
+					<input type="checkbox" name="monday_{{uuid}}" id="monday_{{uuid}}" [(ngModel)]="hours.monday">
+					<small>
+						Monday
+					</small>
+				</label>
+			</div>
+			<div class="col">
+				<label for="tuesday_{{uuid}}">
+					<input type="checkbox" name="tuesday_{{uuid}}" id="tuesday_{{uuid}}" [(ngModel)]="hours.tuesday">
+					<small>
+						Tuesday
+					</small>
+				</label>
+			</div>
+			<div class="col">
+				<label for="wednesday_{{uuid}}">
+					<input type="checkbox" name="wednesday_{{uuid}}" id="wednesday_{{uuid}}" [(ngModel)]="hours.wednesday">
+					<small>
+						Wednesday
+					</small>
+				</label>
+			</div>
+			<div class="col">
+				<label for="thursday_{{uuid}}">
+					<input type="checkbox" name="thursday_{{uuid}}" id="thursday_{{uuid}}" [(ngModel)]="hours.thursday">
+					<small>
+						Thursday
+					</small>
+				</label>
+			</div>
+			<div class="col">
+				<label for="friday_{{uuid}}">
+					<input type="checkbox" name="friday_{{uuid}}" id="friday_{{uuid}}" [(ngModel)]="hours.friday">
+					<small>
+						Friday
+					</small>
+				</label>
+			</div>
+			<div class="col">
+				<label for="saturday_{{uuid}}">
+					<input type="checkbox" name="saturday_{{uuid}}" id="saturday_{{uuid}}" [(ngModel)]="hours.saturday">
+					<small>
+						Saturday
+					</small>
+				</label>
+			</div>
+			<div class="col">
+				<label for="sunday_{{uuid}}">
+					<input type="checkbox" name="sunday_{{uuid}}" id="sunday_{{uuid}}" [(ngModel)]="hours.sunday">
+					<small>
+						Sunday
+					</small>
+				</label>
+			</div>
+		</div>
+		<div class="form-inline">
+			<div class="form-group mr-2">
+				<label for="open">Open</label>
+				<input [(ngModel)]="hours.open" type="time" class="form-control ml-2" id="open_{{uuid}}" placeholder="00:00">
+			</div>
+			<div class="form-group ">
+				<label for="closed">Closed</label>
+				<input [(ngModel)]="hours.closed" type="time" class="form-control ml-2" id="closed_{{uuid}}" placeholder="00:00">
+			</div>
+		</div>
+	</div>
+</div>

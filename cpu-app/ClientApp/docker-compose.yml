@@ -1,9 +1,9 @@
 version: "3.6"
 services:
-  embc-app-frontend:
+  cpu-public-app-frontend:
     build: .
-    image: starter-pack-app-frontend
-    container_name: starter-pack-app-frontend
+    image: cpu-public-app-frontend
+    container_name: cpu-public-app-frontend
     command: "npm start -- --poll=500"
     ports:
       - "4200:4200"
