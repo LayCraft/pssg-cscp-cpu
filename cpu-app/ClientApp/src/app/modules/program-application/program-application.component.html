@@ -14,9 +14,7 @@
 					<h1>{{currentStepperElement.itemName}}</h1>
 				</div>
 				<div *ngFor="let item of stepperElements">
-					<!-- remove the old stepper elements off of the dom -->
 					<div *ngIf="isCurrentStepperElement(item)">
-						<!-- Check the discriminator -->
 						<div *ngIf="item.discriminator === 'contact_information'">
 							<app-program-contact-information [(contactInformation)]="item.object"></app-program-contact-information>
 						</div>
@@ -40,7 +38,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
+	<!-- <div class="row">
 		<pre>{{stepperElements|json}}</pre>
-	</div>
+	</div> -->
 </div>
