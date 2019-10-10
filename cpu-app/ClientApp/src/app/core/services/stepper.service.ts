@@ -40,7 +40,7 @@ export class StepperService {
 		this.stepperElements.next(stepperElements);
 
 		//set the current stepper element to the new record so the user can start editing it immediately
-		this.currentStepperElement.next(stepperElement);
+		// this.currentStepperElement.next(stepperElement); // makes the last element in the stepper always the one selected because last=current
 
 		// be sure one is selected
 		this.checkForSelected();

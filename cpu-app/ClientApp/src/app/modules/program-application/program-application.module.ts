@@ -4,13 +4,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProgramApplicationComponent } from './program-application.component';
 import { CgLiabilityComponent } from './cg-liability/cg-liability.component';
+import { ReviewApplicationComponent } from './review-application/review-application.component';
+import { ProgramComponent } from './program/program.component';
+import { ProgramContactInformationComponent } from './program-contact-information/program-contact-information.component';
+import { AdministrativeInformationComponent } from './administrative-information/administrative-information.component';
 
 
 
 @NgModule({
 	declarations: [
 		ProgramApplicationComponent,
-		CgLiabilityComponent
+		CgLiabilityComponent,
+		ReviewApplicationComponent,
+		ProgramComponent,
+		ProgramContactInformationComponent,
+		AdministrativeInformationComponent,
 	],
 	imports: [
 		CommonModule,
@@ -19,7 +27,8 @@ import { CgLiabilityComponent } from './cg-liability/cg-liability.component';
 		SharedModule,
 	],
 	exports: [
-		ProgramApplicationComponent
+		ProgramApplicationComponent,
+		ProgramContactInformationComponent, // TODO: remove it
 	]
 })
 export class ProgramApplicationModule { }

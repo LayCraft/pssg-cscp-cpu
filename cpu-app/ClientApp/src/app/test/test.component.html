@@ -1,9 +1,8 @@
 <main class="container">
 	<div class="row">
-		<div class="col-4">
-			<!-- <app-icon-stepper [(navigationName)]="nav"></app-icon-stepper> -->
-			{{nav}}
+		<div class="col">
+			<pre *ngIf="test">{{test|json}}</pre>
+			<button (click)="onClick()">Test</button>
 		</div>
 	</div>
-
 </main>

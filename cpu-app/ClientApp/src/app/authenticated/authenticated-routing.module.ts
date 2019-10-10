@@ -3,8 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthenticatedComponent } from './authenticated.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { OrganizationProfilePageComponent } from './modules/organization-profile-page/organization-profile-page.component';
-import { PersonnelPageComponent } from './modules/personnel-page-DELETEME/personnel-page.component';
-import { ProgramPageComponent } from './modules/program-page-DELETEME/program-page.component';
 import { BudgetProposalComponent } from '../modules/budget-proposal/budget-proposal.component';
 import { ProgramApplicationComponent } from '../modules/program-application/program-application.component';
 import { ExpenseReportComponent } from '../modules/expense-report/expense-report.component';
@@ -34,11 +32,6 @@ const routes: Routes = [
 			{
 				path: 'personnel/:organizationId',
 				component: PersonnelComponent
-			},
-			{
-				// DEPRECATED FOR LOOKING AT ONLY
-				path: 'program_application',
-				component: ProgramPageComponent
 			},
 			{
 				path: 'program_application/:organizationId/:contractId',

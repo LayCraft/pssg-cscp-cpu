@@ -27,7 +27,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
 	) { }
 
 	ngOnInit() {
-		// stay up to date with the stepper
+		// stay up to date with the stepper but reset old elements if they exist
 		this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
 		this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
 		// collect the ids for looking up the program from the route.
