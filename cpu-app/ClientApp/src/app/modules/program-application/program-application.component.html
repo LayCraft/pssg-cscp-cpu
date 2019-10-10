@@ -9,7 +9,6 @@
 		</div>
 
 		<div class="col-md-8">
-
 			<div *ngIf="stepperElements && currentStepperElement">
 				<div class="page-header">
 					<h1>{{currentStepperElement.itemName}}</h1>
@@ -28,7 +27,6 @@
 							<app-cg-liability [(cgLiability)]="item.object"></app-cg-liability>
 						</div>
 						<div *ngIf="item.discriminator === 'program'">
-
 							<app-program [(programApplication)]="item.object"></app-program>
 						</div>
 						<div *ngIf="item.discriminator === 'review_application'">
@@ -41,5 +39,8 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="row">
+		<pre>{{stepperElements|json}}</pre>
 	</div>
 </div>

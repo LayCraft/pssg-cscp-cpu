@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { iStepperElement, StepperService } from 'src/app/core/services/stepper.service';
-import { iProgramApplication, iAnnualProgramApplication, ProgramApplication } from 'src/app/core/models/program-application.class';
+import { iProgramApplication, iAnnualProgramApplication, ProgramApplication, AnnualProgramApplication } from 'src/app/core/models/program-application.class';
 import { ProgramApplicationService } from 'src/app/core/services/program-application.service';
 import { AdministrativeInformation } from 'src/app/core/models/administrative-information.class';
 import { ContactInformation } from 'src/app/core/models/contact-information.class';
@@ -18,25 +18,6 @@ export class ProgramApplicationComponent implements OnInit {
 	// used for the stepper component
 	stepperElements: iStepperElement[];
 	currentStepperElement: iStepperElement;
-
-	// used for building the template
-	// stepperElementsTop: iStepperElement[];
-	// stepperElementsPrograms: iStepperElement[];
-	// stepperElementsBottom: iStepperElement[];
-
-	// collection form for the contact information
-	// contactInformationForm: FormGroup;
-
-	// collection and validiy for administrative information form
-	// administrativeInformationForm: iAdministrativeInformation;
-	// administrativeInformationValid: boolean;
-	// administrativeInformationIsValid(valid: boolean) {
-	// 	// track the state of validity
-	// 	this.administrativeInformationValid = valid;
-	// }
-
-	// cg liability toggle value
-	// cgLiability: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -55,7 +36,6 @@ export class ProgramApplicationComponent implements OnInit {
 		this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
 		// set the default top and bottom of the list
 		this.constructDefaultstepperElements();
-
 	}
 
 	programApplicationUpdated(programApplication: iProgramApplication): void {

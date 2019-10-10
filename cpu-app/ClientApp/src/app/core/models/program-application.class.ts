@@ -1,6 +1,6 @@
 import { Address, iAddress } from "./address.class";
 import { Person, iPerson } from "./person.class";
-import { iContactInformation } from './contact-information.class';
+import { iContactInformation, ContactInformation } from './contact-information.class';
 
 export interface iAnnualProgramApplication {
 	organizationId: string;
@@ -8,6 +8,25 @@ export interface iAnnualProgramApplication {
 	programContact: iContactInformation;
 	programs: iProgramApplication[];
 	formState: string; // untouched	incomplete	invalid	complete info
+}
+
+export class AnnualProgramApplication {
+	organizationId: string;
+	contractId: string;
+	programContact: iContactInformation;
+	programs: iProgramApplication[] = [];
+	formState: string; // untouched	incomplete	invalid	complete info
+	constructor(apa?: iAnnualProgramApplication) {
+		if (apa) {
+			this.organizationId = apa.organizationId || null;
+			this.contractId = apa.contractId || null;
+			this.formState = apa.formState || null;
+			this.programContact = new ContactInformation(apa.programContact) || null;
+			apa.programs ? apa.programs.forEach(p => this.programs.push(new ProgramApplication(p))) : this.programs = [];
+		} else {
+			this.programContact = new ContactInformation();
+		}
+	}
 }
 
 export interface iProgramApplication {

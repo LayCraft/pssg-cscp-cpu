@@ -26,7 +26,9 @@ export class ProgramComponent implements OnInit {
 		// private boilerplateService: BoilerplateService,
 		// private programInformationService: ProgramInformationService,
 	) {
-		this.tabs = ['Contact Information', 'Delivery Information', 'Reporting Requirements'];
+		this.tabs = ['Contact Information', 'Delivery Information',
+			// 'Reporting Requirements'
+		];
 		this.currentTab = this.tabs[0];
 	}
 
@@ -35,6 +37,13 @@ export class ProgramComponent implements OnInit {
 		this.programInformationForm = new ProgramApplication();
 		this.addOperationHours();
 		this.addStandbyHours();
+
+		// initialize the contact information if it is supplied else make a new object
+		this.programApplication ? this.programInformationForm = new ProgramApplication(this.programApplication) : new ProgramApplication();
+		// output the object that we initialized
+		this.addOperationHours();
+		this.addStandbyHours();
+		this.onInput();
 		// initialize the program information if it is supplied else make a new object
 		// this.programInformationService.getProgramInformation(this.programMeta.organizationId, this.programMeta.programId).subscribe((p: iProgramInformation) => {
 		//   this.programInformationForm = new ProgramInformation(p);
@@ -44,7 +53,9 @@ export class ProgramComponent implements OnInit {
 	// form helpers. Validity hints and hide/show toggles
 	showValidFeedback(control: AbstractControl): boolean { return !(control.valid && (control.dirty || control.touched)) }
 	showInvalidFeedback(control: AbstractControl): boolean { return !(control.invalid && (control.dirty || control.touched)) }
-	onInput() { }
+	onInput() {
+		this.programApplicationChange.emit(this.programInformationForm);
+	}
 
 	showProgramContact() {
 		// Whether turned off or on we wipe out the contact information
