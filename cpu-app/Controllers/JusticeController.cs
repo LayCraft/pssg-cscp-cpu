@@ -284,7 +284,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 
             var builder = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
-                .AddUserSecrets<Program>(); // must also define a project guid for secrets in the .cspro – add tag <UserSecretsId> containing a guid
+                .AddUserSecrets<Program>(); // must also define a project guid for secrets in the .cspro ï¿½ add tag <UserSecretsId> containing a guid
             var Configuration = builder.Build();
 
             string dynamicsOdataUri = Configuration["DYNAMICS_ODATA_URI"]; // Dynamics ODATA endpoint
