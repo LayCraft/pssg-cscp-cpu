@@ -39,9 +39,42 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
         }
 
         [HttpGet("test")]
-        public async Task<IActionResult> QueryDynamics([FromBody] String model)
+        public async Task<IActionResult> QueryDynamics([FromBody] DynamicsRequestModel model)
         {
-            return new JsonResult("{What You Sent:{" + model + "}}");
+            model = new DynamicsRequestModel();
+            model.BCeID = "9e9b5111-51c9-e911-b80f-00505683fbf4";
+
+            HttpClient httpClient = null;
+            try
+            {
+                var application = model;
+                JsonSerializerSettings settings = new JsonSerializerSettings();
+                settings.NullValueHandling = NullValueHandling.Ignore;
+                var applicationJson = JsonConvert.SerializeObject(application, settings);
+                applicationJson = applicationJson.Replace("odatatype", "@odata.type");
+
+                var endpointAction = "vsd_GetCPUOrgContracts";
+                var tuple = await GetDynamicsHttpClientNew(_configuration, applicationJson, endpointAction);
+
+                return new JsonResult(tuple.Item2);
+                //HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endpointAction);
+                //request.Content = new StringContent(applicationJson, Encoding.UTF8, "application/json");
+
+                //HttpResponseMessage response = await httpClient.SendAsync(request);
+
+                //if (response.StatusCode == HttpStatusCode.OK)
+                //{
+                //    var jsonResult = response.Content.ReadAsStringAsync().Result;
+                //    return new JsonResult(jsonResult);
+                //}
+                //return new JsonResult(response.Content.ReadAsStringAsync().Result);
+            }
+            finally
+            {
+                if (httpClient != null)
+                    httpClient.Dispose();
+            }
+            //return new JsonResult("{What You Sent:{" + model + "}}");
         }
 
         [HttpPost("saveapplication")]
@@ -233,11 +266,11 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
                 //if (response.StatusCode == HttpStatusCode.OK)
                 if (tuple.Item1 == (int)HttpStatusCode.OK)
                 {
-                    var jsonResult = tuple.Item2.Content.ReadAsStringAsync().Result;// response.Content.ReadAsStringAsync().Result;
+                    var jsonResult = tuple.Item3.Content.ReadAsStringAsync().Result;// response.Content.ReadAsStringAsync().Result;
                     return jsonResult;
                 }
 
-                return tuple.Item2.Content.ReadAsStringAsync().Result;// response.Content.ReadAsStringAsync().Result;
+                return tuple.Item3.Content.ReadAsStringAsync().Result;// response.Content.ReadAsStringAsync().Result;
             }
             finally
             {
@@ -285,7 +318,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
             }
         }
 
-        static async Task<Tuple<int, HttpResponseMessage>> GetDynamicsHttpClientNew(IConfiguration configuration, String model, String endPointName)
+        static async Task<Tuple<int, string, HttpResponseMessage>> GetDynamicsHttpClientNew(IConfiguration configuration, String model, String endPointName)
         {
 
             var builder = new ConfigurationBuilder()
@@ -421,12 +454,12 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
                     Console.Out.WriteLine(_responseString);
                     Console.Out.WriteLine(_responseContent2);
 
-                    return new Tuple<int, HttpResponseMessage>((int)_statusCode, _httpResponse2);
+                    return new Tuple<int, string, HttpResponseMessage>((int)_statusCode, _responseContent2, _httpResponse2);
                     // End of scheduled task
                 }
                 catch (Exception e)
                 {
-                    return new Tuple<int, HttpResponseMessage>(100, null);
+                    return new Tuple<int, string, HttpResponseMessage>(100, "", null);
                     throw new Exception(e.Message + " " + _responseContent);
                 }
 
@@ -529,7 +562,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
             //var _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
 
             //Console.Out.WriteLine(_responseContent2);
-            return new Tuple<int, HttpResponseMessage>(100, null);
+            return new Tuple<int, string, HttpResponseMessage>(100, "", null);
         }
 
 
