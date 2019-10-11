@@ -3,13 +3,17 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
+		"build": "ng build --source-map --extract-css --base-href / --deploy-url /",
+		"build:ssr": "npm run build -- --app=ssr --output-hashing=media",
+		"buildprep": "ng build --source-map --extract-css --base-href / --deploy-url /",
+		"buildprod": "ng build --source-map --extract-css --base-href / --deploy-url /",
+		"builduat": "ng build --source-map --extract-css --base-href /uat/ --deploy-url /uat/",
+		"e2e": "ng e2e",
+		"lint": "ng lint",
 		"ng": "ng",
 		"start": "ng serve --source-map --host 0.0.0.0",
-		"buildprod": "ng build --extract-css --base-href / --deploy-url /",
-		"buildprep": "ng build --source-map --extract-css --base-href / --deploy-url /",
 		"test": "ng test",
-		"lint": "ng lint",
-		"e2e": "ng e2e"
+		"watch": "ng build --watch --extract-css --base-href / --deploy-url /"
 	},
 	"private": true,
 	"dependencies": {
@@ -38,9 +42,9 @@
 		"@angular/cli": "~8.3.5",
 		"@angular/compiler-cli": "~8.2.7",
 		"@angular/language-service": "~8.2.7",
-		"@types/node": "~8.9.4",
 		"@types/jasmine": "~3.3.8",
 		"@types/jasminewd2": "~2.0.3",
+		"@types/node": "~8.9.4",
 		"codelyzer": "^5.0.0",
 		"jasmine-core": "~3.4.0",
 		"jasmine-spec-reporter": "~4.2.1",
