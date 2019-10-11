@@ -6,7 +6,7 @@ import { AnonymousComponent } from '../anonymous/anonymous.component';
 import { MatDemoComponent } from './mat-demo/mat-demo.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../modules/material.module';
+import { MaterialModule } from '../core/material.module';
 
 @NgModule({
 	imports: [

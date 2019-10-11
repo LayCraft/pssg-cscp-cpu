@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthenticatedComponent } from './authenticated.component';
-import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { OrganizationProfilePageComponent } from './modules/organization-profile-page/organization-profile-page.component';
-import { BudgetProposalComponent } from '../modules/budget-proposal/budget-proposal.component';
-import { ProgramApplicationComponent } from '../modules/program-application/program-application.component';
-import { ExpenseReportComponent } from '../modules/expense-report/expense-report.component';
-import { StatusReportComponent } from '../modules/status-report/status-report.component';
-import { PersonnelComponent } from '../modules/personnel/personnel.component';
-
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { OrganizationProfilePageComponent } from './pages/organization-profile-page/organization-profile-page.component';
+import { PersonnelComponent } from './pages/personnel/personnel.component';
+import { ProgramApplicationComponent } from './pages/program-application/program-application.component';
+import { BudgetProposalComponent } from './pages/budget-proposal/budget-proposal.component';
+import { StatusReportComponent } from './pages/status-report/status-report.component';
+import { ExpenseReportComponent } from './pages/expense-report/expense-report.component';
 
 const routes: Routes = [
 	{
