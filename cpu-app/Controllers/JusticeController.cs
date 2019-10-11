@@ -38,6 +38,12 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
 
+        [HttpGet("test")]
+        public async Task<IActionResult> QueryDynamics([FromBody] String model)
+        {
+            return new JsonResult("{What You Sent:{" + model + "}}");
+        }
+
         [HttpPost("saveapplication")]
         public async Task<IActionResult> SaveApplication([FromBody] ApplicationFormModel model)
         {
