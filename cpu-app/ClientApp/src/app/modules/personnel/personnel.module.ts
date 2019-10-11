@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PersonnelComponent } from './personnel.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PersonEditorComponent } from './person-editor/person-editor.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 	imports: [
 		CommonModule,
 		SharedModule,
+		FormsModule,
 		ReactiveFormsModule
 	],
 	exports: [

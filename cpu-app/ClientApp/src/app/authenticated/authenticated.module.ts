@@ -25,8 +25,8 @@ import { MaterialModule } from '../modules/material.module';
 	imports: [
 		AuthenticatedRoutingModule,
 		CommonModule,
-		FormsModule,
 		NgbModule,
+		FormsModule,
 		ReactiveFormsModule,
 		SharedModule,
 		MaterialModule,

@@ -75,4 +75,7 @@ export class ProgramComponent implements OnInit {
 	onPaidStaffChange(event: iPerson[]) {
 		this.programInformationForm.additionalStaff = event;
 	}
+	setCurrentTab(tab) {
+		this.currentTab = tab;
+	}
 }

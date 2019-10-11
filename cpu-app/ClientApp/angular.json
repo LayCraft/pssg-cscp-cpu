@@ -3,7 +3,7 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
-		"vsd-public-app": {
+		"cpu-public-app": {
 			"projectType": "application",
 			"schematics": {
 				"@schematics/angular:component": {
@@ -71,18 +71,18 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
-						"browserTarget": "vsd-public-app:build"
+						"browserTarget": "cpu-public-app:build"
 					},
 					"configurations": {
 						"production": {
-							"browserTarget": "vsd-public-app:build:production"
+							"browserTarget": "cpu-public-app:build:production"
 						}
 					}
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "vsd-public-app:build"
+						"browserTarget": "cpu-public-app:build"
 					}
 				},
 				"test": {
@@ -119,16 +119,16 @@
 					"builder": "@angular-devkit/build-angular:protractor",
 					"options": {
 						"protractorConfig": "e2e/protractor.conf.js",
-						"devServerTarget": "vsd-public-app:serve"
+						"devServerTarget": "cpu-public-app:serve"
 					},
 					"configurations": {
 						"production": {
-							"devServerTarget": "vsd-public-app:serve:production"
+							"devServerTarget": "cpu-public-app:serve:production"
 						}
 					}
 				}
 			}
 		}
 	},
-	"defaultProject": "vsd-public-app"
+	"defaultProject": "cpu-public-app"
 }

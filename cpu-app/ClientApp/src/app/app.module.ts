@@ -8,6 +8,8 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from './shared/shared.module';
 import { TestComponent } from './test/test.component';
 import { UnauthorizedInterceptor } from './core/interceptors/unauthorized.interceptor';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
 	declarations: [
@@ -21,6 +23,8 @@ import { UnauthorizedInterceptor } from './core/interceptors/unauthorized.interc
 		BrowserModule,
 		SharedModule,
 		HttpClientModule,
+		FormsModule,
+		RouterModule
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },

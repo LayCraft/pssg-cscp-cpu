@@ -98,4 +98,7 @@ export class ProgramBudgetComponent implements OnInit {
 		}
 		this.meta['totals'].totalPercentFundedByVscp = percentify(this.meta['totals']);
 	}
+	setCurrentTab(tab: string) {
+		this.currentTab = tab;
+	}
 }
