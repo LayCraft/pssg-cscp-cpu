@@ -5,6 +5,8 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { DashboardComponent } from './authenticated/dashboard/dashboard.component';
 import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-proposal.component';
 import { ExpenseReportComponent } from './authenticated/expense-report/expense-report.component';
+import { ProgramApplicationComponent } from './authenticated/program-application/program-application.component';
+import { StatusReportComponent } from './authenticated/status-report/status-report.component';
 
 const routes: Routes = [
   {
@@ -31,8 +33,15 @@ const routes: Routes = [
         path: 'expense_report',
         component: ExpenseReportComponent
       },
+      {
+        path: 'program_application',
+        component: ProgramApplicationComponent
+      },
+      {
+        path: 'status_report',
+        component: StatusReportComponent
+      }
     ]
-
   },
   {
     path: '**',

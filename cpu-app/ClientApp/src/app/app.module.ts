@@ -11,6 +11,8 @@ import { SharedModule } from './shared/shared.module';
 import { DashboardComponent } from './authenticated/dashboard/dashboard.component';
 import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-proposal.component';
 import { ExpenseReportComponent } from './authenticated/expense-report/expense-report.component';
+import { ProgramApplicationComponent } from './authenticated/program-application/program-application.component';
+import { StatusReportComponent } from './authenticated/status-report/status-report.component';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { ExpenseReportComponent } from './authenticated/expense-report/expense-r
     DashboardComponent,
     LandingPageComponent,
     ExpenseReportComponent,
+    ProgramApplicationComponent,
+    StatusReportComponent,
   ],
   imports: [
     AppRoutingModule,
