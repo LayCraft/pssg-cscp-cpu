@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Hours } from '../../../core/models/program-application.class';
 import { uuidv4 } from '../../../core/constants/uuidv4';
+import { Hours } from '../../../core/models/hours.class';
 
 @Component({
   selector: 'app-hours',

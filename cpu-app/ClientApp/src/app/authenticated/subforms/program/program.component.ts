@@ -1,8 +1,9 @@
 import { AbstractControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { iProgramApplication, ProgramApplication, Hours } from '../../../core/models/program-application.class';
+import { iProgramApplication, ProgramApplication } from '../../../core/models/program-application.class';
 import { iPerson } from '../../../core/models/person.class';
 import { PersonService } from '../../../core/services/person.service';
+import { Hours } from '../../../core/models/hours.class';
 
 @Component({
   selector: 'app-program',

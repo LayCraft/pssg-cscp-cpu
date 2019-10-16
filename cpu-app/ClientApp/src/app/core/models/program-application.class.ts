@@ -1,6 +1,8 @@
 import { Address, iAddress } from "./address.class";
 import { Person, iPerson } from "./person.class";
 import { iContactInformation, ContactInformation } from './contact-information.class';
+import { iRevenueSource, RevenueSource } from './revenue-source.class';
+import { iHours, Hours } from './hours.class';
 
 export interface iAnnualProgramApplication {
 	organizationId: string;
@@ -98,61 +100,3 @@ export class ProgramApplication implements iProgramApplication {
 		}
 	}
 }
-
-export interface iHours {
-	monday: boolean;
-	tuesday: boolean;
-	wednesday: boolean;
-	thursday: boolean;
-	friday: boolean;
-	saturday: boolean;
-	sunday: boolean;
-	open: Date; // just used for the hour representation
-	closed: Date;
-}
-export class Hours implements iHours {
-	monday: boolean;
-	tuesday: boolean;
-	wednesday: boolean;
-	thursday: boolean;
-	friday: boolean;
-	saturday: boolean;
-	sunday: boolean;
-	open: Date; // just used for the hour representation
-	closed: Date;
-	constructor(hours?: iHours) {
-		if (hours) {
-			this.monday = hours.monday || null;
-			this.tuesday = hours.tuesday || null;
-			this.wednesday = hours.wednesday || null;
-			this.thursday = hours.thursday || null;
-			this.friday = hours.friday || null;
-			this.saturday = hours.saturday || null;
-			this.sunday = hours.sunday || null;
-			this.open = new Date(hours.open) || null;
-			this.closed = new Date(hours.closed) || null;
-		}
-	}
-}
-export interface iRevenueSource {
-	revenueSourceName: string;
-	cash: number;
-	inKindContribution: number;
-	other: string;
-}
-
-export class RevenueSource implements iRevenueSource {
-	revenueSourceName: string;
-	cash: number;
-	inKindContribution: number;
-	other: string;
-	constructor(rs?: iRevenueSource) {
-		if (rs) {
-			this.revenueSourceName = rs.revenueSourceName || null;
-			this.cash = rs.cash || null;
-			this.inKindContribution = rs.inKindContribution || null;
-			this.other = rs.other || null;
-		}
-	}
-}
-

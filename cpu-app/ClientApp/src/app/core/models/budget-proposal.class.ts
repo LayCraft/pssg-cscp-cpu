@@ -1,5 +1,5 @@
 import { iPerson, Person } from './person.class';
-import { iRevenueSource } from './program-application.class';
+import { iRevenueSource } from './revenue-source.class';
 
 export interface iBudgetProposal {
 	organizationId: string;

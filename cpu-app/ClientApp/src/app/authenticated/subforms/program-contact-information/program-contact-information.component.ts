@@ -47,7 +47,7 @@ export class ProgramContactInformationComponent implements OnInit {
       }
     } as iContactInformation);
 
-    this.personService.getPersons('borkityfoobar').subscribe(p => this.persons = p);
+    this.personService.getPersons('borkityfoobar').subscribe((p: iPerson[]) => this.persons = p);
   }
   onInput() {
     // console.log(this.contactInformationForm.value['contactInformation'])
