@@ -21,6 +21,7 @@ import { CgLiabilityComponent } from './authenticated/subforms/cg-liability/cg-l
 import { ProgramComponent } from './authenticated/subforms/program/program.component';
 import { ReviewApplicationComponent } from './authenticated/subforms/review-application/review-application.component';
 import { ProgramAuthorizerComponent } from './authenticated/subforms/program-authorizer/program-authorizer.component';
+import { HoursComponent } from './authenticated/subforms/hours/hours.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { ProgramAuthorizerComponent } from './authenticated/subforms/program-aut
     ProgramComponent,
     ReviewApplicationComponent,
     ProgramAuthorizerComponent,
+    HoursComponent,
   ],
   imports: [
     AppRoutingModule,
