@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { Notification, NotificationQueueService } from '../../core/services/notification-queue.service';
 
 
 @Component({
@@ -31,19 +32,21 @@ export class NotificationBannerComponent implements OnInit {
   successMessage: string;
   currentNotifications: Notification[];
 
+  levels: string[] = ['danger', 'warning', 'success'];
+
   constructor(
-    // private notificationQueueService: NotificationQueueService,
+    private notificationQueueService: NotificationQueueService,
   ) { }
 
   ngOnInit(): void {
-    // this.notificationQueueService.notificationQueue.subscribe((notifications: Notification[]) => {
-    //   this.currentNotifications = notifications;
-    // });
+    this.notificationQueueService.notificationQueue.subscribe((notifications: Notification[]) => {
+      this.currentNotifications = notifications;
+    });
   }
 
   close(notification: Notification) {
     // expire the notification
-    // this.notificationQueueService.expireNotification(notification.identifier);
+    this.notificationQueueService.expireNotification(notification.identifier);
   }
 
 }
