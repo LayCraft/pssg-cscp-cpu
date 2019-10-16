@@ -28,6 +28,7 @@ import { OrganizationProfileBoxComponent } from './authenticated/components/orga
 import { ContactInformationComponent } from './authenticated/subforms/contact-information/contact-information.component';
 import { AddressComponent } from './authenticated/subforms/address/address.component';
 import { PersonPickerComponent } from './authenticated/subforms/person-picker/person-picker.component';
+import { PersonPickerListComponent } from './authenticated/subforms/person-picker-list/person-picker-list.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { PersonPickerComponent } from './authenticated/subforms/person-picker/pe
     ContactInformationComponent,
     AddressComponent,
     PersonPickerComponent,
+    PersonPickerListComponent,
   ],
   imports: [
     AppRoutingModule,
