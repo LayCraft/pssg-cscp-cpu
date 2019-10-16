@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { DashboardComponent } from './authenticated/dashboard/dashboard.component';
+import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-proposal.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,6 @@ const routes: Routes = [
   },
   {
     path: 'authenticated',
-    component: DashboardComponent,
     children: [
       {
         path: '',
@@ -21,7 +21,11 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent
-      }
+      },
+      {
+        path: 'budget_proposal',
+        component: BudgetProposalComponent
+      },
     ]
 
   },

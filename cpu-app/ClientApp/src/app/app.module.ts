@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SharedModule } from './shared/shared.module';
 import { DashboardComponent } from './authenticated/dashboard/dashboard.component';
+import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-proposal.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { DashboardComponent } from './authenticated/dashboard/dashboard.componen
     AppComponent,
     LandingPageComponent,
     DashboardComponent,
+    BudgetProposalComponent,
   ],
   imports: [
     AppRoutingModule,
