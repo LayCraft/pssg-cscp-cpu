@@ -16,6 +16,11 @@ import { StatusReportComponent } from './authenticated/status-report/status-repo
 import { PersonnelComponent } from './authenticated/personnel/personnel.component';
 import { ProfileComponent } from './authenticated/profile/profile.component';
 import { ProgramContactInformationComponent } from './authenticated/subforms/program-contact-information/program-contact-information.component';
+import { AdministrativeInformationComponent } from './authenticated/subforms/administrative-information/administrative-information.component';
+import { CgLiabilityComponent } from './authenticated/subforms/cg-liability/cg-liability.component';
+import { ProgramComponent } from './authenticated/subforms/program/program.component';
+import { ReviewApplicationComponent } from './authenticated/subforms/review-application/review-application.component';
+import { ProgramAuthorizerComponent } from './authenticated/subforms/program-authorizer/program-authorizer.component';
 
 
 @NgModule({
@@ -31,6 +36,11 @@ import { ProgramContactInformationComponent } from './authenticated/subforms/pro
     PersonnelComponent,
     ProfileComponent,
     ProgramContactInformationComponent,
+    AdministrativeInformationComponent,
+    CgLiabilityComponent,
+    ProgramComponent,
+    ReviewApplicationComponent,
+    ProgramAuthorizerComponent,
   ],
   imports: [
     AppRoutingModule,

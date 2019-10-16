@@ -23,18 +23,23 @@
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
               <!-- <app-administrative-information [(administrativeInformation)]="item.object"></app-administrative-information> -->
+              <app-administrative-information></app-administrative-information>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">
               <!-- <app-cg-liability [(cgLiability)]="item.object"></app-cg-liability> -->
+              <app-cg-liability></app-cg-liability>
             </div>
             <div *ngIf="item.discriminator === discriminators[3]">
               <!-- <app-program [(programApplication)]="item.object"></app-program> -->
+              <app-program></app-program>
             </div>
             <div *ngIf="item.discriminator === discriminators[4]">
               <!-- <app-review-application></app-review-application> -->
+              <app-review-application></app-review-application>
             </div>
             <div *ngIf="item.discriminator === discriminators[5]">
               <!-- <app-program-authorizer [(signature)]="item.object"></app-program-authorizer> -->
+              <app-program-authorizer></app-program-authorizer>
             </div>
           </div>
         </div>
