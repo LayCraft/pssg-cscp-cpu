@@ -3,6 +3,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { iProgramApplication, iAnnualProgramApplication, ProgramApplication } from '../../core/models/program-application.class';
 import { ContactInformation } from '../../core/models/contact-information.class';
 import { AdministrativeInformation } from '../../core/models/administrative-information.class';
+import { ProgramApplicationService } from '../../core/services/program-application.service';
 
 @Component({
   selector: 'app-program-application',
@@ -19,7 +20,7 @@ export class ProgramApplicationComponent implements OnInit {
   currentStepperElement: iStepperElement;
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization']
   constructor(
-    // private programApplicationService: ProgramApplicationService,
+    private programApplicationService: ProgramApplicationService,
     private stepperService: IconStepperService,
   ) { }
 
@@ -46,53 +47,52 @@ export class ProgramApplicationComponent implements OnInit {
     return false;
   }
   constructDefaultstepperElements() {
-    // this.programApplicationService.getProgramApplication('foo', 'bar').subscribe((pa: iAnnualProgramApplication) => {
-    //   // write the default beginning
-    //   [
-    //     {
-    //       itemName: 'Applicant Contact Information',
-    //       formState: 'untouched',
-    //       object: new ContactInformation(),
-    //       discriminator: 'contact_information',
-    //     },
-    //     {
-    //       itemName: 'Applicant Administrative Information',
-    //       formState: 'untouched',
-    //       object: new AdministrativeInformation(),
-    //       discriminator: 'administrative_information',
-    //     },
-    //     {
-    //       itemName: 'Commercial General Liability Insurance',
-    //       formState: 'untouched',
-    //       object: null,
-    //       discriminator: 'commercial_general_liability_insurance',
-    //     },
-    //   ].forEach((f: iStepperElement) => {
-    //     this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
-    //   });
+    this.programApplicationService.getProgramApplication('foo', 'bar').subscribe((pa: iAnnualProgramApplication) => {
+      // write the default beginning
+      [
+        {
+          itemName: 'Applicant Contact Information',
+          formState: 'untouched',
+          object: new ContactInformation(),
+          discriminator: 'contact_information',
+        },
+        {
+          itemName: 'Applicant Administrative Information',
+          formState: 'untouched',
+          object: new AdministrativeInformation(),
+          discriminator: 'administrative_information',
+        },
+        {
+          itemName: 'Commercial General Liability Insurance',
+          formState: 'untouched',
+          object: null,
+          discriminator: 'commercial_general_liability_insurance',
+        },
+      ].forEach((f: iStepperElement) => {
+        this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
+      });
 
-    //   // add the programs to the list
-    //   pa.programs.forEach((p: iProgramApplication) => {
-    //     this.stepperService.addStepperElement(new ProgramApplication(p), p.name, p.formState, 'program')
-    //   });
-    //   // Write the default end part
-    //   [
-    //     {
-    //       itemName: 'Review Program Application',
-    //       formState: 'untouched',
-    //       object: null,
-    //       discriminator: 'review_application',
-    //     },
-    //     {
-    //       itemName: 'Authorization',
-    //       formState: 'untouched',
-    //       object: null,
-    //       discriminator: 'authorization',
-    //     },
-    //   ].forEach((f: iStepperElement) => {
-    //     this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
-    //   });
-
-    // });
+      // add the programs to the list
+      pa.programs.forEach((p: iProgramApplication) => {
+        this.stepperService.addStepperElement(new ProgramApplication(p), p.name, p.formState, 'program')
+      });
+      // Write the default end part
+      [
+        {
+          itemName: 'Review Program Application',
+          formState: 'untouched',
+          object: null,
+          discriminator: 'review_application',
+        },
+        {
+          itemName: 'Authorization',
+          formState: 'untouched',
+          object: null,
+          discriminator: 'authorization',
+        },
+      ].forEach((f: iStepperElement) => {
+        this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
+      });
+    });
   }
 }

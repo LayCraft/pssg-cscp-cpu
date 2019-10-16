@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, EventEmitter, Input, Output } from '@angu
 import { NgForm, AbstractControl } from '@angular/forms';
 import { iAdministrativeInformation, AdministrativeInformation } from '../../../core/models/administrative-information.class';
 import { iPerson } from '../../../core/models/person.class';
+import { PersonService } from '../../../core/services/person.service';
 
 @Component({
   selector: 'app-administrative-information',
@@ -24,12 +25,12 @@ export class AdministrativeInformationComponent implements OnInit {
   persons: iPerson[] = [];
 
   constructor(
-    // private personService: PersonService
+    private personService: PersonService
   ) { }
 
   ngOnInit() {
     // collect the persons for the organization
-    // this.personService.getPersons('foobarorganization').subscribe(p => this.persons = p);
+    this.personService.getPersons('foobarorganization').subscribe(p => this.persons = p);
     // initialize the contact information if it is supplied else make a new object
     this.administrativeInformation ? this.administrativeInformationForm = new AdministrativeInformation(this.administrativeInformation) : new AdministrativeInformation();
     // now that the form is initialized we emit it to send the validity to the parent. Otherwise we have to wait for the user to change something.

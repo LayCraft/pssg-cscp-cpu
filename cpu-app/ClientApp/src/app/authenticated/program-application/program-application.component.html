@@ -4,13 +4,11 @@
       <!-- <app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone> -->
 
       <section class="application-nav sticky-top">
-        icon stepper
         <app-icon-stepper></app-icon-stepper>
       </section>
     </div>
 
     <div class="col-md-8">
-      main content
       <div *ngIf="stepperElements && currentStepperElement">
         <div class="page-header">
           <h1>{{currentStepperElement.itemName}}</h1>
