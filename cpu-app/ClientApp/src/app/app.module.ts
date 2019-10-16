@@ -31,6 +31,7 @@ import { PersonPickerComponent } from './authenticated/subforms/person-picker/pe
 import { PersonPickerListComponent } from './authenticated/subforms/person-picker-list/person-picker-list.component';
 import { MinistryContactBoxComponent } from './authenticated/components/ministry-contact-box/ministry-contact-box.component';
 import { PersonEditorComponent } from './authenticated/subforms/person-editor/person-editor.component';
+import { TestComponent } from './test/test.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { PersonEditorComponent } from './authenticated/subforms/person-editor/pe
     PersonPickerListComponent,
     MinistryContactBoxComponent,
     PersonEditorComponent,
+    TestComponent,
   ],
   imports: [
     AppRoutingModule,

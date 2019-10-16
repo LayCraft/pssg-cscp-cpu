@@ -10,6 +10,7 @@ import { PersonnelComponent } from './authenticated/personnel/personnel.componen
 import { ProfileComponent } from './authenticated/profile/profile.component';
 import { ProgramApplicationComponent } from './authenticated/program-application/program-application.component';
 import { StatusReportComponent } from './authenticated/status-report/status-report.component';
+import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
   {
@@ -17,8 +18,12 @@ const routes: Routes = [
     component: LandingPageComponent
   },
   {
+    path: 'test',
+    component: TestComponent
+  },
+  {
     path: 'authenticated',
-    canActivate: [AuthenticationGuard],// TODO: re-enable this
+    canActivate: [AuthenticationGuard],
     children: [
       {
         path: '',
