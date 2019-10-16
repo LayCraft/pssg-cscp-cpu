@@ -7,12 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
   declarations: [
     // TestComponent,
-    // LandingPageComponent,
     AppComponent,
     LandingPageComponent,
   ],
@@ -20,7 +20,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
-    // SharedModule,
+    SharedModule,
     HttpClientModule,
     FormsModule,
     RouterModule
