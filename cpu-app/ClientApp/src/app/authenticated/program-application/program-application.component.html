@@ -20,8 +20,7 @@
               <app-program-contact-information></app-program-contact-information>
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
-              <!-- <app-administrative-information [(administrativeInformation)]="item.object"></app-administrative-information> -->
-              <app-administrative-information></app-administrative-information>
+              <app-administrative-information [(administrativeInformation)]="item.object"></app-administrative-information>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">
               <!-- <app-cg-liability [(cgLiability)]="item.object"></app-cg-liability> -->
