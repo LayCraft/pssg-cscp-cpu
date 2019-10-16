@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Person, iPerson } from '../../../core/models/person.class';
 import { iContactInformation } from '../../../core/models/contact-information.class';
+import { PersonService } from '../../../core/services/person.service';
 
 @Component({
   selector: 'app-program-contact-information',
@@ -26,23 +27,30 @@ export class ProgramContactInformationComponent implements OnInit {
   boardContact: iPerson;
 
   constructor(
-    // private boilerplateService: BoilerplateService,
-    // private personService: PersonService,
+    private personService: PersonService,
   ) { }
 
   ngOnInit() {
-    // get the boilerplate from the service
-    // this.boilerplateService.getOrganizationBoilerplate('foobazqux').subscribe(ci => {
-    // 	this.contactInformationForm = new FormGroup({
-    // 		'contactInformation': new FormControl('', Validators.required)
-    // 	});
-    // 	this.contactInformationForm.controls['contactInformation'].setValue(ci);
-    // });
-    // set the persons list
-    // this.personService.getPersons('borkityfoobar').subscribe(p => this.persons = p);
+    this.contactInformationForm = new FormGroup({
+      'contactInformation': new FormControl('', Validators.required)
+    });
+    this.contactInformationForm.controls['contactInformation'].setValue({
+      emailAddress: 'foo@bar.baz',
+      faxNumber: '1234567890',
+      phoneNumber: '2502502500',
+      mainAddress: {
+        city: 'Victoria',
+        postalCode: 'v8v3b3',
+        line1: '1234 Douglas St',
+        line2: '',
+        province: 'British Columbia',
+      }
+    } as iContactInformation);
+
+    this.personService.getPersons('borkityfoobar').subscribe(p => this.persons = p);
   }
   onInput() {
-    console.log(this.contactInformationForm.value['contactInformation'])
+    // console.log(this.contactInformationForm.value['contactInformation'])
     // emit the information
     this.contactInformationChange.emit(this.contactInformationForm.value['contactInformation']);
   }
