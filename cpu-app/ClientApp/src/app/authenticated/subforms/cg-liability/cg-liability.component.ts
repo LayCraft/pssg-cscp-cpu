@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-cg-liability',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cg-liability.component.css']
 })
 export class CgLiabilityComponent implements OnInit {
-
+  @Input() cgLiability: boolean;
+  @Output() cgLiabilityChange = new EventEmitter<boolean>();
   constructor() { }
 
   ngOnInit() {
   }
 
+  onChanges() {
+    this.cgLiabilityChange.emit(this.cgLiability);
+  }
 }
