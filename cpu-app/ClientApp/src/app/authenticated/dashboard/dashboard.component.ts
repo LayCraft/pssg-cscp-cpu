@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { iProgramTombstone, iTombstone } from '../../core/models/tombstone.class';
+import { iProgramTombstone, iTombstone, ProgramTombstone } from '../../core/models/tombstone.class';
 import { iContactInformation } from '../../core/models/contact-information.class';
+import { TombstoneService } from '../../core/services/tombstone.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,8 +20,7 @@ export class DashboardComponent implements OnInit {
   formTypes: string[];
 
   constructor(
-    // private tombstoneService: TombstoneService,
-    // private boilerplateService: BoilerplateService,
+    private tombstoneService: TombstoneService,
   ) {
     this.tabs = ['Current Tasks', 'Completed', 'Programs'];
     this.currentTab = this.tabs[0];
@@ -29,16 +29,14 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    // collect BCEIDs for the organization
-    // this.boilerplateService.getOrganizationBoilerplate('FAKE BCEID').subscribe(bp => this.contactInformation = bp);
-    // this.tombstoneService.getTombstones('FAKE BCEID').subscribe(t => {
-    // 	this.tombstones = t.filter(tombstone => tombstone.formStatus !== this.statuses[5]);
-    // 	this.completedTombstones = t.filter(tombstone => tombstone.formStatus === this.statuses[5]);
-    // });
-    // this.tombstoneService.getProgramTombstones('Whatever').subscribe((tombstones: ProgramTombstone[]) => {
-    // 	// clear tombstones
-    // 	this.programTombstones = tombstones;
-    // });
+    this.tombstoneService.getTombstones('FAKE BCEID').subscribe(t => {
+      this.tombstones = t.filter(tombstone => tombstone.formStatus !== this.statuses[5]);
+      this.completedTombstones = t.filter(tombstone => tombstone.formStatus === this.statuses[5]);
+    });
+    this.tombstoneService.getProgramTombstones('Whatever').subscribe((tombstones: ProgramTombstone[]) => {
+      // clear tombstones
+      this.programTombstones = tombstones;
+    });
   }
   setCurrentTab(tabname: string) {
     this.currentTab = tabname;
