@@ -27,6 +27,7 @@ import { ContractTombstoneComponent } from './authenticated/subforms/contract-to
 import { OrganizationProfileBoxComponent } from './authenticated/components/organization-profile-box/organization-profile-box.component';
 import { ContactInformationComponent } from './authenticated/subforms/contact-information/contact-information.component';
 import { AddressComponent } from './authenticated/subforms/address/address.component';
+import { PersonPickerComponent } from './authenticated/subforms/person-picker/person-picker.component';
 
 
 @NgModule({
@@ -51,8 +52,8 @@ import { AddressComponent } from './authenticated/subforms/address/address.compo
     ReviewApplicationComponent,
     StatusReportComponent,
     ContactInformationComponent,
-    AddressComponent
-
+    AddressComponent,
+    PersonPickerComponent,
   ],
   imports: [
     AppRoutingModule,
