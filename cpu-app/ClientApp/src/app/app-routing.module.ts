@@ -36,7 +36,7 @@ const routes: Routes = [
         component: ExpenseReportComponent
       },
       {
-        path: 'program_application', //
+        path: 'program_application', // basic routing and component seems to work
         component: ProgramApplicationComponent
       },
       {
@@ -56,35 +56,7 @@ const routes: Routes = [
   {
     path: '**',
     component: NotFoundComponent,
-  },
-  // {
-  //   path: 'dashboard',
-  //   component: DashboardComponent,
-  // },
-  // {
-  //   path: 'profile/:organizationId',
-  //   component: OrganizationProfilePageComponent,
-  // },
-  // {
-  //   path: 'personnel/:organizationId',
-  //   component: PersonnelComponent
-  // },
-  // {
-  //   path: 'program_application/:organizationId/:contractId',
-  //   component: ProgramApplicationComponent
-  // },
-  // {
-  //   path: 'budget_proposal/:organizationId/:contractId',
-  //   component: BudgetProposalComponent
-  // },
-  // {
-  //   path: 'status_report/:organizationId/:contractId',
-  //   component: StatusReportComponent
-  // },
-  // {
-  //   path: 'expense_report/:organizationId/:contractId',
-  //   component: ExpenseReportComponent
-  // },
+  }
 ];
 
 @NgModule({

@@ -15,6 +15,7 @@ import { ProgramApplicationComponent } from './authenticated/program-application
 import { StatusReportComponent } from './authenticated/status-report/status-report.component';
 import { PersonnelComponent } from './authenticated/personnel/personnel.component';
 import { ProfileComponent } from './authenticated/profile/profile.component';
+import { ProgramContactInformationComponent } from './authenticated/subforms/program-contact-information/program-contact-information.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { ProfileComponent } from './authenticated/profile/profile.component';
     StatusReportComponent,
     PersonnelComponent,
     ProfileComponent,
+    ProgramContactInformationComponent,
   ],
   imports: [
     AppRoutingModule,
