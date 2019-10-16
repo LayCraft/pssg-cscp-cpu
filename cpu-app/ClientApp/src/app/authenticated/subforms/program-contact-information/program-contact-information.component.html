@@ -1,3 +1,16 @@
-<p>
-  program-contact-information works!
-</p>
+<!-- <div class="mb-4" [formGroup]="contactInformationForm" (input)="onInput()"> -->
+<!-- <app-contact-information formControlName="contactInformation"></app-contact-information> -->
+<!-- </div> -->
+<h2 class="blue-header">Program Contact(s)</h2>
+<p>If the executive or board contact information has inaccuracy please update personnel contact information for your organization before submitting this program application.</p>
+<!-- <app-person-picker [title]="'Executive Contact'" [persons]="persons" (person)="pickExecutive($event)"></app-person-picker> -->
+<div class="form-check mt-2">
+  <input [(ngModel)]="hasBoardOfDirectors" (change)="cleanBoardContact()" type="checkbox" id="hasBoardOfDirectors" name="hasBoardOfDirectors" class="form-check-input">
+  <label for="hasBoardOfDirectors">
+    Does your organization have a board of directors?
+  </label>
+</div>
+<span *ngIf="this.hasBoardOfDirectors">
+  <h2 class="blue-header">Board of Directors</h2>
+  <!-- <app-person-picker [title]="'Board Contact (For societies only)'" [persons]="persons" (person)="pickBoardContact($event)"></app-person-picker> -->
+</span>
