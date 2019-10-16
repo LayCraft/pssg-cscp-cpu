@@ -4,6 +4,7 @@ import { iProgramApplication, ProgramApplication } from '../../../core/models/pr
 import { iPerson } from '../../../core/models/person.class';
 import { PersonService } from '../../../core/services/person.service';
 import { Hours } from '../../../core/models/hours.class';
+import { BoilerplateService } from '../../../core/services/boilerplate.service';
 
 @Component({
   selector: 'app-program',
@@ -24,7 +25,6 @@ export class ProgramComponent implements OnInit {
 
   constructor(
     private personService: PersonService,
-    // private boilerplateService: BoilerplateService,
     // private programInformationService: ProgramInformationService,
   ) {
     this.tabs = ['Contact Information', 'Delivery Information',
