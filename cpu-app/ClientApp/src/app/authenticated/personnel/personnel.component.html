@@ -21,7 +21,7 @@
         </div>
         <div *ngFor="let item of stepperElements">
           <span *ngIf="item.id===currentStepperElement.id">
-            <!-- <app-person-editor [(person)]="item.object" (change)="onChange(item)"></app-person-editor> -->
+            <app-person-editor [(person)]="item.object" (change)="onChange(item)"></app-person-editor>
           </span>
         </div>
       </div>

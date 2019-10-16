@@ -30,6 +30,7 @@ import { AddressComponent } from './authenticated/subforms/address/address.compo
 import { PersonPickerComponent } from './authenticated/subforms/person-picker/person-picker.component';
 import { PersonPickerListComponent } from './authenticated/subforms/person-picker-list/person-picker-list.component';
 import { MinistryContactBoxComponent } from './authenticated/components/ministry-contact-box/ministry-contact-box.component';
+import { PersonEditorComponent } from './authenticated/subforms/person-editor/person-editor.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { MinistryContactBoxComponent } from './authenticated/components/ministry
     PersonPickerComponent,
     PersonPickerListComponent,
     MinistryContactBoxComponent,
+    PersonEditorComponent,
   ],
   imports: [
     AppRoutingModule,
