@@ -16,8 +16,7 @@
         <div *ngFor="let item of stepperElements">
           <div *ngIf="isCurrentStepperElement(item)">
             <div *ngIf="item.discriminator === discriminators[0]">
-              <!-- <app-program-contact-information [(contactInformation)]="item.object"></app-program-contact-information> -->
-              <app-program-contact-information></app-program-contact-information>
+              <app-program-contact-information [(contactInformation)]="item.object"></app-program-contact-information>
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
               <app-administrative-information [(administrativeInformation)]="item.object"></app-administrative-information>
