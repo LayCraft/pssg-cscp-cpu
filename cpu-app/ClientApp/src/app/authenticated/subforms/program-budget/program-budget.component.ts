@@ -10,7 +10,6 @@ import { iExpenseTableMeta } from '../expense-table/expense-table.component';
 })
 export class ProgramBudgetComponent implements OnInit {
 
-
   currentTab: string;
   tabs: string[];
   meta: {} = {

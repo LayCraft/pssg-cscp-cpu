@@ -16,7 +16,7 @@ export class BudgetProposalComponent implements OnInit {
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
 
-  discriminators: ['program_overview', 'program', 'authorization'];
+  discriminators: string[] = ['program_overview', 'program', 'authorization'];
 
   constructor(
     private budgetProposalService: BudgetProposalService,
