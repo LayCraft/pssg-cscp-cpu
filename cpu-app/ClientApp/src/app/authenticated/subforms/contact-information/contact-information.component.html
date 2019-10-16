@@ -43,7 +43,7 @@
     </div>
   </div>
   <!-- Main address block -->
-  <!-- <app-address formControlName='mainAddress' [required]="required"></app-address> -->
+  <app-address formControlName='mainAddress' [required]="required"></app-address>
 
   <div class="form-check">
     <!-- Mailing address checkbox -->
@@ -56,7 +56,7 @@
   <div *ngIf="hasMailingAddress.value===true" class="mt-4">
     <h2 class="blue-header">Mailing Address</h2>
     <!-- Mailing Address Block -->
-    <!-- <app-address formControlName='mailingAddress'></app-address> -->
+    <app-address formControlName='mailingAddress'></app-address>
   </div>
   <!-- <pre>contact-information:{{internalFormGroup.valid}}{{internalFormGroup.value|json}}</pre> -->
 </div>

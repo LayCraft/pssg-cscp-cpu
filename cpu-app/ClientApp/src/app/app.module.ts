@@ -26,6 +26,7 @@ import { ExpenseTableComponent } from './authenticated/subforms/expense-table/ex
 import { ContractTombstoneComponent } from './authenticated/subforms/contract-tombstone/contract-tombstone.component';
 import { OrganizationProfileBoxComponent } from './authenticated/components/organization-profile-box/organization-profile-box.component';
 import { ContactInformationComponent } from './authenticated/subforms/contact-information/contact-information.component';
+import { AddressComponent } from './authenticated/subforms/address/address.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { ContactInformationComponent } from './authenticated/subforms/contact-in
     ProgramContactInformationComponent,
     ReviewApplicationComponent,
     StatusReportComponent,
-    ContactInformationComponent
+    ContactInformationComponent,
+    AddressComponent
 
   ],
   imports: [
