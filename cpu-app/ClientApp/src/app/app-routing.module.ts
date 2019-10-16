@@ -28,27 +28,27 @@ const routes: Routes = [
         component: DashboardComponent
       },
       {
-        path: 'budget_proposal',
+        path: 'budget_proposal', // basic routing and component seems to work
         component: BudgetProposalComponent
       },
       {
-        path: 'expense_report',
+        path: 'expense_report', //
         component: ExpenseReportComponent
       },
       {
-        path: 'program_application',
+        path: 'program_application', //
         component: ProgramApplicationComponent
       },
       {
-        path: 'status_report',
+        path: 'status_report', //
         component: StatusReportComponent
       },
       {
-        path: 'profile',
+        path: 'profile', //
         component: ProfileComponent
       },
       {
-        path: 'personnel',
+        path: 'personnel', //
         component: PersonnelComponent
       },
     ]
