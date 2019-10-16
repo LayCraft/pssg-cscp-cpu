@@ -4,6 +4,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { DashboardComponent } from './authenticated/dashboard/dashboard.component';
 import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-proposal.component';
+import { ExpenseReportComponent } from './authenticated/expense-report/expense-report.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
       {
         path: 'budget_proposal',
         component: BudgetProposalComponent
+      },
+      {
+        path: 'expense_report',
+        component: ExpenseReportComponent
       },
     ]
 

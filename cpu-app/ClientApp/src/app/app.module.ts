@@ -10,6 +10,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SharedModule } from './shared/shared.module';
 import { DashboardComponent } from './authenticated/dashboard/dashboard.component';
 import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-proposal.component';
+import { ExpenseReportComponent } from './authenticated/expense-report/expense-report.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-
     BudgetProposalComponent,
     DashboardComponent,
     LandingPageComponent,
+    ExpenseReportComponent,
   ],
   imports: [
     AppRoutingModule,
