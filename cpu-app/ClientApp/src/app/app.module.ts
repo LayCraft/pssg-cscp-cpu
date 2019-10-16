@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +25,7 @@ import { HoursComponent } from './authenticated/subforms/hours/hours.component';
 import { ExpenseTableComponent } from './authenticated/subforms/expense-table/expense-table.component';
 import { ContractTombstoneComponent } from './authenticated/subforms/contract-tombstone/contract-tombstone.component';
 import { OrganizationProfileBoxComponent } from './authenticated/components/organization-profile-box/organization-profile-box.component';
+import { ContactInformationComponent } from './authenticated/subforms/contact-information/contact-information.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { OrganizationProfileBoxComponent } from './authenticated/components/orga
     ProgramComponent,
     ProgramContactInformationComponent,
     ReviewApplicationComponent,
-    StatusReportComponent
+    StatusReportComponent,
+    ContactInformationComponent
 
   ],
   imports: [
@@ -55,6 +57,7 @@ import { OrganizationProfileBoxComponent } from './authenticated/components/orga
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
     SharedModule
