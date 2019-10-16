@@ -30,6 +30,8 @@ export class HeaderComponent implements OnInit {
       } else {
         // User signed in because behaviour subject was not blank
         this.notificationQueueService.addNotification(`${u} has been logged in successfully.`, 'success');
+        this.router.navigate(['/authenticated/dashboard']);
+
       }
       this.user = u;
     });
