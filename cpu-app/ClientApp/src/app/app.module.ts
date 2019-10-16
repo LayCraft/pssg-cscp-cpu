@@ -10,6 +10,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SharedModule } from './shared/shared.module';
 import { DashboardComponent } from './authenticated/dashboard/dashboard.component';
 import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-proposal.component';
+import { IconStepperComponent } from './authenticated/components/icon-stepper/icon-stepper.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-
     LandingPageComponent,
     DashboardComponent,
     BudgetProposalComponent,
+    IconStepperComponent,
   ],
   imports: [
     AppRoutingModule,
