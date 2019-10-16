@@ -30,27 +30,27 @@ const routes: Routes = [
         component: DashboardComponent
       },
       {
-        path: 'budget_proposal/:contractId', // basic routing and component seems to work
+        path: 'budget_proposal/:contractId',
         component: BudgetProposalComponent
       },
       {
-        path: 'expense_report/:contractId', //
+        path: 'expense_report/:contractId',
         component: ExpenseReportComponent
       },
       {
-        path: 'program_application/:contractId', // basic routing and component seems to work
+        path: 'program_application/:contractId',
         component: ProgramApplicationComponent
       },
       {
-        path: 'status_report/:contractId', //
+        path: 'status_report/:contractId',
         component: StatusReportComponent
       },
       {
-        path: 'profile', //
+        path: 'profile',
         component: ProfileComponent
       },
       {
-        path: 'personnel', //
+        path: 'personnel',
         component: PersonnelComponent
       },
     ]
