@@ -4,13 +4,11 @@
       <!-- <app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone> -->
 
       <section class="application-nav sticky-top">
-        icon stepper here
         <app-icon-stepper></app-icon-stepper>
       </section>
     </div>
 
     <div class="col-md-8">
-      main elements here
       <div *ngIf="stepperElements && currentStepperElement">
         <div class="page-header">
           <h1>{{currentStepperElement.itemName}}</h1>
@@ -23,10 +21,10 @@
               Program Overview
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
-              <!-- <app-program-budget></app-program-budget> -->
+              <app-program-budget></app-program-budget>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">
-              <!-- <app-program-authorizer [(signature)]="item.object"></app-program-authorizer> -->
+              <app-program-authorizer [(signature)]="item.object"></app-program-authorizer>
             </div>
           </div>
         </div>

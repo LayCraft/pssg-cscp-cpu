@@ -32,6 +32,8 @@ import { PersonPickerListComponent } from './authenticated/subforms/person-picke
 import { MinistryContactBoxComponent } from './authenticated/components/ministry-contact-box/ministry-contact-box.component';
 import { PersonEditorComponent } from './authenticated/subforms/person-editor/person-editor.component';
 import { TestComponent } from './test/test.component';
+import { ProgramBudgetComponent } from './authenticated/subforms/program-budget/program-budget.component';
+import { RevenueSourceTableComponent } from './authenticated/subforms/revenue-source-table/revenue-source-table.component';
 
 
 @NgModule({
@@ -62,6 +64,8 @@ import { TestComponent } from './test/test.component';
     MinistryContactBoxComponent,
     PersonEditorComponent,
     TestComponent,
+    ProgramBudgetComponent,
+    RevenueSourceTableComponent,
   ],
   imports: [
     AppRoutingModule,

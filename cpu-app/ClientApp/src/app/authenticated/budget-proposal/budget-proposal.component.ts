@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
-import { iProgramBudget, ProgramBudget } from '../../core/models/budget-proposal.class';
+import { iProgramBudget, ProgramBudget, iBudgetProposal } from '../../core/models/budget-proposal.class';
+import { BudgetProposalService } from '../../core/services/budget-proposal.service';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -18,8 +19,8 @@ export class BudgetProposalComponent implements OnInit {
   discriminators: ['program_overview', 'program', 'authorization'];
 
   constructor(
-    // private budgetProposalService: BudgetProposalService,
-    private stepperService: IconStepperService
+    private budgetProposalService: BudgetProposalService,
+    private stepperService: IconStepperService,
   ) { }
 
   ngOnInit() {
@@ -40,27 +41,27 @@ export class BudgetProposalComponent implements OnInit {
     return false;
   }
   constructDefaultstepperElements() {
-    // this.budgetProposalService.getBudgetProposal('foo', 'bar').subscribe((bp: iBudgetProposal) => {
-    // 	// write the default top element
-    // 	const topper = {
-    // 		itemName: 'Program Overview',
-    // 		formState: 'info',
-    // 		object: null,
-    // 		discriminator: 'program_overview',
-    // 	};
-    // 	this.stepperService.addStepperElement(topper.object, topper.itemName, topper.formState, topper.discriminator);
-    // 	// add the programs to the list
-    // 	bp.programs.forEach((p: iProgramBudget) => {
-    // 		this.stepperService.addStepperElement(new ProgramBudget(p), p.name, p.formState, 'program');
-    // 	});
-    // 	// Write the default end part
-    // 	const bottom = {
-    // 		itemName: 'Authorization',
-    // 		formState: 'untouched',
-    // 		object: null,
-    // 		discriminator: 'authorization'
-    // 	};
-    // 	this.stepperService.addStepperElement(bottom.object, bottom.itemName, bottom.formState, bottom.discriminator);
-    // });
+    this.budgetProposalService.getBudgetProposal('foo', 'bar').subscribe((bp: iBudgetProposal) => {
+      // write the default top element
+      const topper = {
+        itemName: 'Program Overview',
+        formState: 'info',
+        object: null,
+        discriminator: 'program_overview',
+      };
+      this.stepperService.addStepperElement(topper.object, topper.itemName, topper.formState, topper.discriminator);
+      // add the programs to the list
+      bp.programs.forEach((p: iProgramBudget) => {
+        this.stepperService.addStepperElement(new ProgramBudget(p), p.name, p.formState, 'program');
+      });
+      // Write the default end part
+      const bottom = {
+        itemName: 'Authorization',
+        formState: 'untouched',
+        object: null,
+        discriminator: 'authorization'
+      };
+      this.stepperService.addStepperElement(bottom.object, bottom.itemName, bottom.formState, bottom.discriminator);
+    });
   }
 }
