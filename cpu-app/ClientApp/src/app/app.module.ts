@@ -10,26 +10,24 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SharedModule } from './shared/shared.module';
 import { DashboardComponent } from './authenticated/dashboard/dashboard.component';
 import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-proposal.component';
-import { IconStepperComponent } from './authenticated/components/icon-stepper/icon-stepper.component';
 
 
 @NgModule({
   declarations: [
     // TestComponent,
     AppComponent,
-    LandingPageComponent,
-    DashboardComponent,
     BudgetProposalComponent,
-    IconStepperComponent,
+    DashboardComponent,
+    LandingPageComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
-    SharedModule,
-    HttpClientModule,
     FormsModule,
-    RouterModule
+    HttpClientModule,
+    RouterModule,
+    SharedModule
   ],
 
   providers: [
