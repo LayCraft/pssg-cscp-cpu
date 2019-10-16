@@ -23,28 +23,31 @@ import { ReviewApplicationComponent } from './authenticated/subforms/review-appl
 import { ProgramAuthorizerComponent } from './authenticated/subforms/program-authorizer/program-authorizer.component';
 import { HoursComponent } from './authenticated/subforms/hours/hours.component';
 import { ExpenseTableComponent } from './authenticated/subforms/expense-table/expense-table.component';
+import { ContractTombstoneComponent } from './authenticated/subforms/contract-tombstone/contract-tombstone.component';
 
 
 @NgModule({
   declarations: [
     // TestComponent,
     AppComponent,
+    AdministrativeInformationComponent,
     BudgetProposalComponent,
+    CgLiabilityComponent,
+    ContractTombstoneComponent,
     DashboardComponent,
-    LandingPageComponent,
     ExpenseReportComponent,
-    ProgramApplicationComponent,
-    StatusReportComponent,
+    ExpenseTableComponent,
+    HoursComponent,
+    LandingPageComponent,
     PersonnelComponent,
     ProfileComponent,
-    ProgramContactInformationComponent,
-    AdministrativeInformationComponent,
-    CgLiabilityComponent,
-    ProgramComponent,
-    ReviewApplicationComponent,
+    ProgramApplicationComponent,
     ProgramAuthorizerComponent,
-    HoursComponent,
-    ExpenseTableComponent,
+    ProgramComponent,
+    ProgramContactInformationComponent,
+    ReviewApplicationComponent,
+    StatusReportComponent,
+
   ],
   imports: [
     AppRoutingModule,
