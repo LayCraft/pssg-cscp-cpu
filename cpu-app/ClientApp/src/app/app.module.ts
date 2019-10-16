@@ -22,6 +22,7 @@ import { ProgramComponent } from './authenticated/subforms/program/program.compo
 import { ReviewApplicationComponent } from './authenticated/subforms/review-application/review-application.component';
 import { ProgramAuthorizerComponent } from './authenticated/subforms/program-authorizer/program-authorizer.component';
 import { HoursComponent } from './authenticated/subforms/hours/hours.component';
+import { ExpenseTableComponent } from './authenticated/subforms/expense-table/expense-table.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { HoursComponent } from './authenticated/subforms/hours/hours.component';
     ReviewApplicationComponent,
     ProgramAuthorizerComponent,
     HoursComponent,
+    ExpenseTableComponent,
   ],
   imports: [
     AppRoutingModule,
