@@ -24,13 +24,13 @@ import { ProgramAuthorizerComponent } from './authenticated/subforms/program-aut
 import { HoursComponent } from './authenticated/subforms/hours/hours.component';
 import { ExpenseTableComponent } from './authenticated/subforms/expense-table/expense-table.component';
 import { ContractTombstoneComponent } from './authenticated/subforms/contract-tombstone/contract-tombstone.component';
+import { OrganizationProfileBoxComponent } from './authenticated/components/organization-profile-box/organization-profile-box.component';
 
 
 @NgModule({
   declarations: [
-    // TestComponent,
-    AppComponent,
     AdministrativeInformationComponent,
+    AppComponent,
     BudgetProposalComponent,
     CgLiabilityComponent,
     ContractTombstoneComponent,
@@ -39,6 +39,7 @@ import { ContractTombstoneComponent } from './authenticated/subforms/contract-to
     ExpenseTableComponent,
     HoursComponent,
     LandingPageComponent,
+    OrganizationProfileBoxComponent,
     PersonnelComponent,
     ProfileComponent,
     ProgramApplicationComponent,
@@ -46,7 +47,7 @@ import { ContractTombstoneComponent } from './authenticated/subforms/contract-to
     ProgramComponent,
     ProgramContactInformationComponent,
     ReviewApplicationComponent,
-    StatusReportComponent,
+    StatusReportComponent
 
   ],
   imports: [
