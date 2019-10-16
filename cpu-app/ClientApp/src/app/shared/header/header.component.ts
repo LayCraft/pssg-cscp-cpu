@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
     // 	} else if (!u) {
     // 		// User signed out because behaviour subject was blank
     // 		this.notificationQueueService.addNotification('User has logged out.', 'warning');
-    // 		// Go back home!
+    // 		// Go back home!m
     // 		this.router.navigate(['']);
     // 	} else {
     // 		// User signed in because behaviour subject was not blank
