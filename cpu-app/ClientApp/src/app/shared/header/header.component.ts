@@ -34,13 +34,15 @@ export class HeaderComponent implements OnInit {
   }
   login() {
     // this.authenticationService.login();
+    alert('Log in!');
   }
   logout() {
     // this.authenticationService.logout();
+    alert('Log out!');
   }
   homeButton() {
     // this is done without a routerlink because you will want to route the user back to a place
     // that is appropriate for their role. So check their logged in state and etc before deciding which route they go to.
-    // this.router.navigate(['']);
+    this.router.navigate(['']);
   }
 }
