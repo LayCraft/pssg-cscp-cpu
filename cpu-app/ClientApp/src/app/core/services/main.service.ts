@@ -17,7 +17,9 @@ export class MainService {
 
   getBlob(): Observable<any> {
     // return transmogrified mock response
-    return of(new Transmogrifier(this.mockResponse));
+      return of(this.mockResponse);
+      // return of(new Transmogrifier(this.mockResponse));
+
     // return this.http.get<any>(this.apiUrl, { headers: this.headers }).pipe(
     // 	retry(3),
     // 	catchError(this.handleError)
