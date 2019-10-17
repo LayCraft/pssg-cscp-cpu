@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { Transmogrifier, iDynamicsBlob } from '../models/transmogrifier.class';
+import { retry, catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,10 @@ export class MainService {
   ) { }
 
   getBlob(): Observable<any> {
-    // return transmogrified mock response
-      return of(this.mockResponse);
-      // return of(new Transmogrifier(this.mockResponse));
-
-    // return this.http.get<any>(this.apiUrl, { headers: this.headers }).pipe(
-    // 	retry(3),
-    // 	catchError(this.handleError)
-    // );
+    return this.http.get<iDynamicsBlob>(this.apiUrl, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
   }
 
   get headers(): HttpHeaders {
