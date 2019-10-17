@@ -55,8 +55,9 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 
                 var endpointAction = "vsd_GetCPUOrgContracts";
                 var tuple = await GetDynamicsHttpClientNew(_configuration, applicationJson, endpointAction);
-
-                return new JsonResult(tuple.Item2);
+                // convert response string into a json object
+                var response = JsonConvert.DeserializeObject(tuple.Item2);
+                return new JsonResult(response);
                 //HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endpointAction);
                 //request.Content = new StringContent(applicationJson, Encoding.UTF8, "application/json");
 
