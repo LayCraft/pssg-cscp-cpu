@@ -4,6 +4,7 @@ import { NotificationQueueService } from '../../core/services/notification-queue
 import { Person, iPerson } from '../../core/models/person.class';
 import { PersonService } from '../../core/services/person.service';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { StateService } from '../../core/services/state.service';
 
 @Component({
   selector: 'app-personnel',
@@ -23,6 +24,7 @@ export class PersonnelComponent implements OnInit {
     private personService: PersonService,
     private notificationQueueService: NotificationQueueService,
     private stepperService: IconStepperService,
+    private stateService: StateService,
   ) { }
 
   ngOnInit() {
@@ -37,12 +39,10 @@ export class PersonnelComponent implements OnInit {
   }
   constructDefaultstepperElements(): void {
     // this is just a constructor
-    // get the personnel list from Dynamics and shove it in here
-    this.personService.getPersons('TODO: bork').subscribe(persons => {
-      this.stepperService.reset();
-      persons.forEach(person => {
+    this.stateService.main.subscribe(s => {
+      s.persons.forEach(person => {
         this.stepperService.addStepperElement(new Person(person), this.nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
-      })
+      });
     });
   }
   nameAssemble(first: string, middle: string, last: string): string {
