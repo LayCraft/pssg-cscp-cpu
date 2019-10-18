@@ -9,8 +9,11 @@
         </span>
       </a>
       <span class="navbar-text" *ngIf="user!=null">
-        <span>{{user}}&nbsp;-&nbsp;</span>
-        <a (click)="logout()">Sign Out</a>
+        <a (click)="logout()">
+          <span>
+            <app-logged-in></app-logged-in>&nbsp;-&nbsp;
+          </span>
+          Sign Out</a>
         <!-- This is for siteminder logout -->
         <!-- <a href="logout">Sign Out</a> -->
       </span>
