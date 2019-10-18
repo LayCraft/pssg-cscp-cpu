@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { iContactInformation } from '../../core/models/contact-information.class';
 import { BoilerplateService } from '../../core/services/boilerplate.service';
+import { StateService } from '../../core/services/state.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,17 +17,18 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private boilerplateService: BoilerplateService,
+    private stateService: StateService,
   ) { }
 
   ngOnInit() {
-    this.route.snapshot.paramMap.get('organizationId');
-    this.boilerplateService.getOrganizationBoilerplate(this.organizationId).subscribe(ci => {
+    // subscribe to main
+    this.stateService.main.subscribe(m => {
       this.contactInformationForm = new FormGroup({
         'contactInformation': new FormControl('', Validators.required)
       });
-      this.contactInformationForm.controls['contactInformation'].setValue(ci);
+      console.log(m.organizationMeta.contactInformation);
+      this.contactInformationForm.controls['contactInformation'].setValue(m.organizationMeta.contactInformation);
     });
   }
   hasCriticalParts(): boolean {

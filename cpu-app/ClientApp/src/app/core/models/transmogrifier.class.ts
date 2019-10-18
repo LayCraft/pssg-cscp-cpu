@@ -7,9 +7,11 @@ import { iTombstone, iProgramTombstone } from './tombstone.class';
 export class Transmogrifier {
   public organizationMeta: iOrganizationMeta;
   public persons: iPerson[];
+  public tombstones: iTombstone[];
   constructor(b: iDynamicsBlob) {
     this.organizationMeta = this.buildOrganizationMeta(b);
     this.persons = this.buildPersons(b);
+    this.tombstones = this.buildTombStones(b);
   }
   private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
     // collect the organization meta and structure it into a new shape
