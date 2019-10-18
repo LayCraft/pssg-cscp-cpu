@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { StateService } from '../../../core/services/state.service';
+import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-organization-profile-box',
@@ -6,13 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./organization-profile-box.component.scss']
 })
 export class OrganizationProfileBoxComponent implements OnInit {
-  organizationMeta = {
-    organizationName: 'BC Social',
-    contracts: ['179898-asa', '1230941-qux'],
-    organizationId: '32989678532',
-    phoneNumber: '1 250 555 1212',
-    emailAddress: 'Kate@soc.gov.bc.ca'
-  };
-  constructor() { }
-  ngOnInit() { }
+  trans: Transmogrifier;
+  constructor(
+    private stateService: StateService
+  ) { }
+  ngOnInit() {
+    this.stateService.main.subscribe(o => {
+      // collect the organization meta information to show in the box.
+      this.trans = o;
+    });
+  }
 }

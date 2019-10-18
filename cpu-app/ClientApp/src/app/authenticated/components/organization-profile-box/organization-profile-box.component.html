@@ -1,15 +1,15 @@
 <div class="card">
   <div class="card-header">
-    {{ organizationMeta.organizationName ||'Organization'}} Profile
+    {{ trans.organizationMeta.organizationName ||'Organization'}} Profile
   </div>
   <div class="card-body">
     <p class="card-text">
       <strong>Phone</strong><br>
-      <a href="tel:{{organizationMeta.phoneNumber}}">{{organizationMeta.phoneNumber}}</a>
+      <a href="tel:{{trans.organizationMeta.contactInformation.phoneNumber}}">{{trans.organizationMeta.contactInformation.phoneNumber}}</a>
     </p>
     <p class="card-text">
       <strong>Email</strong><br>
-      <a href="mailto:{{organizationMeta.emailAddress}}">{{organizationMeta.emailAddress}}</a>
+      <a href="mailto:{{trans.organizationMeta.contactInformation.emailAddress}}">{{trans.organizationMeta.contactInformation.emailAddress}}</a>
     </p>
   </div>
   <div class="card-footer">
