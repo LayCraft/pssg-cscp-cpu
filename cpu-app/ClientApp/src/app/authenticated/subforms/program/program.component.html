@@ -37,7 +37,7 @@
   </div>
   <span class="mb-4" *ngIf="differentProgramContact">
     <h2 class="blue-header">Program Contact</h2>
-    <app-person-picker [title]="'Please select a program contact.'" [persons]="persons" (person)="onProgramContactChange($event)"></app-person-picker>
+    <app-person-picker [title]="'Please select a program contact.'" (person)="onProgramContactChange($event)"></app-person-picker>
     <!-- {{programInformationForm.programContact|json}} -->
   </span>
   <h2 class="blue-header mt-2">Program Staff</h2>

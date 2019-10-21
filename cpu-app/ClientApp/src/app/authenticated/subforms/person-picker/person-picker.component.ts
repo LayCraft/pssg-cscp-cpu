@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iPerson } from '../../../core/models/person.class';
 import { nameAssemble } from '../../../core/constants/name-assemble';
+import { StateService } from '../../../core/services/state.service';
 
 @Component({
   selector: 'app-person-picker',
@@ -11,19 +12,23 @@ export class PersonPickerComponent implements OnInit {
   // this is a person form control that uses template binding.
 
   @Input() title = 'Select Person';
-  @Input() persons: iPerson[] = [];
-  @Output() person = new EventEmitter<iPerson>();
+  @Input() person: iPerson;
+  @Output() personChange = new EventEmitter<iPerson>();
   @Input() showCard = true;
-  personId: string; // assumed that all persons have unique ids
-  currentPerson: iPerson;
   public nameAssemble = nameAssemble;
+  persons: iPerson[];
 
-  constructor() { }
-  ngOnInit() { }
+  constructor(
+    private stateService: StateService,
+  ) { }
+  ngOnInit() {
+    this.stateService.main.subscribe(m => {
+      this.persons = m.persons;
+    });
+  }
 
   onChange() {
-    this.currentPerson = this.persons.filter(p => p.personId === this.personId)[0];
     // emit the first person that the selected ID matches
-    this.person.emit(this.persons.filter(p => p.personId === this.personId)[0])
+    this.personChange.emit(this.person);
   }
 }
