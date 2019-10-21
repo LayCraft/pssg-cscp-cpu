@@ -44,7 +44,10 @@ export class HeaderComponent implements OnInit {
   homeButton() {
     // this is done without a routerlink because you will want to route the user back to a place
     // that is appropriate for their role. So check their logged in state and etc before deciding which route they go to.
-
-    this.router.navigate(['']);
+    if (this.stateService.loggedIn.getValue()) {
+      this.router.navigate(['/authenticated/dashboard']);
+    } else {
+      this.router.navigate(['']);
+    }
   }
 }

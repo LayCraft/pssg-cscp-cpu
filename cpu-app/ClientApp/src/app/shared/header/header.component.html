@@ -11,7 +11,7 @@
       <span class="navbar-text" *ngIf="organizationName!==null">
         <a (click)="logout()">
           <span>
-            <app-logged-in></app-logged-in>&nbsp;-&nbsp;
+            {{organizationName}}&nbsp;-&nbsp;
           </span>
           Sign Out</a>
         <!-- This is for siteminder logout -->

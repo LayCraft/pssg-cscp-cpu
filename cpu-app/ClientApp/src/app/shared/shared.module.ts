@@ -5,26 +5,24 @@ import { FooterComponent } from './footer/footer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NotificationBannerComponent } from './notification-banner/notification-banner.component';
 import { IconStepperComponent } from './icon-stepper/icon-stepper.component';
-import { LoggedInComponent } from './components/logged-in/logged-in.component';
 
 @NgModule({
-	declarations: [
-		FooterComponent,
-		HeaderComponent,
-		IconStepperComponent,
-		NotFoundComponent,
-		NotificationBannerComponent,
-		LoggedInComponent,
-	],
-	imports: [
-		CommonModule
-	],
-	exports: [
-		FooterComponent,
-		HeaderComponent,
-		IconStepperComponent,
-		NotFoundComponent,
-		NotificationBannerComponent,
-	]
+  declarations: [
+    FooterComponent,
+    HeaderComponent,
+    IconStepperComponent,
+    NotFoundComponent,
+    NotificationBannerComponent,
+  ],
+  imports: [
+    CommonModule
+  ],
+  exports: [
+    FooterComponent,
+    HeaderComponent,
+    IconStepperComponent,
+    NotFoundComponent,
+    NotificationBannerComponent,
+  ]
 })
 export class SharedModule { }

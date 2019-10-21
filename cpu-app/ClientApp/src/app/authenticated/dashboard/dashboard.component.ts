@@ -38,7 +38,6 @@ export class DashboardComponent implements OnInit {
     this.stateService.main.subscribe(m => {
       this.organizationMeta = m.organizationMeta;
     });
-
     this.tombstoneService.getTombstones(this.stateService.organizationId.getValue()).subscribe(t => {
       this.tombstones = t.filter(tombstone => tombstone.formStatus !== this.statuses[5]);
       this.completedTombstones = t.filter(tombstone => tombstone.formStatus === this.statuses[5]);
