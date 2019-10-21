@@ -16,10 +16,8 @@ export class AuthenticationGuard implements CanActivate {
     private stateService: StateService,
   ) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    // for this simple system we go see if the user is null.
-    // In a production system this set of checks should be stronger.
-    let organizationId = this.stateService.organizationId.getValue();
-    if (organizationId) {
+    // if they are logged in they can activate the route
+    if (this.stateService.loggedIn.getValue()) {
       // the user is logged in
       return of(true);
     } else {

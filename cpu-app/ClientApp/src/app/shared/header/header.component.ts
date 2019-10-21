@@ -31,7 +31,6 @@ export class HeaderComponent implements OnInit {
         // User signed in because behaviour subject was not blank
         this.notificationQueueService.addNotification(`${u} has been logged in successfully.`, 'success');
         this.router.navigate(['/authenticated/dashboard']);
-
       }
       this.organizationName = u;
     });
@@ -45,6 +44,7 @@ export class HeaderComponent implements OnInit {
   homeButton() {
     // this is done without a routerlink because you will want to route the user back to a place
     // that is appropriate for their role. So check their logged in state and etc before deciding which route they go to.
+
     this.router.navigate(['']);
   }
 }

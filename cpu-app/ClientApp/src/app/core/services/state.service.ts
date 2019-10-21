@@ -12,8 +12,10 @@ export class StateService {
   public main: BehaviorSubject<Transmogrifier> = new BehaviorSubject(null);
   // human readable name for the organization
   public organizationName: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  // primary lookup data is the organization id. If this exists the user is logged in.
+  // primary lookup data is the organization id.
   public organizationId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  // global state of the login
+  public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private mainService: MainService,
@@ -30,6 +32,8 @@ export class StateService {
       //save handy org name and id
       this.organizationName.next(mainData.organizationMeta.organizationName);
       this.organizationId.next(mainData.organizationMeta.organizationId);
+      // set the logged in state
+      this.loggedIn.next(true);
     });
   }
 
@@ -39,5 +43,6 @@ export class StateService {
     this.organizationName.next(null);
     this.organizationId.next(null);
     this.router.navigateByUrl('/');
+    this.loggedIn.next(false);
   }
 }
