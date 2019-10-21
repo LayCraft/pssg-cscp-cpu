@@ -13,7 +13,6 @@ import { iOrganizationMeta } from '../../core/models/organization-meta.class';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  contactInformation: iContactInformation;
   tombstones: iTombstone[];
   completedTombstones: iTombstone[];
   programTombstones: iProgramTombstone[];
@@ -27,7 +26,6 @@ export class DashboardComponent implements OnInit {
   constructor(
     private tombstoneService: TombstoneService,
     private stateService: StateService,
-    private mainService: MainService,
   ) {
     this.tabs = ['Current Tasks', 'Completed', 'Programs'];
     this.currentTab = this.tabs[0];
@@ -36,26 +34,20 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    // collect the main blob from dynamics and load it into the state
-    this.mainService.getBlob().subscribe((b: iDynamicsBlob) => {
-      // transmgrify the data into something useful
-      const trans = new Transmogrifier(b);
-      // make a useful object for the template
-      this.organizationMeta = trans.organizationMeta;
-      this.stateService.main.next(trans);
-
+    // save the organization meta
+    this.stateService.main.subscribe(m => {
+      this.organizationMeta = m.organizationMeta;
     });
 
-    this.tombstoneService.getTombstones('FAKE BCEID').subscribe(t => {
+    this.tombstoneService.getTombstones(this.stateService.organizationId.getValue()).subscribe(t => {
       this.tombstones = t.filter(tombstone => tombstone.formStatus !== this.statuses[5]);
       this.completedTombstones = t.filter(tombstone => tombstone.formStatus === this.statuses[5]);
     });
-    this.tombstoneService.getProgramTombstones('Whatever').subscribe((tombstones: ProgramTombstone[]) => {
-      // clear tombstones
-      this.programTombstones = tombstones;
-    });
-
-    this.stateService.main.subscribe()
+    this.tombstoneService.getProgramTombstones(this.stateService.organizationId.getValue())
+      .subscribe((tombstones: ProgramTombstone[]) => {
+        // clear tombstones
+        this.programTombstones = tombstones;
+      });
   }
   setCurrentTab(tabname: string) {
     this.currentTab = tabname;
