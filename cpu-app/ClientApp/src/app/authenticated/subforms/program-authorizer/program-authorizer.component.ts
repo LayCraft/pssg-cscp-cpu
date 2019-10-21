@@ -16,16 +16,16 @@ export class ProgramAuthorizerComponent implements OnInit {
   @Output() signatureChange = new EventEmitter<iSignature>();
 
   terms: [string, boolean][] = [
-    ['The organization has late or outstanding reports.', false],
-    ['The organization fails to adhere Employment Standards Act of BC.', false],
-    ['The organization fails to adhere to the BC Human Rights Code.', false],
-    ['The organization fails to comply with the Worker\'s Compensation Act (WorkSafe BC).', false],
-    ['The organization does not provide or secure adequate commercial general liability insurance.', false],
-    ['The organization fails to comply with privacy legislation.', false],
-    ['If any part of the application is discovered to be innacurate.', false],
+    ['Termination may occur if the organization has late or outstanding reports.', false],
+    ['Termination may occur if the organization fails to adhere Employment Standards Act of BC.', false],
+    ['Termination may occur if the organization fails to adhere to the BC Human Rights Code.', false],
+    ['Termination may occur if the organization fails to comply with the Worker\'s Compensation Act (WorkSafe BC).', false],
+    ['Termination may occur if the organization does not provide or secure adequate commercial general liability insurance.', false],
+    ['Termination may occur if the organization fails to comply with privacy legislation.', false],
+    ['Termination may occur if any part of the application is found to be innacurate.', false],
     ['I understand that the Application Program for Victim Services and Crime Prevention Division may notify provincial authorities that I have submitted an application.', false],
-    ['I have read and understood the above information.', false],
-
+    ['I have the authority to submit this application on behalf of this organization.', false],
+    ['I have read, understood, and certify that the information being submitted is accurate to the best of my knowledge.', false],
   ]
   constructor() { }
 
