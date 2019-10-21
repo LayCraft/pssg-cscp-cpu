@@ -10,7 +10,7 @@
 <div class="form-group">
   <label for="personPicker">{{label}}</label>
   <select class="form-control" name="personPicker" id="personPicker">
-    <option *ngFor="let person of persons" (click)="addPerson(person.personId)" [value]="person.personId" [class.disabled]="personInPersonsList(person.personId)">{{person.firstName}} {{person.middleName[0]|uppercase}} {{person.lastName}}</option>
+    <option *ngFor="let person of persons" (click)="addPerson(person.personId)" [value]="person.personId" [class.disabled]="personInPersonsList(person.personId)">{{person.firstName||''}} {{person.middleName[0]||''|uppercase}} {{person.lastName||''}}</option>
   </select>
 </div>
 <!-- <pre>{{personsList|json}}</pre> -->

@@ -1,10 +1,7 @@
 What it has: 
-- Lazy loading for authenticated and anonymous functionality
 - The BCGov Bootstrap theme
 - Docker development files in place
 - The BCGov Logo and header/footer branding.
-- Angular Material style sheet to make the components match government colours.
-- Angular Material Stepper and a few other components loaded into the unauthenticated area.
 
 # Victims Services Community Programs Unit
 
@@ -13,12 +10,9 @@ What it has:
 Within the `ClientApp/src/app` folder there are some key locations.
 
 ```
-├───anonymous (Logged out page module for lazy loading)
-│   ├───anonymous-form
-│   └───mat-demo
-├───authenticated (Route guarded lazy loaded module)
+├───authenticated (Route guarded)
 │   ├───components (subcomponents shared across pages)
-│   └───modules (components that represent a page or collection of components)
+│   └───subforms (components that represent form parts)
 ├───core (Models and other data related elements)
 │   ├───constants (Regex validation)
 │   ├───guards (Check for authentication/authorization)
@@ -31,9 +25,7 @@ Within the `ClientApp/src/app` folder there are some key locations.
 │   ├───expense-report
 │   ├───personnel
 │   └───program-application
-├───shared
-│   └───components (General purpose components)
-└───test (This is a component for experimentation.)
+├───shared (General purpose components)
 ```
 
 ## Development server
