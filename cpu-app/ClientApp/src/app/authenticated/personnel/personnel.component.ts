@@ -5,6 +5,7 @@ import { Person, iPerson } from '../../core/models/person.class';
 import { PersonService } from '../../core/services/person.service';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { StateService } from '../../core/services/state.service';
+import { nameAssemble } from '../../core/constants/name-assemble';
 
 @Component({
   selector: 'app-personnel',
@@ -43,17 +44,11 @@ export class PersonnelComponent implements OnInit {
     // this is just a constructor
     this.stateService.main.subscribe(s => {
       s.persons.forEach(person => {
-        this.stepperService.addStepperElement(new Person(person), this.nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
+        this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
       });
     });
   }
-  nameAssemble(first: string, middle: string, last: string): string {
-    let build = '';
-    if (first) build += first + ' ';
-    if (middle) build += middle[0].toUpperCase() + ' ';
-    if (last) build += last;
-    return build;
-  }
+
   // updateCurrent() {
   // 	// make a current item
   // 	this.currentStepperElement.itemName = this.nameAssemble(this.currentStepperElement.object['firstName'], this.currentStepperElement.object['middleName'], this.currentStepperElement.object['lastName']);
@@ -99,7 +94,7 @@ export class PersonnelComponent implements OnInit {
     this.stepperService.removeStepperElement(id);
   }
   onChange(element: iStepperElement) {
-    element.itemName = this.nameAssemble(element.object['firstName'], element.object['middleName'], element.object['lastName'])
+    element.itemName = nameAssemble(element.object['firstName'], element.object['middleName'], element.object['lastName'])
     // loop back to shove the new form into the service
     this.stepperService.setStepperElement(element);
   }

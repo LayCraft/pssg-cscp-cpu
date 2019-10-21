@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iPerson } from '../../../core/models/person.class';
-
+import { nameAssemble } from '../../../core/constants/name-assemble';
 @Component({
   selector: 'app-person-picker-list',
   templateUrl: './person-picker-list.component.html',
@@ -12,7 +12,7 @@ export class PersonPickerListComponent implements OnInit {
   @Output() personsChange = new EventEmitter<iPerson[]>();
 
   personsList: iPerson[] = [];
-
+  public nameAssemble = nameAssemble;
   constructor() { }
 
   ngOnInit() { }

@@ -2,9 +2,9 @@ import { AbstractControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iProgramApplication, ProgramApplication } from '../../../core/models/program-application.class';
 import { iPerson } from '../../../core/models/person.class';
-import { PersonService } from '../../../core/services/person.service';
 import { Hours } from '../../../core/models/hours.class';
-import { BoilerplateService } from '../../../core/services/boilerplate.service';
+import { StateService } from '../../../core/services/state.service';
+import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-program',
@@ -24,8 +24,7 @@ export class ProgramComponent implements OnInit {
   persons: iPerson[] = [];
 
   constructor(
-    private personService: PersonService,
-    // private programInformationService: ProgramInformationService,
+    private stateService: StateService
   ) {
     this.tabs = ['Contact Information', 'Delivery Information',
       // 'Reporting Requirements'
@@ -34,7 +33,9 @@ export class ProgramComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.personService.getPersons('foobarbazqux').subscribe(p => this.persons = p);
+    this.stateService.main.subscribe((m: Transmogrifier) => {
+      this.persons = m.persons;
+    });
     this.programInformationForm = new ProgramApplication();
     this.addOperationHours();
     this.addStandbyHours();

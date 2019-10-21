@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iPerson } from '../../../core/models/person.class';
+import { nameAssemble } from '../../../core/constants/name-assemble';
 
 @Component({
   selector: 'app-person-picker',
@@ -15,6 +16,7 @@ export class PersonPickerComponent implements OnInit {
   @Input() showCard = true;
   personId: string; // assumed that all persons have unique ids
   currentPerson: iPerson;
+  public nameAssemble = nameAssemble;
 
   constructor() { }
   ngOnInit() { }
@@ -23,12 +25,5 @@ export class PersonPickerComponent implements OnInit {
     this.currentPerson = this.persons.filter(p => p.personId === this.personId)[0];
     // emit the first person that the selected ID matches
     this.person.emit(this.persons.filter(p => p.personId === this.personId)[0])
-  }
-  nameAssemble(first: string, middle: string, last: string): string {
-    let build = '';
-    if (first) build += first + ' ';
-    if (middle) build += middle[0].toUpperCase() + ' ';
-    if (last) build += last;
-    return build;
   }
 }
