@@ -48,6 +48,8 @@ export class TombstoneService {
         formType: 'expense_report',
         frequency: 'quarterly',
         organizationId: 'aacb8575ac5acb363a64ca',
+        programName: 'Burns Lake RCMP Victim Assistance Program',
+        note: 'FY19-Q1'
       } as iTombstone,
       {
         contractId: 'bar',
@@ -60,6 +62,8 @@ export class TombstoneService {
         formType: 'expense_report',
         frequency: 'quarterly',
         organizationId: 'aacb8575ac5acb363a64ca',
+        programName: 'Burns Lake RCMP Victim Assistance Program',
+        note: 'FY19-Q2'
       } as iTombstone,
       {
         contractId: 'bar',
@@ -72,6 +76,8 @@ export class TombstoneService {
         formType: 'expense_report',
         frequency: 'quarterly',
         organizationId: 'aacb8575ac5acb363a64ca',
+        programName: 'Community Program 1',
+        note: 'FY19-Q1'
       } as iTombstone,
       {
         contractId: 'bar',
@@ -84,6 +90,9 @@ export class TombstoneService {
         formType: 'expense_report',
         frequency: 'quarterly',
         organizationId: 'aacb8575ac5acb363a64ca',
+        programName: 'Community Program 1',
+        note: 'FY19-Q2'
+
       } as iTombstone,
     ];
     return of(t);
