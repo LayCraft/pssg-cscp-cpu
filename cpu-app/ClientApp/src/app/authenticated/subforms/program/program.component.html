@@ -42,7 +42,7 @@
   </span>
   <h2 class="blue-header mt-2">Program Staff</h2>
   <p>Missing staff can be added by name and set at an organizational level.</p>
-  <app-person-picker-list [persons]="persons" (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
+  <app-person-picker-list (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
   <!-- <pre>additionalStaff{{programInformationForm.additionalStaff|json}}</pre> -->
 </div>
 <div *ngIf="currentTab===tabs[1]">

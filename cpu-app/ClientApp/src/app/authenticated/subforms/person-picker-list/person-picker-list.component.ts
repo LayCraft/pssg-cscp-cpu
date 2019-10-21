@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iPerson } from '../../../core/models/person.class';
 import { nameAssemble } from '../../../core/constants/name-assemble';
+import { StateService } from '../../../core/services/state.service';
 @Component({
   selector: 'app-person-picker-list',
   templateUrl: './person-picker-list.component.html',
@@ -8,14 +9,19 @@ import { nameAssemble } from '../../../core/constants/name-assemble';
 })
 export class PersonPickerListComponent implements OnInit {
   @Input() label = "Select all people who apply."
-  @Input() persons: iPerson[];
   @Output() personsChange = new EventEmitter<iPerson[]>();
-
+  persons: iPerson[]; // the list from the service
   personsList: iPerson[] = [];
   public nameAssemble = nameAssemble;
-  constructor() { }
+  constructor(
+    private stateService: StateService
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.stateService.main.subscribe(m => {
+      this.persons = m.persons;
+    });
+  }
   onInput() {
     // build a list for outputting.
     this.personsChange.emit(this.personsList);
