@@ -90,7 +90,7 @@
   </div>
   <div class="form-group" *ngIf="administrativeInformationForm.staffSubcontracted">
     <h2 class="blue-header">Subcontracted Staff</h2>
-    <!-- <app-person-picker-list [persons]="persons" (personsChange)="onSubcontractedStaffChange($event)"></app-person-picker-list> -->
+    <app-person-picker-list [persons]="persons" (personsChange)="onSubcontractedStaffChange($event)"></app-person-picker-list>
   </div>
   <!-- <div class="form-group">
       <div class="invalid-feedback" [hidden]="aiForm.form.valid || aiForm.form.pristine">
