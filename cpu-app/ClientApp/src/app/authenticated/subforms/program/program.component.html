@@ -42,8 +42,8 @@
   </span>
   <h2 class="blue-header mt-2">Program Staff</h2>
   <p>Missing staff can be added by name and set at an organizational level.</p>
-  <app-person-picker-list [(persons)]="programInformationForm.additionalStaff"></app-person-picker-list>
-  <pre>additionalStaff{{programInformationForm.additionalStaff}}</pre>
+  <app-person-picker-list [persons]="persons" (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
+  <!-- <pre>additionalStaff{{programInformationForm.additionalStaff|json}}</pre> -->
 </div>
 <div *ngIf="currentTab===tabs[1]">
   <h2 class="blue-header">Program Schedule Hours of Operation (not including on-call / stand-by hours)</h2>

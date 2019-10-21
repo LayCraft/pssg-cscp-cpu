@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
       this.contactInformationForm = new FormGroup({
         'contactInformation': new FormControl('', Validators.required)
       });
-      console.log(m.organizationMeta.contactInformation);
+      // console.log(m.organizationMeta.contactInformation);
       this.contactInformationForm.controls['contactInformation'].setValue(m.organizationMeta.contactInformation);
     });
   }

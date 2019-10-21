@@ -142,7 +142,11 @@ export class IconStepperService {
     this.checkForSelected();
   }
   reset() {
+    //clear the current stepper element
     this.currentStepperElement.next(null);
+    //null the behaviour subject
+    this.stepperElements.next(null);
+    //initialize the behavioursubject
     this.stepperElements.next([]);
   }
   private checkForSelected() {

@@ -36,7 +36,7 @@ export class ProgramApplicationComponent implements OnInit {
 
   programApplicationUpdated(programApplication: iProgramApplication): void {
     // handle the updates to the program budget. Write it out to a service or whatever
-    console.log(programApplication);
+    console.log("The program application:", programApplication);
   }
 
   isCurrentStepperElement(item: iStepperElement): boolean {

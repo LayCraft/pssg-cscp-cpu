@@ -38,6 +38,8 @@ export class PersonnelComponent implements OnInit {
     this.stepperService.reset();
   }
   constructDefaultstepperElements(): void {
+    // clear the stepper of existing elements
+    this.stepperService.reset();
     // this is just a constructor
     this.stateService.main.subscribe(s => {
       s.persons.forEach(person => {
