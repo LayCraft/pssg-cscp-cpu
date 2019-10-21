@@ -1,14 +1,43 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { iPerson } from '../models/person.class';
-import { iContactInformation } from '../models/contact-information.class';
-import { Transmogrifier } from '../models/transmogrifier.class';
+import { Transmogrifier, iDynamicsBlob } from '../models/transmogrifier.class';
+import { MainService } from './main.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
   // these are observable states for the application load these in at login time.
-  main: BehaviorSubject<Transmogrifier> = new BehaviorSubject(null);
-  constructor() { }
+  public main: BehaviorSubject<Transmogrifier> = new BehaviorSubject(null);
+  // human readable name for the organization
+  public organizationName: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  // primary lookup data is the organization id. If this exists the user is logged in.
+  public organizationId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
+  constructor(
+    private mainService: MainService,
+    private router: Router,
+  ) { }
+
+  login() {
+    // on login collect the information from the organization id
+    this.mainService.getBlob().subscribe((m: iDynamicsBlob) => {
+      // collect the blob into a useful object
+      const mainData = new Transmogrifier(m);
+      // save the useful blob in a behaviourSubject
+      this.main.next(mainData);
+      //save handy org name and id
+      this.organizationName.next(mainData.organizationMeta.organizationName);
+      this.organizationId.next(mainData.organizationMeta.organizationId);
+    });
+  }
+
+  logout() {
+    // clear the state and route to the homepage
+    this.main.next(null);
+    this.organizationName.next(null);
+    this.organizationId.next(null);
+    this.router.navigateByUrl('/');
+  }
 }

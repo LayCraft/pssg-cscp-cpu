@@ -16,7 +16,7 @@ export class MainService {
     private http: HttpClient
   ) { }
 
-  getBlob(): Observable<any> {
+  getBlob(): Observable<iDynamicsBlob> {
     return this.http.get<iDynamicsBlob>(this.apiUrl, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)

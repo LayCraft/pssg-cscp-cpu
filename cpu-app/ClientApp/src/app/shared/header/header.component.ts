@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../../core/services/authentication.service';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
+import { StateService } from '../../core/services/state.service';
 
 @Component({
   selector: 'app-header',
@@ -9,17 +9,17 @@ import { NotificationQueueService } from '../../core/services/notification-queue
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  user: string = '';
+  organizationName: string = '';
   title: string = 'Victims Services Community Programs Unit';
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService,
+    private stateService: StateService,
     private notificationQueueService: NotificationQueueService,
   ) { }
 
   ngOnInit() {
-    this.authenticationService.user.subscribe(u => {
-      if (this.user === '') {
+    this.stateService.organizationName.subscribe(u => {
+      if (this.organizationName === '') {
         // this is the first page visit. Just skip the notifications.
         // If it were null it came after a logout.
       } else if (!u) {
@@ -33,14 +33,14 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/authenticated/dashboard']);
 
       }
-      this.user = u;
+      this.organizationName = u;
     });
   }
   login() {
-    this.authenticationService.login();
+    this.stateService.login();
   }
   logout() {
-    this.authenticationService.logout();
+    this.stateService.logout();
   }
   homeButton() {
     // this is done without a routerlink because you will want to route the user back to a place

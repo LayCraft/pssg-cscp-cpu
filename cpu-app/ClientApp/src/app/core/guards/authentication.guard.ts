@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { AuthenticationService } from '../services/authentication.service';
 import { NotificationQueueService } from '../services/notification-queue.service';
+import { StateService } from '../services/state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +12,14 @@ export class AuthenticationGuard implements CanActivate {
   // We seperate concerns about authentication and authorization.
 
   constructor(
-    private authenticationService: AuthenticationService,
-    private notificationQueueService: NotificationQueueService
+    private notificationQueueService: NotificationQueueService,
+    private stateService: StateService,
   ) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     // for this simple system we go see if the user is null.
     // In a production system this set of checks should be stronger.
-    let user = this.authenticationService.user.getValue()
-    if (user) {
+    let organizationId = this.stateService.organizationId.getValue();
+    if (organizationId) {
       // the user is logged in
       return of(true);
     } else {

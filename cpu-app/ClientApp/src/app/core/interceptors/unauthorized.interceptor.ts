@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { AuthenticationService } from '../services/authentication.service';
+import { StateService } from '../services/state.service';
 
 @Injectable()
 export class UnauthorizedInterceptor implements HttpInterceptor {
@@ -12,8 +12,8 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
   // It sits and inspects packets. If you want to remove it, it is loaded as a provider in the app module.
 
   constructor(
+    private stateService: StateService,
     private router: Router,
-    private authenticationService: AuthenticationService
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -26,7 +26,7 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
         // check if error is "not logged in"
         if (error.status === 401 && this.router.url !== '/') {
           // perform logout
-          this.authenticationService.logout();
+          this.stateService.logout();
           // redirect to session expired page
           this.router.navigate(['/'])
         }
