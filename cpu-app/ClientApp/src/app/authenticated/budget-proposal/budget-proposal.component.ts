@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { iProgramBudget, ProgramBudget, iBudgetProposal } from '../../core/models/budget-proposal.class';
 import { BudgetProposalService } from '../../core/services/budget-proposal.service';
+import { StateService } from '../../core/services/state.service';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -9,8 +10,8 @@ import { BudgetProposalService } from '../../core/services/budget-proposal.servi
   styleUrls: ['./budget-proposal.component.css']
 })
 export class BudgetProposalComponent implements OnInit {
-  contractId: string = 'bar';
-  organizationId: string = 'foo';
+  contractNumber: string;
+  organizationName: string;
 
   // / used for the stepper component
   currentStepperElement: iStepperElement;
@@ -21,9 +22,11 @@ export class BudgetProposalComponent implements OnInit {
   constructor(
     private budgetProposalService: BudgetProposalService,
     private stepperService: IconStepperService,
+    private stateService: StateService,
   ) { }
 
   ngOnInit() {
+    this.stateService.organizationName.subscribe(n => this.organizationName = n);
 
     // clear all of the old ones out before subscribing to the new ones.
     this.stepperService.reset();
