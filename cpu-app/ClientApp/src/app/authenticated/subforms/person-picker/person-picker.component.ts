@@ -24,4 +24,11 @@ export class PersonPickerComponent implements OnInit {
     // emit the first person that the selected ID matches
     this.person.emit(this.persons.filter(p => p.personId === this.personId)[0])
   }
+  nameAssemble(first: string, middle: string, last: string): string {
+    let build = '';
+    if (first) build += first + ' ';
+    if (middle) build += middle[0].toUpperCase() + ' ';
+    if (last) build += last;
+    return build;
+  }
 }

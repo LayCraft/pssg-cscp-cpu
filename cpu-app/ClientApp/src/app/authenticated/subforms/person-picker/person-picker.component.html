@@ -1,25 +1,25 @@
 <div class="form-group">
-	<label for="personPicker">{{title}}</label>
-	<select class="form-control" [(ngModel)]="personId" (change)="onChange()" name="personPicker" id="personPicker">
-		<option *ngFor="let person of persons" [value]="person.personId">{{person.firstName}} {{person.middleName[0]|uppercase}} {{person.lastName}}</option>
-	</select>
+  <label for="personPicker">{{title}}</label>
+  <select class="form-control" [(ngModel)]="personId" (change)="onChange()" name="personPicker" id="personPicker">
+    <option *ngFor="let person of persons" [value]="person.personId">{{nameAssemble(person.firstName,person.middleName,person.lastName)}}</option>
+  </select>
 </div>
 <div *ngIf="showCard===true && currentPerson" class="card">
-	<div class="card-body">
-		<h5 class="card-title">{{currentPerson.firstName}} {{currentPerson.middleName[0]|uppercase}} {{currentPerson.lastName}}</h5>
-		<h6 class="card-subtitle mb-2 text-muted">{{currentPerson.title}}</h6>
-		<p class="card-text">
-			{{currentPerson.email}}<br>
-			{{currentPerson.phone}}
-			<span *ngIf="currentPerson.address">
-				<br>
-				{{currentPerson.address.line1}}<br>
-				<span *ngIf="currentPerson.address.line2"> {{currentPerson.address.line2}}<br> </span>
-				{{currentPerson.address.city}} {{currentPerson.address.province}} {{currentPerson.address.postalCode}}
-			</span>
-			<span class="invalid-feedback" *ngIf="!currentPerson.address">
-				This contact is missing an address. Please update the contact before submitting this application.
-			</span>
-		</p>
-	</div>
+  <div class="card-body">
+    <h5 class="card-title">{{nameAssemble(currentPerson.firstName,currentPerson.middleName,currentPerson.lastName)}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{currentPerson.title}}</h6>
+    <p class="card-text">
+      {{currentPerson.email}}<br>
+      {{currentPerson.phone}}
+      <span *ngIf="currentPerson.address">
+        <br>
+        {{currentPerson.address.line1}}<br>
+        <span *ngIf="currentPerson.address.line2"> {{currentPerson.address.line2}}<br> </span>
+        {{currentPerson.address.city}} {{currentPerson.address.province}} {{currentPerson.address.postalCode}}
+      </span>
+      <span class="invalid-feedback" *ngIf="!currentPerson.address">
+        This contact is missing an address. Please update the contact before submitting this application.
+      </span>
+    </p>
+  </div>
 </div>

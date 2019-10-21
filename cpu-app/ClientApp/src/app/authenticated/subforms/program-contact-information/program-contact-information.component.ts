@@ -2,8 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Person, iPerson } from '../../../core/models/person.class';
 import { iContactInformation } from '../../../core/models/contact-information.class';
-import { PersonService } from '../../../core/services/person.service';
 import { StateService } from '../../../core/services/state.service';
+import { Transmogrifier } from 'src/app/core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-program-contact-information',
@@ -28,21 +28,20 @@ export class ProgramContactInformationComponent implements OnInit {
   boardContact: iPerson;
 
   constructor(
-    private personService: PersonService,
     private stateService: StateService,
   ) { }
 
   ngOnInit() {
-    this.stateService.main.subscribe(m => {
-      // create a new contact information form
-      this.contactInformationForm = new FormGroup({
-        'contactInformation': new FormControl('', Validators.required)
-      });
+    // create a new contact information form
+    this.contactInformationForm = new FormGroup({
+      'contactInformation': new FormControl('', Validators.required)
+    });
+    this.stateService.main.subscribe((m: Transmogrifier) => {
       // fill the contact information into the form
       this.contactInformationForm.controls['contactInformation'].setValue(m.organizationMeta.contactInformation);
+      // collect persons into this component for use
+      this.persons = m.persons;
     });
-
-    this.personService.getPersons('borkityfoobar').subscribe((p: iPerson[]) => this.persons = p);
   }
   onInput() {
     // console.log(this.contactInformationForm.value['contactInformation'])
