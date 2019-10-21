@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'authenticated',
-    canActivate: [AuthenticationGuard],
+    // canActivate: [AuthenticationGuard],
     children: [
       {
         path: '',

@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Person, iPerson } from '../../../core/models/person.class';
 import { iContactInformation } from '../../../core/models/contact-information.class';
 import { PersonService } from '../../../core/services/person.service';
+import { StateService } from '../../../core/services/state.service';
 
 @Component({
   selector: 'app-program-contact-information',
@@ -28,24 +29,18 @@ export class ProgramContactInformationComponent implements OnInit {
 
   constructor(
     private personService: PersonService,
+    private stateService: StateService,
   ) { }
 
   ngOnInit() {
-    this.contactInformationForm = new FormGroup({
-      'contactInformation': new FormControl('', Validators.required)
+    this.stateService.main.subscribe(m => {
+      // create a new contact information form
+      this.contactInformationForm = new FormGroup({
+        'contactInformation': new FormControl('', Validators.required)
+      });
+      // fill the contact information into the form
+      this.contactInformationForm.controls['contactInformation'].setValue(m.organizationMeta.contactInformation);
     });
-    this.contactInformationForm.controls['contactInformation'].setValue({
-      emailAddress: 'foo@bar.baz',
-      faxNumber: '1234567890',
-      phoneNumber: '2502502500',
-      mainAddress: {
-        city: 'Victoria',
-        postalCode: 'v8v3b3',
-        line1: '1234 Douglas St',
-        line2: '',
-        province: 'British Columbia',
-      }
-    } as iContactInformation);
 
     this.personService.getPersons('borkityfoobar').subscribe((p: iPerson[]) => this.persons = p);
   }
