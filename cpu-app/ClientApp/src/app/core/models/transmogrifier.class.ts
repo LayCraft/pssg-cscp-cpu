@@ -2,16 +2,91 @@ import { iOrganizationMeta } from './organization-meta.class';
 import { iAddress } from './address.class';
 import { iContactInformation } from './contact-information.class';
 import { iPerson } from './person.class';
-import { iTombstone, iProgramTombstone } from './tombstone.class';
+import { iTombstone } from './tombstone.class';
+import { iMinistryUser } from './ministry-user';
+import { iContract } from './contract';
+import { stat } from 'fs';
 
 export class Transmogrifier {
   public organizationMeta: iOrganizationMeta;
   public persons: iPerson[];
   public tombstones: iTombstone[];
+  public contracts: iContract[];
+  public ministryContact: iMinistryUser;
   constructor(b: iDynamicsBlob) {
     this.organizationMeta = this.buildOrganizationMeta(b);
     this.persons = this.buildPersons(b);
-    this.tombstones = this.buildTombStones(b);
+    this.ministryContact = this.buildMinistryContact(b);
+    this.contracts = this.buildContracts(b);
+    // this.tombstones = this.buildTombStones(b);
+  }
+  private buildContracts(b: iDynamicsBlob) {
+    function contractCode(code: number): string {
+      let status;
+      switch (code) {
+        // upcoming
+        case 100000000: {
+          status = 'Sent';
+          break;
+        }
+        case 100000001: {
+          status = 'Received';
+          break;
+        }
+        case 100000002: {
+          status = 'Processing';
+          break;
+        }
+        case 100000003: {
+          status = 'Recommended for Approval';
+          break;
+        }
+        case 100000004: {
+          status = 'Escalated';
+          break;
+        }
+        case 100000005: {
+          status = 'Information Denied';
+          break;
+        }
+        // approved
+        case 100000006: {
+          status = 'Approved';
+          break;
+        }
+        // past
+        case 2: {
+          status = 'Archived';
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+      return status;
+    }
+    function isCompleted(code: number) {
+      if (code === 1) {
+        return true; // this is completed
+      } else {
+        return false; // this is not completed
+      }
+    }
+    const contracts: iContract[] = [];
+    if (b.Contracts.length > 0) {
+      for (let contract of b.Contracts) {
+        contracts.push({
+          isCompleted: isCompleted(contract.statuscode),
+          contractNumber: contract.vsd_name,
+          contractId: contract.vsd_contractid,
+          status: contractCode(contract.statuscode)
+        });
+      }
+    }
+    return contracts;
+  }
+  private buildMinistryContact(b: iDynamicsBlob): iMinistryUser {
+    return {} as iMinistryUser;
   }
   private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
     // collect the organization meta and structure it into a new shape
@@ -213,4 +288,5 @@ export interface iDynamicsBlob {
   Staff?: iDynamicsCrmContact[];
   Tasks?: iDynamicsCrmTask[]
   bceid: string;
+
 };

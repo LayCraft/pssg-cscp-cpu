@@ -22,7 +22,6 @@ export class MainService {
       catchError(this.handleError)
     );
   }
-
   get headers(): HttpHeaders {
     return new HttpHeaders({ 'Content-Type': 'application/json' });
   }
@@ -38,8 +37,9 @@ export class MainService {
     }
     return throwError(errorMessage);
   }
+}
   // THIS MOCK RESPONSE IS SOMETHING RETURNED FROM DYNAMICS
-  // mockResponse: iDynamicsBlob = {
+  // {
   //   "@odata.context": "https://cscp-vs.dev.jag.gov.bc.ca/api/data/v9.0/$metadata#Microsoft.Dynamics.CRM.vsd_GetCPUOrgContractsResponse",
   //   "IsSuccess": true,
   //   "Result": "CPU Organization found..",
@@ -86,7 +86,7 @@ export class MainService {
   //     },
   //     {
   //       "@odata.type": "#Microsoft.Dynamics.CRM.contact",
-  //       "@odata.etag": "W/\"1610562\"",
+  //       "@odata.etag": "W/\"1661577\"",
   //       "address1_line1": "#15 3rd Ave",
   //       "address1_city": "Burns Lake",
   //       "middlename": "Joe",
@@ -124,7 +124,7 @@ export class MainService {
   //     },
   //     {
   //       "@odata.type": "#Microsoft.Dynamics.CRM.contact",
-  //       "@odata.etag": "W/\"1612274\"",
+  //       "@odata.etag": "W/\"1692136\"",
   //       "firstname": "Aaron",
   //       "address1_city": "Alberta Beach",
   //       "address1_line1": "dtyuhkjrteye",
@@ -332,7 +332,7 @@ export class MainService {
   //     },
   //     {
   //       "@odata.type": "#Microsoft.Dynamics.CRM.vsd_program",
-  //       "@odata.etag": "W/\"1614050\"",
+  //       "@odata.etag": "W/\"1707173\"",
   //       "vsd_programid": "0e309304-c4e6-e911-b811-00505683fbf4",
   //       "vsd_postalcodezip": "V0J 1E0",
   //       "_vsd_contactlookup_value": "93341b5c-84d8-e811-815f-480fcff4f6a1",
@@ -382,15 +382,25 @@ export class MainService {
   //   "Tasks": [
   //     {
   //       "@odata.type": "#Microsoft.Dynamics.CRM.task",
-  //       "@odata.etag": "W/\"1637524\"",
+  //       "@odata.etag": "W/\"1712164\"",
   //       "statecode": 0,
-  //       "description": "TEST",
-  //       "activityid": "10c89666-0cea-e911-b811-00505683fbf4",
-  //       "scheduledend": "2019-10-22T07:00:00Z",
-  //       "_regardingobjectid_value": "9e9b5111-51c9-e911-b80f-00505683fbf4",
+  //       "description": "TETS ETST ETSTETSTETSTETSTETS",
+  //       "activityid": "716395ff-f1f4-e911-b811-00505683fbf4",
+  //       "scheduledend": "2020-03-04T08:00:00Z",
+  //       "_regardingobjectid_value": "5dc64c07-a3a8-e911-b80e-00505683fbf4",
   //       "statuscode": 2,
-  //       "subject": "TEST"
+  //       "subject": "Contract Renewal Application"
+  //     },
+  //     {
+  //       "@odata.type": "#Microsoft.Dynamics.CRM.task",
+  //       "@odata.etag": "W/\"1712169\"",
+  //       "statecode": 0,
+  //       "description": "Complete Schedule G for first quarter",
+  //       "activityid": "43a7b61e-f2f4-e911-b811-00505683fbf4",
+  //       "scheduledend": "2020-06-01T07:00:00Z",
+  //       "_regardingobjectid_value": "5dc64c07-a3a8-e911-b80e-00505683fbf4",
+  //       "statuscode": 2,
+  //       "subject": "Schedule G completed"
   //     }
   //   ]
-  // };
-}
+  // }
