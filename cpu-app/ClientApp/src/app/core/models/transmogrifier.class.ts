@@ -5,7 +5,6 @@ import { iPerson } from './person.class';
 import { iTombstone } from './tombstone.class';
 import { iMinistryUser } from './ministry-user';
 import { iContract } from './contract';
-import { stat } from 'fs';
 
 export class Transmogrifier {
   public organizationMeta: iOrganizationMeta;
@@ -60,6 +59,7 @@ export class Transmogrifier {
           break;
         }
         default: {
+          status = 'None';
           break;
         }
       }
@@ -83,6 +83,7 @@ export class Transmogrifier {
         });
       }
     }
+    console.log(b.Contracts.length > 0);
     return contracts;
   }
   private buildMinistryContact(b: iDynamicsBlob): iMinistryUser {
