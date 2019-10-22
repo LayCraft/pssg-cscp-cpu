@@ -5,6 +5,7 @@ import { iPerson } from './person.class';
 import { iTombstone } from './tombstone.class';
 import { iMinistryUser } from './ministry-user';
 import { iContract } from './contract';
+import { iTask } from './task';
 
 export class Transmogrifier {
   public organizationMeta: iOrganizationMeta;
@@ -12,86 +13,128 @@ export class Transmogrifier {
   public tombstones: iTombstone[];
   public contracts: iContract[];
   public ministryContact: iMinistryUser;
+  public tasks: iTask[];
+
   constructor(b: iDynamicsBlob) {
     this.organizationMeta = this.buildOrganizationMeta(b);
     this.persons = this.buildPersons(b);
     this.ministryContact = this.buildMinistryContact(b);
     this.contracts = this.buildContracts(b);
-    // this.tombstones = this.buildTombStones(b);
+    this.tasks = this.buildTasks(b);
   }
-  private buildContracts(b: iDynamicsBlob) {
-    function contractCode(code: number): string {
-      let status;
-      switch (code) {
+  private buildTasks(b: iDynamicsBlob): iTask[] {
+    function taskCode(statuscode: number): string {
+      let textStatus;
+      switch (statuscode) {
+        case 2: {
+          textStatus = 'Not Started';
+          break;
+        }
+        case 3: {
+          textStatus = 'In Progress';
+          break;
+        }
+        case 4: {
+          textStatus = 'Waiting';
+          break;
+        }
+        case 7: {
+          textStatus = 'Deferred';
+          break;
+        }
+        case 5: {
+          textStatus = 'Completed';
+          break;
+        }
+        case 6: {
+          textStatus = 'Cancelled';
+          break;
+        }
+        default: {
+          textStatus = 'No Status';
+          break;
+        }
+      }
+      return textStatus;
+    }
+    const tasks: iTask[] = [];
+    for (let task of b.Tasks) {
+      tasks.push({
+        status: taskCode(task.statuscode),
+        isCompleted: this.isCompleted(task.statecode),
+        taskName: task.subject,
+        taskDescription: task.description,
+        deadline: new Date(task.scheduledend),
+        taskId: task.activityid,
+        contractId: task._regardingobjectid_value,
+      });
+    }
+    return tasks;
+  }
+  private isCompleted(code: number): boolean {
+    if (code === 1) {
+      return true; // this is completed
+    } else {
+      return false; // this is not completed
+    }
+  }
+  private buildContracts(b: iDynamicsBlob): iContract[] {
+    function contractCode(statuscode: number): string {
+      let textStatus;
+      switch (statuscode) {
         // upcoming
         case 100000000: {
-          status = 'Sent';
+          textStatus = 'Sent';
           break;
         }
         case 100000001: {
-          status = 'Received';
+          textStatus = 'Received';
           break;
         }
         case 100000002: {
-          status = 'Processing';
+          textStatus = 'Processing';
           break;
         }
         case 100000003: {
-          status = 'Recommended for Approval';
+          textStatus = 'Recommended for Approval';
           break;
         }
         case 100000004: {
-          status = 'Escalated';
+          textStatus = 'Escalated';
           break;
         }
         case 100000005: {
-          status = 'Information Denied';
+          textStatus = 'Information Denied';
           break;
         }
         // approved
         case 100000006: {
-          status = 'Approved';
+          textStatus = 'Approved';
           break;
         }
         // past
         case 2: {
-          status = 'Archived';
-          break;
-        }
-        case 1: {
-          status = 'Status one?';
-          break;
-        }
-        case 0: {
-          status = 'Status zero?'
+          textStatus = 'Archived';
           break;
         }
         default: {
-          status = 'No Status';
+          textStatus = 'No Status';
           break;
         }
       }
-      return status;
-    }
-    function isCompleted(code: number) {
-      if (code === 1) {
-        return true; // this is completed
-      } else {
-        return false; // this is not completed
-      }
+      return textStatus;
     }
     const contracts: iContract[] = [];
     if (b.Contracts.length > 0) {
       for (let contract of b.Contracts) {
         contracts.push({
-          isCompleted: isCompleted(contract.statuscode),
+          isCompleted: this.isCompleted(contract.statecode),
           contractNumber: contract.vsd_name,
           contractId: contract.vsd_contractid,
-          status: contractCode(contract.statuscode)
+          status: contractCode(contract.statuscode),
         });
       }
     }
-    console.log(b.Contracts.length > 0);
     return contracts;
   }
   private buildMinistryContact(b: iDynamicsBlob): iMinistryUser {
@@ -240,6 +283,7 @@ interface iDynamicsCrmContract {
   _vsd_contactlookup2_value?: string;
   _vsd_customer_value?: string;
   statuscode?: number;
+  statecode?: number;
   vsd_contractid?: string;
   vsd_name?: string;
 }

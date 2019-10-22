@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { Transmogrifier, iDynamicsBlob } from '../models/transmogrifier.class';
-import { retry, catchError, tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { iDynamicsBlob } from '../models/transmogrifier.class';
+import { retry, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

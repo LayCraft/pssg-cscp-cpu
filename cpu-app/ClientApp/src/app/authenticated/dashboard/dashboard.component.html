@@ -17,8 +17,8 @@
   <div *ngFor="let contract of contracts" class="row mt-4">
     <div class="col">
       {{contract|json}}
-      <!-- <app-task-list></app-task-list> -->
+      <app-task-list [tasks]="tasks"></app-task-list>
     </div>
   </div>
-  <pre *ngIf="contracts">{{contracts|json}}</pre>
+  <!-- <pre *ngIf="contracts">{{contracts|json}}</pre> -->
 </div>

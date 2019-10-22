@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StateService } from '../../core/services/state.service';
 import { iOrganizationMeta } from '../../core/models/organization-meta.class';
 import { iContract } from '../../core/models/contract';
+import { iTask } from '../../core/models/task';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,6 +12,7 @@ import { iContract } from '../../core/models/contract';
 export class DashboardComponent implements OnInit {
   organizationMeta: iOrganizationMeta;
   contracts: iContract[];
+  tasks: iTask[];
 
   constructor(
     private stateService: StateService,
@@ -22,6 +24,7 @@ export class DashboardComponent implements OnInit {
       this.organizationMeta = m.organizationMeta;
       // save the contracts
       this.contracts = m.contracts;
+      this.tasks = m.tasks;
     });
   }
 }
