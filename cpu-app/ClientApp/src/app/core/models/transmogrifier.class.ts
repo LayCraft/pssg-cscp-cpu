@@ -58,8 +58,16 @@ export class Transmogrifier {
           status = 'Archived';
           break;
         }
+        case 1: {
+          status = 'Status one?';
+          break;
+        }
+        case 0: {
+          status = 'Status zero?'
+          break;
+        }
         default: {
-          status = 'None';
+          status = 'No Status';
           break;
         }
       }
