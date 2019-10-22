@@ -1,21 +1,21 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { iTombstone, ProgramTombstone, iProgramTombstone } from '../../../core/models/tombstone.class';
+import { iTombstone } from '../../../core/models/tombstone.class';
 import { StateService } from '../../../core/services/state.service';
 import { iPerson } from '../../../core/models/person.class';
 
 @Component({
-  selector: 'app-todo-list',
-  templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.css']
+  selector: 'app-task-list',
+  templateUrl: './task-list.component.html',
+  styleUrls: ['./task-list.component.css']
 })
-export class TodoListComponent implements OnInit {
+export class TaskListComponent implements OnInit {
   tabs: string[];
   currentTab: string;
 
   statuses: string[];
   formTypes: string[];
 
-  tombstones: iTombstone[] = [
+  @Input() tombstones: iTombstone[] = [
     {
       contractId: 'foo',
       contractNumber: '15092013-21',
@@ -95,38 +95,17 @@ export class TodoListComponent implements OnInit {
       frequency: 'quarterly',
       organizationId: 'aacb8575ac5acb363a64ca',
       programName: 'Community Program 1',
-      note: 'FY19-Q2'
-
+      note: 'FY19-Q2',
+      programContact: {
+        firstName: 'Tony',
+        middleName: 'Eugene',
+        lastName: 'Stark',
+        title: 'Man of Iron',
+        email: 'tonystark67@hotmail.com',
+      } as iPerson,
+      programId: 'NCC-1701'
     } as iTombstone,
   ];
-
-  completedTombstones: iTombstone[];
-  programTombstones: ProgramTombstone[] = [{
-    programContact: {
-      firstName: 'Tony',
-      middleName: 'Eugene',
-      lastName: 'Stark',
-      title: 'Man of Iron',
-      email: 'tonystark67@hotmail.com',
-    } as iPerson,
-    programName: 'Marvel Compassion Club',
-    contractNumber: 'PDA-12345',
-    organizationId: 'BCEID goes here',
-    programId: 'NCC-1701'
-  },
-  {
-    programContact: {
-      firstName: 'Dick',
-      middleName: 'Pete',
-      lastName: 'Grayson',
-      title: 'The Robin',
-      email: 'trickydickgrayson@yahoo.com.cn',
-    } as iPerson,
-    programName: 'Social Work Metropolis',
-    programId: 'wert',
-    contractNumber: 'PDF-91191',
-    organizationId: 'BCEID goes here',
-  }] as iProgramTombstone[];;
 
   constructor(
     private stateService: StateService
@@ -137,7 +116,9 @@ export class TodoListComponent implements OnInit {
     this.formTypes = ['program_application', 'budget_proposal', 'status_report', 'expense_report'];
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // split tombstones into current, completed and programs
+  }
 
   setCurrentTab(tabname: string) {
     this.currentTab = tabname;

@@ -15,8 +15,6 @@
   </div>
   <div class="card-body">
     <span *ngIf="currentTab===tabs[0]">
-      <!-- Show completed items -->
-      <!-- <input type="checkbox"> -->
       <table class="table table-sm table-striped">
         <thead class="thead">
           <tr>
@@ -74,8 +72,6 @@
       </ul>
     </span>
     <span *ngIf="currentTab===tabs[1]">
-      <!-- Show completed items -->
-      <!-- <input type="checkbox"> -->
       <table class="table table-sm table-striped">
         <thead class="thead">
           <tr>
@@ -87,7 +83,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let tombstone of completedTombstones; let i=index">
+          <tr *ngFor="let tombstone of tombstones; let i=index">
             <th scope="row">
               {{i+1}}
             </th>
@@ -120,7 +116,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let tombstone of programTombstones; let i=index">
+          <tr *ngFor="let tombstone of tombstones; let i=index">
             <th scope="row">
               {{i+1}}
             </th>
