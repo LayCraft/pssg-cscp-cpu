@@ -14,10 +14,10 @@
       <app-ministry-contact-box></app-ministry-contact-box>
     </div>
   </div>
-  <div *ngFor="let contract of contracts" class="row mt-4">
+  <div *ngFor="let contract of trans.contracts" class="row mt-4">
     <div class="col">
       {{contract|json}}
-      <app-task-list [tasks]="tasks"></app-task-list>
+      <app-task-list [tasks]="filterTasks(contract.contractId, trans.tasks)"></app-task-list>
     </div>
   </div>
   <!-- <pre *ngIf="contracts">{{contracts|json}}</pre> -->

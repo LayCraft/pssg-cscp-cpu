@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../../core/services/state.service';
-import { iOrganizationMeta } from '../../core/models/organization-meta.class';
-import { iContract } from '../../core/models/contract';
-import { iTask } from '../../core/models/task';
+import { Transmogrifier } from 'src/app/core/models/transmogrifier.class';
+import { iTask } from 'src/app/core/models/task';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,9 +9,7 @@ import { iTask } from '../../core/models/task';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  organizationMeta: iOrganizationMeta;
-  contracts: iContract[];
-  tasks: iTask[];
+  trans: Transmogrifier;
 
   constructor(
     private stateService: StateService,
@@ -20,11 +17,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.stateService.main.subscribe(m => {
-      // save the organization meta
-      this.organizationMeta = m.organizationMeta;
-      // save the contracts
-      this.contracts = m.contracts;
-      this.tasks = m.tasks;
+      this.trans = m;
     });
+  }
+  filterTasks(tasks: iTask[], contractId: string): iTask[] {
+    return tasks.filter(t => t.contractId === contractId);
   }
 }
