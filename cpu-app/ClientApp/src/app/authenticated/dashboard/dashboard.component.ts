@@ -20,7 +20,15 @@ export class DashboardComponent implements OnInit {
       this.trans = m;
     });
   }
-  filterTasks(tasks: iTask[], contractId: string): iTask[] {
-    return tasks.filter(t => t.contractId === contractId);
+  filterTasks(contractId: string, tasks: iTask[]): iTask[] {
+    const filteredTasks: iTask[] = [];
+    // select all tasks with matching contract ids
+    for (let task of tasks) {
+      if (task.contractId === contractId) {
+        filteredTasks.push(task);
+      }
+    }
+    console.log(tasks);
+    return filteredTasks;
   }
 }
