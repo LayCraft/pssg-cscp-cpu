@@ -34,6 +34,7 @@ import { PersonEditorComponent } from './authenticated/subforms/person-editor/pe
 import { TestComponent } from './test/test.component';
 import { ProgramBudgetComponent } from './authenticated/subforms/program-budget/program-budget.component';
 import { RevenueSourceTableComponent } from './authenticated/subforms/revenue-source-table/revenue-source-table.component';
+import { TodoListComponent } from './authenticated/components/todo-list/todo-list.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { RevenueSourceTableComponent } from './authenticated/subforms/revenue-so
     TestComponent,
     ProgramBudgetComponent,
     RevenueSourceTableComponent,
+    TodoListComponent,
   ],
   imports: [
     AppRoutingModule,
