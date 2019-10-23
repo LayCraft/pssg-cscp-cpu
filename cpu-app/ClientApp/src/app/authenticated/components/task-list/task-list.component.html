@@ -15,7 +15,6 @@
   </div>
   <div class="card-body">
     <span *ngIf="currentTab===tabs[0]">
-      <pre>{{contract.tasks|json}}</pre>
       <table class="table table-sm table-striped">
         <thead class="thead">
           <th scope="col">Status</th>
@@ -25,7 +24,27 @@
         </thead>
         <tbody>
           <tr *ngFor="let task of contract.tasks">
-            <td>{{task.status}}</td>
+            <!-- Completed status items go into a different tab -->
+            <td *ngIf="task.status !== realStatuses[4]">
+              <!-- Not Started -->
+              <i *ngIf="task.status === realStatuses[0]" class="fas fa-ellipsis-h text-secondary"></i>
+              <!-- In Progress -->
+              <i *ngIf="task.status === realStatuses[1]" class="far fa-file text-success"></i>
+              <!-- Waiting -->
+              <i *ngIf="task.status === realStatuses[2]" class="fas fa-stopwatch text-info"></i>
+              <!-- Deferred -->
+              <i *ngIf="task.status === realStatuses[3]" class="fas fa-pause-circle text-warning"></i>
+              <!-- Completed -->
+              <!-- <i *ngIf="task.status === realStatuses[4]" class="fas fa-check-circle text-success"></i> -->
+              <!-- Cancelled -->
+              <i *ngIf="task.status === realStatuses[5]" class="far fa-stop-circle text-danger"></i>
+              <!-- No Status -->
+              <i *ngIf="task.status === realStatuses[6]" class="fas fa-bacon text-danger"></i>
+              <!-- colour the text the same -->
+              <span class="ml-1" [class.text-secondary]='task.status === realStatuses[0]' [class.text-success]='task.status === realStatuses[1]' [class.text-info]='task.status === realStatuses[2]' [class.text-warning]='task.status === realStatuses[3]' [class.text-success]='task.status === realStatuses[4]' [class.text-danger]='task.status === realStatuses[5]' [class.text-danger]='task.status === realStatuses[6]'>
+                {{task.status}}
+              </span>
+            </td>
             <td>
               <a routerLink="/authenticated/{{task.formType}}/{{contract.contractId}}">
                 {{task.taskName}}
@@ -36,65 +55,6 @@
           </tr>
         </tbody>
       </table>
-
-
-
-
-      <table class="table table-sm table-striped">
-        <thead class="thead">
-          <tr>
-            <th scope="col">Status</th>
-            <th scope="col">Action</th>
-            <th scope="col">Frequency</th>
-            <th scope="col">Form</th>
-            <th scope="col">For Range</th>
-            <th scope="col">Deadline</th>
-            <th scope="col" width="20%">Note</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let tombstone of tombstones; let i=index">
-            <td>
-              <!-- Missed -->
-              <i *ngIf="tombstone.formStatus === statuses[0]" class="fas fa-times-circle text-danger"></i>
-              <!-- Late -->
-              <i *ngIf="tombstone.formStatus === statuses[1]" class="fas fa-clock text-warning"></i>
-              <!-- Submitted -->
-              <i *ngIf="tombstone.formStatus === statuses[2]" class="fas fa-check-circle text-success"></i>
-              <!-- Started -->
-              <i *ngIf="tombstone.formStatus === statuses[3]" class="far fa-file text-secondary"></i>
-              <!-- Action Required -->
-              <i *ngIf="tombstone.formStatus === statuses[4]" class="far fa-comment-dots text-info"></i>
-              <!-- colour the text the same -->
-              <span class="ml-1" [class.text-info]='tombstone.formStatus === statuses[4]' [class.text-secondary]='tombstone.formStatus === statuses[3]' [class.text-success]='tombstone.formStatus === statuses[2]' [class.text-warning]='tombstone.formStatus === statuses[1]' [class.text-danger]='tombstone.formStatus === statuses[0]'>
-                {{tombstone.formStatus}}
-              </span>
-            </td>
-            <td>
-              <a routerLink="/authenticated/{{tombstone.formType}}/{{tombstone.programId}}">Complete</a>
-            </td>
-            <td>{{tombstone.frequency | titlecase}}</td>
-            <td>{{tombstone.formName}}<br>
-            </td>
-            <td>
-              {{tombstone.forDateRangeStart |date:'yyyy-MM-dd'}} &mdash; {{tombstone.forDateRangeEnd |date:'yyyy-MM-dd'}}
-            </td>
-            <td> {{tombstone.formDeadline |date:'yyyy-MM-dd'}}</td>
-            <td>
-              <div>
-                {{tombstone.note}}
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- <ul class="pagination my-0">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul> -->
     </span>
     <span *ngIf="currentTab===tabs[1]">
       <table class="table table-sm table-striped">
