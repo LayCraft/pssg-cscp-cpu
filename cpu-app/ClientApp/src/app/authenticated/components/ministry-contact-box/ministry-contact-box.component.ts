@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { StateService } from '../../../core/services/state.service';
+import { iMinistryUser } from 'src/app/core/models/ministry-user';
 
 @Component({
   selector: 'app-ministry-contact-box',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ministry-contact-box.component.css']
 })
 export class MinistryContactBoxComponent implements OnInit {
-
-  constructor() { }
+  ministryUser: iMinistryUser;
+  constructor(
+    private stateService: StateService,
+  ) { }
 
   ngOnInit() {
+    this.stateService.main.subscribe(m => this.ministryUser = m.ministryContact);
   }
-
 }
