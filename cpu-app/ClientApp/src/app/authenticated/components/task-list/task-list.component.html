@@ -18,6 +18,30 @@
       <pre>{{contract.tasks|json}}</pre>
       <table class="table table-sm table-striped">
         <thead class="thead">
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+          <th scope="col">Description</th>
+          <th scope="col">Deadline</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of contract.tasks">
+            <td>{{task.status}}</td>
+            <td>
+              <a routerLink="/authenticated/{{task.formType}}/{{contract.contractId}}">
+                {{task.taskName}}
+              </a>
+            </td>
+            <td>{{task.taskDescription}}</td>
+            <td>{{task.deadline|date:'yyyy-MM-dd'}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+
+      <table class="table table-sm table-striped">
+        <thead class="thead">
           <tr>
             <th scope="col">Status</th>
             <th scope="col">Action</th>

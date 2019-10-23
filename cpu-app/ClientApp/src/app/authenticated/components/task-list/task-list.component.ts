@@ -3,6 +3,7 @@ import { iTombstone } from '../../../core/models/tombstone.class';
 import { StateService } from '../../../core/services/state.service';
 import { iPerson } from '../../../core/models/person.class';
 import { iContract } from '../../../core/models/contract';
+import { TaskStatus } from '../../../core/constants/task-status';
 
 @Component({
   selector: 'app-task-list',
@@ -12,7 +13,7 @@ import { iContract } from '../../../core/models/contract';
 export class TaskListComponent implements OnInit {
   tabs: string[];
   currentTab: string;
-
+  realStatuses: string[] = TaskStatus;
   statuses: string[];
   formTypes: string[];
   @Input() contract: iContract;

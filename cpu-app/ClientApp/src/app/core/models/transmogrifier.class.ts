@@ -55,6 +55,33 @@ export class Transmogrifier {
       }
       return textStatus;
     }
+    function formType(discriminator: string): string {
+      let formType;
+
+      switch (discriminator) {
+        case 'a': {
+          formType = 'program_application';
+          break;
+        }
+        case 'a': {
+          formType = 'budget_proposal';
+          break;
+        }
+        case 'a': {
+          formType = 'expense_report';
+          break;
+        }
+        case 'a': {
+          formType = 'status_report';
+          break;
+        }
+        default: {
+          formType = 'none';
+          break;
+        }
+      }
+      return formType;
+    }
     const tasks: iTask[] = [];
     for (let task of b.Tasks) {
       // if the task matches the supplied contract return it
@@ -69,6 +96,7 @@ export class Transmogrifier {
           // make a date from the supplied date. TODO MomentJS
           deadline: new Date(task.scheduledend),
           taskId: task.activityid,
+          formType: formType('foo'),
         });
       }
     }

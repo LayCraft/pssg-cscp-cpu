@@ -5,4 +5,5 @@ export interface iTask {
   taskDescription: string;
   deadline: Date;
   taskId: string;
+  formType: string;
 }
