@@ -47,6 +47,10 @@ const routes: Routes = [
         component: ExpenseReportComponent
       },
       {
+        path: 'expense_report',
+        component: ExpenseReportComponent
+      },
+      {
         path: 'program_application/:contractId',
         component: ProgramApplicationComponent
       },
@@ -56,6 +60,10 @@ const routes: Routes = [
       },
       {
         path: 'status_report/:contractId',
+        component: StatusReportComponent
+      },
+      {
+        path: 'status_report',
         component: StatusReportComponent
       },
       {

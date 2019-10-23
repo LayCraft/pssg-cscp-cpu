@@ -38,7 +38,7 @@ export class TaskListComponent implements OnInit {
       formDeadline: new Date('2020-01-15'),
       formName: 'Budget Proposal',
       formStatus: 'Action Required',
-      formType: 'status_report',
+      formType: 'budget_proposal',
       frequency: 'annual',
       organizationId: 'aacb8575ac5acb363a64ca'
     } as iTombstone,

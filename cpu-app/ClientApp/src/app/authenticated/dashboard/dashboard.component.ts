@@ -28,7 +28,6 @@ export class DashboardComponent implements OnInit {
         filteredTasks.push(task);
       }
     }
-    console.log(tasks);
     return filteredTasks;
   }
 }
