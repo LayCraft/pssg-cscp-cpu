@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Transmogrifier, iDynamicsBlob } from '../models/transmogrifier.class';
 import { MainService } from './main.service';
 import { Router } from '@angular/router';
+import { NotificationQueueService } from './notification-queue.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class StateService {
   constructor(
     private mainService: MainService,
     private router: Router,
+    private notificationQueueService: NotificationQueueService,
   ) { }
 
   login() {
@@ -32,6 +34,8 @@ export class StateService {
       //save handy org name and id
       this.organizationName.next(mainData.organizationMeta.organizationName);
       this.organizationId.next(mainData.organizationMeta.organizationId);
+      // give a notification
+      this.notificationQueueService.addNotification(`${mainData.organizationMeta.organizationName} has been logged in successfully.`, 'success');
       // set the logged in state
       this.loggedIn.next(true);
     });
@@ -43,6 +47,8 @@ export class StateService {
     this.organizationName.next(null);
     this.organizationId.next(null);
     this.router.navigateByUrl('/');
+    //notification about the login
+    this.notificationQueueService.addNotification('User has logged out.', 'warning');
     this.loggedIn.next(false);
   }
 }

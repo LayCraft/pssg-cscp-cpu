@@ -8,16 +8,18 @@
           {{title}}
         </span>
       </a>
-      <span class="navbar-text" *ngIf="organizationName!==null">
+      <span class="navbar-text" *ngIf="loggedIn">
         <a (click)="logout()">
           <span>
             {{organizationName}}&nbsp;-&nbsp;
           </span>
-          Sign Out</a>
+          <app-state-holder></app-state-holder>
+          Sign Out
+        </a>
         <!-- This is for siteminder logout -->
         <!-- <a href="logout">Sign Out</a> -->
       </span>
-      <span class="navbar-text" *ngIf="organizationName===null">
+      <span class="navbar-text" *ngIf="!loggedIn">
         <a (click)="login()">Log In</a>
         <!-- This is for siteminder login -->
         <!-- <a href="login/" tabindex="1">Log In</a> -->
