@@ -171,7 +171,9 @@ export class Transmogrifier {
     return contracts;
   }
   private buildMinistryContact(b: iDynamicsBlob): iMinistryUser {
-    return {} as iMinistryUser;
+    return {
+      fullname: b.MinistryUser.fullname,
+    };
   }
   private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
     // collect the organization meta and structure it into a new shape
