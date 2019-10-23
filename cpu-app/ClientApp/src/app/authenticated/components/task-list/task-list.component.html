@@ -1,6 +1,6 @@
 <div class="card mb-4">
   <div class="card-header">
-    <h1 class="h2">Contract: #1097583</h1>
+    <h1 class="h2">Contract: {{contract.contractNumber}}</h1>
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
         <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Current</a>
@@ -14,7 +14,7 @@
     </ul>
   </div>
   <div class="card-body">
-    <!-- <pre>{{tasks|json}}</pre> -->
+    <pre>{{contract.tasks|json}}</pre>
     <span *ngIf="currentTab===tabs[0]">
       <table class="table table-sm table-striped">
         <thead class="thead">

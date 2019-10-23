@@ -13,16 +13,14 @@ export class Transmogrifier {
   public tombstones: iTombstone[];
   public contracts: iContract[];
   public ministryContact: iMinistryUser;
-  public tasks: iTask[];
 
   constructor(b: iDynamicsBlob) {
     this.organizationMeta = this.buildOrganizationMeta(b);
     this.persons = this.buildPersons(b);
     this.ministryContact = this.buildMinistryContact(b);
     this.contracts = this.buildContracts(b);
-    this.tasks = this.buildTasks(b);
   }
-  private buildTasks(b: iDynamicsBlob): iTask[] {
+  private buildTasks(b: iDynamicsBlob, contractId: string): iTask[] {
     function taskCode(statuscode: number): string {
       let textStatus;
       switch (statuscode) {
@@ -59,17 +57,23 @@ export class Transmogrifier {
     }
     const tasks: iTask[] = [];
     for (let task of b.Tasks) {
-      tasks.push({
-        status: taskCode(task.statuscode),
-        isCompleted: this.isCompleted(task.statecode),
-        taskName: task.subject,
-        taskDescription: task.description,
-        deadline: new Date(task.scheduledend),
-        taskId: task.activityid,
-        contractId: task._regardingobjectid_value,
-      });
+      // if the task matches the supplied contract return it
+      if (task._regardingobjectid_value === contractId) {
+        tasks.push({
+          // convert the status from a meaningless dynamics number to a meaningful string
+          status: taskCode(task.statuscode),
+          // convert the numeric completion state from meaningless dynamics number to a useful boolean
+          isCompleted: this.isCompleted(task.statecode),
+          taskName: task.subject,
+          taskDescription: task.description,
+          // make a date from the supplied date. TODO MomentJS
+          deadline: new Date(task.scheduledend),
+          taskId: task.activityid,
+        });
+      }
     }
     return tasks;
+
   }
   private isCompleted(code: number): boolean {
     if (code === 1) {
@@ -132,6 +136,7 @@ export class Transmogrifier {
           contractNumber: contract.vsd_name,
           contractId: contract.vsd_contractid,
           status: contractCode(contract.statuscode),
+          tasks: this.buildTasks(b, contract.vsd_contractid),
         });
       }
     }

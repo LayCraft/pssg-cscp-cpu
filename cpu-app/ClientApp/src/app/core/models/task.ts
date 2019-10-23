@@ -5,5 +5,4 @@ export interface iTask {
   taskDescription: string;
   deadline: Date;
   taskId: string;
-  contractId: string;
 }

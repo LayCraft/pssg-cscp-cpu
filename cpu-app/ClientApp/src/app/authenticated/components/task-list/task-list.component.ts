@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { iTombstone } from '../../../core/models/tombstone.class';
 import { StateService } from '../../../core/services/state.service';
 import { iPerson } from '../../../core/models/person.class';
-import { iTask } from '../../../core/models/task';
+import { iContract } from '../../../core/models/contract';
 
 @Component({
   selector: 'app-task-list',
@@ -15,7 +15,7 @@ export class TaskListComponent implements OnInit {
 
   statuses: string[];
   formTypes: string[];
-  @Input() tasks: iTask[] = [];
+  @Input() contract: iContract;
   @Input() tombstones: iTombstone[] = [
     {
       contractId: 'foo',
