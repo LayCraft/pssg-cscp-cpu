@@ -94,7 +94,7 @@ export class Transmogrifier {
           taskName: task.subject,
           taskDescription: task.description,
           // make a date from the supplied date. TODO MomentJS
-          deadline: new Date(task.scheduledend),
+          deadline: task.scheduledend ? new Date(task.scheduledend) : null,
           taskId: task.activityid,
           formType: formType('foo'),
         });
