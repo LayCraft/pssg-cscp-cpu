@@ -4,15 +4,15 @@
   </div>
   <div class="card-body">
     <div class="card-title">
-      {{ministryUser.fullname}}
+      {{nameAssemble(ministryUser.firstName,null,ministryUser.lastName)}}
     </div>
     <p class="card-text">
       <strong>Phone</strong><br>
-      <a href="tel:12505552323">1(555)555-2323</a>
+      <a href="tel:{{ministryUser.phone}}">{{ministryUser.phone}}</a>
     </p>
     <p class="card-text">
       <strong>Email</strong><br>
-      <a href="mailto:fake-user@gov.bc.ca">fake-user@gov.bc.ca</a>
+      <a href="mailto:{{ministryUser.email}}">{{ministryUser.email}}</a>
     </p>
   </div>
 </div>
