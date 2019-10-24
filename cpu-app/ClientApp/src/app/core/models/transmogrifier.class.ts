@@ -57,7 +57,6 @@ export class Transmogrifier {
     }
     function formType(discriminator: string): string {
       let formType;
-
       switch (discriminator) {
         case 'a': {
           formType = 'program_application';
@@ -76,7 +75,7 @@ export class Transmogrifier {
           break;
         }
         default: {
-          formType = 'none';
+          formType = 'Unrecongized type:' + discriminator;
           break;
         }
       }
@@ -96,7 +95,7 @@ export class Transmogrifier {
           // make a date from the supplied date. TODO MomentJS
           deadline: task.scheduledend ? new Date(task.scheduledend) : null,
           taskId: task.activityid,
-          formType: formType('foo'),
+          formType: formType(task._vsd_tasktypeid_value),
         });
       }
     }
