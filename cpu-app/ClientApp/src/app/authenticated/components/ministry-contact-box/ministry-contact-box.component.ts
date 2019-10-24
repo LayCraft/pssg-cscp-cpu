@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../../../core/services/state.service';
-import { iMinistryUser } from 'src/app/core/models/ministry-user';
+import { iMinistryUser } from '../../../core/models/ministry-user';
 
 @Component({
   selector: 'app-ministry-contact-box',
