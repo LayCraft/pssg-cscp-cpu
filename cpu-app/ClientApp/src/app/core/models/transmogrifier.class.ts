@@ -6,6 +6,7 @@ import { iTombstone } from './tombstone.class';
 import { iMinistryUser } from './ministry-user';
 import { iContract } from './contract';
 import { iTask } from './task';
+import { iProgram } from './program';
 
 export class Transmogrifier {
   public organizationMeta: iOrganizationMeta;
@@ -102,6 +103,37 @@ export class Transmogrifier {
     return tasks;
 
   }
+  private buildPrograms(b: iDynamicsBlob, contractId: string): iProgram[] {
+    const programs: iProgram[] = [];
+    for (let program of b.Programs) {
+      if (program._vsd_contractid_value === contractId) {
+        programs.push({
+          // build an address
+          address: {
+            city: program.vsd_city,
+            line1: program.vsd_addressline1,
+            line2: program.vsd_addressline2,
+            postalCode: program.vsd_city,
+            province: program.vsd_provincestate,
+          },
+          email: program.vsd_emailaddress,
+          fax: program.vsd_fax,
+          // build an address
+          mailingAddress: {
+            city: program.vsd_mailingcity,
+            line1: program.vsd_mailingaddressline1,
+            line2: program.vsd_mailingaddressline2,
+            postalCode: program.vsd_mailingcity,
+            province: program.vsd_mailingprovincestate,
+          },
+          phone: program.vsd_phonenumber,
+          programId: program.vsd_programid,
+          programName: program.vsd_name,
+        });
+      }
+    }
+    return programs;
+  }
   private isCompleted(code: number): boolean {
     if (code === 1) {
       return true; // this is completed
@@ -159,9 +191,10 @@ export class Transmogrifier {
     if (b.Contracts.length > 0) {
       for (let contract of b.Contracts) {
         contracts.push({
-          isCompleted: this.isCompleted(contract.statecode),
-          contractNumber: contract.vsd_name,
           contractId: contract.vsd_contractid,
+          contractNumber: contract.vsd_name,
+          isCompleted: this.isCompleted(contract.statecode),
+          programs: this.buildPrograms(b, contract.vsd_contractid),
           status: contractCode(contract.statuscode),
           tasks: this.buildTasks(b, contract.vsd_contractid),
         });

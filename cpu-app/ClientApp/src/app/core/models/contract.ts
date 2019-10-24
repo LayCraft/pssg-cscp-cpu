@@ -1,4 +1,5 @@
 import { iTask } from "./task";
+import { iProgram } from "./program";
 
 export interface iContract {
   contractNumber: string;
@@ -6,4 +7,5 @@ export interface iContract {
   isCompleted: boolean;
   status: string;
   tasks: iTask[];
+  programs: iProgram[];
 }
