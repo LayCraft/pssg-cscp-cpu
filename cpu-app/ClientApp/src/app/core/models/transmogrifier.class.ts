@@ -172,7 +172,10 @@ export class Transmogrifier {
   }
   private buildMinistryContact(b: iDynamicsBlob): iMinistryUser {
     return {
-      fullname: b.MinistryUser.fullname,
+      firstName: b.MinistryUser.firstname,
+      lastName: b.MinistryUser.lastname,
+      email: b.MinistryUser.internalemailaddress,
+      phone: b.MinistryUser.address1_telephone1,
     };
   }
   private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
@@ -324,7 +327,10 @@ interface iDynamicsCrmContract {
 }
 interface iDynamicsMinistryUser {
   "@odata.etag": string;
-  fullname?: string;
+  address1_telephone1?: string;
+  firstname?: string;
+  internalemailaddress?: string;
+  lastname?: string;
   ownerid?: string;
   systemuserid?: string;
 }
@@ -356,6 +362,7 @@ interface iDynamicsCrmTask {
   "@odata.type": string;
   "@odata.etag": string;
   _regardingobjectid_value?: string;
+  _vsd_tasktypeid_value?: string;
   activityid?: string;
   description?: string;
   scheduledend?: string;
