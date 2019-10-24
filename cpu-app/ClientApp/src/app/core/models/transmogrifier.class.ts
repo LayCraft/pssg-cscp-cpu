@@ -2,7 +2,6 @@ import { iOrganizationMeta } from './organization-meta.class';
 import { iAddress } from './address.class';
 import { iContactInformation } from './contact-information.class';
 import { iPerson } from './person.class';
-import { iTombstone } from './tombstone.class';
 import { iMinistryUser } from './ministry-user';
 import { iContract } from './contract';
 import { iTask } from './task';
@@ -11,7 +10,6 @@ import { iProgram } from './program';
 export class Transmogrifier {
   public organizationMeta: iOrganizationMeta;
   public persons: iPerson[];
-  public tombstones: iTombstone[];
   public contracts: iContract[];
   public ministryContact: iMinistryUser;
 
@@ -57,21 +55,23 @@ export class Transmogrifier {
       return textStatus;
     }
     function formType(discriminator: string): string {
+      // this discriminator is used to let the system know which form to open up using a patern known as single table inheritance
+      // https://www.martinfowler.com/eaaCatalog/singleTableInheritance.html
       let formType;
       switch (discriminator) {
         case 'a': {
           formType = 'program_application';
           break;
         }
-        case 'a': {
+        case 'b': {
           formType = 'budget_proposal';
           break;
         }
-        case 'a': {
+        case 'c': {
           formType = 'expense_report';
           break;
         }
-        case 'a': {
+        case 'd': {
           formType = 'status_report';
           break;
         }
@@ -142,60 +142,74 @@ export class Transmogrifier {
     }
   }
   private buildContracts(b: iDynamicsBlob): iContract[] {
-    function contractCode(statuscode: number): string {
+    function contractCode(statuscode: number): [string, string] {
       let textStatus;
+      let textCategory;
       switch (statuscode) {
         // upcoming
         case 100000000: {
           textStatus = 'Sent';
+          textCategory = 'upcoming';
           break;
         }
         case 100000001: {
           textStatus = 'Received';
+          textCategory = 'upcoming';
           break;
         }
         case 100000002: {
           textStatus = 'Processing';
+          textCategory = 'upcoming';
           break;
         }
         case 100000003: {
           textStatus = 'Recommended for Approval';
+          textCategory = 'upcoming';
           break;
         }
         case 100000004: {
           textStatus = 'Escalated';
+          textCategory = 'upcoming';
           break;
         }
         case 100000005: {
           textStatus = 'Information Denied';
+          textCategory = 'upcoming';
           break;
         }
         // approved
         case 100000006: {
           textStatus = 'Approved';
+          textCategory = 'current'
           break;
         }
         // past
         case 2: {
           textStatus = 'Archived';
+          textCategory = 'past';
           break;
         }
         default: {
           textStatus = 'No Status';
+          textCategory = 'none'
           break;
         }
       }
-      return textStatus;
+      return [textCategory, textStatus];
     }
     const contracts: iContract[] = [];
     if (b.Contracts.length > 0) {
       for (let contract of b.Contracts) {
+        const status = contractCode(contract.statuscode);
         contracts.push({
+          // upcoming, current, past
+          category: status[0],
+          // Sent, Received, Processing, Recommended for Approval, Escalated, Information Denied, Approved, Archived, No Status
           contractId: contract.vsd_contractid,
           contractNumber: contract.vsd_name,
           isCompleted: this.isCompleted(contract.statecode),
           programs: this.buildPrograms(b, contract.vsd_contractid),
-          status: contractCode(contract.statuscode),
+          status: status[1],
           tasks: this.buildTasks(b, contract.vsd_contractid),
         });
       }
@@ -293,12 +307,6 @@ export class Transmogrifier {
       personList.push(person);
     }
     return personList;
-  }
-  private buildTombStones(b: iDynamicsBlob): iTombstone[] {
-    // TODO: collect tombstones
-    const tombstones: iTombstone[] = [];
-
-    return tombstones;
   }
 }
 

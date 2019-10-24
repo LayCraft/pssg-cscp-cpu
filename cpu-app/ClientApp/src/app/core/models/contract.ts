@@ -2,10 +2,11 @@ import { iTask } from "./task";
 import { iProgram } from "./program";
 
 export interface iContract {
-  contractNumber: string;
+  category: string;
   contractId: string;
+  contractNumber: string;
   isCompleted: boolean;
+  programs: iProgram[];
   status: string;
   tasks: iTask[];
-  programs: iProgram[];
 }
