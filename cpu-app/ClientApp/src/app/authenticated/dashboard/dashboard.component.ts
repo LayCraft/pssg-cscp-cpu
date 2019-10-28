@@ -9,6 +9,7 @@ import { Transmogrifier } from '../../core/models/transmogrifier.class';
 })
 export class DashboardComponent implements OnInit {
   trans: Transmogrifier;
+  categories = ['upcoming', 'current', 'past'];
 
   constructor(
     private stateService: StateService,
