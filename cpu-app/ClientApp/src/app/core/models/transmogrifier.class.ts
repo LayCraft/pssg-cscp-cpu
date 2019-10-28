@@ -207,7 +207,7 @@ export class Transmogrifier {
           // Sent, Received, Processing, Recommended for Approval, Escalated, Information Denied, Approved, Archived, No Status
           contractId: contract.vsd_contractid,
           contractNumber: contract.vsd_name,
-          isCompleted: this.isCompleted(contract.statecode), //TODO: Is this actually meaningful in the FE?
+          // isCompleted: this.isCompleted(contract.statecode), //TODO: Is this actually meaningful in the FE?
           programs: this.buildPrograms(b, contract.vsd_contractid),
           status: status[1],
           tasks: this.buildTasks(b, contract.vsd_contractid),
