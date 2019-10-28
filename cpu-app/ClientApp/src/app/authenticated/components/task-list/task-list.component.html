@@ -23,7 +23,7 @@
           <th scope="col">Deadline</th>
         </thead>
         <tbody>
-          <tr *ngFor="let task of contract.tasks">
+          <tr *ngFor="let task of incompleteTasks">
             <!-- Completed status items go into a different tab -->
             <td>
               <!-- Not Started -->
@@ -65,7 +65,7 @@
           <th scope="col">Deadline</th>
         </thead>
         <tbody>
-          <tr *ngFor="let task of contract.tasks">
+          <tr *ngFor="let task of completeTasks">
             <!-- Completed status items go into a different tab -->
             <td>
               <!-- Not Started -->
