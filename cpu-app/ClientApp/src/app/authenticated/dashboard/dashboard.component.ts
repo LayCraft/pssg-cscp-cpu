@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../../core/services/state.service';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
-import { iTask } from '../../core/models/task';
 
 @Component({
   selector: 'app-dashboard',

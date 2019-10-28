@@ -59,11 +59,11 @@ export class Transmogrifier {
       // https://www.martinfowler.com/eaaCatalog/singleTableInheritance.html
       let formType;
       switch (discriminator) {
-        case 'a': {
+        case '47525432-e8f5-e911-b811-00505683fbf4': {
           formType = 'program_application';
           break;
         }
-        case 'b': {
+        case '768faf46-e8f5-e911-b811-00505683fbf4': {
           formType = 'budget_proposal';
           break;
         }
