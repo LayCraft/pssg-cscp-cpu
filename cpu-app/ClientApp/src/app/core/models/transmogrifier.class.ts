@@ -75,8 +75,21 @@ export class Transmogrifier {
           formType = 'status_report';
           break;
         }
+        case '8fa3b7ae-e8f5-e911-b811-00505683fbf4': {
+          formType = 'profile';
+          break;
+        }
+        // below are unsupported
+        case '47525432-e8f5-e911-b811-00505683fbf4': {
+          formType = 'renew_contract';
+          break;
+        }
+        case '3e9826e5-e8f5-e911-b811-00505683fbf4': {
+          formType = 'financial_statement';
+          break;
+        }
         default: {
-          console.log('This guid was not found in the supported form types: ' + discriminator)
+          console.log('An error has occured. This type of form is not known:\n' + discriminator);
           formType = discriminator;
           break;
         }
