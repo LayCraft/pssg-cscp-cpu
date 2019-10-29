@@ -59,7 +59,7 @@ export class Transmogrifier {
       // https://www.martinfowler.com/eaaCatalog/singleTableInheritance.html
       let formType;
       switch (discriminator) {
-        case '47525432-e8f5-e911-b811-00505683fbf4': {
+        case 'e023659f-e8f5-e911-b811-00505683fbf4': {
           formType = 'program_application';
           break;
         }
@@ -67,16 +67,17 @@ export class Transmogrifier {
           formType = 'budget_proposal';
           break;
         }
-        case 'c': {
+        case '9d0ef880-e8f5-e911-b811-00505683fbf4': {
           formType = 'expense_report';
           break;
         }
-        case 'd': {
+        case 'c84daf8d-e8f5-e911-b811-00505683fbf4': {
           formType = 'status_report';
           break;
         }
         default: {
-          formType = 'Unrecongized type:' + discriminator;
+          console.log('This guid was not found in the supported form types: ' + discriminator)
+          formType = discriminator;
           break;
         }
       }
