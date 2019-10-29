@@ -71,7 +71,7 @@ export class Transmogrifier {
           formType = 'expense_report';
           break;
         }
-        case 'c84daf8d-e8f5-e911-b811-00505683fbf4': {
+        case '3e9826e5-e8f5-e911-b811-00505683fbf4': {
           formType = 'status_report';
           break;
         }
@@ -79,17 +79,15 @@ export class Transmogrifier {
           formType = 'profile';
           break;
         }
-        // below are unsupported
+        // unsupported
+        // todo: why are there two discriminators for one form type? Are they the same form?
         case '47525432-e8f5-e911-b811-00505683fbf4': {
-          formType = 'renew_contract';
-          break;
-        }
-        case '3e9826e5-e8f5-e911-b811-00505683fbf4': {
-          formType = 'financial_statement';
+          console.log('Unsupporeted program application discriminator.')
+          formType = 'program_application';
           break;
         }
         default: {
-          console.log('An error has occured. This type of form is not known:\n' + discriminator);
+          console.log('An error has occured. This type of task is not known:\n' + discriminator);
           formType = discriminator;
           break;
         }
