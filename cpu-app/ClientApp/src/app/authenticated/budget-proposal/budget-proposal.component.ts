@@ -1,11 +1,11 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ProgramBudget } from '../../core/models/budget-proposal.class';
-import { StateService } from '../../core/services/state.service';
-import { Transmogrifier } from '../../core/models/transmogrifier.class';
-import { iContract } from '../../core/models/contract';
-import { iProgram } from '../../core/models/program';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { iProgram } from '../../core/models/program';
+import { iContract } from '../../core/models/contract';
+import { Transmogrifier } from '../../core/models/transmogrifier.class';
+import { StateService } from '../../core/services/state.service';
+import { ProgramBudget } from '../../core/models/budget-proposal.class';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -69,7 +69,7 @@ export class BudgetProposalComponent implements OnInit {
 
     // add the programs to the list
     this.contract.programs.forEach((c: iProgram) => {
-      this.stepperService.addStepperElement(new ProgramBudget(), c.programName, 'untouched', 'program')
+      this.stepperService.addStepperElement(new ProgramBudget(), c.programName, 'untouched', 'program');
     });
 
     const bottom = {
