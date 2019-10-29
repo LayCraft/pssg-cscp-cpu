@@ -1,2 +1,2 @@
 # pssg-cscp-cpu
-Cummunity Program Unit
+Community Program Unit
