@@ -1,193 +1,87 @@
-import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { CookieService } from 'ngx-cookie-service';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatDividerModule,
-  MatExpansionModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatNativeDateModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSliderModule,
-  MatSlideToggleModule,
-  MatSnackBarModule,
-  MatSortModule,
-  MatStepperModule,
-  MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule
-} from '@angular/material';
-import { CdkTableModule } from '@angular/cdk/table';
 import { AppComponent } from './app.component';
-//import { DynamicsDataService } from './services/dynamics-data.service';
-import { CanDeactivateGuard } from './services/can-deactivate-guard.service';
-import { HomeComponent } from './home/home.component';
-import { VersionInfoDataService } from './services/version-info-data.service';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { SignPadDialog } from './sign-dialog/sign-dialog.component';
-import { CancelApplicationDialog } from './shared/cancel-dialog/cancel-dialog.component';
-import { DeactivateGuardDialog } from './shared/guard-dialog/guard-dialog.component';
-import { RenewApplicationComponent } from './renew-application/renew-application.component';
-import { FileUploaderBoxComponent } from './file-uploader-box/file-uploader-box.component';
+import { RouterModule } from '@angular/router';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { SharedModule } from './shared/shared.module';
+import { DashboardComponent } from './authenticated/dashboard/dashboard.component';
+import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-proposal.component';
+import { ExpenseReportComponent } from './authenticated/expense-report/expense-report.component';
+import { ProgramApplicationComponent } from './authenticated/program-application/program-application.component';
+import { StatusReportComponent } from './authenticated/status-report/status-report.component';
+import { PersonnelComponent } from './authenticated/personnel/personnel.component';
+import { ProfileComponent } from './authenticated/profile/profile.component';
+import { ProgramContactInformationComponent } from './authenticated/subforms/program-contact-information/program-contact-information.component';
+import { AdministrativeInformationComponent } from './authenticated/subforms/administrative-information/administrative-information.component';
+import { CgLiabilityComponent } from './authenticated/subforms/cg-liability/cg-liability.component';
+import { ProgramComponent } from './authenticated/subforms/program/program.component';
+import { ReviewApplicationComponent } from './authenticated/subforms/review-application/review-application.component';
+import { ProgramAuthorizerComponent } from './authenticated/subforms/program-authorizer/program-authorizer.component';
+import { HoursComponent } from './authenticated/subforms/hours/hours.component';
+import { ExpenseTableComponent } from './authenticated/subforms/expense-table/expense-table.component';
+import { ContractTombstoneComponent } from './authenticated/subforms/contract-tombstone/contract-tombstone.component';
+import { OrganizationProfileBoxComponent } from './authenticated/components/organization-profile-box/organization-profile-box.component';
+import { ContactInformationComponent } from './authenticated/subforms/contact-information/contact-information.component';
+import { AddressComponent } from './authenticated/subforms/address/address.component';
+import { PersonPickerComponent } from './authenticated/subforms/person-picker/person-picker.component';
+import { PersonPickerListComponent } from './authenticated/subforms/person-picker-list/person-picker-list.component';
+import { MinistryContactBoxComponent } from './authenticated/components/ministry-contact-box/ministry-contact-box.component';
+import { PersonEditorComponent } from './authenticated/subforms/person-editor/person-editor.component';
 import { TestComponent } from './test/test.component';
-import { FileDropModule } from 'ngx-file-drop';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { FileUploaderComponent } from './shared/file-uploader/file-uploader.component';
-import { NgBusyModule } from 'ng-busy';
-import { BsDatepickerModule, AlertModule } from 'ngx-bootstrap';
-import { FieldComponent } from './shared/field/field.component';
-import { QuickExitComponent } from './quick-exit/quick-exit.component';
-import { VersionInfoDialog } from './version-info/version-info.component';
-import { SignaturePadModule } from 'angular2-signaturepad';
-import { ApplicantContactInformationComponent } from './applicant-contact-information/applicant-contact-information.component';
-import { ProgramPlannerComponent } from './program-planner/program-planner.component';
-import { OrganizationProfileMakerComponent } from './organization-profile-maker/organization-profile-maker.component';
+import { ProgramBudgetComponent } from './authenticated/subforms/program-budget/program-budget.component';
+import { RevenueSourceTableComponent } from './authenticated/subforms/revenue-source-table/revenue-source-table.component';
+import { TaskListComponent } from './authenticated/components/task-list/task-list.component';
+
 
 @NgModule({
   declarations: [
+    AdministrativeInformationComponent,
     AppComponent,
-    SignPadDialog,
-    CancelApplicationDialog,
-    DeactivateGuardDialog,
-    RenewApplicationComponent,
-    FileUploaderBoxComponent,
+    BudgetProposalComponent,
+    CgLiabilityComponent,
+    ContractTombstoneComponent,
+    DashboardComponent,
+    ExpenseReportComponent,
+    ExpenseTableComponent,
+    HoursComponent,
+    LandingPageComponent,
+    OrganizationProfileBoxComponent,
+    PersonnelComponent,
+    ProfileComponent,
+    ProgramApplicationComponent,
+    ProgramAuthorizerComponent,
+    ProgramComponent,
+    ProgramContactInformationComponent,
+    ReviewApplicationComponent,
+    StatusReportComponent,
+    ContactInformationComponent,
+    AddressComponent,
+    PersonPickerComponent,
+    PersonPickerListComponent,
+    MinistryContactBoxComponent,
+    PersonEditorComponent,
     TestComponent,
-    HomeComponent,
-    NotFoundComponent,
-    FileUploaderComponent,
-    FieldComponent,
-    QuickExitComponent,
-    VersionInfoDialog,
-    ApplicantContactInformationComponent,
-    ProgramPlannerComponent,
-    OrganizationProfileMakerComponent,
+    ProgramBudgetComponent,
+    RevenueSourceTableComponent,
+    TaskListComponent,
   ],
   imports: [
+    AppRoutingModule,
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    NgBusyModule,
-    CdkTableModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    FileDropModule,
-    SignaturePadModule,
-    TooltipModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    AlertModule.forRoot()
+    RouterModule,
+    SharedModule
   ],
-  exports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    CdkTableModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    FileDropModule,
-    TooltipModule,
-    MatTooltipModule
-  ],
+
   providers: [
-    CookieService,
-    CanDeactivateGuard,
-    Title,
-    VersionInfoDataService,
-  ],
-  entryComponents: [
-    VersionInfoDialog,
-    SignPadDialog,
-    CancelApplicationDialog,
-    DeactivateGuardDialog
+    // { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

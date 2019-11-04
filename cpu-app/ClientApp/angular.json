@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "vsd_public_app": {
+    "cpu-public-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -21,13 +21,13 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/ng-busy/src/style/busy.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "src/styles-font.scss"
+              "src/assets/bootstrap-theme/scss/bootstrap-theme.scss",
+              "node_modules/@bcgov/bc-sans/css/BCSans.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "src/styles.scss"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -52,18 +52,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "vsd_public_app:build"
+            "browserTarget": "cpu-public-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "vsd_public_app:build:production"
+              "browserTarget": "cpu-public-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "vsd_public_app:build"
+            "browserTarget": "cpu-public-app:build"
           }
         },
         "test": {
@@ -75,11 +75,11 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
-              "node_modules/ng-busy/src/style/busy.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
-              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "src/styles-font.scss"
+              "src/assets/bootstrap-theme/scss/bootstrap-theme.scss",
+              "node_modules/@bcgov/bc-sans/css/BCSans.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "src/styles.scss"
             ],
             "assets": [
               "src/assets"
@@ -100,7 +100,7 @@
         }
       }
     },
-    "vsd_public_app-e2e": {
+    "cpu-public-app-e2e": {
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -109,7 +109,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "vsd_public_app:serve"
+            "devServerTarget": "cpu-public-app:serve"
           }
         },
         "lint": {
@@ -126,7 +126,7 @@
       }
     }
   },
-  "defaultProject": "vsd_public_app",
+  "defaultProject": "cpu-public-app",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

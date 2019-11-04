@@ -1,0 +1,137 @@
+<div class="card mb-4">
+  <div class="card-header">
+    <h1 class="h2">Contract: {{contract.contractNumber}}</h1>
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Current</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="setCurrentTab(tabs[1])" [class.active]="currentTab===tabs[1]">Completed</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="setCurrentTab(tabs[2])" [class.active]="currentTab===tabs[2]">Programs</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <span *ngIf="currentTab===tabs[0]">
+      <table class="table table-sm table-striped">
+        <thead class="thead">
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+          <th scope="col">Description</th>
+          <th scope="col">Deadline</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of incompleteTasks">
+            <!-- Completed status items go into a different tab -->
+            <td>
+              <!-- Not Started -->
+              <i *ngIf="task.status === statuses[0]" class="fas fa-ellipsis-h text-secondary"></i>
+              <!-- In Progress -->
+              <i *ngIf="task.status === statuses[1]" class="far fa-file text-success"></i>
+              <!-- Waiting -->
+              <i *ngIf="task.status === statuses[2]" class="fas fa-stopwatch text-info"></i>
+              <!-- Deferred -->
+              <i *ngIf="task.status === statuses[3]" class="fas fa-pause-circle text-warning"></i>
+              <!-- Completed -->
+              <i *ngIf="task.status === statuses[4]" class="fas fa-check-circle text-success"></i>
+              <!-- Cancelled -->
+              <i *ngIf="task.status === statuses[5]" class="far fa-stop-circle text-danger"></i>
+              <!-- No Status -->
+              <i *ngIf="task.status === statuses[6]" class="fas fa-bacon text-danger"></i>
+              <!-- colour the text the same -->
+              <span class="ml-1" [class.text-secondary]='task.status === statuses[0]' [class.text-success]='task.status === statuses[1]' [class.text-info]='task.status === statuses[2]' [class.text-warning]='task.status === statuses[3]' [class.text-success]='task.status === statuses[4]' [class.text-danger]='task.status === statuses[5]' [class.text-danger]='task.status === statuses[6]'>
+                {{task.status}}
+              </span>
+            </td>
+            <td>
+              <a routerLink="/authenticated/{{task.formType}}/{{contract.contractId}}">
+                {{task.taskName}}
+              </a>
+            </td>
+            <td>{{task.taskDescription}}</td>
+            <td>{{task.deadline|date:'yyyy-MM-dd'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </span>
+    <span *ngIf="currentTab===tabs[1]">
+      <table class="table table-sm table-striped">
+        <thead class="thead">
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+          <th scope="col">Description</th>
+          <th scope="col">Deadline</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of completeTasks">
+            <!-- Completed status items go into a different tab -->
+            <td>
+              <!-- Not Started -->
+              <i *ngIf="task.status === statuses[0]" class="fas fa-ellipsis-h text-secondary"></i>
+              <!-- In Progress -->
+              <i *ngIf="task.status === statuses[1]" class="far fa-file text-success"></i>
+              <!-- Waiting -->
+              <i *ngIf="task.status === statuses[2]" class="fas fa-stopwatch text-info"></i>
+              <!-- Deferred -->
+              <i *ngIf="task.status === statuses[3]" class="fas fa-pause-circle text-warning"></i>
+              <!-- Completed -->
+              <i *ngIf="task.status === statuses[4]" class="fas fa-check-circle text-success"></i>
+              <!-- Cancelled -->
+              <i *ngIf="task.status === statuses[5]" class="far fa-stop-circle text-danger"></i>
+              <!-- No Status -->
+              <i *ngIf="task.status === statuses[6]" class="fas fa-bacon text-danger"></i>
+              <!-- colour the text the same -->
+              <span class="ml-1" [class.text-secondary]='task.status === statuses[0]' [class.text-success]='task.status === statuses[1]' [class.text-info]='task.status === statuses[2]' [class.text-warning]='task.status === statuses[3]' [class.text-success]='task.status === statuses[4]' [class.text-danger]='task.status === statuses[5]' [class.text-danger]='task.status === statuses[6]'>
+                {{task.status}}
+              </span>
+            </td>
+            <td>
+              <a routerLink="/authenticated/{{task.formType}}/{{contract.contractId}}">
+                {{task.taskName}}
+              </a>
+            </td>
+            <td>{{task.taskDescription}}</td>
+            <td>{{task.deadline|date:'yyyy-MM-dd'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </span>
+    <span *ngIf="currentTab===tabs[2]">
+      <table class="table table-sm table-striped">
+        <thead class="thead">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Programs</th>
+            <th scope="col">Program Contact</th>
+            <th scope="col">Update Contact</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let program of contract.programs; let i=index">
+            <th scope="row">
+              {{i+1}}
+            </th>
+            <td>{{program.programName}}
+            </td>
+            <td>
+              <strong>Email: </strong>{{program.email}}<br>
+              <strong>Phone: </strong>{{program.phone}}<br>
+            </td>
+            <td><a routerLink="/authenticated/profile">Update Contact</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <!--
+      <ul class="pagination my-0">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul> -->
+    </span>
+  </div>
+</div>

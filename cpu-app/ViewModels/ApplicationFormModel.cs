@@ -2,6 +2,11 @@
 
 namespace Gov.Cscp.VictimServices.Public.ViewModels
 {
+    public class DynamicsRequestModel
+    {
+        public string BCeID { get; set; }
+    }
+
     public class ApplicationFormModel
     {
         public Introduction Introduction { get; set; }
