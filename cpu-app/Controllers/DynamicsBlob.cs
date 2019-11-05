@@ -17,6 +17,7 @@ using System;
 namespace Gov.Cscp.VictimServices.Public.Controllers
 {
 	[Route("api/[controller]")]
+	[Authorize]
 	public class DynamicsBlobController : Controller
 	{
 		private readonly IConfiguration _configuration;
@@ -48,7 +49,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			}
 			finally { }
 		}
-		static async Task<Tuple<int, string, HttpResponseMessage>> GetDynamicsHttpClient(IConfiguration configuration, String model, String endPointName)
+		static async Task<Tuple<int, string, HttpResponseMessage>> GetDynamicsHttpClient(IConfiguration configuration, string model, string endPointName)
 		{
 
 			var builder = new ConfigurationBuilder()
@@ -108,7 +109,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 
 				//stsClient.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
 				//stsClient.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
-				//stsClient.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
+				// stsClient.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
 
 				stsClient.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
 				stsClient.DefaultRequestHeaders.Add("return-client-request-id", "true");
@@ -116,16 +117,16 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 
 				// Construct the body of the request
 				var pairs = new List<KeyValuePair<string, string>>
-								{
-										new KeyValuePair<string, string>("resource", applicationGroupResource),
-										new KeyValuePair<string, string>("client_id", applicationGroupClientId),
-										new KeyValuePair<string, string>("client_secret", applicationGroupSecret),
-										new KeyValuePair<string, string>("username", serviceAccountUsername),
-										new KeyValuePair<string, string>("password", serviceAccountPassword),
-										new KeyValuePair<string, string>("scope", "openid"),
-										new KeyValuePair<string, string>("response_mode", "form_post"),
-										new KeyValuePair<string, string>("grant_type", "password")
-								 };
+					{
+						new KeyValuePair<string, string>("resource", applicationGroupResource),
+						new KeyValuePair<string, string>("client_id", applicationGroupClientId),
+						new KeyValuePair<string, string>("client_secret", applicationGroupSecret),
+						new KeyValuePair<string, string>("username", serviceAccountUsername),
+						new KeyValuePair<string, string>("password", serviceAccountPassword),
+						new KeyValuePair<string, string>("scope", "openid"),
+						new KeyValuePair<string, string>("response_mode", "form_post"),
+						new KeyValuePair<string, string>("grant_type", "password")
+						};
 
 				// This will also set the content type of the request
 				var content = new FormUrlEncodedContent(pairs);
@@ -208,90 +209,6 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				throw new Exception("No configured connection to Dynamics.");
 			}
 
-			//IDynamicsClient client = new DynamicsClient(new Uri(dynamicsOdataUri), serviceClientCredentials);
-
-			//// set the native client URI.  This is required if you have a reverse proxy or IFD in place and the native URI is different from your access URI.
-			//if (string.IsNullOrEmpty(Configuration["DYNAMICS_NATIVE_ODATA_URI"]))
-			//{
-			//    client.NativeBaseUri = new Uri(Configuration["DYNAMICS_ODATA_URI"]);
-			//}
-			//else
-			//{
-			//    client.NativeBaseUri = new Uri(Configuration["DYNAMICS_NATIVE_ODATA_URI"]);
-			//}
-
-			//return client;
-
-
-
-
-
-
-
-
-			//var client = new HttpClient();
-
-			//var dynamicsOdataUri = configuration["DYNAMICS_ODATAURI"];
-			//var ssgUsername = configuration["SSG_USERNAME"];
-			//var ssgPassword = configuration["SSG_PASSWORD"];
-			//var dynamicsID = configuration["DYN_ID"];
-			//var dynamicsSecret = configuration["DYN_SECRET"];
-
-			//client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
-			//client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
-			//client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
-			//client.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
-			//client.DefaultRequestHeaders.Add("return-client-request-id", "true");
-			//client.DefaultRequestHeaders.Add("Accept", "application/json");
-
-			//var stsEndpoint = "https://sts4.gov.bc.ca/adfs/oauth2/token";
-
-			//var pairs = new List<KeyValuePair<string, string>>
-
-			//{
-			//    //new KeyValuePair<string, string>("resource", resource),
-			//    new KeyValuePair<string, string>("resource", dynamicsOdataUri),//resource),
-			//    new KeyValuePair<string, string>("client_id", dynamicsID),//clientId),
-			//    //new KeyValuePair<string, string>("client_id", clientId),
-			//    //new KeyValuePair<string, string>("client_secret", secret),
-			//    new KeyValuePair<string, string>("client_secret", dynamicsSecret),//secret),
-			//    new KeyValuePair<string, string>("client_info", "1"),
-			//    new KeyValuePair<string, string>("username", ssgUsername),// idirName),
-			//    //new KeyValuePair<string, string>("username", idirName),
-			//    //new KeyValuePair<string, string>("password", password),
-			//    new KeyValuePair<string, string>("password", ssgPassword),// password),
-			//    new KeyValuePair<string, string>("scope", "openid"),
-			//    new KeyValuePair<string, string>("response_mode", "form_post"),
-			//    new KeyValuePair<string, string>("grant_type", "password")
-			// };
-
-			//var content = new FormUrlEncodedContent(pairs);
-
-			//var _httpResponse = await client.PostAsync(stsEndpoint, content);
-
-			//var _responseContent = await _httpResponse.Content.ReadAsStringAsync();
-
-			//Dictionary<string, string> result = JsonConvert.DeserializeObject<Dictionary<string, string>>(_responseContent);
-			//string token = result["access_token"];
-
-			//client = new HttpClient();
-			//var Authorization = $"Bearer {token}";
-			//client.DefaultRequestHeaders.Add("Authorization", Authorization);
-			//client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
-			//client.DefaultRequestHeaders.Add("OData-Version", "4.0");
-			//client.DefaultRequestHeaders.Add("Accept", "application/json");
-
-			//string url = "https://spd-spice.dev.jag.gov.bc.ca/api/data/v9.0/accounts";
-
-			//HttpRequestMessage _httpRequest = new HttpRequestMessage(HttpMethod.Get, url);
-
-			//var _httpResponse2 = await client.SendAsync(_httpRequest);
-			//HttpStatusCode _statusCode = _httpResponse2.StatusCode;
-
-			//var _responseString = _httpResponse2.ToString();
-			//var _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
-
-			//Console.Out.WriteLine(_responseContent2);
 			return new Tuple<int, string, HttpResponseMessage>(100, "", null);
 		}
 	}

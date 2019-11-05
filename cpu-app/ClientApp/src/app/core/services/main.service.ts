@@ -10,14 +10,14 @@ import { retry, catchError } from 'rxjs/operators';
 export class MainService {
 
   // this should query the test api
-  apiUrl = 'api/justice/test';
+  apiUrl = 'api/DynamicsBlob/';
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getBlob(): Observable<iDynamicsBlob> {
-    return this.http.get<iDynamicsBlob>(this.apiUrl, { headers: this.headers }).pipe(
+  getBlob(bceid: string = '9e9b5111-51c9-e911-b80f-00505683fbf4'): Observable<iDynamicsBlob> {
+    return this.http.get<iDynamicsBlob>(this.apiUrl + bceid, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
