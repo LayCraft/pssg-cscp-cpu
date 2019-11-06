@@ -26,6 +26,7 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string emailaddress1 { get; set; }
 		public string fax { get; set; }
 		public string name { get; set; }
+		public string odatatype = "Microsoft.Dynamics.CRM.account";
 		public string telephone1 { get; set; }
 	}
 }

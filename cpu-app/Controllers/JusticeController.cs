@@ -38,46 +38,6 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			_httpContextAccessor = httpContextAccessor;
 		}
 
-		[HttpGet("test")]
-		public async Task<IActionResult> QueryDynamics([FromBody] DynamicsRequestModel model)
-		{
-			model = new DynamicsRequestModel();
-			model.BCeID = "9e9b5111-51c9-e911-b80f-00505683fbf4";
-
-			HttpClient httpClient = null;
-			try
-			{
-				var application = model;
-				JsonSerializerSettings settings = new JsonSerializerSettings();
-				settings.NullValueHandling = NullValueHandling.Ignore;
-				var applicationJson = JsonConvert.SerializeObject(application, settings);
-				applicationJson = applicationJson.Replace("odatatype", "@odata.type");
-
-				var endpointAction = "vsd_GetCPUOrgContracts";
-				var tuple = await GetDynamicsHttpClientNew(_configuration, applicationJson, endpointAction);
-				// convert response string into a json object
-				return new JsonResult(JsonConvert.DeserializeObject(tuple.Item2));
-
-				//HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endpointAction);
-				//request.Content = new StringContent(applicationJson, Encoding.UTF8, "application/json");
-
-				//HttpResponseMessage response = await httpClient.SendAsync(request);
-
-				//if (response.StatusCode == HttpStatusCode.OK)
-				//{
-				//    var jsonResult = response.Content.ReadAsStringAsync().Result;
-				//    return new JsonResult(jsonResult);
-				//}
-				//return new JsonResult(response.Content.ReadAsStringAsync().Result);
-			}
-			finally
-			{
-				if (httpClient != null)
-					httpClient.Dispose();
-			}
-			//return new JsonResult("{What You Sent:{" + model + "}}");
-		}
-
 		[HttpPost("saveapplication")]
 		public async Task<IActionResult> SaveApplication([FromBody] ApplicationFormModel model)
 		{
