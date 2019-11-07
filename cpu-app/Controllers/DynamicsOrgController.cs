@@ -19,18 +19,18 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 {
 
 	[Route("api/[controller]")]
-	public class OrganizationUserController : Controller
+	public class DynamicsOrgController : Controller
 	{
 		private readonly IConfiguration _configuration;
 		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public OrganizationUserController(IHttpContextAccessor httpContextAccessor)
+		public DynamicsOrgController(IHttpContextAccessor httpContextAccessor)
 		{
 			this._httpContextAccessor = httpContextAccessor;
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Create([FromBody] Models.DynamicsOrganizationUser model)
+		public async Task<IActionResult> Create([FromBody] Models.DynamicsOrg model)
 		{
 			if (model == null)
 			{
@@ -66,7 +66,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			public bool IsCompletedSuccessfully { get; set; }
 			public string Result { get; set; }
 		}
-		private static async Task<string> CreateOrganizationUser(IConfiguration configuration, Models.DynamicsOrganizationUser model)
+		private static async Task<string> CreateOrganizationUser(IConfiguration configuration, Models.DynamicsOrg model)
 		{
 			HttpClient httpClient = null;
 			try
@@ -77,7 +77,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				applicationJson = applicationJson.Replace("odatatype", "@odata.type");
 
 				// Get results into the tuple
-				var endpointAction = "vsd_CreateCVAPClaim";
+				var endpointAction = "vsd_SetCPUOrgContracts";
 				var tuple = await GetDynamicsHttpClient(configuration, applicationJson, endpointAction);
 
 				string tempResult = tuple.Item1.ToString();
@@ -97,7 +97,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 					httpClient.Dispose();
 			}
 		}
-		static async Task<Tuple<int, HttpResponseMessage>> GetDynamicsHttpClient(IConfiguration configuration, String model, String endPointName)
+		static async Task<Tuple<int, HttpResponseMessage>> GetDynamicsHttpClient(IConfiguration configuration, string model, string endPointName)
 		{
 
 			var builder = new ConfigurationBuilder()
