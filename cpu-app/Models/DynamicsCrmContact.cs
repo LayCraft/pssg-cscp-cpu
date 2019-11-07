@@ -23,6 +23,7 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string lastname { get; set; }
 		public string middlename { get; set; }
 		public string mobilephone { get; set; }
+		public string odatatype = "#Microsoft.Dynamics.CRM.contact";
 		public string vsd_bceid { get; set; }
 	}
 }
