@@ -26,6 +26,14 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		public DynamicsOrgController(IHttpContextAccessor httpContextAccessor)
 		{
 			this._httpContextAccessor = httpContextAccessor;
+			// build the configuration for access from the secrets
+			// TODO: is comment below still valid? 
+			// Note: must also define a project guid for secrets in the .csproj add tag <UserSecretsId> containing a guid
+			var builder = new ConfigurationBuilder()
+			.AddEnvironmentVariables()
+			.AddUserSecrets<Program>();
+			// save the configuration in the class. Doing it in the constructor means that the file read is done at creation of the endpoint. Config changes restart the containers.
+			this._configuration = builder.Build();
 		}
 
 		[HttpPost]
@@ -33,220 +41,109 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		{
 			if (model == null)
 			{
-				if (ModelState.ErrorCount > 0)
-				{
-					var errors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
-					return new JsonResult(new { IsSuccess = false, Status = "Application Save Error", Message = "Errors in binding: " + string.Join(Environment.NewLine, errors) });
-				}
-				else
-				{
-					return new JsonResult(new { IsSuccess = false, Status = "Application Save Error", Message = "Error: Model is null." });
-				}
+				// post has not included content
+				return NoContent();
 			}
-			//get the response from dynamics
-			var t = Task.Run(() => CreateOrganizationUser(_configuration, model));
-			t.Wait();
-
-			string dynamicsResponse = Newtonsoft.Json.JsonConvert.SerializeObject(t);
-			DynamicsResponse response = JsonConvert.DeserializeObject<DynamicsResponse>(dynamicsResponse);
-			// return a useful repsonse to the client
-			var ret = new
+			else
 			{
-				IsSuccess = response.IsCompletedSuccessfully,
-				Status = "Organization User Save",
-				Message = response.Result
-			};
-			return new JsonResult(ret);
+				// post with the model and configuration included
+				// make a new http client
+				var client = new HttpClient();
+				// client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
+				// client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
+				// client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
+				client.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
+				client.DefaultRequestHeaders.Add("return-client-request-id", "true");
+				client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+				// string adfsOauth2Uri = _configuration["ADFS_OAUTH2_URI"]; // ADFS OAUTH2 URI - usually /adfs/oauth2/token on STS
+
+				// string applicationGroupResource = _configuration["DYNAMICS_APP_GROUP_RESOURCE"]; // ADFS 2016 Application Group resource (URI)
+				// string applicationGroupClientId = _configuration["DYNAMICS_APP_GROUP_CLIENT_ID"]; // ADFS 2016 Application Group Client ID
+				// Construct the body of the request
+				var pairs = new List<KeyValuePair<string, string>>
+					{
+						new KeyValuePair<string, string>("resource", _configuration["DYNAMICS_APP_GROUP_RESOURCE"]),
+						new KeyValuePair<string, string>("client_id", _configuration["DYNAMICS_APP_GROUP_CLIENT_ID"]),
+						new KeyValuePair<string, string>("client_secret", _configuration["DYNAMICS_APP_GROUP_SECRET"]),
+						new KeyValuePair<string, string>("username", _configuration["DYNAMICS_USERNAME"]),
+						new KeyValuePair<string, string>("password", _configuration["DYNAMICS_PASSWORD"]),
+						new KeyValuePair<string, string>("scope", "openid"),
+						new KeyValuePair<string, string>("response_mode", "form_post"),
+						new KeyValuePair<string, string>("grant_type", "password")
+						};
+				// URL encode the content
+				var content = new FormUrlEncodedContent(pairs);
+
+				// get the response from the OAUTH2 api endpoint
+				string _responseContent;
+				try
+				{
+					HttpResponseMessage _httpResponse = await client.PostAsync(_configuration["ADFS_OAUTH2_URI"], content);
+					// get the response content string
+					_responseContent = _httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+				}
+				catch
+				{
+					Console.WriteLine("FOOBAR: Http post to OAUTH2 URI failed.");
+					return StatusCode(500);
+				}
+
+				string token;
+				try
+				{
+					// deserialize the response into a dictionary
+					Dictionary<string, string> result = JsonConvert.DeserializeObject<Dictionary<string, string>>(_responseContent);
+					// get the access token from the result and save it for posting to dynamics				
+					token = result["access_token"];
+				}
+				catch
+				{
+					Console.WriteLine("FOOBAR: Could not collect access token: ");
+					return StatusCode(500);
+				}
+
+				// rebuild the http client for posting to Dynamics
+				client = new HttpClient();
+				var Authorization = $"Bearer {token}";
+				client.DefaultRequestHeaders.Add("Authorization", Authorization);
+				client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
+				client.DefaultRequestHeaders.Add("OData-Version", "4.0");
+				client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+				// build the url for posting to this endpoint
+				string url = _configuration["DYNAMICS_APP_GROUP_RESOURCE"] + "vsd_SetCPUOrgContracts";
+				// construct the http request
+				HttpRequestMessage _httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
+				HttpResponseMessage _httpResponse2;
+				HttpStatusCode _statusCode;
+				try
+				{
+					// serialize the model and put it onto the http request
+					_httpRequest.Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(model), System.Text.Encoding.UTF8, "application/json");
+					// send the request
+					_httpResponse2 = await client.SendAsync(_httpRequest);
+					_statusCode = _httpResponse2.StatusCode;
+				}
+				catch
+				{
+					Console.WriteLine("FOOBAR: Could not serialize the model or the http response from Dynamics had a problem.");
+					return StatusCode(500);
+				}
+
+				// clean up the response and save the content as a string
+				var _responseString = _httpResponse2.ToString();
+				var _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
+				return Ok();
+			}
 		}
+
 		internal class DynamicsResponse
 		{
 			public string odatacontext { get; set; }
 			public bool IsSuccess { get; set; }
 			public bool IsCompletedSuccessfully { get; set; }
 			public string Result { get; set; }
-		}
-		private static async Task<string> CreateOrganizationUser(IConfiguration configuration, Models.DynamicsOrg model)
-		{
-			HttpClient httpClient = null;
-			try
-			{
-				JsonSerializerSettings settings = new JsonSerializerSettings();
-				settings.NullValueHandling = NullValueHandling.Ignore;
-				var applicationJson = JsonConvert.SerializeObject(model, settings);
-				applicationJson = applicationJson.Replace("odatatype", "@odata.type");
-
-				// Get results into the tuple
-				var endpointAction = "vsd_SetCPUOrgContracts";
-				var tuple = await GetDynamicsHttpClient(configuration, applicationJson, endpointAction);
-
-				string tempResult = tuple.Item1.ToString();
-
-				DynamicsResponse dynamicsResponse = new DynamicsResponse();
-				dynamicsResponse.IsSuccess = (tempResult == "200"); // Only return true if we get a 200 back from the server
-
-				dynamicsResponse.Result = tempResult;
-				dynamicsResponse.odatacontext = tuple.Item2.ToString();
-
-				return dynamicsResponse.odatacontext;
-
-			}
-			finally
-			{
-				if (httpClient != null)
-					httpClient.Dispose();
-			}
-		}
-		static async Task<Tuple<int, HttpResponseMessage>> GetDynamicsHttpClient(IConfiguration configuration, string model, string endPointName)
-		{
-
-			var builder = new ConfigurationBuilder()
-					.AddEnvironmentVariables()
-					.AddUserSecrets<Program>(); // must also define a project guid for secrets in the .cspro � add tag <UserSecretsId> containing a guid
-			var Configuration = builder.Build();
-
-			string dynamicsOdataUri = Configuration["DYNAMICS_ODATA_URI"]; // Dynamics ODATA endpoint
-			string dynamicsJobName = endPointName;// Configuration["DYNAMICS_JOB_NAME"]; // Dynamics Job Name
-
-			if (string.IsNullOrEmpty(dynamicsOdataUri))
-			{
-				throw new Exception("Configuration setting DYNAMICS_ODATA_URI is blank.");
-			}
-
-			// Cloud - x.dynamics.com
-			string aadTenantId = Configuration["DYNAMICS_AAD_TENANT_ID"]; // Cloud AAD Tenant ID
-			string serverAppIdUri = Configuration["DYNAMICS_SERVER_APP_ID_URI"]; // Cloud Server App ID URI
-			string appRegistrationClientKey = Configuration["DYNAMICS_APP_REG_CLIENT_KEY"]; // Cloud App Registration Client Key
-			string appRegistrationClientId = Configuration["DYNAMICS_APP_REG_CLIENT_ID"]; // Cloud App Registration Client Id
-
-			// One Premise ADFS (2016)
-			string adfsOauth2Uri = Configuration["ADFS_OAUTH2_URI"]; // ADFS OAUTH2 URI - usually /adfs/oauth2/token on STS
-			string applicationGroupResource = Configuration["DYNAMICS_APP_GROUP_RESOURCE"]; // ADFS 2016 Application Group resource (URI)
-			string applicationGroupClientId = Configuration["DYNAMICS_APP_GROUP_CLIENT_ID"]; // ADFS 2016 Application Group Client ID
-			string applicationGroupSecret = Configuration["DYNAMICS_APP_GROUP_SECRET"]; // ADFS 2016 Application Group Secret
-			string serviceAccountUsername = Configuration["DYNAMICS_USERNAME"]; // Service account username
-			string serviceAccountPassword = Configuration["DYNAMICS_PASSWORD"]; // Service account password
-
-			// API Gateway to NTLM user.  This is used in v8 environments.  Note that the SSG Username and password are not the same as the NTLM user.
-			string ssgUsername = Configuration["SSG_USERNAME"];  // BASIC authentication username
-			string ssgPassword = Configuration["SSG_PASSWORD"];  // BASIC authentication password
-
-			ServiceClientCredentials serviceClientCredentials = null;
-			if (!string.IsNullOrEmpty(appRegistrationClientId) && !string.IsNullOrEmpty(appRegistrationClientKey) && !string.IsNullOrEmpty(serverAppIdUri) && !string.IsNullOrEmpty(aadTenantId))
-			// Cloud authentication - using an App Registration's client ID, client key.  Add the App Registration to Dynamics as an Application User.
-			{
-				var authenticationContext = new AuthenticationContext(
-				"https://login.windows.net/" + aadTenantId);
-				ClientCredential clientCredential = new ClientCredential(appRegistrationClientId, appRegistrationClientKey);
-				var task = authenticationContext.AcquireTokenAsync(serverAppIdUri, clientCredential);
-				task.Wait();
-				var authenticationResult = task.Result;
-				string token = authenticationResult.CreateAuthorizationHeader().Substring("Bearer ".Length);
-				serviceClientCredentials = new TokenCredentials(token);
-			}
-			if (!string.IsNullOrEmpty(adfsOauth2Uri) &&
-									!string.IsNullOrEmpty(applicationGroupResource) &&
-									!string.IsNullOrEmpty(applicationGroupClientId) &&
-									!string.IsNullOrEmpty(applicationGroupSecret) &&
-									!string.IsNullOrEmpty(serviceAccountUsername) &&
-									!string.IsNullOrEmpty(serviceAccountPassword))
-			// ADFS 2016 authentication - using an Application Group Client ID and Secret, plus service account credentials.
-			{
-				// create a new HTTP client that is just used to get a token.
-				var stsClient = new HttpClient();
-
-				//stsClient.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
-				//stsClient.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
-				//stsClient.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
-
-				stsClient.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
-				stsClient.DefaultRequestHeaders.Add("return-client-request-id", "true");
-				stsClient.DefaultRequestHeaders.Add("Accept", "application/json");
-
-				// Construct the body of the request
-				var pairs = new List<KeyValuePair<string, string>>
-								{
-										new KeyValuePair<string, string>("resource", applicationGroupResource),
-										new KeyValuePair<string, string>("client_id", applicationGroupClientId),
-										new KeyValuePair<string, string>("client_secret", applicationGroupSecret),
-										new KeyValuePair<string, string>("username", serviceAccountUsername),
-										new KeyValuePair<string, string>("password", serviceAccountPassword),
-										new KeyValuePair<string, string>("scope", "openid"),
-										new KeyValuePair<string, string>("response_mode", "form_post"),
-										new KeyValuePair<string, string>("grant_type", "password")
-								 };
-
-				// This will also set the content type of the request
-				var content = new FormUrlEncodedContent(pairs);
-				// send the request to the ADFS server
-				var _httpResponse = stsClient.PostAsync(adfsOauth2Uri, content).GetAwaiter().GetResult();
-				var _responseContent = _httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-				// response should be in JSON format.
-				try
-				{
-					Dictionary<string, string> result = JsonConvert.DeserializeObject<Dictionary<string, string>>(_responseContent);
-					string token = result["access_token"];
-					// set the bearer token.
-					serviceClientCredentials = new TokenCredentials(token);
-
-
-					// Code to perform Scheduled task
-					var client = new HttpClient();
-					client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
-					client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
-					client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
-					client.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
-					client.DefaultRequestHeaders.Add("return-client-request-id", "true");
-					client.DefaultRequestHeaders.Add("Accept", "application/json");
-
-					client = new HttpClient();
-					var Authorization = $"Bearer {token}";
-					client.DefaultRequestHeaders.Add("Authorization", Authorization);
-					client.DefaultRequestHeaders.Add("OData-MaxVersion", "4.0");
-					client.DefaultRequestHeaders.Add("OData-Version", "4.0");
-					client.DefaultRequestHeaders.Add("Accept", "application/json");
-					//client.DefaultRequestHeaders.Add("content-type", "application/json");
-					//client.DefaultRequestHeaders.Add("Content-Type", "application/json; charset=utf-8");
-
-					string url = dynamicsOdataUri + dynamicsJobName;
-
-					HttpRequestMessage _httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
-					_httpRequest.Content = new StringContent(model, Encoding.UTF8, "application/json");
-					//_httpRequest.Content = new StringContent(System.IO.File.ReadAllText(@"C:\Temp\VSD-RestSampleData3.txt"), Encoding.UTF8, "application/json");
-
-					var _httpResponse2 = await client.SendAsync(_httpRequest);
-					HttpStatusCode _statusCode = _httpResponse2.StatusCode;
-
-					var _responseString = _httpResponse2.ToString();
-					var _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
-
-					Console.Out.WriteLine(model);
-					Console.Out.WriteLine(_responseString);
-					Console.Out.WriteLine(_responseContent2);
-
-					return new Tuple<int, HttpResponseMessage>((int)_statusCode, _httpResponse2);
-					// End of scheduled task
-				}
-				catch (Exception e)
-				{
-					return new Tuple<int, HttpResponseMessage>(100, null);
-					throw new Exception(e.Message + " " + _responseContent);
-				}
-
-			}
-			else if (!string.IsNullOrEmpty(ssgUsername) && !string.IsNullOrEmpty(ssgPassword))
-			// Authenticate using BASIC authentication - used for API Gateways with BASIC authentication.  Add the NTLM user associated with the API gateway entry to Dynamics as a user.            
-			{
-				serviceClientCredentials = new BasicAuthenticationCredentials()
-				{
-					UserName = ssgUsername,
-					Password = ssgPassword
-				};
-			}
-			else
-			{
-				throw new Exception("No configured connection to Dynamics.");
-			}
-			return new Tuple<int, HttpResponseMessage>(100, null);
 		}
 	}
 }
