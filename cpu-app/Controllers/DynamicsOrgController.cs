@@ -119,8 +119,18 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				HttpStatusCode _statusCode;
 				try
 				{
+					// make options for the json serializer
+					System.Text.Json.JsonSerializerOptions options = new System.Text.Json.JsonSerializerOptions();
+					options.IgnoreNullValues = true;
+					// turn the model into a string
+					string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
+					// replace the odata to @odata. because the class doesn't serialize with special characters like this
+					// several cases: odatatype=>"@odata.type" odataetag=>"@odata.etag" etc
+					modelString = modelString.Replace("odata", "@odata.");
+					// Console.Out.WriteLine(modelString);
 					// serialize the model and put it onto the http request
-					_httpRequest.Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(model), System.Text.Encoding.UTF8, "application/json");
+					_httpRequest.Content = new StringContent(modelString, System.Text.Encoding.UTF8, "application/json");
+
 					// send the request
 					_httpResponse2 = await client.SendAsync(_httpRequest);
 					_statusCode = _httpResponse2.StatusCode;
@@ -132,9 +142,21 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				}
 
 				// clean up the response and save the content as a string
-				var _responseString = _httpResponse2.ToString();
-				var _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
-				return Ok();
+				string _responseString = _httpResponse2.ToString();
+				// wait for the http to come back from dynamics
+				string _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
+				var dynamicsResponse = System.Text.Json.JsonSerializer.Deserialize<DynamicsResponse>(_responseContent2);
+				Console.Out.WriteLine(_responseContent2);
+				if (dynamicsResponse.IsSuccess)
+				{
+					// Success. Return 
+					return Ok(dynamicsResponse);
+				}
+				else
+				{
+					// bad gateway status code. Dynamics didn't like it.
+					return StatusCode(502, dynamicsResponse);
+				}
 			}
 		}
 
@@ -142,7 +164,6 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		{
 			public string odatacontext { get; set; }
 			public bool IsSuccess { get; set; }
-			public bool IsCompletedSuccessfully { get; set; }
 			public string Result { get; set; }
 		}
 	}
