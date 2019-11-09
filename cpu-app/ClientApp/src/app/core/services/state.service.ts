@@ -16,6 +16,8 @@ export class StateService {
   public organizationName: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   // primary lookup data is the organization id.
   public organizationId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  // must post back with a BCeID
+  public bceid: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   // global state of the login
   public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -26,8 +28,10 @@ export class StateService {
   ) { }
 
   login() {
+    //TODO: set BCeID from siteminder
+    this.bceid.next('9e9b5111-51c9-e911-b80f-00505683fbf4');
     // on login collect the information from the organization id
-    this.mainService.getBlob().subscribe((m: iDynamicsBlob) => {
+    this.mainService.getBlob(this.bceid.getValue()).subscribe((m: iDynamicsBlob) => {
       // collect the blob into a useful object
       const mainData = new Transmogrifier(m);
       // save the useful blob in a behaviourSubject

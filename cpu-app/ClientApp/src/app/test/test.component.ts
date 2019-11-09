@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
 import { MainService } from '../core/services/main.service';
 import { Transmogrifier } from '../core/models/transmogrifier.class';
+import { ProfileService } from '../core/services/profile.service';
+import { iDynamicsPostOrg } from '../core/models/dynamics-post';
 
 @Component({
   selector: 'app-test',
@@ -13,18 +12,51 @@ import { Transmogrifier } from '../core/models/transmogrifier.class';
 export class TestComponent implements OnInit {
 
   // store the results
-  response: any;
+  trans: Transmogrifier;
+  orgChange: string;
 
-  // this should query the test api
-  apiUrl = 'api/justice/test';
-
+  bceid: string;
   constructor(
     private mainService: MainService,
+    private profileService: ProfileService,
   ) { }
   ngOnInit() {
-    // returns the transmogrified
-    this.mainService.getBlob().subscribe(s =>
-      this.response = new Transmogrifier(s)
+    this.bceid = "9e9b5111-51c9-e911-b80f-00505683fbf4";
+    this.orgChange = `{
+  "BCeID": "9e9b5111-51c9-e911-b80f-00505683fbf4",
+  "Organization": {
+    "accountid": "ee3db438-1ea8-e911-b80e-00505683fbf4",
+    "name": "Village of Burns Lake",
+    "telephone1": "250-692-7587",
+    "fax": "250-546-2922",
+    "emailaddress1": "village@burnslake.ca",
+    "address1_line1": "#15 3rd Ave",
+    "address1_line2": "P.O. Box 570",
+    "address1_city": "Burns Lake",
+    "address1_postalcode": "V0J 1E0",
+    "address1_stateorprovince": "British Columbia",
+    "address2_line1": "2: 15 3rd Ave",
+    "address2_line2": "2: P.O. Box 570",
+    "address2_city": "Burns Lake",
+    "address2_stateorprovince": "British Columbia",
+    "address2_postalcode": "V0J 1E1"
+  }
+}`;
+    this.refresh();
+  }
+
+  postOrg() {
+    this.profileService.updateOrg(JSON.parse(this.orgChange)).subscribe(o => {
+      console.log(o);
+      this.refresh();
+    },
+      err => alert(JSON.stringify(err))
     );
+  }
+  refresh() {
+    //set the current object
+    this.mainService.getBlob(this.bceid).subscribe(t => {
+      this.trans = new Transmogrifier(t);
+    });
   }
 }

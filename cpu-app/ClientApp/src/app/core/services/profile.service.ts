@@ -1,25 +1,23 @@
 import { Injectable } from '@angular/core';
+import { iDynamicsBlob } from '../models/dynamics-blob';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { iDynamicsBlob } from '../models/dynamics-blob';
 import { retry, catchError } from 'rxjs/operators';
-import { NotificationQueueService } from './notification-queue.service';
+import { iDynamicsPostOrg } from '../models/dynamics-post';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MainService {
-
+export class ProfileService {
   // this should query the test api
-  apiUrl = 'api/DynamicsBlob/';
+  apiUrl = 'api/DynamicsOrg';
 
   constructor(
-    private http: HttpClient,
-    private notificationQueueService: NotificationQueueService
+    private http: HttpClient
   ) { }
 
-  getBlob(bceid: string): Observable<iDynamicsBlob> {
-    return this.http.get<iDynamicsBlob>(this.apiUrl + bceid, { headers: this.headers }).pipe(
+  updateOrg(org: iDynamicsPostOrg): Observable<any> {
+    return this.http.post<any>(this.apiUrl, org, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
