@@ -1,5 +1,5 @@
 export interface iDynamicsOrganization {
-  "@odata.etag"?: string; //not needed for post back
+  fortunecookieetag?: string; //not needed for post back
   _ownerid_value?: string;
   _vsd_boardcontactid_value?: string;
   _vsd_executivecontactid_value?: string;
@@ -22,8 +22,8 @@ export interface iDynamicsOrganization {
   telephone1?: string;
 }
 export interface iDynamicsCrmContact {
-  "@odata.type": string;
-  "@odata.etag"?: string;
+  fortunecookietype: string;
+  fortunecookieetag?: string;
   _parentcustomerid_value?: string;
   address1_city?: string;
   address1_composite?: string;
@@ -43,8 +43,8 @@ export interface iDynamicsCrmContact {
   vsd_bceid?: string;
 }
 export interface iDynamicsCrmContract {
-  "@odata.type": string;
-  "@odata.etag": string;
+  fortunecookietype: string;
+  fortunecookieetag: string;
   _vsd_contactlookup1_value?: string;
   _vsd_contactlookup2_value?: string;
   _vsd_customer_value?: string;
@@ -54,7 +54,7 @@ export interface iDynamicsCrmContract {
   vsd_name?: string;
 }
 export interface iDynamicsMinistryUser {
-  "@odata.etag": string;
+  fortunecookieetag: string;
   address1_telephone1?: string;
   firstname?: string;
   internalemailaddress?: string;
@@ -63,8 +63,8 @@ export interface iDynamicsMinistryUser {
   systemuserid?: string;
 }
 export interface iDynamicsCrmProgram {
-  "@odata.type": string;
-  "@odata.etag": string;
+  fortunecookietype: string;
+  fortunecookieetag: string;
   _vsd_contactlookup_value?: string;
   _vsd_contractid_value?: string;
   _vsd_cpu_regiondistrict_value?: string;
@@ -87,8 +87,8 @@ export interface iDynamicsCrmProgram {
   vsd_provincestate?: string;
 }
 export interface iDynamicsCrmTask {
-  "@odata.type": string;
-  "@odata.etag": string;
+  fortunecookietype: string;
+  fortunecookieetag: string;
   _regardingobjectid_value?: string;
   _vsd_tasktypeid_value?: string;
   activityid?: string;
@@ -99,7 +99,7 @@ export interface iDynamicsCrmTask {
   subject?: string;
 }
 export interface iDynamicsBlob {
-  "@odata.context": string;
+  fortunecookiecontext: string;
   BoardContact?: iDynamicsCrmContact,
   Contracts?: iDynamicsCrmContract[];
   ExecutiveContact?: iDynamicsCrmContact,

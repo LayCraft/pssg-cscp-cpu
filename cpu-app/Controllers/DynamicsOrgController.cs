@@ -125,8 +125,8 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 					// turn the model into a string
 					string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
 					// replace the odata to @odata. because the class doesn't serialize with special characters like this
-					// several cases: odatatype=>"@odata.type" odataetag=>"@odata.etag" etc
-					modelString = modelString.Replace("odata", "@odata.");
+					// several cases: odatatype=>"@odata.type" odataetag=>"@odata.etag", "vsd_ExecutiveContactIdodatabind"=>"vsd_ExecutiveContactId@odata.bind" etc
+					modelString = modelString.Replace("fortunecookie", "@odata.");
 					// Console.Out.WriteLine(modelString);
 					// serialize the model and put it onto the http request
 					_httpRequest.Content = new StringContent(modelString, System.Text.Encoding.UTF8, "application/json");

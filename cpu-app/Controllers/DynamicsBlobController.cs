@@ -39,6 +39,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			{
 				// convert the object to json string
 				string applicationJson = JsonConvert.SerializeObject(model);
+				applicationJson.Replace("@odata.", "fortunecookie");
 				// set the endpoint action
 				string endpointAction = "vsd_GetCPUOrgContracts";
 				// get the response
