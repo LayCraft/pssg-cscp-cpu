@@ -4,9 +4,15 @@ import { Router } from '@angular/router';
 import { iContactInformation, ContactInformation } from '../../core/models/contact-information.class';
 import { StateService } from '../../core/services/state.service';
 import { iPerson } from '../../core/models/person.class';
+<<<<<<< HEAD
 import { ProfileService } from '../../core/services/profile.service';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { DynamicsPostOrg, iDynamicsPostOrg } from '../../core/models/dynamics-post';
+=======
+import { iDynamicsPostOrg } from '../../core/models/dynamics-post';
+import { ProfileService } from '../../core/services/profile.service';
+import { Transmogrifier } from '../../core/models/transmogrifier.class';
+>>>>>>> 5f9a6eab449bb2e61b698971c2fe300c6c0f1df2
 
 @Component({
   selector: 'app-profile',
