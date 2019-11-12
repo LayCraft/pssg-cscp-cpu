@@ -1,5 +1,5 @@
-interface iDynamicsOrganization {
-  "@odata.etag": string;
+export interface iDynamicsOrganization {
+  "@odata.etag"?: string; //not needed for post back
   _ownerid_value?: string;
   _vsd_boardcontactid_value?: string;
   _vsd_executivecontactid_value?: string;
@@ -21,8 +21,8 @@ interface iDynamicsOrganization {
   name?: string;
   telephone1?: string;
 }
-interface iDynamicsCrmContact {
-  "@odata.type"?: string;
+export interface iDynamicsCrmContact {
+  "@odata.type": string;
   "@odata.etag"?: string;
   _parentcustomerid_value?: string;
   address1_city?: string;
@@ -42,7 +42,7 @@ interface iDynamicsCrmContact {
   mobilephone?: string;
   vsd_bceid?: string;
 }
-interface iDynamicsCrmContract {
+export interface iDynamicsCrmContract {
   "@odata.type": string;
   "@odata.etag": string;
   _vsd_contactlookup1_value?: string;
@@ -53,7 +53,7 @@ interface iDynamicsCrmContract {
   vsd_contractid?: string;
   vsd_name?: string;
 }
-interface iDynamicsMinistryUser {
+export interface iDynamicsMinistryUser {
   "@odata.etag": string;
   address1_telephone1?: string;
   firstname?: string;
@@ -62,7 +62,7 @@ interface iDynamicsMinistryUser {
   ownerid?: string;
   systemuserid?: string;
 }
-interface iDynamicsCrmProgram {
+export interface iDynamicsCrmProgram {
   "@odata.type": string;
   "@odata.etag": string;
   _vsd_contactlookup_value?: string;
@@ -86,7 +86,7 @@ interface iDynamicsCrmProgram {
   vsd_programid?: string;
   vsd_provincestate?: string;
 }
-interface iDynamicsCrmTask {
+export interface iDynamicsCrmTask {
   "@odata.type": string;
   "@odata.etag": string;
   _regardingobjectid_value?: string;
