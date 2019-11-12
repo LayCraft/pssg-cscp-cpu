@@ -15,7 +15,7 @@ import { nameAssemble } from '../../core/constants/name-assemble';
 export class PersonnelComponent implements OnInit {
   // this is an organization level component
   reload = false;
-  organizationId = 'foobar';
+  organizationId: string;
   // used for the stepper component
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
@@ -43,6 +43,8 @@ export class PersonnelComponent implements OnInit {
     this.stepperService.reset();
     // this is just a constructor
     this.stateService.main.subscribe(s => {
+      //save the organization ID for posting back
+      this.organizationId = s.organizationMeta.organizationId;
       s.persons.forEach(person => {
         this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
       });

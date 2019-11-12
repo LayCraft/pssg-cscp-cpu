@@ -1,7 +1,11 @@
 <main class="container">
   <div class="row">
     <div class="col">
-      <pre>{{response|json}}</pre>
+      <pre>{{trans|json}}</pre>
+    </div>
+    <div class="col">
+      <textarea class="form-control" [(ngModel)]="orgChange"></textarea>
+      <button class="form-control" (click)="postOrg()">Update</button>
     </div>
   </div>
 </main>
