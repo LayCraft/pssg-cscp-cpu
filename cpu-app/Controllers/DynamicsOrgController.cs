@@ -71,7 +71,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 						new KeyValuePair<string, string>("scope", "openid"),
 						new KeyValuePair<string, string>("response_mode", "form_post"),
 						new KeyValuePair<string, string>("grant_type", "password")
-						};
+					};
 				// URL encode the content
 				var content = new FormUrlEncodedContent(pairs);
 
@@ -127,7 +127,6 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 					// replace the odata to @odata. because the class doesn't serialize with special characters like this
 					// several cases: odatatype=>"@odata.type" odataetag=>"@odata.etag", "vsd_ExecutiveContactIdodatabind"=>"vsd_ExecutiveContactId@odata.bind" etc
 					modelString = modelString.Replace("fortunecookie", "@odata.");
-					// Console.Out.WriteLine(modelString);
 					// serialize the model and put it onto the http request
 					_httpRequest.Content = new StringContent(modelString, System.Text.Encoding.UTF8, "application/json");
 
@@ -145,8 +144,6 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				string _responseString = _httpResponse2.ToString();
 				// wait for the http to come back from dynamics
 				string _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
-				Console.Out.WriteLine("Umbrella");
-				Console.Out.WriteLine(_responseContent2);
 				var dynamicsResponse = System.Text.Json.JsonSerializer.Deserialize<DynamicsResponse>(_responseContent2);
 				// Console.Out.WriteLine(_responseContent2);
 				if (dynamicsResponse.IsSuccess)
