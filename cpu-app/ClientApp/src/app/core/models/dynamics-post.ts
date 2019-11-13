@@ -11,7 +11,7 @@ export function DynamicsPostOrg(bceid: string, organizationId: string, f: iConta
   // map contact info to the dynamics format
   //TODO: these must be accepted but are not through the API. Commenting them out until they are implemented.
   if (f.boardContact && f.boardContact.personId) org["vsd_BoardContactIdfortunecookiebind"] = f.boardContact.personId;
-  if (f.executiveContact && f.boardContact.personId) org["vsd_ExecutiveContactIdfortunecookiebind"] = f.executiveContact.personId;
+  if (f.executiveContact && f.executiveContact.personId) org["vsd_ExecutiveContactIdfortunecookiebind"] = f.executiveContact.personId;
   if (f.emailAddress) org["emailaddress1"] = f.emailAddress;
   if (f.faxNumber) org["fax"] = f.faxNumber;
   if (f.phoneNumber) org["telephone1"] = f.phoneNumber;

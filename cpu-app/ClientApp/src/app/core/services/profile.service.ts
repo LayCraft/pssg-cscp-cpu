@@ -17,6 +17,7 @@ export class ProfileService {
   ) { }
 
   updateOrg(org: iDynamicsPostOrg): Observable<any> {
+    console.log(org);
     return this.http.post<any>(this.apiUrl, org, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)

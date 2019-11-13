@@ -16,8 +16,8 @@ import { DynamicsPostOrg, iDynamicsPostOrg } from '../../core/models/dynamics-po
 export class ProfileComponent implements OnInit {
 
   contactInformationForm: FormGroup;
-  executiveContact: iPerson;
-  boardContact: iPerson;
+  executiveContact: iPerson = null;
+  boardContact: iPerson = null;
 
   constructor(
     private router: Router,
