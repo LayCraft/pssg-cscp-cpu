@@ -10,24 +10,23 @@ export function DynamicsPostOrg(bceid: string, organizationId: string, f: iConta
   const org: iDynamicsOrganization = {};
   // map contact info to the dynamics format
   //TODO: these must be accepted but are not through the API. Commenting them out until they are implemented.
-  // if (f.boardContact) org["_vsd_boardcontactid_value"] = f.boardContact.personId;
-  // if (f.executiveContact) org["_vsd_executivecontactid_value"] = f.executiveContact.personId;
+  if (f.boardContact && f.boardContact.personId) org["vsd_BoardContactIdfortunecookiebind"] = f.boardContact.personId;
+  if (f.executiveContact && f.boardContact.personId) org["vsd_ExecutiveContactIdfortunecookiebind"] = f.executiveContact.personId;
   if (f.emailAddress) org["emailaddress1"] = f.emailAddress;
   if (f.faxNumber) org["fax"] = f.faxNumber;
-  if (f.mailingAddress) org["address2_city"] = f.mailingAddress.city;
-  if (f.mainAddress) org["address1_city"] = f.mainAddress.city;
-  if (f.mainAddress) org["address1_line1"] = f.mainAddress.line1;
-  if (f.mainAddress) org["address1_line2"] = f.mainAddress.line2;
-  if (f.mainAddress) org["address1_postalcode"] = f.mainAddress.postalCode;
-  if (f.mainAddress) org["address1_stateorprovince"] = f.mainAddress.province;
   if (f.phoneNumber) org["telephone1"] = f.phoneNumber;
-  if (f.mailingAddress) org["address2_line1"] = f.mailingAddress.line1;
-  if (f.mailingAddress) org["address2_line2"] = f.mailingAddress.line2;
-  if (f.mailingAddress) org["address2_postalcode"] = f.mailingAddress.postalCode;
-  if (f.mailingAddress) org["address2_stateorprovince"] = f.mailingAddress.province;
+  if (f.mailingAddress && f.mailingAddress.city) org["address2_city"] = f.mailingAddress.city;
+  if (f.mailingAddress && f.mailingAddress.line1) org["address2_line1"] = f.mailingAddress.line1;
+  if (f.mailingAddress && f.mailingAddress.line2) org["address2_line2"] = f.mailingAddress.line2;
+  if (f.mailingAddress && f.mailingAddress.postalCode) org["address2_postalcode"] = f.mailingAddress.postalCode;
+  if (f.mailingAddress && f.mailingAddress.province) org["address2_stateorprovince"] = f.mailingAddress.province;
+  if (f.mainAddress && f.mainAddress.city) org["address1_city"] = f.mainAddress.city;
+  if (f.mainAddress && f.mainAddress.line1) org["address1_line1"] = f.mainAddress.line1;
+  if (f.mainAddress && f.mainAddress.line2) org["address1_line2"] = f.mainAddress.line2;
+  if (f.mainAddress && f.mainAddress.postalCode) org["address1_postalcode"] = f.mainAddress.postalCode;
+  if (f.mainAddress && f.mainAddress.province) org["address1_stateorprovince"] = f.mainAddress.province;
   // add the account id
   org["accountid"] = organizationId;
-
   return {
     BCeID: bceid,
     Organization: org

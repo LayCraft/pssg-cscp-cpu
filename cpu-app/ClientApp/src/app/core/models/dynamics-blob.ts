@@ -1,5 +1,4 @@
 export interface iDynamicsOrganization {
-  fortunecookieetag?: string; //not needed for post back
   _ownerid_value?: string;
   _vsd_boardcontactid_value?: string;
   _vsd_executivecontactid_value?: string;
@@ -20,10 +19,10 @@ export interface iDynamicsOrganization {
   fax?: string;
   name?: string;
   telephone1?: string;
+  vsd_BoardContactIdfortunecookiebind?: string;
+  vsd_ExecutiveContactIdfortunecookiebind?: string;
 }
 export interface iDynamicsCrmContact {
-  fortunecookietype: string;
-  fortunecookieetag?: string;
   _parentcustomerid_value?: string;
   address1_city?: string;
   address1_composite?: string;
@@ -35,6 +34,8 @@ export interface iDynamicsCrmContact {
   emailaddress1?: string;
   fax?: string;
   firstname?: string;
+  fortunecookieetag?: string;
+  fortunecookietype: string;
   fullname?: string;
   jobtitle?: string;
   lastname?: string;
@@ -43,33 +44,33 @@ export interface iDynamicsCrmContact {
   vsd_bceid?: string;
 }
 export interface iDynamicsCrmContract {
-  fortunecookietype: string;
-  fortunecookieetag: string;
   _vsd_contactlookup1_value?: string;
   _vsd_contactlookup2_value?: string;
   _vsd_customer_value?: string;
-  statuscode?: number;
+  fortunecookieetag: string;
+  fortunecookietype: string;
   statecode?: number;
+  statuscode?: number;
   vsd_contractid?: string;
   vsd_name?: string;
 }
 export interface iDynamicsMinistryUser {
-  fortunecookieetag: string;
   address1_telephone1?: string;
   firstname?: string;
+  fortunecookieetag: string;
   internalemailaddress?: string;
   lastname?: string;
   ownerid?: string;
   systemuserid?: string;
 }
 export interface iDynamicsCrmProgram {
-  fortunecookietype: string;
-  fortunecookieetag: string;
   _vsd_contactlookup_value?: string;
   _vsd_contractid_value?: string;
   _vsd_cpu_regiondistrict_value?: string;
   _vsd_cpu_regiondistrictlookup2_value?: string;
   _vsd_serviceproviderid_value?: string;
+  fortunecookieetag: string;
+  fortunecookietype: string;
   vsd_addressline1?: string;
   vsd_addressline2?: string;
   vsd_city?: string;
@@ -87,19 +88,18 @@ export interface iDynamicsCrmProgram {
   vsd_provincestate?: string;
 }
 export interface iDynamicsCrmTask {
-  fortunecookietype: string;
-  fortunecookieetag: string;
   _regardingobjectid_value?: string;
   _vsd_tasktypeid_value?: string;
   activityid?: string;
   description?: string;
+  fortunecookieetag: string;
+  fortunecookietype: string;
   scheduledend?: string;
   statecode?: number;
   statuscode?: number;
   subject?: string;
 }
 export interface iDynamicsBlob {
-  fortunecookiecontext: string;
   BoardContact?: iDynamicsCrmContact,
   Contracts?: iDynamicsCrmContract[];
   ExecutiveContact?: iDynamicsCrmContact,
@@ -111,4 +111,5 @@ export interface iDynamicsBlob {
   Staff?: iDynamicsCrmContact[];
   Tasks?: iDynamicsCrmTask[]
   bceid: string;
+  fortunecookiecontext: string;
 };

@@ -39,14 +39,14 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			{
 				// convert the object to json string
 				string applicationJson = JsonConvert.SerializeObject(model);
-				applicationJson.Replace("@odata.", "fortunecookie");
 				// set the endpoint action
 				string endpointAction = "vsd_GetCPUOrgContracts";
 				// get the response
 				Tuple<int, string, HttpResponseMessage> tuple = await GetDynamicsHttpClient(_configuration, applicationJson, endpointAction);
 
+				string response = tuple.Item2.Replace("@odata.", "fortunecookie");
 				// convert response string into a json object and return it
-				return new JsonResult(JsonConvert.DeserializeObject(tuple.Item2));
+				return new JsonResult(JsonConvert.DeserializeObject(response));
 			}
 			finally { }
 		}
