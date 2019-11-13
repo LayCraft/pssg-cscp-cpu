@@ -17,7 +17,11 @@ namespace Gov.Cscp.VictimServices.Public.Models
 			set { _vsd_ExecutiveContactIdfortunecookiebind = value; }
 		}
 		private string _vsd_BoardContactIdfortunecookiebind;
-		public string vsd_BoardContactIdfortunecookiebind { get; set; }
+		public string vsd_BoardContactIdfortunecookiebind
+		{
+			get { return "/contacts(" + _vsd_BoardContactIdfortunecookiebind + ")"; }
+			set { _vsd_BoardContactIdfortunecookiebind = value; }
+		}
 		public string accountid { get; set; }
 		public string address1_city { get; set; }
 		public string address1_composite { get; set; }
