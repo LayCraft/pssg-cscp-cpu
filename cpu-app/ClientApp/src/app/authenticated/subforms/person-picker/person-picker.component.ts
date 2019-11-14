@@ -28,7 +28,7 @@ export class PersonPickerComponent implements OnInit {
   }
 
   onChange() {
-    console.log(this.person);
+    // console.log(this.person);
     this.personChange.emit(this.person);
   }
 }
