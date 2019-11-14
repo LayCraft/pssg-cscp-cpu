@@ -6,7 +6,7 @@ import { StateService } from '../../core/services/state.service';
 import { iPerson } from '../../core/models/person.class';
 import { ProfileService } from '../../core/services/profile.service';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
-import { DynamicsPostOrg, iDynamicsPostOrg } from '../../core/models/dynamics-post';
+import { iDynamicsPostOrg, DynamicsPostOrganization } from '../../core/models/dynamics-post';
 
 @Component({
   selector: 'app-profile',
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
     formValue.executiveContact = this.executiveContact;
     formValue.boardContact = this.boardContact;
     // cast the data into something useful for dynamics
-    const dynamicsPost: iDynamicsPostOrg = DynamicsPostOrg(this.stateService.bceid.getValue(), this.stateService.organizationId.getValue(), formValue);
+    const dynamicsPost: iDynamicsPostOrg = DynamicsPostOrganization(this.stateService.bceid.getValue(), this.stateService.organizationId.getValue(), formValue);
 
 
     // post to the organization

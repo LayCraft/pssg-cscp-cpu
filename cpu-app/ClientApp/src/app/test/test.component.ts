@@ -41,7 +41,30 @@ export class TestComponent implements OnInit {
     "emailaddress1": "village@burnslake.ca",
     "fax": "250-546-2922",
     "telephone1": "250-692-7587"
-  }
+  },
+  "StaffCollection": [
+    {
+    "fortunecookietype":"Microsoft.Dynamics.CRM.contact",
+    "contactid": "4a9824c3-286c-e911-b80c-00505683fbf4",
+    "firstname": "Adam",
+    "lastname": "Rodger",
+    "address1_city": "Alberta Beach",
+    "address1_line1": "34564rwedsfgdsf st",
+    "address1_stateorprovince": "Arizona",
+    "address1_postalcode": "234532",
+    "emailaddress1": "a.roger@gmail.com"
+    },
+    {
+    "fortunecookietype":"Microsoft.Dynamics.CRM.contact",
+    "firstname": "Adam New1",
+    "lastname": "Rodger New1",
+    "address1_city": "Vancouver",
+    "address1_line1": "232 Smith St",
+    "address1_stateorprovince": "British Columbia",
+    "address1_postalcode": "V5R 6H7",
+    "emailaddress1": "AdamNew1@gmail.com"
+    }
+  ]
 }`;
     this.refresh();
   }

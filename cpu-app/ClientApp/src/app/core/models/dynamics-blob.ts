@@ -4,13 +4,11 @@ export interface iDynamicsOrganization {
   _vsd_executivecontactid_value?: string;
   accountid?: string;
   address1_city?: string;
-  address1_composite?: string;
   address1_line1?: string;
   address1_line2?: string;
   address1_postalcode?: string;
   address1_stateorprovince?: string;
   address2_city?: string;
-  address2_composite?: string;
   address2_line1?: string;
   address2_line2?: string;
   address2_postalcode?: string;
@@ -25,7 +23,6 @@ export interface iDynamicsOrganization {
 export interface iDynamicsCrmContact {
   _parentcustomerid_value?: string;
   address1_city?: string;
-  address1_composite?: string;
   address1_line1?: string;
   address1_line2?: string;
   address1_postalcode?: string;
@@ -35,8 +32,7 @@ export interface iDynamicsCrmContact {
   fax?: string;
   firstname?: string;
   fortunecookieetag?: string;
-  fortunecookietype: string;
-  fullname?: string;
+  fortunecookietype?: string;
   jobtitle?: string;
   lastname?: string;
   middlename?: string;
@@ -47,8 +43,8 @@ export interface iDynamicsCrmContract {
   _vsd_contactlookup1_value?: string;
   _vsd_contactlookup2_value?: string;
   _vsd_customer_value?: string;
-  fortunecookieetag: string;
-  fortunecookietype: string;
+  fortunecookieetag?: string;
+  fortunecookietype?: string;
   statecode?: number;
   statuscode?: number;
   vsd_contractid?: string;
@@ -57,7 +53,7 @@ export interface iDynamicsCrmContract {
 export interface iDynamicsMinistryUser {
   address1_telephone1?: string;
   firstname?: string;
-  fortunecookieetag: string;
+  fortunecookieetag?: string;
   internalemailaddress?: string;
   lastname?: string;
   ownerid?: string;
@@ -69,8 +65,8 @@ export interface iDynamicsCrmProgram {
   _vsd_cpu_regiondistrict_value?: string;
   _vsd_cpu_regiondistrictlookup2_value?: string;
   _vsd_serviceproviderid_value?: string;
-  fortunecookieetag: string;
-  fortunecookietype: string;
+  fortunecookieetag?: string;
+  fortunecookietype?: string;
   vsd_addressline1?: string;
   vsd_addressline2?: string;
   vsd_city?: string;
@@ -110,6 +106,6 @@ export interface iDynamicsBlob {
   Result?: string;
   Staff?: iDynamicsCrmContact[];
   Tasks?: iDynamicsCrmTask[]
-  bceid: string;
-  fortunecookiecontext: string;
+  bceid?: string; // represents the organization level BCeID.
+  fortunecookiecontext?: string;
 };

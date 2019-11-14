@@ -1,12 +1,16 @@
-import { iDynamicsOrganization } from "./dynamics-blob";
+import { iDynamicsOrganization, iDynamicsCrmContact } from "./dynamics-blob";
 import { iContactInformation } from "./contact-information.class";
-
+import { iPerson } from "./person.class";
 export interface iDynamicsPostOrg {
   "BCeID": string;
   "Organization": iDynamicsOrganization;
 }
+export interface iDynamicsPostUsers {
+  "BCeID": string;
+  "Staff": iDynamicsCrmContact[];
+}
 // this is a mapper function for posting back to dynamics
-export function DynamicsPostOrg(bceid: string, organizationId: string, f: iContactInformation): iDynamicsPostOrg {
+export function DynamicsPostOrganization(bceid: string, organizationId: string, f: iContactInformation): iDynamicsPostOrg {
   const org: iDynamicsOrganization = {};
   // map contact info to the dynamics format
   //TODO: these must be accepted but are not through the API. Commenting them out until they are implemented.
@@ -31,4 +35,32 @@ export function DynamicsPostOrg(bceid: string, organizationId: string, f: iConta
     BCeID: bceid,
     Organization: org
   } as iDynamicsPostOrg;
+}
+export function DynamicsPostUsers(bceid: string, organizationId: string, people: iPerson[]): iDynamicsPostUsers {
+  const ppl: iDynamicsCrmContact[] = [];
+  for (let person of people) {
+    const p: iDynamicsCrmContact = {};
+    // add all properties that are non null
+    if (person.address && person.address.city) p["address1_city"] = person.address.city;
+    if (person.address && person.address.line1) p["address1_line1"] = person.address.line1;
+    if (person.address && person.address.line2) p["address1_line2"] = person.address.line2;
+    if (person.address && person.address.line2) p["address1_postalcode"] = person.address.line2;
+    if (person.address && person.address.province) p["address1_stateorprovince"] = person.address.province;
+    if (person.personId) p["contactid"] = person.personId;
+    if (person.email) p["emailaddress1"] = person.email;
+    if (person.fax) p["fax"] = person.fax;
+    if (person.firstName) p["firstname"] = person.firstName;
+    if (person.title) p["jobtitle"] = person.title;
+    if (person.lastName) p["lastname"] = person.lastName;
+    if (person.middleName) p["middlename"] = person.middleName;
+    if (person.phone) p["mobilephone"] = person.phone;
+    if (bceid) p["vsd_bceid"] = bceid;
+    // add person to the collection
+    ppl.push(p);
+  }
+  return {
+    BCeID: bceid,
+    Staff: ppl
+  } as iDynamicsPostUsers;
+
 }
