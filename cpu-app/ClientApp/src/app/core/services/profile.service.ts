@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { iDynamicsBlob } from '../models/dynamics-blob';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
@@ -17,7 +16,6 @@ export class ProfileService {
   ) { }
 
   updateOrg(org: iDynamicsPostOrg): Observable<any> {
-    console.log(org);
     return this.http.post<any>(this.apiUrl, org, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)

@@ -25,5 +25,6 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string mobilephone { get; set; }
 		public string fortunecookietype = "Microsoft.Dynamics.CRM.contact";
 		public string vsd_bceid { get; set; }
+		public int status { get; set; }
 	}
 }
