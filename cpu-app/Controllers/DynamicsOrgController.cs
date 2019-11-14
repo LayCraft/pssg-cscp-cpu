@@ -145,8 +145,6 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				string _responseString = _httpResponse2.ToString();
 				// wait for the http to come back from dynamics
 				string _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
-				Console.Out.WriteLine("Umbrella");
-				Console.Out.WriteLine(_responseContent2);
 				var dynamicsResponse = System.Text.Json.JsonSerializer.Deserialize<DynamicsResponse>(_responseContent2);
 				// Console.Out.WriteLine(_responseContent2);
 				if (dynamicsResponse.IsSuccess)
