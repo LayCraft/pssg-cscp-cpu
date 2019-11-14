@@ -28,7 +28,7 @@ export class PersonPickerComponent implements OnInit {
   }
 
   onChange() {
-    // emit the first person that the selected ID matches
+    console.log(this.person);
     this.personChange.emit(this.person);
   }
 }

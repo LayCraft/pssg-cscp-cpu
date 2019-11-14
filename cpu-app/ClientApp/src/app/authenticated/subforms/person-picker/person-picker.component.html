@@ -1,7 +1,8 @@
 <div class="form-group">
   <label for="personPicker">{{title}}</label>
-  <select [(ngModel)]="person" class="form-control" name="personPicker" id="personPicker">
-    <option *ngFor="let person of persons" [ngValue]="person">{{nameAssemble(person.firstName,person.middleName,person.lastName)}}</option>
+  <select [(ngModel)]="person" (change)="onChange()" class="form-control" name="personPicker" id="personPicker">
+    <option disabled>{{nameAssemble(person.firstName,person.middleName,person.lastName)}}</option>
+    <option *ngFor="let p of persons" [ngValue]="p">{{nameAssemble(p.firstName,p.middleName,p.lastName)}}</option>
   </select>
 </div>
 <div *ngIf="showCard===true && person" class="card">

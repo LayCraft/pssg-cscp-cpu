@@ -34,6 +34,7 @@ export class ProfileComponent implements OnInit {
       // console.log(m.organizationMeta.contactInformation);
       this.contactInformationForm.controls['contactInformation'].setValue(m.organizationMeta.contactInformation);
       this.executiveContact = m.organizationMeta.contactInformation.executiveContact;
+      this.boardContact = m.organizationMeta.contactInformation.boardContact;
     });
   }
   hasCriticalParts(): boolean {
@@ -69,5 +70,9 @@ export class ProfileComponent implements OnInit {
   onExecutiveContactChange(event: iPerson) {
     // cast the personish object to a person
     this.executiveContact = event;
+  }
+  onBoardContactChange(event: iPerson) {
+    // cast the personish object to a person
+    this.boardContact = event;
   }
 }
