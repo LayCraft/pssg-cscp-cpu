@@ -13,13 +13,33 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		private string _vsd_ExecutiveContactIdfortunecookiebind;
 		public string vsd_ExecutiveContactIdfortunecookiebind
 		{
-			get { return "/contacts(" + _vsd_ExecutiveContactIdfortunecookiebind + ")"; }
+			get
+			{
+				if (_vsd_ExecutiveContactIdfortunecookiebind != null)
+				{
+					return "/contacts(" + _vsd_ExecutiveContactIdfortunecookiebind + ")";
+				}
+				else
+				{
+					return null;
+				}
+			}
 			set { _vsd_ExecutiveContactIdfortunecookiebind = value; }
 		}
 		private string _vsd_BoardContactIdfortunecookiebind;
 		public string vsd_BoardContactIdfortunecookiebind
 		{
-			get { return "/contacts(" + _vsd_BoardContactIdfortunecookiebind + ")"; }
+			get
+			{
+				if (_vsd_BoardContactIdfortunecookiebind != null)
+				{
+					return "/contacts(" + _vsd_BoardContactIdfortunecookiebind + ")";
+				}
+				else
+				{
+					return null;
+				}
+			}
 			set { _vsd_BoardContactIdfortunecookiebind = value; }
 		}
 		public string accountid { get; set; }
