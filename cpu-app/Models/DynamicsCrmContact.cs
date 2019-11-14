@@ -25,6 +25,25 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string mobilephone { get; set; }
 		public string fortunecookietype = "Microsoft.Dynamics.CRM.contact";
 		public string vsd_bceid { get; set; }
-		public int status { get; set; }
+		// optional status value. 1 is soft delete and null shouldn't be included.
+		private int? _status;
+		public int? status
+		{
+			get
+			{
+				if (_status.HasValue)
+				{
+					return _status.Value;
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				_status = value;
+			}
+		}
 	}
 }
