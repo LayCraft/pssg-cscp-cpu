@@ -9,7 +9,7 @@ export interface iPerson {
   firstName: string;
   fundedFromVscp?: number;
   hoursWorkedPerWeek?: number;
-  isActive?: boolean;
+  deactivated?: boolean; // if true this deactivates
   lastName: string;
   middleName?: string;
   personId: string;
@@ -28,7 +28,7 @@ export class Person implements iPerson {
   firstName: string;
   fundedFromVscp?: number;
   hoursWorkedPerWeek?: number;
-  isActive?: boolean;
+  deactivated?: boolean;
   lastName: string;
   middleName?: string;
   personId: string;
@@ -46,7 +46,7 @@ export class Person implements iPerson {
       this.firstName = person.firstName || null;
       this.fundedFromVscp = person.fundedFromVscp || null;
       this.hoursWorkedPerWeek = person.hoursWorkedPerWeek || null;
-      this.isActive = person.isActive || null;
+      this.deactivated = person.deactivated || null;
       this.lastName = person.lastName || null;
       this.middleName = person.middleName || null;
       this.personId = person.personId || null;
