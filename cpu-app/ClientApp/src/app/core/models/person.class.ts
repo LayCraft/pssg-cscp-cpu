@@ -5,10 +5,10 @@ export interface iPerson {
   // baseHourlyWage?: number;
   // benefits?: number;
   // hoursWorkedPerWeek?: number;
+  // fundedFromVscp?: number;
   email: string;
   fax?: string;
   firstName: string;
-  fundedFromVscp?: number;
   activeUser: boolean;
   deactivated?: boolean; // if true this deactivates
   lastName: string;
@@ -27,7 +27,7 @@ export class Person implements iPerson {
   email: string;
   fax?: string;
   firstName: string;
-  fundedFromVscp?: number;
+  // fundedFromVscp?: number;
   hoursWorkedPerWeek?: number;
   deactivated?: boolean;
   lastName: string;
@@ -45,11 +45,11 @@ export class Person implements iPerson {
       // this.benefits = person.benefits || null;
       // this.hoursWorkedPerWeek = person.hoursWorkedPerWeek || null;
       // this.typeOfEmployee = person.typeOfEmployee || null; // frontline, regular,
+      // this.fundedFromVscp = person.fundedFromVscp || null;
       this.deactivated = person.deactivated || null;
       this.email = person.email || null;
       this.fax = person.fax || null;
       this.firstName = person.firstName || null;
-      this.fundedFromVscp = person.fundedFromVscp || null;
       this.lastName = person.lastName || null;
       this.middleName = person.middleName || null;
       this.personId = person.personId || null;
