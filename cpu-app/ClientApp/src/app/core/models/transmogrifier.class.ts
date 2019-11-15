@@ -318,7 +318,7 @@ export class Transmogrifier {
         phone: p.mobilephone || null,
         title: p.jobtitle || null,
         // if the state code is zero or null the user is active
-        deactivated: !p.statecode || p.statecode === 0 ? false : true || null,
+        deactivated: !p.statuscode || p.statuscode === 0 ? false : true || null,
       }
       personList.push(person);
     }

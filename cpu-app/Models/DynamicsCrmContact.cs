@@ -26,14 +26,14 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.contact"; } }
 		public string vsd_bceid { get; set; }
 		// optional status value. 1 is soft delete and null shouldn't be included.
-		private int? _status;
-		public int? status
+		private int? _statuscode;
+		public int? statuscode
 		{
 			get
 			{
-				if (_status.HasValue)
+				if (_statuscode.HasValue)
 				{
-					return _status.Value;
+					return _statuscode.Value;
 				}
 				else
 				{
@@ -42,7 +42,7 @@ namespace Gov.Cscp.VictimServices.Public.Models
 			}
 			set
 			{
-				_status = value;
+				_statuscode = value;
 			}
 		}
 	}

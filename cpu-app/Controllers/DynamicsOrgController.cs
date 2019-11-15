@@ -60,6 +60,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 
 				// string applicationGroupResource = _configuration["DYNAMICS_APP_GROUP_RESOURCE"]; // ADFS 2016 Application Group resource (URI)
 				// string applicationGroupClientId = _configuration["DYNAMICS_APP_GROUP_CLIENT_ID"]; // ADFS 2016 Application Group Client ID
+
 				// Construct the body of the request
 				var pairs = new List<KeyValuePair<string, string>>
 					{
@@ -124,6 +125,8 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 					options.IgnoreNullValues = true;
 					// turn the model into a string
 					string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
+					Console.Out.WriteLine("Grease");
+					Console.Out.WriteLine(modelString);
 					// replace the odata to @odata. because the class doesn't serialize with special characters like this
 					// several cases: odatatype=>"@odata.type" odataetag=>"@odata.etag", "vsd_ExecutiveContactIdodatabind"=>"vsd_ExecutiveContactId@odata.bind" etc
 					modelString = modelString.Replace("fortunecookie", "@odata.");

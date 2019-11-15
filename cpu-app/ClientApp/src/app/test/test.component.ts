@@ -27,23 +27,8 @@ export class TestComponent implements OnInit {
   "BCeID": "9e9b5111-51c9-e911-b80f-00505683fbf4",
   "StaffCollection": [
     {
-    "contactid": "4a9824c3-286c-e911-b80c-00505683fbf4",
-    "firstname": "Adam",
-    "lastname": "Rodger",
-    "address1_city": "Alberta Beach",
-    "address1_line1": "34564rwedsfgdsf st",
-    "address1_stateorprovince": "Arizona",
-    "address1_postalcode": "234532",
-    "emailaddress1": "a.roger@gmail.com"
-    },
-    {
-    "firstname": "Adam New1",
-    "lastname": "Rodger New1",
-    "address1_city": "Vancouver",
-    "address1_line1": "232 Smith St",
-    "address1_stateorprovince": "British Columbia",
-    "address1_postalcode": "V5R 6H7",
-    "emailaddress1": "AdamNew1@gmail.com"
+    "contactid": "foo",
+    "statuscode": 1
     }
   ]
 }`;
@@ -59,13 +44,12 @@ export class TestComponent implements OnInit {
     );
   }
   postUsers() {
-    // this.personService.updatePersons(JSON.parse(this.orgChange)).subscribe(o => {
-    //   console.log(o);
-    //   this.refresh();
-    // },
-    //   err => alert(JSON.stringify(err))
-    // );
-    alert("doop");
+    this.personService.setPersons(JSON.parse(this.orgChange)).subscribe(o => {
+      console.log(o);
+      this.refresh();
+    },
+      err => alert(JSON.stringify(err))
+    );
   }
 
   refresh() {

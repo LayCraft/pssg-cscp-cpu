@@ -38,7 +38,7 @@ export interface iDynamicsCrmContact {
   middlename?: string;
   mobilephone?: string;
   vsd_bceid?: string;
-  statecode?: number;
+  statuscode?: number;
 }
 export interface iDynamicsCrmContract {
   _vsd_contactlookup1_value?: string;
@@ -46,7 +46,6 @@ export interface iDynamicsCrmContract {
   _vsd_customer_value?: string;
   fortunecookieetag?: string;
   fortunecookietype?: string;
-  statecode?: number;
   statuscode?: number;
   vsd_contractid?: string;
   vsd_name?: string;
