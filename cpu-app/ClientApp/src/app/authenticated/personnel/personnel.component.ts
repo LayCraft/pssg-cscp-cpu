@@ -73,25 +73,30 @@ export class PersonnelComponent implements OnInit {
   }
   add() {
     const element: iPerson = {
-      typeOfEmployee: '',
+      // annualSalary: null,
+      // baseHourlyWage: null,
+      // benefits: null,
+      // hoursWorkedPerWeek: null,
       address: null,
-      annualSalary: null,
-      baseHourlyWage: null,
-      benefits: null,
       email: '',
       fax: '',
       firstName: '',
-      hoursWorkedPerWeek: null,
+      fundedFromVscp: null,
       lastName: '',
       middleName: '',
       personId: '',
       phone: '',
       title: '',
-      fundedFromVscp: null,
+      typeOfEmployee: '',
+      activeUser: false,
     };
     this.stepperService.addStepperElement(element, 'New Person', null, 'person');
   }
   remove(id: string = this.currentStepperElement.id) {
+    // set the stepper element to deactivated
+    this.stepperService.setStepperElementProperty(id, 'deactivated', true);
+    // change the stepper to look like a deletion
+    this.stepperService.setFormState(id, 'invalid');
     // remove the element
     this.stepperService.removeStepperElement(id);
   }

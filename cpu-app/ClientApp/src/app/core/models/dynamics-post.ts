@@ -54,7 +54,7 @@ export function DynamicsPostUsers(bceid: string, organizationId: string, people:
     if (person.lastName) p["lastname"] = person.lastName;
     if (person.middleName) p["middlename"] = person.middleName;
     if (person.phone) p["mobilephone"] = person.phone;
-    if (person.deactivated) p["statuscode"] = 1; // sending a 1 statuscode means soft delete the record
+    if (person.deactivated) p["statecode"] = 1; // sending a 1 statuscode means soft delete the record
     if (bceid) p["vsd_bceid"] = bceid;
     // add person to the collection
     ppl.push(p);

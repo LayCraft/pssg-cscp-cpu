@@ -317,8 +317,10 @@ export class Transmogrifier {
         personId: p.contactid || null,
         phone: p.mobilephone || null,
         title: p.jobtitle || null,
+        // if a user has a vsd_bceid included they are actthe active user
+        activeUser: p.vsd_bceid ? true : false,
         // if the state code is zero or null the user is active
-        deactivated: !p.statuscode || p.statuscode === 0 ? false : true || null,
+        deactivated: !p.statecode || p.statecode === 0 ? false : true || null,
       }
       personList.push(person);
     }
