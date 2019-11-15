@@ -58,14 +58,14 @@ export class PersonnelComponent implements OnInit {
   save(exit?: boolean) {
     // make a person array to submit
     const cleanup = this.stepperElements.map(s => s.object as iPerson);
-    this.personService.setPersons(this.organizationId, cleanup).subscribe(
-      () => {
-        // Go get the new people with whatever transformations happened.
-        this.constructDefaultstepperElements();
-        this.notificationQueueService.addNotification('Personnel Saved', 'success');
-      },
-      err => this.notificationQueueService.addNotification(err, 'danger')
-    );
+    // this.personService.setPersons(this.organizationId, cleanup).subscribe(
+    //   () => {
+    //     // Go get the new people with whatever transformations happened.
+    //     this.constructDefaultstepperElements();
+    //     this.notificationQueueService.addNotification('Personnel Saved', 'success');
+    //   },
+    //   err => this.notificationQueueService.addNotification(err, 'danger')
+    // );
     if (exit) {
       // they chose to exit
       this.router.navigate(['/authenticated/dashboard']);

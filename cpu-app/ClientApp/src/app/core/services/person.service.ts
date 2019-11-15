@@ -16,7 +16,7 @@ export class PersonService {
     private http: HttpClient
   ) { }
 
-  updatePersons(users: iDynamicsPostUsers): Observable<any> {
+  setPersons(users: iDynamicsPostUsers): Observable<any> {
     return this.http.post<any>(this.apiUrl, users, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)

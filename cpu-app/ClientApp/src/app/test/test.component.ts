@@ -59,12 +59,13 @@ export class TestComponent implements OnInit {
     );
   }
   postUsers() {
-    this.personService.updatePersons(JSON.parse(this.orgChange)).subscribe(o => {
-      console.log(o);
-      this.refresh();
-    },
-      err => alert(JSON.stringify(err))
-    );
+    // this.personService.updatePersons(JSON.parse(this.orgChange)).subscribe(o => {
+    //   console.log(o);
+    //   this.refresh();
+    // },
+    //   err => alert(JSON.stringify(err))
+    // );
+    alert("doop");
   }
 
   refresh() {

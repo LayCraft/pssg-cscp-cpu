@@ -49,9 +49,9 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				// post with the model and configuration included
 				// make a new http client
 				var client = new HttpClient();
-				// client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
-				// client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
-				// client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
+				client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
+				client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
+				client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
 				client.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
 				client.DefaultRequestHeaders.Add("return-client-request-id", "true");
 				client.DefaultRequestHeaders.Add("Accept", "application/json");
