@@ -1,11 +1,6 @@
 import { Address, iAddress } from "./address.class";
 export interface iPerson {
   address?: iAddress;
-  // annualSalary?: number;
-  // baseHourlyWage?: number;
-  // benefits?: number;
-  // hoursWorkedPerWeek?: number;
-  // fundedFromVscp?: number;
   email: string;
   fax?: string;
   firstName: string;
@@ -40,12 +35,6 @@ export class Person implements iPerson {
   constructor(person?: iPerson) {
     if (person) {
       this.address = new Address(person.address) || new Address();
-      // this.annualSalary = person.annualSalary || null;
-      // this.baseHourlyWage = person.baseHourlyWage || null;
-      // this.benefits = person.benefits || null;
-      // this.hoursWorkedPerWeek = person.hoursWorkedPerWeek || null;
-      // this.typeOfEmployee = person.typeOfEmployee || null; // frontline, regular,
-      // this.fundedFromVscp = person.fundedFromVscp || null;
       this.deactivated = person.deactivated || null;
       this.email = person.email || null;
       this.fax = person.fax || null;
