@@ -38,6 +38,7 @@ export interface iDynamicsCrmContact {
   middlename?: string;
   mobilephone?: string;
   vsd_bceid?: string;
+  state?: number;
 }
 export interface iDynamicsCrmContract {
   _vsd_contactlookup1_value?: string;

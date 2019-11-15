@@ -317,6 +317,7 @@ export class Transmogrifier {
         personId: p.contactid || null,
         phone: p.mobilephone || null,
         title: p.jobtitle || null,
+        isActive: p.state === 0 ? true : false || null,
       }
       personList.push(person);
     }
