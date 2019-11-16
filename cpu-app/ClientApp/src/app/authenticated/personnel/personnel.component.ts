@@ -6,6 +6,7 @@ import { PersonService } from '../../core/services/person.service';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { StateService } from '../../core/services/state.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
+import { DynamicsPostUsers } from '../../core/models/dynamics-post';
 
 @Component({
   selector: 'app-personnel',
@@ -57,15 +58,16 @@ export class PersonnelComponent implements OnInit {
   // }
   save(exit?: boolean) {
     // make a person array to submit
-    const cleanup = this.stepperElements.map(s => s.object as iPerson);
-    // this.personService.setPersons(this.organizationId, cleanup).subscribe(
-    //   () => {
-    //     // Go get the new people with whatever transformations happened.
-    //     this.constructDefaultstepperElements();
-    //     this.notificationQueueService.addNotification('Personnel Saved', 'success');
-    //   },
-    //   err => this.notificationQueueService.addNotification(err, 'danger')
-    // );
+    const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
+    const post = DynamicsPostUsers(this.stateService.bceid.getValue(), cleanup);
+    this.personService.setPersons(post).subscribe(
+      () => {
+        // Go get the new people with whatever transformations happened.
+        this.constructDefaultstepperElements();
+        this.notificationQueueService.addNotification('Personnel Saved', 'success');
+      },
+      err => this.notificationQueueService.addNotification(err, 'danger')
+    );
     if (exit) {
       // they chose to exit
       this.router.navigate(['/authenticated/dashboard']);

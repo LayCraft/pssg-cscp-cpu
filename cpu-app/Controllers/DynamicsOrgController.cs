@@ -149,7 +149,9 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				// wait for the http to come back from dynamics
 				string _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
 				var dynamicsResponse = System.Text.Json.JsonSerializer.Deserialize<DynamicsResponse>(_responseContent2);
-				// Console.Out.WriteLine(_responseContent2);
+				Console.Out.WriteLine("What does Dynamics say?");
+
+				Console.Out.WriteLine(_responseContent2);
 				if (dynamicsResponse.IsSuccess)
 				{
 					// Success. Return 

@@ -25,7 +25,7 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string mobilephone { get; set; }
 		public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.contact"; } }
 		public string vsd_bceid { get; set; }
-		// optional status value. 1 is soft delete and null shouldn't be included.
+		// statecode is an optional status value. 1 is soft delete and null shouldn't be included.
 		private int? _statecode;
 		public int? statecode
 		{

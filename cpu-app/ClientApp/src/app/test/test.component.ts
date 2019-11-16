@@ -24,14 +24,19 @@ export class TestComponent implements OnInit {
   ngOnInit() {
     this.bceid = "9e9b5111-51c9-e911-b80f-00505683fbf4";
     this.orgChange = `{
-  "BCeID": "9e9b5111-51c9-e911-b80f-00505683fbf4",
-  "StaffCollection": [
-    {
-    "contactid": "foo",
-    "statuscode": 1
-    }
-  ]
-}`;
+      "BCeID": "9e9b5111-51c9-e911-b80f-00505683fbf4",
+      "StaffCollection": [
+        {
+          "address1_city": "Vancouver",
+          "address1_line1": "232 Smith St",
+          "address1_stateorprovince": "British Columbia",
+          "contactid": "dcc1172b-87f6-e911-b811-00505683fbf4",
+          "emailaddress1": "AdamNew1@gmail.com",
+          "firstname": "Adam New1",
+          "lastname": "Rodger New1"
+        }
+      ]
+    }`;
     this.refresh();
   }
 

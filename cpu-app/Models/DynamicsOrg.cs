@@ -12,8 +12,8 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public DynamicsOrganization Organization { get; set; }
 		public DynamicsCrmContact[] StaffCollection { get; set; }
 		// Unimplemented
-		// public DynamicsCrmContract[] ContractCollection { get; set; }
-		// public DynamicsCrmProgram[] ProgramCollection { get; set; }
-		// public DynamicsCrmTask[] TaskCollection { get; set; }
+		// public DynamicsCrmContract[] Contracts { get; set; }
+		// public DynamicsCrmProgram[] Programs { get; set; }
+		// public DynamicsCrmTask[] Tasks { get; set; }
 	}
 }

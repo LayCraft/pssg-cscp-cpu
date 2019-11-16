@@ -7,7 +7,7 @@ export interface iDynamicsPostOrg {
 }
 export interface iDynamicsPostUsers {
   "BCeID": string;
-  "Staff": iDynamicsCrmContact[];
+  "StaffCollection": iDynamicsCrmContact[];
 }
 // this is a mapper function for posting back to dynamics
 export function DynamicsPostOrganization(bceid: string, organizationId: string, f: iContactInformation): iDynamicsPostOrg {
@@ -36,7 +36,7 @@ export function DynamicsPostOrganization(bceid: string, organizationId: string, 
     Organization: org
   } as iDynamicsPostOrg;
 }
-export function DynamicsPostUsers(bceid: string, organizationId: string, people: iPerson[]): iDynamicsPostUsers {
+export function DynamicsPostUsers(bceid: string, people: iPerson[]): iDynamicsPostUsers {
   const ppl: iDynamicsCrmContact[] = [];
   for (let person of people) {
     const p: iDynamicsCrmContact = {};
@@ -55,13 +55,12 @@ export function DynamicsPostUsers(bceid: string, organizationId: string, people:
     if (person.middleName) p["middlename"] = person.middleName;
     if (person.phone) p["mobilephone"] = person.phone;
     if (person.deactivated) p["statecode"] = 1; // sending a 1 statuscode means soft delete the record
-    if (bceid) p["vsd_bceid"] = bceid;
     // add person to the collection
     ppl.push(p);
   }
   return {
     BCeID: bceid,
-    Staff: ppl
+    StaffCollection: ppl
   } as iDynamicsPostUsers;
 
 }
