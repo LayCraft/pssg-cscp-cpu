@@ -113,7 +113,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				client.DefaultRequestHeaders.Add("Accept", "application/json");
 
 				// build the url for posting to this endpoint
-				string url = _configuration["DYNAMICS_APP_GROUP_RESOURCE"] + "vsd_SetCPUOrgContracts";
+				string url = _configuration["DYNAMICS_ODATA_URI"] + "vsd_SetCPUOrgContracts";
 				// construct the http request
 				HttpRequestMessage _httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
 				HttpResponseMessage _httpResponse2 = null;
