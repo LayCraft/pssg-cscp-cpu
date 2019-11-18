@@ -16,6 +16,9 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // be sure the list is fresh when the user comes here.
+    this.stateService.refresh();
+    // always display the current main collection
     this.stateService.main.subscribe(m => {
       this.trans = m;
     });

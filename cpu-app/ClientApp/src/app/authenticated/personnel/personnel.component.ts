@@ -38,13 +38,13 @@ export class PersonnelComponent implements OnInit {
     // when main changes refresh the data
     this.stateService.main.subscribe(m => {
       // set the default top and bottom list
-      this.constructDefaultstepperElements(m);
+      this.constructStepperElements(m);
     });
   }
   ngOnDestroy() {
     this.stepperService.reset();
   }
-  constructDefaultstepperElements(main?: Transmogrifier): void {
+  constructStepperElements(main?: Transmogrifier): void {
     if (!main) { main = this.stateService.main.getValue(); }
     // clear the stepper of existing elements
     this.stepperService.reset();
