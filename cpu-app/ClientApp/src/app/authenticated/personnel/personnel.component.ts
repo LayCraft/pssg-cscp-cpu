@@ -6,6 +6,7 @@ import { PersonService } from '../../core/services/person.service';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { StateService } from '../../core/services/state.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
+import { DynamicsPostUsers } from '../../core/models/dynamics-post';
 
 @Component({
   selector: 'app-personnel',
@@ -57,8 +58,9 @@ export class PersonnelComponent implements OnInit {
   // }
   save(exit?: boolean) {
     // make a person array to submit
-    const cleanup = this.stepperElements.map(s => s.object as iPerson);
-    this.personService.setPersons(this.organizationId, cleanup).subscribe(
+    const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
+    const post = DynamicsPostUsers(this.stateService.bceid.getValue(), cleanup);
+    this.personService.setPersons(post).subscribe(
       () => {
         // Go get the new people with whatever transformations happened.
         this.constructDefaultstepperElements();
@@ -73,25 +75,30 @@ export class PersonnelComponent implements OnInit {
   }
   add() {
     const element: iPerson = {
-      typeOfEmployee: '',
+      // annualSalary: null,
+      // baseHourlyWage: null,
+      // benefits: null,
+      // hoursWorkedPerWeek: null,
+      // fundedFromVscp: null,
       address: null,
-      annualSalary: null,
-      baseHourlyWage: null,
-      benefits: null,
       email: '',
       fax: '',
       firstName: '',
-      hoursWorkedPerWeek: null,
       lastName: '',
       middleName: '',
       personId: '',
       phone: '',
       title: '',
-      fundedFromVscp: null,
+      typeOfEmployee: '',
+      activeUser: false,
     };
     this.stepperService.addStepperElement(element, 'New Person', null, 'person');
   }
   remove(id: string = this.currentStepperElement.id) {
+    // set the stepper element to deactivated
+    this.stepperService.setStepperElementProperty(id, 'deactivated', true);
+    // change the stepper to look like a deletion
+    this.stepperService.setFormState(id, 'invalid');
     // remove the element
     this.stepperService.removeStepperElement(id);
   }

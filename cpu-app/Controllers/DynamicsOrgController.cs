@@ -49,9 +49,9 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				// post with the model and configuration included
 				// make a new http client
 				var client = new HttpClient();
-				// client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
-				// client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
-				// client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
+				client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
+				client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
+				client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
 				client.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
 				client.DefaultRequestHeaders.Add("return-client-request-id", "true");
 				client.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -60,6 +60,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 
 				// string applicationGroupResource = _configuration["DYNAMICS_APP_GROUP_RESOURCE"]; // ADFS 2016 Application Group resource (URI)
 				// string applicationGroupClientId = _configuration["DYNAMICS_APP_GROUP_CLIENT_ID"]; // ADFS 2016 Application Group Client ID
+
 				// Construct the body of the request
 				var pairs = new List<KeyValuePair<string, string>>
 					{
@@ -124,6 +125,8 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 					options.IgnoreNullValues = true;
 					// turn the model into a string
 					string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
+					Console.Out.WriteLine("Grease");
+					Console.Out.WriteLine(modelString);
 					// replace the odata to @odata. because the class doesn't serialize with special characters like this
 					// several cases: odatatype=>"@odata.type" odataetag=>"@odata.etag", "vsd_ExecutiveContactIdodatabind"=>"vsd_ExecutiveContactId@odata.bind" etc
 					modelString = modelString.Replace("fortunecookie", "@odata.");
@@ -146,7 +149,9 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				// wait for the http to come back from dynamics
 				string _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
 				var dynamicsResponse = System.Text.Json.JsonSerializer.Deserialize<DynamicsResponse>(_responseContent2);
-				// Console.Out.WriteLine(_responseContent2);
+				Console.Out.WriteLine("What does Dynamics say?");
+
+				Console.Out.WriteLine(_responseContent2);
 				if (dynamicsResponse.IsSuccess)
 				{
 					// Success. Return 

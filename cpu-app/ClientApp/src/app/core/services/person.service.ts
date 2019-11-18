@@ -1,67 +1,41 @@
 import { Injectable } from '@angular/core';
-import { of, Observable } from 'rxjs';
-import { iPerson, Person } from '../models/person.class';
-import { iAddress } from '../models/address.class';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
+import { iDynamicsPostOrg, iDynamicsPostUsers } from '../models/dynamics-post';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonService {
+  // this should query the test api
+  apiUrl = 'api/DynamicsOrg';
 
-  fakePeople: iPerson[] = [
-    {
-      firstName: 'Blaine',
-      middleName: 'Alan',
-      lastName: 'Megaman',
-      typeOfEmployee: 'regular',
-      title: 'Photographer',
-      email: 'foobar@baz.qux',
-      personId: 'alkfhaklafd',
-      phone: '1(250)891-5376 ext 3',
-      address: {
-        line1: 'foo',
-        city: 'bar',
-        country: 'Canada',
-        postalCode: 'V8V 3E9',
-        province: 'Alberta',
-      } as iAddress
-    },
-    {
-      firstName: 'Curtis',
-      middleName: 'Hathor',
-      lastName: 'Masters',
-      typeOfEmployee: 'regular',
-      title: 'Grunt Worker',
-      email: 'foobar@baz.qux',
-      personId: 'qweroprewqio',
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  setPersons(users: iDynamicsPostUsers): Observable<any> {
+    console.log(users);
+    return this.http.post<any>(this.apiUrl, users, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+  get headers(): HttpHeaders {
+    return new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
+  protected handleError(err): Observable<never> {
+    let errorMessage = '';
+    if (err.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      errorMessage = err.error.message;
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      errorMessage = `Backend returned code ${err.status}, body was: ${err.message}`;
     }
-  ];
-
-  getfakePersonFromMockList(personId: string): iPerson {
-    // remove everyone from the array besides the person we care about then return the person
-    return this.fakePeople.filter(p => p.personId)[0] || null;
-  }
-  insertfakePersonFromMockList(person: Person): iPerson {
-    // if there is nobody in hte list with matching ID add them
-    if (this.fakePeople.filter(p => person.personId === p.personId).length === 0) {
-      this.fakePeople.push(person);
-    }
-    return person;
-  }
-
-  constructor() { }
-  getPersons(organizationId: string): Observable<iPerson[]> {
-    return of(this.fakePeople);
-  }
-  setPersons(organizationId: string, persons: iPerson[]): Observable<iPerson[]> {
-    this.fakePeople = persons;
-    return of(this.fakePeople);
-  }
-
-  setPerson(organizationId: string, person: Person): Observable<iPerson> {
-    return of(this.insertfakePersonFromMockList(person));
-  }
-  getPerson(organizationId: string, personId: string): Observable<iPerson> {
-    return of(this.getfakePersonFromMockList(personId));
+    return throwError(errorMessage);
   }
 }

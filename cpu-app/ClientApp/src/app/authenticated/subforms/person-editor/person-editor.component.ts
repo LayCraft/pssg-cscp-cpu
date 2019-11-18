@@ -18,9 +18,11 @@ export class PersonEditorComponent implements OnInit {
   constructor() { }
   internalFormGroup: FormGroup;
 
-  get email() { return this.internalFormGroup.get('email') }
-  get phone() { return this.internalFormGroup.get('phone') }
-  get fax() { return this.internalFormGroup.get('fax') }
+  get email() { return this.internalFormGroup.get('email'); }
+  get phone() { return this.internalFormGroup.get('phone'); }
+  get fax() { return this.internalFormGroup.get('fax'); }
+  get firstName() { return this.internalFormGroup.get('firstName'); }
+  get lastName() { return this.internalFormGroup.get('lastName'); }
 
   ngOnInit() {
     this.buildForm();
@@ -32,21 +34,22 @@ export class PersonEditorComponent implements OnInit {
   }
   buildForm() {
     this.internalFormGroup = new FormGroup({
-      'typeOfEmployee': new FormControl(''),
+      // 'baseHourlyWage': new FormControl(''),
+      // 'annualSalary': new FormControl(''),
+      // 'hoursWorkedPerWeek': new FormControl(''),
+      // 'typeOfEmployee': new FormControl(''),
+      // 'benefits': new FormControl(''),
+      // 'fundedFromVscp': new FormControl(''),
       'address': new FormControl(''),
-      'annualSalary': new FormControl(''),
-      'baseHourlyWage': new FormControl(''),
-      'benefits': new FormControl(''),
       'email': new FormControl('', [Validators.required, Validators.pattern(EMAIL)]),
       'fax': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
       'firstName': new FormControl('', [Validators.required]),
-      'hoursWorkedPerWeek': new FormControl(''),
       'lastName': new FormControl('', [Validators.required]),
       'middleName': new FormControl(''),
       'personId': new FormControl(''),
       'phone': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
       'title': new FormControl(''),
-      'fundedFromVscp': new FormControl(''),
+      'deactivated': new FormControl(''),
     });
     // set the values into the form
     this.internalFormGroup.setValue(this.person, { emitEvent: false });

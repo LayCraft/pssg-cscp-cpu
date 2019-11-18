@@ -16,30 +16,42 @@
   </div>
 
   <!-- Contract category can be upcoming current past or none -->
-  <h3>Upcoming</h3>
-  <span *ngFor="let contract of trans.contracts">
-    <div *ngIf="contract.category===categories[0]" class="row mb-1">
-      <div class="col">
-        <app-task-list [contract]="contract"></app-task-list>
-      </div>
+  <div class="card mb-4">
+    <div class="card-header">Upcoming Contracts</div>
+    <div class="card-body">
+      <span *ngFor="let contract of trans.contracts">
+        <div *ngIf="contract.category===categories[0]" class="row mb-1">
+          <div class="col">
+            <app-task-list [contract]="contract"></app-task-list>
+          </div>
+        </div>
+      </span>
     </div>
-  </span>
-  <h3>Current</h3>
-  <span *ngFor="let contract of trans.contracts">
-    <div *ngIf="contract.category===categories[1]" class="row mb-1">
-      <div class="col">
-        <app-task-list [contract]="contract"></app-task-list>
-      </div>
+  </div>
+  <div class="card mb-4">
+    <div class="card-header">Current Contracts</div>
+    <div class="card-body">
+      <span *ngFor="let contract of trans.contracts">
+        <div *ngIf="contract.category===categories[1]" class="row mb-1">
+          <div class="col">
+            <app-task-list [contract]="contract"></app-task-list>
+          </div>
+        </div>
+      </span>
     </div>
-  </span>
-  <h3>Past</h3>
-  <span *ngFor="let contract of trans.contracts">
-    <div *ngIf="contract.category===categories[2]" class="row mb-1">
-      <div class="col">
-        <app-task-list [contract]="contract"></app-task-list>
-      </div>
+  </div>
+  <div class="card mb-4">
+    <div class="card-header">Past Contracts</div>
+    <div class="card-body">
+      <span *ngFor="let contract of trans.contracts">
+        <div *ngIf="contract.category===categories[2]" class="row mb-1">
+          <div class="col">
+            <app-task-list [contract]="contract"></app-task-list>
+          </div>
+        </div>
+      </span>
     </div>
-  </span>
+  </div>
 
 
   <!-- <pre *ngIf="contracts">{{contracts|json}}</pre> -->
