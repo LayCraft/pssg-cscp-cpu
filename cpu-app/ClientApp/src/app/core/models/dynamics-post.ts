@@ -44,7 +44,7 @@ export function DynamicsPostUsers(bceid: string, people: iPerson[]): iDynamicsPo
     if (person.address && person.address.city) p["address1_city"] = person.address.city;
     if (person.address && person.address.line1) p["address1_line1"] = person.address.line1;
     if (person.address && person.address.line2) p["address1_line2"] = person.address.line2;
-    if (person.address && person.address.line2) p["address1_postalcode"] = person.address.line2;
+    if (person.address && person.address.postalCode) p["address1_postalcode"] = person.address.postalCode;
     if (person.address && person.address.province) p["address1_stateorprovince"] = person.address.province;
     if (person.personId) p["contactid"] = person.personId;
     if (person.email) p["emailaddress1"] = person.email;

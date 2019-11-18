@@ -191,6 +191,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				}
 				catch (Exception e)
 				{
+					// todo: console out
 					return new Tuple<int, string, HttpResponseMessage>(100, "", null);
 					throw new Exception(e.Message + " " + _responseContent);
 				}
