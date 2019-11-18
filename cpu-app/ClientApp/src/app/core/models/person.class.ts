@@ -1,17 +1,15 @@
 import { Address, iAddress } from "./address.class";
 export interface iPerson {
   address?: iAddress;
+  deactivated?: boolean; // if true this deactivates
   email: string;
   fax?: string;
   firstName: string;
-  activeUser: boolean;
-  deactivated?: boolean; // if true this deactivates
   lastName: string;
   middleName?: string;
   personId: string;
   phone?: string;
   title: string;
-  typeOfEmployee?: string; // frontline, regular,
 }
 
 export class Person implements iPerson {
@@ -19,19 +17,16 @@ export class Person implements iPerson {
   annualSalary?: number;
   baseHourlyWage?: number;
   benefits?: number;
+  deactivated?: boolean;
   email: string;
   fax?: string;
   firstName: string;
-  // fundedFromVscp?: number;
   hoursWorkedPerWeek?: number;
-  deactivated?: boolean;
   lastName: string;
   middleName?: string;
   personId: string;
   phone?: string;
-  activeUser: boolean;
   title: string;
-  typeOfEmployee?: string; // frontline, regular,
   constructor(person?: iPerson) {
     if (person) {
       this.address = new Address(person.address) || new Address();

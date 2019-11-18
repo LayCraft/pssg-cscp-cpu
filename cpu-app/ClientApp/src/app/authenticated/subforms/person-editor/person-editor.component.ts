@@ -34,12 +34,6 @@ export class PersonEditorComponent implements OnInit {
   }
   buildForm() {
     this.internalFormGroup = new FormGroup({
-      // 'baseHourlyWage': new FormControl(''),
-      // 'annualSalary': new FormControl(''),
-      // 'hoursWorkedPerWeek': new FormControl(''),
-      // 'typeOfEmployee': new FormControl(''),
-      // 'benefits': new FormControl(''),
-      // 'fundedFromVscp': new FormControl(''),
       'address': new FormControl(''),
       'email': new FormControl('', [Validators.required, Validators.pattern(EMAIL)]),
       'fax': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
@@ -49,7 +43,7 @@ export class PersonEditorComponent implements OnInit {
       'personId': new FormControl(''),
       'phone': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
       'title': new FormControl(''),
-      'deactivated': new FormControl(''),
+      'deactivated': new FormControl(false),
     });
     // set the values into the form
     this.internalFormGroup.setValue(this.person, { emitEvent: false });

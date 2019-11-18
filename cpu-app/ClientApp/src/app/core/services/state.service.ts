@@ -56,4 +56,13 @@ export class StateService {
     this.notificationQueueService.addNotification('User has logged out.', 'warning');
     this.loggedIn.next(false);
   }
+  refresh() {
+    // quick refresh of data
+    this.mainService.getBlob(this.bceid.getValue()).subscribe((m: iDynamicsBlob) => {
+      // collect the blob into a useful object
+      const mainData = new Transmogrifier(m);
+      // save the useful blob in a behaviourSubject
+      this.main.next(mainData);
+    });
+  }
 }

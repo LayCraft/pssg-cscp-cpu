@@ -6,7 +6,9 @@ import { PersonService } from '../../core/services/person.service';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { StateService } from '../../core/services/state.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
-import { DynamicsPostUsers } from '../../core/models/dynamics-post';
+import { DynamicsPostUsers, iDynamicsPostUsers, convertPersonToCrmContact } from '../../core/models/dynamics-post';
+import { iDynamicsCrmContact } from '../../core/models/dynamics-blob';
+import { Transmogrifier } from 'src/app/core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-personnel',
@@ -33,38 +35,36 @@ export class PersonnelComponent implements OnInit {
     // stay up to date with the stepper but reset old elements if they exist
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
-    // set the default top and bottom list
-    this.constructDefaultstepperElements();
+    // when main changes refresh the data
+    this.stateService.main.subscribe(m => {
+      // set the default top and bottom list
+      this.constructDefaultstepperElements(m);
+    });
   }
   ngOnDestroy() {
     this.stepperService.reset();
   }
-  constructDefaultstepperElements(): void {
+  constructDefaultstepperElements(main?: Transmogrifier): void {
+    if (!main) { main = this.stateService.main.getValue(); }
     // clear the stepper of existing elements
     this.stepperService.reset();
-    // this is just a constructor
-    this.stateService.main.subscribe(s => {
-      //save the organization ID for posting back
-      this.organizationId = s.organizationMeta.organizationId;
-      s.persons.forEach(person => {
-        this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
-      });
+
+    //save the organization ID for posting back
+    this.organizationId = main.organizationMeta.organizationId;
+    main.persons.forEach(person => {
+      this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
     });
   }
 
-  // updateCurrent() {
-  // 	// make a current item
-  // 	this.currentStepperElement.itemName = this.nameAssemble(this.currentStepperElement.object['firstName'], this.currentStepperElement.object['middleName'], this.currentStepperElement.object['lastName']);
-  // }
   save(exit?: boolean) {
     // make a person array to submit
     const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
     const post = DynamicsPostUsers(this.stateService.bceid.getValue(), cleanup);
     this.personService.setPersons(post).subscribe(
       () => {
-        // Go get the new people with whatever transformations happened.
-        this.constructDefaultstepperElements();
         this.notificationQueueService.addNotification('Personnel Saved', 'success');
+        // refresh the list of people on save
+        this.stateService.refresh();
       },
       err => this.notificationQueueService.addNotification(err, 'danger')
     );
@@ -75,11 +75,6 @@ export class PersonnelComponent implements OnInit {
   }
   add() {
     const element: iPerson = {
-      // annualSalary: null,
-      // baseHourlyWage: null,
-      // benefits: null,
-      // hoursWorkedPerWeek: null,
-      // fundedFromVscp: null,
       address: null,
       email: '',
       fax: '',
@@ -89,18 +84,26 @@ export class PersonnelComponent implements OnInit {
       personId: '',
       phone: '',
       title: '',
-      typeOfEmployee: '',
-      activeUser: false,
+      deactivated: false,
     };
     this.stepperService.addStepperElement(element, 'New Person', null, 'person');
   }
-  remove(id: string = this.currentStepperElement.id) {
-    // set the stepper element to deactivated
-    this.stepperService.setStepperElementProperty(id, 'deactivated', true);
-    // change the stepper to look like a deletion
-    this.stepperService.setFormState(id, 'invalid');
-    // remove the element
-    this.stepperService.removeStepperElement(id);
+  remove(stepperElement: iStepperElement) {
+    // collect the person as an object for deletion
+    const person: iPerson = stepperElement.object as iPerson;
+    if (confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
+      // set deactivated state
+      person.deactivated = true;
+      const post: iDynamicsPostUsers = {
+        BCeID: this.stateService.bceid.getValue(),
+        StaffCollection: [convertPersonToCrmContact(person)]
+      };
+      // post the person
+      this.personService.setPersons(post).subscribe(p => {
+        // refresh the results
+        this.stateService.refresh();
+      });
+    }
   }
   onChange(element: iStepperElement) {
     element.itemName = nameAssemble(element.object['firstName'], element.object['middleName'], element.object['lastName'])
