@@ -116,7 +116,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				string url = _configuration["DYNAMICS_APP_GROUP_RESOURCE"] + "vsd_SetCPUOrgContracts";
 				// construct the http request
 				HttpRequestMessage _httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
-				HttpResponseMessage _httpResponse2;
+				HttpResponseMessage _httpResponse2 = null;
 				HttpStatusCode _statusCode;
 				try
 				{
@@ -138,8 +138,10 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 					_httpResponse2 = await client.SendAsync(_httpRequest);
 					_statusCode = _httpResponse2.StatusCode;
 				}
-				catch
+				catch (Exception e)
 				{
+					Console.Out.WriteLine(e.Message);
+					Console.Out.WriteLine(_httpResponse2.StatusCode);
 					Console.WriteLine("FOOBAR: Could not serialize the model or the http response from Dynamics had a problem.");
 					return StatusCode(500);
 				}
