@@ -91,7 +91,11 @@ export class PersonnelComponent implements OnInit {
   remove(stepperElement: iStepperElement) {
     // collect the person as an object for deletion
     const person: iPerson = stepperElement.object as iPerson;
-    if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
+
+    // if the person didn't exist we simple remove them. We do not post back to the server
+    if (!person.personId) {
+      this.stateService.refresh();
+    } else if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
       // set deactivated state
       person.deactivated = true;
       const post: iDynamicsPostUsers = {
@@ -103,9 +107,6 @@ export class PersonnelComponent implements OnInit {
         // refresh the results
         this.stateService.refresh();
       });
-    } else {
-      // person is me
-      alert('You cannot delete your account.')
     }
   }
   onChange(element: iStepperElement) {
