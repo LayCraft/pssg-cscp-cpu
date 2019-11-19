@@ -67,6 +67,11 @@ const routes: Routes = [
         component: StatusReportComponent
       },
       {
+        // if there is extra information we redirect to the profile page anyhow.
+        path: 'profile/:contractId',
+        redirectTo: 'profile'
+      },
+      {
         path: 'profile',
         component: ProfileComponent
       },
