@@ -7,8 +7,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { StateService } from '../../core/services/state.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
 import { DynamicsPostUsers, iDynamicsPostUsers, convertPersonToCrmContact } from '../../core/models/dynamics-post';
-import { iDynamicsCrmContact } from '../../core/models/dynamics-blob';
-import { Transmogrifier } from 'src/app/core/models/transmogrifier.class';
+import { Transmogrifier } from '../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-personnel',
@@ -49,13 +48,14 @@ export class PersonnelComponent implements OnInit {
     if (!main) { main = this.stateService.main.getValue(); }
     // clear the stepper of existing elements
     this.stepperService.reset();
-
-    main.persons.forEach(person => {
-      this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
-    });
+    if (main.persons) {
+      main.persons.forEach(person => {
+        this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
+      });
+    }
   }
 
-  save(exit?: boolean) {
+  save() {
     // make a person array to submit
     const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
     const post = DynamicsPostUsers(this.stateService.bceid.getValue(), cleanup);
@@ -67,11 +67,14 @@ export class PersonnelComponent implements OnInit {
       },
       err => this.notificationQueueService.addNotification(err, 'danger')
     );
-    if (exit) {
-      // they chose to exit
+  }
+
+  exit() {
+    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
+
   add() {
     const element: iPerson = {
       address: null,
@@ -91,7 +94,11 @@ export class PersonnelComponent implements OnInit {
   remove(stepperElement: iStepperElement) {
     // collect the person as an object for deletion
     const person: iPerson = stepperElement.object as iPerson;
-    if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
+
+    // if the person didn't exist we simple remove them. We do not post back to the server
+    if (!person.personId) {
+      this.stateService.refresh();
+    } else if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
       // set deactivated state
       person.deactivated = true;
       const post: iDynamicsPostUsers = {
@@ -103,9 +110,6 @@ export class PersonnelComponent implements OnInit {
         // refresh the results
         this.stateService.refresh();
       });
-    } else {
-      // person is me
-      alert('You cannot delete your account.')
     }
   }
   onChange(element: iStepperElement) {

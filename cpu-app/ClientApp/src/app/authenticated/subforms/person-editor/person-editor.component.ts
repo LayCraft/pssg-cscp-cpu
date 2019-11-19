@@ -17,8 +17,7 @@ export class PersonEditorComponent implements OnInit {
   public formHelper = new FormHelper();
   constructor() { }
   internalFormGroup: FormGroup;
-  deactivated: boolean = false;
-
+  me: boolean = false;
 
   get email() { return this.internalFormGroup.get('email'); }
   get phone() { return this.internalFormGroup.get('phone'); }
@@ -29,10 +28,9 @@ export class PersonEditorComponent implements OnInit {
   ngOnInit() {
     // determine if the current user is modifying themself
     if (this.person.me) {
-      this.deactivated = true;
-    } else {
-      this.buildForm();
+      this.me = true;
     }
+    this.buildForm();
   }
 
   onChanges() {
@@ -44,8 +42,8 @@ export class PersonEditorComponent implements OnInit {
       'address': new FormControl(''),
       'email': new FormControl('', [Validators.required, Validators.pattern(EMAIL)]),
       'fax': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
-      'firstName': new FormControl('', [Validators.required]),
-      'lastName': new FormControl('', [Validators.required]),
+      'firstName': new FormControl({ value: '', disabled: this.me }, [Validators.required]),
+      'lastName': new FormControl({ value: '', disabled: this.me }, [Validators.required]),
       'middleName': new FormControl(''),
       'personId': new FormControl(''),
       'phone': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),

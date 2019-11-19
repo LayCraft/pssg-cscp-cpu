@@ -10,7 +10,7 @@ export interface iPerson {
   personId: string;
   phone?: string;
   title?: string;
-  me: boolean;
+  me: boolean; // is this the current user? If so this is "me".
 }
 
 export class Person implements iPerson {

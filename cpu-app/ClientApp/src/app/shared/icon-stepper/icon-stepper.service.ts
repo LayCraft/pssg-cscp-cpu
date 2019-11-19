@@ -41,7 +41,7 @@ export class IconStepperService {
     this.stepperElements.next(stepperElements);
 
     //set the current stepper element to the new record so the user can start editing it immediately
-    // this.currentStepperElement.next(stepperElement); // makes the last element in the stepper always the one selected because last=current
+    this.currentStepperElement.next(stepperElement); // makes the last element in the stepper always the one selected because last=current
 
     // be sure one is selected
     this.checkForSelected();
@@ -156,7 +156,7 @@ export class IconStepperService {
     // We want this service to stay in a perpetually valid state because it is the source of truth for the stepper.
 
     const c = this.currentStepperElement.getValue();
-    const se = this.stepperElements.getValue();
+    const se: iStepperElement[] = this.stepperElements.getValue();
     if (c && !se.length) {
       // currently selected item and no selectable items
       // null out the currently selected item since it no longer exists
@@ -169,6 +169,20 @@ export class IconStepperService {
       // currently selected item and non null length
       // the item should be in the list. But it may not be if it was deleted from under us.
       // there is still length so we set the item null and do this function over again and it gets fixed in the (!c && se.length).
+      // if the element is not in the list then we need to pick a valid element
+      let inStepperElements = false;
+      for (let i = 0; i < se.length; i++) {
+        //matching element
+        if (se[i].id === c.id) {
+          inStepperElements = true;
+          break;
+        }
+      }
+      if (!inStepperElements) {
+        // there is no matching element so set the selected element to the first in the list
+        // there must be one because se.length is true
+        this.currentStepperElement.next(this.stepperElements.getValue()[0]);
+      }
     }
     else if (!c && !se.length) {
       // nothing loaded? Fine. do nothing

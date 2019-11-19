@@ -1,7 +1,4 @@
-<div *ngIf="deactivated">
-  Editing oneself is not yet supported.
-</div>
-<div *ngIf="!deactivated">
+<div *ngIf="internalFormGroup">
   <fieldset [formGroup]="internalFormGroup" (input)="onChanges()">
     <h2 class="blue-header">Personal Information {{person.firstName}}</h2>
     <div class="form-row">
@@ -64,7 +61,6 @@
         </div>
       </div>
     </div>
-    <!-- <h2 class="blue-header">Employment Information</h2> -->
     <div class="form-row">
       <div class="col-md">
         <div class="form-group">
@@ -73,20 +69,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="form-row">
-    <div class="col-md">
-      <div class="form-group">
-        <label for="annualSalary">Annual Salary ($)</label>
-        <input formControlName="annualSalary" type="number" class="form-control" id="annualSalary">
-      </div>
-    </div>
-    <div class="col-md">
-      <div class="form-group">
-        <label for="hoursWorkedPerWeek">Hours Worked Per Week</label>
-        <input formControlName="hoursWorkedPerWeek" type="number" class="form-control" id="hoursWorkedPerWeek">
-      </div>
-    </div>
-  </div> -->
     <h2 class="blue-header">Mailing Address</h2>
     <app-address formControlName="address"></app-address>
   </fieldset>
