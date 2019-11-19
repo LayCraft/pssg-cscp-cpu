@@ -180,9 +180,9 @@ export class IconStepperService {
       }
       if (!inStepperElements) {
         // there is no matching element so set the selected element to the first in the list
+        // there must be one because se.length is true
         this.currentStepperElement.next(this.stepperElements.getValue()[0]);
       }
-
     }
     else if (!c && !se.length) {
       // nothing loaded? Fine. do nothing
