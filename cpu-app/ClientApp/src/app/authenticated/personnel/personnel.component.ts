@@ -7,8 +7,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { StateService } from '../../core/services/state.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
 import { DynamicsPostUsers, iDynamicsPostUsers, convertPersonToCrmContact } from '../../core/models/dynamics-post';
-import { iDynamicsCrmContact } from '../../core/models/dynamics-blob';
-import { Transmogrifier } from 'src/app/core/models/transmogrifier.class';
+import { Transmogrifier } from '../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-personnel',
