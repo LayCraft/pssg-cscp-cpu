@@ -18,7 +18,7 @@ import { Transmogrifier } from 'src/app/core/models/transmogrifier.class';
 export class PersonnelComponent implements OnInit {
   // this is an organization level component
   reload = false;
-  organizationId: string;
+  bceid: string;
   // used for the stepper component
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
@@ -40,6 +40,7 @@ export class PersonnelComponent implements OnInit {
       // set the default top and bottom list
       this.constructStepperElements(m);
     });
+    this.bceid = this.stateService.bceid.getValue();
   }
   ngOnDestroy() {
     this.stepperService.reset();
@@ -49,8 +50,6 @@ export class PersonnelComponent implements OnInit {
     // clear the stepper of existing elements
     this.stepperService.reset();
 
-    //save the organization ID for posting back
-    this.organizationId = main.organizationMeta.organizationId;
     main.persons.forEach(person => {
       this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
     });
@@ -85,13 +84,14 @@ export class PersonnelComponent implements OnInit {
       phone: '',
       title: '',
       deactivated: false,
+      me: false,
     };
     this.stepperService.addStepperElement(element, 'New Person', null, 'person');
   }
   remove(stepperElement: iStepperElement) {
     // collect the person as an object for deletion
     const person: iPerson = stepperElement.object as iPerson;
-    if (confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
+    if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
       // set deactivated state
       person.deactivated = true;
       const post: iDynamicsPostUsers = {
@@ -103,6 +103,9 @@ export class PersonnelComponent implements OnInit {
         // refresh the results
         this.stateService.refresh();
       });
+    } else {
+      // person is me
+      alert('You cannot delete your account.')
     }
   }
   onChange(element: iStepperElement) {

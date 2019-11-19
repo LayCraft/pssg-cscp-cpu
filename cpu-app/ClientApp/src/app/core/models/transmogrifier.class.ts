@@ -317,6 +317,8 @@ export class Transmogrifier {
         personId: p.contactid || null,
         phone: p.mobilephone || null,
         title: p.jobtitle || null,
+        // if this person has the right value it is me.
+        me: p.vsd_bceid ? true : false,
         // if the state code is zero or null the user is active
         deactivated: !p.statecode || p.statecode === 0 ? false : true || null,
       }

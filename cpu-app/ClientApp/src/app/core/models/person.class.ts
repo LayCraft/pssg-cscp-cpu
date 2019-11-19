@@ -9,7 +9,8 @@ export interface iPerson {
   middleName?: string;
   personId: string;
   phone?: string;
-  title: string;
+  title?: string;
+  me: boolean;
 }
 
 export class Person implements iPerson {
@@ -26,7 +27,8 @@ export class Person implements iPerson {
   middleName?: string;
   personId: string;
   phone?: string;
-  title: string;
+  title?: string;
+  me: boolean = false;
   constructor(person?: iPerson) {
     if (person) {
       this.address = new Address(person.address) || new Address();
@@ -39,6 +41,7 @@ export class Person implements iPerson {
       this.personId = person.personId || null;
       this.phone = person.phone || null;
       this.title = person.title || null;
+      this.me = person.me;
     } else {
       this.address = new Address();
     }

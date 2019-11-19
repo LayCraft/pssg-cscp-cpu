@@ -21,6 +21,9 @@
         </div>
         <div *ngFor="let item of stepperElements">
           <span *ngIf="item.id===currentStepperElement.id">
+            <div *ngIf="item.object['personId']">
+              This person's BCEID is {{item.object['personId']}} and the organization is {{bceid}}.
+            </div>
             <app-person-editor [(person)]="item.object" (change)="onChange(item)"></app-person-editor>
           </span>
         </div>
