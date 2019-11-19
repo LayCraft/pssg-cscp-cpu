@@ -8,20 +8,20 @@
           <app-icon-stepper></app-icon-stepper>
         </div>
         <button class="btn btn-primary mt-2 mr-2" (click)="add()">Add</button>
-        <button class="btn btn-primary mt-2" (click)="save(true)">Save &amp; Exit</button>
+        <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
       </section>
     </div>
 
     <div class="col-md-8">
       <div *ngIf="currentStepperElement">
         <div class="page-header">
-          <button class="btn btn-danger mt-2 mr-2" (click)="remove(currentStepperElement)">Deactivate</button>
-          <button class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
           <h1>{{currentStepperElement.object['firstName']}} {{currentStepperElement.object['lastName']}}</h1>
         </div>
         <div *ngFor="let item of stepperElements">
           <span *ngIf="item.id===currentStepperElement.id">
             <app-person-editor [(person)]="item.object" (change)="onChange(item)"></app-person-editor>
+            <button *ngIf="!item?.object['me']" class="btn btn-danger mt-2 mr-2" (click)="remove(currentStepperElement)">Deactivate</button>
+            <button class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
           </span>
         </div>
       </div>

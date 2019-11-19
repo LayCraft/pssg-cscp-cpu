@@ -54,7 +54,7 @@ export class PersonnelComponent implements OnInit {
     });
   }
 
-  save(exit?: boolean) {
+  save() {
     // make a person array to submit
     const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
     const post = DynamicsPostUsers(this.stateService.bceid.getValue(), cleanup);
@@ -66,8 +66,9 @@ export class PersonnelComponent implements OnInit {
       },
       err => this.notificationQueueService.addNotification(err, 'danger')
     );
-    if (exit) {
-      // they chose to exit
+  }
+  exit() {
+    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
