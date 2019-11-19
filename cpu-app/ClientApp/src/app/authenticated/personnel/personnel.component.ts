@@ -48,10 +48,11 @@ export class PersonnelComponent implements OnInit {
     if (!main) { main = this.stateService.main.getValue(); }
     // clear the stepper of existing elements
     this.stepperService.reset();
-
-    main.persons.forEach(person => {
-      this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
-    });
+    if (main.persons) {
+      main.persons.forEach(person => {
+        this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
+      });
+    }
   }
 
   save() {
@@ -67,11 +68,13 @@ export class PersonnelComponent implements OnInit {
       err => this.notificationQueueService.addNotification(err, 'danger')
     );
   }
+
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
+
   add() {
     const element: iPerson = {
       address: null,

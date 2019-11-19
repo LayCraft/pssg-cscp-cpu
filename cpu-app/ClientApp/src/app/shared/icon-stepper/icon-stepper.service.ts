@@ -171,9 +171,9 @@ export class IconStepperService {
       // there is still length so we set the item null and do this function over again and it gets fixed in the (!c && se.length).
       // if the element is not in the list then we need to pick a valid element
       let inStepperElements = false;
-      for (let e of se) {
+      for (let i = 0; i < se.length; i++) {
         //matching element
-        if (e.id === c.id) {
+        if (se[i].id === c.id) {
           inStepperElements = true;
           break;
         }
