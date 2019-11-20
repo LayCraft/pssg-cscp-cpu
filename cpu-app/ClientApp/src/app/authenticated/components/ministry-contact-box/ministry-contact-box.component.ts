@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../../../core/services/state.service';
-import { iMinistryUser } from '../../../core/models/ministry-user';
 import { nameAssemble } from '../../../core/constants/name-assemble';
+import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-ministry-contact-box',
@@ -9,13 +9,13 @@ import { nameAssemble } from '../../../core/constants/name-assemble';
   styleUrls: ['./ministry-contact-box.component.css']
 })
 export class MinistryContactBoxComponent implements OnInit {
-  ministryUser: iMinistryUser;
+  trans: Transmogrifier;
   nameAssemble = nameAssemble;
   constructor(
     private stateService: StateService,
   ) { }
 
   ngOnInit() {
-    this.stateService.main.subscribe(m => this.ministryUser = m.ministryContact);
+    this.stateService.main.subscribe(main => this.trans = main);
   }
 }

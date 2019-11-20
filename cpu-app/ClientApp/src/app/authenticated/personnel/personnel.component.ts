@@ -36,8 +36,10 @@ export class PersonnelComponent implements OnInit {
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     // when main changes refresh the data
     this.stateService.main.subscribe(m => {
-      // set the default top and bottom list
-      this.constructStepperElements(m);
+      if (m) {
+        // set the default top and bottom list
+        this.constructStepperElements(m);
+      }
     });
     this.bceid = this.stateService.bceid.getValue();
   }
