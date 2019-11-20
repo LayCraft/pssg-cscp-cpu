@@ -1,3 +1,24 @@
-<p>
-  status-report works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <!-- <app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone> -->
+
+      <section class="application-nav sticky-top">
+        <app-icon-stepper></app-icon-stepper>
+      </section>
+    </div>
+
+    <div class="col-md-8">
+      <div *ngIf="stepperElements && currentStepperElement">
+        <div class="page-header">
+          <h1>{{currentStepperElement.itemName}}</h1>
+        </div>
+        <div *ngFor="let item of stepperElements">
+          <div *ngIf="isCurrentStepperElement(item)">
+            Stepper element. {{item|json}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

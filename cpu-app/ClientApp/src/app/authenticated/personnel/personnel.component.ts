@@ -36,8 +36,10 @@ export class PersonnelComponent implements OnInit {
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     // when main changes refresh the data
     this.stateService.main.subscribe(m => {
-      // set the default top and bottom list
-      this.constructStepperElements(m);
+      if (m) {
+        // set the default top and bottom list
+        this.constructStepperElements(m);
+      }
     });
     this.bceid = this.stateService.bceid.getValue();
   }
@@ -52,6 +54,8 @@ export class PersonnelComponent implements OnInit {
       main.persons.forEach(person => {
         this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
       });
+      // set the stepper to the first element
+      this.stepperService.setFirstStepperElement();
     }
   }
 
@@ -113,7 +117,7 @@ export class PersonnelComponent implements OnInit {
     }
   }
   onChange(element: iStepperElement) {
-    element.itemName = nameAssemble(element.object['firstName'], element.object['middleName'], element.object['lastName'])
+    element.itemName = nameAssemble(element.object['firstName'], element.object['middleName'], element.object['lastName']);
     // loop back to shove the new form into the service
     this.stepperService.setStepperElement(element);
   }
