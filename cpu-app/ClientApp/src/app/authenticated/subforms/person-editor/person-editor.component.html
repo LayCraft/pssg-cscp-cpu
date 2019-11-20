@@ -5,19 +5,37 @@
       <div class="col-md">
         <div class="form-group">
           <label for="firstName">First Name</label>
-          <input formControlName="firstName" type="text" class="form-control" id="firstName" name="firstName" [required]="formHelper.isDirtyOrTouched(firstName)">
+          <input formControlName="firstName" type="text" class="form-control" id="firstName" name="firstName" [required]="formHelper.isDirtyOrTouched(firstName)" maxlength="50">
+          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(firstName)" style="display: inherit">
+            Ok
+          </div>
+          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(firstName)" style="display: inherit">
+            Try Again.
+          </div>
         </div>
       </div>
       <div class="col-md">
         <div class="form-group">
           <label for="middleName">Middle Name (optional)</label>
-          <input formControlName="middleName" type="text" class="form-control" id="middleName" name="middleName">
+          <input formControlName="middleName" type="text" class="form-control" id="middleName" name="middleName" maxlength="50">
+          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(middleName)" style="display: inherit">
+            Ok
+          </div>
+          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(middleName)" style="display: inherit">
+            Try Again.
+          </div>
         </div>
       </div>
       <div class="col-md">
         <div class="form-group">
           <label for="lastName">Last Name</label>
-          <input formControlName="lastName" type="text" class="form-control" id="lastName" name="lastName" [required]="formHelper.isDirtyOrTouched(lastName)">
+          <input formControlName="lastName" type="text" class="form-control" id="lastName" name="lastName" [required]="formHelper.isDirtyOrTouched(lastName)" maxlength="50">
+          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(lastName)" style="display: inherit">
+            Ok
+          </div>
+          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(lastName)" style="display: inherit">
+            Try Again.
+          </div>
         </div>
       </div>
     </div>

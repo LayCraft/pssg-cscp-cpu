@@ -52,6 +52,8 @@ export class PersonnelComponent implements OnInit {
       main.persons.forEach(person => {
         this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
       });
+      // set the stepper to the first element
+      this.stepperService.setFirstStepperElement();
     }
   }
 
@@ -113,7 +115,7 @@ export class PersonnelComponent implements OnInit {
     }
   }
   onChange(element: iStepperElement) {
-    element.itemName = nameAssemble(element.object['firstName'], element.object['middleName'], element.object['lastName'])
+    element.itemName = nameAssemble(element.object['firstName'], element.object['middleName'], element.object['lastName']);
     // loop back to shove the new form into the service
     this.stepperService.setStepperElement(element);
   }

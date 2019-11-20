@@ -20,10 +20,11 @@ export class PersonEditorComponent implements OnInit {
   me: boolean = false;
 
   get email() { return this.internalFormGroup.get('email'); }
-  get phone() { return this.internalFormGroup.get('phone'); }
   get fax() { return this.internalFormGroup.get('fax'); }
   get firstName() { return this.internalFormGroup.get('firstName'); }
   get lastName() { return this.internalFormGroup.get('lastName'); }
+  get middleName() { return this.internalFormGroup.get('middleName'); }
+  get phone() { return this.internalFormGroup.get('phone'); }
 
   ngOnInit() {
     // determine if the current user is modifying themself
@@ -42,12 +43,12 @@ export class PersonEditorComponent implements OnInit {
       'address': new FormControl(''),
       'email': new FormControl('', [Validators.required, Validators.pattern(EMAIL)]),
       'fax': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
-      'firstName': new FormControl({ value: '', disabled: this.me }, [Validators.required]),
-      'lastName': new FormControl({ value: '', disabled: this.me }, [Validators.required]),
-      'middleName': new FormControl(''),
-      'personId': new FormControl(''),
-      'phone': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
-      'title': new FormControl(''),
+      'firstName': new FormControl({ value: '', disabled: this.me }, [Validators.required, Validators.maxLength(50)]),
+      'lastName': new FormControl({ value: '', disabled: this.me }, [Validators.required, Validators.maxLength(50)]),
+      'middleName': new FormControl(['', Validators.maxLength(50)]),
+      'personId': new FormControl(['']),
+      'phone': new FormControl([''], [Validators.required, Validators.pattern(PHONE_NUMBER)]),
+      'title': new FormControl(['', Validators.maxLength(50)]),
       'deactivated': new FormControl(null),
       'me': new FormControl(null),
     });

@@ -82,6 +82,10 @@ export class IconStepperService {
       }
     }
   }
+  setFirstStepperElement(): void {
+    this.setStepperElement(this.stepperElements.getValue()[0]);
+    this.checkForSelected();
+  }
   setStepperElement(element: iStepperElement): void {
     if (this.logging) { console.log('setStepperElement()') }
     // collect the elements
