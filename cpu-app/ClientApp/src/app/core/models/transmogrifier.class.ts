@@ -240,8 +240,8 @@ export class Transmogrifier {
   private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
     // collect the organization meta and structure it into a new shape
     return {
-      bceid: b.bceid || null,
-      organizationId: b.Organization.accountid || null,
+      userId: b.Userbceid || null,
+      organizationId: b.Businessbceid || null,
       organizationName: b.Organization.name || null,
       contactInformation: {
         phoneNumber: b.Organization.telephone1 || null,

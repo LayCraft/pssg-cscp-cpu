@@ -97,6 +97,7 @@ export interface iDynamicsCrmTask {
 }
 export interface iDynamicsBlob {
   BoardContact?: iDynamicsCrmContact,
+  Businessbceid?: string; // represents the organization level BCeID.
   Contracts?: iDynamicsCrmContract[];
   ExecutiveContact?: iDynamicsCrmContact,
   IsSuccess?: true;
@@ -106,7 +107,6 @@ export interface iDynamicsBlob {
   Result?: string;
   Staff?: iDynamicsCrmContact[];
   Tasks?: iDynamicsCrmTask[]
-  Businessbceid?: string; // represents the organization level BCeID.
   Userbceid?: string; // represents the user's BCeID.
   fortunecookiecontext?: string;
 };
