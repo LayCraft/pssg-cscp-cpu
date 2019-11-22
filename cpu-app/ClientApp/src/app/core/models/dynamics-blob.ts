@@ -106,6 +106,7 @@ export interface iDynamicsBlob {
   Result?: string;
   Staff?: iDynamicsCrmContact[];
   Tasks?: iDynamicsCrmTask[]
-  bceid?: string; // represents the organization level BCeID.
+  Businessbceid?: string; // represents the organization level BCeID.
+  Userbceid?: string; // represents the user's BCeID.
   fortunecookiecontext?: string;
 };
