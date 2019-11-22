@@ -19,6 +19,8 @@ export class StateService {
   public organizationId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   // the user's bceid
   public userId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  // the account id
+  public accountId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   // global state of the login
   public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -45,7 +47,7 @@ export class StateService {
         this.organizationName.next(mainData.organizationMeta.organizationName);//what does dynamics say this organization's name is?
         this.organizationId.next(mainData.organizationId);//what does dynamics say the organization's bceid is?
         this.userId.next(mainData.userId);//what does dynamics say the user's bceid is?
-
+        this.accountId.next(mainData.organizationMeta.accountId);//what is the dynamics primary key for postback
         // give a notification
         this.notificationQueueService.addNotification(`${mainData.organizationMeta.organizationName} has been logged in successfully.`, 'success');
         // set the logged in state
