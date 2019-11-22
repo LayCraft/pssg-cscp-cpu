@@ -47,7 +47,6 @@ export class StateService {
         this.organizationName.next(mainData.organizationMeta.organizationName);//what does dynamics say this organization's name is?
         this.accountId.next(mainData.organizationMeta.accountId);//what is the dynamics primary key for postback
 
-        console.log(this.accountId);
         // give a notification
         this.notificationQueueService.addNotification(`${mainData.organizationMeta.organizationName} has been logged in successfully.`, 'success');
         // set the logged in state

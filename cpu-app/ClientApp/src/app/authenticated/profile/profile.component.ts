@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
     // post to the organization
     this.profileService.updateOrg(dynamicsPost).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         // success. Collect the transmogrifier and modify it.
         const temp: Transmogrifier = this.stateService.main.getValue();
         temp.organizationMeta.contactInformation = new ContactInformation(formValue);
