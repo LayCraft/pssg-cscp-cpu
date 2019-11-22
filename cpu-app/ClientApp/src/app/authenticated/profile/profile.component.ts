@@ -48,6 +48,7 @@ export class ProfileComponent implements OnInit {
     formValue.executiveContact = this.executiveContact;
     formValue.boardContact = this.boardContact;
     // cast the data into something useful for dynamics
+    // const dynamicsPost: iDynamicsPostOrg = DynamicsPostOrganization(this.stateService.bceid.getValue(), this.stateService.organizationId.getValue(), formValue);
     const dynamicsPost: iDynamicsPostOrg = DynamicsPostOrganization(this.stateService.bceid.getValue(), this.stateService.organizationId.getValue(), formValue);
 
 

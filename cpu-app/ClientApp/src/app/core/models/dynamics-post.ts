@@ -2,7 +2,8 @@ import { iDynamicsOrganization, iDynamicsCrmContact } from "./dynamics-blob";
 import { iContactInformation } from "./contact-information.class";
 import { iPerson } from "./person.class";
 export interface iDynamicsPostOrg {
-  "BCeID": string;
+  "Userbceid": string;
+  "Businessbceid": string;
   "Organization": iDynamicsOrganization;
 }
 export interface iDynamicsPostUsers {
@@ -10,7 +11,7 @@ export interface iDynamicsPostUsers {
   "StaffCollection": iDynamicsCrmContact[];
 }
 // this is a mapper function for posting back to dynamics
-export function DynamicsPostOrganization(bceid: string, organizationId: string, f: iContactInformation): iDynamicsPostOrg {
+export function DynamicsPostOrganization(userId: string, organizationId: string, accountId: string, f: iContactInformation): iDynamicsPostOrg {
   const org: iDynamicsOrganization = {};
   // map contact info to the dynamics format
   //TODO: these must be accepted but are not through the API. Commenting them out until they are implemented.
@@ -29,11 +30,12 @@ export function DynamicsPostOrganization(bceid: string, organizationId: string, 
   if (f.mainAddress && f.mainAddress.line2) org["address1_line2"] = f.mainAddress.line2;
   if (f.mainAddress && f.mainAddress.postalCode) org["address1_postalcode"] = f.mainAddress.postalCode;
   if (f.mainAddress && f.mainAddress.province) org["address1_stateorprovince"] = f.mainAddress.province;
-  // add the account id
-  org["accountid"] = organizationId;
+  // add the account id to the object
+  org["accountid"] = accountId;
   return {
-    BCeID: bceid,
-    Organization: org
+    Businessbceid: organizationId,
+    Userbceid: userId,
+    Organization: org,
   } as iDynamicsPostOrg;
 }
 export function DynamicsPostUsers(bceid: string, people: iPerson[]): iDynamicsPostUsers {
