@@ -17,7 +17,8 @@ import { Transmogrifier } from '../../core/models/transmogrifier.class';
 export class PersonnelComponent implements OnInit {
   // this is an organization level component
   reload = false;
-  bceid: string;
+  userId: string;
+  organizationId: string;
   // used for the stepper component
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
@@ -41,7 +42,8 @@ export class PersonnelComponent implements OnInit {
         this.constructStepperElements(m);
       }
     });
-    this.bceid = this.stateService.bceid.getValue();
+    this.userId = this.stateService.userId.getValue();
+    this.organizationId = this.stateService.organizationId.getValue();
   }
   ngOnDestroy() {
     this.stepperService.reset();
@@ -62,7 +64,8 @@ export class PersonnelComponent implements OnInit {
   save() {
     // make a person array to submit
     const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
-    const post = DynamicsPostUsers(this.stateService.bceid.getValue(), cleanup);
+    const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), cleanup);
+    // console.log(post);
     this.personService.setPersons(post).subscribe(
       () => {
         this.notificationQueueService.addNotification('Personnel Saved', 'success');
@@ -106,7 +109,8 @@ export class PersonnelComponent implements OnInit {
       // set deactivated state
       person.deactivated = true;
       const post: iDynamicsPostUsers = {
-        BCeID: this.stateService.bceid.getValue(),
+        UserBCeID: this.stateService.userId.getValue(),
+        BusinessBCeID: this.stateService.organizationId.getValue(),
         StaffCollection: [convertPersonToCrmContact(person)]
       };
       // post the person

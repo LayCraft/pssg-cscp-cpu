@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { iDynamicsBlob } from '../models/dynamics-blob';
 import { retry, catchError } from 'rxjs/operators';
-import { NotificationQueueService } from './notification-queue.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +10,14 @@ import { NotificationQueueService } from './notification-queue.service';
 export class MainService {
 
   // this should query the test api
-  apiUrl = 'api/DynamicsBlob/';
+  apiUrl = 'api/DynamicsBlob';
 
   constructor(
     private http: HttpClient,
-    private notificationQueueService: NotificationQueueService
   ) { }
 
-  getBlob(bceid: string): Observable<iDynamicsBlob> {
-    return this.http.get<iDynamicsBlob>(this.apiUrl + bceid, { headers: this.headers }).pipe(
+  getBlob(userId: string, organizationId: string): Observable<iDynamicsBlob> {
+    return this.http.get<iDynamicsBlob>(`${this.apiUrl}/${userId}/${organizationId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

@@ -22,7 +22,9 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public DynamicsMinistryUser MinistryUser { get; set; }
 		public DynamicsOrganization Organization { get; set; }
 		public string Result { get; set; }
-		public string bceid { get; set; }
+		public string UserBCeID { get; set; }
+		public string BusinessBCeID { get; set; }
+
 
 	}
 }

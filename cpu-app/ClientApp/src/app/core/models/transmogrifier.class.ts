@@ -9,12 +9,20 @@ import { iProgram } from './program';
 import { iDynamicsBlob } from './dynamics-blob';
 
 export class Transmogrifier {
+  // postback data
+  public organizationId: string;
+  public userId: string;
+  // public accountId: string; //really this is in the organizationMeta object
+
+  // collections of viewmodels
   public organizationMeta: iOrganizationMeta;
   public persons: iPerson[];
   public contracts: iContract[];
   public ministryContact: iMinistryUser;
 
   constructor(b: iDynamicsBlob) {
+    this.userId = b.UserBCeID;// this is the user's bceid
+    this.organizationId = b.BusinessBCeID; // this is the organization's bceid
     this.organizationMeta = this.buildOrganizationMeta(b);
     this.persons = this.buildPersons(b);
     this.ministryContact = this.buildMinistryContact(b);
@@ -240,8 +248,9 @@ export class Transmogrifier {
   private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
     // collect the organization meta and structure it into a new shape
     return {
-      bceid: b.bceid || null,
-      organizationId: b.Organization.accountid || null,
+      userId: b.UserBCeID || null,
+      accountId: b.Organization.accountid || null, // the dynamics id must be included when posting back sometimes.
+      organizationId: b.BusinessBCeID || null,
       organizationName: b.Organization.name || null,
       contactInformation: {
         phoneNumber: b.Organization.telephone1 || null,

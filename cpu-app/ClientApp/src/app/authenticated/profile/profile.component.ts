@@ -48,13 +48,13 @@ export class ProfileComponent implements OnInit {
     formValue.executiveContact = this.executiveContact;
     formValue.boardContact = this.boardContact;
     // cast the data into something useful for dynamics
-    const dynamicsPost: iDynamicsPostOrg = DynamicsPostOrganization(this.stateService.bceid.getValue(), this.stateService.organizationId.getValue(), formValue);
+    const dynamicsPost: iDynamicsPostOrg = DynamicsPostOrganization(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), this.stateService.accountId.getValue(), formValue);
 
 
     // post to the organization
     this.profileService.updateOrg(dynamicsPost).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         // success. Collect the transmogrifier and modify it.
         const temp: Transmogrifier = this.stateService.main.getValue();
         temp.organizationMeta.contactInformation = new ContactInformation(formValue);
