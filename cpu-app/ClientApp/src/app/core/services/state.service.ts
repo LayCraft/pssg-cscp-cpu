@@ -43,12 +43,11 @@ export class StateService {
 
         // save the useful blob of viewmodels
         this.main.next(mainData);
-
         //save handy information. For when you don't want to bring in a whole transmogrifier into the component
         this.organizationName.next(mainData.organizationMeta.organizationName);//what does dynamics say this organization's name is?
-        this.organizationId.next(mainData.organizationId);//what does dynamics say the organization's bceid is?
-        this.userId.next(mainData.userId);//what does dynamics say the user's bceid is?
         this.accountId.next(mainData.organizationMeta.accountId);//what is the dynamics primary key for postback
+
+        console.log(this.accountId);
         // give a notification
         this.notificationQueueService.addNotification(`${mainData.organizationMeta.organizationName} has been logged in successfully.`, 'success');
         // set the logged in state
