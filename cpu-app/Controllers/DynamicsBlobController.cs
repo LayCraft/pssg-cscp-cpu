@@ -33,13 +33,10 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		[HttpGet("{userBceid}/{businessBceid}")]
 		public async Task<IActionResult> GetBlob(string userBceid, string businessBceid)
 		{
-			//build an object that we can use to query dynamics
-			DynamicsRequestModel model = new DynamicsRequestModel("9e9b5111-51c9-e911-b80f-00505683fbf4", "fd889a40-14b2-e811-8163-480fcff4f621");
-
 			try
 			{
-				// convert the object to json string
-				string applicationJson = JsonConvert.SerializeObject(model);
+				// convert the parameters to a json string
+				string applicationJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
 				// set the endpoint action
 				string endpointAction = "vsd_GetCPUOrgContracts";
 				// get the response
