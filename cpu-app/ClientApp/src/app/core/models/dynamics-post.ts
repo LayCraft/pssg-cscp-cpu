@@ -39,7 +39,7 @@ export function DynamicsPostOrganization(userId: string, organizationId: string,
     Organization: org,
   } as iDynamicsPostOrg;
 }
-export function DynamicsPostUsers(bceid: string, people: iPerson[]): iDynamicsPostUsers {
+export function DynamicsPostUsers(userId: string, organizationId: string, people: iPerson[]): iDynamicsPostUsers {
   const ppl: iDynamicsCrmContact[] = [];
   for (let person of people) {
     // convert the person to a contact
@@ -48,7 +48,8 @@ export function DynamicsPostUsers(bceid: string, people: iPerson[]): iDynamicsPo
     ppl.push(p);
   }
   return {
-    BCeID: bceid,
+    Userbceid: userId,
+    Businessbceid: organizationId,
     StaffCollection: ppl
   } as iDynamicsPostUsers;
 }
