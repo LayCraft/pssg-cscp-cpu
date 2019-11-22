@@ -12,7 +12,7 @@ export class Transmogrifier {
   // postback data
   public organizationId: string;
   public userId: string;
-  // accountId used in postback is in the organizationMeta object
+  // public accountId: string; //really this is in the organizationMeta object
 
   // collections of viewmodels
   public organizationMeta: iOrganizationMeta;

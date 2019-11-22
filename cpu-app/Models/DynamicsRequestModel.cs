@@ -2,10 +2,12 @@ namespace Gov.Cscp.VictimServices.Public.Models
 {
 	public class DynamicsRequestModel
 	{
-		public string BCeID;
-		public DynamicsRequestModel(string BCeID)
+		public string Businessbceid;
+		public string Userbceid;
+		public DynamicsRequestModel(string UserBCeID, string BusinessBCeID)
 		{
-			this.BCeID = BCeID;
+			this.Businessbceid = BusinessBCeID;
+			this.Userbceid = UserBCeID;
 		}
 	}
 }
