@@ -59,8 +59,8 @@ export class TestComponent implements OnInit {
 
   refresh() {
     //set the current object
-    this.mainService.getBlob(this.bceid).subscribe(t => {
-      this.trans = new Transmogrifier(t);
-    });
+    // this.mainService.getBlob(this.bceid).subscribe(t => {
+    //   this.trans = new Transmogrifier(t);
+    // });
   }
 }

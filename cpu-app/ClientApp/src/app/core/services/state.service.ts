@@ -33,9 +33,10 @@ export class StateService {
   login() {
     //TODO: set BCeID from siteminder
     this.userId.next('9e9b5111-51c9-e911-b80f-00505683fbf4');
+    this.organizationId.next('fd889a40-14b2-e811-8163-480fcff4f621');
 
     // on login collect the information from the organization id
-    this.mainService.getBlob(this.userId.getValue()).subscribe(
+    this.mainService.getBlob(this.userId.getValue(), this.organizationId.getValue()).subscribe(
       (m: iDynamicsBlob) => {
         // collect the blob into a useful object
         const mainData = new Transmogrifier(m);
@@ -68,7 +69,7 @@ export class StateService {
   }
   refresh() {
     // quick refresh of data
-    this.mainService.getBlob(this.userId.getValue()).subscribe(
+    this.mainService.getBlob(this.userId.getValue(), this.organizationId.getValue()).subscribe(
       (m: iDynamicsBlob) => {
         // collect the blob into a useful object
         const mainData = new Transmogrifier(m);
