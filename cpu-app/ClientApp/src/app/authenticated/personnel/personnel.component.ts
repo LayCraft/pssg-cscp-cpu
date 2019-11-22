@@ -108,8 +108,8 @@ export class PersonnelComponent implements OnInit {
       // set deactivated state
       person.deactivated = true;
       const post: iDynamicsPostUsers = {
-        Userbceid: this.stateService.userId.getValue(),
-        Businessbceid: this.stateService.organizationId.getValue(),
+        UserBCeID: this.stateService.userId.getValue(),
+        BusinessBCeID: this.stateService.organizationId.getValue(),
         StaffCollection: [convertPersonToCrmContact(person)]
       };
       // post the person

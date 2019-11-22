@@ -21,8 +21,8 @@ export class Transmogrifier {
   public ministryContact: iMinistryUser;
 
   constructor(b: iDynamicsBlob) {
-    this.userId = b.Userbceid;// this is the user's bceid
-    this.organizationId = b.Businessbceid; // this is the organization's bceid
+    this.userId = b.UserBCeID;// this is the user's bceid
+    this.organizationId = b.BusinessBCeID; // this is the organization's bceid
     this.organizationMeta = this.buildOrganizationMeta(b);
     this.persons = this.buildPersons(b);
     this.ministryContact = this.buildMinistryContact(b);
@@ -248,9 +248,9 @@ export class Transmogrifier {
   private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
     // collect the organization meta and structure it into a new shape
     return {
-      userId: b.Userbceid || null,
+      userId: b.UserBCeID || null,
       accountId: b.Organization.accountid || null, // the dynamics id must be included when posting back sometimes.
-      organizationId: b.Businessbceid || null,
+      organizationId: b.BusinessBCeID || null,
       organizationName: b.Organization.name || null,
       contactInformation: {
         phoneNumber: b.Organization.telephone1 || null,

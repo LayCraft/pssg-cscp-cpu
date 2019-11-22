@@ -2,13 +2,13 @@ import { iDynamicsOrganization, iDynamicsCrmContact } from "./dynamics-blob";
 import { iContactInformation } from "./contact-information.class";
 import { iPerson } from "./person.class";
 export interface iDynamicsPostOrg {
-  "Userbceid": string;
-  "Businessbceid": string;
+  "UserBCeID": string;
+  "BusinessBCeID": string;
   "Organization": iDynamicsOrganization;
 }
 export interface iDynamicsPostUsers {
-  "Userbceid": string;
-  "Businessbceid": string;
+  "UserBCeID": string;
+  "BusinessBCeID": string;
   "StaffCollection": iDynamicsCrmContact[];
 }
 // this is a mapper function for posting back to dynamics
@@ -34,8 +34,8 @@ export function DynamicsPostOrganization(userId: string, organizationId: string,
   // add the account id to the object
   org["accountid"] = accountId;
   return {
-    Businessbceid: organizationId,
-    Userbceid: userId,
+    BusinessBCeID: organizationId,
+    UserBCeID: userId,
     Organization: org,
   } as iDynamicsPostOrg;
 }
@@ -48,8 +48,8 @@ export function DynamicsPostUsers(userId: string, organizationId: string, people
     ppl.push(p);
   }
   return {
-    Userbceid: userId,
-    Businessbceid: organizationId,
+    UserBCeID: userId,
+    BusinessBCeID: organizationId,
     StaffCollection: ppl
   } as iDynamicsPostUsers;
 }
