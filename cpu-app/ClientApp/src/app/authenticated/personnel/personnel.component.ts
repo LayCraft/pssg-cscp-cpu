@@ -64,7 +64,7 @@ export class PersonnelComponent implements OnInit {
   save() {
     // make a person array to submit
     const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
-    const post = DynamicsPostUsers(this.stateService.userId.getValue(), cleanup);
+    const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), cleanup);
     this.personService.setPersons(post).subscribe(
       () => {
         this.notificationQueueService.addNotification('Personnel Saved', 'success');
