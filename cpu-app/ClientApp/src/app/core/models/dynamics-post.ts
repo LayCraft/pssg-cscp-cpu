@@ -7,7 +7,8 @@ export interface iDynamicsPostOrg {
   "Organization": iDynamicsOrganization;
 }
 export interface iDynamicsPostUsers {
-  "BCeID": string;
+  "Userbceid": string;
+  "Businessbceid": string;
   "StaffCollection": iDynamicsCrmContact[];
 }
 // this is a mapper function for posting back to dynamics

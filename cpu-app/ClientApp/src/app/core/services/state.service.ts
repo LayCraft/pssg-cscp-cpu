@@ -11,13 +11,14 @@ import { iDynamicsBlob } from '../models/dynamics-blob';
 })
 export class StateService {
   // these are observable states for the application load these in at login time.
+  // main is the whole blob of data from the get request
   public main: BehaviorSubject<Transmogrifier> = new BehaviorSubject(null);
   // human readable name for the organization
   public organizationName: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  // primary lookup data is the organization id.
+  // the organization's bceid.
   public organizationId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  // must post back with a BCeID
-  public bceid: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  // the user's bceid
+  public userId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   // global state of the login
   public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -29,21 +30,28 @@ export class StateService {
 
   login() {
     //TODO: set BCeID from siteminder
-    this.bceid.next('9e9b5111-51c9-e911-b80f-00505683fbf4');
+    this.userId.next('9e9b5111-51c9-e911-b80f-00505683fbf4');
+
     // on login collect the information from the organization id
-    this.mainService.getBlob(this.bceid.getValue()).subscribe((m: iDynamicsBlob) => {
-      // collect the blob into a useful object
-      const mainData = new Transmogrifier(m);
-      // save the useful blob in a behaviourSubject
-      this.main.next(mainData);
-      //save handy org name and id
-      this.organizationName.next(mainData.organizationMeta.organizationName);
-      this.organizationId.next(mainData.organizationMeta.organizationId);
-      // give a notification
-      this.notificationQueueService.addNotification(`${mainData.organizationMeta.organizationName} has been logged in successfully.`, 'success');
-      // set the logged in state
-      this.loggedIn.next(true);
-    });
+    this.mainService.getBlob(this.userId.getValue()).subscribe(
+      (m: iDynamicsBlob) => {
+        // collect the blob into a useful object
+        const mainData = new Transmogrifier(m);
+
+        // save the useful blob of viewmodels
+        this.main.next(mainData);
+
+        //save handy information. For when you don't want to bring in a whole transmogrifier into the component
+        this.organizationName.next(mainData.organizationMeta.organizationName);//what does dynamics say this organization's name is?
+        this.organizationId.next(mainData.organizationId);//what does dynamics say the organization's bceid is?
+        this.userId.next(mainData.userId);//what does dynamics say the user's bceid is?
+
+        // give a notification
+        this.notificationQueueService.addNotification(`${mainData.organizationMeta.organizationName} has been logged in successfully.`, 'success');
+        // set the logged in state
+        this.loggedIn.next(true);
+      }
+    );
   }
 
   logout() {
@@ -58,11 +66,13 @@ export class StateService {
   }
   refresh() {
     // quick refresh of data
-    this.mainService.getBlob(this.bceid.getValue()).subscribe((m: iDynamicsBlob) => {
-      // collect the blob into a useful object
-      const mainData = new Transmogrifier(m);
-      // save the useful blob in a behaviourSubject
-      this.main.next(mainData);
-    });
+    this.mainService.getBlob(this.userId.getValue()).subscribe(
+      (m: iDynamicsBlob) => {
+        // collect the blob into a useful object
+        const mainData = new Transmogrifier(m);
+        // save the useful blob in a behaviourSubject
+        this.main.next(mainData);
+      }
+    );
   }
 }

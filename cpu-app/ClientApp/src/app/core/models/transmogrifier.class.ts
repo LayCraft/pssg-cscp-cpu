@@ -9,12 +9,16 @@ import { iProgram } from './program';
 import { iDynamicsBlob } from './dynamics-blob';
 
 export class Transmogrifier {
+  public userId: string;
+  public organizationId: string;
   public organizationMeta: iOrganizationMeta;
   public persons: iPerson[];
   public contracts: iContract[];
   public ministryContact: iMinistryUser;
 
   constructor(b: iDynamicsBlob) {
+    this.userId = b.Userbceid;
+    this.organizationId = b.Businessbceid;
     this.organizationMeta = this.buildOrganizationMeta(b);
     this.persons = this.buildPersons(b);
     this.ministryContact = this.buildMinistryContact(b);
