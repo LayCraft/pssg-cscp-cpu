@@ -3,7 +3,6 @@ import { iContract } from '../../../core/models/contract';
 import { TaskStatus } from '../../../core/constants/task-status';
 import { FormTypes } from '../../../core/constants/form-types';
 import { iTask } from '../../../core/models/task';
-import { iProgram } from '../../../core/models/program';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
