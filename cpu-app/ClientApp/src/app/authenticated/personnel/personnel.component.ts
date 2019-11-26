@@ -57,7 +57,7 @@ export class PersonnelComponent implements OnInit {
         this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
       });
       // set the stepper to the first element
-      this.stepperService.setFirstStepperElement();
+      this.stepperService.setToFirstStepperElement();
     }
   }
 

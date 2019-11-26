@@ -3,10 +3,10 @@
     <h1 class="h2">Contract: {{contract.contractNumber}}</h1>
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
-        <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Current</a>
+        <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Current{{incompleteTasks.length ? ' ('+incompleteTasks.length+')':''}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="setCurrentTab(tabs[1])" [class.active]="currentTab===tabs[1]">Completed</a>
+        <a class="nav-link" (click)="setCurrentTab(tabs[1])" [class.active]="currentTab===tabs[1]">Completed{{completeTasks.length ? ' ('+completeTasks.length+')':''}}</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="setCurrentTab(tabs[2])" [class.active]="currentTab===tabs[2]">Programs</a>
@@ -17,10 +17,10 @@
     <span *ngIf="currentTab===tabs[0]">
       <table class="table table-sm table-striped">
         <thead class="thead">
-          <th scope="col">Status</th>
-          <th scope="col">Action</th>
-          <th scope="col">Description</th>
-          <th scope="col">Deadline</th>
+          <th style="width:15%" scope="col">Status</th>
+          <th style="width:30%" scope="col">Action</th>
+          <th style="width:40%" scope="col">Description</th>
+          <th style="width:15%" scope="col">Deadline</th>
         </thead>
         <tbody>
           <tr *ngFor="let task of incompleteTasks">

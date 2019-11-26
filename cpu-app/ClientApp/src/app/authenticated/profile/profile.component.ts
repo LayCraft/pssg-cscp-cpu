@@ -65,7 +65,12 @@ export class ProfileComponent implements OnInit {
       },
       err => console.log(err)
     )
-
+  }
+  onExit() {
+    if (confirm("All unsaved changes will be lost. Are you sure you want to return to the dashboard?")) {
+      // send the user back to the dashboard
+      this.router.navigate(['/authenticated/dashboard']);
+    }
   }
   onExecutiveContactChange(event: iPerson) {
     // cast the personish object to a person
