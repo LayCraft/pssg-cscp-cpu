@@ -105,6 +105,7 @@ export class ProgramApplicationComponent implements OnInit {
     ].forEach((f: iStepperElement) => {
       this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
     });
-
+    // put the page naviagation to the first page
+    this.stepperService.setToFirstStepperElement();
   }
 }

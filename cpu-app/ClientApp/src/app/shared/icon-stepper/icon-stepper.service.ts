@@ -44,7 +44,7 @@ export class IconStepperService {
     this.currentStepperElement.next(stepperElement); // makes the last element in the stepper always the one selected because last=current
 
     // be sure one is selected
-    this.checkForSelected();
+    // this.checkForSelected();
     // return
     return stepperElement;
   }
@@ -64,7 +64,7 @@ export class IconStepperService {
     if (this.currentStepperElement.getValue().id === id) { }
     // replace the behaviourSubject
     this.stepperElements.next(stepperElements);
-    this.checkForSelected();
+    // this.checkForSelected();
   }
   getStepperElement(id: string): iStepperElement {
     if (this.logging) { console.log('getStepperElement()') }
@@ -82,10 +82,11 @@ export class IconStepperService {
       }
     }
   }
-  setFirstStepperElement(): void {
-    this.setStepperElement(this.stepperElements.getValue()[0]);
-    this.checkForSelected();
+
+  setToFirstStepperElement(): void {
+    this.currentStepperElement.next(this.stepperElements.getValue()[0]);
   }
+
   setStepperElement(element: iStepperElement): void {
     if (this.logging) { console.log('setStepperElement()') }
     // collect the elements
@@ -99,7 +100,7 @@ export class IconStepperService {
     });
     // assign the stepper elements back to the behavioursubject
     this.stepperElements.next(stepperElements);
-    this.checkForSelected();
+    // this.checkForSelected();
   }
   setStepperElementProperty(id: string, property: string, value: any): void {
     if (this.logging) { console.log('setStepperElementProperty()') }
@@ -128,7 +129,7 @@ export class IconStepperService {
 
     // set it to the current
     this.currentStepperElement.next(element);
-    this.checkForSelected();
+    // this.checkForSelected();
   }
   initializeStepperElements(stepperElements: iStepperElement[]): void {
     if (this.logging) { console.log('initializeStepperElements()') }
@@ -143,7 +144,7 @@ export class IconStepperService {
     })
     // save the stepper elements
     this.stepperElements.next(newStepperElements);
-    this.checkForSelected();
+    // this.checkForSelected();
   }
   reset() {
     //clear the current stepper element
@@ -168,7 +169,7 @@ export class IconStepperService {
     } else if (!c && se.length) {
       // no currently selected and selectable items
       // pick the first element in the list.
-      this.currentStepperElement.next(se[0]);
+      this.setToFirstStepperElement();
     } else if (c && se.length) {
       // currently selected item and non null length
       // the item should be in the list. But it may not be if it was deleted from under us.
@@ -185,7 +186,7 @@ export class IconStepperService {
       if (!inStepperElements) {
         // there is no matching element so set the selected element to the first in the list
         // there must be one because se.length is true
-        this.currentStepperElement.next(this.stepperElements.getValue()[0]);
+        this.setToFirstStepperElement();
       }
     }
     else if (!c && !se.length) {
