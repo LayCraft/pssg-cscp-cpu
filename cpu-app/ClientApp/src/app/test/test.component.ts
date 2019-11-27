@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { iDynamicsExpenseReport } from '../core/models/dynamics-expense-report';
+import { iDynamicsScheduleGResponse } from '../core/models/dynamics-schedule-g-response';
 
 @Component({
   selector: 'app-test',
@@ -9,7 +9,7 @@ import { iDynamicsExpenseReport } from '../core/models/dynamics-expense-report';
 export class TestComponent implements OnInit {
 
   // store the results
-  input: iDynamicsExpenseReport;
+  input: iDynamicsScheduleGResponse;
   output: any;
 
   constructor(
