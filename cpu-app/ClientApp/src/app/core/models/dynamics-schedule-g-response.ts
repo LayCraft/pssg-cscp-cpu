@@ -31,5 +31,5 @@ export interface iDynamicsScheduleGResponse {
   Userbceid?: string;
   Businessbceid?: string;
   ScheduleGs?: iDynamicsScheduleGs[];
-  ScheduleGLineItems?: iDynamicsScheduleGLineItems;
+  ScheduleGLineItems?: iDynamicsScheduleGLineItems[];
 }

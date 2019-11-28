@@ -44,8 +44,6 @@ export class TestComponent implements OnInit {
       "_vsd_expenselineitem_value": "f7e71080-2cba-e911-b80f-00505683fbf4",
       "vsd_scheduleglineitemid": "e580dbe7-a910-ea11-b810-005056830319"
     }, {
-      "@odata.type": "#Microsoft.Dynamics.CRM.vsd_scheduleglineitem",
-      "@odata.etag": "W/\"1974720\"",
       "_transactioncurrencyid_value": "332fffff-f04b-e911-b80c-00505683fbf4",
       "_vsd_expenselineitem_value": "b4cd7aa0-2cba-e911-b80f-00505683fbf4",
       "_vsd_schedulegid_value": "e480dbe7-a910-ea11-b810-005056830319",
@@ -53,8 +51,6 @@ export class TestComponent implements OnInit {
       "vsd_scheduleglineitemid": "e680dbe7-a910-ea11-b810-005056830319",
       "vsd_quarterlybudgetedamount": 1250.00
     }, {
-      "@odata.type": "#Microsoft.Dynamics.CRM.vsd_scheduleglineitem",
-      "@odata.etag": "W/\"1974721\"",
       "_transactioncurrencyid_value": "332fffff-f04b-e911-b80c-00505683fbf4",
       "_vsd_expenselineitem_value": "bd4abcc6-2dba-e911-b80f-00505683fbf4",
       "_vsd_schedulegid_value": "e480dbe7-a910-ea11-b810-005056830319",

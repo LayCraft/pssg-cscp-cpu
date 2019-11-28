@@ -11,7 +11,7 @@
   <label for="personPicker">{{label}}</label>
   <select class="form-control" name="personPicker" id="personPicker">
     <option *ngFor="let person of persons" (click)="addPerson(person.personId)" [value]="person.personId" [class.disabled]="personInPersonsList(person.personId)">
-      {{nameAssemble(person.firstName,person.middleName,person.lastName)}}
+      {{nameAssemble(person.firstName,person.middleName,person.lastName)}} {{' - '+person.title}}
     </option>
   </select>
 </div>
