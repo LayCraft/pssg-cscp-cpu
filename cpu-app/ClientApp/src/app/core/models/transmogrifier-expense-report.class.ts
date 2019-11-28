@@ -23,25 +23,20 @@ const ExpenseItemLabels: {} = {
 
 export interface iExpenseReport {
   // salary benefits program delivery and administration expense
-  administrationCostDescription: string;
-  administrationCostValue: number;
-  administrationCostAnnualBudget: number;
-  administrationCostQuarterlyBudget: number;
+  administrationDescription: string;
+  administrationValue: number;
+  administrationAnnualBudget: number;
+  administrationQuarterlyBudget: number;
 
-  programDeliveryCostDescription: string;
-  programDeliveryCostValue: number;
-  programDeliveryCostAnnualBudget: number;
-  programDeliveryCostQuarterlyBudget: number;
+  programDeliveryDescription: string;
+  programDeliveryValue: number;
+  programDeliveryAnnualBudget: number;
+  programDeliveryQuarterlyBudget: number;
 
-  salariesBenefitsCostDescription: string;
-  salariesBenefitsCostValue: number;
-  salariesBenefitsCostAnnualBudget: number;
-  salariesBenefitsCostQuarterlyBudget: number;
-
-  programTravelCostDescription: string;
-  programTravelCostValue: number;
-  programTravelCostAnnualBudget: number;
-  programTravelCostQuarterlyBudget: number;
+  salariesBenefitsDescription: string;
+  salariesBenefitsValue: number;
+  salariesBenefitsAnnualBudget: number;
+  salariesBenefitsQuarterlyBudget: number;
 
   programExpenseLineItems: iLineItem[];
 }
@@ -61,17 +56,49 @@ export class TransmogrifierExpenseReport {
     this.userId = g.Userbceid;// this is the user's bceid
     this.organizationId = g.Businessbceid; // this is the organization's bceid
     this.expenseReports = this.buildExpenseReports(g);
-    // for every item in the schedule g's
-    // for every item in the schedule g line items
-    // if the schedule G identifier guid matches the guid for the line items
-    // take the line item and determine which type it is
-    // assign the values in the item into the correct fields for the type
-    //label
-    //annualBudget
-
-
   }
   buildExpenseReports(g: iDynamicsScheduleGResponse): iExpenseReport[] {
-    return [];
+    const expenseReport: iExpenseReport[] = [];
+    // for every item in the schedule g's
+    for (let sched of g.ScheduleGs) {
+      const e: iExpenseReport = {
+        // administration costs
+        administrationAnnualBudget: sched.vsd_yeartodateprogramadministration || 0,
+        administrationDescription: sched.vsd_programadministrationexplanation || '',
+        administrationQuarterlyBudget: sched.vsd_quarterlybudgetedprogramadministration || 0,
+        administrationValue: 911, //TODO
+
+        // program delivery costs
+        programDeliveryAnnualBudget: sched.vsd_yeartodateprogramdelivery || 0,
+        programDeliveryDescription: sched.vsd_programdeliveryexplanations || '',
+        programDeliveryQuarterlyBudget: sched.vsd_quarterlybudgetedprogramdelivery || 0,
+        programDeliveryValue: 911, //TODO
+
+        // salaries and benefits costs
+        salariesBenefitsAnnualBudget: sched.vsd_yeartodatesalariesandbenefits || 0,
+        salariesBenefitsDescription: sched.vsd_salariesandbenefitsexplanation || '',
+        salariesBenefitsQuarterlyBudget: sched.vsd_quarterlybudgetedsalariesbenefits || 0,
+        salariesBenefitsValue: 911, //TODO
+
+        // placeholder
+        programExpenseLineItems: [],
+      };
+      // for every item in the schedule g line items
+      for (let item of g.ScheduleGLineItems) {
+        // if the schedule G identifier guid matches the guid for the line items
+        if (item._vsd_schedulegid_value === sched.vsd_schedulegid) {
+          e.programExpenseLineItems.push({
+            // get the correct label for the line from the list of constant values
+            label: ExpenseItemLabels[item._vsd_expenselineitem_value.toUpperCase()] || "Unknown Line Item Type",
+            annualBudget: item.vsd_annualbudgetedamount || 0,
+            quarterlyBudget: item.vsd_quarterlybudgetedamount || 0,
+            actual: item.vsd_actualexpensescurrentquarter || 0,
+          });
+        }
+      }
+      // add to the collection
+      expenseReport.push(e);
+    }
+    return expenseReport;
   }
 }
