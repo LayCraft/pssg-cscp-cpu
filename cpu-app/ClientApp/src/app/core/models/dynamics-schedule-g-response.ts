@@ -12,7 +12,7 @@ export interface iDynamicsScheduleGs {
   vsd_yeartodatevarianceprogramadministration?: number;
 
   vsd_programdeliverybudgeted?: number;
-  vsd_programdeliverycurrentquarter?: string;
+  vsd_programdeliverycurrentquarter?: number;
   vsd_programdeliveryexplanations?: string;
   vsd_quarterlybudgetedprogramdelivery?: number;
   vsd_yeartodateprogramdelivery?: number;

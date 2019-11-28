@@ -66,19 +66,19 @@ export class TransmogrifierExpenseReport {
         administrationAnnualBudget: sched.vsd_yeartodateprogramadministration || 0,
         administrationDescription: sched.vsd_programadministrationexplanation || '',
         administrationQuarterlyBudget: sched.vsd_quarterlybudgetedprogramadministration || 0,
-        administrationValue: 911, //TODO
+        administrationValue: sched.vsd_programadministrationcurrentquarter || 0,
 
         // program delivery costs
         programDeliveryAnnualBudget: sched.vsd_yeartodateprogramdelivery || 0,
         programDeliveryDescription: sched.vsd_programdeliveryexplanations || '',
         programDeliveryQuarterlyBudget: sched.vsd_quarterlybudgetedprogramdelivery || 0,
-        programDeliveryValue: 911, //TODO
+        programDeliveryValue: sched.vsd_programdeliverycurrentquarter || 0,
 
         // salaries and benefits costs
         salariesBenefitsAnnualBudget: sched.vsd_yeartodatesalariesandbenefits || 0,
         salariesBenefitsDescription: sched.vsd_salariesandbenefitsexplanation || '',
         salariesBenefitsQuarterlyBudget: sched.vsd_quarterlybudgetedsalariesbenefits || 0,
-        salariesBenefitsValue: 911, //TODO
+        salariesBenefitsValue: sched.vsd_salariesbenefitscurrentquarter || 0, //TODO
 
         // placeholder
         programExpenseLineItems: [],
