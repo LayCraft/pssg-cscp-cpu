@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MainService } from '../core/services/main.service';
-import { Transmogrifier } from '../core/models/transmogrifier.class';
-import { ProfileService } from '../core/services/profile.service';
-import { PersonService } from '../core/services/person.service';
+import { iDynamicsScheduleGResponse } from '../core/models/dynamics-schedule-g-response';
+import { TransmogrifierExpenseReport } from '../core/models/transmogrifier-expense-report.class';
 
 @Component({
   selector: 'app-test',
@@ -12,55 +10,62 @@ import { PersonService } from '../core/services/person.service';
 export class TestComponent implements OnInit {
 
   // store the results
-  trans: Transmogrifier;
-  orgChange: string;
+  input: iDynamicsScheduleGResponse = {
+    "@odata.context": "https://cscp-vs.dev.jag.gov.bc.ca/api/data/v9.0/$metadata#Microsoft.Dynamics.CRM.vsd_GetCPUScheduleGResponse",
+    "IsSuccess": true,
+    "Result": "CPU Organization found..",
+    "Userbceid": "9e9b5111-51c9-e911-b80f-00505683fbf4",
+    "Businessbceid": "fd889a40-14b2-e811-8163-480fcff4f621",
+    "ScheduleGs": [
+      {
+        "_transactioncurrencyid_value": "332fffff-f04b-e911-b80c-00505683fbf4",
+        "vsd_salaryandbenefitsbudgeted": 60000.0000,
+        "vsd_schedulegid": "e480dbe7-a910-ea11-b810-005056830319",
+        "vsd_yeartodatesalariesandbenefits": 1000.0000,
+        "vsd_programdeliverybudgeted": 11000.0000,
+        "vsd_reportreviewed": false,
+        "vsd_quarterlybudgetedprogramdelivery": 2750.00,
+        "vsd_yeartodateprogramadministration": 800.0000,
+        "vsd_quarterlybudgetedsalariesbenefits": 15000.00,
+        "vsd_cpu_reportingperiod": 100000002,
+        "vsd_yeartodatevarianceprogramadministration": 19200.00,
+        "vsd_quarterlybudgetedprogramadministration": 5000.00,
+        "vsd_programadministrationbudgeted": 20000.0000,
+        "vsd_yeartodatevarianceprogramdelivery": 10800.00,
+        "_vsd_contract_value": "9e9b5111-51c9-e911-b80f-00505683fbf4",
+        "vsd_yeartodatevariancesalariesbenefits": 59000.0000,
+        "vsd_yeartodateprogramdelivery": 200.0000,
+        "_vsd_program_value": "0e309304-c4e6-e911-b811-00505683fbf4",
+        "_vsd_serviceprovider_value": "ee3db438-1ea8-e911-b80e-00505683fbf4"
+      }
+    ],
+    "ScheduleGLineItems": [{
+      "@odata.type": "#Microsoft.Dynamics.CRM.vsd_scheduleglineitem",
+      "@odata.etag": "W/\"1974719\"",
+      "_vsd_schedulegid_value": "e480dbe7-a910-ea11-b810-005056830319",
+      "_vsd_expenselineitem_value": "f7e71080-2cba-e911-b80f-00505683fbf4",
+      "vsd_scheduleglineitemid": "e580dbe7-a910-ea11-b810-005056830319"
+    }, {
+      "_transactioncurrencyid_value": "332fffff-f04b-e911-b80c-00505683fbf4",
+      "_vsd_expenselineitem_value": "b4cd7aa0-2cba-e911-b80f-00505683fbf4",
+      "_vsd_schedulegid_value": "e480dbe7-a910-ea11-b810-005056830319",
+      "vsd_annualbudgetedamount": 5000.0000,
+      "vsd_scheduleglineitemid": "e680dbe7-a910-ea11-b810-005056830319",
+      "vsd_quarterlybudgetedamount": 1250.00
+    }, {
+      "_transactioncurrencyid_value": "332fffff-f04b-e911-b80c-00505683fbf4",
+      "_vsd_expenselineitem_value": "bd4abcc6-2dba-e911-b80f-00505683fbf4",
+      "_vsd_schedulegid_value": "e480dbe7-a910-ea11-b810-005056830319",
+      "vsd_annualbudgetedamount": 20000.0000,
+      "vsd_scheduleglineitemid": "e780dbe7-a910-ea11-b810-005056830319",
+      "vsd_quarterlybudgetedamount": 5000.00
+    }]
+  } as iDynamicsScheduleGResponse;
+  output: TransmogrifierExpenseReport;
 
-  bceid: string;
   constructor(
-    private mainService: MainService,
-    private profileService: ProfileService,
-    private personService: PersonService,
   ) { }
   ngOnInit() {
-    this.bceid = "9e9b5111-51c9-e911-b80f-00505683fbf4";
-    this.orgChange = `{
-      "BCeID": "9e9b5111-51c9-e911-b80f-00505683fbf4",
-      "StaffCollection": [
-        {
-          "address1_city": "Vancouver",
-          "address1_line1": "232 Smith St",
-          "address1_stateorprovince": "British Columbia",
-          "contactid": "dcc1172b-87f6-e911-b811-00505683fbf4",
-          "emailaddress1": "AdamNew1@gmail.com",
-          "firstname": "Adam New1",
-          "lastname": "Rodger New1"
-        }
-      ]
-    }`;
-    this.refresh();
-  }
-
-  postOrg() {
-    this.profileService.updateOrg(JSON.parse(this.orgChange)).subscribe(o => {
-      console.log(o);
-      this.refresh();
-    },
-      err => alert(JSON.stringify(err))
-    );
-  }
-  postUsers() {
-    this.personService.setPersons(JSON.parse(this.orgChange)).subscribe(o => {
-      console.log(o);
-      this.refresh();
-    },
-      err => alert(JSON.stringify(err))
-    );
-  }
-
-  refresh() {
-    //set the current object
-    // this.mainService.getBlob(this.bceid).subscribe(t => {
-    //   this.trans = new Transmogrifier(t);
-    // });
+    this.output = new TransmogrifierExpenseReport(this.input);
   }
 }
