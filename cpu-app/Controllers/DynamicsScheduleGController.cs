@@ -218,11 +218,6 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				client.DefaultRequestHeaders.Add("return-client-request-id", "true");
 				client.DefaultRequestHeaders.Add("Accept", "application/json");
 
-				// string adfsOauth2Uri = _configuration["ADFS_OAUTH2_URI"]; // ADFS OAUTH2 URI - usually /adfs/oauth2/token on STS
-
-				// string applicationGroupResource = _configuration["DYNAMICS_APP_GROUP_RESOURCE"]; // ADFS 2016 Application Group resource (URI)
-				// string applicationGroupClientId = _configuration["DYNAMICS_APP_GROUP_CLIENT_ID"]; // ADFS 2016 Application Group Client ID
-
 				// Construct the body of the request
 				var pairs = new List<KeyValuePair<string, string>>
 					{
