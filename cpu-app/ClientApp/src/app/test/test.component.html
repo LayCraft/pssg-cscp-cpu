@@ -1,12 +1,16 @@
 <main class="container">
   <div class="row">
-    <div class="col">
-      <pre>{{trans|json}}</pre>
+    <div class="col-6">
+      <h1>
+        Dynamics Input
+      </h1>
+      <pre>{{input|json}}</pre>
     </div>
-    <div class="col">
-      <textarea class="form-control" [(ngModel)]="orgChange"></textarea>
-      <button class="form-control" (click)="postOrg()">Update Org</button>
-      <button class="form-control" (click)="postUsers()">Update Users</button>
+    <div class="col-6">
+      <h1>
+        Transmogrified Output
+      </h1>
+      <pre>{{output|json}}</pre>
     </div>
   </div>
 </main>
