@@ -69,12 +69,20 @@
                       ${{(er.expenseReport.salariesBenefitsValue + er.expenseReport.programDeliveryValue + er.expenseReport.administrationValue)|number:'1.0-0'}}
                     </td>
                     <td>
-                      {{((((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue))+
-                        (((er.expenseReport.programDeliveryAnnualBudget*0.25)-er.expenseReport.programDeliveryValue))+
-                        (((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)))|number:'1.0-0'}}
+                      {{(
+                          ((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)+
+                          ((er.expenseReport.programDeliveryAnnualBudget*0.25)-er.expenseReport.programDeliveryValue)+
+                          ((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)
+                        )|number:'1.0-0'}}
                     </td>
                     <td>
-
+                      {{
+                        (
+                          (er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)+
+                          (er.expenseReport.programDeliveryAnnualBudget-er.expenseReport.programDeliveryValue)+
+                          (er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)
+                        )|number:'1.0-0'
+                      }}
                     </td>
                   </tr>
                 </tfoot>
