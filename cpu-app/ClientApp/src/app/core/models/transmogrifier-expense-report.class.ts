@@ -41,6 +41,7 @@ export interface iExpenseReport {
   programExpenseLineItems: iLineItem[];
 }
 interface iLineItem {
+  itemId: string;
   label: string;
   annualBudget: number;
   quarterlyBudget: number;
@@ -91,6 +92,7 @@ export class TransmogrifierExpenseReport {
           annualBudget: item.vsd_annualbudgetedamount || 0,
           quarterlyBudget: item.vsd_quarterlybudgetedamount || 0,
           actual: item.vsd_actualexpensescurrentquarter || 0,
+          itemId: item.vsd_scheduleglineitemid,
         });
       }
     }
