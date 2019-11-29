@@ -61,4 +61,12 @@ export class ExpenseReportComponent implements OnInit {
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
   }
+  sumCosts(one, two, three): number {
+    let x = 0;
+    if (typeof one === 'number') x = x + one;
+    if (typeof two === 'number') x = x + two;
+    if (typeof three === 'number') x = x + three;
+    // summarize them if they are numbers
+    return x;
+  }
 }

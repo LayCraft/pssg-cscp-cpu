@@ -16,7 +16,8 @@
           <h1>{{currentStepperElement.itemName}}</h1>
         </div>
         <div *ngFor="let item of stepperElements">
-          <span *ngIf="item.id===currentStepperElement.id">
+          <!-- check if the expense report has loaded and the current stepper is correct -->
+          <span *ngIf="er && item.id===currentStepperElement.id">
             <div *ngIf="item.discriminator === discriminators[0]">
               <table class="table table-sm table-striped">
                 <thead class="thead">
@@ -30,37 +31,51 @@
                 <tbody>
                   <tr>
                     <th scope="row">Salaries and Benefits</th>
-                    <td>Annual Budgeted Amount</td>
-                    <td>Quarterly Budgeted Amount</td>
-                    <td>Actual Expenditures, Current Quarter</td>
-                    <td>Quarterly Variance</td>
-                    <td>Year to Date Variance</td>
+                    <td>${{(er.expenseReport.salariesBenefitsAnnualBudget|number:'1.0-0')||0}}</td>
+                    <td>${{(er.expenseReport.salariesBenefitsQuarterlyBudget|number:'1.0-0')||0}}</td>
+                    <td>
+                      <input [(ngModel)]="er.expenseReport.salariesBenefitsValue" type="number" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue">
+                    </td>
+                    <td>${{((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                    <td>${{(er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Program Delivery</th>
-                    <td>Annual Budgeted Amount</td>
-                    <td>Quarterly Budgeted Amount</td>
-                    <td>Actual Expenditures, Current Quarter</td>
-                    <td>Quarterly Variance</td>
-                    <td>Year to Date Variance</td>
+                    <td>${{(er.expenseReport.programDeliveryAnnualBudget|number:'1.0-0')||0}}</td>
+                    <td>${{(er.expenseReport.programDeliveryQuarterlyBudget|number:'1.0-0')||0}}</td>
+                    <td>
+                      <input [(ngModel)]="er.expenseReport.programDeliveryValue" type="number" class="form-control" id="programDeliveryValue" name="programDeliveryValue">
+                    </td>
+                    <td>${{((er.expenseReport.programDeliveryAnnualBudget*0.25)-er.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
+                    <td>${{(er.expenseReport.programDeliveryAnnualBudget-er.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Program Administration</th>
-                    <td>Annual Budgeted Amount</td>
-                    <td>Quarterly Budgeted Amount</td>
-                    <td>Actual Expenditures, Current Quarter</td>
-                    <td>Quarterly Variance</td>
-                    <td>Year to Date Variance</td>
+                    <td>${{(er.expenseReport.administrationAnnualBudget|number:'1.0-0')||0}}</td>
+                    <td>${{(er.expenseReport.administrationQuarterlyBudget|number:'1.0-0')||0}}</td>
+                    <td>
+                      <input [(ngModel)]="er.expenseReport.administrationValue" type="number" class="form-control" id="administrationValue" name="administrationValue">
+                    </td>
+                    <td>${{((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                    <td>${{(er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr>
                     <th scope="row">Total</th>
-                    <td>Annual Budgeted Amount</td>
-                    <td>Quarterly Budgeted Amount</td>
-                    <td>Actual Expenditures, Current Quarter</td>
-                    <td>Quarterly Variance</td>
-                    <td>Year to Date Variance</td>
+                    <td>${{(er.expenseReport.salariesBenefitsAnnualBudget+er.expenseReport.programDeliveryAnnualBudget+er.expenseReport.administrationAnnualBudget)||0 |number:'1.0-0'}}</td>
+                    <td>${{(er.expenseReport.salariesBenefitsQuarterlyBudget+er.expenseReport.programDeliveryQuarterlyBudget+er.expenseReport.administrationQuarterlyBudget)||0|number:'1.0-0'}}</td>
+                    <td>
+                      ${{(er.expenseReport.salariesBenefitsValue + er.expenseReport.programDeliveryValue + er.expenseReport.administrationValue)|number:'1.0-0'}}
+                    </td>
+                    <td>
+                      {{((((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue))+
+                        (((er.expenseReport.programDeliveryAnnualBudget*0.25)-er.expenseReport.programDeliveryValue))+
+                        (((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)))|number:'1.0-0'}}
+                    </td>
+                    <td>
+
+                    </td>
                   </tr>
                 </tfoot>
               </table>
@@ -75,7 +90,7 @@
           </span>
         </div>
       </div>
-      <!-- <pre>List:{{stepperElements|json}}</pre> -->
+      <pre>ER:{{er|json}}</pre>
     </div>
   </div>
 </div>

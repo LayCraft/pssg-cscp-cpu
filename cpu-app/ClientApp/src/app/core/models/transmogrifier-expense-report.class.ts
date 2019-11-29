@@ -61,6 +61,7 @@ export class TransmogrifierExpenseReport {
   buildExpenseReport(g: iDynamicsScheduleGResponse): iExpenseReport {
     // for every item in the schedule g's
     const e: iExpenseReport = {
+
       // administration costs
       administrationAnnualBudget: g.ScheduleG.vsd_yeartodateprogramadministration || 0,
       administrationDescription: g.ScheduleG.vsd_programadministrationexplanation || '',
