@@ -13,8 +13,9 @@
     <div class="col">
       <div *ngIf="currentStepperElement">
         <div class="page-header">
-          <h1>{{currentStepperElement.itemName}}</h1>
+          <h1>Program Expense Report</h1>
         </div>
+        <h2 class="blue-header">{{currentStepperElement.itemName}}</h2>
         <div *ngFor="let item of stepperElements">
           <!-- check if the expense report has loaded and the current stepper is correct -->
           <span *ngIf="er && item.id===currentStepperElement.id">
@@ -102,7 +103,22 @@
                   </tr>
                 </tfoot>
               </table>
-
+              <h2 class="blue-header">
+                Explanation of Variances
+              </h2>
+              <p>Please explain the variances in this section. Program managers must be contacted if a program is unstaffed for 30 days or more.</p>
+              <div class="form-group">
+                <label for="salariesBenefitsDescription">Salaries and Benefits</label>
+                <textarea [(ngModel)]="er.expenseReport.salariesBenefitsDescription" name="salariesBenefitsDescription" id="salariesBenefitsDescription" cols="30" rows="10" class="form-control" placeholder="Comments here..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="programDeliveryDescription">Program Delivery Costs</label>
+                <textarea [(ngModel)]="er.expenseReport.programDeliveryDescription" name="programDeliveryDescription" id="programDeliveryDescription" cols="30" rows="10" class="form-control" placeholder="Comments here..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="administrationDescription">Administration Costs</label>
+                <textarea [(ngModel)]="er.expenseReport.administrationDescription" name="administrationDescription" id="administrationDescription" cols="30" rows="10" class="form-control" placeholder="Comments here..."></textarea>
+              </div>
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
               page 2
