@@ -134,23 +134,20 @@
                 <tbody>
                   <tr *ngFor="let item of er.expenseReport.programExpenseLineItems">
                     <th scope="row">{{item.label}}</th>
-                    <td>{{item.annualBudget}}</td>
-                    <td>{{item.quarterlyBudget}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-
-                    <!-- <th scope="row">Salaries and Benefits</th>
-                      <td>${{(er.expenseReport.salariesBenefitsAnnualBudget|number:'1.0-0')||0}}</td>
-                      <td>${{(er.expenseReport.salariesBenefitsQuarterlyBudget|number:'1.0-0')||0}}</td>
-                      <td>
-                        <input [(ngModel)]="er.expenseReport.salariesBenefitsValue" type="number" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue">
-                      </td>
-                      <td>${{((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
-                      <td>${{(er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td> -->
+                    <td>${{item.annualBudget||0}}</td>
+                    <td>${{item.quarterlyBudget||0}}</td>
+                    <td>
+                      <input [(ngModel)]="item.actual" type="number" class="form-control" [id]="item.itemId" [name]="item.itemId">
+                    </td>
+                    <td>
+                      ${{((item.annualBudget*0.25)-item.actual)|number:'1.0-0'}}
+                    </td>
+                    <td>
+                      ${{(item.annualBudget-item.actual)|number:'1.0-0'}}
+                    </td>
                   </tr>
                 </tbody>
-                <tfoot>
+                <!-- <tfoot>
                   <tr>
                     <th scope="row">Total</th>
                     <td>
@@ -190,7 +187,7 @@
                       </strong>
                     </td>
                   </tr>
-                </tfoot>
+                </tfoot> -->
               </table>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">
