@@ -199,7 +199,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			return new Tuple<int, string, HttpResponseMessage>(100, "", null);
 		}
 		[HttpPost("{scheduleGId}")]
-		public async Task<IActionResult> SetScheduleG([FromBody] Models.DynamicsOrg model)
+		public async Task<IActionResult> SetScheduleG([FromBody] Models.DynamicsScheduleG model)
 		{
 			if (model == null)
 			{
