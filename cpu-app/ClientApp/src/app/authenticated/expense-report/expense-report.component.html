@@ -22,7 +22,7 @@
             <div *ngIf="item.discriminator === discriminators[0]">
               <table class="table table-sm table-striped">
                 <thead class="thead">
-                  <th scope="col">Expense Catgory</th>
+                  <th scope="col">Expense Category</th>
                   <th scope="col">Annual Budgeted Amount</th>
                   <th scope="col">Quarterly Budgeted Amount</th>
                   <th scope="col">Actual Expenditures, Current Quarter</th>
@@ -104,9 +104,9 @@
                 </tfoot>
               </table>
               <h2 class="blue-header">
-                Explanation of Variances
+                Explanation for Variances
               </h2>
-              <p>Please explain the variances in this section. Program managers must be contacted if a program is unstaffed for 30 days or more.</p>
+              <p>Please explain the variances in this section. Why were expenditures above or below the quarterly budgeted amount? Program managers must be contacted if a program is unstaffed for 30 days or more.</p>
               <div class="form-group">
                 <label for="salariesBenefitsDescription">Salaries and Benefits</label>
                 <textarea [(ngModel)]="er.expenseReport.salariesBenefitsDescription" name="salariesBenefitsDescription" id="salariesBenefitsDescription" cols="30" rows="10" class="form-control" placeholder="Comments here..."></textarea>
@@ -121,7 +121,77 @@
               </div>
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
-              page 2
+              <p>Please complete your budgeted and actual expenditures for the following specific line items.</p>
+              <table class="table table-sm table-striped">
+                <thead class="thead">
+                  <th scope="col">Expense Category</th>
+                  <th scope="col">Annual Budgeted Amount</th>
+                  <th scope="col">Quarterly Budgeted Amount</th>
+                  <th scope="col">Actual Expenditures, Current Quarter</th>
+                  <th scope="col">Quarterly Variance</th>
+                  <th scope="col">Year to Date Variance</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of er.expenseReport.programExpenseLineItems">
+                    <th scope="row">{{item.label}}</th>
+                    <td>{{item.annualBudget}}</td>
+                    <td>{{item.quarterlyBudget}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                    <!-- <th scope="row">Salaries and Benefits</th>
+                      <td>${{(er.expenseReport.salariesBenefitsAnnualBudget|number:'1.0-0')||0}}</td>
+                      <td>${{(er.expenseReport.salariesBenefitsQuarterlyBudget|number:'1.0-0')||0}}</td>
+                      <td>
+                        <input [(ngModel)]="er.expenseReport.salariesBenefitsValue" type="number" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue">
+                      </td>
+                      <td>${{((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                      <td>${{(er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td> -->
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th scope="row">Total</th>
+                    <td>
+                      <strong>
+                        ${{(er.expenseReport.salariesBenefitsAnnualBudget+er.expenseReport.programDeliveryAnnualBudget+er.expenseReport.administrationAnnualBudget)||0 |number:'1.0-0'}}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        ${{(er.expenseReport.salariesBenefitsQuarterlyBudget+er.expenseReport.programDeliveryQuarterlyBudget+er.expenseReport.administrationQuarterlyBudget)||0|number:'1.0-0'}}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        ${{(er.expenseReport.salariesBenefitsValue + er.expenseReport.programDeliveryValue + er.expenseReport.administrationValue)|number:'1.0-0'}}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        {{(
+                            ((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)+
+                            ((er.expenseReport.programDeliveryAnnualBudget*0.25)-er.expenseReport.programDeliveryValue)+
+                            ((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)
+                            )|number:'1.0-0'
+                          }}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        {{
+                            (
+                              (er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)+
+                              (er.expenseReport.programDeliveryAnnualBudget-er.expenseReport.programDeliveryValue)+
+                              (er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)
+                            )|number:'1.0-0'
+                          }}
+                      </strong>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">
               page 3
