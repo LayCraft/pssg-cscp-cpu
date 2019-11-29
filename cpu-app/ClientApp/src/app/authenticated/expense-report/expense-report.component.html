@@ -18,7 +18,53 @@
         <div *ngFor="let item of stepperElements">
           <span *ngIf="item.id===currentStepperElement.id">
             <div *ngIf="item.discriminator === discriminators[0]">
-              page 1
+              <table class="table table-sm table-striped">
+                <thead class="thead">
+                  <th scope="col">Expense Catgory</th>
+                  <th scope="col">Annual Budgeted Amount</th>
+                  <th scope="col">Quarterly Budgeted Amount</th>
+                  <th scope="col">Actual Expenditures, Current Quarter</th>
+                  <th scope="col">Quarterly Variance</th>
+                  <th scope="col">Year to Date Variance</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Salaries and Benefits</th>
+                    <td>Annual Budgeted Amount</td>
+                    <td>Quarterly Budgeted Amount</td>
+                    <td>Actual Expenditures, Current Quarter</td>
+                    <td>Quarterly Variance</td>
+                    <td>Year to Date Variance</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Program Delivery</th>
+                    <td>Annual Budgeted Amount</td>
+                    <td>Quarterly Budgeted Amount</td>
+                    <td>Actual Expenditures, Current Quarter</td>
+                    <td>Quarterly Variance</td>
+                    <td>Year to Date Variance</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Program Administration</th>
+                    <td>Annual Budgeted Amount</td>
+                    <td>Quarterly Budgeted Amount</td>
+                    <td>Actual Expenditures, Current Quarter</td>
+                    <td>Quarterly Variance</td>
+                    <td>Year to Date Variance</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th scope="row">Total</th>
+                    <td>Annual Budgeted Amount</td>
+                    <td>Quarterly Budgeted Amount</td>
+                    <td>Actual Expenditures, Current Quarter</td>
+                    <td>Quarterly Variance</td>
+                    <td>Year to Date Variance</td>
+                  </tr>
+                </tfoot>
+              </table>
+
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
               page 2
