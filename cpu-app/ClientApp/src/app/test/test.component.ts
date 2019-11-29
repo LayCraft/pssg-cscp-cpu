@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { iDynamicsScheduleGResponse } from '../core/models/dynamics-schedule-g-response';
 import { TransmogrifierExpenseReport } from '../core/models/transmogrifier-expense-report.class';
+import { ExpenseReportService } from '../core/services/expense-report.service';
 
 @Component({
   selector: 'app-test',
@@ -64,8 +65,12 @@ export class TestComponent implements OnInit {
   output: TransmogrifierExpenseReport;
 
   constructor(
+    private expenseReportService: ExpenseReportService
   ) { }
   ngOnInit() {
-    this.output = new TransmogrifierExpenseReport(this.input);
+    this.expenseReportService.getScheduleG("e480dbe7-a910-ea11-b810-005056830319").subscribe(g => {
+      this.output = new TransmogrifierExpenseReport(g);
+    },
+      err => console.log(err));
   }
 }
