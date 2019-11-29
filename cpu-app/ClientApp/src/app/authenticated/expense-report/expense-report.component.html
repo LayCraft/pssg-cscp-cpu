@@ -1,1 +1,35 @@
-<pre>{{er|json}}</pre>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <section class="application-nav sticky-top">
+        <div style="max-height: 90%;">
+          <app-icon-stepper></app-icon-stepper>
+        </div>
+        <!-- <button class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
+        <button class="btn btn-primary mt-2" (click)="exit()">Exit</button> -->
+      </section>
+    </div>
+
+    <div class="col">
+      <div *ngIf="currentStepperElement">
+        <div class="page-header">
+          <h1>{{currentStepperElement.itemName}}</h1>
+        </div>
+        <div *ngFor="let item of stepperElements">
+          <span *ngIf="item.id===currentStepperElement.id">
+            <div *ngIf="item.discriminator === discriminators[0]">
+              page 1
+            </div>
+            <div *ngIf="item.discriminator === discriminators[1]">
+              page 2
+            </div>
+            <div *ngIf="item.discriminator === discriminators[2]">
+              page 3
+            </div>
+          </span>
+        </div>
+      </div>
+      <!-- <pre>List:{{stepperElements|json}}</pre> -->
+    </div>
+  </div>
+</div>
