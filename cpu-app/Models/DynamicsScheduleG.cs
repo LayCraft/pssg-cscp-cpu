@@ -11,8 +11,8 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string BusinessBCeID { get; set; }
 		public string UserBCeID { get; set; }
 
-		public DynamicsOrganization Organization { get; set; }
-		public DynamicsCrmContact[] StaffCollection { get; set; }
+		public DynamicsScheduleGCollection[] ScheduleGCollection { get; set; }
+		public DynamicsScheduleGLineItemCollection[] ScheduleGLineItemCollection { get; set; }
 
 	}
 }
