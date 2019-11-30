@@ -15,7 +15,7 @@ export class ExpenseReportComponent implements OnInit {
   discriminators: string[] = ['salary_benefits', 'program_expense', 'authorization']
 
   // for variable length line item sums
-  lineItemSums: {} = {
+  lineItemSums = {
     annualBudgetSum: null,
     quarterlyBudgetSum: null,
     actualSum: null,
@@ -90,8 +90,15 @@ export class ExpenseReportComponent implements OnInit {
     this.lineItemSums['quarterlyVarianceSum'] = this.lineItemSums['annualBudgetSum'] * 0.25 - this.lineItemSums['actualSum'];
     //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
-
   }
-
-
+  updateLineItemSums() {
+    //actual expendatures this quarter
+    this.lineItemSums['actualSum'] = this.er.expenseReport.programExpenseLineItems
+      .map(l => l.actual)
+      .reduce((prev, curr) => prev + curr);
+    //quarterly variance
+    this.lineItemSums['quarterlyVarianceSum'] = this.lineItemSums['annualBudgetSum'] * 0.25 - this.lineItemSums['actualSum'];
+    //YTD variance
+    this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
+  }
 }
