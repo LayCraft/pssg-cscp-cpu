@@ -14,6 +14,15 @@ export class ExpenseReportComponent implements OnInit {
   currentStepperElement: iStepperElement;
   discriminators: string[] = ['salary_benefits', 'program_expense', 'authorization']
 
+  // for variable length line item sums
+  lineItemSums: {} = {
+    annualBudgetSum: null,
+    quarterlyBudgetSum: null,
+    actualSum: null,
+    quarterlyVarianceSum: null,
+    annualVarianceSum: null,
+  };
+
   // expense report
   er: TransmogrifierExpenseReport;
 
@@ -24,14 +33,15 @@ export class ExpenseReportComponent implements OnInit {
 
   ngOnInit() {
     // get the expense report to fill
-    this.expenseReportService.getScheduleG("e480dbe7-a910-ea11-b810-005056830319").subscribe(g =>
-      this.er = new TransmogrifierExpenseReport(g));
+    this.expenseReportService.getScheduleG("e480dbe7-a910-ea11-b810-005056830319").subscribe(g => {
+      this.er = new TransmogrifierExpenseReport(g);
+      this.calculateLineItemSums();
+    });
     // construct the stepper
     this.constructDefaultstepperElements();
     // Subscribe to the stepper elements
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
-
   }
   constructDefaultstepperElements() {
     // write the default beginning
@@ -61,12 +71,27 @@ export class ExpenseReportComponent implements OnInit {
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
   }
-  sumCosts(one, two, three): number {
-    let x = 0;
-    if (typeof one === 'number') x = x + one;
-    if (typeof two === 'number') x = x + two;
-    if (typeof three === 'number') x = x + three;
-    // summarize them if they are numbers
-    return x;
+
+
+  calculateLineItemSums() {
+    //annual budgeted amount
+    this.lineItemSums['annualBudgetSum'] = this.er.expenseReport.programExpenseLineItems
+      .map(l => l.annualBudget)
+      .reduce((prev, curr) => prev + curr);
+    //quarterly budgeted amount
+    this.lineItemSums['quarterlyBudgetSum'] = this.er.expenseReport.programExpenseLineItems
+      .map(l => l.quarterlyBudget)
+      .reduce((prev, curr) => prev + curr);
+    //actual expendatures this quarter
+    this.lineItemSums['actualSum'] = this.er.expenseReport.programExpenseLineItems
+      .map(l => l.actual)
+      .reduce((prev, curr) => prev + curr);
+    //quarterly variance
+    this.lineItemSums['quarterlyVarianceSum'] = this.lineItemSums['annualBudgetSum'] * 0.25 - this.lineItemSums['actualSum'];
+    //YTD variance
+    this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
+
   }
+
+
 }
