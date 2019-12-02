@@ -109,15 +109,15 @@
               <p>Please explain the variances in this section. Why were expenditures above or below the quarterly budgeted amount? Program managers must be contacted if a program is unstaffed for 30 days or more.</p>
               <div class="form-group">
                 <label for="salariesBenefitsDescription">Salaries and Benefits</label>
-                <textarea [(ngModel)]="er.expenseReport.salariesBenefitsDescription" name="salariesBenefitsDescription" id="salariesBenefitsDescription" cols="30" rows="10" class="form-control" placeholder="Comments here..."></textarea>
+                <textarea [(ngModel)]="er.expenseReport.salariesBenefitsDescription" name="salariesBenefitsDescription" id="salariesBenefitsDescription" cols="30" rows="5" class="form-control" placeholder="Comments here..."></textarea>
               </div>
               <div class="form-group">
                 <label for="programDeliveryDescription">Program Delivery Costs</label>
-                <textarea [(ngModel)]="er.expenseReport.programDeliveryDescription" name="programDeliveryDescription" id="programDeliveryDescription" cols="30" rows="10" class="form-control" placeholder="Comments here..."></textarea>
+                <textarea [(ngModel)]="er.expenseReport.programDeliveryDescription" name="programDeliveryDescription" id="programDeliveryDescription" cols="30" rows="5" class="form-control" placeholder="Comments here..."></textarea>
               </div>
               <div class="form-group">
                 <label for="administrationDescription">Administration Costs</label>
-                <textarea [(ngModel)]="er.expenseReport.administrationDescription" name="administrationDescription" id="administrationDescription" cols="30" rows="10" class="form-control" placeholder="Comments here..."></textarea>
+                <textarea [(ngModel)]="er.expenseReport.administrationDescription" name="administrationDescription" id="administrationDescription" cols="30" rows="5" class="form-control" placeholder="Comments here..."></textarea>
               </div>
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
@@ -178,15 +178,29 @@
                   </tr>
                 </tfoot>
               </table>
-              {{lineItemSums|json}}
+              <h2 class="blue-header">Contract Services</h2>
+              <div class="form-group">
+                <label for="contractService">Contracted Service Rate</label>
+                <input type="text" [value]="'hours per week'" class="form-control" id="contractService" readonly>
+              </div>
+              <div class="form-group">
+                <label for="contractServiceQuarter">Contracted Service Hours This Quarter</label>
+                <input type="text" [value]="'hours this quarter'" class="form-control" id="contractServiceQuarter" readonly>
+              </div>
+              <div class="form-group">
+                <label for="actualServiceQuarter">Actual Service Hours This Quarter</label>
+                <input type="number" min="0" [(ngModel)]="er.expenseReport.administrationAnnualBudget" class="form-control" id="actualServiceQuarter">
+                <!-- TODO this should be tied to some real data -->
+              </div>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">
               page 3
             </div>
           </span>
         </div>
+
       </div>
-      <pre>ER:{{er|json}}</pre>
+      <!-- <pre>ER:{{er|json}}</pre> -->
     </div>
   </div>
 </div>
