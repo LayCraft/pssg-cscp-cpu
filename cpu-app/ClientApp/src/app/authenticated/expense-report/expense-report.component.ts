@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ExpenseReportService } from '../../core/services/expense-report.service';
 import { TransmogrifierExpenseReport } from '../../core/models/transmogrifier-expense-report.class';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { iPerson } from '../../core/models/person.class';
+import { StateService } from '../../core/services/state.service';
 
 @Component({
   selector: 'app-expense-report',
@@ -28,7 +30,7 @@ export class ExpenseReportComponent implements OnInit {
 
   constructor(
     private expenseReportService: ExpenseReportService,
-    private stepperService: IconStepperService
+    private stepperService: IconStepperService,
   ) { }
 
   ngOnInit() {

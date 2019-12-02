@@ -197,12 +197,12 @@
                 <input [(ngModel)]="er.expenseReport.executiveReview" type="checkbox" class="form-check-input" id="executiveCheck">
                 <label for="executiveCheck" class="form-check-label">This report has been reviewed by executive-level management</label>
               </div>
+              <h2 class="blue-header mt-4">Contact for program expense report</h2>
+              {{er.userId}}
             </div>
           </span>
         </div>
-
       </div>
-      <pre>ER:{{er|json}}</pre>
     </div>
   </div>
 </div>

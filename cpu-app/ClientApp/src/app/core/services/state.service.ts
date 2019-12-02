@@ -5,6 +5,7 @@ import { MainService } from './main.service';
 import { Router } from '@angular/router';
 import { NotificationQueueService } from './notification-queue.service';
 import { iDynamicsBlob } from '../models/dynamics-blob';
+import { iPerson } from '../models/person.class';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,8 @@ export class StateService {
   public organizationId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   // the user's bceid
   public userId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  // the user as an object
+  public currentUser: BehaviorSubject<iPerson> = new BehaviorSubject<iPerson>(null);
   // the account id
   public accountId: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   // global state of the login
