@@ -193,13 +193,16 @@
               </div>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">
-              page 3
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="executiveCheck">
+                <label for="executiveCheck" class="form-check-label">This report has been reviewed by executive-level management</label>
+              </div>
             </div>
           </span>
         </div>
 
       </div>
-      <pre>ER:{{er|json}}</pre>
+      <!-- <pre>ER:{{er|json}}</pre> -->
     </div>
   </div>
 </div>
