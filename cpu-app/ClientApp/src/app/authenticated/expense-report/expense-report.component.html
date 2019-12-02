@@ -198,7 +198,8 @@
                 <label for="executiveCheck" class="form-check-label">This report has been reviewed by executive-level management</label>
               </div>
               <h2 class="blue-header mt-4">Contact for program expense report</h2>
-              {{er.userId}}
+              {{currentUser|json}}<br>
+              {{currentUserId}}<br>
             </div>
           </span>
         </div>

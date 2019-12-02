@@ -324,6 +324,7 @@ export class Transmogrifier {
         lastName: p.lastname || null,
         middleName: p.middlename || null,
         personId: p.contactid || null,
+        userId: p.vsd_bceid || null,
         phone: p.mobilephone || null,
         title: p.jobtitle || null,
         // if this person has the right value it is me.

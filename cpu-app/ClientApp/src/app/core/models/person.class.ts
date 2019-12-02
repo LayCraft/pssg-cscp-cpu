@@ -6,11 +6,12 @@ export interface iPerson {
   fax?: string;
   firstName: string;
   lastName: string;
+  me: boolean; // is this the current user? If so this is "me".
   middleName?: string;
   personId: string;
   phone?: string;
   title?: string;
-  me: boolean; // is this the current user? If so this is "me".
+  userId?: string;
 }
 
 export class Person implements iPerson {
@@ -24,11 +25,12 @@ export class Person implements iPerson {
   firstName: string;
   hoursWorkedPerWeek?: number;
   lastName: string;
+  me: boolean = false;
   middleName?: string;
   personId: string;
   phone?: string;
   title?: string;
-  me: boolean = false;
+  userId?: string;
   constructor(person?: iPerson) {
     if (person) {
       this.address = new Address(person.address) || new Address();
@@ -41,6 +43,7 @@ export class Person implements iPerson {
       this.personId = person.personId || null;
       this.phone = person.phone || null;
       this.title = person.title || null;
+      this.userId = person.userId || null;
       this.me = person.me;
     } else {
       this.address = new Address();

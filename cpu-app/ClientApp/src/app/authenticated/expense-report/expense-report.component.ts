@@ -27,13 +27,20 @@ export class ExpenseReportComponent implements OnInit {
 
   // expense report
   er: TransmogrifierExpenseReport;
+  currentUserId: string;
+  currentUser: iPerson;
+  users: iPerson[];
 
   constructor(
     private expenseReportService: ExpenseReportService,
     private stepperService: IconStepperService,
+    private stateService: StateService,
   ) { }
 
   ngOnInit() {
+    this.stateService.userId.subscribe(u => this.currentUserId = u);
+    this.stateService.main.subscribe(u => this.users = u.persons);
+    this.stateService.currentUser.subscribe(u => this.currentUser = u);
     // get the expense report to fill
     this.expenseReportService.getScheduleG("e480dbe7-a910-ea11-b810-005056830319").subscribe(g => {
       this.er = new TransmogrifierExpenseReport(g);
