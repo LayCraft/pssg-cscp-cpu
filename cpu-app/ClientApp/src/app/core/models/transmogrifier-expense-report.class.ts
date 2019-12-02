@@ -39,6 +39,10 @@ export interface iExpenseReport {
   salariesBenefitsQuarterlyBudget: number;
 
   programExpenseLineItems: iLineItem[];
+
+  contractServiceHoursPerWeek: number;
+  contractServiceHoursPerQuarter: number;
+  contractServiceHoursQuarterlyActual: number;
 }
 interface iLineItem {
   itemId: string;
@@ -82,6 +86,11 @@ export class TransmogrifierExpenseReport {
 
       // placeholder
       programExpenseLineItems: [],
+
+      // contract service hours
+      contractServiceHoursPerQuarter: 0,
+      contractServiceHoursPerWeek: 0,
+      contractServiceHoursQuarterlyActual: 0,
     };
     // for every item in the schedule g line items
     for (let item of g.ScheduleGLineItems) {
