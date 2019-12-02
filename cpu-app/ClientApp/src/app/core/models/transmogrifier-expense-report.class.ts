@@ -85,9 +85,9 @@ export class TransmogrifierExpenseReport {
       salariesBenefitsValue: g.ScheduleG.vsd_salariesbenefitscurrentquarter || 0, //TODO
 
       // contract service hours
-      contractServiceHoursPerQuarter: 0,
-      contractServiceHoursPerWeek: 0,
-      contractServiceHoursQuarterlyActual: 0,
+      contractServiceHoursQuarterlyActual: g.ScheduleG.vsd_actualhoursthisquarter || 0,
+      contractServiceHoursPerWeek: g.ScheduleG.vsd_contractedservicehrsthisquarter || 0,
+      contractServiceHoursPerQuarter: g.ScheduleG.vsd_cpu_numberofhours || 0,
       // placeholder
       programExpenseLineItems: [],
     };
