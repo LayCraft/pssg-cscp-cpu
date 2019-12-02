@@ -43,6 +43,7 @@ export interface iExpenseReport {
   contractServiceHoursPerWeek: number;
   contractServiceHoursPerQuarter: number;
   contractServiceHoursQuarterlyActual: number;
+  executiveReview: boolean;
 }
 interface iLineItem {
   itemId: string;
@@ -88,6 +89,7 @@ export class TransmogrifierExpenseReport {
       contractServiceHoursQuarterlyActual: g.ScheduleG.vsd_actualhoursthisquarter || 0,
       contractServiceHoursPerWeek: g.ScheduleG.vsd_contractedservicehrsthisquarter || 0,
       contractServiceHoursPerQuarter: g.ScheduleG.vsd_cpu_numberofhours || 0,
+      executiveReview: g.ScheduleG.vsd_reportreviewed || false,
       // placeholder
       programExpenseLineItems: [],
     };
