@@ -14,9 +14,6 @@ export class ExpenseReportComponent implements OnInit {
   currentStepperElement: iStepperElement;
   discriminators: string[] = ['salary_benefits', 'program_expense', 'authorization']
 
-  contractServiceHoursPerWeek: number = 40;
-  contractServiceHoursThisQuarter: number = 480;
-
   // for variable length line item sums
   lineItemSums = {
     annualBudgetSum: null,

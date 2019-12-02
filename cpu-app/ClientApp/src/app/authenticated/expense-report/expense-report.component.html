@@ -181,16 +181,15 @@
               <h2 class="blue-header">Contract Services</h2>
               <div class="form-group">
                 <label for="contractService">Contracted Service Rate</label>
-                <input type="text" [value]="'hours per week'" class="form-control" id="contractService" readonly>
+                <input type="text" [value]="er.expenseReport.contractServiceHoursPerWeek+' hours per week'" class="form-control" id="contractService" readonly>
               </div>
               <div class="form-group">
-                <label for="contractServiceQuarter">Contracted Service Hours This Quarter</label>
-                <input type="text" [value]="'hours this quarter'" class="form-control" id="contractServiceQuarter" readonly>
+                <label for="contractServiceQuarter">Contracted Service Hours</label>
+                <input type="text" [value]="er.expenseReport.contractServiceHoursPerQuarter+' hours this quarter'" class="form-control" id="contractServiceQuarter" readonly>
               </div>
               <div class="form-group">
                 <label for="actualServiceQuarter">Actual Service Hours This Quarter</label>
-                <input type="number" min="0" [(ngModel)]="er.expenseReport.administrationAnnualBudget" class="form-control" id="actualServiceQuarter">
-                <!-- TODO this should be tied to some real data -->
+                <input type="number" min="0" [(ngModel)]="er.expenseReport.contractServiceHoursQuarterlyActual" class="form-control" id="actualServiceQuarter">
               </div>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">
@@ -200,7 +199,7 @@
         </div>
 
       </div>
-      <!-- <pre>ER:{{er|json}}</pre> -->
+      <pre>ER:{{er|json}}</pre>
     </div>
   </div>
 </div>

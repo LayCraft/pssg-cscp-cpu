@@ -84,13 +84,12 @@ export class TransmogrifierExpenseReport {
       salariesBenefitsQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedsalariesbenefits || 0,
       salariesBenefitsValue: g.ScheduleG.vsd_salariesbenefitscurrentquarter || 0, //TODO
 
-      // placeholder
-      programExpenseLineItems: [],
-
       // contract service hours
       contractServiceHoursPerQuarter: 0,
       contractServiceHoursPerWeek: 0,
       contractServiceHoursQuarterlyActual: 0,
+      // placeholder
+      programExpenseLineItems: [],
     };
     // for every item in the schedule g line items
     for (let item of g.ScheduleGLineItems) {
