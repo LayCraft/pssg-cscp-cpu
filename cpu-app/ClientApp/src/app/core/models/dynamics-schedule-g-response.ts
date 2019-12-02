@@ -36,6 +36,11 @@ export interface iDynamicsScheduleG {
   vsd_schedulegid?: string;
   vsd_reportreviewed?: boolean;
   vsd_cpu_reportingperiod?: number;
+
+  // number of hours contracted area
+  vsd_cpu_numberofhours: number;
+  vsd_contractedservicehrsthisquarter: number;
+  vsd_actualhoursthisquarter: number;
 }
 export interface iDynamicsScheduleGLineItems {
   fortunecookieetag?: string;
