@@ -7,6 +7,9 @@ namespace Gov.Cscp.VictimServices.Public.Models
 {
 	public class DynamicsScheduleGCollection
 	{
+		public float vsd_actualhoursthisquarter { get; set; }
+		public float vsd_contractedservicehoursthisquarter { get; set; }
+		public float vsd_cpu_numberofhours { get; set; }
 		public float vsd_programadministrationcurrentquarter { get; set; }
 		public float vsd_programdeliverycurrentquarter { get; set; }
 		public float vsd_salariesbenefitscurrentquarter { get; set; }

@@ -1,3 +1,208 @@
-<p>
-  expense-report works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <section class="application-nav sticky-top">
+        <div style="max-height: 90%;">
+          <app-icon-stepper></app-icon-stepper>
+        </div>
+        <button class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
+        <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
+      </section>
+    </div>
+
+    <div class="col">
+      <div *ngIf="currentStepperElement">
+        <div class="page-header">
+          <h1>Program Expense Report</h1>
+        </div>
+        <h2 class="blue-header">{{currentStepperElement.itemName}}</h2>
+        <div *ngFor="let item of stepperElements">
+          <!-- check if the expense report has loaded and the current stepper is correct -->
+          <span *ngIf="er && item.id===currentStepperElement.id">
+            <div *ngIf="item.discriminator === discriminators[0]">
+              <table class="table table-sm table-striped">
+                <thead class="thead">
+                  <th scope="col">Expense Category</th>
+                  <th scope="col">Annual Budgeted Amount</th>
+                  <th scope="col">Quarterly Budgeted Amount</th>
+                  <th scope="col">Actual Expenditures, Current Quarter</th>
+                  <th scope="col">Quarterly Variance</th>
+                  <th scope="col">Year to Date Variance</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Salaries and Benefits</th>
+                    <td>${{(er.expenseReport.salariesBenefitsAnnualBudget|number:'1.0-0')||0}}</td>
+                    <td>${{(er.expenseReport.salariesBenefitsQuarterlyBudget|number:'1.0-0')||0}}</td>
+                    <td>
+                      <input [(ngModel)]="er.expenseReport.salariesBenefitsValue" type="number" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue">
+                    </td>
+                    <td>${{((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                    <td>${{(er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Program Delivery</th>
+                    <td>${{(er.expenseReport.programDeliveryAnnualBudget|number:'1.0-0')||0}}</td>
+                    <td>${{(er.expenseReport.programDeliveryQuarterlyBudget|number:'1.0-0')||0}}</td>
+                    <td>
+                      <input [(ngModel)]="er.expenseReport.programDeliveryValue" type="number" class="form-control" id="programDeliveryValue" name="programDeliveryValue">
+                    </td>
+                    <td>${{((er.expenseReport.programDeliveryAnnualBudget*0.25)-er.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
+                    <td>${{(er.expenseReport.programDeliveryAnnualBudget-er.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Program Administration</th>
+                    <td>${{(er.expenseReport.administrationAnnualBudget|number:'1.0-0')||0}}</td>
+                    <td>${{(er.expenseReport.administrationQuarterlyBudget|number:'1.0-0')||0}}</td>
+                    <td>
+                      <input [(ngModel)]="er.expenseReport.administrationValue" type="number" class="form-control" id="administrationValue" name="administrationValue">
+                    </td>
+                    <td>${{((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                    <td>${{(er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th scope="row">Total</th>
+                    <td>
+                      <strong>
+                        ${{(er.expenseReport.salariesBenefitsAnnualBudget+er.expenseReport.programDeliveryAnnualBudget+er.expenseReport.administrationAnnualBudget)||0 |number:'1.0-0'}}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        ${{(er.expenseReport.salariesBenefitsQuarterlyBudget+er.expenseReport.programDeliveryQuarterlyBudget+er.expenseReport.administrationQuarterlyBudget)||0|number:'1.0-0'}}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        ${{(er.expenseReport.salariesBenefitsValue + er.expenseReport.programDeliveryValue + er.expenseReport.administrationValue)|number:'1.0-0'}}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        ${{(
+                          ((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)+
+                          ((er.expenseReport.programDeliveryAnnualBudget*0.25)-er.expenseReport.programDeliveryValue)+
+                          ((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)
+                          )|number:'1.0-0'
+                        }}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        ${{
+                          (
+                            (er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)+
+                            (er.expenseReport.programDeliveryAnnualBudget-er.expenseReport.programDeliveryValue)+
+                            (er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)
+                          )|number:'1.0-0'
+                        }}
+                      </strong>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+              <h2 class="blue-header">
+                Explanation for Variances
+              </h2>
+              <p>Please explain the variances in this section. Why were expenditures above or below the quarterly budgeted amount? Program managers must be contacted if a program is unstaffed for 30 days or more.</p>
+              <div class="form-group">
+                <label for="salariesBenefitsDescription">Salaries and Benefits</label>
+                <textarea [(ngModel)]="er.expenseReport.salariesBenefitsDescription" name="salariesBenefitsDescription" id="salariesBenefitsDescription" cols="30" rows="5" class="form-control" placeholder="Comments here..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="programDeliveryDescription">Program Delivery Costs</label>
+                <textarea [(ngModel)]="er.expenseReport.programDeliveryDescription" name="programDeliveryDescription" id="programDeliveryDescription" cols="30" rows="5" class="form-control" placeholder="Comments here..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="administrationDescription">Administration Costs</label>
+                <textarea [(ngModel)]="er.expenseReport.administrationDescription" name="administrationDescription" id="administrationDescription" cols="30" rows="5" class="form-control" placeholder="Comments here..."></textarea>
+              </div>
+            </div>
+            <div *ngIf="item.discriminator === discriminators[1]">
+              <p>Please complete your budgeted and actual expenditures for the following specific line items.</p>
+              <table class="table table-sm table-striped">
+                <thead class="thead">
+                  <th scope="col">Expense Category</th>
+                  <th scope="col">Annual Budgeted Amount</th>
+                  <th scope="col">Quarterly Budgeted Amount</th>
+                  <th scope="col">Actual Expenditures, Current Quarter</th>
+                  <th scope="col">Quarterly Variance</th>
+                  <th scope="col">Year to Date Variance</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of er.expenseReport.programExpenseLineItems">
+                    <th scope="row">{{item.label}}</th>
+                    <td>${{item.annualBudget||0}}</td>
+                    <td>${{item.quarterlyBudget||0}}</td>
+                    <td>
+                      <input [(ngModel)]="item.actual" (input)="updateLineItemSums()" type="number" class="form-control" [id]="item.itemId" [name]="item.itemId">
+                    </td>
+                    <td>
+                      ${{((item.annualBudget*0.25)-item.actual)|number:'1.0-0'}}
+                    </td>
+                    <td>
+                      ${{(item.annualBudget-item.actual)|number:'1.0-0'}}
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th scope="row">Total</th>
+                    <td>
+                      <strong>
+                        ${{lineItemSums.annualBudgetSum||0|number:'1.0-0'}}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        ${{lineItemSums.quarterlyBudgetSum||0|number:'1.0-0'}}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        ${{lineItemSums.actualSum||0|number:'1.0-0'}}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        ${{lineItemSums.quarterlyVarianceSum||0|number:'1.0-0'}}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
+                        ${{lineItemSums.annualVarianceSum||0|number:'1.0-0'}}
+                      </strong>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+              <h2 class="blue-header">Contract Services</h2>
+              <div class="form-group">
+                <label for="contractService">Contracted Service Rate</label>
+                <input type="text" [value]="er.expenseReport.contractServiceHoursPerWeek+' hours per week'" class="form-control" id="contractService" readonly>
+              </div>
+              <div class="form-group">
+                <label for="contractServiceQuarter">Contracted Service Hours</label>
+                <input type="text" [value]="er.expenseReport.contractServiceHoursPerQuarter+' hours this quarter'" class="form-control" id="contractServiceQuarter" readonly>
+              </div>
+              <div class="form-group">
+                <label for="actualServiceQuarter">Actual Service Hours This Quarter</label>
+                <input type="number" min="0" [(ngModel)]="er.expenseReport.contractServiceHoursQuarterlyActual" class="form-control" id="actualServiceQuarter">
+              </div>
+            </div>
+            <div *ngIf="item.discriminator === discriminators[2]">
+              <div class="form-check">
+                <input [(ngModel)]="er.expenseReport.executiveReview" type="checkbox" class="form-check-input" id="executiveCheck">
+                <label for="executiveCheck" class="form-check-label">This report has been reviewed by executive-level management</label>
+              </div>
+              <h2 class="blue-header mt-4">Contact for program expense report</h2>
+              <app-person-card [person]="currentUser"></app-person-card>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

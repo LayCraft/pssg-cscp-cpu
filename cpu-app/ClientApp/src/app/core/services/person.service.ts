@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { iDynamicsPostOrg, iDynamicsPostUsers } from '../models/dynamics-post';
-
+import { iDynamicsPostUsers } from '../models/transmogrifier.class';
 
 @Injectable({
   providedIn: 'root'

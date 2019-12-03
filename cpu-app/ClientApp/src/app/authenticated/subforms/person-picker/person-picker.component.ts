@@ -24,6 +24,10 @@ export class PersonPickerComponent implements OnInit {
   ngOnInit() {
     this.stateService.main.subscribe(m => {
       this.persons = m.persons;
+      if (!this.person && m.persons.length) {
+        // set to first person
+        this.person = m[0];
+      }
     });
   }
 

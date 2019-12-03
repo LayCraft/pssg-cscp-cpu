@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
+import { iPerson } from '../../core/models/person.class';
+import { nameAssemble } from '../../core/constants/name-assemble'
 
 @Component({
   selector: 'app-header',
@@ -9,29 +11,28 @@ import { StateService } from '../../core/services/state.service';
 })
 export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
-  organizationName: string = '';
   title: string = 'Victims Services Community Programs Unit';
+  currentUser: string;
+  nameAssemble;
+
   constructor(
     private router: Router,
     private stateService: StateService,
-  ) { }
+  ) {
+    // for building names
+    this.nameAssemble = nameAssemble;
+  }
 
   ngOnInit() {
-    this.stateService.loggedIn.subscribe(l => this.loggedIn = l);
-    this.stateService.organizationName.subscribe(u => {
-      if (this.organizationName === '') {
-        // this is the first page visit. Just skip the notifications.
-        // If it were null it came after a logout.
-      } else if (!u) {
-        // User signed out because behaviour subject was blank
-        // Go back home!m
-        this.router.navigate(['']);
-      } else {
-        // User signed in because behaviour subject was not blank
-        this.router.navigate(['/authenticated/dashboard']);
+    this.stateService.loggedIn.subscribe(l => {
+      this.loggedIn = l;
+      // if the user is not logged in anymore route them home
+      l ? this.router.navigate(['/authenticated/dashboard']) : this.router.navigate(['']);
+    });
+    this.stateService.currentUser.subscribe(u => {
+      if (u) {
+        this.currentUser = nameAssemble(u.firstName, u.middleName, u.lastName);
       }
-      // save the organization for displaying
-      this.organizationName = u;
     });
   }
   login() {

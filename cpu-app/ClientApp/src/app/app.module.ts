@@ -35,6 +35,7 @@ import { TestComponent } from './test/test.component';
 import { ProgramBudgetComponent } from './authenticated/subforms/program-budget/program-budget.component';
 import { RevenueSourceTableComponent } from './authenticated/subforms/revenue-source-table/revenue-source-table.component';
 import { TaskListComponent } from './authenticated/components/task-list/task-list.component';
+import { PersonCardComponent } from './authenticated/subforms/person-card/person-card.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { TaskListComponent } from './authenticated/components/task-list/task-lis
     ProgramBudgetComponent,
     RevenueSourceTableComponent,
     TaskListComponent,
+    PersonCardComponent,
   ],
   imports: [
     AppRoutingModule,

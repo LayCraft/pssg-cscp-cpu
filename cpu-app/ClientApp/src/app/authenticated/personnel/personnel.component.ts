@@ -1,20 +1,19 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Person, iPerson } from '../../core/models/person.class';
 import { PersonService } from '../../core/services/person.service';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { StateService } from '../../core/services/state.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
-import { DynamicsPostUsers, iDynamicsPostUsers, convertPersonToCrmContact } from '../../core/models/dynamics-post';
-import { Transmogrifier } from '../../core/models/transmogrifier.class';
+import { Transmogrifier, DynamicsPostUsers, iDynamicsPostUsers, convertPersonToCrmContact } from '../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-personnel',
   templateUrl: './personnel.component.html',
   styleUrls: ['./personnel.component.css']
 })
-export class PersonnelComponent implements OnInit {
+export class PersonnelComponent implements OnInit, OnDestroy {
   // this is an organization level component
   reload = false;
   userId: string;
@@ -61,19 +60,23 @@ export class PersonnelComponent implements OnInit {
     }
   }
 
-  save() {
-    // make a person array to submit
-    const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
-    const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), cleanup);
-    // console.log(post);
-    this.personService.setPersons(post).subscribe(
-      () => {
-        this.notificationQueueService.addNotification('Personnel Saved', 'success');
-        // refresh the list of people on save
-        this.stateService.refresh();
-      },
-      err => this.notificationQueueService.addNotification(err, 'danger')
-    );
+  save(person: iPerson) {
+    // a person needs minimum a first and last name to be submitted
+    if (person.firstName && person.lastName) {
+      const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), [person]);
+      // console.log(post);
+      this.personService.setPersons(post).subscribe(
+        () => {
+          this.notificationQueueService.addNotification('Personnel Saved', 'success');
+          // refresh the list of people on save
+          this.stateService.refresh();
+        },
+        err => this.notificationQueueService.addNotification(err, 'danger')
+      );
+    } else {
+      // notify the user that this user was not saved.
+      this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
+    }
   }
 
   exit() {
@@ -85,16 +88,17 @@ export class PersonnelComponent implements OnInit {
   add() {
     const element: iPerson = {
       address: null,
+      deactivated: false,
       email: '',
       fax: '',
       firstName: '',
       lastName: '',
+      me: false,
       middleName: '',
       personId: '',
       phone: '',
       title: '',
-      deactivated: false,
-      me: false,
+      userId: null,
     };
     this.stepperService.addStepperElement(element, 'New Person', null, 'person');
   }
