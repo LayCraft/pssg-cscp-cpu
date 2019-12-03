@@ -1,6 +1,8 @@
 import { iDynamicsOrganization, iDynamicsCrmContact } from "./dynamics-blob";
 import { iContactInformation } from "./contact-information.class";
 import { iPerson } from "./person.class";
+import { iDynamicsScheduleG, iDynamicsScheduleGLineItem } from "./dynamics-schedule-g-response";
+import { iExpenseReport } from "./transmogrifier-expense-report.class";
 export interface iDynamicsPostOrg {
   "UserBCeID": string;
   "BusinessBCeID": string;
@@ -11,11 +13,16 @@ export interface iDynamicsPostUsers {
   "BusinessBCeID": string;
   "StaffCollection": iDynamicsCrmContact[];
 }
+export interface iDynamicsPostScheduleG {
+  "UserBCeID": string;
+  "BusinessBCeID": string;
+  "ScheduleGCollection": iDynamicsScheduleG[];
+  "ScheduleGLineItemCollection": iDynamicsScheduleGLineItem[];
+}
 // this is a mapper function for posting back to dynamics
 export function DynamicsPostOrganization(userId: string, organizationId: string, accountId: string, f: iContactInformation): iDynamicsPostOrg {
   const org: iDynamicsOrganization = {};
   // map contact info to the dynamics format
-  //TODO: these must be accepted but are not through the API. Commenting them out until they are implemented.
   if (f.boardContact && f.boardContact.personId) org["vsd_BoardContactIdfortunecookiebind"] = f.boardContact.personId;
   if (f.executiveContact && f.executiveContact.personId) org["vsd_ExecutiveContactIdfortunecookiebind"] = f.executiveContact.personId;
   if (f.emailAddress) org["emailaddress1"] = f.emailAddress;
@@ -54,7 +61,7 @@ export function DynamicsPostUsers(userId: string, organizationId: string, people
   } as iDynamicsPostUsers;
 }
 
-export function convertPersonToCrmContact(person: iPerson): iDynamicsCrmContact {
+function convertPersonToCrmContact(person: iPerson): iDynamicsCrmContact {
   const p: iDynamicsCrmContact = {};
   // add all properties that are non null
   if (person.address && person.address.city) p["address1_city"] = person.address.city;
@@ -73,4 +80,35 @@ export function convertPersonToCrmContact(person: iPerson): iDynamicsCrmContact 
   if (person.deactivated) p["statecode"] = 1; // sending a 1 statuscode means soft delete the record
   // return the person
   return p;
+}
+export function iDynamicsPostScheduleG(userId: string, organizationId: string, expenseReportId: string, e: iExpenseReport): iDynamicsPostScheduleG {
+  // schedule g's
+  const g: iDynamicsScheduleG = {};
+
+  // _vsd_contact_value?: string;
+  // vsd_actualhoursthisquarter?: number;
+  // vsd_cpu_numberofhours?: number;
+  // vsd_cpu_reportingperiod?: number;
+  // vsd_programadministrationcurrentquarter?: number;
+  // vsd_programadministrationexplanation?: string;
+  // vsd_programdeliverycurrentquarter?: number;
+  // vsd_programdeliveryexplanations?: string;
+  // vsd_reportreviewed?: boolean;
+  // vsd_salariesandbenefitsexplanation?: string;
+  // vsd_salariesbenefitscurrentquarter?: number;
+
+  g["vsd_schedulegid"] = expenseReportId;
+
+  // schedule g line items;
+  const glis: iDynamicsScheduleGLineItem[] = [];
+
+  // for each line
+
+  // if (f.mailingAddress && f.mailingAddress.city) org["address2_city"] = f.mailingAddress.city;
+  return {
+    BusinessBCeID: organizationId,
+    UserBCeID: userId,
+    ScheduleGCollection: [g],
+    ScheduleGLineItemCollection: glis,
+  } as iDynamicsPostScheduleG;
 }

@@ -13,7 +13,7 @@ export interface iDynamicsScheduleG {
   vsd_quarterlybudgetedprogramadministration?: number;
   vsd_yeartodateprogramadministration?: number;
   vsd_yeartodatevarianceprogramadministration?: number;
-  vsd_quarterlyvarianceprogramadministration: number;
+  vsd_quarterlyvarianceprogramadministration?: number;
 
   vsd_programdeliverybudgeted?: number;
   vsd_programdeliverycurrentquarter?: number;
@@ -38,11 +38,11 @@ export interface iDynamicsScheduleG {
   vsd_cpu_reportingperiod?: number;
 
   // number of hours contracted area
-  vsd_cpu_numberofhours: number;
-  vsd_contractedservicehrsthisquarter: number;
-  vsd_actualhoursthisquarter: number;
+  vsd_cpu_numberofhours?: number;
+  vsd_contractedservicehrsthisquarter?: number;
+  vsd_actualhoursthisquarter?: number;
 }
-export interface iDynamicsScheduleGLineItems {
+export interface iDynamicsScheduleGLineItem {
   fortunecookieetag?: string;
   fortunecookietype?: string;
   _transactioncurrencyid_value?: string;
@@ -63,5 +63,5 @@ export interface iDynamicsScheduleGResponse {
   Userbceid?: string;
   Businessbceid?: string;
   ScheduleG?: iDynamicsScheduleG;
-  ScheduleGLineItems?: iDynamicsScheduleGLineItems[];
+  ScheduleGLineItems?: iDynamicsScheduleGLineItem[];
 }

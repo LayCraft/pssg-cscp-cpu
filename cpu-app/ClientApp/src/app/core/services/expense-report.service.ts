@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { iDynamicsScheduleGResponse } from '../models/dynamics-schedule-g-response';
+import { iDynamicsPostScheduleG } from '../models/dynamics-post';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,9 @@ export class ExpenseReportService {
       retry(3),
       catchError(this.handleError)
     );
+  }
+  setScheduleG(scheduleG: iDynamicsPostScheduleG) {
+
   }
   get headers(): HttpHeaders {
     return new HttpHeaders({ 'Content-Type': 'application/json' });
