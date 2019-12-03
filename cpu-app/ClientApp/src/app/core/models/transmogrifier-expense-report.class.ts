@@ -1,4 +1,3 @@
-import { iDynamicsScheduleGResponse } from "./dynamics-schedule-g-response";
 
 // a collection of the expense item guids as K/V pairs for generating line items
 const ExpenseItemLabels: {} = {
@@ -21,6 +20,12 @@ const ExpenseItemLabels: {} = {
   "84415B3D-2DBA-E911-B80F-00505683FBF4": "Volunteer Appreciation/Honorariums",
 }
 
+export interface iDynamicsPostScheduleG {
+  "UserBCeID": string;
+  "BusinessBCeID": string;
+  "ScheduleGCollection": iDynamicsScheduleG[];
+  "ScheduleGLineItemCollection": iDynamicsScheduleGLineItem[];
+}
 export interface iExpenseReport {
   // salary benefits program delivery and administration expense
   administrationDescription: string;
@@ -51,6 +56,74 @@ interface iLineItem {
   annualBudget: number;
   quarterlyBudget: number;
   actual: number;
+}
+
+export interface iDynamicsScheduleG {
+  fortunecookieetag?: string;
+  fortunecookietype?: string;
+  _vsd_serviceprovider_value?: string;
+  _vsd_program_value?: string;
+  _vsd_contract_value?: string;
+  _vsd_contact_value?: string;
+  _transactioncurrencyid_value?: string;
+
+  vsd_programadministrationbudgeted?: number;
+  vsd_programadministrationcurrentquarter?: number;
+  vsd_programadministrationexplanation?: string;
+  vsd_quarterlybudgetedprogramadministration?: number;
+  vsd_yeartodateprogramadministration?: number;
+  vsd_yeartodatevarianceprogramadministration?: number;
+  vsd_quarterlyvarianceprogramadministration?: number;
+
+  vsd_programdeliverybudgeted?: number;
+  vsd_programdeliverycurrentquarter?: number;
+  vsd_programdeliveryexplanations?: string;
+  vsd_quarterlybudgetedprogramdelivery?: number;
+  vsd_yeartodateprogramdelivery?: number;
+  vsd_yeartodatevarianceprogramdelivery?: number;
+  vsd_quarterlyvarianceprogramdelivery?: number;
+
+  vsd_quarterlybudgetedsalariesbenefits?: number;
+  vsd_salariesandbenefitsexplanation?: string;
+  vsd_salariesbenefitscurrentquarter?: number;
+  vsd_salaryandbenefitsbudgeted?: number;
+  vsd_yeartodatesalariesandbenefits?: number;
+  vsd_yeartodatevariancesalariesbenefits?: number;
+  vsd_quarterlyvariancesalariesbenefits?: number;
+
+  vsd_submitteddate?: string;
+
+  vsd_schedulegid?: string;
+  vsd_reportreviewed?: boolean;
+  vsd_cpu_reportingperiod?: number;
+
+  // number of hours contracted area
+  vsd_cpu_numberofhours?: number;
+  vsd_contractedservicehrsthisquarter?: number;
+  vsd_actualhoursthisquarter?: number;
+}
+export interface iDynamicsScheduleGLineItem {
+  fortunecookieetag?: string;
+  fortunecookietype?: string;
+  _transactioncurrencyid_value?: string;
+  _vsd_expenselineitem_value?: string;
+  _vsd_schedulegid_value?: string;
+  vsd_actualexpendituresyeartodate?: number;
+  vsd_scheduleglineitemid?: string;
+  vsd_annualbudgetedamount?: number;
+  vsd_quarterlybudgetedamount?: number;
+  vsd_actualexpensescurrentquarter?: number;
+  vsd_yeartodatevariance?: number;
+  vsd_quarterlyvariance?: number;
+}
+export interface iDynamicsScheduleGResponse {
+  fortunecookiecontext?: string;
+  IsSuccess?: boolean;
+  Result?: string;
+  Userbceid?: string;
+  Businessbceid?: string;
+  ScheduleG?: iDynamicsScheduleG;
+  ScheduleGLineItems?: iDynamicsScheduleGLineItem[];
 }
 
 export class TransmogrifierExpenseReport {
@@ -109,4 +182,54 @@ export class TransmogrifierExpenseReport {
     }
     return e;
   }
+}
+
+export function iDynamicsPostScheduleG(userId: string, organizationId: string, expenseReportId: string, e: iExpenseReport): iDynamicsPostScheduleG {
+  // schedule g's
+  const g: iDynamicsScheduleG = {};
+
+  if (e.administrationValue) g.vsd_programadministrationcurrentquarter = e.administrationValue;
+  // administration costs
+  if (e.administrationAnnualBudget) g.vsd_yeartodateprogramadministration = e.administrationAnnualBudget;
+  if (e.administrationDescription) g.vsd_programadministrationexplanation = e.administrationDescription;
+  if (e.administrationQuarterlyBudget) g.vsd_quarterlybudgetedprogramadministration = e.administrationQuarterlyBudget;
+  if (e.administrationValue) g.vsd_programadministrationcurrentquarter = e.administrationValue;
+
+  // program delivery costs
+  if (e.programDeliveryAnnualBudget) g.vsd_yeartodateprogramdelivery = e.programDeliveryAnnualBudget;
+  if (e.programDeliveryDescription) g.vsd_programdeliveryexplanations = e.programDeliveryDescription;
+  if (e.programDeliveryQuarterlyBudget) g.vsd_quarterlybudgetedprogramdelivery = e.programDeliveryQuarterlyBudget;
+  if (e.programDeliveryValue) g.vsd_programdeliverycurrentquarter = e.programDeliveryValue;
+
+  // salaries and benefits costs
+  if (e.salariesBenefitsAnnualBudget) g.vsd_yeartodatesalariesandbenefits = e.salariesBenefitsAnnualBudget;
+  if (e.salariesBenefitsDescription) g.vsd_salariesandbenefitsexplanation = e.salariesBenefitsDescription;
+  if (e.salariesBenefitsQuarterlyBudget) g.vsd_quarterlybudgetedsalariesbenefits = e.salariesBenefitsQuarterlyBudget;
+  if (e.salariesBenefitsValue) g.vsd_salariesbenefitscurrentquarter = e.salariesBenefitsValue;
+
+  // contract service hours
+  if (e.contractServiceHoursQuarterlyActual) g.vsd_actualhoursthisquarter = e.contractServiceHoursQuarterlyActual;
+  if (e.contractServiceHoursPerWeek) g.vsd_contractedservicehrsthisquarter = e.contractServiceHoursPerWeek;
+  if (e.contractServiceHoursPerQuarter) g.vsd_cpu_numberofhours = e.contractServiceHoursPerQuarter;
+  if (e.executiveReview) g.vsd_reportreviewed = e.executiveReview;
+
+  // save the identifier for this form
+  if (expenseReportId) g.vsd_schedulegid = expenseReportId;
+
+  // schedule g line items;
+  const glis: iDynamicsScheduleGLineItem[] = [];
+  for (let y of e.programExpenseLineItems) {
+    const lineItem: iDynamicsScheduleGLineItem = {
+      vsd_scheduleglineitemid: expenseReportId,
+      vsd_actualexpensescurrentquarter: y.actual || 0,
+    };
+    glis.push(lineItem);
+  }
+
+  return {
+    BusinessBCeID: organizationId,
+    UserBCeID: userId,
+    ScheduleGCollection: [g],
+    ScheduleGLineItemCollection: glis,
+  } as iDynamicsPostScheduleG;
 }
