@@ -11,7 +11,7 @@
       <span class="navbar-text" *ngIf="loggedIn">
         <a (click)="logout()">
           <span>
-            {{organizationName}}&nbsp;-&nbsp;
+            {{currentUser}}&nbsp;-&nbsp;
           </span>
           <app-state-holder></app-state-holder>
           Sign Out

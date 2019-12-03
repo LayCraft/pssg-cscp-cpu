@@ -81,7 +81,7 @@
                     </td>
                     <td>
                       <strong>
-                        {{(
+                        ${{(
                           ((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)+
                           ((er.expenseReport.programDeliveryAnnualBudget*0.25)-er.expenseReport.programDeliveryValue)+
                           ((er.expenseReport.salariesBenefitsAnnualBudget*0.25)-er.expenseReport.salariesBenefitsValue)
@@ -91,7 +91,7 @@
                     </td>
                     <td>
                       <strong>
-                        {{
+                        ${{
                           (
                             (er.expenseReport.salariesBenefitsAnnualBudget-er.expenseReport.salariesBenefitsValue)+
                             (er.expenseReport.programDeliveryAnnualBudget-er.expenseReport.programDeliveryValue)+
@@ -152,27 +152,27 @@
                     <th scope="row">Total</th>
                     <td>
                       <strong>
-                        {{lineItemSums.annualBudgetSum|number:'1.0-0'}}
+                        ${{lineItemSums.annualBudgetSum||0|number:'1.0-0'}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        {{lineItemSums.quarterlyBudgetSum|number:'1.0-0'}}
+                        ${{lineItemSums.quarterlyBudgetSum||0|number:'1.0-0'}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        {{lineItemSums.actualSum|number:'1.0-0'}}
+                        ${{lineItemSums.actualSum||0|number:'1.0-0'}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        {{lineItemSums.quarterlyVarianceSum|number:'1.0-0'}}
+                        ${{lineItemSums.quarterlyVarianceSum||0|number:'1.0-0'}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        {{lineItemSums.annualVarianceSum|number:'1.0-0'}}
+                        ${{lineItemSums.annualVarianceSum||0|number:'1.0-0'}}
                       </strong>
                     </td>
                   </tr>
@@ -198,8 +198,7 @@
                 <label for="executiveCheck" class="form-check-label">This report has been reviewed by executive-level management</label>
               </div>
               <h2 class="blue-header mt-4">Contact for program expense report</h2>
-              {{currentUser|json}}<br>
-              {{currentUserId}}<br>
+              <app-person-card [person]="currentUser"></app-person-card>
             </div>
           </span>
         </div>
