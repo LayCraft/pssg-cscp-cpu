@@ -41,7 +41,7 @@ export class PersonEditorComponent implements OnInit {
   buildForm() {
     this.internalFormGroup = new FormGroup({
       'address': new FormControl(''),
-      'deactivated': new FormControl(null),
+      'deactivated': new FormControl(false),
       'email': new FormControl('', [Validators.required, Validators.pattern(EMAIL)]),
       'fax': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
       'firstName': new FormControl({ value: '', disabled: this.me }, [Validators.required, Validators.maxLength(50)]),

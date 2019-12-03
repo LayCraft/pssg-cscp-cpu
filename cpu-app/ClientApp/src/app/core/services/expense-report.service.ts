@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { iDynamicsScheduleGResponse, iDynamicsPostScheduleG } from '../models/transmogrifier-expense-report.class';
+import { iDynamicsScheduleGResponse } from '../models/dynamics-blob';
+import { iDynamicsPostScheduleG } from '../models/transmogrifier-expense-report.class';
 
 @Injectable({
   providedIn: 'root'

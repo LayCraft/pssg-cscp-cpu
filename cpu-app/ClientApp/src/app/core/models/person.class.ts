@@ -34,7 +34,7 @@ export class Person implements iPerson {
   constructor(person?: iPerson) {
     if (person) {
       this.address = new Address(person.address) || new Address();
-      this.deactivated = person.deactivated || null;
+      this.deactivated = person.deactivated || false;
       this.email = person.email || null;
       this.fax = person.fax || null;
       this.firstName = person.firstName || null;

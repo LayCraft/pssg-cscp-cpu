@@ -6,8 +6,7 @@ import { PersonService } from '../../core/services/person.service';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { StateService } from '../../core/services/state.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
-import { DynamicsPostUsers, iDynamicsPostUsers, convertPersonToCrmContact } from '../../core/models/dynamics-post';
-import { Transmogrifier } from '../../core/models/transmogrifier.class';
+import { Transmogrifier, DynamicsPostUsers, iDynamicsPostUsers, convertPersonToCrmContact } from '../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-personnel',
@@ -63,7 +62,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
 
   save() {
     // make a person array to submit
-    const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
+    const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson).filter(p => p.lastName && p.firstName);
     const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), cleanup);
     // console.log(post);
     this.personService.setPersons(post).subscribe(
@@ -85,16 +84,17 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   add() {
     const element: iPerson = {
       address: null,
+      deactivated: false,
       email: '',
       fax: '',
       firstName: '',
       lastName: '',
+      me: false,
       middleName: '',
       personId: '',
       phone: '',
       title: '',
-      deactivated: false,
-      me: false,
+      userId: null,
     };
     this.stepperService.addStepperElement(element, 'New Person', null, 'person');
   }

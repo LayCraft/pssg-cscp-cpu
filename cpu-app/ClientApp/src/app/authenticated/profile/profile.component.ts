@@ -5,8 +5,7 @@ import { iContactInformation, ContactInformation } from '../../core/models/conta
 import { StateService } from '../../core/services/state.service';
 import { iPerson } from '../../core/models/person.class';
 import { ProfileService } from '../../core/services/profile.service';
-import { Transmogrifier } from '../../core/models/transmogrifier.class';
-import { iDynamicsPostOrg, DynamicsPostOrganization } from '../../core/models/dynamics-post';
+import { Transmogrifier, iDynamicsPostOrg, DynamicsPostOrganization } from '../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-profile',
