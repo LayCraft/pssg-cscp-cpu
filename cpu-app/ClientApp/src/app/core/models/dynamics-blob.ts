@@ -5,6 +5,9 @@
 // the transmogrifier lets us manage the properties in the view models.
 // When we want to send it back to dynamics we use a converter function to map the data in a way that Dynamics expects to recieve.
 
+// Basically Dynamics API gets all data from an entity without any restrictions which can result in a massive amount of data coming for minor updates.
+// So
+
 export interface iDynamicsOrganization {
   _ownerid_value?: string;
   _vsd_boardcontactid_value?: string;
@@ -118,6 +121,7 @@ export interface iDynamicsBlob {
   fortunecookiecontext?: string;
 };
 
+// SCHEDULE G STUFF
 export interface iDynamicsScheduleG {
   fortunecookieetag?: string;
   fortunecookietype?: string;

@@ -60,19 +60,23 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     }
   }
 
-  save() {
-    // make a person array to submit
-    const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson).filter(p => p.lastName && p.firstName);
-    const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), cleanup);
-    // console.log(post);
-    this.personService.setPersons(post).subscribe(
-      () => {
-        this.notificationQueueService.addNotification('Personnel Saved', 'success');
-        // refresh the list of people on save
-        this.stateService.refresh();
-      },
-      err => this.notificationQueueService.addNotification(err, 'danger')
-    );
+  save(person: iPerson) {
+    // a person needs minimum a first and last name to be submitted
+    if (person.firstName && person.lastName) {
+      const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), [person]);
+      // console.log(post);
+      this.personService.setPersons(post).subscribe(
+        () => {
+          this.notificationQueueService.addNotification('Personnel Saved', 'success');
+          // refresh the list of people on save
+          this.stateService.refresh();
+        },
+        err => this.notificationQueueService.addNotification(err, 'danger')
+      );
+    } else {
+      // notify the user that this user was not saved.
+      this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
+    }
   }
 
   exit() {

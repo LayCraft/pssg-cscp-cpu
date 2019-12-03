@@ -21,7 +21,7 @@
           <span *ngIf="item.id===currentStepperElement.id">
             <app-person-editor [(person)]="item.object" (change)="onChange(item)"></app-person-editor>
             <button *ngIf="!item?.object['me']" class="btn btn-danger mt-2 mr-2" (click)="remove(currentStepperElement)">Deactivate</button>
-            <button class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
+            <button class="btn btn-primary mt-2 mr-2" (click)="save(item.object)">Save</button>
           </span>
         </div>
       </div>
