@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Person, iPerson } from '../../core/models/person.class';
 import { PersonService } from '../../core/services/person.service';
@@ -14,7 +14,7 @@ import { Transmogrifier } from '../../core/models/transmogrifier.class';
   templateUrl: './personnel.component.html',
   styleUrls: ['./personnel.component.css']
 })
-export class PersonnelComponent implements OnInit {
+export class PersonnelComponent implements OnInit, OnDestroy {
   // this is an organization level component
   reload = false;
   userId: string;

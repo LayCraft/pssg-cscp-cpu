@@ -71,19 +71,19 @@ export class TransmogrifierExpenseReport {
       administrationAnnualBudget: g.ScheduleG.vsd_yeartodateprogramadministration || 0,
       administrationDescription: g.ScheduleG.vsd_programadministrationexplanation || '',
       administrationQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedprogramadministration || 0,
-      administrationValue: g.ScheduleG.vsd_programadministrationcurrentquarter || 0,
+      administrationValue: Math.round(g.ScheduleG.vsd_programadministrationcurrentquarter) || 0,
 
       // program delivery costs
       programDeliveryAnnualBudget: g.ScheduleG.vsd_yeartodateprogramdelivery || 0,
       programDeliveryDescription: g.ScheduleG.vsd_programdeliveryexplanations || '',
       programDeliveryQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedprogramdelivery || 0,
-      programDeliveryValue: g.ScheduleG.vsd_programdeliverycurrentquarter || 0,
+      programDeliveryValue: Math.round(g.ScheduleG.vsd_programdeliverycurrentquarter) || 0,
 
       // salaries and benefits costs
       salariesBenefitsAnnualBudget: g.ScheduleG.vsd_yeartodatesalariesandbenefits || 0,
       salariesBenefitsDescription: g.ScheduleG.vsd_salariesandbenefitsexplanation || '',
       salariesBenefitsQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedsalariesbenefits || 0,
-      salariesBenefitsValue: g.ScheduleG.vsd_salariesbenefitscurrentquarter || 0, //TODO
+      salariesBenefitsValue: Math.round(g.ScheduleG.vsd_salariesbenefitscurrentquarter) || 0, //TODO
 
       // contract service hours
       contractServiceHoursQuarterlyActual: g.ScheduleG.vsd_actualhoursthisquarter || 0,
@@ -102,7 +102,7 @@ export class TransmogrifierExpenseReport {
           label: ExpenseItemLabels[item._vsd_expenselineitem_value.toUpperCase()] || "Unknown Line Item Type",
           annualBudget: item.vsd_annualbudgetedamount || 0,
           quarterlyBudget: item.vsd_quarterlybudgetedamount || 0,
-          actual: item.vsd_actualexpensescurrentquarter || 0,
+          actual: Math.round(item.vsd_actualexpensescurrentquarter) || 0,
           itemId: item.vsd_scheduleglineitemid,
         });
       }

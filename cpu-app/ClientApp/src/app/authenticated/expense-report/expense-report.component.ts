@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ExpenseReportService } from '../../core/services/expense-report.service';
-import { TransmogrifierExpenseReport } from '../../core/models/transmogrifier-expense-report.class';
-import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
-import { iPerson } from '../../core/models/person.class';
+import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
+import { TransmogrifierExpenseReport } from '../../core/models/transmogrifier-expense-report.class';
+import { iPerson } from '../../core/models/person.class';
+import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 
 @Component({
   selector: 'app-expense-report',
   templateUrl: './expense-report.component.html',
   styleUrls: ['./expense-report.component.css']
 })
-export class ExpenseReportComponent implements OnInit {
+export class ExpenseReportComponent implements OnInit, OnDestroy {
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
@@ -33,6 +34,7 @@ export class ExpenseReportComponent implements OnInit {
     private expenseReportService: ExpenseReportService,
     private stepperService: IconStepperService,
     private stateService: StateService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -47,6 +49,10 @@ export class ExpenseReportComponent implements OnInit {
     // Subscribe to the stepper elements
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
+  }
+  ngOnDestroy() {
+    // clean the stepper
+    this.stepperService.reset();
   }
   constructDefaultstepperElements() {
     // write the default beginning
@@ -105,5 +111,24 @@ export class ExpenseReportComponent implements OnInit {
     this.lineItemSums['quarterlyVarianceSum'] = this.lineItemSums['annualBudgetSum'] * 0.25 - this.lineItemSums['actualSum'];
     //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
+  }
+  save() {
+    // // make a person array to submit
+    // const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
+    // const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), cleanup);
+    // // console.log(post);
+    // this.personService.setPersons(post).subscribe(
+    //   () => {
+    //     this.notificationQueueService.addNotification('Personnel Saved', 'success');
+    //     // refresh the list of people on save
+    //     this.stateService.refresh();
+    //   },
+    //   err => this.notificationQueueService.addNotification(err, 'danger')
+    // );
+  }
+  exit() {
+    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.router.navigate(['/authenticated/dashboard']);
+    }
   }
 }

@@ -41,16 +41,17 @@ export class PersonEditorComponent implements OnInit {
   buildForm() {
     this.internalFormGroup = new FormGroup({
       'address': new FormControl(''),
+      'deactivated': new FormControl(null),
       'email': new FormControl('', [Validators.required, Validators.pattern(EMAIL)]),
       'fax': new FormControl('', [Validators.required, Validators.pattern(PHONE_NUMBER)]),
       'firstName': new FormControl({ value: '', disabled: this.me }, [Validators.required, Validators.maxLength(50)]),
       'lastName': new FormControl({ value: '', disabled: this.me }, [Validators.required, Validators.maxLength(50)]),
+      'me': new FormControl(null),
       'middleName': new FormControl(['', Validators.maxLength(50)]),
+      'userId': new FormControl(''),
       'personId': new FormControl(['']),
       'phone': new FormControl([''], [Validators.required, Validators.pattern(PHONE_NUMBER)]),
       'title': new FormControl(['', Validators.maxLength(50)]),
-      'deactivated': new FormControl(null),
-      'me': new FormControl(null),
     });
     // set the values into the form
     this.internalFormGroup.setValue(this.person, { emitEvent: false });

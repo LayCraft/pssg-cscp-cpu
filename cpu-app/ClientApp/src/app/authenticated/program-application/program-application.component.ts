@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AdministrativeInformation } from '../../core/models/administrative-information.class';
 import { ContactInformation } from '../../core/models/contact-information.class';
 import { StateService } from '../../core/services/state.service';
@@ -13,7 +13,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
   templateUrl: './program-application.component.html',
   styleUrls: ['./program-application.component.css']
 })
-export class ProgramApplicationComponent implements OnInit {
+export class ProgramApplicationComponent implements OnInit, OnDestroy {
 
   contract: iContract;
 
@@ -45,6 +45,10 @@ export class ProgramApplicationComponent implements OnInit {
     });
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
+  }
+  ngOnDestroy() {
+    // clean the stepper
+    this.stepperService.reset();
   }
 
   programApplicationUpdated(programApplication: iProgramApplication): void {
