@@ -38,6 +38,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+
     this.stateService.currentUser.subscribe(u => this.currentUser = u);
     // get the expense report to fill
     this.expenseReportService.getScheduleG("e480dbe7-a910-ea11-b810-005056830319").subscribe(g => {
@@ -55,6 +56,8 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
     this.stepperService.reset();
   }
   constructDefaultstepperElements() {
+    // clean out the old things that might be living in the stepper.
+    this.stepperService.reset();
     // write the default beginning
     [
       {
