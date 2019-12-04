@@ -6,19 +6,8 @@ import { iMinistryUser } from './ministry-user';
 import { iContract } from './contract';
 import { iTask } from './task';
 import { iProgram } from './program';
-import { iDynamicsBlob, iDynamicsCrmContact, iDynamicsOrganization } from './dynamics-blob';
+import { iDynamicsBlob, iDynamicsCrmContact, iDynamicsOrganization, iDynamicsPostOrg, iDynamicsPostUsers } from './dynamics-blob';
 
-
-export interface iDynamicsPostOrg {
-  "UserBCeID": string;
-  "BusinessBCeID": string;
-  "Organization": iDynamicsOrganization;
-}
-export interface iDynamicsPostUsers {
-  "UserBCeID": string;
-  "BusinessBCeID": string;
-  "StaffCollection": iDynamicsCrmContact[];
-}
 export class Transmogrifier {
   // postback data
   public organizationId: string;

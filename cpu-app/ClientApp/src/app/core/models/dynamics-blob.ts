@@ -189,3 +189,70 @@ export interface iDynamicsScheduleGResponse {
   ScheduleG?: iDynamicsScheduleG;
   ScheduleGLineItems?: iDynamicsScheduleGLineItem[];
 }
+export interface iDynamicsSchedule {
+  _vsd_programid_value?: string;
+  fortunecookieetag?: string;
+  fortunecookietype?: string;
+  vsd_days?: string;
+  vsd_scheduledendtime?: string;
+  vsd_scheduledstarttime?: string;
+  vsd_scheduleid?: string;
+  vsd_cpu_scheduletype?: number;
+}
+export interface iDynamicsScheduleFResponse {
+  BoardContact?: iDynamicsCrmContact;
+  Contract?: iDynamicsCrmContract;
+  ExecutiveContact?: iDynamicsCrmContact;
+  Organization?: iDynamicsOrganization;
+  ProgramCollection?: iDynamicsCrmProgram[];
+  ScheduleCollection?: iDynamicsSchedule[];
+  fortunecookiecontext?: string;
+}
+
+export interface iDynamicsPostScheduleG {
+  "UserBCeID": string;
+  "BusinessBCeID": string;
+  "ScheduleGCollection": iDynamicsScheduleG[];
+  "ScheduleGLineItemCollection": iDynamicsScheduleGLineItem[];
+}
+export interface iDynamicsPostOrg {
+  "UserBCeID": string;
+  "BusinessBCeID": string;
+  "Organization": iDynamicsOrganization;
+}
+export interface iDynamicsPostUsers {
+  "UserBCeID": string;
+  "BusinessBCeID": string;
+  "StaffCollection": iDynamicsCrmContact[];
+}
+export interface iDynamicsLineItem {
+  itemId: string;
+  label: string;
+  annualBudget: number;
+  quarterlyBudget: number;
+  actual: number;
+}
+export interface iExpenseReport {
+  // salary benefits program delivery and administration expense
+  administrationDescription: string;
+  administrationValue: number;
+  administrationAnnualBudget: number;
+  administrationQuarterlyBudget: number;
+
+  programDeliveryDescription: string;
+  programDeliveryValue: number;
+  programDeliveryAnnualBudget: number;
+  programDeliveryQuarterlyBudget: number;
+
+  salariesBenefitsDescription: string;
+  salariesBenefitsValue: number;
+  salariesBenefitsAnnualBudget: number;
+  salariesBenefitsQuarterlyBudget: number;
+
+  programExpenseLineItems: iDynamicsLineItem[];
+
+  contractServiceHoursPerWeek: number;
+  contractServiceHoursPerQuarter: number;
+  contractServiceHoursQuarterlyActual: number;
+  executiveReview: boolean;
+}
