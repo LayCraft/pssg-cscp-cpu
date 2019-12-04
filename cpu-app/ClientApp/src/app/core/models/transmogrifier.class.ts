@@ -95,7 +95,7 @@ export class Transmogrifier {
     const contracts: iContract[] = [];
     if (b.Contracts.length > 0) {
       for (let contract of b.Contracts) {
-        const status = contractCode(contract.statuscode);
+        const status: [string, string] = contractCode(contract.statuscode);
         contracts.push({
           // upcoming, current, past
           category: status[0],
