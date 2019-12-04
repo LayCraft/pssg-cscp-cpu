@@ -7,6 +7,7 @@ import { iContract } from '../../core/models/contract';
 import { iProgram } from '../../core/models/program';
 import { iProgramApplication, ProgramApplication } from '../../core/models/program-application.class';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { ProgramApplicationService } from '../../core/services/program-application.service';
 
 @Component({
   selector: 'app-program-application',
@@ -25,6 +26,7 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     private stepperService: IconStepperService,
     private stateService: StateService,
     private route: ActivatedRoute,
+    private programApplicationService: ProgramApplicationService,
   ) { }
 
   ngOnInit() {
