@@ -1,38 +1,27 @@
 import { iProgramApplication } from "./program-application.class";
-import { iDynamicsScheduleFResponse } from "./dynamics-blob";
+import { iDynamicsScheduleFResponse, iDynamicsCrmProgram } from "./dynamics-blob";
+import { iContract } from "./contract";
 
-export class TransmogrifierExpenseReport {
+export class TransmogrifierProgramApplication {
   public organizationId: string;
   public userId: string;
-  public programApplication: iProgramApplication;
+  public programApplication: iContract;
 
   constructor(g: iDynamicsScheduleFResponse) {
-    this.programApplication = this.buildProgramApplication(g);
+    this.programApplication = this.buildContract(g);
   }
-  buildProgramApplication(g: iDynamicsScheduleFResponse): iProgramApplication {
-    // for every item in the schedule g's
-    const p: iProgramApplication = {
-      name: 'string',
-      formState: 'string',
-      contractId: 'string',
-      programId: 'string',
-      email: 'string',
-      programLocation: 'string',
-      serviceArea: 'string',
-      phoneNumber: 'string',
-      faxNumber: 'string',
 
-      mainAddress: null,
-      mailingAddress: null,
-      programContact: null,
-
-      revenueSources: [],
-      additionalStaff: [],
-      operationHours: [],
-      standbyHours: []
+  buildContract(g: iDynamicsScheduleFResponse): iContract {
+    const c: iContract = {
+      category: 'upcoming',
+      contractId: '',
+      contractNumber: '',
+      status: '',
+      programs: [],
+      tasks: [],
     };
 
-    return p;
+    return c;
   }
 }
 
