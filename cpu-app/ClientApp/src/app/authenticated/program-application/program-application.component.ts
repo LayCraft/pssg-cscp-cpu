@@ -30,6 +30,7 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    // this.programApplicationService
     this.route.params.subscribe(p => {
       // collect the contract from the route
       const contractId = p['contractId'];

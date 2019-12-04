@@ -15,15 +15,14 @@ export class ProgramApplicationService {
     private http: HttpClient,
   ) { }
 
-  // getScheduleF(scheduleFId: string): Observable<iDynamicsScheduleFResponse> {
-  //   return this.http.get<iDynamicsScheduleFResponse>(`${this.apiUrl}/${scheduleFId}`, { headers: this.headers }).pipe(
-  //     retry(3),
-  //     catchError(this.handleError)
-  //   );
-  // }
-  // setScheduleG(scheduleF: iDynamicsPostScheduleF) {
-
-  // }
+  getScheduleF(scheduleFId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${scheduleFId}`, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+  setScheduleG(scheduleF: any) {
+  }
   get headers(): HttpHeaders {
     return new HttpHeaders({ 'Content-Type': 'application/json' });
   }
