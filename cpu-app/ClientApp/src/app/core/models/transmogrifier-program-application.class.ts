@@ -57,14 +57,21 @@ export class TransmogrifierProgramApplication {
       for (let sched of g.ScheduleCollection) {
         // if the schedule matches this program collect it.
         if (sched._vsd_programid_value === p.vsd_programid) {
-          //save the hours into a useful format.
-          let hours: iHours = {
-            open: null,
-            closed: null,
+          // split the times into something that we can turn into moment
+          const open: number[] = sched.vsd_scheduledstarttime.split(':').map(x => parseInt(x));
+          const closed: number[] = sched.vsd_scheduledstarttime.split(':').map(x => parseInt(x));
+
+          const hours: iHours = {
+            //save the hours into moment format.
+            open: moment().hours(open[0]).minutes(open[1]),
+            closed: moment().hours(closed[0]).minutes(closed[1]),
+            // save the identifier for the post back to dynamics
             hoursId: sched.vsd_scheduleid,
             // convert the nasty comma seperated string version to useful week day boolean
             ...convertToWeekDays(sched.vsd_days)
           };
+          console.log(hours.open)
+
           // check for which collection of hours this is
           if (sched.vsd_cpu_scheduletype === 100000000) {
             // The type is active hours

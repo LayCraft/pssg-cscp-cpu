@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 export interface iHours {
   monday?: boolean;
   tuesday?: boolean;
@@ -6,8 +7,8 @@ export interface iHours {
   friday?: boolean;
   saturday?: boolean;
   sunday?: boolean;
-  open: Date; // just used for the hour representation
-  closed: Date;
+  open: Moment; // just used for the hour representation
+  closed: Moment;
   hoursId: string;
 }
 export class Hours implements iHours {
@@ -18,8 +19,8 @@ export class Hours implements iHours {
   friday: boolean;
   saturday: boolean;
   sunday: boolean;
-  open: Date; // just used for the hour representation
-  closed: Date;
+  open: Moment; // just used for the hour representation
+  closed: Moment;
   hoursId: string;
   constructor(hours?: iHours) {
     if (hours) {
@@ -30,8 +31,8 @@ export class Hours implements iHours {
       this.friday = hours.friday || null;
       this.saturday = hours.saturday || null;
       this.sunday = hours.sunday || null;
-      this.open = new Date(hours.open) || null;
-      this.closed = new Date(hours.closed) || null;
+      this.open = hours.open || null;
+      this.closed = hours.closed || null;
     }
   }
 }
