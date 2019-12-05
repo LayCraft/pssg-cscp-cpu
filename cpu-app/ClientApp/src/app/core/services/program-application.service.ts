@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
+import { iDynamicsScheduleFResponse } from '../models/dynamics-blob';
 
 
 @Injectable({
@@ -15,13 +16,13 @@ export class ProgramApplicationService {
     private http: HttpClient,
   ) { }
 
-  getScheduleF(scheduleFId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${scheduleFId}`, { headers: this.headers }).pipe(
+  getScheduleF(scheduleFId: string): Observable<iDynamicsScheduleFResponse> {
+    return this.http.get<iDynamicsScheduleFResponse>(`${this.apiUrl}/${scheduleFId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
-  setScheduleG(scheduleF: any) {
+  setScheduleF(scheduleF: any) {
   }
   get headers(): HttpHeaders {
     return new HttpHeaders({ 'Content-Type': 'application/json' });
