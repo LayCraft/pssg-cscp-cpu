@@ -8,6 +8,7 @@ import { iProgram } from '../../core/models/program';
 import { iProgramApplication, ProgramApplication } from '../../core/models/program-application.class';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { ProgramApplicationService } from '../../core/services/program-application.service';
+import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
 
 @Component({
   selector: 'app-program-application',
@@ -17,7 +18,7 @@ import { ProgramApplicationService } from '../../core/services/program-applicati
 export class ProgramApplicationComponent implements OnInit, OnDestroy {
 
   contract: iContract;
-
+  trans: TransmogrifierProgramApplication;
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
@@ -30,7 +31,9 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    // this.programApplicationService
+    this.programApplicationService.getScheduleF('9e9b5111-51c9-e911-b80f-00505683fbf4').subscribe(f => {
+      this.trans = new TransmogrifierProgramApplication(f);
+    });
     this.route.params.subscribe(p => {
       // collect the contract from the route
       const contractId = p['contractId'];
