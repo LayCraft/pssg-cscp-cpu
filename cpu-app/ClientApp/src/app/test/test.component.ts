@@ -18,6 +18,7 @@ export class TestComponent implements OnInit {
     this.programApplicationService.getScheduleF('9e9b5111-51c9-e911-b80f-00505683fbf4').subscribe((f: iDynamicsScheduleFResponse) => {
       this.dynamics = f;
       this.trans = new TransmogrifierProgramApplication(f);
+      console.log(this.trans);
     })
   }
 }
