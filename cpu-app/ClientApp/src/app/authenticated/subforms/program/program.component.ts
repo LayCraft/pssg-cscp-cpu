@@ -16,7 +16,6 @@ export class ProgramComponent implements OnInit {
   @Output() programApplicationChange = new EventEmitter<iProgramApplication>();
   required = false;
   // the form model
-  programInformationForm: ProgramApplication;
   differentProgramContact: boolean = false;
 
   currentTab: string;
@@ -36,13 +35,6 @@ export class ProgramComponent implements OnInit {
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.persons = m.persons;
     });
-    this.programInformationForm = new ProgramApplication();
-    this.addOperationHours();
-    this.addStandbyHours();
-
-    // initialize the contact information if it is supplied else make a new object
-    this.programApplication ? this.programInformationForm = new ProgramApplication(this.programApplication) : new ProgramApplication();
-    // output the object that we initialized
     this.addOperationHours();
     this.addStandbyHours();
     this.onInput();
@@ -56,7 +48,7 @@ export class ProgramComponent implements OnInit {
   showValidFeedback(control: AbstractControl): boolean { return !(control.valid && (control.dirty || control.touched)) }
   showInvalidFeedback(control: AbstractControl): boolean { return !(control.invalid && (control.dirty || control.touched)) }
   onInput() {
-    this.programApplicationChange.emit(this.programInformationForm);
+    this.programApplicationChange.emit(this.programApplication);
   }
 
   showProgramContact() {
@@ -65,20 +57,20 @@ export class ProgramComponent implements OnInit {
   }
 
   addOperationHours() {
-    this.programInformationForm.operationHours.push(new Hours());
+    this.programApplication.operationHours.push(new Hours());
   }
   addStandbyHours() {
-    this.programInformationForm.standbyHours.push(new Hours());
+    this.programApplication.standbyHours.push(new Hours());
   }
 
   onProgramContactChange(event: iPerson) {
-    this.programInformationForm.programContact = event;
+    this.programApplication.programContact = event;
   }
   onPaidStaffChange(event: iPerson[]) {
-    this.programInformationForm.additionalStaff = event;
+    this.programApplication.additionalStaff = event;
   }
   onProgramStaffChange(event: iPerson[]) {
-    this.programInformationForm.additionalStaff = event;
+    this.programApplication.additionalStaff = event;
   }
   setCurrentTab(tab) {
     this.currentTab = tab;
