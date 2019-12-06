@@ -24,7 +24,6 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
-  persons: iPerson[];
   constructor(
     private stepperService: IconStepperService,
     private stateService: StateService,
@@ -33,38 +32,28 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.programApplicationService.getScheduleF('9e9b5111-51c9-e911-b80f-00505683fbf4').subscribe(f => {
-      // make the transmogrifier for this form
-      this.trans = new TransmogrifierProgramApplication(f);
-      // make a list of persons to compensate for incomplete data from Dynamics
-      this.persons = this.stateService.main.getValue().persons;
-      // add the data that we do have to the collection may be stale but better than nothing.
-      // TODO: update when dynamics API is fixed.
-      this.trans.programApplications.forEach(t => {
-        // for each person
-        this.persons.forEach(p => {
-          // the ones in the tranmogrifier will be missing information because it is absent from dynamics
-          if (p.personId === t.programContact.personId) {
-            t.programContact = p;
-          }
+    // get the right contract by route
+    this.route.params.subscribe(p => {
+      this.programApplicationService.getScheduleF(p['contractId']).subscribe(f => {
+        // make the transmogrifier for this form
+        this.trans = new TransmogrifierProgramApplication(f);
+
+        // make a list of persons to compensate for incomplete data from Dynamics
+        const persons = this.stateService.main.getValue().persons;
+        // add the data that we do have to the collection may be stale but better than nothing.
+        // TODO: update when dynamics API is fixed.
+        this.trans.programApplications.forEach(t => {
+          // for each person
+          persons.forEach(p => {
+            // the ones in the tranmogrifier will be missing information because it is absent from dynamics
+            if (p.personId === t.programContact.personId) {
+              t.programContact = p;
+            }
+          });
         });
       });
     });
-    this.route.params.subscribe(p => {
-      // collect the contract from the route
-      const contractId = p['contractId'];
-      // don't subscribe because this is only used at page load to collect meta
-      const contracts: iContract[] = this.stateService.main.getValue().contracts;
-      // isolate the correct contract
-      for (let contract of contracts) {
-        if (contract.contractId == contractId) {
-          this.contract = contract;
-        }
-      }
-      // clear all of the old stepper elements
-      this.stepperService.reset();
-      this.constructDefaultstepperElements();
-    });
+
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
   }

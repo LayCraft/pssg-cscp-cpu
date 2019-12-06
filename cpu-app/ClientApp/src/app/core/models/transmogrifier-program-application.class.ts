@@ -77,7 +77,6 @@ export class TransmogrifierProgramApplication {
             // convert the nasty comma seperated string version to useful week day boolean
             ...convertToWeekDays(sched.vsd_days)
           };
-          console.log(hours.open)
 
           // check for which collection of hours this is
           if (sched.vsd_cpu_scheduletype === 100000000) {

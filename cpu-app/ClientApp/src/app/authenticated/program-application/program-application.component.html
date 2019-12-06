@@ -38,6 +38,7 @@
       <app-administrative-information [(administrativeInformation)]="trans.administrativeInformation"></app-administrative-information>
       <app-cg-liability [(cgLiability)]="trans.cglInsurance"></app-cg-liability>
       <span *ngFor="let program of trans.programApplications">
+        <h1>{{program.name}}</h1>
         <app-program [(programApplication)]="program"></app-program>
       </span>
       <pre>{{trans|json}}</pre>
