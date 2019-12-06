@@ -9,6 +9,7 @@ import { iProgramApplication, ProgramApplication } from '../../core/models/progr
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { ProgramApplicationService } from '../../core/services/program-application.service';
 import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
+import { iPerson } from 'src/app/core/models/person.class';
 
 @Component({
   selector: 'app-program-application',
@@ -22,7 +23,8 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
-  discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization']
+  discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
+  persons: iPerson[];
   constructor(
     private stepperService: IconStepperService,
     private stateService: StateService,
@@ -32,7 +34,21 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.programApplicationService.getScheduleF('9e9b5111-51c9-e911-b80f-00505683fbf4').subscribe(f => {
+      // make the transmogrifier for this form
       this.trans = new TransmogrifierProgramApplication(f);
+      // make a list of persons to compensate for incomplete data from Dynamics
+      this.persons = this.stateService.main.getValue().persons;
+      // add the data that we do have to the collection may be stale but better than nothing.
+      // TODO: update when dynamics API is fixed.
+      this.trans.programApplications.forEach(t => {
+        // for each person
+        this.persons.forEach(p => {
+          // the ones in the tranmogrifier will be missing information because it is absent from dynamics
+          if (p.personId === t.programContact.personId) {
+            t.programContact = p;
+          }
+        });
+      });
     });
     this.route.params.subscribe(p => {
       // collect the contract from the route

@@ -3,17 +3,24 @@ import { iDynamicsScheduleFResponse } from "./dynamics-blob";
 import { iHours } from "./hours.class";
 import * as moment from 'moment';
 import { convertToWeekDays } from '../constants/convert-to-week-days';
+import { iContactInformation, ContactInformation } from "./contact-information.class";
+import { iAdministrativeInformation, AdministrativeInformation } from "./administrative-information.class";
 
 export class TransmogrifierProgramApplication {
-  public organizationId: string;
-  public userId: string;
-  public programApplications: iProgramApplication[];
+  organizationId: string;
+  userId: string;
+  administrativeInformation: iAdministrativeInformation;
+  cglInsurance: string; // commercial general liability insurance detail string picked from options.
+  contactInformation: iContactInformation;
+  programApplications: iProgramApplication[];
 
   constructor(g: iDynamicsScheduleFResponse) {
+    this.administrativeInformation = new AdministrativeInformation();
+    this.contactInformation = new ContactInformation();
     this.programApplications = this.buildProgramApplications(g);
   }
 
-  buildProgramApplications(g: iDynamicsScheduleFResponse): iProgramApplication[] {
+  private buildProgramApplications(g: iDynamicsScheduleFResponse): iProgramApplication[] {
     const applications: iProgramApplication[] = [];
 
     for (let p of g.ProgramCollection) {
