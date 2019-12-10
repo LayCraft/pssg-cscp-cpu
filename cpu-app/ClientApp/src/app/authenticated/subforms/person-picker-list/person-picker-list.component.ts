@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iPerson } from '../../../core/models/person.class';
 import { nameAssemble } from '../../../core/constants/name-assemble';
 import { StateService } from '../../../core/services/state.service';
+import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 @Component({
   selector: 'app-person-picker-list',
   templateUrl: './person-picker-list.component.html',
@@ -18,7 +19,7 @@ export class PersonPickerListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.stateService.main.subscribe(m => {
+    this.stateService.main.subscribe((m: Transmogrifier) => {
       this.persons = m.persons;
     });
   }

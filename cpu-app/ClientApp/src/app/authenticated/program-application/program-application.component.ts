@@ -9,7 +9,6 @@ import { iProgramApplication, ProgramApplication } from '../../core/models/progr
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { ProgramApplicationService } from '../../core/services/program-application.service';
 import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
-import { iPerson } from 'src/app/core/models/person.class';
 
 @Component({
   selector: 'app-program-application',

@@ -12,11 +12,6 @@ import { contractCode } from '../constants/contract-code';
 import { taskCode } from '../constants/task-code';
 
 export class Transmogrifier {
-  // postback data
-  public organizationId: string;
-  public userId: string;
-  // public accountId: string; //really this is in the organizationMeta object
-
   // collections of viewmodels
   public organizationMeta: iOrganizationMeta;
   public persons: iPerson[];
@@ -24,8 +19,6 @@ export class Transmogrifier {
   public ministryContact: iMinistryUser;
 
   constructor(b: iDynamicsBlob) {
-    this.userId = b.UserBCeID;// this is the user's bceid
-    this.organizationId = b.BusinessBCeID; // this is the organization's bceid
     this.organizationMeta = this.buildOrganizationMeta(b);
     this.persons = this.buildPersons(b);
     this.ministryContact = this.buildMinistryContact(b);

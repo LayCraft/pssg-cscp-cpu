@@ -4,6 +4,7 @@ import { iAdministrativeInformation, AdministrativeInformation } from '../../../
 import { iPerson } from '../../../core/models/person.class';
 import { PersonService } from '../../../core/services/person.service';
 import { StateService } from '../../../core/services/state.service';
+import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-administrative-information',
@@ -32,7 +33,7 @@ export class AdministrativeInformationComponent implements OnInit {
 
   ngOnInit() {
     // collect the persons for the organization
-    this.stateService.main.subscribe(m => {
+    this.stateService.main.subscribe((m: Transmogrifier) => {
       this.persons = m.persons;
     });
     // initialize the contact information if it is supplied else make a new object

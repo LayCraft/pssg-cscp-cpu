@@ -16,10 +16,66 @@ export class TransmogrifierProgramApplication {
 
   constructor(g: iDynamicsScheduleFResponse) {
     this.administrativeInformation = new AdministrativeInformation();
-    this.contactInformation = new ContactInformation();
+    this.contactInformation = this.buildContactInformation(g);
     this.programApplications = this.buildProgramApplications(g);
   }
-
+  private buildContactInformation(b: iDynamicsScheduleFResponse): iContactInformation {
+    return {
+      phoneNumber: b.Organization.telephone1 || null,
+      emailAddress: b.Organization.emailaddress1 || null,
+      faxNumber: b.Organization.fax || null,
+      mainAddress: {
+        city: b.Organization.address1_city || null,
+        line1: b.Organization.address1_line1 || null,
+        line2: b.Organization.address1_line2 || null,
+        postalCode: b.Organization.address1_postalcode || null,
+        province: b.Organization.address1_stateorprovince || null,
+      },
+      mailingAddress: {
+        city: b.Organization.address2_city || null,
+        line1: b.Organization.address2_line1 || null,
+        line2: b.Organization.address2_line2 || null,
+        postalCode: b.Organization.address2_postalcode || null,
+        province: b.Organization.address2_stateorprovince || null,
+      },
+      executiveContact: {
+        email: b.ExecutiveContact.emailaddress1 || null,
+        fax: b.ExecutiveContact.fax || null,
+        firstName: b.ExecutiveContact.firstname || null,
+        lastName: b.ExecutiveContact.lastname || null,
+        middleName: b.ExecutiveContact.middlename || null,
+        personId: b.ExecutiveContact.contactid || null,
+        phone: b.ExecutiveContact.mobilephone || null,
+        title: b.ExecutiveContact.jobtitle || null,
+        me: null,
+        address: {
+          city: b.ExecutiveContact.address1_city || null,
+          line1: b.ExecutiveContact.address1_line1 || null,
+          line2: b.ExecutiveContact.address1_line2 || null,
+          postalCode: b.ExecutiveContact.address1_postalcode || null,
+          province: b.ExecutiveContact.address1_stateorprovince || null,
+        }
+      },
+      boardContact: {
+        email: b.BoardContact.emailaddress1 || null,
+        fax: b.BoardContact.fax || null,
+        firstName: b.BoardContact.firstname || null,
+        lastName: b.BoardContact.lastname || null,
+        middleName: b.BoardContact.middlename || null,
+        personId: b.BoardContact.contactid || null,
+        phone: b.BoardContact.mobilephone || null,
+        title: b.BoardContact.jobtitle || null,
+        me: null,
+        address: {
+          city: b.BoardContact.address1_city || null,
+          line1: b.BoardContact.address1_line1 || null,
+          line2: b.BoardContact.address1_line2 || null,
+          postalCode: b.BoardContact.address1_postalcode || null,
+          province: b.BoardContact.address1_stateorprovince || null,
+        }
+      }
+    }
+  }
   private buildProgramApplications(g: iDynamicsScheduleFResponse): iProgramApplication[] {
     const applications: iProgramApplication[] = [];
 
