@@ -13,12 +13,13 @@ import { MainService } from '../core/services/main.service';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
-  dynamics;
-  trans: TransmogrifierProgramApplication;
+  dynamics: any;
+  mainData: Transmogrifier;
+  currentUser: iPerson;
   staff: iPerson[];
+  trans: TransmogrifierProgramApplication;
   constructor(
     private programApplicationService: ProgramApplicationService,
-    private stateService: StateService,
     private mainService: MainService,
   ) { }
   ngOnInit() {
@@ -36,14 +37,12 @@ export class TestComponent implements OnInit {
       (m: iDynamicsBlob) => {
         // collect the blob into a useful object
         const mainData = new Transmogrifier(m);
+        this.staff = mainData.persons;
         // save the useful blob of viewmodels
-        this.stateService.main.next(mainData);
         // save the user that matches the current bceid
-        this.stateService.currentUser.next(mainData.persons.filter(p => p.userId === userId)[0]);
-        // set the logged in state
-        this.stateService.loggedIn.next(true);
+        this.currentUser = mainData.persons.filter(p => p.userId === userId)[0];
+        this.mainData = mainData;
       }
     );
-    this.stateService.main.subscribe((t: Transmogrifier) => this.staff = t.persons)
   }
 }
