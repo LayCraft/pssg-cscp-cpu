@@ -86,8 +86,8 @@ export class TransmogrifierProgramApplication {
         contractId: p._vsd_contractid_value,
         programId: p.vsd_programid,
         email: p.vsd_emailaddress,
-        programLocation: p.vsd_city + '???',
-        serviceArea: p.vsd_city + '???',
+        programLocation: undefined,
+        serviceArea: undefined,
         phoneNumber: p.vsd_phonenumber,
         faxNumber: p.vsd_fax,
         mainAddress: {
@@ -106,10 +106,10 @@ export class TransmogrifierProgramApplication {
         },
         programContact: {
           personId: p._vsd_contactlookup_value,
-          me: null,
-          lastName: null,
-          firstName: null,
-          email: null,
+          me: undefined,
+          lastName: undefined,
+          firstName: undefined,
+          email: undefined,
         },
         revenueSources: [],//iRevenueSource[];
         additionalStaff: [],//iPerson[];
