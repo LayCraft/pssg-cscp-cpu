@@ -9,12 +9,16 @@ import { iAdministrativeInformation, AdministrativeInformation } from "./adminis
 export class TransmogrifierProgramApplication {
   organizationId: string;
   userId: string;
+  contractId: string;
   administrativeInformation: iAdministrativeInformation;
   cglInsurance: string; // commercial general liability insurance detail string picked from options.
   contactInformation: iContactInformation;
   programApplications: iProgramApplication[];
 
   constructor(g: iDynamicsScheduleFResponse) {
+    this.organizationId = undefined;
+    this.userId = g.Contract.vsd_contractid;
+    this.contractId = g.Contract.vsd_contractid;
     this.administrativeInformation = new AdministrativeInformation();
     this.contactInformation = this.buildContactInformation(g);
     this.programApplications = this.buildProgramApplications(g);
@@ -82,7 +86,7 @@ export class TransmogrifierProgramApplication {
     for (let p of g.ProgramCollection) {
       let temp: iProgramApplication = {
         name: p.vsd_name,
-        formState: null,
+        formState: undefined,
         contractId: p._vsd_contractid_value,
         programId: p.vsd_programid,
         email: p.vsd_emailaddress,
