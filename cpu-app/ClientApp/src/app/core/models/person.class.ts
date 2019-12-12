@@ -8,7 +8,7 @@ export interface iPerson {
   fax?: string;
   firstName: string;
   lastName: string;
-  me: boolean; // is this the current user? If so this is "me".
+  me?: boolean; // is this the current user? If so this is "me".
   middleName?: string;
   phone?: string;
   title?: string;
@@ -25,7 +25,7 @@ export class Person implements iPerson {
   firstName: string;
   hoursWorkedPerWeek?: number;
   lastName: string;
-  me: boolean = false;
+  me?: boolean = false;
   middleName?: string;
   personId: string;
   phone?: string;

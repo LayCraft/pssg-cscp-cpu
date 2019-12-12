@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ProgramApplicationService } from '../core/services/program-application.service';
 import { TransmogrifierProgramApplication } from '../core/models/transmogrifier-program-application.class';
 import { iDynamicsScheduleFResponse, iDynamicsBlob } from '../core/models/dynamics-blob';
-import { StateService } from '../core/services/state.service';
 import { iPerson } from '../core/models/person.class';
 import { Transmogrifier } from '../core/models/transmogrifier.class';
 import { MainService } from '../core/services/main.service';

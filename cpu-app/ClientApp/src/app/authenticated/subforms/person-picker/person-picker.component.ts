@@ -23,12 +23,9 @@ export class PersonPickerComponent implements OnInit {
     private stateService: StateService,
   ) { }
   ngOnInit() {
+    // make a new person object from what was handed to this picker.
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.persons = m.persons;
-      if (!this.person && m.persons.length) {
-        // set to first person
-        this.person = m[0];
-      }
     });
   }
 

@@ -9,6 +9,7 @@ import { iProgramApplication, ProgramApplication } from '../../core/models/progr
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { ProgramApplicationService } from '../../core/services/program-application.service';
 import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
+import { Person } from '../../core/models/person.class';
 
 @Component({
   selector: 'app-program-application',
@@ -25,7 +26,6 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
   constructor(
     private stepperService: IconStepperService,
-    private stateService: StateService,
     private route: ActivatedRoute,
     private programApplicationService: ProgramApplicationService,
   ) { }
@@ -36,20 +36,6 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
       this.programApplicationService.getScheduleF(p['contractId']).subscribe(f => {
         // make the transmogrifier for this form
         this.trans = new TransmogrifierProgramApplication(f);
-
-        // make a list of persons to compensate for incomplete data from Dynamics
-        const persons = this.stateService.main.getValue().persons;
-        // add the data that we do have to the collection may be stale but better than nothing.
-        // TODO: update when dynamics API is fixed.
-        this.trans.programApplications.forEach(t => {
-          // for each person
-          persons.forEach(p => {
-            // the ones in the tranmogrifier will be missing information because it is absent from dynamics
-            if (p.personId === t.programContact.personId) {
-              t.programContact = p;
-            }
-          });
-        });
       });
     });
 

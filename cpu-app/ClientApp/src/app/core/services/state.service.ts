@@ -48,6 +48,7 @@ export class StateService {
   logout() {
     // clear the state and route to the homepage
     this.main.next(null);
+    this.currentUser.next(null);
     //notification about the login
     this.notificationQueueService.addNotification('User has logged out.', 'warning');
     this.loggedIn.next(false);
@@ -56,13 +57,18 @@ export class StateService {
     // quick refresh of data
     const userId = this.main.getValue().organizationMeta.userId;
     const organizationId = this.main.getValue().organizationMeta.organizationId;
-    this.mainService.getBlob(userId, organizationId).subscribe(
-      (m: iDynamicsBlob) => {
-        // collect the blob into a useful object
-        const mainData = new Transmogrifier(m);
-        // save the useful blob in a behaviourSubject
-        this.main.next(mainData);
-      }
-    );
+    // only perform this get blob if the required information has been returned at least once
+    // we need the user and organization id to do this
+    if (userId && organizationId) {
+      this.mainService.getBlob(userId, organizationId).subscribe(
+        (m: iDynamicsBlob) => {
+          console.log(m);
+          // collect the blob into a useful object
+          const mainData = new Transmogrifier(m);
+          // save the useful blob in a behaviourSubject
+          this.main.next(mainData);
+        }
+      );
+    }
   }
 }
