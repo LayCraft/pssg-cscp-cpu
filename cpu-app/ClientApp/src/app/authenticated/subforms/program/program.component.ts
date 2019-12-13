@@ -17,7 +17,7 @@ export class ProgramComponent implements OnInit {
   required = false;
   // the form model
   differentProgramContact: boolean = false;
-
+  pa: ProgramApplication;
   currentTab: string;
   tabs: string[];
   persons: iPerson[] = [];
@@ -35,13 +35,10 @@ export class ProgramComponent implements OnInit {
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.persons = m.persons;
     });
+    this.pa = new ProgramApplication(this.programApplication);
     this.addOperationHours();
     this.addStandbyHours();
     this.onInput();
-    // initialize the program information if it is supplied else make a new object
-    // this.programInformationService.getProgramInformation(this.programMeta.organizationId, this.programMeta.programId).subscribe((p: iProgramInformation) => {
-    //   this.programInformationForm = new ProgramInformation(p);
-    // });
   }
 
   // form helpers. Validity hints and hide/show toggles
@@ -65,12 +62,17 @@ export class ProgramComponent implements OnInit {
 
   onProgramContactChange(event: iPerson) {
     this.programApplication.programContact = event;
+    this.onInput();
   }
   onPaidStaffChange(event: iPerson[]) {
     this.programApplication.additionalStaff = event;
+    this.onInput();
+
   }
   onProgramStaffChange(event: iPerson[]) {
     this.programApplication.additionalStaff = event;
+    this.onInput();
+
   }
   setCurrentTab(tab) {
     this.currentTab = tab;

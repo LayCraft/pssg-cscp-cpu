@@ -31,7 +31,6 @@ export class TestComponent implements OnInit {
     const userId = '9e9b5111-51c9-e911-b80f-00505683fbf4';
     const orgId = 'fd889a40-14b2-e811-8163-480fcff4f621';
 
-    // on login collect the information from the organization id
     this.mainService.getBlob(userId, orgId).subscribe(
       (m: iDynamicsBlob) => {
         // collect the blob into a useful object

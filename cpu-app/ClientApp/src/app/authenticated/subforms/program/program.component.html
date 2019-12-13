@@ -5,29 +5,17 @@
 </ul>
 
 <div *ngIf="currentTab===tabs[0]">
-  <form #piForm="ngForm" (input)="onInput()">
+  <div>
     <h2 class="blue-header">Main Program Information</h2>
     <div class="form-group">
       <label for="programLocation" [class.required]="required">Program Location</label>
-      <input class="form-control" type="text" [(ngModel)]="programApplication.programLocation" id="programLocation" name="programLocation" #programLocation="ngModel" disabled>
-      <div class="valid-feedback" [hidden]="showValidFeedback(programLocation)" style="display: inherit">
-        Ok
-      </div>
-      <div class="invalid-feedback" [hidden]="showInvalidFeedback(programLocation)" style="display: inherit">
-        Try Again
-      </div>
+      <input class="form-control" type="text" [(ngModel)]="programApplication.programLocation" id="programLocation" name="programLocation" disabled>
     </div>
     <div class="form-group">
       <label for="serviceArea" [class.required]="required">Service Area</label>
-      <input class="form-control" type="text" [(ngModel)]="programApplication.serviceArea" id="serviceArea" name="serviceArea" #serviceArea="ngModel" disabled>
-      <div class="valid-feedback" [hidden]="showValidFeedback(serviceArea)" style="display: inherit">
-        Ok
-      </div>
-      <div class="invalid-feedback" [hidden]="showInvalidFeedback(serviceArea)" style="display: inherit">
-        Try Again
-      </div>
+      <input class="form-control" type="text" [(ngModel)]="programApplication.serviceArea" id="serviceArea" name="serviceArea" disabled>
     </div>
-  </form>
+  </div>
 
   <div class="form-group">
     <div class="form-check">

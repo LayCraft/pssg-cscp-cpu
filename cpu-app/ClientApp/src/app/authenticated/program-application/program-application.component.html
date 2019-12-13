@@ -1,12 +1,17 @@
 <div class="container">
   <div class="row" *ngIf="trans">
     <div class="col-md-4">
-      <!-- <section class="application-nav sticky-top">
+      <section class="application-nav sticky-top">
         <app-icon-stepper></app-icon-stepper>
-      </section> -->
+      </section>
     </div>
 
     <div class="col-md-8">
+      <div *ngIf="stepperElements && currentStepperElement">
+        <div class="page-header">
+          <h1>{{currentStepperElement.itemName}}</h1>
+        </div>
+      </div>
       <!-- <div *ngIf="stepperElements && currentStepperElement">
         <div class="page-header">
           <h1>{{currentStepperElement.itemName}}</h1>
@@ -56,14 +61,15 @@
         </div>
       </div>
       <app-program-contact-information [(contactInformation)]="trans.contactInformation"></app-program-contact-information>
+      <hr>
       <app-administrative-information [(administrativeInformation)]="trans.administrativeInformation"></app-administrative-information>
+      <hr>
       <app-cg-liability [(cgLiability)]="trans.cglInsurance"></app-cg-liability>
+      <hr>
       <span *ngFor="let program of trans.programApplications">
         <h1>{{program.name}}</h1>
         <app-program [(programApplication)]="program"></app-program>
-
       </span>
-      <pre>{{trans|json}}</pre>
     </div>
   </div>
   <!-- <div class="row">

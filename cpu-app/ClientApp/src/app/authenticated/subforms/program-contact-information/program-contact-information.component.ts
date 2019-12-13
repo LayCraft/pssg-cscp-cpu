@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Person, iPerson } from '../../../core/models/person.class';
-import { iContactInformation } from '../../../core/models/contact-information.class';
+import { iContactInformation, ContactInformation } from '../../../core/models/contact-information.class';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 
@@ -24,7 +24,7 @@ export class ProgramContactInformationComponent implements OnInit {
   persons: Person[] = [];
   hasBoardOfDirectors: boolean = false;
 
-  executive: iPerson;
+  executiveContact: iPerson;
   boardContact: iPerson;
 
   constructor(
@@ -32,6 +32,9 @@ export class ProgramContactInformationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.executiveContact = this.contactInformation.executiveContact;
+    this.boardContact = this.contactInformation.boardContact;
+    this.hasBoardOfDirectors = this.contactInformation.boardContact ? true : false;
     // create a new contact information form
     this.contactInformationForm = new FormGroup({
       'contactInformation': new FormControl('', Validators.required)
@@ -44,15 +47,12 @@ export class ProgramContactInformationComponent implements OnInit {
     });
   }
   onInput() {
-    // console.log(this.contactInformationForm.value['contactInformation'])
+    // emittable
+    const ci: ContactInformation = this.contactInformationForm.value['contactInformation'];
+    ci.boardContact = this.boardContact;
+    ci.executiveContact = this.executiveContact;
     // emit the information
     this.contactInformationChange.emit(this.contactInformationForm.value['contactInformation']);
-  }
-  pickExecutive(event: iPerson) {
-    this.executive = event;
-  }
-  pickBoardContact(event: iPerson) {
-    this.boardContact = event;
   }
   cleanBoardContact() {
     // if the board of directors is false we need to remove the object.
