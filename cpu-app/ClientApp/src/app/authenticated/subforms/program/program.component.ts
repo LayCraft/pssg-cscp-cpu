@@ -2,7 +2,7 @@ import { AbstractControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iProgramApplication, ProgramApplication } from '../../../core/models/program-application.class';
 import { iPerson } from '../../../core/models/person.class';
-import { Hours } from '../../../core/models/hours.class';
+import { Hours, iHours } from '../../../core/models/hours.class';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 
@@ -58,6 +58,12 @@ export class ProgramComponent implements OnInit {
   }
   addStandbyHours() {
     this.programApplication.standbyHours.push(new Hours());
+  }
+  removeOperationHours(i: number) {
+    this.programApplication.operationHours = this.programApplication.operationHours.filter((hours: iHours, j: number) => i !== j);
+  }
+  removeStandbyHours(i: number) {
+    this.programApplication.standbyHours = this.programApplication.standbyHours.filter((hours: iHours, j: number) => i !== j);
   }
 
   onProgramContactChange(event: iPerson) {

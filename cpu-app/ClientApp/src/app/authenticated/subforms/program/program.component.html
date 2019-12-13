@@ -5,16 +5,14 @@
 </ul>
 
 <div *ngIf="currentTab===tabs[0]">
-  <div>
-    <h2 class="blue-header">Main Program Information</h2>
-    <div class="form-group">
-      <label for="programLocation" [class.required]="required">Program Location</label>
-      <input class="form-control" type="text" [(ngModel)]="programApplication.programLocation" id="programLocation" name="programLocation" disabled>
-    </div>
-    <div class="form-group">
-      <label for="serviceArea" [class.required]="required">Service Area</label>
-      <input class="form-control" type="text" [(ngModel)]="programApplication.serviceArea" id="serviceArea" name="serviceArea" disabled>
-    </div>
+  <h2 class="blue-header">Main Program Information</h2>
+  <div class="form-group">
+    <label for="programLocation" [class.required]="required">Program Location</label>
+    <input class="form-control" type="text" [(ngModel)]="programApplication.programLocation" id="programLocation" name="programLocation" disabled>
+  </div>
+  <div class="form-group">
+    <label for="serviceArea" [class.required]="required">Service Area</label>
+    <input class="form-control" type="text" [(ngModel)]="programApplication.serviceArea" id="serviceArea" name="serviceArea" disabled>
   </div>
 
   <div class="form-group">
@@ -33,15 +31,17 @@
 </div>
 <div *ngIf="currentTab===tabs[1]">
   <h2 class="blue-header">Program Schedule Hours of Operation (not including on-call / stand-by hours)</h2>
-  <div *ngFor="let hours of programApplication.operationHours">
+  <div *ngFor="let hours of programApplication.operationHours; let i=index">
     <app-hours [(hours)]="hours"></app-hours>
+    <a (click)="removeOperationHours(i)" class="btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
   </div>
-  <button class="btn btn-secondary mb-4" (click)="addOperationHours()">Add Operation Hours</button>
+  <button class="btn btn-secondary mb-4 mt-2" (click)="addOperationHours()">Add Operation Hours</button>
   <h2 class="blue-header">Program On-call / Stand-by Hours of Operation</h2>
-  <div *ngFor="let hours of programApplication.standbyHours">
+  <div *ngFor="let hours of programApplication.standbyHours; let i=index">
     <app-hours [(hours)]="hours"></app-hours>
+    <a (click)="removeStandbyHours(i)" class="btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
   </div>
-  <button class="btn btn-secondary mb-4" (click)="addStandbyHours()">Add On-call/Stand-by Hours</button>
+  <button class="btn btn-secondary mb-4 mt-2" (click)="addStandbyHours()">Add On-call/Stand-by Hours</button>
 </div>
 <div *ngIf="currentTab===tabs[2]">
   <h2 class="blue-header">Reporting Requirements</h2>
