@@ -11,14 +11,28 @@
         <div class="page-header">
           <h1>{{currentStepperElement.itemName}}</h1>
         </div>
-      </div>
-      <!-- <div *ngIf="stepperElements && currentStepperElement">
-        <div class="page-header">
-          <h1>{{currentStepperElement.itemName}}</h1>
-        </div>
         <div *ngFor="let item of stepperElements">
           <div *ngIf="isCurrentStepperElement(item)">
             <div *ngIf="item.discriminator === discriminators[0]">
+              <h2 class="blue-header">
+                Applicant Organization Legal Name
+              </h2>
+              <div class="form-row">
+                <div class="col-md">
+                  <div class="form-group">
+                    <label for="orgName">Organization Name (contract id)</label>
+                    <input [value]="undefined" type="text" class="form-control" id="orgName" name="orgName" disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md">
+                  <div class="form-group">
+                    <label for="city">Contract Number</label>
+                    <input [value]="undefined" type="text" class="form-control" id="contractNumber" name="contractNumber" disabled>
+                  </div>
+                </div>
+              </div>
               <app-program-contact-information [(contactInformation)]="trans.contactInformation"></app-program-contact-information>
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
@@ -28,7 +42,13 @@
               <app-cg-liability [(cgLiability)]="trans.cglInsurance"></app-cg-liability>
             </div>
             <div *ngIf="item.discriminator === discriminators[3]">
-              <app-program [(programApplication)]="item.object"></app-program>
+              <span *ngFor="let program of trans.programApplications">
+                <!-- Check if the program is the one in the stepper. -->
+                <span *ngIf="program.programId===item.object['programId']">
+                  <app-program [(programApplication)]="program"></app-program>
+                  <pre>{{program|json}}</pre>
+                </span>
+              </span>
             </div>
             <div *ngIf="item.discriminator === discriminators[4]">
               <app-review-application></app-review-application>
@@ -38,41 +58,7 @@
             </div>
           </div>
         </div>
-      </div> -->
-      <div>
-        <h2 class="blue-header">
-          Applicant Organization Legal Name
-        </h2>
-        <div class="form-row">
-          <div class="col-md">
-            <div class="form-group">
-              <label for="orgName">Organization Name (contract id)</label>
-              <input [value]="undefined" type="text" class="form-control" id="orgName" name="orgName" disabled>
-            </div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="col-md">
-            <div class="form-group">
-              <label for="city">Contract Number</label>
-              <input [value]="undefined" type="text" class="form-control" id="contractNumber" name="contractNumber" disabled>
-            </div>
-          </div>
-        </div>
       </div>
-      <app-program-contact-information [(contactInformation)]="trans.contactInformation"></app-program-contact-information>
-      <hr>
-      <app-administrative-information [(administrativeInformation)]="trans.administrativeInformation"></app-administrative-information>
-      <hr>
-      <app-cg-liability [(cgLiability)]="trans.cglInsurance"></app-cg-liability>
-      <hr>
-      <span *ngFor="let program of trans.programApplications">
-        <h1>{{program.name}}</h1>
-        <app-program [(programApplication)]="program"></app-program>
-      </span>
     </div>
   </div>
-  <!-- <div class="row">
-      <pre>{{stepperElements|json}}</pre>
-    </div> -->
 </div>
