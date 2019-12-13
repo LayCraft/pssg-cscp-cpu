@@ -1,7 +1,5 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { iContract } from '../../core/models/contract';
-import { iProgram } from '../../core/models/program';
 import { iProgramApplication } from '../../core/models/program-application.class';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { ProgramApplicationService } from '../../core/services/program-application.service';
@@ -20,9 +18,10 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
   currentStepperElement: iStepperElement;
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
   constructor(
-    private stepperService: IconStepperService,
-    private route: ActivatedRoute,
     private programApplicationService: ProgramApplicationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private stepperService: IconStepperService,
   ) { }
 
   ngOnInit() {
@@ -101,5 +100,24 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     });
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
+  }
+  save() {
+    // // make a person array to submit
+    // const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
+    // const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), cleanup);
+    // // console.log(post);
+    // this.personService.setPersons(post).subscribe(
+    //   () => {
+    //     this.notificationQueueService.addNotification('Personnel Saved', 'success');
+    //     // refresh the list of people on save
+    //     this.stateService.refresh();
+    //   },
+    //   err => this.notificationQueueService.addNotification(err, 'danger')
+    // );
+  }
+  exit() {
+    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.router.navigate(['/authenticated/dashboard']);
+    }
   }
 }

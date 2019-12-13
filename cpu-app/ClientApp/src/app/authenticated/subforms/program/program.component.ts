@@ -1,10 +1,11 @@
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iProgramApplication, ProgramApplication } from '../../../core/models/program-application.class';
 import { iPerson } from '../../../core/models/person.class';
 import { Hours, iHours } from '../../../core/models/hours.class';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
+import { iContactInformation } from '../../../core/models/contact-information.class';
 
 @Component({
   selector: 'app-program',
@@ -17,10 +18,12 @@ export class ProgramComponent implements OnInit {
   required = false;
   // the form model
   differentProgramContact: boolean = false;
+  contactInformationForm: FormGroup;
   pa: ProgramApplication;
   currentTab: string;
   tabs: string[];
   persons: iPerson[] = [];
+  programContactInformation: iContactInformation;
 
   constructor(
     private stateService: StateService
@@ -34,6 +37,12 @@ export class ProgramComponent implements OnInit {
   ngOnInit() {
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.persons = m.persons;
+
+      // build a reactive form for the contact information
+      this.contactInformationForm = new FormGroup({
+        'contactInformation': new FormControl('')
+      });
+      this.contactInformationForm.controls['contactInformation'].setValue(m.organizationMeta.contactInformation);
     });
     this.pa = new ProgramApplication(this.programApplication);
     this.addOperationHours();

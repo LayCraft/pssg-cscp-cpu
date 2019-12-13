@@ -2,7 +2,11 @@
   <div class="row" *ngIf="trans">
     <div class="col-md-4">
       <section class="application-nav sticky-top">
-        <app-icon-stepper></app-icon-stepper>
+        <div style="max-height: 90%;">
+          <app-icon-stepper></app-icon-stepper>
+        </div>
+        <button class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
+        <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
       </section>
     </div>
 
@@ -46,6 +50,7 @@
                 <!-- Check if the program is the one in the stepper. -->
                 <span *ngIf="program.programId===item.object['programId']">
                   <app-program [(programApplication)]="program"></app-program>
+
                   <pre>{{program|json}}</pre>
                 </span>
               </span>
