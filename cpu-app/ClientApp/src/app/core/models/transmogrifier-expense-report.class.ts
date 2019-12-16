@@ -1,64 +1,7 @@
-import { iDynamicsScheduleGLineItem, iDynamicsScheduleG, iDynamicsScheduleGResponse } from "./dynamics-blob";
+import { iDynamicsScheduleGLineItem, iDynamicsScheduleG, iDynamicsScheduleGResponse, iExpenseReport, iDynamicsPostScheduleG } from "./dynamics-blob";
+import { ExpenseItemLabels } from "../constants/expense-item-labels";
 
 // a collection of the expense item guids as K/V pairs for generating line items
-const ExpenseItemLabels: {} = {
-  "05D84E55-2EBA-E911-B80F-00505683FBF4": "Administration - Related Utilities",
-  "B87E6400-2EBA-E911-B80F-00505683FBF4": "Administration-Related Rent/Lease/Mortgage",
-  "4B7325D9-2DBA-E911-B80F-00505683FBF4": "Administrative Support Wages/Benefits",
-  "53C1C560-2EBA-E911-B80F-00505683FBF4": "Bookkeeping/Bank Fees",
-  "BD4ABCC6-2DBA-E911-B80F-00505683FBF4": "Management Salary/Benefits",
-  "099C3B77-2DBA-E911-B80F-00505683FBF4": "Memberships",
-  "7D48816D-2EBA-E911-B80F-00505683FBF4": "Other Administration Costs",
-  "A5FE2187-2DBA-E911-B80F-00505683FBF4": "Other Program Related Expenses",
-  "F070E090-2CBA-E911-B80F-00505683FBF4": "Phone",
-  "B33CDA77-2CBA-E911-B80F-00505683FBF4": "Program Related - Office Supplies/Software",
-  "18F4336E-2CBA-E911-B80F-00505683FBF4": "Program Related - Rent/Lease/Mortgage",
-  "F7E71080-2CBA-E911-B80F-00505683FBF4": "Program Related - Travel",
-  "32AD5D8A-2CBA-E911-B80F-00505683FBF4": "Program Related - Utilities",
-  "121ED353-2DBA-E911-B80F-00505683FBF4": "Property Maintenance",
-  "4DD7B12C-2DBA-E911-B80F-00505683FBF4": "Resource Materials/Printing Costs",
-  "B4CD7AA0-2CBA-E911-B80F-00505683FBF4": "Staff Training and Associated Travel",
-  "84415B3D-2DBA-E911-B80F-00505683FBF4": "Volunteer Appreciation/Honorariums",
-}
-
-export interface iDynamicsPostScheduleG {
-  "UserBCeID": string;
-  "BusinessBCeID": string;
-  "ScheduleGCollection": iDynamicsScheduleG[];
-  "ScheduleGLineItemCollection": iDynamicsScheduleGLineItem[];
-}
-export interface iExpenseReport {
-  // salary benefits program delivery and administration expense
-  administrationDescription: string;
-  administrationValue: number;
-  administrationAnnualBudget: number;
-  administrationQuarterlyBudget: number;
-
-  programDeliveryDescription: string;
-  programDeliveryValue: number;
-  programDeliveryAnnualBudget: number;
-  programDeliveryQuarterlyBudget: number;
-
-  salariesBenefitsDescription: string;
-  salariesBenefitsValue: number;
-  salariesBenefitsAnnualBudget: number;
-  salariesBenefitsQuarterlyBudget: number;
-
-  programExpenseLineItems: iLineItem[];
-
-  contractServiceHoursPerWeek: number;
-  contractServiceHoursPerQuarter: number;
-  contractServiceHoursQuarterlyActual: number;
-  executiveReview: boolean;
-}
-interface iLineItem {
-  itemId: string;
-  label: string;
-  annualBudget: number;
-  quarterlyBudget: number;
-  actual: number;
-}
-
 
 
 export class TransmogrifierExpenseReport {

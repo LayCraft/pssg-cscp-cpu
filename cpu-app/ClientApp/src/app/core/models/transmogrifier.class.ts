@@ -6,25 +6,12 @@ import { iMinistryUser } from './ministry-user';
 import { iContract } from './contract';
 import { iTask } from './task';
 import { iProgram } from './program';
-import { iDynamicsBlob, iDynamicsCrmContact, iDynamicsOrganization } from './dynamics-blob';
+import { iDynamicsBlob, iDynamicsCrmContact, iDynamicsOrganization, iDynamicsPostOrg, iDynamicsPostUsers } from './dynamics-blob';
+import { formType } from '../constants/form-type';
+import { contractCode } from '../constants/contract-code';
+import { taskCode } from '../constants/task-code';
 
-
-export interface iDynamicsPostOrg {
-  "UserBCeID": string;
-  "BusinessBCeID": string;
-  "Organization": iDynamicsOrganization;
-}
-export interface iDynamicsPostUsers {
-  "UserBCeID": string;
-  "BusinessBCeID": string;
-  "StaffCollection": iDynamicsCrmContact[];
-}
 export class Transmogrifier {
-  // postback data
-  public organizationId: string;
-  public userId: string;
-  // public accountId: string; //really this is in the organizationMeta object
-
   // collections of viewmodels
   public organizationMeta: iOrganizationMeta;
   public persons: iPerson[];
@@ -32,88 +19,12 @@ export class Transmogrifier {
   public ministryContact: iMinistryUser;
 
   constructor(b: iDynamicsBlob) {
-    this.userId = b.UserBCeID;// this is the user's bceid
-    this.organizationId = b.BusinessBCeID; // this is the organization's bceid
     this.organizationMeta = this.buildOrganizationMeta(b);
     this.persons = this.buildPersons(b);
     this.ministryContact = this.buildMinistryContact(b);
     this.contracts = this.buildContracts(b);
   }
   private buildTasks(b: iDynamicsBlob, contractId: string): iTask[] {
-    function taskCode(statuscode: number): string {
-      let textStatus;
-      switch (statuscode) {
-        case 2: {
-          textStatus = 'Not Started';
-          break;
-        }
-        case 3: {
-          textStatus = 'In Progress';
-          break;
-        }
-        case 4: {
-          textStatus = 'Waiting';
-          break;
-        }
-        case 7: {
-          textStatus = 'Deferred';
-          break;
-        }
-        case 5: {
-          textStatus = 'Completed';
-          break;
-        }
-        case 6: {
-          textStatus = 'Cancelled';
-          break;
-        }
-        default: {
-          textStatus = 'No Status';
-          break;
-        }
-      }
-      return textStatus;
-    }
-    function formType(discriminator: string): string {
-      // this discriminator is used to let the system know which form to open up using a patern known as single table inheritance
-      // https://www.martinfowler.com/eaaCatalog/singleTableInheritance.html
-      let formType;
-      switch (discriminator) {
-        case 'e023659f-e8f5-e911-b811-00505683fbf4': {
-          formType = 'program_application';
-          break;
-        }
-        case '768faf46-e8f5-e911-b811-00505683fbf4': {
-          formType = 'budget_proposal';
-          break;
-        }
-        case '9d0ef880-e8f5-e911-b811-00505683fbf4': {
-          formType = 'expense_report';
-          break;
-        }
-        case 'c84daf8d-e8f5-e911-b811-00505683fbf4': {
-          formType = 'status_report';
-          break;
-        }
-        case '8fa3b7ae-e8f5-e911-b811-00505683fbf4': {
-          formType = 'profile';
-          break;
-        }
-        // unsupported
-        // todo: why are there two discriminators for one form type? Are they the same form?
-        case '47525432-e8f5-e911-b811-00505683fbf4': {
-          console.log('Unsupporeted program application discriminator.')
-          formType = 'program_application';
-          break;
-        }
-        default: {
-          console.log('An error has occured. This type of task is not known:\n' + discriminator);
-          formType = discriminator;
-          break;
-        }
-      }
-      return formType;
-    }
     const tasks: iTask[] = [];
     for (let task of b.Tasks) {
       // if the task matches the supplied contract return it
@@ -174,65 +85,10 @@ export class Transmogrifier {
     }
   }
   private buildContracts(b: iDynamicsBlob): iContract[] {
-    function contractCode(statuscode: number): [string, string] {
-      let textStatus;
-      let textCategory;
-      switch (statuscode) {
-        // upcoming
-        case 100000000: {
-          textStatus = 'Sent';
-          textCategory = 'upcoming';
-          break;
-        }
-        case 100000001: {
-          textStatus = 'Received';
-          textCategory = 'upcoming';
-          break;
-        }
-        case 100000002: {
-          textStatus = 'Processing';
-          textCategory = 'upcoming';
-          break;
-        }
-        case 100000003: {
-          textStatus = 'Recommended for Approval';
-          textCategory = 'upcoming';
-          break;
-        }
-        case 100000004: {
-          textStatus = 'Escalated';
-          textCategory = 'upcoming';
-          break;
-        }
-        case 100000005: {
-          textStatus = 'Information Denied';
-          textCategory = 'upcoming';
-          break;
-        }
-        // approved
-        case 100000006: {
-          textStatus = 'Approved';
-          textCategory = 'current'
-          break;
-        }
-        // past
-        case 2: {
-          textStatus = 'Archived';
-          textCategory = 'past';
-          break;
-        }
-        default: {
-          textStatus = 'No Status';
-          textCategory = 'none';
-          break;
-        }
-      }
-      return [textCategory, textStatus];
-    }
     const contracts: iContract[] = [];
     if (b.Contracts.length > 0) {
       for (let contract of b.Contracts) {
-        const status = contractCode(contract.statuscode);
+        const status: [string, string] = contractCode(contract.statuscode);
         contracts.push({
           // upcoming, current, past
           category: status[0],

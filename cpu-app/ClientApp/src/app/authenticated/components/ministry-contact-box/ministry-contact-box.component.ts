@@ -16,6 +16,6 @@ export class MinistryContactBoxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.stateService.main.subscribe(main => this.trans = main);
+    this.stateService.main.subscribe((m: Transmogrifier) => this.trans = m);
   }
 }

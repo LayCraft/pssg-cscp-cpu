@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iPerson } from '../../../core/models/person.class';
 import { nameAssemble } from '../../../core/constants/name-assemble';
 import { StateService } from '../../../core/services/state.service';
+import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-person-picker',
@@ -22,12 +23,9 @@ export class PersonPickerComponent implements OnInit {
     private stateService: StateService,
   ) { }
   ngOnInit() {
-    this.stateService.main.subscribe(m => {
+    // make a new person object from what was handed to this picker.
+    this.stateService.main.subscribe((m: Transmogrifier) => {
       this.persons = m.persons;
-      if (!this.person && m.persons.length) {
-        // set to first person
-        this.person = m[0];
-      }
     });
   }
 

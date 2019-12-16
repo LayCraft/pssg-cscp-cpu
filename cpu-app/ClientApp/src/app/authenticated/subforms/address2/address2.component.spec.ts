@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StateHolderComponent } from './state-holder.component';
+import { Address2Component } from './address2.component';
 
-describe('StateHolderComponent', () => {
-  let component: StateHolderComponent;
-  let fixture: ComponentFixture<StateHolderComponent>;
+describe('Address2Component', () => {
+  let component: Address2Component;
+  let fixture: ComponentFixture<Address2Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StateHolderComponent ]
+      declarations: [ Address2Component ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StateHolderComponent);
+    fixture = TestBed.createComponent(Address2Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

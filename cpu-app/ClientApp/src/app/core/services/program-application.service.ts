@@ -1,58 +1,42 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { iProgramApplication, iAnnualProgramApplication } from '../models/program-application.class';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { retry, catchError } from 'rxjs/operators';
+import { iDynamicsScheduleFResponse } from '../models/dynamics-blob';
+
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root'
 })
 export class ProgramApplicationService {
-	dummyProgram: iAnnualProgramApplication = {
-		organizationId: 'asfdljjlkhasfd',
-		contractId: '712389327891',
-		formState: 'incomplete',
-		programContact: null,
-		programs: [
-			{
-				name: 'Program One',
-				programId: 'qwreyturwqeyu',
-				contractId: '2768194124',
-				email: "foo@fibble.ca",
-				programLocation: "Quxville",
-				serviceArea: "Metro Fibbletown",
-				phoneNumber: "12505551023",
-				faxNumber: "12505551023",
-				mainAddress: null,
-				mailingAddress: null,
-				programContact: null,
-				additionalStaff: [],
-				revenueSources: [],
-				operationHours: [],
-				standbyHours: null,
-			} as iProgramApplication,
-			{
-				name: 'Program Two',
-				programId: 'aafsdfasdfsda',
-				contractId: '547465745',
-				email: "baz@fibble.ca",
-				programLocation: "Quxville",
-				serviceArea: "Metro Fibbletown",
-				phoneNumber: "12505551023",
-				faxNumber: "12505551023",
-				mainAddress: null,
-				mailingAddress: null,
-				programContact: null,
-				additionalStaff: [],
-				revenueSources: [],
-				operationHours: [],
-				standbyHours: null,
-			} as iProgramApplication
-		]
-	};
+  // this should query the test api
+  apiUrl = 'api/DynamicsScheduleF';
 
-	constructor() { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
-	getProgramApplication(organizationId: string, contractId: string): Observable<iAnnualProgramApplication> {
-		const bork = { ...this.dummyProgram };
-		return of(bork as iAnnualProgramApplication);
-	}
+  getScheduleF(scheduleFId: string): Observable<iDynamicsScheduleFResponse> {
+    return this.http.get<iDynamicsScheduleFResponse>(`${this.apiUrl}/${scheduleFId}`, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+  setScheduleF(scheduleF: any) {
+  }
+  get headers(): HttpHeaders {
+    return new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
+  protected handleError(err): Observable<never> {
+    let errorMessage = '';
+    if (err.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      errorMessage = err.error.message;
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      errorMessage = `Backend returned code ${err.status}, body was: ${err.message}`;
+    }
+    return throwError(errorMessage);
+  }
 }

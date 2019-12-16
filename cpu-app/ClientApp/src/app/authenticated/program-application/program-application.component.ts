@@ -1,12 +1,9 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AdministrativeInformation } from '../../core/models/administrative-information.class';
-import { ContactInformation } from '../../core/models/contact-information.class';
-import { StateService } from '../../core/services/state.service';
-import { iContract } from '../../core/models/contract';
-import { iProgram } from '../../core/models/program';
-import { iProgramApplication, ProgramApplication } from '../../core/models/program-application.class';
+import { iProgramApplication } from '../../core/models/program-application.class';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { ProgramApplicationService } from '../../core/services/program-application.service';
+import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
 
 @Component({
   selector: 'app-program-application',
@@ -15,33 +12,26 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 })
 export class ProgramApplicationComponent implements OnInit, OnDestroy {
 
-  contract: iContract;
-
+  trans: TransmogrifierProgramApplication;
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
-  discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization']
+  discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
   constructor(
-    private stepperService: IconStepperService,
-    private stateService: StateService,
+    private programApplicationService: ProgramApplicationService,
     private route: ActivatedRoute,
+    private router: Router,
+    private stepperService: IconStepperService,
   ) { }
 
   ngOnInit() {
+    // get the right contract by route
     this.route.params.subscribe(p => {
-      // collect the contract from the route
-      const contractId = p['contractId'];
-      // don't subscribe because this is only used at page load to collect meta
-      const contracts: iContract[] = this.stateService.main.getValue().contracts;
-      // isolate the correct contract
-      for (let contract of contracts) {
-        if (contract.contractId == contractId) {
-          this.contract = contract;
-        }
-      }
-      // clear all of the old stepper elements
-      this.stepperService.reset();
-      this.constructDefaultstepperElements();
+      this.programApplicationService.getScheduleF(p['contractId']).subscribe(f => {
+        // make the transmogrifier for this form
+        this.trans = new TransmogrifierProgramApplication(f);
+        this.constructDefaultstepperElements(this.trans);
+      });
     });
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
@@ -62,20 +52,19 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     }
     return false;
   }
-  constructDefaultstepperElements() {
-
+  constructDefaultstepperElements(trans: TransmogrifierProgramApplication) {
     // write the default beginning
     [
       {
         itemName: 'Applicant Contact Information',
         formState: 'untouched',
-        object: new ContactInformation(),
+        object: null,
         discriminator: 'contact_information',
       },
       {
         itemName: 'Applicant Administrative Information',
         formState: 'untouched',
-        object: new AdministrativeInformation(),
+        object: null,
         discriminator: 'administrative_information',
       },
       {
@@ -89,8 +78,8 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     });
 
     // add the programs to the list
-    this.contract.programs.forEach((p: iProgram) => {
-      this.stepperService.addStepperElement(new ProgramApplication(), p.programName, 'untouched', 'program');
+    this.trans.programApplications.forEach((p: iProgramApplication) => {
+      this.stepperService.addStepperElement({ programId: p.programId }, p.name, 'untouched', 'program');
     });
     // Write the default end part
     [
@@ -111,5 +100,24 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     });
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
+  }
+  save() {
+    // // make a person array to submit
+    // const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
+    // const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), cleanup);
+    // // console.log(post);
+    // this.personService.setPersons(post).subscribe(
+    //   () => {
+    //     this.notificationQueueService.addNotification('Personnel Saved', 'success');
+    //     // refresh the list of people on save
+    //     this.stateService.refresh();
+    //   },
+    //   err => this.notificationQueueService.addNotification(err, 'danger')
+    // );
+  }
+  exit() {
+    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.router.navigate(['/authenticated/dashboard']);
+    }
   }
 }

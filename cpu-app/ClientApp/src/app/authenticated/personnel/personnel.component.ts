@@ -1,12 +1,13 @@
-import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Person, iPerson } from '../../core/models/person.class';
 import { PersonService } from '../../core/services/person.service';
-import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
+import { Transmogrifier, convertPersonToCrmContact, DynamicsPostUsers } from '../../core/models/transmogrifier.class';
+import { iDynamicsPostUsers } from '../../core/models/dynamics-blob';
+import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
-import { Transmogrifier, DynamicsPostUsers, iDynamicsPostUsers, convertPersonToCrmContact } from '../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-personnel',
@@ -35,14 +36,14 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     // when main changes refresh the data
-    this.stateService.main.subscribe(m => {
+    this.stateService.main.subscribe((m: Transmogrifier) => {
       if (m) {
         // set the default top and bottom list
         this.constructStepperElements(m);
+        this.userId = m.organizationMeta.userId;
+        this.organizationId = m.organizationMeta.organizationId;
       }
     });
-    this.userId = this.stateService.userId.getValue();
-    this.organizationId = this.stateService.organizationId.getValue();
   }
   ngOnDestroy() {
     this.stepperService.reset();
@@ -63,7 +64,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   save(person: iPerson) {
     // a person needs minimum a first and last name to be submitted
     if (person.firstName && person.lastName) {
-      const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), [person]);
+      const post = DynamicsPostUsers(this.userId, this.organizationId, [person]);
       // console.log(post);
       this.personService.setPersons(post).subscribe(
         () => {
@@ -113,8 +114,8 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       // set deactivated state
       person.deactivated = true;
       const post: iDynamicsPostUsers = {
-        UserBCeID: this.stateService.userId.getValue(),
-        BusinessBCeID: this.stateService.organizationId.getValue(),
+        UserBCeID: this.userId,
+        BusinessBCeID: this.organizationId,
         StaffCollection: [convertPersonToCrmContact(person)]
       };
       // post the person

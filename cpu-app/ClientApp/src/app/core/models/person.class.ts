@@ -1,17 +1,17 @@
 import { Address, iAddress } from "./address.class";
 export interface iPerson {
+  personId: string;
+  userId?: string;
   address?: iAddress;
   deactivated?: boolean; // if true this deactivates
   email: string;
   fax?: string;
   firstName: string;
   lastName: string;
-  me: boolean; // is this the current user? If so this is "me".
+  me?: boolean; // is this the current user? If so this is "me".
   middleName?: string;
-  personId: string;
   phone?: string;
   title?: string;
-  userId?: string;
 }
 
 export class Person implements iPerson {
@@ -25,7 +25,7 @@ export class Person implements iPerson {
   firstName: string;
   hoursWorkedPerWeek?: number;
   lastName: string;
-  me: boolean = false;
+  me?: boolean = false;
   middleName?: string;
   personId: string;
   phone?: string;

@@ -1,10 +1,13 @@
 import { AbstractControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { iProgramApplication, ProgramApplication } from '../../../core/models/program-application.class';
-import { iPerson } from '../../../core/models/person.class';
-import { Hours } from '../../../core/models/hours.class';
+import { FormHelper } from '../../../core/form-helper';
+import { Hours, iHours } from '../../../core/models/hours.class';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
+import { iContactInformation } from '../../../core/models/contact-information.class';
+import { iPerson } from '../../../core/models/person.class';
+import { iProgramApplication, ProgramApplication } from '../../../core/models/program-application.class';
+import { EMAIL, PHONE_NUMBER } from '../../../core/constants/regex.constants';
 
 @Component({
   selector: 'app-program',
@@ -16,12 +19,16 @@ export class ProgramComponent implements OnInit {
   @Output() programApplicationChange = new EventEmitter<iProgramApplication>();
   required = false;
   // the form model
-  programInformationForm: ProgramApplication;
-  differentProgramContact: boolean = false;
-
   currentTab: string;
-  tabs: string[];
+  differentProgramContact: boolean = false;
+  pa: ProgramApplication;
   persons: iPerson[] = [];
+  programContactInformation: iContactInformation;
+  tabs: string[];
+  // helpers for setting form state
+  public formHelper = new FormHelper();
+  emailRegex: RegExp;
+  phoneRegex: RegExp;
 
   constructor(
     private stateService: StateService
@@ -30,33 +37,26 @@ export class ProgramComponent implements OnInit {
       // 'Reporting Requirements'
     ];
     this.currentTab = this.tabs[0];
+    this.emailRegex = EMAIL;
+    this.phoneRegex = PHONE_NUMBER;
   }
 
   ngOnInit() {
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.persons = m.persons;
     });
-    this.programInformationForm = new ProgramApplication();
-    this.addOperationHours();
-    this.addStandbyHours();
-
-    // initialize the contact information if it is supplied else make a new object
-    this.programApplication ? this.programInformationForm = new ProgramApplication(this.programApplication) : new ProgramApplication();
-    // output the object that we initialized
+    this.pa = new ProgramApplication(this.programApplication);
     this.addOperationHours();
     this.addStandbyHours();
     this.onInput();
-    // initialize the program information if it is supplied else make a new object
-    // this.programInformationService.getProgramInformation(this.programMeta.organizationId, this.programMeta.programId).subscribe((p: iProgramInformation) => {
-    //   this.programInformationForm = new ProgramInformation(p);
-    // });
   }
 
   // form helpers. Validity hints and hide/show toggles
   showValidFeedback(control: AbstractControl): boolean { return !(control.valid && (control.dirty || control.touched)) }
   showInvalidFeedback(control: AbstractControl): boolean { return !(control.invalid && (control.dirty || control.touched)) }
   onInput() {
-    this.programApplicationChange.emit(this.programInformationForm);
+    // assemble both parts of the form into one object
+    this.programApplicationChange.emit(this.programApplication);
   }
 
   showProgramContact() {
@@ -65,20 +65,31 @@ export class ProgramComponent implements OnInit {
   }
 
   addOperationHours() {
-    this.programInformationForm.operationHours.push(new Hours());
+    this.programApplication.operationHours.push(new Hours());
   }
   addStandbyHours() {
-    this.programInformationForm.standbyHours.push(new Hours());
+    this.programApplication.standbyHours.push(new Hours());
+  }
+  removeOperationHours(i: number) {
+    this.programApplication.operationHours = this.programApplication.operationHours.filter((hours: iHours, j: number) => i !== j);
+  }
+  removeStandbyHours(i: number) {
+    this.programApplication.standbyHours = this.programApplication.standbyHours.filter((hours: iHours, j: number) => i !== j);
   }
 
   onProgramContactChange(event: iPerson) {
-    this.programInformationForm.programContact = event;
+    this.programApplication.programContact = event;
+    this.onInput();
   }
   onPaidStaffChange(event: iPerson[]) {
-    this.programInformationForm.additionalStaff = event;
+    this.programApplication.additionalStaff = event;
+    this.onInput();
+
   }
   onProgramStaffChange(event: iPerson[]) {
-    this.programInformationForm.additionalStaff = event;
+    this.programApplication.additionalStaff = event;
+    this.onInput();
+
   }
   setCurrentTab(tab) {
     this.currentTab = tab;

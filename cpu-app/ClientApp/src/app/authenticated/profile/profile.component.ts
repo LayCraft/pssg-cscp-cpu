@@ -5,7 +5,8 @@ import { iContactInformation, ContactInformation } from '../../core/models/conta
 import { StateService } from '../../core/services/state.service';
 import { iPerson } from '../../core/models/person.class';
 import { ProfileService } from '../../core/services/profile.service';
-import { Transmogrifier, iDynamicsPostOrg, DynamicsPostOrganization } from '../../core/models/transmogrifier.class';
+import { Transmogrifier, DynamicsPostOrganization } from '../../core/models/transmogrifier.class';
+import { iDynamicsPostOrg } from '../../core/models/dynamics-blob';
 
 @Component({
   selector: 'app-profile',
@@ -17,6 +18,9 @@ export class ProfileComponent implements OnInit {
   contactInformationForm: FormGroup;
   executiveContact: iPerson = null;
   boardContact: iPerson = null;
+  userId: string;
+  organizationId: string;
+  accountId: string;
 
   constructor(
     private router: Router,
@@ -26,7 +30,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     // subscribe to main
-    this.stateService.main.subscribe(m => {
+    this.stateService.main.subscribe((m: Transmogrifier) => {
       this.contactInformationForm = new FormGroup({
         'contactInformation': new FormControl('', Validators.required)
       });
@@ -34,6 +38,10 @@ export class ProfileComponent implements OnInit {
       this.contactInformationForm.controls['contactInformation'].setValue(m.organizationMeta.contactInformation);
       this.executiveContact = m.organizationMeta.contactInformation.executiveContact;
       this.boardContact = m.organizationMeta.contactInformation.boardContact;
+      // save the postback IDs
+      this.userId = m.organizationMeta.userId;
+      this.organizationId = m.organizationMeta.organizationId;
+      this.accountId = m.organizationMeta.accountId;
     });
   }
   hasCriticalParts(): boolean {
@@ -47,7 +55,7 @@ export class ProfileComponent implements OnInit {
     formValue.executiveContact = this.executiveContact;
     formValue.boardContact = this.boardContact;
     // cast the data into something useful for dynamics
-    const dynamicsPost: iDynamicsPostOrg = DynamicsPostOrganization(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), this.stateService.accountId.getValue(), formValue);
+    const dynamicsPost: iDynamicsPostOrg = DynamicsPostOrganization(this.userId, this.organizationId, this.accountId, formValue);
 
 
     // post to the organization

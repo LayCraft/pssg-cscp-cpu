@@ -5,7 +5,6 @@ import { FooterComponent } from './footer/footer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NotificationBannerComponent } from './notification-banner/notification-banner.component';
 import { IconStepperComponent } from './icon-stepper/icon-stepper.component';
-import { StateHolderComponent } from './state-holder/state-holder.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +13,6 @@ import { StateHolderComponent } from './state-holder/state-holder.component';
     IconStepperComponent,
     NotFoundComponent,
     NotificationBannerComponent,
-    StateHolderComponent,
   ],
   imports: [
     CommonModule

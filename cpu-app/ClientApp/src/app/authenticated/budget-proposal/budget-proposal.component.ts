@@ -5,7 +5,7 @@ import { iProgram } from '../../core/models/program';
 import { iContract } from '../../core/models/contract';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { StateService } from '../../core/services/state.service';
-import { ProgramBudget } from '../../core/models/budget-proposal.class';
+import { ProgramBudget, iProgramBudget } from '../../core/models/budget-proposal.class';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -68,9 +68,9 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.addStepperElement(topper.object, topper.itemName, topper.formState, topper.discriminator);
 
     // add the programs to the list
-    this.contract.programs.forEach((c: iProgram) => {
-      this.stepperService.addStepperElement(new ProgramBudget(), c.programName, 'untouched', 'program');
-    });
+    // this.contract.programs.forEach((c: iProgramBudget) => {
+    //   this.stepperService.addStepperElement(new ProgramBudget(), c.name, 'untouched', 'program');
+    // });
 
     const bottom = {
       itemName: 'Authorization',

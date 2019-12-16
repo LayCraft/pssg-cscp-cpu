@@ -13,7 +13,7 @@ export class OrganizationProfileBoxComponent implements OnInit {
     private stateService: StateService
   ) { }
   ngOnInit() {
-    this.stateService.main.subscribe(o => {
+    this.stateService.main.subscribe((o: Transmogrifier) => {
       // collect the organization meta information to show in the box.
       this.trans = o;
     });
