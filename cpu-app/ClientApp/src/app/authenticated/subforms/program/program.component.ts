@@ -7,7 +7,7 @@ import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { iContactInformation } from '../../../core/models/contact-information.class';
 import { iPerson } from '../../../core/models/person.class';
 import { iProgramApplication, ProgramApplication } from '../../../core/models/program-application.class';
-import { EMAIL } from '../../../core/constants/regex.constants';
+import { EMAIL, PHONE_NUMBER } from '../../../core/constants/regex.constants';
 
 @Component({
   selector: 'app-program',
@@ -28,6 +28,7 @@ export class ProgramComponent implements OnInit {
   // helpers for setting form state
   public formHelper = new FormHelper();
   emailRegex: RegExp;
+  phoneRegex: RegExp;
 
   constructor(
     private stateService: StateService
@@ -37,6 +38,7 @@ export class ProgramComponent implements OnInit {
     ];
     this.currentTab = this.tabs[0];
     this.emailRegex = EMAIL;
+    this.phoneRegex = PHONE_NUMBER;
   }
 
   ngOnInit() {
