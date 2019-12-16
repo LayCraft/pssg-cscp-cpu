@@ -24,20 +24,20 @@
     </div>
   </div>
 </div>
-<!-- <div class="form-row">
+<div class="form-row">
   <div class="col-md">
     <div class="form-group">
-      <label for="city" [class.required]="required">City</label>
-      <input type="text" class="form-control" id="city" name="city" formControlName="city" [required]="formHelper.isRequired(city, required)">
-      <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(city)" style="display: inherit">
+      <label for="city">City</label>
+      <input type="text" class="form-control" id="city" name="city" [(ngModel)]="address.city" #city="ngModel">
+      <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(city)">
         Ok
       </div>
-      <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(city)" style="display: inherit">
+      <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(city)">
         Try Again
       </div>
     </div>
   </div>
-  <div class="col-md">
+  <!-- <div class="col-md">
     <div class="form-group">
       <label for="province" [class.required]="required">Province</label>
       <select class="form-control" [class.required]="required" name="province" id="province" formControlName="province" [required]="formHelper.isRequired(province, required)">
@@ -50,9 +50,9 @@
         Try Again
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
-
+<!--
 <div class="form-row">
   <div class="col-md">
     <div class="form-group">
