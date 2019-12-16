@@ -11,18 +11,18 @@
       </div>
     </div>
   </div>
-  <!-- <div class="col-md">
+  <div class="col-md">
     <div class="form-group">
       <label for="line2">Address Line 2</label>
-      <input type="text" class="form-control" id="line2" name="line2" formControlName="line2">
-      <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(line2)" style="display: inherit">
+      <input type="text" class="form-control required" id="line2" name="line2" [(ngModel)]="address.line2" #line2="ngModel">
+      <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(line2)">
         Ok
       </div>
-      <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(line2)" style="display: inherit">
+      <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(line2)">
         Try Again
       </div>
     </div>
-  </div> -->
+  </div>
 </div>
 <!-- <div class="form-row">
   <div class="col-md">
