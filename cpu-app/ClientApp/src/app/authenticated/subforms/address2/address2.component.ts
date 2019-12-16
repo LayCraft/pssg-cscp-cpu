@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormHelper } from '../../../core/form-helper';
 import { iAddress, Address } from '../../../core/models/address.class';
 import { COUNTRIES_ADDRESS_2 } from '../../../core/constants/country-list';
+import { POSTAL_CODE } from '../../../core/constants/regex.constants';
 
 @Component({
   selector: 'app-address2',
@@ -14,10 +15,12 @@ export class Address2Component implements OnInit {
   @Input() address: iAddress;
   @Output() addressChange = new EventEmitter<iAddress>();
 
-  countries;
-  country;
+  countries: any;
+  country: any;
+  postalRegex: RegExp;
 
   constructor() {
+    this.postalRegex = POSTAL_CODE;
     this.countries = COUNTRIES_ADDRESS_2;
     this.country = this.address && this.address.country ? COUNTRIES_ADDRESS_2[this.address.country] : COUNTRIES_ADDRESS_2['Canada'];
   }
