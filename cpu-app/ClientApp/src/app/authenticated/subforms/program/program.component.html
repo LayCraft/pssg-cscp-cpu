@@ -32,7 +32,6 @@
         </div>
       </div>
     </div>
-    <app-address2 [(address)]="pa.mainAddress"></app-address2>
     <div class="form-row">
       <div class="col-md">
         <div class="form-group">
@@ -59,6 +58,9 @@
         </div>
       </div>
     </div>
+    <app-address2 [(address)]="pa.mainAddress"></app-address2>
+    <h2 class="blue-header">Mailing Address</h2>
+    <app-address2 [(address)]="pa.mailingAddress"></app-address2>
 
     <div class="form-group">
       <div class="form-check">
