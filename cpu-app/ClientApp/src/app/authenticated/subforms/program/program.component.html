@@ -15,10 +15,22 @@
     <input class="form-control" type="text" [(ngModel)]="programApplication.serviceArea" id="serviceArea" name="serviceArea" disabled>
   </div>
 
-  <!-- Add the program information -->
-  <div [formGroup]="contactInformationForm">
-    <app-contact-information formControlName="programContactInformation"></app-contact-information>
+  <h2 class="blue-header">Primary Program Contact Information</h2>
+  <div class="form-row">
+    <div class="col-md">
+      <div class="form-group">
+        <label for="emailAddress">Email</label>
+        <input type="text" class="form-control" id="emailAddress" name="emailAddress" [(ngModel)]="pa.email" #emailAddress="ngModel" [pattern]="emailRegex">
+        <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)" style="display: inherit">
+          Ok
+        </div>
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(emailAddress)" style="display: inherit">
+          Try Again
+        </div>
+      </div>
+    </div>
   </div>
+
 
   <div class="form-group">
     <div class="form-check">
@@ -64,3 +76,6 @@ We need to know if this is a Violence Against Women Program.</pre>
     <p>For Violence Against Women Programs only Have you submitted monthly STV-DES reports to the end of Nov 2019</p>
   </div>
 </div>
+<span *ngIf="pa">
+  <pre>{{pa|json}}</pre>
+</span>

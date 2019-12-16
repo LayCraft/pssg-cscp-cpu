@@ -50,8 +50,6 @@
                 <!-- Check if the program is the one in the stepper. -->
                 <span *ngIf="program.programId===item.object['programId']">
                   <app-program [(programApplication)]="program"></app-program>
-
-                  <pre>{{program|json}}</pre>
                 </span>
               </span>
             </div>
@@ -61,6 +59,7 @@
             <div *ngIf="item.discriminator === discriminators[5]">
               <app-program-authorizer></app-program-authorizer>
             </div>
+            <pre>{{trans|json}}</pre>
           </div>
         </div>
       </div>

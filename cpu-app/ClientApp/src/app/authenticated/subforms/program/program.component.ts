@@ -1,11 +1,13 @@
-import { AbstractControl, FormGroup, FormControl } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { iProgramApplication, ProgramApplication } from '../../../core/models/program-application.class';
-import { iPerson } from '../../../core/models/person.class';
+import { FormHelper } from '../../../core/form-helper';
 import { Hours, iHours } from '../../../core/models/hours.class';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { iContactInformation } from '../../../core/models/contact-information.class';
+import { iPerson } from '../../../core/models/person.class';
+import { iProgramApplication, ProgramApplication } from '../../../core/models/program-application.class';
+import { EMAIL } from '../../../core/constants/regex.constants';
 
 @Component({
   selector: 'app-program',
@@ -17,13 +19,15 @@ export class ProgramComponent implements OnInit {
   @Output() programApplicationChange = new EventEmitter<iProgramApplication>();
   required = false;
   // the form model
-  differentProgramContact: boolean = false;
-  contactInformationForm: FormGroup;
-  pa: ProgramApplication;
   currentTab: string;
-  tabs: string[];
+  differentProgramContact: boolean = false;
+  pa: ProgramApplication;
   persons: iPerson[] = [];
   programContactInformation: iContactInformation;
+  tabs: string[];
+  // helpers for setting form state
+  public formHelper = new FormHelper();
+  emailRegex: RegExp;
 
   constructor(
     private stateService: StateService
@@ -32,17 +36,12 @@ export class ProgramComponent implements OnInit {
       // 'Reporting Requirements'
     ];
     this.currentTab = this.tabs[0];
+    this.emailRegex = EMAIL;
   }
 
   ngOnInit() {
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.persons = m.persons;
-
-      // build a reactive form for the contact information
-      this.contactInformationForm = new FormGroup({
-        'contactInformation': new FormControl('')
-      });
-      this.contactInformationForm.controls['contactInformation'].setValue(m.organizationMeta.contactInformation);
     });
     this.pa = new ProgramApplication(this.programApplication);
     this.addOperationHours();
@@ -54,6 +53,7 @@ export class ProgramComponent implements OnInit {
   showValidFeedback(control: AbstractControl): boolean { return !(control.valid && (control.dirty || control.touched)) }
   showInvalidFeedback(control: AbstractControl): boolean { return !(control.invalid && (control.dirty || control.touched)) }
   onInput() {
+    // assemble both parts of the form into one object
     this.programApplicationChange.emit(this.programApplication);
   }
 
