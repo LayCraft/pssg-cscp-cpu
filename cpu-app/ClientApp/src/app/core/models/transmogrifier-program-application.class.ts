@@ -8,56 +8,51 @@ import { iAdministrativeInformation, AdministrativeInformation } from "./adminis
 import { iPerson } from "./person.class";
 
 export class TransmogrifierProgramApplication {
-  organizationId: string;
-  userId: string;
   contractId: string;
   contractName: string;
+  contractNumber: string;
+  organizationId: string;
+  organizationName: string;
+  userId: string;
   administrativeInformation: iAdministrativeInformation;
   cglInsurance: string; // commercial general liability insurance detail string picked from options.
   contactInformation: iContactInformation;
   programApplications: iProgramApplication[];
 
   constructor(g: iDynamicsScheduleFResponse) {
-    this.organizationId = g.Businessbceid;
-    this.userId = g.Userbceid;
     this.contractId = g.Contract.vsd_contractid;
     this.contractName = g.Contract.vsd_name;
-    this.cglInsurance = this.cglInsuranceDecode(g.Contract.vsd_cpu_insuranceoptions);
+    this.contractNumber = g.Contract.vsd_name;
+    this.organizationId = g.Businessbceid;
+    this.organizationName = g.Organization.name;
+    this.userId = g.Userbceid;
+    this.cglInsurance = this.decodeCglInsurance(g.Contract.vsd_cpu_insuranceoptions);
     this.administrativeInformation = this.buildAdministrativeInformation(g);
     this.contactInformation = this.buildContactInformation(g);
     this.programApplications = this.buildProgramApplications(g);
   }
-  private cglInsuranceDecode(code: number): string {
-    switch (code) {
-      case 100000000:
-        return 'Agency Carries own CGL coverage';
-      case 100000001:
-        return "Agency requesting Province's Master Insurance Program enrolment";
-      default:
-        return null;
-    }
-  }
+
   private buildAdministrativeInformation(b: iDynamicsScheduleFResponse): iAdministrativeInformation {
     const staffSubcontractedPersons: iPerson[] = [];
     b.StaffCollection.map((s: iDynamicsCrmContact): iPerson => {
       return {
-        personId: s.contactid || null,
-        userId: s.vsd_bceid || null,
         address: {
+          city: s.address1_city || null,
+          country: s.address1_country || null,
           line1: s.address1_line1 || null,
           line2: s.address1_line2 || null,
-          city: s.address1_city || null,
           postalCode: s.address1_postalcode || null,
           province: s.address1_stateorprovince || null,
-          country: s.address1_country || null,
         },
         email: s.emailaddress1 || null,
         fax: s.fax || null,
         firstName: s.firstname || null,
         lastName: s.lastname || null,
         middleName: s.middlename || null,
+        personId: s.contactid || null,
         phone: s.mobilephone || null,
         title: s.jobtitle || null,
+        userId: s.vsd_bceid || null,
       };
     });
 
@@ -74,22 +69,26 @@ export class TransmogrifierProgramApplication {
   }
   private buildContactInformation(b: iDynamicsScheduleFResponse): iContactInformation {
     return {
-      phoneNumber: b.Organization.telephone1 || null,
       emailAddress: b.Organization.emailaddress1 || null,
       faxNumber: b.Organization.fax || null,
-      mainAddress: {
-        city: b.Organization.address1_city || null,
-        line1: b.Organization.address1_line1 || null,
-        line2: b.Organization.address1_line2 || null,
-        postalCode: b.Organization.address1_postalcode || null,
-        province: b.Organization.address1_stateorprovince || null,
-      },
-      mailingAddress: {
-        city: b.Organization.address2_city || null,
-        line1: b.Organization.address2_line1 || null,
-        line2: b.Organization.address2_line2 || null,
-        postalCode: b.Organization.address2_postalcode || null,
-        province: b.Organization.address2_stateorprovince || null,
+      phoneNumber: b.Organization.telephone1 || null,
+      boardContact: {
+        address: {
+          city: b.BoardContact.address1_city || null,
+          line1: b.BoardContact.address1_line1 || null,
+          line2: b.BoardContact.address1_line2 || null,
+          postalCode: b.BoardContact.address1_postalcode || null,
+          province: b.BoardContact.address1_stateorprovince || null,
+        },
+        email: b.BoardContact.emailaddress1 || null,
+        fax: b.BoardContact.fax || null,
+        firstName: b.BoardContact.firstname || null,
+        lastName: b.BoardContact.lastname || null,
+        me: null,
+        middleName: b.BoardContact.middlename || null,
+        personId: b.BoardContact.contactid || null,
+        phone: b.BoardContact.mobilephone || null,
+        title: b.BoardContact.jobtitle || null,
       },
       executiveContact: {
         email: b.ExecutiveContact.emailaddress1 || null,
@@ -109,40 +108,35 @@ export class TransmogrifierProgramApplication {
           province: b.ExecutiveContact.address1_stateorprovince || null,
         }
       },
-      boardContact: {
-        email: b.BoardContact.emailaddress1 || null,
-        fax: b.BoardContact.fax || null,
-        firstName: b.BoardContact.firstname || null,
-        lastName: b.BoardContact.lastname || null,
-        middleName: b.BoardContact.middlename || null,
-        personId: b.BoardContact.contactid || null,
-        phone: b.BoardContact.mobilephone || null,
-        title: b.BoardContact.jobtitle || null,
-        me: null,
-        address: {
-          city: b.BoardContact.address1_city || null,
-          line1: b.BoardContact.address1_line1 || null,
-          line2: b.BoardContact.address1_line2 || null,
-          postalCode: b.BoardContact.address1_postalcode || null,
-          province: b.BoardContact.address1_stateorprovince || null,
-        }
+      mailingAddress: {
+        city: b.Organization.address2_city || null,
+        line1: b.Organization.address2_line1 || null,
+        line2: b.Organization.address2_line2 || null,
+        postalCode: b.Organization.address2_postalcode || null,
+        province: b.Organization.address2_stateorprovince || null,
+      },
+      mainAddress: {
+        city: b.Organization.address1_city || null,
+        line1: b.Organization.address1_line1 || null,
+        line2: b.Organization.address1_line2 || null,
+        postalCode: b.Organization.address1_postalcode || null,
+        province: b.Organization.address1_stateorprovince || null,
       }
     }
   }
   private buildProgramApplications(g: iDynamicsScheduleFResponse): iProgramApplication[] {
     const applications: iProgramApplication[] = [];
-
     for (let p of g.ProgramCollection) {
       let temp: iProgramApplication = {
-        name: p.vsd_name,
-        formState: undefined,
         contractId: p._vsd_contractid_value,
-        programId: p.vsd_programid,
         email: p.vsd_emailaddress,
+        faxNumber: p.vsd_fax,
+        formState: undefined,
+        name: p.vsd_name,
+        phoneNumber: p.vsd_phonenumber,
+        programId: p.vsd_programid,
         programLocation: undefined,
         serviceArea: undefined,
-        phoneNumber: p.vsd_phonenumber,
-        faxNumber: p.vsd_fax,
         mainAddress: {
           line1: p.vsd_addressline1,
           line2: p.vsd_addressline2,
@@ -210,6 +204,16 @@ export class TransmogrifierProgramApplication {
         return 'Associate';
       case '100000002':
         return 'Non-Member';
+      default:
+        return null;
+    }
+  }
+  private decodeCglInsurance(code: number): string {
+    switch (code) {
+      case 100000000:
+        return 'Agency Carries own CGL coverage';
+      case 100000001:
+        return "Agency requesting Province's Master Insurance Program enrolment";
       default:
         return null;
     }

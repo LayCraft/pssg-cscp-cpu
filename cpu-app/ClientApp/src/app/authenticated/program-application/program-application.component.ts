@@ -1,11 +1,11 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
+import { ProgramApplicationService } from '../../core/services/program-application.service';
+import { StateService } from '../../core/services/state.service';
+import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
 import { iProgramApplication } from '../../core/models/program-application.class';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
-import { ProgramApplicationService } from '../../core/services/program-application.service';
-import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
-import { StateService } from '../../core/services/state.service';
-import { NotificationQueueService } from '../../core/services/notification-queue.service';
 
 @Component({
   selector: 'app-program-application',
@@ -20,13 +20,12 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
   currentStepperElement: iStepperElement;
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
   constructor(
+    private notificationQueueService: NotificationQueueService,
     private programApplicationService: ProgramApplicationService,
     private route: ActivatedRoute,
     private router: Router,
-    private stepperService: IconStepperService,
     private stateService: StateService,
-    private notificationQueueService: NotificationQueueService
-
+    private stepperService: IconStepperService
   ) { }
 
   ngOnInit() {
