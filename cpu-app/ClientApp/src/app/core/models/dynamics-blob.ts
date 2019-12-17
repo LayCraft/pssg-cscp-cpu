@@ -205,6 +205,7 @@ export interface iDynamicsSchedule {
   vsd_cpu_scheduletype?: number;
 }
 export interface iDynamicsScheduleFResponse {
+  IsSuccess?: boolean;
   BoardContact?: iDynamicsCrmContact;
   Contract?: iDynamicsCrmContract;
   ExecutiveContact?: iDynamicsCrmContact;

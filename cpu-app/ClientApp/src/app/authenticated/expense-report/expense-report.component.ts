@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ExpenseReportService } from '../../core/services/expense-report.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { TransmogrifierExpenseReport } from '../../core/models/transmogrifier-expense-report.class';
 import { iPerson } from '../../core/models/person.class';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
 
 @Component({
   selector: 'app-expense-report',
@@ -35,19 +36,33 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
     private stepperService: IconStepperService,
     private stateService: StateService,
     private router: Router,
+    private route: ActivatedRoute,
+    private notificationQueueService: NotificationQueueService
   ) { }
 
   ngOnInit() {
     // collect current user from the user state.
     this.stateService.currentUser.subscribe(u => this.currentUser = u);
-    // collect information for collecting the data
-    const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
-    const userId: string = this.stateService.main.getValue().organizationMeta.userId;
+    this.route.params.subscribe(p => {
+      // collect information for collecting the data
+      const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
+      const userId: string = this.stateService.main.getValue().organizationMeta.userId;
 
-    // get the expense report to fill
-    this.expenseReportService.getScheduleG(organizationId, userId, "e480dbe7-a910-ea11-b810-005056830319").subscribe(g => {
-      this.er = new TransmogrifierExpenseReport(g);
-      this.calculateLineItemSums();
+      // get the expense report to fill
+      this.expenseReportService.getScheduleG(organizationId, userId, p['contractId']).subscribe(
+        g => {
+          if (!g.IsSuccess) {
+            // notify the user of a system error
+            this.notificationQueueService.addNotification('An attempt at getting this expense report was unsuccessful. If this problem persists please notify your ministry contact.', 'danger');
+            // route back to the dashboard
+            this.router.navigate(['/authenticated/dashboard']);
+          } else {
+            // make the transmogrifier for this form
+            this.er = new TransmogrifierExpenseReport(g);
+            this.calculateLineItemSums();
+          }
+        }
+      );
     });
 
     // construct the stepper
@@ -92,7 +107,6 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
     this.stepperService.setToFirstStepperElement();
   }
 
-
   calculateLineItemSums() {
     //annual budgeted amount
     this.lineItemSums['annualBudgetSum'] = this.er.expenseReport.programExpenseLineItems
@@ -121,20 +135,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
     //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
   }
-  save() {
-    // // make a person array to submit
-    // const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
-    // const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), cleanup);
-    // // console.log(post);
-    // this.personService.setPersons(post).subscribe(
-    //   () => {
-    //     this.notificationQueueService.addNotification('Personnel Saved', 'success');
-    //     // refresh the list of people on save
-    //     this.stateService.refresh();
-    //   },
-    //   err => this.notificationQueueService.addNotification(err, 'danger')
-    // );
-  }
+  save() { }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
       this.router.navigate(['/authenticated/dashboard']);

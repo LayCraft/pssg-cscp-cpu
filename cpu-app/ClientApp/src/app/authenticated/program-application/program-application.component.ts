@@ -5,6 +5,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { ProgramApplicationService } from '../../core/services/program-application.service';
 import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
 import { StateService } from '../../core/services/state.service';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
 
 @Component({
   selector: 'app-program-application',
@@ -24,6 +25,8 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     private router: Router,
     private stepperService: IconStepperService,
     private stateService: StateService,
+    private notificationQueueService: NotificationQueueService
+
   ) { }
 
   ngOnInit() {
@@ -32,13 +35,23 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
       // collect the current user information from the state.
       const userId: string = this.stateService.main.getValue().organizationMeta.userId;
       const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
-
-      this.programApplicationService.getScheduleF(organizationId, userId, p['contractId']).subscribe(f => {
-        // make the transmogrifier for this form
-        this.trans = new TransmogrifierProgramApplication(f);
-        this.constructDefaultstepperElements(this.trans);
-      });
+      // get the program application to fill
+      this.programApplicationService.getScheduleF(organizationId, userId, p['contractId']).subscribe(
+        f => {
+          if (!f.IsSuccess) {
+            // notify the user of a system error
+            this.notificationQueueService.addNotification('An attempt at getting this program application form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
+            // route back to the dashboard
+            this.router.navigate(['/authenticated/dashboard']);
+          } else {
+            // make the transmogrifier for this form
+            this.trans = new TransmogrifierProgramApplication(f);
+            this.constructDefaultstepperElements(this.trans);
+          }
+        }
+      );
     });
+    // subscribe to the stepper state
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
   }
@@ -107,20 +120,7 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
   }
-  save() {
-    // // make a person array to submit
-    // const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
-    // const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), cleanup);
-    // // console.log(post);
-    // this.personService.setPersons(post).subscribe(
-    //   () => {
-    //     this.notificationQueueService.addNotification('Personnel Saved', 'success');
-    //     // refresh the list of people on save
-    //     this.stateService.refresh();
-    //   },
-    //   err => this.notificationQueueService.addNotification(err, 'danger')
-    // );
-  }
+  save() { }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
       this.router.navigate(['/authenticated/dashboard']);
