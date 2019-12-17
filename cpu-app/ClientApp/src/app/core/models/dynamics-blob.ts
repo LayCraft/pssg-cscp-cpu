@@ -14,11 +14,13 @@ export interface iDynamicsOrganization {
   _vsd_executivecontactid_value?: string;
   accountid?: string;
   address1_city?: string;
+  address1_country?: string;
   address1_line1?: string;
   address1_line2?: string;
   address1_postalcode?: string;
   address1_stateorprovince?: string;
   address2_city?: string;
+  address2_country?: string;
   address2_line1?: string;
   address2_line2?: string;
   address2_postalcode?: string;
@@ -33,6 +35,7 @@ export interface iDynamicsOrganization {
 export interface iDynamicsCrmContact {
   _parentcustomerid_value?: string;
   address1_city?: string;
+  address1_country?: string;
   address1_line1?: string;
   address1_line2?: string;
   address1_postalcode?: string;
@@ -47,8 +50,8 @@ export interface iDynamicsCrmContact {
   lastname?: string;
   middlename?: string;
   mobilephone?: string;
-  vsd_bceid?: string;
   statecode?: number;
+  vsd_bceid?: string;
 }
 export interface iDynamicsCrmContract {
   _vsd_contactlookup1_value?: string;
@@ -58,7 +61,10 @@ export interface iDynamicsCrmContract {
   fortunecookietype?: string;
   statuscode?: number;
   vsd_contractid?: string;
+  vsd_cpu_programstaffsubcontracted?: boolean;
+  vsd_cpu_staffunionized?: boolean;
   vsd_name?: string;
+  vsd_cpu_insuranceoptions?: number;
 }
 export interface iDynamicsMinistryUser {
   address1_telephone1?: string;
@@ -205,14 +211,21 @@ export interface iDynamicsSchedule {
   vsd_cpu_scheduletype?: number;
 }
 export interface iDynamicsScheduleFResponse {
-  IsSuccess?: boolean;
   BoardContact?: iDynamicsCrmContact;
+  Businessbceid: string;
   Contract?: iDynamicsCrmContract;
   ExecutiveContact?: iDynamicsCrmContact;
+  IsSuccess?: boolean;
   Organization?: iDynamicsOrganization;
   ProgramCollection?: iDynamicsCrmProgram[];
+  RegionDistrictCollection?: iDynamicsRegionDistrict[];
+  Result?: string;
   ScheduleCollection?: iDynamicsSchedule[];
-  fortunecookiecontext?: string;
+  StaffCollection?: iDynamicsCrmContact[];
+  Userbceid?: string;
+}
+export interface iDynamicsRegionDistrict {
+  vsd_name: string;
 }
 
 export interface iDynamicsPostScheduleG {
