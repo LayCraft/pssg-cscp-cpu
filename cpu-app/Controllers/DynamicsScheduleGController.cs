@@ -30,13 +30,13 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			this._configuration = configuration;
 		}
 
-		[HttpGet("{scheduleGId}")]
-		public async Task<IActionResult> GetScheduleG(string scheduleGId)
+		[HttpGet("{businessBceid}/{userBceid}/{scheduleGId}")]
+		public async Task<IActionResult> GetScheduleG(string businessBceid, string userBceid, string scheduleGId)
 		{
 			try
 			{
 				// convert the parameters to a json string
-				string applicationJson = "{}";
+				string applicationJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
 				// set the endpoint action
 				string endpointAction = "vsd_schedulegs(" + scheduleGId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUScheduleG";
 				// get the response

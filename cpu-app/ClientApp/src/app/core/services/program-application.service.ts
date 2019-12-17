@@ -16,8 +16,8 @@ export class ProgramApplicationService {
     private http: HttpClient,
   ) { }
 
-  getScheduleF(scheduleFId: string): Observable<iDynamicsScheduleFResponse> {
-    return this.http.get<iDynamicsScheduleFResponse>(`${this.apiUrl}/${scheduleFId}`, { headers: this.headers }).pipe(
+  getScheduleF(organizationId: string, userId: string, scheduleFId: string): Observable<iDynamicsScheduleFResponse> {
+    return this.http.get<iDynamicsScheduleFResponse>(`${this.apiUrl}/${organizationId}/${userId}/${scheduleFId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

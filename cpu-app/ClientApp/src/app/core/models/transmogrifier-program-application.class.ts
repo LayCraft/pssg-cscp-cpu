@@ -17,8 +17,8 @@ export class TransmogrifierProgramApplication {
 
   constructor(g: iDynamicsScheduleFResponse) {
     this.organizationId = undefined;
-    this.userId = g.Contract.vsd_contractid;
-    this.contractId = g.Contract.vsd_contractid;
+    this.userId = undefined;
+    this.contractId = g.Contract.vsd_contractid || undefined;
     this.administrativeInformation = new AdministrativeInformation();
     this.contactInformation = this.buildContactInformation(g);
     this.programApplications = this.buildProgramApplications(g);

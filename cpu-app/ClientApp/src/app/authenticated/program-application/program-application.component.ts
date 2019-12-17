@@ -4,6 +4,7 @@ import { iProgramApplication } from '../../core/models/program-application.class
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { ProgramApplicationService } from '../../core/services/program-application.service';
 import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
+import { StateService } from '../../core/services/state.service';
 
 @Component({
   selector: 'app-program-application',
@@ -22,12 +23,17 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private stepperService: IconStepperService,
+    private stateService: StateService,
   ) { }
 
   ngOnInit() {
     // get the right contract by route
     this.route.params.subscribe(p => {
-      this.programApplicationService.getScheduleF(p['contractId']).subscribe(f => {
+      // collect the current user information from the state.
+      const userId: string = this.stateService.main.getValue().organizationMeta.userId;
+      const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
+
+      this.programApplicationService.getScheduleF(organizationId, userId, p['contractId']).subscribe(f => {
         // make the transmogrifier for this form
         this.trans = new TransmogrifierProgramApplication(f);
         this.constructDefaultstepperElements(this.trans);

@@ -112,7 +112,7 @@ export interface iDynamicsCrmTask {
 }
 export interface iDynamicsBlob {
   BoardContact?: iDynamicsCrmContact,
-  BusinessBCeID?: string; // represents the organization level BCeID.
+  Businessbceid?: string; // represents the organization level BCeID.
   Contracts?: iDynamicsCrmContract[];
   ExecutiveContact?: iDynamicsCrmContact,
   IsSuccess?: true;
@@ -122,7 +122,7 @@ export interface iDynamicsBlob {
   Result?: string;
   Staff?: iDynamicsCrmContact[];
   Tasks?: iDynamicsCrmTask[]
-  UserBCeID?: string; // represents the user's BCeID.
+  Userbceid?: string; // represents the user's BCeID.
   fortunecookiecontext?: string;
 };
 
@@ -215,20 +215,20 @@ export interface iDynamicsScheduleFResponse {
 }
 
 export interface iDynamicsPostScheduleG {
-  "UserBCeID": string;
-  "BusinessBCeID": string;
-  "ScheduleGCollection": iDynamicsScheduleG[];
-  "ScheduleGLineItemCollection": iDynamicsScheduleGLineItem[];
+  UserBCeID: string;
+  BusinessBCeID: string;
+  ScheduleGCollection: iDynamicsScheduleG[];
+  ScheduleGLineItemCollection: iDynamicsScheduleGLineItem[];
 }
 export interface iDynamicsPostOrg {
-  "UserBCeID": string;
-  "BusinessBCeID": string;
-  "Organization": iDynamicsOrganization;
+  UserBCeID: string;
+  BusinessBCeID: string;
+  Organization: iDynamicsOrganization;
 }
 export interface iDynamicsPostUsers {
-  "UserBCeID": string;
-  "BusinessBCeID": string;
-  "StaffCollection": iDynamicsCrmContact[];
+  UserBCeID: string;
+  BusinessBCeID: string;
+  StaffCollection: iDynamicsCrmContact[];
 }
 export interface iDynamicsLineItem {
   itemId: string;
