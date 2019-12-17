@@ -6,7 +6,6 @@ import { ProgramApplicationService } from '../../core/services/program-applicati
 import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
 import { StateService } from '../../core/services/state.service';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
-import { iDynamicsScheduleFResponse } from 'src/app/core/models/dynamics-blob';
 
 @Component({
   selector: 'app-program-application',

@@ -1,27 +1,76 @@
 import { iProgramApplication } from "./program-application.class";
-import { iDynamicsScheduleFResponse } from "./dynamics-blob";
+import { iDynamicsScheduleFResponse, iDynamicsCrmContact } from "./dynamics-blob";
 import { iHours } from "./hours.class";
 import * as moment from 'moment';
 import { convertToWeekDays } from '../constants/convert-to-week-days';
 import { iContactInformation, ContactInformation } from "./contact-information.class";
 import { iAdministrativeInformation, AdministrativeInformation } from "./administrative-information.class";
+import { iPerson } from "./person.class";
 
 export class TransmogrifierProgramApplication {
   organizationId: string;
   userId: string;
   contractId: string;
+  contractName: string;
   administrativeInformation: iAdministrativeInformation;
   cglInsurance: string; // commercial general liability insurance detail string picked from options.
   contactInformation: iContactInformation;
   programApplications: iProgramApplication[];
 
   constructor(g: iDynamicsScheduleFResponse) {
-    this.organizationId = undefined;
-    this.userId = undefined;
-    this.contractId = g.Contract.vsd_contractid || undefined;
-    this.administrativeInformation = new AdministrativeInformation();
+    this.organizationId = g.Businessbceid;
+    this.userId = g.Userbceid;
+    this.contractId = g.Contract.vsd_contractid;
+    this.contractName = g.Contract.vsd_name;
+    this.cglInsurance = this.cglInsuranceDecode(g.Contract.vsd_cpu_insuranceoptions);
+    this.administrativeInformation = this.buildAdministrativeInformation(g);
     this.contactInformation = this.buildContactInformation(g);
     this.programApplications = this.buildProgramApplications(g);
+  }
+  private cglInsuranceDecode(code: number): string {
+    switch (code) {
+      case 100000000:
+        return 'Agency Carries own CGL coverage';
+      case 100000001:
+        return "Agency requesting Province's Master Insurance Program enrolment";
+      default:
+        return null;
+    }
+  }
+  private buildAdministrativeInformation(b: iDynamicsScheduleFResponse): iAdministrativeInformation {
+    const staffSubcontractedPersons: iPerson[] = [];
+    b.StaffCollection.map((s: iDynamicsCrmContact): iPerson => {
+      return {
+        personId: s.contactid || null,
+        userId: s.vsd_bceid || null,
+        address: {
+          line1: s.address1_line1 || null,
+          line2: s.address1_line2 || null,
+          city: s.address1_city || null,
+          postalCode: s.address1_postalcode || null,
+          province: s.address1_stateorprovince || null,
+          country: s.address1_country || null,
+        },
+        email: s.emailaddress1 || null,
+        fax: s.fax || null,
+        firstName: s.firstname || null,
+        lastName: s.lastname || null,
+        middleName: s.middlename || null,
+        phone: s.mobilephone || null,
+        title: s.jobtitle || null,
+      };
+    });
+
+    return {
+      ccseaMemberType: this.decodeCcseaMemberType(b.Contract.vsd_cpu_memberofcssea),
+      compliantEmploymentStandardsAct: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000000") : null,
+      compliantHumanRights: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000001") : null,
+      compliantWorkersCompensation: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000002") : null,
+      staffSubcontractedPersons,
+      staffUnion: b.Contract.vsd_cpu_specificunion,
+      staffSubcontracted: b.Contract.vsd_cpu_programstaffsubcontracted,
+      staffUnionized: b.Contract.vsd_cpu_staffunionized,
+    };
   }
   private buildContactInformation(b: iDynamicsScheduleFResponse): iContactInformation {
     return {
@@ -152,5 +201,17 @@ export class TransmogrifierProgramApplication {
       applications.push(temp)
     }
     return applications;
+  }
+  private decodeCcseaMemberType(code: string): string {
+    switch (code) {
+      case '100000000':
+        return 'Member';
+      case '100000001':
+        return 'Associate';
+      case '100000002':
+        return 'Non-Member';
+      default:
+        return null;
+    }
   }
 }

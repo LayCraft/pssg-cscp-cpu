@@ -61,10 +61,13 @@ export interface iDynamicsCrmContract {
   fortunecookietype?: string;
   statuscode?: number;
   vsd_contractid?: string;
+  vsd_cpu_insuranceoptions?: number;
+  vsd_cpu_memberofcssea?: string;
   vsd_cpu_programstaffsubcontracted?: boolean;
+  vsd_cpu_specificunion?: string;
   vsd_cpu_staffunionized?: boolean;
   vsd_name?: string;
-  vsd_cpu_insuranceoptions?: number;
+  vsd_cpu_humanresourcepolicies?: string; // this is actually an array that comes in wrong
 }
 export interface iDynamicsMinistryUser {
   address1_telephone1?: string;
