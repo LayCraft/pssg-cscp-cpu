@@ -15,15 +15,15 @@ export class ExpenseReportService {
     private http: HttpClient,
   ) { }
 
-  getScheduleG(scheduleGId: string): Observable<iDynamicsScheduleGResponse> {
-    return this.http.get<iDynamicsScheduleGResponse>(`${this.apiUrl}/${scheduleGId}`, { headers: this.headers }).pipe(
+  getScheduleG(organizationId: string, userId: string, scheduleGId: string): Observable<iDynamicsScheduleGResponse> {
+    return this.http.get<iDynamicsScheduleGResponse>(`${this.apiUrl}/${organizationId}/${userId}/${scheduleGId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
   setScheduleG(scheduleG: iDynamicsPostScheduleG) {
-
   }
+
   get headers(): HttpHeaders {
     return new HttpHeaders({ 'Content-Type': 'application/json' });
   }

@@ -38,15 +38,21 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
+    // collect current user from the user state.
     this.stateService.currentUser.subscribe(u => this.currentUser = u);
+    // collect information for collecting the data
+    const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
+    const userId: string = this.stateService.main.getValue().organizationMeta.userId;
+
     // get the expense report to fill
-    this.expenseReportService.getScheduleG("e480dbe7-a910-ea11-b810-005056830319").subscribe(g => {
+    this.expenseReportService.getScheduleG(organizationId, userId, "e480dbe7-a910-ea11-b810-005056830319").subscribe(g => {
       this.er = new TransmogrifierExpenseReport(g);
       this.calculateLineItemSums();
     });
+
     // construct the stepper
     this.constructDefaultstepperElements();
+
     // Subscribe to the stepper elements
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
