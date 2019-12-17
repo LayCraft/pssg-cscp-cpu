@@ -1,11 +1,11 @@
-import { iProgramApplication } from "./program-application.class";
-import { iDynamicsScheduleFResponse, iDynamicsCrmContact } from "./dynamics-blob";
-import { iHours } from "./hours.class";
 import * as moment from 'moment';
 import { convertToWeekDays } from '../constants/convert-to-week-days';
-import { iContactInformation, ContactInformation } from "./contact-information.class";
-import { iAdministrativeInformation, AdministrativeInformation } from "./administrative-information.class";
+import { iAdministrativeInformation } from "./administrative-information.class";
+import { iContactInformation } from "./contact-information.class";
+import { iDynamicsScheduleFResponse, iDynamicsCrmContact } from "./dynamics-blob";
+import { iHours } from "./hours.class";
 import { iPerson } from "./person.class";
+import { iProgramApplication } from "./program-application.class";
 
 export class TransmogrifierProgramApplication {
   contractId: string;
