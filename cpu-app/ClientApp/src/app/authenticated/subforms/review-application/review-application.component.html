@@ -146,19 +146,31 @@
   <tbody>
     <tr>
       <th class="col-3 text-right" scope="row">Staff are subcontracted</th>
-      <td>{{tpa?.administrativeInformation?.staffSubcontracted}}</td>
+      <td>{{tpa?.administrativeInformation?.staffSubcontracted ?'Yes':'No'}}</td>
     </tr>
     <tr *ngFor="let person of tpa?.administrativeInformation?.staffSubcontractedPersons; let i=index">
       <th class="col-3 text-right" scope="row">Subcontractor {{i+1}}</th>
-      <td>{{person|json}}</td>
+      <td>{{person.firstName}} {{person.middleName}} {{person.lastName}}{{person.title?' - '+person.title:''}}</td>
     </tr>
   </tbody>
 </table>
 
-<p>Subcontracted Staff</p>
 <h2 class="blue-header">Commercial General Liability Insurance</h2>
-<p>CGL Insurance</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">CGL Insurance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="col-3 text-right" scope="row">Stated as</th>
+      <td>{{tpa.cglInsurance}}</td>
+    </tr>
+  </tbody>
+</table>
 
+<app-program-summary-table [program]=""></app-program-summary-table>
 <h2 class="blue-header">Program: Foo</h2>
 <p>Main Program Information</p>
 <p>Mailing Address</p>
