@@ -1,6 +1,84 @@
 <h2 class="blue-header">Primary Contact Information</h2>
-<p>Primary Contact Information</p>
-<p>Mailing Address</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">Primary Contact</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="col-3 text-right" scope="row">Email Address</th>
+      <td>{{tpa?.contactInformation?.emailAddress}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Phone Number</th>
+      <td>{{tpa?.contactInformation?.phoneNumber}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Fax Number</th>
+      <td>{{tpa?.contactInformation?.faxNumber}}</td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">Location Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line 1</th>
+      <td>{{tpa?.contactInformation?.mainAddress?.line1}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line 2</th>
+      <td>{{tpa?.contactInformation?.mainAddress?.line2}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">City</th>
+      <td>{{tpa?.contactInformation?.mainAddress?.city}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Province</th>
+      <td>{{tpa?.contactInformation?.mainAddress?.province}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Postal Code</th>
+      <td>{{tpa?.contactInformation?.mainAddress?.postalCode}}</td>
+    </tr>
+  </tbody>
+</table>
+<table *ngIf="tpa.contactInformation.mailingAddress" class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">Mailing Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line 1</th>
+      <td>{{tpa?.contactInformation?.mailingAddress?.line1}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line 2</th>
+      <td>{{tpa?.contactInformation?.mailingAddress?.line2}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">City</th>
+      <td>{{tpa?.contactInformation?.mailingAddress?.city}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Province</th>
+      <td>{{tpa?.contactInformation?.mailingAddress?.province}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Postal Code</th>
+      <td>{{tpa?.contactInformation?.mailingAddress?.postalCode}}</td>
+    </tr>
+  </tbody>
+</table>
+
 <p>Executive Contact</p>
 <p>Board Contact</p>
 <h2 class="blue-header">Applicant Administrative Information</h2>
@@ -24,28 +102,12 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
       <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
     </tr>
   </tbody>
 </table> -->
