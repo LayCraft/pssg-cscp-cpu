@@ -105,6 +105,24 @@
   </tbody>
 </table>
 
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">Union Associations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="col-3 text-right" scope="row">Are staff unionized?</th>
+      <td>{{tpa?.administrativeInformation?.staffUnionized?'Yes':'No'}}</td>
+    </tr>
+    <tr *ngIf="tpa?.administrativeInformation?.staffUnionized">
+      <th class="col-3 text-right" scope="row">Union</th>
+      <td>{{tpa?.administrativeInformation?.staffUnion}}</td>
+    </tr>
+  </tbody>
+</table>
+
 <p>Union</p>
 <p>CCSEA Membership</p>
 <p>Subcontracted Staff</p>
