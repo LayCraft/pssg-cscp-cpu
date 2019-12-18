@@ -82,9 +82,29 @@
 <app-person-table [title]="'Executive Contact'" [person]="tpa.contactInformation.executiveContact"></app-person-table>
 <app-person-table [title]="'Board Contact'" [person]="tpa.contactInformation.boardContact"></app-person-table>
 
-<p>Board Contact</p>
 <h2 class="blue-header">Applicant Administrative Information</h2>
-<p>Compliance</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">Compliance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="col-3 text-right" scope="row">Compliant with Employment Standards Act of BC</th>
+      <td>{{tpa?.administrativeInformation?.compliantEmploymentStandardsAct?'Yes':'No'}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Compliant with BC's Human Rights Code</th>
+      <td>{{tpa?.administrativeInformation?.compliantHumanRights ?'Yes':'No'}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Compliant with Worker's Compensation Act (WorkSafe BC)</th>
+      <td>{{tpa?.administrativeInformation?.compliantWorkersCompensation ?'Yes':'No'}}</td>
+    </tr>
+  </tbody>
+</table>
+
 <p>Union</p>
 <p>CCSEA Membership</p>
 <p>Subcontracted Staff</p>
