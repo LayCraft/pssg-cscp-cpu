@@ -1,8 +1,10 @@
 import * as moment from 'moment';
-import { convertToWeekDays } from '../constants/convert-to-week-days';
+import { decodeToWeekDays } from '../constants/decode-to-week-days';
+import { decodeCglInsurance } from '../constants/decode-cgl-insurance-type';
+import { decodeCcseaMemberType } from '../constants/decode-ccsea-member-type';
 import { iAdministrativeInformation } from "./administrative-information.class";
 import { iContactInformation } from "./contact-information.class";
-import { iDynamicsScheduleFResponse, iDynamicsCrmContact } from "./dynamics-blob";
+import { iDynamicsScheduleFResponse, iDynamicsCrmContact, iDynamicsCrmContract } from "./dynamics-blob";
 import { iHours } from "./hours.class";
 import { iPerson } from "./person.class";
 import { iProgramApplication } from "./program-application.class";
@@ -26,7 +28,7 @@ export class TransmogrifierProgramApplication {
     this.organizationId = g.Businessbceid;
     this.organizationName = g.Organization.name;
     this.userId = g.Userbceid;
-    this.cglInsurance = this.decodeCglInsurance(g.Contract.vsd_cpu_insuranceoptions);
+    this.cglInsurance = decodeCglInsurance(g.Contract.vsd_cpu_insuranceoptions);
     this.administrativeInformation = this.buildAdministrativeInformation(g);
     this.contactInformation = this.buildContactInformation(g);
     this.programApplications = this.buildProgramApplications(g);
@@ -57,7 +59,7 @@ export class TransmogrifierProgramApplication {
     });
 
     return {
-      ccseaMemberType: this.decodeCcseaMemberType(b.Contract.vsd_cpu_memberofcssea),
+      ccseaMemberType: decodeCcseaMemberType(b.Contract.vsd_cpu_memberofcssea),
       compliantEmploymentStandardsAct: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000000") : null,
       compliantHumanRights: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000001") : null,
       compliantWorkersCompensation: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000002") : null,
@@ -151,13 +153,29 @@ export class TransmogrifierProgramApplication {
           postalCode: p.vsd_mailingpostalcodezip,
           province: p.vsd_mailingprovincestate
         },
-        programContact: {
-          personId: p._vsd_contactlookup_value,
-          me: undefined,
-          lastName: undefined,
-          firstName: undefined,
-          email: undefined,
-        },
+        programContact: g.StaffCollection
+          .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
+          .map((c: iDynamicsCrmContact): iPerson => {
+            return {
+              email: c.emailaddress1 || null,
+              fax: c.fax || null,
+              firstName: c.firstname || null,
+              lastName: c.lastname || null,
+              middleName: c.middlename || null,
+              personId: c.contactid || null,
+              phone: c.mobilephone || null,
+              title: c.jobtitle || null,
+              userId: c.vsd_bceid || null,
+              address: {
+                line1: c.address1_line1 || null,
+                line2: c.address1_line2 || null,
+                city: c.address1_city || null,
+                postalCode: c.address1_postalcode || null,
+                province: c.address1_stateorprovince || null,
+                country: c.address1_country || 'Canada',
+              },
+            }
+          })[0],
         revenueSources: [],//iRevenueSource[];
         additionalStaff: [],//iPerson[];
         operationHours: [],//iHours[];
@@ -178,7 +196,7 @@ export class TransmogrifierProgramApplication {
             // save the identifier for the post back to dynamics
             hoursId: sched.vsd_scheduleid,
             // convert the nasty comma seperated string version to useful week day boolean
-            ...convertToWeekDays(sched.vsd_days)
+            ...decodeToWeekDays(sched.vsd_days)
           };
 
           // check for which collection of hours this is
@@ -196,26 +214,5 @@ export class TransmogrifierProgramApplication {
     }
     return applications;
   }
-  private decodeCcseaMemberType(code: string): string {
-    switch (code) {
-      case '100000000':
-        return 'Member';
-      case '100000001':
-        return 'Associate';
-      case '100000002':
-        return 'Non-Member';
-      default:
-        return null;
-    }
-  }
-  private decodeCglInsurance(code: number): string {
-    switch (code) {
-      case 100000000:
-        return 'Agency Carries own CGL coverage';
-      case 100000001:
-        return "Agency requesting Province's Master Insurance Program enrolment";
-      default:
-        return null;
-    }
-  }
+
 }
