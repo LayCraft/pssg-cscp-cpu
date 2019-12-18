@@ -56,7 +56,7 @@
               </span>
             </div>
             <div *ngIf="item.discriminator === discriminators[4]">
-              <app-review-application></app-review-application>
+              <app-review-application [tpa]="trans"></app-review-application>
             </div>
             <div *ngIf="item.discriminator === discriminators[5]">
               <app-program-authorizer></app-program-authorizer>

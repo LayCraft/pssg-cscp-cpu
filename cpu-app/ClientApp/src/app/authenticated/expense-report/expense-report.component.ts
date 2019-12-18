@@ -54,6 +54,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
           if (!g.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this expense report was unsuccessful. If this problem persists please notify your ministry contact.', 'danger');
+            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the standard API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {

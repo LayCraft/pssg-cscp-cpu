@@ -3,10 +3,6 @@ export function formType(discriminator: string): string {
   // https://www.martinfowler.com/eaaCatalog/singleTableInheritance.html
   let formType;
   switch (discriminator) {
-    case 'e023659f-e8f5-e911-b811-00505683fbf4': {
-      formType = 'program_application';
-      break;
-    }
     case '768faf46-e8f5-e911-b811-00505683fbf4': {
       formType = 'budget_proposal';
       break;
@@ -23,10 +19,14 @@ export function formType(discriminator: string): string {
       formType = 'profile';
       break;
     }
-    // unsupported
     // todo: why are there two discriminators for one form type? Are they the same form?
+    case 'e023659f-e8f5-e911-b811-00505683fbf4': {
+      console.log('Supported program application discriminator: e023659f-e8f5-e911-b811-00505683fbf4');
+      formType = 'program_application';
+      break;
+    }
     case '47525432-e8f5-e911-b811-00505683fbf4': {
-      console.log('Unsupported program application discriminator.')
+      console.log('Unsupported program application discriminator: 47525432-e8f5-e911-b811-00505683fbf4');
       formType = 'program_application';
       break;
     }

@@ -40,6 +40,8 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
           if (!f.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this program application form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
+            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the standard API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {
@@ -71,6 +73,8 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     return false;
   }
   constructDefaultstepperElements(trans: TransmogrifierProgramApplication) {
+    // clean out the old things that might be living in the stepper.
+    this.stepperService.reset();
     // write the default beginning
     [
       {
