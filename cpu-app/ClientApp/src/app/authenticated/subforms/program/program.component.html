@@ -22,7 +22,7 @@
       <div class="col-md">
         <div class="form-group">
           <label for="emailAddress">Email</label>
-          <input type="text" class="form-control" id="emailAddress" name="emailAddress" [(ngModel)]="pa.email" #emailAddress="ngModel" [pattern]="emailRegex">
+          <input type="text" class="form-control" id="emailAddress" name="emailAddress" [(ngModel)]="programApplication.email" #emailAddress="ngModel" [pattern]="emailRegex">
           <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)">
             Ok
           </div>
@@ -36,7 +36,7 @@
       <div class="col-md">
         <div class="form-group">
           <label for="phoneNumber">Phone Number</label>
-          <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="pa.phoneNumber" #phoneNumber="ngModel" [pattern]="phoneRegex">
+          <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="programApplication.phoneNumber" #phoneNumber="ngModel" [pattern]="phoneRegex">
           <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber)">
             Ok
           </div>
@@ -48,7 +48,7 @@
       <div class="col-md">
         <div class="form-group">
           <label for="faxNumber">Fax Number</label>
-          <input type="text" class="form-control" id="faxNumber" name="faxNumber" [(ngModel)]="pa.faxNumber" #faxNumber="ngModel" [pattern]="phoneRegex">
+          <input type="text" class="form-control" id="faxNumber" name="faxNumber" [(ngModel)]="programApplication.faxNumber" #faxNumber="ngModel" [pattern]="phoneRegex">
           <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(faxNumber)">
             Ok
           </div>
@@ -58,9 +58,9 @@
         </div>
       </div>
     </div>
-    <app-address2 [(address)]="pa.mainAddress"></app-address2>
+    <app-address2 [(address)]="programApplication.mainAddress"></app-address2>
     <h2 class="blue-header">Mailing Address</h2>
-    <app-address2 [(address)]="pa.mailingAddress"></app-address2>
+    <app-address2 [(address)]="programApplication.mailingAddress"></app-address2>
 
     <div class="form-group">
       <div class="form-check">
@@ -107,6 +107,6 @@ We need to know if this is a Violence Against Women Program.</pre>
     </div>
   </div>
 </form>
-<span *ngIf="pa">
-  <pre>{{pa|json}}</pre>
-</span>
+<!-- <span *ngIf="programApplication">
+  <pre>{{programApplication|json}}</pre>
+</span> -->

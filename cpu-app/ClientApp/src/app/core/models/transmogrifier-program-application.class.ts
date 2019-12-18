@@ -86,7 +86,6 @@ export class TransmogrifierProgramApplication {
         fax: b.BoardContact.fax || null,
         firstName: b.BoardContact.firstname || null,
         lastName: b.BoardContact.lastname || null,
-        me: null,
         middleName: b.BoardContact.middlename || null,
         personId: b.BoardContact.contactid || null,
         phone: b.BoardContact.mobilephone || null,
@@ -131,14 +130,14 @@ export class TransmogrifierProgramApplication {
     for (let p of g.ProgramCollection) {
       let temp: iProgramApplication = {
         contractId: p._vsd_contractid_value,
-        email: p.vsd_emailaddress,
+        email: p.vsd_emailaddress || g.Organization.emailaddress1 || null, // fallback to organization email address
         faxNumber: p.vsd_fax,
-        formState: undefined,
+        formState: 'untouched',// untouched	incomplete	invalid	complete info,
         name: p.vsd_name,
         phoneNumber: p.vsd_phonenumber,
         programId: p.vsd_programid,
-        programLocation: undefined,
-        serviceArea: undefined,
+        programLocation: p._vsd_cpu_regiondistrict_value,
+        serviceArea: p._vsd_cpu_regiondistrict_value,
         mainAddress: {
           line1: p.vsd_addressline1,
           line2: p.vsd_addressline2,
