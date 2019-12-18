@@ -1,7 +1,124 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">Main Program Information</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="col-3 text-right" scope="row">Program Name</th>
+      <td>{{pa?.name}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Program Type</th>
+      <td>NOT IMPLEMENTED</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Program Location</th>
+      <td>{{pa?.programLocation}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Service Location</th>
+      <td>{{pa?.serviceArea}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Email Address</th>
+      <td>{{pa?.email}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Phone Number</th>
+      <td>{{pa?.phoneNumber}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Fax Number</th>
+      <td>{{pa?.faxNumber}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line 1</th>
+      <td>{{pa?.mainAddress?.line1}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line 2</th>
+      <td>{{pa?.mainAddress?.line2}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">City</th>
+      <td>{{pa?.mainAddress?.city}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Province</th>
+      <td>{{pa?.mainAddress?.province}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Postal Code</th>
+      <td>{{pa?.mainAddress?.postalCode}}</td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">Location Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line 1</th>
+      <td>{{pa?.mainAddress?.line1}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line 2</th>
+      <td>{{pa?.mainAddress?.line2}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">City</th>
+      <td>{{pa?.mainAddress?.city}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Province</th>
+      <td>{{pa?.mainAddress?.province}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Postal Code</th>
+      <td>{{pa?.mainAddress?.postalCode}}</td>
+    </tr>
+  </tbody>
+</table>
+<table *ngIf="pa?.mailingAddress" class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">Mailing Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line 1</th>
+      <td>{{pa?.mailingAddress?.line1}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line 2</th>
+      <td>{{pa?.mailingAddress?.line2}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">City</th>
+      <td>{{pa?.mailingAddress?.city}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Province</th>
+      <td>{{pa?.mailingAddress?.province}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Postal Code</th>
+      <td>{{pa?.mailingAddress?.postalCode}}</td>
+    </tr>
+  </tbody>
+</table>
+<!--
 <p>Main Program Information</p>
 <p>Mailing Address</p>
 <p>Program Contact</p>
 <p>Program Staff</p>
 <p>Program Schedule Hours</p>
+-->
 
 <pre>{{pa|json}}</pre>
