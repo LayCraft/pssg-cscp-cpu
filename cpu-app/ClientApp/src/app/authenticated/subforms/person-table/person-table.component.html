@@ -1,1 +1,49 @@
-{{title}}{{person}}
+<table *ngIf="person" class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">{{title}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="col-3 text-right" scope="row">Name</th>
+      <td>{{person.firstName}} {{person.middleName}} {{person.lastName}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Title</th>
+      <td>{{person.title}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Email</th>
+      <td>{{person.email}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Phone</th>
+      <td>{{person.phone}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Fax</th>
+      <td>{{person.fax}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">City</th>
+      <td>{{person.address?.city}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line 1</th>
+      <td>{{person.address?.line1}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Line2</th>
+      <td>{{person.address?.line2}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Postal Code</th>
+      <td>{{person.address?.postalCode}}</td>
+    </tr>
+    <tr>
+      <th class="col-3 text-right" scope="row">Province</th>
+      <td>{{person.address?.province}}</td>
+    </tr>
+  </tbody>
+</table>
