@@ -190,14 +190,13 @@ export class TransmogrifierProgramApplication {
 
           const hours: iHours = {
             //save the hours into moment format.
-            open: moment().hours(open[0]).minutes(open[1]),
-            closed: moment().hours(closed[0]).minutes(closed[1]),
+            open: moment().hours(open[0]).minutes(open[1]).toString(),
+            closed: moment().hours(closed[0]).minutes(closed[1]).toString(),
             // save the identifier for the post back to dynamics
             hoursId: sched.vsd_scheduleid,
             // convert the nasty comma seperated string version to useful week day boolean
             ...decodeToWeekDays(sched.vsd_days)
           };
-
           // check for which collection of hours this is
           if (sched.vsd_cpu_scheduletype === 100000000) {
             // The type is active hours
