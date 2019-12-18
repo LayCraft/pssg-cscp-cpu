@@ -7,7 +7,7 @@ import { iProgramApplication } from '../../../core/models/program-application.cl
   styleUrls: ['./program-summary-table.component.css']
 })
 export class ProgramSummaryTableComponent implements OnInit {
-  @Input() program: iProgramApplication;
+  @Input() pa: iProgramApplication;
   constructor() { }
 
   ngOnInit() {

@@ -169,14 +169,10 @@
     </tr>
   </tbody>
 </table>
-
-<app-program-summary-table [program]=""></app-program-summary-table>
-<h2 class="blue-header">Program: Foo</h2>
-<p>Main Program Information</p>
-<p>Mailing Address</p>
-<p>Program Contact</p>
-<p>Program Staff</p>
-<p>Program Schedule Hours</p>
+<div *ngFor="let programApplication of tpa.programApplications">
+  <h2 class="blue-header">Program: {{programApplication.name}}</h2>
+  <app-program-summary-table [pa]="programApplication"></app-program-summary-table>
+</div>
 
 
 <!-- <table class="table table-striped">
