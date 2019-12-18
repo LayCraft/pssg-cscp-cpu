@@ -1,6 +1,6 @@
 import { iHours } from "../models/hours.class";
 
-export function convertToWeekDays(csvString: string): Partial<iHours> {
+export function decodeToWeekDays(csvString: string): Partial<iHours> {
   return {
     monday: csvString.indexOf('100000000') >= 0 ? true : false,
     tuesday: csvString.indexOf('100000001') >= 0 ? true : false,

@@ -7,8 +7,8 @@ export interface iHours {
   friday?: boolean;
   saturday?: boolean;
   sunday?: boolean;
-  open: Moment; // just used for the hour representation
-  closed: Moment;
+  open: string; // just used for the hour representation
+  closed: string; // should look like this 11:21
   hoursId: string;
 }
 export class Hours implements iHours {
@@ -19,8 +19,8 @@ export class Hours implements iHours {
   friday: boolean;
   saturday: boolean;
   sunday: boolean;
-  open: Moment; // just used for the hour representation
-  closed: Moment;
+  open: string; // just used for the hour representation
+  closed: string; // should look like this 18:54
   hoursId: string;
   constructor(hours?: iHours) {
     if (hours) {

@@ -1,4 +1,4 @@
-<form name="form" novalidate>
+<form name="form" (input)="onInput()" novalidate>
 
   <ul class="nav nav-pills mb-2">
     <li *ngFor="let tab of tabs" class="nav-item">
@@ -9,12 +9,12 @@
   <div *ngIf="currentTab===tabs[0]">
     <h2 class="blue-header">Main Program Information</h2>
     <div class="form-group">
-      <label for="programLocation" [class.required]="required">Program Location</label>
-      <input class="form-control" type="text" [(ngModel)]="programApplication.programLocation" id="programLocation" name="programLocation" disabled>
+      <label for="programLocation">Program Location</label>
+      <input class="form-control" type="text" [ngModel]="programApplication.programLocation" id="programLocation" name="programLocation" disabled>
     </div>
     <div class="form-group">
-      <label for="serviceArea" [class.required]="required">Service Area</label>
-      <input class="form-control" type="text" [(ngModel)]="programApplication.serviceArea" id="serviceArea" name="serviceArea" disabled>
+      <label for="serviceArea">Service Area</label>
+      <input class="form-control" type="text" [ngModel]="programApplication.serviceArea" id="serviceArea" name="serviceArea" disabled>
     </div>
 
     <h2 class="blue-header">Primary Program Contact Information</h2>
@@ -22,11 +22,11 @@
       <div class="col-md">
         <div class="form-group">
           <label for="emailAddress">Email</label>
-          <input type="text" class="form-control" id="emailAddress" name="emailAddress" [(ngModel)]="pa.email" #emailAddress="ngModel" [pattern]="emailRegex">
-          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)" style="display: inherit">
+          <input type="text" class="form-control" id="emailAddress" name="emailAddress" [(ngModel)]="programApplication.email" #emailAddress="ngModel" [pattern]="emailRegex">
+          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)">
             Ok
           </div>
-          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(emailAddress)" style="display: inherit">
+          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(emailAddress)">
             Try Again
           </div>
         </div>
@@ -36,11 +36,11 @@
       <div class="col-md">
         <div class="form-group">
           <label for="phoneNumber">Phone Number</label>
-          <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="pa.phoneNumber" #phoneNumber="ngModel" [pattern]="phoneRegex">
+          <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="programApplication.phoneNumber" #phoneNumber="ngModel" [pattern]="phoneRegex">
           <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber)">
             Ok
           </div>
-          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(phoneNumber)" style="display: inherit">
+          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(phoneNumber)">
             Try Again
           </div>
         </div>
@@ -48,19 +48,19 @@
       <div class="col-md">
         <div class="form-group">
           <label for="faxNumber">Fax Number</label>
-          <input type="text" class="form-control" id="faxNumber" name="faxNumber" [(ngModel)]="pa.faxNumber" #faxNumber="ngModel" [pattern]="phoneRegex">
-          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(faxNumber)" style="display: inherit">
+          <input type="text" class="form-control" id="faxNumber" name="faxNumber" [(ngModel)]="programApplication.faxNumber" #faxNumber="ngModel" [pattern]="phoneRegex">
+          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(faxNumber)">
             Ok
           </div>
-          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(faxNumber)" style="display: inherit">
+          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(faxNumber)">
             Try Again
           </div>
         </div>
       </div>
     </div>
-    <app-address2 [(address)]="pa.mainAddress"></app-address2>
+    <app-address2 [(address)]="programApplication.mainAddress"></app-address2>
     <h2 class="blue-header">Mailing Address</h2>
-    <app-address2 [(address)]="pa.mailingAddress"></app-address2>
+    <app-address2 [(address)]="programApplication.mailingAddress"></app-address2>
 
     <div class="form-group">
       <div class="form-check">
@@ -107,6 +107,6 @@ We need to know if this is a Violence Against Women Program.</pre>
     </div>
   </div>
 </form>
-<span *ngIf="pa">
-  <pre>{{pa|json}}</pre>
-</span>
+<!-- <span *ngIf="programApplication">
+  <pre>{{programApplication|json}}</pre>
+</span> -->

@@ -1,9 +1,11 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
+import { ProgramApplicationService } from '../../core/services/program-application.service';
+import { StateService } from '../../core/services/state.service';
+import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
 import { iProgramApplication } from '../../core/models/program-application.class';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
-import { ProgramApplicationService } from '../../core/services/program-application.service';
-import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
 
 @Component({
   selector: 'app-program-application',
@@ -18,21 +20,39 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
   currentStepperElement: iStepperElement;
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
   constructor(
+    private notificationQueueService: NotificationQueueService,
     private programApplicationService: ProgramApplicationService,
     private route: ActivatedRoute,
     private router: Router,
-    private stepperService: IconStepperService,
+    private stateService: StateService,
+    private stepperService: IconStepperService
   ) { }
 
   ngOnInit() {
     // get the right contract by route
     this.route.params.subscribe(p => {
-      this.programApplicationService.getScheduleF(p['contractId']).subscribe(f => {
-        // make the transmogrifier for this form
-        this.trans = new TransmogrifierProgramApplication(f);
-        this.constructDefaultstepperElements(this.trans);
-      });
+      // collect the current user information from the state.
+      const userId: string = this.stateService.main.getValue().organizationMeta.userId;
+      const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
+      // get the program application to fill
+      this.programApplicationService.getScheduleF(organizationId, userId, p['contractId']).subscribe(
+        f => {
+          if (!f.IsSuccess) {
+            // notify the user of a system error
+            this.notificationQueueService.addNotification('An attempt at getting this program application form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
+            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the standard API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+
+            // route back to the dashboard
+            this.router.navigate(['/authenticated/dashboard']);
+          } else {
+            // make the transmogrifier for this form
+            this.trans = new TransmogrifierProgramApplication(f);
+            this.constructDefaultstepperElements(this.trans);
+          }
+        }
+      );
     });
+    // subscribe to the stepper state
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
   }
@@ -53,6 +73,8 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     return false;
   }
   constructDefaultstepperElements(trans: TransmogrifierProgramApplication) {
+    // clean out the old things that might be living in the stepper.
+    this.stepperService.reset();
     // write the default beginning
     [
       {
@@ -101,20 +123,7 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
   }
-  save() {
-    // // make a person array to submit
-    // const cleanup: Person[] = this.stepperElements.map(s => s.object as iPerson);
-    // const post = DynamicsPostUsers(this.stateService.userId.getValue(), this.stateService.organizationId.getValue(), cleanup);
-    // // console.log(post);
-    // this.personService.setPersons(post).subscribe(
-    //   () => {
-    //     this.notificationQueueService.addNotification('Personnel Saved', 'success');
-    //     // refresh the list of people on save
-    //     this.stateService.refresh();
-    //   },
-    //   err => this.notificationQueueService.addNotification(err, 'danger')
-    // );
-  }
+  save() { }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
       this.router.navigate(['/authenticated/dashboard']);

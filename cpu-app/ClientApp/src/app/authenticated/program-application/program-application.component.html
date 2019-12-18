@@ -18,14 +18,15 @@
         <div *ngFor="let item of stepperElements">
           <div *ngIf="isCurrentStepperElement(item)">
             <div *ngIf="item.discriminator === discriminators[0]">
+              <!-- Metadata for organization -->
               <h2 class="blue-header">
                 Applicant Organization Legal Name
               </h2>
               <div class="form-row">
                 <div class="col-md">
                   <div class="form-group">
-                    <label for="orgName">Organization Name (contract id)</label>
-                    <input [value]="undefined" type="text" class="form-control" id="orgName" name="orgName" disabled>
+                    <label for="orgName">Legal Name of Organization</label>
+                    <input [value]="trans.organizationName" type="text" class="form-control" id="orgName" name="orgName" disabled>
                   </div>
                 </div>
               </div>
@@ -33,10 +34,11 @@
                 <div class="col-md">
                   <div class="form-group">
                     <label for="city">Contract Number</label>
-                    <input [value]="undefined" type="text" class="form-control" id="contractNumber" name="contractNumber" disabled>
+                    <input [value]="trans.contractNumber" type="text" class="form-control" id="contractNumber" name="contractNumber" disabled>
                   </div>
                 </div>
               </div>
+              <!-- Primary contact information -->
               <app-program-contact-information [(contactInformation)]="trans.contactInformation"></app-program-contact-information>
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
@@ -54,12 +56,12 @@
               </span>
             </div>
             <div *ngIf="item.discriminator === discriminators[4]">
-              <app-review-application></app-review-application>
+              <app-review-application [tpa]="trans"></app-review-application>
             </div>
             <div *ngIf="item.discriminator === discriminators[5]">
               <app-program-authorizer></app-program-authorizer>
             </div>
-            <pre>{{trans|json}}</pre>
+            <!-- <pre>{{trans|json}}</pre> -->
           </div>
         </div>
       </div>

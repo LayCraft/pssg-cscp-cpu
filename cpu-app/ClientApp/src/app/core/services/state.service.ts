@@ -62,7 +62,6 @@ export class StateService {
     if (userId && organizationId) {
       this.mainService.getBlob(userId, organizationId).subscribe(
         (m: iDynamicsBlob) => {
-          console.log(m);
           // collect the blob into a useful object
           const mainData = new Transmogrifier(m);
           // save the useful blob in a behaviourSubject

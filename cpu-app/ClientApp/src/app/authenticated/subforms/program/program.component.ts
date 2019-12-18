@@ -21,7 +21,6 @@ export class ProgramComponent implements OnInit {
   // the form model
   currentTab: string;
   differentProgramContact: boolean = false;
-  pa: ProgramApplication;
   persons: iPerson[] = [];
   programContactInformation: iContactInformation;
   tabs: string[];
@@ -45,7 +44,6 @@ export class ProgramComponent implements OnInit {
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.persons = m.persons;
     });
-    this.pa = new ProgramApplication(this.programApplication);
     this.addOperationHours();
     this.addStandbyHours();
     this.onInput();

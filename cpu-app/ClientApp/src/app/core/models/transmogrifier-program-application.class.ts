@@ -1,46 +1,95 @@
-import { iProgramApplication } from "./program-application.class";
-import { iDynamicsScheduleFResponse } from "./dynamics-blob";
-import { iHours } from "./hours.class";
 import * as moment from 'moment';
-import { convertToWeekDays } from '../constants/convert-to-week-days';
-import { iContactInformation, ContactInformation } from "./contact-information.class";
-import { iAdministrativeInformation, AdministrativeInformation } from "./administrative-information.class";
+import { decodeToWeekDays } from '../constants/decode-to-week-days';
+import { decodeCglInsurance } from '../constants/decode-cgl-insurance-type';
+import { decodeCcseaMemberType } from '../constants/decode-ccsea-member-type';
+import { iAdministrativeInformation } from "./administrative-information.class";
+import { iContactInformation } from "./contact-information.class";
+import { iDynamicsScheduleFResponse, iDynamicsCrmContact, iDynamicsCrmContract } from "./dynamics-blob";
+import { iHours } from "./hours.class";
+import { iPerson } from "./person.class";
+import { iProgramApplication } from "./program-application.class";
 
 export class TransmogrifierProgramApplication {
-  organizationId: string;
-  userId: string;
   contractId: string;
+  contractName: string;
+  contractNumber: string;
+  organizationId: string;
+  organizationName: string;
+  userId: string;
   administrativeInformation: iAdministrativeInformation;
   cglInsurance: string; // commercial general liability insurance detail string picked from options.
   contactInformation: iContactInformation;
   programApplications: iProgramApplication[];
 
   constructor(g: iDynamicsScheduleFResponse) {
-    this.organizationId = undefined;
-    this.userId = g.Contract.vsd_contractid;
     this.contractId = g.Contract.vsd_contractid;
-    this.administrativeInformation = new AdministrativeInformation();
+    this.contractName = g.Contract.vsd_name;
+    this.contractNumber = g.Contract.vsd_name;
+    this.organizationId = g.Businessbceid;
+    this.organizationName = g.Organization.name;
+    this.userId = g.Userbceid;
+    this.cglInsurance = decodeCglInsurance(g.Contract.vsd_cpu_insuranceoptions);
+    this.administrativeInformation = this.buildAdministrativeInformation(g);
     this.contactInformation = this.buildContactInformation(g);
     this.programApplications = this.buildProgramApplications(g);
   }
+
+  private buildAdministrativeInformation(b: iDynamicsScheduleFResponse): iAdministrativeInformation {
+    const staffSubcontractedPersons: iPerson[] = [];
+    b.StaffCollection.map((s: iDynamicsCrmContact): iPerson => {
+      return {
+        address: {
+          city: s.address1_city || null,
+          country: s.address1_country || null,
+          line1: s.address1_line1 || null,
+          line2: s.address1_line2 || null,
+          postalCode: s.address1_postalcode || null,
+          province: s.address1_stateorprovince || null,
+        },
+        email: s.emailaddress1 || null,
+        fax: s.fax || null,
+        firstName: s.firstname || null,
+        lastName: s.lastname || null,
+        middleName: s.middlename || null,
+        personId: s.contactid || null,
+        phone: s.mobilephone || null,
+        title: s.jobtitle || null,
+        userId: s.vsd_bceid || null,
+      };
+    });
+
+    return {
+      ccseaMemberType: decodeCcseaMemberType(b.Contract.vsd_cpu_memberofcssea),
+      compliantEmploymentStandardsAct: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000000") : null,
+      compliantHumanRights: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000001") : null,
+      compliantWorkersCompensation: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000002") : null,
+      staffSubcontractedPersons,
+      staffUnion: b.Contract.vsd_cpu_specificunion,
+      staffSubcontracted: b.Contract.vsd_cpu_programstaffsubcontracted,
+      staffUnionized: b.Contract.vsd_cpu_staffunionized,
+    };
+  }
   private buildContactInformation(b: iDynamicsScheduleFResponse): iContactInformation {
     return {
-      phoneNumber: b.Organization.telephone1 || null,
       emailAddress: b.Organization.emailaddress1 || null,
       faxNumber: b.Organization.fax || null,
-      mainAddress: {
-        city: b.Organization.address1_city || null,
-        line1: b.Organization.address1_line1 || null,
-        line2: b.Organization.address1_line2 || null,
-        postalCode: b.Organization.address1_postalcode || null,
-        province: b.Organization.address1_stateorprovince || null,
-      },
-      mailingAddress: {
-        city: b.Organization.address2_city || null,
-        line1: b.Organization.address2_line1 || null,
-        line2: b.Organization.address2_line2 || null,
-        postalCode: b.Organization.address2_postalcode || null,
-        province: b.Organization.address2_stateorprovince || null,
+      phoneNumber: b.Organization.telephone1 || null,
+      boardContact: {
+        address: {
+          city: b.BoardContact.address1_city || null,
+          line1: b.BoardContact.address1_line1 || null,
+          line2: b.BoardContact.address1_line2 || null,
+          postalCode: b.BoardContact.address1_postalcode || null,
+          province: b.BoardContact.address1_stateorprovince || null,
+        },
+        email: b.BoardContact.emailaddress1 || null,
+        fax: b.BoardContact.fax || null,
+        firstName: b.BoardContact.firstname || null,
+        lastName: b.BoardContact.lastname || null,
+        middleName: b.BoardContact.middlename || null,
+        personId: b.BoardContact.contactid || null,
+        phone: b.BoardContact.mobilephone || null,
+        title: b.BoardContact.jobtitle || null,
       },
       executiveContact: {
         email: b.ExecutiveContact.emailaddress1 || null,
@@ -60,40 +109,35 @@ export class TransmogrifierProgramApplication {
           province: b.ExecutiveContact.address1_stateorprovince || null,
         }
       },
-      boardContact: {
-        email: b.BoardContact.emailaddress1 || null,
-        fax: b.BoardContact.fax || null,
-        firstName: b.BoardContact.firstname || null,
-        lastName: b.BoardContact.lastname || null,
-        middleName: b.BoardContact.middlename || null,
-        personId: b.BoardContact.contactid || null,
-        phone: b.BoardContact.mobilephone || null,
-        title: b.BoardContact.jobtitle || null,
-        me: null,
-        address: {
-          city: b.BoardContact.address1_city || null,
-          line1: b.BoardContact.address1_line1 || null,
-          line2: b.BoardContact.address1_line2 || null,
-          postalCode: b.BoardContact.address1_postalcode || null,
-          province: b.BoardContact.address1_stateorprovince || null,
-        }
+      mailingAddress: {
+        city: b.Organization.address2_city || null,
+        line1: b.Organization.address2_line1 || null,
+        line2: b.Organization.address2_line2 || null,
+        postalCode: b.Organization.address2_postalcode || null,
+        province: b.Organization.address2_stateorprovince || null,
+      },
+      mainAddress: {
+        city: b.Organization.address1_city || null,
+        line1: b.Organization.address1_line1 || null,
+        line2: b.Organization.address1_line2 || null,
+        postalCode: b.Organization.address1_postalcode || null,
+        province: b.Organization.address1_stateorprovince || null,
       }
     }
   }
   private buildProgramApplications(g: iDynamicsScheduleFResponse): iProgramApplication[] {
     const applications: iProgramApplication[] = [];
-
     for (let p of g.ProgramCollection) {
       let temp: iProgramApplication = {
-        name: p.vsd_name,
-        formState: undefined,
         contractId: p._vsd_contractid_value,
-        programId: p.vsd_programid,
-        email: p.vsd_emailaddress,
-        programLocation: undefined,
-        serviceArea: undefined,
-        phoneNumber: p.vsd_phonenumber,
+        email: p.vsd_emailaddress || g.Organization.emailaddress1 || null, // fallback to organization email address
         faxNumber: p.vsd_fax,
+        formState: 'untouched',// untouched	incomplete	invalid	complete info,
+        name: p.vsd_name,
+        phoneNumber: p.vsd_phonenumber,
+        programId: p.vsd_programid,
+        programLocation: p._vsd_cpu_regiondistrict_value,
+        serviceArea: p._vsd_cpu_regiondistrict_value,
         mainAddress: {
           line1: p.vsd_addressline1,
           line2: p.vsd_addressline2,
@@ -108,14 +152,30 @@ export class TransmogrifierProgramApplication {
           postalCode: p.vsd_mailingpostalcodezip,
           province: p.vsd_mailingprovincestate
         },
-        programContact: {
-          personId: p._vsd_contactlookup_value,
-          me: undefined,
-          lastName: undefined,
-          firstName: undefined,
-          email: undefined,
-        },
-        revenueSources: [],//iRevenueSource[];
+        programContact: g.StaffCollection
+          .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
+          .map((c: iDynamicsCrmContact): iPerson => {
+            return {
+              email: c.emailaddress1 || null,
+              fax: c.fax || null,
+              firstName: c.firstname || null,
+              lastName: c.lastname || null,
+              middleName: c.middlename || null,
+              personId: c.contactid || null,
+              phone: c.mobilephone || null,
+              title: c.jobtitle || null,
+              userId: c.vsd_bceid || null,
+              address: {
+                line1: c.address1_line1 || null,
+                line2: c.address1_line2 || null,
+                city: c.address1_city || null,
+                postalCode: c.address1_postalcode || null,
+                province: c.address1_stateorprovince || null,
+                country: c.address1_country || 'Canada',
+              },
+            }
+          })[0],
+        // revenueSources: [],//iRevenueSource[];
         additionalStaff: [],//iPerson[];
         operationHours: [],//iHours[];
         standbyHours: [],//iHours[];
@@ -130,14 +190,13 @@ export class TransmogrifierProgramApplication {
 
           const hours: iHours = {
             //save the hours into moment format.
-            open: moment().hours(open[0]).minutes(open[1]),
-            closed: moment().hours(closed[0]).minutes(closed[1]),
+            open: moment().hours(open[0]).minutes(open[1]).toString(),
+            closed: moment().hours(closed[0]).minutes(closed[1]).toString(),
             // save the identifier for the post back to dynamics
             hoursId: sched.vsd_scheduleid,
             // convert the nasty comma seperated string version to useful week day boolean
-            ...convertToWeekDays(sched.vsd_days)
+            ...decodeToWeekDays(sched.vsd_days)
           };
-
           // check for which collection of hours this is
           if (sched.vsd_cpu_scheduletype === 100000000) {
             // The type is active hours
@@ -153,4 +212,5 @@ export class TransmogrifierProgramApplication {
     }
     return applications;
   }
+
 }

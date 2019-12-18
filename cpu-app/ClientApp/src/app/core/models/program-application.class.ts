@@ -42,7 +42,7 @@ export interface iProgramApplication {
   serviceArea: string;
   phoneNumber: string;
   faxNumber: string;
-  revenueSources: iRevenueSource[];
+  // revenueSources: iRevenueSource[];
 
   mainAddress: iAddress; // should be a class
   mailingAddress: iAddress; // should be a class (for building forms from )
@@ -69,7 +69,7 @@ export class ProgramApplication implements iProgramApplication {
   mailingAddress: iAddress; // should be a class (for building forms from )
   programContact: iPerson;
 
-  revenueSources: iRevenueSource[] = [];
+  // revenueSources: iRevenueSource[] = [];
   additionalStaff: iPerson[] = [];
   operationHours: iHours[] = [];
   standbyHours: iHours[] = [];
@@ -89,7 +89,7 @@ export class ProgramApplication implements iProgramApplication {
       this.programContact = new Person(prog.programContact) || new Person();
       // populate arrays if they are included
       prog.additionalStaff ? prog.additionalStaff.forEach(s => this.additionalStaff.push(new Person(s))) : this.additionalStaff = [];
-      prog.revenueSources ? prog.revenueSources.forEach(r => this.revenueSources.push(new RevenueSource(r))) : this.revenueSources = [];
+      // prog.revenueSources ? prog.revenueSources.forEach(r => this.revenueSources.push(new RevenueSource(r))) : this.revenueSources = [];
       prog.operationHours ? prog.operationHours.forEach(o => this.operationHours.push(new Hours(o))) : this.operationHours = [];
       prog.standbyHours ? prog.standbyHours.forEach(s => this.standbyHours.push(new Hours(s))) : this.standbyHours = [];
       prog.additionalStaff ? prog.additionalStaff.forEach(p => this.additionalStaff.push(new Person(p))) : this.additionalStaff = [];

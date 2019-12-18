@@ -17,8 +17,6 @@ import { nameAssemble } from '../../core/constants/name-assemble';
 export class PersonnelComponent implements OnInit, OnDestroy {
   // this is an organization level component
   reload = false;
-  userId: string;
-  organizationId: string;
   // used for the stepper component
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
@@ -40,8 +38,6 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       if (m) {
         // set the default top and bottom list
         this.constructStepperElements(m);
-        this.userId = m.organizationMeta.userId;
-        this.organizationId = m.organizationMeta.organizationId;
       }
     });
   }
@@ -64,7 +60,9 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   save(person: iPerson) {
     // a person needs minimum a first and last name to be submitted
     if (person.firstName && person.lastName) {
-      const post = DynamicsPostUsers(this.userId, this.organizationId, [person]);
+      const userId = this.stateService.main.getValue().organizationMeta.userId;
+      const organizationId = this.stateService.main.getValue().organizationMeta.organizationId;
+      const post = DynamicsPostUsers(userId, organizationId, [person]);
       // console.log(post);
       this.personService.setPersons(post).subscribe(
         () => {
@@ -113,9 +111,11 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     } else if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
       // set deactivated state
       person.deactivated = true;
+      const userId = this.stateService.main.getValue().organizationMeta.userId;
+      const organizationId = this.stateService.main.getValue().organizationMeta.organizationId;
       const post: iDynamicsPostUsers = {
-        UserBCeID: this.userId,
-        BusinessBCeID: this.organizationId,
+        UserBCeID: userId,
+        BusinessBCeID: organizationId,
         StaffCollection: [convertPersonToCrmContact(person)]
       };
       // post the person

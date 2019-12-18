@@ -23,6 +23,9 @@ export class Transmogrifier {
     this.persons = this.buildPersons(b);
     this.ministryContact = this.buildMinistryContact(b);
     this.contracts = this.buildContracts(b);
+    if (!this.organizationMeta.organizationId || !this.organizationMeta.userId) {
+      alert('There is a major problem with the content returned from the backend. BCEID information is missing which makes it impossible to interact in a meaningful way.');
+    }
   }
   private buildTasks(b: iDynamicsBlob, contractId: string): iTask[] {
     const tasks: iTask[] = [];
@@ -115,9 +118,9 @@ export class Transmogrifier {
   private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
     // collect the organization meta and structure it into a new shape
     return {
-      userId: b.UserBCeID || null,
+      userId: b.Userbceid || null,
       accountId: b.Organization.accountid || null, // the dynamics id must be included when posting back sometimes.
-      organizationId: b.BusinessBCeID || null,
+      organizationId: b.Businessbceid || null,
       organizationName: b.Organization.name || null,
       contactInformation: {
         phoneNumber: b.Organization.telephone1 || null,

@@ -6,8 +6,8 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
   styleUrls: ['./cg-liability.component.css']
 })
 export class CgLiabilityComponent implements OnInit {
-  @Input() cgLiability: boolean;
-  @Output() cgLiabilityChange = new EventEmitter<boolean>();
+  @Input() cgLiability: string;
+  @Output() cgLiabilityChange = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit() {

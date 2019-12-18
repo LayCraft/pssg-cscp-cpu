@@ -19,9 +19,6 @@ export class DashboardComponent implements OnInit {
 
     // always display the current main collection
     this.stateService.main.subscribe((m: Transmogrifier) => {
-      if (m !== null) {
-        this.stateService.refresh();
-      }
       this.trans = m;
     });
   }
