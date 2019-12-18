@@ -113,11 +113,22 @@
     </tr>
   </tbody>
 </table>
+<app-person-table [title]="'Program Contact'" [person]="pa?.programContact"></app-person-table>
+
+<table *ngIf="pa?.mailingAddress" class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">Program Staff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let person of pa.additionalStaff;let i=index">
+      <th class="col-3 text-right" scope="row">Person {{i+1}}</th>
+      <td>{{person.firstName}} {{person.middleName}} {{person.lastName}}{{person.title?' - '+person.title:''}}</td>
+    </tr>
+  </tbody>
+</table>
 <!--
-<p>Main Program Information</p>
-<p>Mailing Address</p>
-<p>Program Contact</p>
-<p>Program Staff</p>
 <p>Program Schedule Hours</p>
 -->
 

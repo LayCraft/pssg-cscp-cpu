@@ -175,7 +175,7 @@ export class TransmogrifierProgramApplication {
               },
             }
           })[0],
-        revenueSources: [],//iRevenueSource[];
+        // revenueSources: [],//iRevenueSource[];
         additionalStaff: [],//iPerson[];
         operationHours: [],//iHours[];
         standbyHours: [],//iHours[];

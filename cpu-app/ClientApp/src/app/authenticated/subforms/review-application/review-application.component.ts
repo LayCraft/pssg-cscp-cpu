@@ -183,7 +183,6 @@ export class ReviewApplicationComponent implements OnInit {
             "country": "Canada"
           }
         },
-        "revenueSources": [],
         "additionalStaff": [
           {
             "address": {
@@ -274,7 +273,6 @@ export class ReviewApplicationComponent implements OnInit {
             "country": "Canada"
           }
         },
-        "revenueSources": [],
         "additionalStaff": [],
         "operationHours": [
           {
