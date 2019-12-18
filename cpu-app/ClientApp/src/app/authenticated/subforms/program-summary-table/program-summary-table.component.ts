@@ -15,10 +15,10 @@ export class ProgramSummaryTableComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (this.pa.operationHours) {
+    if (this.pa.operationHours && this.pa.operationHours.length) {
       this.operationsSum = this.pa.operationHours.map(h => this.calculateHourTotal(h)).reduce((prev, curr) => prev += curr);
     }
-    if (this.pa.standbyHours) {
+    if (this.pa.standbyHours && this.pa.standbyHours.length) {
       this.standbySum = this.pa.standbyHours.map(h => this.calculateHourTotal(h)).reduce((prev, curr) => prev += curr);
     }
   }
