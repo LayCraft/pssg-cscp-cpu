@@ -116,20 +116,24 @@
 
 <app-person-table [title]="'Program Contact'" [person]="pa?.programContact"></app-person-table>
 
-<table *ngIf="pa?.mailingAddress" class="table table-striped">
+<table class="table table-striped">
   <thead>
     <tr>
       <th colspan="2" scope="col">Program Staff</th>
     </tr>
   </thead>
   <tbody>
+    <tr *ngIf="!pa.additionalStaff.length">
+      <th class="col-4 text-right" scope="row">Staff</th>
+      <td>No staff declared on {{pa.name}}</td>
+    </tr>
     <tr *ngFor="let person of pa.additionalStaff;let i=index">
       <th class="col-4 text-right" scope="row">Person {{i+1}}</th>
       <td>{{person.firstName}} {{person.middleName}} {{person.lastName}}{{person.title?' - '+person.title:''}}</td>
     </tr>
   </tbody>
 </table>
-<table *ngIf="pa?.mailingAddress" class="table table-striped">
+<table class="table table-striped">
   <thead>
     <tr>
       <th colspan="2" scope="col">Program Schedule Hours</th>
