@@ -113,7 +113,7 @@
   </thead>
   <tbody>
     <tr>
-      <th class="col-3 text-right" scope="row">Are staff unionized?</th>
+      <th class="col-3 text-right" scope="row">Staff are union affiliated</th>
       <td>{{tpa?.administrativeInformation?.staffUnionized?'Yes':'No'}}</td>
     </tr>
     <tr *ngIf="tpa?.administrativeInformation?.staffUnionized">
@@ -123,8 +123,20 @@
   </tbody>
 </table>
 
-<p>Union</p>
-<p>CCSEA Membership</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col">CCSEA Membership</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="col-3 text-right" scope="row">Member Type</th>
+      <td>{{tpa?.administrativeInformation?.ccseaMemberType}}</td>
+    </tr>
+  </tbody>
+</table>
+
 <p>Subcontracted Staff</p>
 <h2 class="blue-header">Commercial General Liability Insurance</h2>
 <p>CGL Insurance</p>
