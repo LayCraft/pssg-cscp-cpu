@@ -226,7 +226,12 @@ export class ReviewApplicationComponent implements OnInit {
           }
         ],
         "operationHours": [
-          {}
+          {
+            monday: true,
+            tuesday: true,
+            open: "18:15",
+            closed: "17:15",
+          }
         ],
         "standbyHours": [
           {}
