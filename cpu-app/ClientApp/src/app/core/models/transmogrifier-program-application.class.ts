@@ -6,8 +6,9 @@ import { iAdministrativeInformation } from "./administrative-information.class";
 import { iContactInformation } from "./contact-information.class";
 import { iDynamicsScheduleFResponse, iDynamicsCrmContact, iDynamicsCrmContract } from "./dynamics-blob";
 import { iHours } from "./hours.class";
-import { iPerson } from "./person.class";
+import { iPerson, Person } from "./person.class";
 import { iProgramApplication } from "./program-application.class";
+import { iSignature } from '../../authenticated/subforms/program-authorizer/program-authorizer.component';
 
 export class TransmogrifierProgramApplication {
   contractId: string;
@@ -20,6 +21,7 @@ export class TransmogrifierProgramApplication {
   cglInsurance: string; // commercial general liability insurance detail string picked from options.
   contactInformation: iContactInformation;
   programApplications: iProgramApplication[];
+  signature: iSignature;
 
   constructor(g: iDynamicsScheduleFResponse) {
     this.contractId = g.Contract.vsd_contractid;
@@ -32,8 +34,15 @@ export class TransmogrifierProgramApplication {
     this.administrativeInformation = this.buildAdministrativeInformation(g);
     this.contactInformation = this.buildContactInformation(g);
     this.programApplications = this.buildProgramApplications(g);
+    this.signature = this.buildSignature(g);
   }
-
+  private buildSignature(b: iDynamicsScheduleFResponse): iSignature {
+    return {
+      signer: new Person(),
+      signature: undefined,
+      termsConfirmation: undefined,
+    }
+  }
   private buildAdministrativeInformation(b: iDynamicsScheduleFResponse): iAdministrativeInformation {
     const staffSubcontractedPersons: iPerson[] = [];
     b.StaffCollection.map((s: iDynamicsCrmContact): iPerson => {

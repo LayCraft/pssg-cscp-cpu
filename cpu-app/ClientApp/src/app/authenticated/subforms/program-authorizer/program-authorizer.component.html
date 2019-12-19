@@ -16,34 +16,13 @@
 <h2 class="blue-header">Standard Authorization &amp; Signature</h2>
 <p>As a signing authority I understand that the organization may have this application or a resulting contract terminated if:</p>
 <div *ngFor="let term of terms; let i=index" class="form-group">
-  <label for="term_{{i}}">
-    <input type="checkbox" (input)="onInput()" name="term_{{i}}" id="term_{{i}}" [(ngModel)]="term[1]">
-    {{term[0]}}
-  </label>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" (input)="onInput()" name="term_{{i}}" id="term_{{i}}" [(ngModel)]="term[1]">
+    <label class="form-check-label" for="term_{{i}}">
+      {{term[0]}}
+    </label>
+  </div>
 </div>
 <div *ngIf="state">
-  <h4>
-    Authorized Signing Officer
-  </h4>
-  <div class="form-row">
-    <div class="col-md">
-      Full Name
-    </div>
-    <div class="col-md">
-      Title
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md">
-      Email
-    </div>
-    <div class="col-md">
-      Date
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md">
-      Signature
-    </div>
-  </div>
+  <app-person-picker (input)="onInput()" [title]="'Authorized Signing Officer'" [(person)]="signature.signer"></app-person-picker>
 </div>
