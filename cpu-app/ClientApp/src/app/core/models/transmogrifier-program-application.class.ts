@@ -37,11 +37,8 @@ export class TransmogrifierProgramApplication {
     this.signature = this.buildSignature(g);
   }
   private buildSignature(b: iDynamicsScheduleFResponse): iSignature {
-    return {
-      signer: new Person(),
-      signature: undefined,
-      termsConfirmation: undefined,
-    }
+    // @TODO: Get signature and load it
+    return undefined;
   }
   private buildAdministrativeInformation(b: iDynamicsScheduleFResponse): iAdministrativeInformation {
     const staffSubcontractedPersons: iPerson[] = [];

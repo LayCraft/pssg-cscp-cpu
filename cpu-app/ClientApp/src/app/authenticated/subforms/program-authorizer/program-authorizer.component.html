@@ -25,4 +25,12 @@
 </div>
 <div *ngIf="state">
   <app-person-picker (input)="onInput()" [title]="'Authorized Signing Officer'" [(person)]="signature.signer"></app-person-picker>
+  <ul>
+    <li>Signature collector</li>
+    <li>Date Field</li>
+    <li>Submit button</li>
+  </ul>
+</div>
+<div *ngIf="!state" class="alert alert-info" role="alert">
+  Please confirm the terms above enable signing and submitting.
 </div>
