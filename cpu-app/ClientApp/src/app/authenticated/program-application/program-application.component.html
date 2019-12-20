@@ -59,7 +59,7 @@
               <app-review-application [tpa]="trans"></app-review-application>
             </div>
             <div *ngIf="item.discriminator === discriminators[5]">
-              <app-program-authorizer></app-program-authorizer>
+              <app-program-authorizer [(signature)]="trans.signature"></app-program-authorizer>
             </div>
             <!-- <pre>{{trans|json}}</pre> -->
           </div>

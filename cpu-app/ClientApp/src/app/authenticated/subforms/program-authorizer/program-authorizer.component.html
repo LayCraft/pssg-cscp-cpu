@@ -16,34 +16,35 @@
 <h2 class="blue-header">Standard Authorization &amp; Signature</h2>
 <p>As a signing authority I understand that the organization may have this application or a resulting contract terminated if:</p>
 <div *ngFor="let term of terms; let i=index" class="form-group">
-  <label for="term_{{i}}">
-    <input type="checkbox" (input)="onInput()" name="term_{{i}}" id="term_{{i}}" [(ngModel)]="term[1]">
-    {{term[0]}}
-  </label>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" (input)="onInput()" name="term_{{i}}" id="term_{{i}}" [(ngModel)]="term[1]">
+    <label class="form-check-label" for="term_{{i}}">
+      {{term[0]}}
+    </label>
+  </div>
 </div>
 <div *ngIf="state">
-  <h4>
-    Authorized Signing Officer
-  </h4>
-  <div class="form-row">
-    <div class="col-md">
-      Full Name
+  <app-person-picker (input)="onInput()" [title]="'Authorized Signing Officer'" [(person)]="signature.signer"></app-person-picker>
+  <div class="card mt-2">
+    <div class="card-body">
+      <h5 class="card-title">Please add your signature here with you finger or other pointing device.</h5>
     </div>
-    <div class="col-md">
-      Title
+    <div class="mx-auto bg-light mb-2" style="width:600px;height:200px;border:1px solid #666;">
+      <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"></signature-pad>
     </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md">
-      Email
-    </div>
-    <div class="col-md">
-      Date
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md">
-      Signature
+    <div class="card-footer">
+      <button class="btn btn-secondary" (click)="clearSignature()">Clear</button>
+      <span *ngIf="!signature.signatureDate">
+        <button class="btn btn-primary float-right" (click)="acceptSignature()">Sign</button>
+      </span>
+      <span *ngIf="signature.signatureDate">
+        <button class="btn btn-outline-success mr-2 float-right" disabled>
+          Signed on {{signature.signatureDate|date}}
+        </button>
+      </span>
     </div>
   </div>
+</div>
+<div *ngIf="!state" class="alert alert-info" role="alert">
+  Please confirm the terms above enable signing and submitting.
 </div>
