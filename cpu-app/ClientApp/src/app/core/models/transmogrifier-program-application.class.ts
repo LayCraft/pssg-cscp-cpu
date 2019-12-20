@@ -4,7 +4,7 @@ import { decodeCglInsurance } from '../constants/decode-cgl-insurance-type';
 import { decodeCcseaMemberType } from '../constants/decode-ccsea-member-type';
 import { iAdministrativeInformation } from "./administrative-information.class";
 import { iContactInformation } from "./contact-information.class";
-import { iDynamicsScheduleFResponse, iDynamicsCrmContact, iDynamicsCrmContract } from "./dynamics-blob";
+import { iDynamicsScheduleFResponse, iDynamicsCrmContact } from "./dynamics-blob";
 import { iHours } from "./hours.class";
 import { iPerson, Person } from "./person.class";
 import { iProgramApplication } from "./program-application.class";
