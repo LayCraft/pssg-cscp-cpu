@@ -39,6 +39,7 @@ import { SharedModule } from './shared/shared.module';
 import { StatusReportComponent } from './authenticated/status-report/status-report.component';
 import { TaskListComponent } from './authenticated/components/task-list/task-list.component';
 import { TestComponent } from './test/test.component';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { TestComponent } from './test/test.component';
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    SignaturePadModule
   ],
 
   providers: [

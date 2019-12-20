@@ -1,10 +1,14 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import { iPerson, Person } from '../../../core/models/person.class';
 import { StateService } from '../../../core/services/state.service';
+import { SignaturePad } from 'angular2-signaturepad/signature-pad';
+import * as moment from 'moment';
+
 
 export interface iSignature {
   signer: iPerson;
-  signature: any; // TODO: not sure how the signature collection part works yet
+  signature?: any; // TODO: not sure how the signature collection part works yet
+  signatureDate?: Date;
   termsConfirmation: boolean;
 }
 @Component({
@@ -15,7 +19,12 @@ export interface iSignature {
 export class ProgramAuthorizerComponent implements OnInit {
   @Input() signature: iSignature;
   @Output() signatureChange = new EventEmitter<iSignature>();
+  @ViewChild(SignaturePad) signaturePad: SignaturePad;
 
+  public signatureImage: any;
+  wasSigned: boolean = false;
+  signatureData: string;
+  signingDate: string;
   terms: [string, boolean][] = [
     ['I understand that the Application Program for Victim Services and Crime Prevention Division may notify the above authorities that I have submitted an application', false],
     ['I have read and understood the above information', false]
@@ -39,7 +48,6 @@ export class ProgramAuthorizerComponent implements OnInit {
       // set the signature from the application state if not set
       this.signature = {
         signer: new Person(this.stateService.currentUser.getValue()),
-        signature: null,
         termsConfirmation: false,
       }
     }
@@ -56,5 +64,30 @@ export class ProgramAuthorizerComponent implements OnInit {
       // emit the signature
       this.signatureChange.emit(this.signature);
     };
+  }
+
+  signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
+    'minWidth': 0.3,
+    'maxWidth': 2.5,
+    'canvasWidth': 600,
+    'canvasHeight': 200,
+  };
+  clearSignature() {
+    this.wasSigned = false;
+    this.signatureData = null;
+    this.signaturePad.clear();
+    this.signature.signature = null;
+    this.signature.signatureDate = null;
+  }
+
+  acceptSignature() {
+    if (this.wasSigned) {
+      let signatureData = this.signaturePad.toDataURL();
+      this.signature.signature = signatureData;
+      this.signature.signatureDate = new Date()
+    }
+  }
+  drawStart() {
+    this.wasSigned = true;
   }
 }
