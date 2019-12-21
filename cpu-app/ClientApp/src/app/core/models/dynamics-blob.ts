@@ -52,11 +52,8 @@ export interface iDynamicsCrmContact {
   mobilephone?: string;
   statecode?: number;
   vsd_bceid?: string;
-}
-export interface iDynamicsCrmProgramContact {
-  contactid?: string;
-  vsd_programid?: string;
-  vsd_contact_vsd_programid?: string;
+  vsd_contact_vsd_programid?: string; // added when contact is listed in a program. Which program id are they under
+  vsd_programid?: string; // added when contact is listed in a program
 }
 export interface iDynamicsCrmContract {
   _vsd_contactlookup1_value?: string;
@@ -226,7 +223,7 @@ export interface iDynamicsScheduleFResponse {
   ScheduleCollection?: iDynamicsSchedule[];
   Result?: string;
   RegionDistrictCollection?: iDynamicsRegionDistrict[];
-  ProgramContactCollection?: iDynamicsCrmProgramContact[];
+  ProgramContactCollection?: iDynamicsCrmContact[];
   ProgramCollection?: iDynamicsCrmProgram[];
   Organization?: iDynamicsOrganization;
   IsSuccess?: boolean;

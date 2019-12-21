@@ -87,6 +87,7 @@ export class TransmogrifierProgramApplication {
           line2: b.BoardContact.address1_line2 || null,
           postalCode: b.BoardContact.address1_postalcode || null,
           province: b.BoardContact.address1_stateorprovince || null,
+          country: b.BoardContact.address1_country || 'Canada'
         },
         email: b.BoardContact.emailaddress1 || null,
         fax: b.BoardContact.fax || null,
@@ -113,6 +114,7 @@ export class TransmogrifierProgramApplication {
           line2: b.ExecutiveContact.address1_line2 || null,
           postalCode: b.ExecutiveContact.address1_postalcode || null,
           province: b.ExecutiveContact.address1_stateorprovince || null,
+          country: b.ExecutiveContact.address1_country || 'Canada',
         }
       },
       mailingAddress: {
@@ -121,6 +123,7 @@ export class TransmogrifierProgramApplication {
         line2: b.Organization.address2_line2 || null,
         postalCode: b.Organization.address2_postalcode || null,
         province: b.Organization.address2_stateorprovince || null,
+        country: b.Organization.address2_country || 'Canada'
       },
       mainAddress: {
         city: b.Organization.address1_city || null,
@@ -128,6 +131,7 @@ export class TransmogrifierProgramApplication {
         line2: b.Organization.address1_line2 || null,
         postalCode: b.Organization.address1_postalcode || null,
         province: b.Organization.address1_stateorprovince || null,
+        country: b.Organization.address1_country || 'Canada'
       }
     }
   }
@@ -138,51 +142,35 @@ export class TransmogrifierProgramApplication {
         contractId: p._vsd_contractid_value,
         email: p.vsd_emailaddress || g.Organization.emailaddress1 || null, // fallback to organization email address
         faxNumber: p.vsd_fax,
-        formState: 'untouched',// untouched	incomplete	invalid	complete info,
+        formState: 'untouched',// untouched	incomplete invalid complete info,
         name: p.vsd_name,
         phoneNumber: p.vsd_phonenumber,
         programId: p.vsd_programid,
         programLocation: p._vsd_cpu_regiondistrict_value,
         serviceArea: p._vsd_cpu_regiondistrict_value,
         mainAddress: {
-          line1: p.vsd_addressline1,
-          line2: p.vsd_addressline2,
-          city: p.vsd_city,
-          postalCode: p.vsd_postalcodezip,
-          province: p.vsd_provincestate
+          line1: p.vsd_addressline1 || null,
+          line2: p.vsd_addressline2 || null,
+          city: p.vsd_city || null,
+          postalCode: p.vsd_postalcodezip || null,
+          province: p.vsd_provincestate || null,
+          country: p.vsd_country || 'Canada',
         },
         mailingAddress: {
-          city: p.vsd_mailingcity,
-          line1: p.vsd_mailingaddressline1,
-          line2: p.vsd_mailingaddressline2,
-          postalCode: p.vsd_mailingpostalcodezip,
-          province: p.vsd_mailingprovincestate
+          city: p.vsd_mailingcity || null,
+          line1: p.vsd_mailingaddressline1 || null,
+          line2: p.vsd_mailingaddressline2 || null,
+          postalCode: p.vsd_mailingpostalcodezip || null,
+          province: p.vsd_mailingprovincestate || null,
+          country: p.vsd_mailingcountry || 'Canada',
         },
         programContact: g.StaffCollection
           .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
-          .map((c: iDynamicsCrmContact): iPerson => {
-            return {
-              email: c.emailaddress1 || null,
-              fax: c.fax || null,
-              firstName: c.firstname || null,
-              lastName: c.lastname || null,
-              middleName: c.middlename || null,
-              personId: c.contactid || null,
-              phone: c.mobilephone || null,
-              title: c.jobtitle || null,
-              userId: c.vsd_bceid || null,
-              address: {
-                line1: c.address1_line1 || null,
-                line2: c.address1_line2 || null,
-                city: c.address1_city || null,
-                postalCode: c.address1_postalcode || null,
-                province: c.address1_stateorprovince || null,
-                country: c.address1_country || 'Canada',
-              },
-            }
-          })[0],
+          .map(p => this.makePerson(p))[0],
         // revenueSources: [],//iRevenueSource[];
-        additionalStaff: [],//iPerson[];
+        additionalStaff: g.ProgramContactCollection
+          .filter((c: iDynamicsCrmContact) => c.vsd_programid = p.vsd_programid)
+          .map(p => this.makePerson(p)),// iPerson[];
         operationHours: [],//iHours[];
         standbyHours: [],//iHours[];
       }
@@ -218,5 +206,26 @@ export class TransmogrifierProgramApplication {
     }
     return applications;
   }
-
+  private makePerson(c: iDynamicsCrmContact): iPerson {
+    return {
+      email: c.emailaddress1 || null,
+      fax: c.fax || null,
+      firstName: c.firstname || null,
+      lastName: c.lastname || null,
+      middleName: c.middlename || null,
+      personId: c.contactid || null,
+      phone: c.mobilephone || null,
+      title: c.jobtitle || null,
+      userId: c.vsd_bceid || null,
+      address: {
+        line1: c.address1_line1 || null,
+        line2: c.address1_line2 || null,
+        city: c.address1_city || null,
+        postalCode: c.address1_postalcode || null,
+        province: c.address1_stateorprovince || null,
+        country: c.address1_country || 'Canada',
+      },
+    }
+  }
 }
+

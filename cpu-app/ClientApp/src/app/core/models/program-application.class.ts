@@ -1,55 +1,24 @@
 import { Address, iAddress } from "./address.class";
 import { Person, iPerson } from "./person.class";
-import { iContactInformation, ContactInformation } from './contact-information.class';
-import { iRevenueSource, RevenueSource } from './revenue-source.class';
 import { iHours, Hours } from './hours.class';
 
-export interface iAnnualProgramApplication {
-  organizationId: string;
-  contractId: string;
-  programContact: iContactInformation;
-  programs: iProgramApplication[];
-  formState: string; // untouched	incomplete	invalid	complete info
-}
-
-export class AnnualProgramApplication {
-  organizationId: string;
-  contractId: string;
-  programContact: iContactInformation;
-  programs: iProgramApplication[] = [];
-  formState: string; // untouched	incomplete	invalid	complete info
-  constructor(apa?: iAnnualProgramApplication) {
-    if (apa) {
-      this.organizationId = apa.organizationId || null;
-      this.contractId = apa.contractId || null;
-      this.formState = apa.formState || null;
-      this.programContact = new ContactInformation(apa.programContact) || null;
-      apa.programs ? apa.programs.forEach(p => this.programs.push(new ProgramApplication(p))) : this.programs = [];
-    } else {
-      this.programContact = new ContactInformation();
-    }
-  }
-}
-
 export interface iProgramApplication {
-  name: string;
-  formState: string;
   contractId: string;
-  programId: string;
-
   email: string;
+  faxNumber: string;
+  formState: string;
+  name: string;
+  phoneNumber: string;
+  programId: string;
   programLocation: string;
   serviceArea: string;
-  phoneNumber: string;
-  faxNumber: string;
+
   // revenueSources: iRevenueSource[];
-
-  mainAddress: iAddress; // should be a class
-  mailingAddress: iAddress; // should be a class (for building forms from )
-  programContact: iPerson;
   additionalStaff: iPerson[];
-
+  mailingAddress: iAddress;
+  mainAddress: iAddress;
   operationHours: iHours[];
+  programContact: iPerson;
   standbyHours: iHours[];
 }
 
