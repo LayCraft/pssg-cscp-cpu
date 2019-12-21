@@ -44,14 +44,6 @@ export class TransmogrifierProgramApplication {
     const staffSubcontractedPersons: iPerson[] = [];
     b.StaffCollection.map((s: iDynamicsCrmContact): iPerson => {
       return {
-        address: {
-          city: s.address1_city || null,
-          country: s.address1_country || null,
-          line1: s.address1_line1 || null,
-          line2: s.address1_line2 || null,
-          postalCode: s.address1_postalcode || null,
-          province: s.address1_stateorprovince || null,
-        },
         email: s.emailaddress1 || null,
         fax: s.fax || null,
         firstName: s.firstname || null,
@@ -61,6 +53,14 @@ export class TransmogrifierProgramApplication {
         phone: s.mobilephone || null,
         title: s.jobtitle || null,
         userId: s.vsd_bceid || null,
+        address: {
+          city: s.address1_city || null,
+          country: s.address1_country || 'Canada',
+          line1: s.address1_line1 || null,
+          line2: s.address1_line2 || null,
+          postalCode: s.address1_postalcode || null,
+          province: s.address1_stateorprovince || null,
+        },
       };
     });
 
@@ -81,14 +81,6 @@ export class TransmogrifierProgramApplication {
       faxNumber: b.Organization.fax || null,
       phoneNumber: b.Organization.telephone1 || null,
       boardContact: {
-        address: {
-          city: b.BoardContact.address1_city || null,
-          line1: b.BoardContact.address1_line1 || null,
-          line2: b.BoardContact.address1_line2 || null,
-          postalCode: b.BoardContact.address1_postalcode || null,
-          province: b.BoardContact.address1_stateorprovince || null,
-          country: b.BoardContact.address1_country || 'Canada'
-        },
         email: b.BoardContact.emailaddress1 || null,
         fax: b.BoardContact.fax || null,
         firstName: b.BoardContact.firstname || null,
@@ -97,6 +89,14 @@ export class TransmogrifierProgramApplication {
         personId: b.BoardContact.contactid || null,
         phone: b.BoardContact.mobilephone || null,
         title: b.BoardContact.jobtitle || null,
+        address: {
+          city: b.BoardContact.address1_city || null,
+          country: b.BoardContact.address1_country || 'Canada',
+          line1: b.BoardContact.address1_line1 || null,
+          line2: b.BoardContact.address1_line2 || null,
+          postalCode: b.BoardContact.address1_postalcode || null,
+          province: b.BoardContact.address1_stateorprovince || null
+        },
       },
       executiveContact: {
         email: b.ExecutiveContact.emailaddress1 || null,
@@ -107,31 +107,30 @@ export class TransmogrifierProgramApplication {
         personId: b.ExecutiveContact.contactid || null,
         phone: b.ExecutiveContact.mobilephone || null,
         title: b.ExecutiveContact.jobtitle || null,
-        me: null,
         address: {
           city: b.ExecutiveContact.address1_city || null,
+          country: b.ExecutiveContact.address1_country || 'Canada',
           line1: b.ExecutiveContact.address1_line1 || null,
           line2: b.ExecutiveContact.address1_line2 || null,
           postalCode: b.ExecutiveContact.address1_postalcode || null,
           province: b.ExecutiveContact.address1_stateorprovince || null,
-          country: b.ExecutiveContact.address1_country || 'Canada',
         }
       },
       mailingAddress: {
         city: b.Organization.address2_city || null,
+        country: b.Organization.address2_country || 'Canada',
         line1: b.Organization.address2_line1 || null,
         line2: b.Organization.address2_line2 || null,
         postalCode: b.Organization.address2_postalcode || null,
-        province: b.Organization.address2_stateorprovince || null,
-        country: b.Organization.address2_country || 'Canada'
+        province: b.Organization.address2_stateorprovince || null
       },
       mainAddress: {
         city: b.Organization.address1_city || null,
+        country: b.Organization.address1_country || 'Canada',
         line1: b.Organization.address1_line1 || null,
         line2: b.Organization.address1_line2 || null,
         postalCode: b.Organization.address1_postalcode || null,
-        province: b.Organization.address1_stateorprovince || null,
-        country: b.Organization.address1_country || 'Canada'
+        province: b.Organization.address1_stateorprovince || null
       }
     }
   }
