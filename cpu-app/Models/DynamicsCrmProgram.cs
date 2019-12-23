@@ -7,11 +7,13 @@ namespace Gov.Cscp.VictimServices.Public.Models
 {
 	public class DynamicsCrmProgram
 	{
+
 		public string _vsd_contactlookup_value { get; set; }
 		public string _vsd_contractid_value { get; set; }
 		public string _vsd_cpu_regiondistrict_value { get; set; }
 		public string _vsd_cpu_regiondistrictlookup2_value { get; set; }
 		public string _vsd_serviceproviderid_value { get; set; }
+		public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.vsd_contract"; } }
 		public string vsd_addressline1 { get; set; }
 		public string vsd_addressline2 { get; set; }
 		public string vsd_city { get; set; }
@@ -27,5 +29,7 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string vsd_postalcodezip { get; set; }
 		public string vsd_programid { get; set; }
 		public string vsd_provincestate { get; set; }
+		public float vsd_totaloncallstandbyhours { get; set; }
+		public float vsd_totalscheduledhours { get; set; }
 	}
 }
