@@ -17,7 +17,7 @@ export class MainService {
   ) { }
 
   getBlob(userId: string, organizationId: string): Observable<iDynamicsBlob> {
-    return this.http.get<iDynamicsBlob>(`${this.apiUrl}/${userId}/${organizationId}`, { headers: this.headers }).pipe(
+    return this.http.get<iDynamicsBlob>(`${this.apiUrl}/${organizationId}/${userId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

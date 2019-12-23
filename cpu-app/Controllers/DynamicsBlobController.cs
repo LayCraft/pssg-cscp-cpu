@@ -30,7 +30,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			this._configuration = configuration;
 		}
 
-		[HttpGet("{userBceid}/{businessBceid}")]
+		[HttpGet("{businessBceid}/{userBceid}")]
 		public async Task<IActionResult> GetBlob(string userBceid, string businessBceid)
 		{
 			try
