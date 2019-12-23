@@ -10,10 +10,13 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		// this is the model that Dynamics expects back to update the organization level information
 		public string BusinessBCeID { get; set; }
 		public string UserBCeID { get; set; }
-		public DynamicsCrmContract ContractCollection { get; set; }
+		// TODO the program model is not consistent so this breaks posts
+		public DynamicsCrmProgram ProgramContactCollection { get; set; }
 		public DynamicsOrganization OrganizationCollection { get; set; }
-		public DynamicsCrmContact ExecutiveContact { get; set; }
-		public DynamicsCrmProgram[] ProgramCollection { get; set; }
 		public DynamicsCrmSchedule[] ScheduleCollection { get; set; }
+		public DynamicsCrmProgram[] ProgramCollection { get; set; }
+		public DynamicsCrmContract ContractCollection { get; set; }
+		public DynamicsCrmContact[] StaffCollection { get; set; }
+		public DynamicsCrmContact ExecutiveContact { get; set; }
 	}
 }
