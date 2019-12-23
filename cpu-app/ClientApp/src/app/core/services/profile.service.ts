@@ -9,7 +9,7 @@ import { iDynamicsPostOrg } from '../models/dynamics-blob';
 })
 export class ProfileService {
   // this should query the test api
-  apiUrl = 'api/Dashboard/Profile';
+  apiUrl = 'api/DynamicsOrg';
 
   constructor(
     private http: HttpClient
