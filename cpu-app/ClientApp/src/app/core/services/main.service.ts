@@ -10,7 +10,7 @@ import { retry, catchError } from 'rxjs/operators';
 export class MainService {
 
   // this should query the test api
-  apiUrl = 'api/DynamicsBlob';
+  apiUrl = 'api/Dashboard';
 
   constructor(
     private http: HttpClient,
