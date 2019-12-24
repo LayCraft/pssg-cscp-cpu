@@ -30,15 +30,15 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			this._configuration = configuration;
 		}
 
-		[HttpGet("{businessBceid}/{userBceid}/{contractId}")]
-		public async Task<IActionResult> GetScheduleF(string businessBceid, string userBceid, string contractId)
+		[HttpGet("{businessBceid}/{userBceid}/{programId}")]
+		public async Task<IActionResult> GetScheduleF(string businessBceid, string userBceid, string programId)
 		{
 			try
 			{
 				// convert the parameters to a json string
 				string applicationJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
 				// set the endpoint action
-				string endpointAction = "vsd_programs(" + contractId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUBudgetProposal";
+				string endpointAction = "vsd_programs(" + programId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUBudgetProposal";
 				// get the response
 				Tuple<int, string, HttpResponseMessage> tuple = await GetDynamicsHttpClient(_configuration, applicationJson, endpointAction);
 

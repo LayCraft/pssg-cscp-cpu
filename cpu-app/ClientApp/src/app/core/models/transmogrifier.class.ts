@@ -42,14 +42,19 @@ export class Transmogrifier {
           taskDescription: task.description,
           // make a date from the supplied date. TODO MomentJS
           deadline: task.scheduledend ? new Date(task.scheduledend) : null,
-          // general purpose lookup. Because lookups are dumb coming back from Dynamics we unify lookups so that we don't have Dynamics idiocy running wild in the forms.
-          taskId: formType(task._vsd_tasktypeid_value) === "expense_report" ? task._vsd_schedulegid_value : contractId,
+          // lookups are dumb coming back from Dynamics we unify lookups so that we don't have Dynamics idiocy running wild in the forms.
+          // sometimes we look up by a scheduleG ID, sometimes by a contractId, sometimes by a programId. :-(
+          // the front end doesn't need to handle guids differently. They all act as a lookup key.
+          // this is shorthand for an if statement in an if statement
+          taskId: formType(task._vsd_tasktypeid_value) === "expense_report"
+            ? task._vsd_schedulegid_value
+            : formType(task._vsd_tasktypeid_value) === "budget_proposal" ? task._vsd_programid_value : contractId,
           // what kind of form is this?
           formType: formType(task._vsd_tasktypeid_value),
         });
       }
     }
-    return tasks;
+   ) return tasks;
 
   }
   private buildPrograms(b: iDynamicsBlob, contractId: string): iProgram[] {
