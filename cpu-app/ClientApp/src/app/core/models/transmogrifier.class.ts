@@ -54,8 +54,7 @@ export class Transmogrifier {
         });
       }
     }
-   ) return tasks;
-
+    return tasks;
   }
   private buildPrograms(b: iDynamicsBlob, contractId: string): iProgram[] {
     const programs: iProgram[] = [];
