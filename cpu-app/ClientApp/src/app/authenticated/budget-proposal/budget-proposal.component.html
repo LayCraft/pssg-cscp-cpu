@@ -27,25 +27,6 @@
       </div>
     </div> -->
     <div class="col-md-8">
-      <h2 class="blue-header">
-        Budget Proposal Instructions
-      </h2>
-      <ol>
-        <li>
-          For each program applied for, a separate Budget Proposal must be completed.
-        </li>
-        <li>
-          For <strong>Police-based Victim Service</strong> programs that are cost-shared with municipality / regional district, the maximum <strong>"In-kind Contribution"</strong> amount that may be claimed for under "Municipal" or "Regional District" is 20% cash. "In-kind contributions" include costs for facilities (e.g. rent, utilities and maintenance), telephone, fax, and office supplies, etc.
-        </li>
-        <li>
-          For each program, your budget should confirm that you are providing the number of service hours as stated in your contract.
-        </li>
-        <li>
-          <strong>
-            Your Budget Proposal must be balanced and equal to the amount identified in your Program Application Cover Letter.
-          </strong>
-        </li>
-      </ol>
       <ul class="nav nav-pills mb-2">
         <li *ngFor="let tab of tabs" class="nav-item">
           <a class="nav-link" [class.active]="tab===currentTab" (click)="currentTab=tab">{{tab}}</a>
