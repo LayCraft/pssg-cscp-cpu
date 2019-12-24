@@ -96,37 +96,38 @@ export class BudgetProposalComponent implements OnInit {
     //   this.stepperService.reset();
     //   this.constructDefaultstepperElements();
     // });
-
+    this.constructDefaultstepperElements();
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
 
   }
 
-  // isCurrentStepperElement(item: iStepperElement): boolean {
-  //   if (item.id === this.currentStepperElement.id) {
-  //     // names match? must be the same. Makes the assumption that all names are unique.
-  //     return true;
-  //   }
-  //   return false;
-  // }
-  // constructDefaultstepperElements() {
-  //   // write the default top element
-  //   const topper = {
-  //     itemName: 'Program Overview',
-  //     formState: 'info',
-  //     object: null,
-  //     discriminator: 'program_overview',
-  //   };
-  //   this.stepperService.addStepperElement(topper.object, topper.itemName, topper.formState, topper.discriminator);
-
-  //    const bottom = {
-  //     itemName: 'Authorization',
-  //     formState: 'untouched',
-  //     object: null,
-  //     discriminator: 'authorization'
-  //   };
-  //   this.stepperService.addStepperElement(bottom.object, bottom.itemName, bottom.formState, bottom.discriminator);
-  // }
+  isCurrentStepperElement(item: iStepperElement): boolean {
+    if (item.id === this.currentStepperElement.id) {
+      // names match? must be the same. Makes the assumption that all names are unique.
+      return true;
+    }
+    return false;
+  }
+  constructDefaultstepperElements() {
+    this.stepperService.reset();
+    // write the default top element
+    const topper = {
+      itemName: 'Program Overview',
+      formState: 'info',
+      object: null,
+      discriminator: 'program_overview',
+    };
+    this.stepperService.addStepperElement(topper.object, topper.itemName, topper.formState, topper.discriminator);
+    //
+    const bottom = {
+      itemName: 'Authorization',
+      formState: 'untouched',
+      object: null,
+      discriminator: 'authorization'
+    };
+    this.stepperService.addStepperElement(bottom.object, bottom.itemName, bottom.formState, bottom.discriminator);
+  }
 
   collectMeta(event: iExpenseTableMeta, name: string) {
     function percentify(event: iExpenseTableMeta): number {
