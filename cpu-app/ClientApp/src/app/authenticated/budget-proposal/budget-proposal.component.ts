@@ -4,8 +4,9 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { iProgram } from '../../core/models/program';
 import { iContract } from '../../core/models/contract';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
-import { StateService } from '../../core/services/state.service';
 import { ProgramBudget, iProgramBudget } from '../../core/models/budget-proposal.class';
+import { StateService } from '../../core/services/state.service';
+import { BudgetProposalService } from '../../core/services/budget-proposal.service';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -20,15 +21,17 @@ export class BudgetProposalComponent implements OnInit {
   discriminators: string[] = ['program_overview', 'program', 'authorization'];
   contract: iContract;
   contractId: string;
-  trans: Transmogrifier;
+  trans: any;
 
   constructor(
     private stepperService: IconStepperService,
     private stateService: StateService,
+    private budgetProposalService: BudgetProposalService,
     private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
+    // this.budgetProposalService.getBudgetProposal('asd','asd')
     this.route.params.subscribe(p => {
       // collect the contract from the route
       const contractId = p['contractId'];
