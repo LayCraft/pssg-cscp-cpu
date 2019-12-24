@@ -1,129 +1,43 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { iBudgetProposal } from '../models/budget-proposal.class';
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
+import { iDynamicsBudgetProposal } from '../models/dynamics-blob';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root'
 })
 export class BudgetProposalService {
-	dummyBudget = {
-		organizationId: 'StarFleet',
-		contractId: 'ncc-1701',
-		formState: 'untouched',
-		programs: [
-			{
-				formState: 'complete',
-				programId: 'guiduuidguid',
-				name: 'Social Work Andoria',
-				type: 'PVBS',
-				email: 'JeanLuc@enterprise.com',
-				revenueSources: [
-					{
-						revenueSourceName: 'Ministry of PSSG-Vscp',
-						cash: 34000,
-						inKindContribution: 12350,
-					},
-					{
-						revenueSourceName: 'Municipal Government',
-						cash: 34000,
-						inKindContribution: 12350,
-					},
-					{
-						revenueSourceName: 'Regional District',
-						cash: 34000,
-						inKindContribution: 12350,
-					}
-				],
-				salariesAndBenefits: [
-					{
-						title: 'CEO',
-						annualSalary: 90010,
-						benefits: 2345,
-						fundedFromVscp: 2345
-					},
-					{
-						title: 'Helper',
-						annualSalary: 1234,
-						benefits: 38472,
-						fundedFromVscp: 23
-					}
-				],
-				programDeliveryCosts: [
-					{
-						itemName: 'Management salary/benefits',
-						tooltip: 'This is what would be in a tooltip.',
-						totalCost: 293874,
-						fundedFromVscp: 123432,
-					},
-					{
-						itemName: 'Other salary/benefits',
-						tooltip: 'This is what would be in a tooltip.',
-						totalCost: 293874,
-						fundedFromVscp: 123432,
-					},
-					{
-						itemName: 'Employee salary/benefits',
-						tooltip: 'This is what would be in a tooltip.',
-						totalCost: 293874,
-						fundedFromVscp: 123432,
-					},
-				],
-				programDeliveryMemberships: [
-					{
-						itemName: 'Employee membership',
-						tooltip: 'This is what would be in a tooltip.',
-						totalCost: 293874,
-						fundedFromVscp: 1233,
-					},
-				],
-				programDeliveryOtherExpenses: [
-					{
-						itemName: 'Another Expense',
-						tooltip: 'This is what would be in a tooltip.',
-						totalCost: 634,
-						fundedFromVscp: 1432,
-					},
-				],
-				administrationCosts: [
-					{
-						itemName: 'Another administrative cost',
-						tooltip: 'This is what would be in a tooltip.',
-						totalCost: 324,
-						fundedFromVscp: 14312,
-					},
-				],
-				administrationOtherExpenses: [
-					{
-						itemName: 'Another Administrative Expense',
-						tooltip: 'This is what would be in a tooltip.',
-						totalCost: 6345764,
-						fundedFromVscp: 475,
-					},
-				],
-			},
-			{
-				formState: 'incomplete',
-				programId: 'guiduuidguid',
-				name: 'Social Work Bajor',
-				type: 'PVBS',
-				email: 'BenSisco3@dsn.gov.com'
-			},
-			{
-				formState: 'invalid',
-				programId: 'guiduuidguid',
-				name: 'Social Work Romulus',
-				type: 'PVBS',
-				email: 'BenSisco3@dsn.gov.com'
-			},
-		],
-	} as iBudgetProposal;
 
-	constructor() { }
+  // this should query the test api
+  apiUrl = 'api/DynamicsBudgetProposal';
 
-	getBudgetProposal(organizationId: string, contractId: string): Observable<iBudgetProposal> {
-		const bork = { ...this.dummyBudget };
-		bork.organizationId = organizationId;
-		bork.contractId = contractId;
-		return of(bork as iBudgetProposal);
-	}
+  constructor(
+    private http: HttpClient,
+  ) { }
+
+  getBudgetProposal(organizationId: string, userId: string, programId: string): Observable<iDynamicsBudgetProposal> {
+    return this.http.get<iDynamicsBudgetProposal>(`${this.apiUrl}/${organizationId}/${userId}/${programId}`, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+  setBudgetProposal(budgetProposal: any) {
+  }
+
+  get headers(): HttpHeaders {
+    return new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
+  protected handleError(err): Observable<never> {
+    let errorMessage = '';
+    if (err.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      errorMessage = err.error.message;
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      errorMessage = `Backend returned code ${err.status}, body was: ${err.message}`;
+    }
+    return throwError(errorMessage);
+  }
 }
