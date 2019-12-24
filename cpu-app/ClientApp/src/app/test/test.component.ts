@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BudgetProposalService } from '../core/services/budget-proposal.service';
 
 @Component({
   selector: 'app-test',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
-
-  constructor() { }
-  ngOnInit() { }
+  data: any;
+  constructor(
+    private budgetProposalService: BudgetProposalService
+  ) { }
+  ngOnInit() {
+    this.budgetProposalService.getBudgetProposal('orgid', 'userid').subscribe(d => this.data = d);
+  }
 }
