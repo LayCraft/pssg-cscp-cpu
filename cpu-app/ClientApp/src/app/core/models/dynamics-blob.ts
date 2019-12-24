@@ -113,6 +113,7 @@ export interface iDynamicsCrmProgram {
 }
 export interface iDynamicsCrmTask {
   _regardingobjectid_value?: string;
+  _vsd_schedulegid_value?: string;
   _vsd_tasktypeid_value?: string;
   activityid?: string;
   description?: string;
