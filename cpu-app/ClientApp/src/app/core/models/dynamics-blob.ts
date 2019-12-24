@@ -333,10 +333,10 @@ export interface iDynamicsCrmProgramBudget {
   vsd_programid?: string,
 }
 export interface iDynamicsCrmProgramRevenueSource {
-  vsd_inkindcontribution: number;
-  vsd_cpu_revenuesourcetype: number;
-  vsd_cashcontribution: number;
-  vsd_programrevenuesourceid: string;
-  _vsd_programid_value: string;
-  _transactioncurrencyid_value: string;
+  vsd_inkindcontribution?: number;
+  vsd_cpu_revenuesourcetype?: number;
+  vsd_cashcontribution?: number;
+  vsd_programrevenuesourceid?: string;
+  _vsd_programid_value?: string;
+  _transactioncurrencyid_value?: string;
 }
