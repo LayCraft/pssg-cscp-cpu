@@ -1,22 +1,18 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4">
-      <!-- <app-contract-tombstone [organizationName]="organizationName"></app-contract-tombstone> -->
-
       <section class="application-nav sticky-top">
         <app-icon-stepper></app-icon-stepper>
       </section>
     </div>
 
-    <div class="col-md-8">
+    <!-- <div class="col-md-8">
       <div *ngIf="stepperElements && currentStepperElement">
         <div class="page-header">
           <h1>{{currentStepperElement.itemName}}</h1>
         </div>
         <div *ngFor="let item of stepperElements">
-          <!-- remove the old stepper elements off of the dom -->
           <div *ngIf="isCurrentStepperElement(item)">
-            <!-- Check the discriminator -->
             <div *ngIf="item.discriminator === discriminators[0]">
               Program Overview
             </div>
@@ -29,6 +25,35 @@
           </div>
         </div>
       </div>
+    </div> -->
+    <div class="col-md-8">
+      <h2 class="blue-header">
+        Budget Proposal Instructions
+      </h2>
+      <h2 class="blue-header">
+        Program Revenue Sources
+      </h2>
+      <h2 class="blue-header">
+        Salaries and Benefits
+      </h2>
+      <h2 class="blue-header">
+        Program Delivery Costs
+      </h2>
+      <h2 class="blue-header">
+        Budget Proposal Instructions
+      </h2>
+      <h2 class="blue-header">
+        Administration Costs
+      </h2>
+      <h2 class="blue-header">
+        Total Program Expenditures
+      </h2>
+      <h2 class="blue-header">
+        Budget Proposals Summary
+      </h2>
+      <h2 class="blue-header">
+        Authorization
+      </h2>
     </div>
   </div>
   <div class="row">
