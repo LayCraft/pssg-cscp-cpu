@@ -38,7 +38,8 @@ export class Transmogrifier {
           // convert the numeric completion state from meaningless dynamics number to a useful boolean
           isCompleted: this.isCompleted(task.statecode),
           taskName: formType(task._vsd_tasktypeid_value, true),
-          taskDescription: task.subject,
+          taskTitle: task.subject,
+          taskDescription: task.description,
           // make a date from the supplied date. TODO MomentJS
           deadline: task.scheduledend ? new Date(task.scheduledend) : null,
           // general purpose lookup. Because lookups are dumb coming back from Dynamics we unify lookups so that we don't have Dynamics idiocy running wild in the forms.
