@@ -6,7 +6,7 @@ import { iMinistryUser } from './ministry-user';
 import { iContract } from './contract';
 import { iTask } from './task';
 import { iProgram } from './program';
-import { iDynamicsBlob, iDynamicsCrmContact, iDynamicsOrganization, iDynamicsPostOrg, iDynamicsPostUsers } from './dynamics-blob';
+import { iDynamicsBlob, iDynamicsCrmContact, iDynamicsOrganization, iDynamicsPostOrg, iDynamicsPostUsers, iDynamicsCrmTask } from './dynamics-blob';
 import { formType } from '../constants/form-type';
 import { contractCode } from '../constants/contract-code';
 import { taskCode } from '../constants/task-code';
@@ -42,19 +42,33 @@ export class Transmogrifier {
           taskDescription: task.description,
           // make a date from the supplied date. TODO MomentJS
           deadline: task.scheduledend ? new Date(task.scheduledend) : null,
-          // lookups are dumb coming back from Dynamics we unify lookups so that we don't have Dynamics idiocy running wild in the forms.
-          // sometimes we look up by a scheduleG ID, sometimes by a contractId, sometimes by a programId. :-(
-          // the front end doesn't need to handle guids differently. They all act as a lookup key.
-          // this is shorthand for an if statement in an if statement
-          taskId: formType(task._vsd_tasktypeid_value) === "expense_report"
-            ? task._vsd_schedulegid_value
-            : formType(task._vsd_tasktypeid_value) === "budget_proposal" ? task._vsd_programid_value : contractId,
+
+          taskId: this.getCorrectTaskIdByDiscriminator(contractId, task, formType(task._vsd_tasktypeid_value)),
           // what kind of form is this?
           formType: formType(task._vsd_tasktypeid_value),
         });
       }
     }
     return tasks;
+  }
+  private getCorrectTaskIdByDiscriminator(contractId: string, t: iDynamicsCrmTask, discriminator: string): string {
+    // lookups are dumb coming back from Dynamics we unify lookups so that we don't have Dynamics idiocy running wild in the forms.
+    // sometimes we look up by a scheduleG ID, sometimes by a contractId, sometimes by a programId. :-(
+    // the front end doesn't need to handle guids differently. They all act as a lookup key.
+    // this is shorthand for an if statement in an if statement
+    if (discriminator === 'budget_proposal') {
+      return t._vsd_programid_value;
+    }
+    if (discriminator === 'expense_report') {
+      return t._vsd_schedulegid_value;
+    }
+    if (discriminator === 'status_report') {
+      return contractId;
+    }
+    if (discriminator === 'program_application') {
+      return contractId;
+    }
+    return contractId;
   }
   private buildPrograms(b: iDynamicsBlob, contractId: string): iProgram[] {
     const programs: iProgram[] = [];

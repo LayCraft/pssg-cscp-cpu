@@ -52,7 +52,7 @@
               </td>
               <td>
                 <a routerLink="/authenticated/{{task.formType}}/{{task.taskId}}">
-                  {{task.taskName}}
+                  {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
                 </a>
               </td>
               <td>{{task.taskTitle}}</td>
