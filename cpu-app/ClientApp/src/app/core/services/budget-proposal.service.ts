@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { iDynamicsBudgetProposal } from '../models/dynamics-blob';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class BudgetProposalService {
     private http: HttpClient,
   ) { }
 
-  getBudgetProposal(organizationId: string, userId: string, scheduleGId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${organizationId}/${userId}/${scheduleGId}`, { headers: this.headers }).pipe(
+  getBudgetProposal(organizationId: string, userId: string, programId: string): Observable<iDynamicsBudgetProposal> {
+    return this.http.get<iDynamicsBudgetProposal>(`${this.apiUrl}/${organizationId}/${userId}/${programId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
