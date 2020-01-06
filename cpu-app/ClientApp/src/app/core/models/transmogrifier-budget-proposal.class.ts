@@ -1,5 +1,6 @@
-import { iDynamicsBudgetProposal } from "./dynamics-blob";
+import { iDynamicsBudgetProposal, iDynamicsCrmProgramRevenueSource } from "./dynamics-blob";
 import { iProgramBudget } from "./budget-proposal.class";
+import { iRevenueSource } from "./revenue-source.class";
 
 export class TransmogrifierBudgetProposal {
   public organizationId: string;
@@ -13,11 +14,10 @@ export class TransmogrifierBudgetProposal {
   }
   buildBudgetProposal(g: iDynamicsBudgetProposal): iProgramBudget {
     const pb: iProgramBudget = {
-      contractId: '',
-      programId: '',
-      name: '',
-      type: '',
-      email: '',
+      contractId: g.Contract.vsd_contractid || '',
+      programId: g.Program.vsd_programid || '',
+      name: g.Program.vsd_name || '',
+      email: g.Program.vsd_emailaddress || '',
       revenueSources: [],
       salariesAndBenefits: [],
       programDeliveryCosts: [],
@@ -27,7 +27,7 @@ export class TransmogrifierBudgetProposal {
       administrationOtherExpenses: [],
     };
 
-    pb.revenueSources = [];
+    pb.revenueSources = this.buildRevenueSources(g);
     pb.salariesAndBenefits = [];
     pb.programDeliveryCosts = [];
     pb.programDeliveryMemberships = [];
@@ -36,5 +36,13 @@ export class TransmogrifierBudgetProposal {
     pb.administrationOtherExpenses = [];
 
     return pb;
+  }
+  buildRevenueSources(g: iDynamicsBudgetProposal): iRevenueSource[] {
+    const rs: iRevenueSource[] = [];
+    // for each revenue source in the collection
+    g.ProgramRevenueSourceCollection.forEach((rs: iDynamicsCrmProgramRevenueSource) => {
+
+    })
+    return rs;
   }
 }

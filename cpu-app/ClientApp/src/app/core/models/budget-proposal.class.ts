@@ -5,7 +5,7 @@ export interface iProgramBudget {
   contractId: string;
   programId: string;
   name: string;
-  type: string;
+  type?: string;
   formState?: string; // untouched	incomplete	invalid	complete info
   email: string;
   revenueSources: iRevenueSource[];
