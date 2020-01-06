@@ -15,29 +15,19 @@ export class TransmogrifierBudgetProposal {
     this.programBudget = this.buildBudgetProposal(g);
   }
   buildBudgetProposal(g: iDynamicsBudgetProposal): iProgramBudget {
-    const pb: iProgramBudget = {
+    return {
       contractId: g.Contract.vsd_contractid || '',
       programId: g.Program.vsd_programid || '',
       name: g.Program.vsd_name || '',
       email: g.Program.vsd_emailaddress || '',
-      revenueSources: [],
-      salariesAndBenefits: [],
+      revenueSources: this.buildRevenueSources(g),
+      salariesAndBenefits: this.buildSalariesAndBenefits(g),
       programDeliveryCosts: [],
       programDeliveryMemberships: [],
       programDeliveryOtherExpenses: [],
       administrationCosts: [],
       administrationOtherExpenses: [],
     };
-
-    pb.revenueSources = this.buildRevenueSources(g);
-    pb.salariesAndBenefits = this.buildSalariesAndBenefits(g);
-    pb.programDeliveryCosts = [];
-    pb.programDeliveryMemberships = [];
-    pb.programDeliveryOtherExpenses = [];
-    pb.administrationCosts = [];
-    pb.administrationOtherExpenses = [];
-
-    return pb;
   }
   buildRevenueSources(g: iDynamicsBudgetProposal): iRevenueSource[] {
     const rs: iRevenueSource[] = [];
