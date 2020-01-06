@@ -1,4 +1,4 @@
-export const formTypes: string[] = [
+export const revenueSourceTypes: string[] = [
   'Ministry of PSSG - VSCP',
   'Municipal Government',
   'Regional District',
@@ -10,23 +10,23 @@ export function revenueSourceType(discriminator: number): string {
   let revenueSourceType;
   switch (discriminator) {
     case 100000000: {
-      revenueSourceType = formTypes[0];
+      revenueSourceType = revenueSourceTypes[0];
       break;
     }
     case 100000001: {
-      revenueSourceType = formTypes[1];
+      revenueSourceType = revenueSourceTypes[1];
       break;
     }
     case 100000002: {
-      revenueSourceType = formTypes[2];
+      revenueSourceType = revenueSourceTypes[2];
       break;
     }
     case 100000003: {
-      revenueSourceType = formTypes[3];
+      revenueSourceType = revenueSourceTypes[3];
       break;
     }
     case 100000004: {
-      revenueSourceType = formTypes[4];
+      revenueSourceType = revenueSourceTypes[4];
       break;
     }
     default: {
