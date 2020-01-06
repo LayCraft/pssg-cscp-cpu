@@ -1,18 +1,12 @@
 import { iPerson, Person } from './person.class';
 import { iRevenueSource } from './revenue-source.class';
 
-export interface iBudgetProposal {
-  organizationId: string;
-  contractId: string;
-  programs: iProgramBudget[];
-  formState: string; // untouched	incomplete	invalid	complete info
-}
 export interface iProgramBudget {
   contractId: string;
   programId: string;
   name: string;
   type: string;
-  formState: string; // untouched	incomplete	invalid	complete info
+  formState?: string; // untouched	incomplete	invalid	complete info
   email: string;
   revenueSources: iRevenueSource[];
   salariesAndBenefits: iPerson[];
