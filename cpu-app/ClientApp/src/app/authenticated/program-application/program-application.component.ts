@@ -99,6 +99,12 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
       this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
     });
 
+    // if there are no program applications what are we doing here?
+    if (!this.trans.programApplications.length) {
+      this.stepperService.addStepperElement(null, 'Program Application Does Not Include Programs', 'invalid');
+      this.notificationQueueService.addNotification('A program application should always have a program attached. This is a problem with the data held by the ministry. Please contact your ministry representative and let them know that this has occured and that you cannot complete your program application.', 'danger', 99999999);
+    }
+
     // add the programs to the list
     this.trans.programApplications.forEach((p: iProgramApplication) => {
       this.stepperService.addStepperElement({ programId: p.programId }, p.name, 'untouched', 'program');
