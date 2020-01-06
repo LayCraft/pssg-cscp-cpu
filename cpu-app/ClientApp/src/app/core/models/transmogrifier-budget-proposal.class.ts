@@ -1,6 +1,8 @@
-import { iDynamicsBudgetProposal, iDynamicsCrmProgramRevenueSource } from "./dynamics-blob";
-import { iProgramBudget } from "./budget-proposal.class";
+import { iDynamicsBudgetProposal, iDynamicsCrmProgramRevenueSource, iDynamicsProgramExpense } from "./dynamics-blob";
+import { iProgramBudget, iSalaryAndBenefits } from "./budget-proposal.class";
 import { iRevenueSource } from "./revenue-source.class";
+import { revenueSourceTypes, revenueSourceType } from "../constants/revenue-source-type";
+import { iPerson } from "./person.class";
 
 export class TransmogrifierBudgetProposal {
   public organizationId: string;
@@ -28,7 +30,7 @@ export class TransmogrifierBudgetProposal {
     };
 
     pb.revenueSources = this.buildRevenueSources(g);
-    pb.salariesAndBenefits = [];
+    pb.salariesAndBenefits = this.buildSalariesAndBenefits(g);
     pb.programDeliveryCosts = [];
     pb.programDeliveryMemberships = [];
     pb.programDeliveryOtherExpenses = [];
@@ -39,10 +41,30 @@ export class TransmogrifierBudgetProposal {
   }
   buildRevenueSources(g: iDynamicsBudgetProposal): iRevenueSource[] {
     const rs: iRevenueSource[] = [];
-    // for each revenue source in the collection
-    g.ProgramRevenueSourceCollection.forEach((rs: iDynamicsCrmProgramRevenueSource) => {
-
+    // for each revenue source in the collection build it into something useful
+    g.ProgramRevenueSourceCollection.forEach((prs: iDynamicsCrmProgramRevenueSource) => {
+      rs.push({
+        revenueSourceName: revenueSourceType(prs.vsd_cpu_revenuesourcetype) || '',
+        cash: prs.vsd_cashcontribution || 0,
+        inKindContribution: prs.vsd_inkindcontribution || 0,
+        other: prs.vsd_cpu_otherrevenuesource || '',
+      });
     })
     return rs;
+  }
+  buildSalariesAndBenefits(g: iDynamicsBudgetProposal): iSalaryAndBenefits[] {
+    return g.ProgramExpenseCollection
+      // filter all non "salaries and benefits" items
+      .filter((e: iDynamicsProgramExpense) => e.vsd_cpu_programexpensetype === 100000000)
+      // data munging
+      .map((e: iDynamicsProgramExpense): iSalaryAndBenefits => {
+        return {
+          title: e.vsd_cpu_titleposition || '',
+          salary: e.vsd_cpu_salary || 0,
+          benefits: e.vsd_cpu_benefits || 0,
+          fundedFromVscp: e.vsd_cpu_fundedfromvscp || 0,
+          totalCost: e.vsd_totalcost || 0,
+        }
+      });
   }
 }
