@@ -1,7 +1,7 @@
 import { iOrganizationMeta } from './organization-meta.interface';
 import { iContactInformation } from './contact-information.interface';
 import { iPerson } from './person.class';
-import { iMinistryUser } from './ministry-user';
+import { iMinistryUser } from './ministry-user.interface';
 import { iContract } from './contract.interface';
 import { iTask } from './task';
 import { iProgram } from './program';
