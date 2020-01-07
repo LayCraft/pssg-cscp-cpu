@@ -1,5 +1,5 @@
 import { iPerson } from "./person.class";
-import { iHours } from './hours.class';
+import { iHours } from './hours.interface';
 import { iAddress } from "./address.interface";
 
 export interface iProgramApplication {

@@ -5,8 +5,8 @@ import { decodeToWeekDays } from '../constants/decode-to-week-days';
 import { iAdministrativeInformation } from "./administrative-information.interface";
 import { iContactInformation } from "./contact-information.interface";
 import { iDynamicsScheduleFResponse, iDynamicsCrmContact } from "./dynamics-blob";
-import { iHours } from "./hours.class";
-import { iPerson, Person } from "./person.class";
+import { iHours } from "./hours.interface";
+import { iPerson } from "./person.class";
 import { iProgramApplication } from "./program-application";
 import { iSignature } from '../../authenticated/subforms/program-authorizer/program-authorizer.component';
 
