@@ -6,7 +6,7 @@ import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { iContactInformation } from '../../../core/models/contact-information.interface';
 import { iPerson } from '../../../core/models/person.interface';
-import { iProgramApplication } from '../../../core/models/program-application';
+import { iProgramApplication } from '../../../core/models/program-application.interface';
 import { EMAIL, PHONE_NUMBER } from '../../../core/constants/regex.constants';
 import { iHours } from '../../../core/models/hours.interface';
 

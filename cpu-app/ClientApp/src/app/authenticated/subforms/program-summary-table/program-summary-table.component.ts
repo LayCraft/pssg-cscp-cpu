@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import { Component, OnInit, Input } from '@angular/core';
-import { iProgramApplication } from '../../../core/models/program-application';
+import { iProgramApplication } from '../../../core/models/program-application.interface';
 import { iHours } from '../../../core/models/hours.interface';
 
 @Component({

@@ -4,7 +4,7 @@ import { NotificationQueueService } from '../../core/services/notification-queue
 import { ProgramApplicationService } from '../../core/services/program-application.service';
 import { StateService } from '../../core/services/state.service';
 import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
-import { iProgramApplication } from '../../core/models/program-application';
+import { iProgramApplication } from '../../core/models/program-application.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 
 @Component({
