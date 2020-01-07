@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { iExpenseItem, ExpenseItem } from '../../../core/models/budget-proposal';
+import { iExpenseItem } from '../../../core/models/expense-item.interface';
+import { ExpenseItem } from '../../../core/models/expense-item.class';
 
 export interface iExpenseTableMeta {
   totalCost: number;

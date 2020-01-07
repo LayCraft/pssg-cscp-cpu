@@ -1,5 +1,6 @@
 import { iPerson } from './person.class';
 import { iRevenueSource } from './revenue-source.class';
+import { iExpenseItem } from './expense-item.interface';
 
 export interface iBudgetProposal {
   organizationId: string;
@@ -23,23 +24,5 @@ export interface iProgramBudget {
   administrationOtherExpenses: iExpenseItem[];
 }
 
-export interface iExpenseItem {
-  itemName: string;
-  tooltip?: string;
-  totalCost: number;
-  fundedFromVscp: number;
-}
-export class ExpenseItem {
-  itemName: string;
-  tooltip: string;
-  totalCost: number;
-  fundedFromVscp: number;
-  constructor(xi?: iExpenseItem) {
-    if (xi) {
-      this.itemName = xi.itemName || null;
-      this.tooltip = xi.tooltip || null;
-      this.totalCost = xi.totalCost || null;
-      this.fundedFromVscp = xi.fundedFromVscp || null;
-    }
-  }
-}
+
+
