@@ -1,4 +1,4 @@
-import { iHours } from "../models/hours.class";
+import { iHours } from "../models/hours.interface";
 
 export function decodeToWeekDays(csvString: string): Partial<iHours> {
   return {

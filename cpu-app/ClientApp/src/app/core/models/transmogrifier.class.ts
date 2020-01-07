@@ -1,4 +1,4 @@
-import { iOrganizationMeta } from './organization-meta.class';
+import { iOrganizationMeta } from './organization-meta.interface';
 import { iContactInformation } from './contact-information.interface';
 import { iPerson } from './person.class';
 import { iMinistryUser } from './ministry-user';
