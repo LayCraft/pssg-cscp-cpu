@@ -1,5 +1,6 @@
-import { iPerson, Person } from './person.class';
+import { iPerson } from './person.interface';
 import { iAdministrativeInformation } from './administrative-information.interface';
+import { Person } from './person.class';
 
 export class AdministrativeInformation implements iAdministrativeInformation {
   compliantEmploymentStandardsAct: boolean;

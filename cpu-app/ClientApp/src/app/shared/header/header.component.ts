@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
-import { iPerson } from '../../core/models/person.class';
+import { iPerson } from '../../core/models/person.interface';
 import { nameAssemble } from '../../core/constants/name-assemble'
 
 @Component({

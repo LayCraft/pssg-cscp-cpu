@@ -1,4 +1,4 @@
-import { iPerson } from './person.class';
+import { iPerson } from './person.interface';
 
 export interface iAdministrativeInformation {
   compliantEmploymentStandardsAct: boolean;

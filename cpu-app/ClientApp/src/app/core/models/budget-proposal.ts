@@ -1,4 +1,4 @@
-import { iPerson } from './person.class';
+import { iPerson } from './person.interface';
 import { iRevenueSource } from './revenue-source.class';
 import { iExpenseItem } from './expense-item.interface';
 

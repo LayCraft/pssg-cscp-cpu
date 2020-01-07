@@ -1,5 +1,5 @@
 import { iAddress } from "./address.interface";
-import { iPerson } from "./person.class";
+import { iPerson } from "./person.interface";
 
 export interface iContactInformation {
   boardContact?: iPerson;

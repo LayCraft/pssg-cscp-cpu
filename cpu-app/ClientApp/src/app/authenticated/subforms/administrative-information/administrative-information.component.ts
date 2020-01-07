@@ -1,4 +1,4 @@
-import { iPerson } from '../../../core/models/person.class';
+import { iPerson } from '../../../core/models/person.interface';
 import { iAdministrativeInformation } from '../../../core/models/administrative-information.interface';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { StateService } from '../../../core/services/state.service';

@@ -1,4 +1,4 @@
-import { iPerson } from "./person.class";
+import { iPerson } from "./person.interface";
 import { iHours } from './hours.interface';
 import { iAddress } from "./address.interface";
 

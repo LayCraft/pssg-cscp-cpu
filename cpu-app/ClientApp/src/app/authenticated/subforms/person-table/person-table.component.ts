@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { iPerson } from '../../../core/models/person.class';
+import { iPerson } from '../../../core/models/person.interface';
 
 @Component({
   selector: 'app-person-table',

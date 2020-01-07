@@ -1,4 +1,5 @@
-import { iPerson, Person } from "./person.class";
+import { Person } from "./person.class";
+import { iPerson } from "./person.interface";
 
 export interface iTombstone {
   formName: string;
@@ -17,7 +18,6 @@ export interface iTombstone {
   lastUpdated: Date;
   programName: string;
   programContact: iPerson;
-
 }
 export class Tombstone implements iTombstone {
   // this class may be useful because it can offer a way to convert dates.

@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Transmogrifier } from '../models/transmogrifier.class';
 import { MainService } from './main.service';
-import { Router } from '@angular/router';
 import { NotificationQueueService } from './notification-queue.service';
 import { iDynamicsBlob } from '../models/dynamics-blob';
-import { iPerson } from '../models/person.class';
+import { iPerson } from '../models/person.interface';
 
 @Injectable({
   providedIn: 'root'

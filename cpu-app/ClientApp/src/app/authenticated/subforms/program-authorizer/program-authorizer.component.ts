@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
-import { iPerson, Person } from '../../../core/models/person.class';
-import { StateService } from '../../../core/services/state.service';
-import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import * as moment from 'moment';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Person } from '../../../core/models/person.class';
+import { SignaturePad } from 'angular2-signaturepad/signature-pad';
+import { StateService } from '../../../core/services/state.service';
+import { iPerson } from '../../../core/models/person.interface';
 
 
 export interface iSignature {
