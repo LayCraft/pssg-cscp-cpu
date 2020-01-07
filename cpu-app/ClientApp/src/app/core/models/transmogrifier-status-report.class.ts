@@ -48,7 +48,6 @@ export class TransmogrifierStatusReport {
   }
 
   private fieldType(d: number): string {
-    console.log(d);
     // convert the field type into a string
     let type: string;
     switch (d) {
