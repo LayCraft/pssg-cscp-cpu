@@ -4,7 +4,7 @@ import { iPerson } from './person.interface';
 import { iMinistryUser } from './ministry-user.interface';
 import { iContract } from './contract.interface';
 import { iTask } from './task';
-import { iProgram } from './program';
+import { iProgram } from './program.interface';
 import { iDynamicsBlob, iDynamicsCrmContact, iDynamicsOrganization, iDynamicsPostOrg, iDynamicsPostUsers, iDynamicsCrmTask } from './dynamics-blob';
 import { formType } from '../constants/form-type';
 import { contractCode } from '../constants/contract-code';
