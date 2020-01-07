@@ -1,24 +1,7 @@
 import { Person } from "./person.class";
 import { iPerson } from "./person.interface";
+import { iTombstone, iProgramTombstone } from "./tombstone.interface";
 
-export interface iTombstone {
-  formName: string;
-  formType: string; // Differentiates which component we use to set the data
-  formDeadline: Date; // Latest time this can be submitted
-  formStatus: string; // "Not Started", "Awaiting Approval", "Submitted", "Late", "Missed"
-  forDateRangeStart: Date; // start of applicable period for form
-  forDateRangeEnd: Date; // end of applicable period for form
-  internalNote: string; // for internal note
-  note: string; // for communication notes or automatically generated notes.
-  contractNumber: string; // This item appears on which contract number
-  organizationId: string; // BCeID number for lookup
-  contractId: string; // contract id lookup number
-  programId: string; // the id of the program to look up
-  frequency: string; // annual, biannual, quarter, month,
-  lastUpdated: Date;
-  programName: string;
-  programContact: iPerson;
-}
 export class Tombstone implements iTombstone {
   // this class may be useful because it can offer a way to convert dates.
   formName: string;
@@ -57,15 +40,6 @@ export class Tombstone implements iTombstone {
       this.programContact = new Person(tombstone.programContact);
     }
   }
-}
-
-export interface iProgramTombstone {
-  programContact: iPerson;
-  programName: string;
-  programId: string;
-  contractId: string;
-  contractNumber: string;
-  organizationId: string;
 }
 
 export class ProgramTombstone implements iProgramTombstone {
