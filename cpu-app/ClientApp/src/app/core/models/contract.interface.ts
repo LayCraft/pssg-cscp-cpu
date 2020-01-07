@@ -1,4 +1,4 @@
-import { iTask } from "./task";
+import { iTask } from "./task.interface";
 import { iProgram } from "./program.interface";
 
 export interface iContract {

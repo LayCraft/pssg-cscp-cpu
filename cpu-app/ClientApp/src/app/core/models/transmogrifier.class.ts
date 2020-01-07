@@ -3,7 +3,7 @@ import { iContactInformation } from './contact-information.interface';
 import { iPerson } from './person.interface';
 import { iMinistryUser } from './ministry-user.interface';
 import { iContract } from './contract.interface';
-import { iTask } from './task';
+import { iTask } from './task.interface';
 import { iProgram } from './program.interface';
 import { iDynamicsBlob, iDynamicsCrmContact, iDynamicsOrganization, iDynamicsPostOrg, iDynamicsPostUsers, iDynamicsCrmTask } from './dynamics-blob';
 import { formType } from '../constants/form-type';
