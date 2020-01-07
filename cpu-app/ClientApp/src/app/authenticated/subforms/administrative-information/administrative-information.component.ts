@@ -1,10 +1,11 @@
+import { AdministrativeInformation } from '../../../core/models/administrative-information.class';
 import { Component, OnInit, ViewChild, EventEmitter, Input, Output } from '@angular/core';
 import { NgForm, AbstractControl } from '@angular/forms';
-import { iAdministrativeInformation, AdministrativeInformation } from '../../../core/models/administrative-information.class';
-import { iPerson } from '../../../core/models/person.class';
 import { PersonService } from '../../../core/services/person.service';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
+import { iAdministrativeInformation } from 'src/app/core/models/administrative-information.interface';
+import { iPerson } from '../../../core/models/person.class';
 
 @Component({
   selector: 'app-administrative-information',

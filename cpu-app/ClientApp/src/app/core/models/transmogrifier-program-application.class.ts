@@ -1,8 +1,8 @@
 import * as moment from 'moment';
-import { decodeToWeekDays } from '../constants/decode-to-week-days';
-import { decodeCglInsurance } from '../constants/decode-cgl-insurance-type';
 import { decodeCcseaMemberType } from '../constants/decode-ccsea-member-type';
-import { iAdministrativeInformation } from "./administrative-information.class";
+import { decodeCglInsurance } from '../constants/decode-cgl-insurance-type';
+import { decodeToWeekDays } from '../constants/decode-to-week-days';
+import { iAdministrativeInformation } from "./administrative-information.interface";
 import { iContactInformation } from "./contact-information.class";
 import { iDynamicsScheduleFResponse, iDynamicsCrmContact } from "./dynamics-blob";
 import { iHours } from "./hours.class";
