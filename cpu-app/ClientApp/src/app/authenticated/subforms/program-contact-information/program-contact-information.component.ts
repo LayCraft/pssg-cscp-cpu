@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Person, iPerson } from '../../../core/models/person.class';
-import { iContactInformation, ContactInformation } from '../../../core/models/contact-information.class';
+import { ContactInformation } from '../../../core/models/contact-information.class';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
+import { iContactInformation } from '../../../core/models/contact-information.interface';
 
 @Component({
   selector: 'app-program-contact-information',

@@ -1,10 +1,10 @@
 import { Component, OnInit, forwardRef, Input } from '@angular/core';
+import { EMAIL, PHONE_NUMBER } from '../../../core/constants/regex.constants';
+import { FormHelper } from '../../../core/form-helper';
 import { NG_VALUE_ACCESSOR, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { iContactInformation } from '../../../core/models/contact-information.interface';
 import { takeUntil, tap } from 'rxjs/operators';
-import { iContactInformation } from '../../../core/models/contact-information.class';
-import { FormHelper } from '../../../core/form-helper';
-import { EMAIL, PHONE_NUMBER } from '../../../core/constants/regex.constants';
 
 @Component({
   selector: 'app-contact-information',

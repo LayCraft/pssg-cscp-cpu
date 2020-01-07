@@ -1,16 +1,6 @@
-import { iAddress } from "./address.interface";
-import { Person, iPerson } from "./person.class";
+import { Person } from "./person.class";
 import { Address } from "./address.class";
-
-export interface iContactInformation {
-  boardContact?: iPerson;
-  emailAddress: string;
-  executiveContact?: iPerson;
-  faxNumber: string;
-  mailingAddress: iAddress;
-  mainAddress: iAddress;
-  phoneNumber: string;
-}
+import { iContactInformation } from "./contact-information.interface";
 
 export class ContactInformation implements iContactInformation {
   emailAddress: string;

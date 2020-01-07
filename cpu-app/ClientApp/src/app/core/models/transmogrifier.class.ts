@@ -1,5 +1,5 @@
 import { iOrganizationMeta } from './organization-meta.class';
-import { iContactInformation } from './contact-information.class';
+import { iContactInformation } from './contact-information.interface';
 import { iPerson } from './person.class';
 import { iMinistryUser } from './ministry-user';
 import { iContract } from './contract';

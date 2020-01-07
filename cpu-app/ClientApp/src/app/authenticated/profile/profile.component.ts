@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { iContactInformation, ContactInformation } from '../../core/models/contact-information.class';
+import { ContactInformation } from '../../core/models/contact-information.class';
 import { StateService } from '../../core/services/state.service';
 import { iPerson } from '../../core/models/person.class';
 import { ProfileService } from '../../core/services/profile.service';
 import { Transmogrifier, DynamicsPostOrganization } from '../../core/models/transmogrifier.class';
 import { iDynamicsPostOrg } from '../../core/models/dynamics-blob';
+import { iContactInformation } from '../../core/models/contact-information.interface';
 
 @Component({
   selector: 'app-profile',
