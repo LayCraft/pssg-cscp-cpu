@@ -1,28 +1,43 @@
 import { iPerson, Person } from './person.class';
 import { iRevenueSource } from './revenue-source.class';
 
-export interface iBudgetProposal {
-  organizationId: string;
-  contractId: string;
-  programs: iProgramBudget[];
-  formState: string; // untouched	incomplete	invalid	complete info
-}
 export interface iProgramBudget {
   contractId: string;
   programId: string;
   name: string;
-  type: string;
-  formState: string; // untouched	incomplete	invalid	complete info
+  type?: string;
+  formState?: string; // untouched	incomplete	invalid	complete info
   email: string;
   revenueSources: iRevenueSource[];
-  salariesAndBenefits: iPerson[];
+  salariesAndBenefits: iSalaryAndBenefits[];
   programDeliveryCosts: iExpenseItem[];
   programDeliveryMemberships: iExpenseItem[];
   programDeliveryOtherExpenses: iExpenseItem[];
   administrationCosts: iExpenseItem[];
   administrationOtherExpenses: iExpenseItem[];
 }
-export class ProgramBudget {
+export interface iSalaryAndBenefits {
+  title: string;
+  salary: number;
+  benefits: number;
+  fundedFromVscp: number;
+  totalCost: number;
+}
+export class SalaryAndBenefits {
+  title: string;
+  salary: number;
+  benefits: number;
+  fundedFromVscp: number;
+  totalCost: number;
+  constructor(s: iSalaryAndBenefits) {
+    this.title = s.title || '';
+    this.salary = s.salary || 0;
+    this.benefits = s.benefits || 0;
+    this.fundedFromVscp = s.fundedFromVscp || 0;
+    this.totalCost = s.totalCost || 0;
+  }
+}
+export class ProgramBudget implements iProgramBudget {
   contractId: string;
   programId: string;
   name: string;
@@ -30,7 +45,7 @@ export class ProgramBudget {
   formState: string; // untouched	incomplete	invalid	complete info
   email: string;
   revenueSources: iRevenueSource[];
-  salariesAndBenefits: iPerson[] = [];
+  salariesAndBenefits: iSalaryAndBenefits[] = [];
   programDeliveryCosts: iExpenseItem[] = [];
   programDeliveryMemberships: iExpenseItem[] = [];
   programDeliveryOtherExpenses: iExpenseItem[] = [];
@@ -46,7 +61,7 @@ export class ProgramBudget {
       this.email = pb.email || null;
       this.revenueSources = pb.revenueSources || null;
       // if it exists loop over item and make a new object otherwise set the property to a blank array
-      pb.salariesAndBenefits ? pb.salariesAndBenefits.forEach(x => this.salariesAndBenefits.push(new Person(x))) : this.salariesAndBenefits = [];
+      pb.salariesAndBenefits ? pb.salariesAndBenefits.forEach(x => this.salariesAndBenefits.push(new SalaryAndBenefits(x))) : this.salariesAndBenefits = [];
       pb.programDeliveryCosts ? pb.programDeliveryCosts.forEach(x => this.programDeliveryCosts.push(new ExpenseItem(x))) : this.programDeliveryCosts = [];
       pb.programDeliveryMemberships ? pb.programDeliveryMemberships.forEach(x => this.programDeliveryMemberships.push(new ExpenseItem(x))) : this.programDeliveryMemberships = [];
       pb.programDeliveryOtherExpenses ? pb.programDeliveryOtherExpenses.forEach(x => this.programDeliveryOtherExpenses.push(new ExpenseItem(x))) : this.programDeliveryOtherExpenses = [];

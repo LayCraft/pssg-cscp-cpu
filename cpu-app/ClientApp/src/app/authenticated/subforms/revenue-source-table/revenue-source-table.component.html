@@ -10,13 +10,10 @@
     <tr *ngFor="let source of revenueSourcesForm; let i=index">
       <td>
         <select [(ngModel)]="source.revenueSourceName" class="form-control" name="source_{{i}}" id="source_{{i}}">
-          <option>Ministry of PSSG-VSCP</option>
-          <option>Municipal Government</option>
-          <option>Regional District</option>
-          <option>Applicant Organization</option>
-          <option>Other</option>
+          <option *ngFor="let type of revenueSourceTypes">{{type}}</option>
         </select>
-        <span *ngIf="source.revenueSourceName===other">
+        <!-- if the type is other show an input box -->
+        <span *ngIf="source.revenueSourceName===revenueSourceTypes[4]">
           <input class="form-control mt-1" type="text" [(ngModel)]="source.other" placeholder="Specify" id="other_{{i}}">
         </span>
       </td>
