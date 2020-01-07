@@ -6,7 +6,7 @@ import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { iContactInformation } from '../../../core/models/contact-information.class';
 import { iPerson } from '../../../core/models/person.class';
-import { iProgramApplication, ProgramApplication } from '../../../core/models/program-application.class';
+import { iProgramApplication } from '../../../core/models/program-application';
 import { EMAIL, PHONE_NUMBER } from '../../../core/constants/regex.constants';
 
 @Component({

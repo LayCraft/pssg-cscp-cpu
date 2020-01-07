@@ -2,7 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { iRevenueSource, RevenueSource } from '../../core/models/revenue-source.class';
-import { iExpenseItem, ExpenseItem } from '../../core/models/budget-proposal.class';
+import { iExpenseItem, ExpenseItem } from '../../core/models/budget-proposal';
 import { iDynamicsBudgetProposal } from '../../core/models/dynamics-blob';
 import { StateService } from '../../core/services/state.service';
 import { BudgetProposalService } from '../../core/services/budget-proposal.service';

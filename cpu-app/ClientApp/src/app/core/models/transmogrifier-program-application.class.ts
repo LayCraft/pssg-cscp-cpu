@@ -7,7 +7,7 @@ import { iContactInformation } from "./contact-information.class";
 import { iDynamicsScheduleFResponse, iDynamicsCrmContact } from "./dynamics-blob";
 import { iHours } from "./hours.class";
 import { iPerson, Person } from "./person.class";
-import { iProgramApplication } from "./program-application.class";
+import { iProgramApplication } from "./program-application";
 import { iSignature } from '../../authenticated/subforms/program-authorizer/program-authorizer.component';
 
 export class TransmogrifierProgramApplication {

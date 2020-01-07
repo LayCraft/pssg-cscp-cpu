@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import { Component, OnInit, Input } from '@angular/core';
 import { TransmogrifierProgramApplication } from '../../../core/models/transmogrifier-program-application.class';
-import { iProgramApplication } from '../../../core/models/program-application.class';
+import { iProgramApplication } from '../../../core/models/program-application';
 
 @Component({
   selector: 'app-review-application',

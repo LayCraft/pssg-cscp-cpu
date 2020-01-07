@@ -23,7 +23,6 @@ export interface iProgramApplication {
 }
 
 export class ProgramApplication implements iProgramApplication {
-
   contractId: string;
   programId: string;
   name: string;
