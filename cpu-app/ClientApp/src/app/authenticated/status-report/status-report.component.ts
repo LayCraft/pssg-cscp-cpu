@@ -10,7 +10,7 @@ import { TransmogrifierStatusReport } from '../../core/models/transmogrifier-sta
 })
 export class StatusReportComponent implements OnInit {
   response: any;
-  trans: any;
+  trans: TransmogrifierStatusReport;
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;

@@ -21,12 +21,27 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-6">
       <pre>{{response|json}}</pre>
     </div>
     <div class="col-6">
       <pre>{{trans|json}}</pre>
+    </div>
+  </div> -->
+  <div class="row">
+    <div class="col">
+      <span *ngIf="trans">
+        <span *ngFor="let group of trans.statusReportQuestions">
+          <h1>{{group.name}}</h1>
+          <ul>
+            <li *ngFor="let question of group.questions">
+              {{question.label}}<br>
+              {{question[question.type]|json}}
+            </li>
+          </ul>
+        </span>
+      </span>
     </div>
   </div>
 </div>

@@ -12,8 +12,7 @@ export class TransmogrifierStatusReport {
     this.organizationId = g.Businessbceid; // this is the organization's bceid
     this.buildStatusReport(g);
   }
-  buildStatusReport(g: iDynamicsMonthlyStatisticsQuestions): void {
-
+  private buildStatusReport(g: iDynamicsMonthlyStatisticsQuestions): void {
     // for every category of questions collect the matching items
     for (let category of g.CategoryCollection) {
       const q: iQuestionCollection = {
