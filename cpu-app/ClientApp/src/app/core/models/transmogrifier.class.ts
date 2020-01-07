@@ -2,7 +2,7 @@ import { iOrganizationMeta } from './organization-meta.class';
 import { iContactInformation } from './contact-information.interface';
 import { iPerson } from './person.class';
 import { iMinistryUser } from './ministry-user';
-import { iContract } from './contract';
+import { iContract } from './contract.interface';
 import { iTask } from './task';
 import { iProgram } from './program';
 import { iDynamicsBlob, iDynamicsCrmContact, iDynamicsOrganization, iDynamicsPostOrg, iDynamicsPostUsers, iDynamicsCrmTask } from './dynamics-blob';

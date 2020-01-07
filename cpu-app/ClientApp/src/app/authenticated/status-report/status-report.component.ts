@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { iContract } from '../../core/models/contract';
+import { iContract } from '../../core/models/contract.interface';
 import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
 import { StateService } from '../../core/services/state.service';
 import { StatusReportService } from '../../core/services/status-report.service';
