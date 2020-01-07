@@ -1,15 +1,44 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4">
-      <!-- <app-contract-tombstone [organizationId]="organizationId" [contractId]="contractId"></app-contract-tombstone> -->
-
       <section class="application-nav sticky-top">
         <app-icon-stepper></app-icon-stepper>
       </section>
     </div>
 
     <div class="col-md-8">
-      <div *ngIf="stepperElements && currentStepperElement">
+      <span *ngIf="trans">
+        <span *ngFor="let group of trans.statusReportQuestions">
+          <h2 class="blue-header">{{group.name}}</h2>
+          <div *ngFor="let q of group.questions" class="form-group">
+            <span *ngIf="q.type==='string'">
+              <label [for]="q.uuid">{{q.label}}</label>
+              <textarea [(ngModel)]="q.string" class="form-control" [id]="q.uuid" rows="3"></textarea>
+            </span>
+            <span *ngIf="q.type==='boolean'">
+              <p class="mb-0">{{q.label}}</p>
+              <div class="form-check form-check-inline">
+                <input [(ngModel)]="q.boolean" class="form-check-input" type="radio" [name]="q.uuid" [id]="q.uuid" [value]="true">
+                <label class="form-check-label" [for]="q.uuid">
+                  Yes
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input [(ngModel)]="q.boolean" class="form-check-input" type="radio" [name]="q.uuid" [id]="q.uuid" [value]="false">
+                <label class="form-check-label" [for]="q.uuid">
+                  No
+                </label>
+              </div>
+            </span>
+
+            <span *ngIf="q.type==='number'">
+              <label [for]="q.uuid">{{q.label}}</label>
+              <input [(ngModel)]="q.number" type="number" class="form-control" [id]="q.uuid">
+            </span>
+          </div>
+        </span>
+      </span>
+      <!-- <div *ngIf="stepperElements && currentStepperElement">
         <div class="page-header">
           <h1>{{currentStepperElement.itemName}}</h1>
         </div>
@@ -18,57 +47,9 @@
             Stepper element. {{item|json}}
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <!-- <div class="row">
-    <div class="col-6">
-      <pre>{{response|json}}</pre>
-    </div>
-    <div class="col-6">
-      <pre>{{trans|json}}</pre>
-    </div>
-  </div> -->
-  <!-- <div class="row">
-    <div class="col">
-      <span *ngIf="trans">
-        <span *ngFor="let group of trans.statusReportQuestions">
-          <h1>{{group.name}}</h1>
-          <ul>
-            <li *ngFor="let question of group.questions">
-              {{question.label}}<br>
-              {{question[question.type]|json}}
-            </li>
-          </ul>
-        </span>
-      </span>
-    </div>
-  </div> -->
-  <div class="row">
-    <div class="col-8">
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-      <div class="form-group">
-        <p class="mb-0">Blablabl</p>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
-          <label class="form-check-label" for="exampleRadios1">
-            Yes
-          </label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-          <label class="form-check-label" for="exampleRadios2">
-            No
-          </label>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="exampleFormControlInput1">Email address</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
+<pre>{{response|json}}</pre>
+<pre>{{trans|json}}</pre>

@@ -1,5 +1,6 @@
 import { iDynamicsMonthlyStatisticsQuestions, iDynamicsMonthlyStatisticsQuestionsQuestion } from "./dynamics-blob";
 import { iQuestionCollection, iQuestion } from "./status-report-question.interface"
+import { uuidv4 } from "../constants/uuidv4";
 // a collection of the expense item guids as K/V pairs for generating line items
 export class TransmogrifierStatusReport {
   public organizationId: string;
@@ -34,7 +35,8 @@ export class TransmogrifierStatusReport {
             const type = this.fieldType(d.vsd_questiontype);
             const q: iQuestion = {
               label: d.vsd_name,
-              type
+              type,
+              uuid: uuidv4(),
             }
             // instantiate the correct property with the freshest null value
             q[type] = null;
