@@ -1,8 +1,9 @@
+import { Address } from '../../../core/models/address.class';
+import { COUNTRIES_ADDRESS_2 } from '../../../core/constants/country-list';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormHelper } from '../../../core/form-helper';
-import { iAddress, Address } from '../../../core/models/address.class';
-import { COUNTRIES_ADDRESS_2 } from '../../../core/constants/country-list';
 import { POSTAL_CODE } from '../../../core/constants/regex.constants';
+import { iAddress } from '../../../core/models/address.interface';
 
 @Component({
   selector: 'app-address2',

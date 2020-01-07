@@ -1,4 +1,5 @@
-import { Address, iAddress } from "./address.class";
+import { Address } from "./address.class";
+import { iAddress } from "./address.interface";
 export interface iPerson {
   personId: string;
   userId?: string;

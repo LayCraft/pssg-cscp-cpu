@@ -1,6 +1,6 @@
-import { Address, iAddress } from "./address.class";
-import { Person, iPerson } from "./person.class";
-import { iHours, Hours } from './hours.class';
+import { iPerson } from "./person.class";
+import { iHours } from './hours.class';
+import { iAddress } from "./address.interface";
 
 export interface iProgramApplication {
   contractId: string;

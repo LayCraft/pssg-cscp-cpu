@@ -1,5 +1,4 @@
 import { iOrganizationMeta } from './organization-meta.class';
-import { iAddress } from './address.class';
 import { iContactInformation } from './contact-information.class';
 import { iPerson } from './person.class';
 import { iMinistryUser } from './ministry-user';
@@ -10,6 +9,7 @@ import { iDynamicsBlob, iDynamicsCrmContact, iDynamicsOrganization, iDynamicsPos
 import { formType } from '../constants/form-type';
 import { contractCode } from '../constants/contract-code';
 import { taskCode } from '../constants/task-code';
+import { iAddress } from './address.interface';
 
 export class Transmogrifier {
   // collections of viewmodels

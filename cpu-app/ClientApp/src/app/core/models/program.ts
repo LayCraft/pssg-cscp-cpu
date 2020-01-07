@@ -1,4 +1,4 @@
-import { iAddress } from "./address.class";
+import { iAddress } from "./address.interface";
 
 export interface iProgram {
   address: iAddress;
