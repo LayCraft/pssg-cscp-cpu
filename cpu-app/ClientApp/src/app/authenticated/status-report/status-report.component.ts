@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { iContract } from '../../core/models/contract.interface';
 import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
-import { StateService } from '../../core/services/state.service';
 import { StatusReportService } from '../../core/services/status-report.service';
+import { TransmogrifierStatusReport } from '../../core/models/transmogrifier-status-report.class';
 
 @Component({
   selector: 'app-status-report',
@@ -25,7 +23,7 @@ export class StatusReportComponent implements OnInit {
     this.statusReportService.getStatusReportQuestions('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4', '0e309304-c4e6-e911-b811-00505683fbf4')
       .subscribe(r => {
         this.response = r;
-
+        this.trans = new TransmogrifierStatusReport(r);
       });
     // clear all of the old stepper elements
     this.constructDefaultstepperElements();
