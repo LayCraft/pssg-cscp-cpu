@@ -48,6 +48,7 @@ export function convertStatusReportToDynamics(trans: TransmogrifierStatusReport)
     BusinessBCeID: trans.organizationId,
     UserBCeID: trans.userId,
     ReportingPeriod: months[trans.reportingPeriod] || 0,
-    AnswerCollection: answers
+    // get rid of any answers are missing a value. Otherwise dynamics 204's.
+    AnswerCollection: answers.filter(v => v.vsd_yesnoboolean || v.vsd_textanswer || v.vsd_number)
   };
 }

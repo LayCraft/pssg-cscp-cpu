@@ -3,6 +3,7 @@ import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/i
 import { StatusReportService } from '../../core/services/status-report.service';
 import { TransmogrifierStatusReport } from '../../core/models/transmogrifier-status-report.class';
 import { iQuestionCollection } from '../../core/models/question-collection.interface';
+import { convertStatusReportToDynamics } from '../../core/models/converters/status-report-to-dynamics';
 
 @Component({
   selector: 'app-status-report',
@@ -25,6 +26,7 @@ export class StatusReportComponent implements OnInit {
       .subscribe(r => {
         this.response = r;
         this.trans = new TransmogrifierStatusReport(r);
+        this.trans.reportingPeriod = "January";
         this.constructDefaultstepperElements();
       });
 
@@ -38,6 +40,16 @@ export class StatusReportComponent implements OnInit {
       return true;
     }
     return false;
+  }
+  submit() {
+    // TODO: check for validity
+
+    // send the stuff
+    this.statusReportService
+      .setStatusReportAnswers(this.trans.programId, convertStatusReportToDynamics(this.trans))
+      .subscribe((foo) => {
+        this.response = foo;
+      });
   }
 
   constructDefaultstepperElements() {

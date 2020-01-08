@@ -6,13 +6,15 @@ import { iDynamicsPostStatusReport } from "./dynamics-post";
 export class TransmogrifierStatusReport {
   public organizationId: string;
   public userId: string;
+  public programId: string;
   public programType: string;
   public reportingPeriod: string;
   public statusReportQuestions: iQuestionCollection[] = []; // this is a collection of objects
 
   constructor(g: iDynamicsMonthlyStatisticsQuestions) {
     this.userId = g.Userbceid;// this is the user's bceid
-    this.organizationId = g.Businessbceid; // this is the organization's bceid
+    this.organizationId = g.Businessbceid;// this is the organization's bceid
+    this.programId = g.Program.vsd_programid;
     this.reportingPeriod = null;
     this.programType = null;
 
