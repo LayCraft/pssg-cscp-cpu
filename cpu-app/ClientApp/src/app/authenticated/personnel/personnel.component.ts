@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
-import { Person, iPerson } from '../../core/models/person.class';
+import { Person } from '../../core/models/person.class';
 import { PersonService } from '../../core/services/person.service';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
@@ -8,6 +8,7 @@ import { Transmogrifier, convertPersonToCrmContact, DynamicsPostUsers } from '..
 import { iDynamicsPostUsers } from '../../core/models/dynamics-blob';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
+import { iPerson } from '../../core/models/person.interface';
 
 @Component({
   selector: 'app-personnel',

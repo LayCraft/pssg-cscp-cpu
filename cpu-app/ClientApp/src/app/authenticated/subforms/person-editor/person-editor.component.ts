@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { iPerson } from '../../../core/models/person.class';
+import { iPerson } from '../../../core/models/person.interface';
 import { FormHelper } from '../../../core/form-helper';
 import { EMAIL, PHONE_NUMBER } from '../../../core/constants/regex.constants';
 

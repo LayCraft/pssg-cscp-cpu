@@ -6,51 +6,51 @@
   </thead>
   <tbody>
     <tr>
-      <th class="col-4 text-right" scope="row">Program Name</th>
+      <th scope="row">Program Name</th>
       <td>{{pa?.name}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Program Type</th>
+      <th scope="row">Program Type</th>
       <td>NOT IMPLEMENTED</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Program Location</th>
+      <th scope="row">Program Location</th>
       <td>{{pa?.programLocation}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Service Location</th>
+      <th scope="row">Service Location</th>
       <td>{{pa?.serviceArea}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Email Address</th>
+      <th scope="row">Email Address</th>
       <td>{{pa?.email}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Phone Number</th>
+      <th scope="row">Phone Number</th>
       <td>{{pa?.phoneNumber}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Fax Number</th>
+      <th scope="row">Fax Number</th>
       <td>{{pa?.faxNumber}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Line 1</th>
+      <th scope="row">Line 1</th>
       <td>{{pa?.mainAddress?.line1}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Line 2</th>
+      <th scope="row">Line 2</th>
       <td>{{pa?.mainAddress?.line2}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">City</th>
+      <th scope="row">City</th>
       <td>{{pa?.mainAddress?.city}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Province</th>
+      <th scope="row">Province</th>
       <td>{{pa?.mainAddress?.province}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Postal Code</th>
+      <th scope="row">Postal Code</th>
       <td>{{pa?.mainAddress?.postalCode}}</td>
     </tr>
   </tbody>
@@ -63,23 +63,23 @@
   </thead>
   <tbody>
     <tr>
-      <th class="col-4 text-right" scope="row">Line 1</th>
+      <th scope="row">Line 1</th>
       <td>{{pa?.mainAddress?.line1}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Line 2</th>
+      <th scope="row">Line 2</th>
       <td>{{pa?.mainAddress?.line2}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">City</th>
+      <th scope="row">City</th>
       <td>{{pa?.mainAddress?.city}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Province</th>
+      <th scope="row">Province</th>
       <td>{{pa?.mainAddress?.province}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Postal Code</th>
+      <th scope="row">Postal Code</th>
       <td>{{pa?.mainAddress?.postalCode}}</td>
     </tr>
   </tbody>
@@ -92,23 +92,23 @@
   </thead>
   <tbody>
     <tr>
-      <th class="col-4 text-right" scope="row">Line 1</th>
+      <th scope="row">Line 1</th>
       <td>{{pa?.mailingAddress?.line1}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Line 2</th>
+      <th scope="row">Line 2</th>
       <td>{{pa?.mailingAddress?.line2}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">City</th>
+      <th scope="row">City</th>
       <td>{{pa?.mailingAddress?.city}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Province</th>
+      <th scope="row">Province</th>
       <td>{{pa?.mailingAddress?.province}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Postal Code</th>
+      <th scope="row">Postal Code</th>
       <td>{{pa?.mailingAddress?.postalCode}}</td>
     </tr>
   </tbody>
@@ -124,11 +124,11 @@
   </thead>
   <tbody>
     <tr *ngIf="!pa.additionalStaff.length">
-      <th class="col-4 text-right" scope="row">Staff</th>
+      <th scope="row">Staff</th>
       <td>No staff declared on {{pa.name}}</td>
     </tr>
     <tr *ngFor="let person of pa.additionalStaff;let i=index">
-      <th class="col-4 text-right" scope="row">Person {{i+1}}</th>
+      <th scope="row">Person {{i+1}}</th>
       <td>{{person.firstName}} {{person.middleName}} {{person.lastName}}{{person.title?' - '+person.title:''}}</td>
     </tr>
   </tbody>
@@ -141,11 +141,11 @@
   </thead>
   <tbody>
     <tr>
-      <th class="col-4 text-right" scope="row">Total Scheduled Hours per Week</th>
+      <th scope="row">Total Scheduled Hours per Week</th>
       <td>{{operationsSum}}</td>
     </tr>
     <tr>
-      <th class="col-4 text-right" scope="row">Total On-call / Standby Hours per Week</th>
+      <th scope="row">Total On-call / Standby Hours per Week</th>
       <td>{{standbySum}}</td>
     </tr>
   </tbody>

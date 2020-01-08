@@ -1,13 +1,14 @@
 import { AbstractControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormHelper } from '../../../core/form-helper';
-import { Hours, iHours } from '../../../core/models/hours.class';
+import { Hours } from '../../../core/models/hours.class';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
-import { iContactInformation } from '../../../core/models/contact-information.class';
-import { iPerson } from '../../../core/models/person.class';
-import { iProgramApplication, ProgramApplication } from '../../../core/models/program-application.class';
+import { iContactInformation } from '../../../core/models/contact-information.interface';
+import { iPerson } from '../../../core/models/person.interface';
+import { iProgramApplication } from '../../../core/models/program-application.interface';
 import { EMAIL, PHONE_NUMBER } from '../../../core/constants/regex.constants';
+import { iHours } from '../../../core/models/hours.interface';
 
 @Component({
   selector: 'app-program',

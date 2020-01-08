@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ExpenseReportService } from '../../core/services/expense-report.service';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { TransmogrifierExpenseReport } from '../../core/models/transmogrifier-expense-report.class';
-import { iPerson } from '../../core/models/person.class';
+import { iPerson } from '../../core/models/person.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
-import { NotificationQueueService } from '../../core/services/notification-queue.service';
 
 @Component({
   selector: 'app-expense-report',

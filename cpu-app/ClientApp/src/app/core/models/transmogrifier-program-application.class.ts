@@ -1,13 +1,13 @@
 import * as moment from 'moment';
-import { decodeToWeekDays } from '../constants/decode-to-week-days';
-import { decodeCglInsurance } from '../constants/decode-cgl-insurance-type';
 import { decodeCcseaMemberType } from '../constants/decode-ccsea-member-type';
-import { iAdministrativeInformation } from "./administrative-information.class";
-import { iContactInformation } from "./contact-information.class";
+import { decodeCglInsurance } from '../constants/decode-cgl-insurance-type';
+import { decodeToWeekDays } from '../constants/decode-to-week-days';
+import { iAdministrativeInformation } from "./administrative-information.interface";
+import { iContactInformation } from "./contact-information.interface";
 import { iDynamicsScheduleFResponse, iDynamicsCrmContact } from "./dynamics-blob";
-import { iHours } from "./hours.class";
-import { iPerson, Person } from "./person.class";
-import { iProgramApplication } from "./program-application.class";
+import { iHours } from "./hours.interface";
+import { iPerson } from "./person.interface";
+import { iProgramApplication } from "./program-application.interface";
 import { iSignature } from '../../authenticated/subforms/program-authorizer/program-authorizer.component';
 
 export class TransmogrifierProgramApplication {

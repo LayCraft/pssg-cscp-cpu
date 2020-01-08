@@ -5,7 +5,7 @@ import { tap, takeUntil } from 'rxjs/operators';
 import { iCountry, COUNTRIES_ADDRESS_2 } from '../../../core/constants/country-list';
 import { POSTAL_CODE, WORD } from '../../../core/constants/regex.constants';
 import { FormHelper } from '../../../core/form-helper';
-import { iAddress } from '../../../core/models/address.class';
+import { iAddress } from '../../../core/models/address.interface';
 
 @Component({
   selector: 'app-address',

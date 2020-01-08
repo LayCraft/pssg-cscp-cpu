@@ -1,7 +1,9 @@
 import { iDynamicsBudgetProposal, iDynamicsCrmProgramRevenueSource, iDynamicsProgramExpense } from "./dynamics-blob";
-import { iProgramBudget, iSalaryAndBenefits, iExpenseItem } from "./budget-proposal.class";
-import { iRevenueSource } from "./revenue-source.class";
+import { iRevenueSource } from "./revenue-source.interface";
 import { revenueSourceType } from "../constants/revenue-source-type";
+import { iProgramBudget } from "./program-budget.interface";
+import { iSalaryAndBenefits } from "./salary-and-benefits.interface";
+import { iExpenseItem } from "./expense-item.interface";
 
 export class TransmogrifierBudgetProposal {
   public organizationId: string;
@@ -72,25 +74,4 @@ export class TransmogrifierBudgetProposal {
   buildAdministrationOtherExpenses(g: iDynamicsBudgetProposal): iExpenseItem[] {
     return [];
   }
-}
-
-const budgetProposalLabels = {
-  '05D84E55-2EBA-E911-B80F-00505683FBF4': 'Administration - Related Utilities',
-  'B87E6400-2EBA-E911-B80F-00505683FBF4': 'Administration-Related Rent/Lease/Mortgage',
-  '4B7325D9-2DBA-E911-B80F-00505683FBF4': 'Administrative Support Wages/Benefits',
-  '53C1C560-2EBA-E911-B80F-00505683FBF4': 'Bookkeeping/Bank Fees',
-  'BD4ABCC6-2DBA-E911-B80F-00505683FBF4': 'Management Salary/Benefits',
-  '099C3B77-2DBA-E911-B80F-00505683FBF4': 'Memberships',
-  '7D48816D-2EBA-E911-B80F-00505683FBF4': 'Other Administration Costs',
-  'A5FE2187-2DBA-E911-B80F-00505683FBF4': 'Other Program Related Expenses',
-  'F070E090-2CBA-E911-B80F-00505683FBF4': 'Phone',
-  'B33CDA77-2CBA-E911-B80F-00505683FBF4': 'Program Related - Office Supplies/Software',
-  '18F4336E-2CBA-E911-B80F-00505683FBF4': 'Program Related - Rent/Lease/Mortgage',
-  'F7E71080-2CBA-E911-B80F-00505683FBF4': 'Program Related - Travel',
-  '32AD5D8A-2CBA-E911-B80F-00505683FBF4': 'Program Related - Utilities',
-  '121ED353-2DBA-E911-B80F-00505683FBF4': 'Property Maintenance',
-  '4DD7B12C-2DBA-E911-B80F-00505683FBF4': 'Resource Materials/Printing Costs',
-  'B4CD7AA0-2CBA-E911-B80F-00505683FBF4': 'Staff Training and Associated Travel',
-  '84415B3D-2DBA-E911-B80F-00505683FBF4': 'Volunteer Appreciation/Honorariums',
-  '3974f01e-fa12-ea11-b814-00505683fbf4': 'Salaries and Benefits',
 }

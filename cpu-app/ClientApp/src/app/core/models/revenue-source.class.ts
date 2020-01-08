@@ -1,9 +1,4 @@
-export interface iRevenueSource {
-  revenueSourceName: string;
-  cash: number;
-  inKindContribution: number;
-  other: string;//if they have added their own then this is the field that represents their entry
-}
+import { iRevenueSource } from "./revenue-source.interface";
 
 export class RevenueSource implements iRevenueSource {
   revenueSourceName: string;

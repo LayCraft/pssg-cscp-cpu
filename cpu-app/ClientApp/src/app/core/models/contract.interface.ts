@@ -1,5 +1,5 @@
-import { iTask } from "./task";
-import { iProgram } from "./program";
+import { iTask } from "./task.interface";
+import { iProgram } from "./program.interface";
 
 export interface iContract {
   // isCompleted: boolean; // basically useless

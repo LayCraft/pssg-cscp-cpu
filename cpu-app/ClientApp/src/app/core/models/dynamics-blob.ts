@@ -130,11 +130,11 @@ export interface iDynamicsBlob {
   Businessbceid?: string; // represents the organization level BCeID.
   Contracts?: iDynamicsCrmContract[];
   ExecutiveContact?: iDynamicsCrmContact,
-  IsSuccess?: true;
+  IsSuccess: boolean;
   MinistryUser?: iDynamicsMinistryUser;
   Organization?: iDynamicsOrganization;
   Programs?: iDynamicsCrmProgram[];
-  Result?: string;
+  Result: string;
   Staff?: iDynamicsCrmContact[];
   Tasks?: iDynamicsCrmTask[]
   Userbceid?: string; // represents the user's BCeID.
@@ -202,8 +202,8 @@ export interface iDynamicsScheduleGLineItem {
 }
 export interface iDynamicsScheduleGResponse {
   fortunecookiecontext?: string;
-  IsSuccess?: boolean;
-  Result?: string;
+  IsSuccess: boolean;
+  Result: string;
   Userbceid?: string;
   Businessbceid?: string;
   ScheduleG?: iDynamicsScheduleG;
@@ -223,7 +223,7 @@ export interface iDynamicsScheduleFResponse {
   Userbceid?: string;
   StaffCollection?: iDynamicsCrmContact[];
   ScheduleCollection?: iDynamicsSchedule[];
-  Result?: string;
+  Result: string;
   RegionDistrictCollection?: iDynamicsRegionDistrict[];
   ProgramContactCollection?: iDynamicsCrmContact[];
   ProgramCollection?: iDynamicsCrmProgram[];
@@ -254,37 +254,7 @@ export interface iDynamicsPostUsers {
   BusinessBCeID: string;
   StaffCollection: iDynamicsCrmContact[];
 }
-export interface iDynamicsLineItem {
-  itemId: string;
-  label: string;
-  annualBudget: number;
-  quarterlyBudget: number;
-  actual: number;
-}
-export interface iExpenseReport {
-  // salary benefits program delivery and administration expense
-  administrationDescription: string;
-  administrationValue: number;
-  administrationAnnualBudget: number;
-  administrationQuarterlyBudget: number;
 
-  programDeliveryDescription: string;
-  programDeliveryValue: number;
-  programDeliveryAnnualBudget: number;
-  programDeliveryQuarterlyBudget: number;
-
-  salariesBenefitsDescription: string;
-  salariesBenefitsValue: number;
-  salariesBenefitsAnnualBudget: number;
-  salariesBenefitsQuarterlyBudget: number;
-
-  programExpenseLineItems: iDynamicsLineItem[];
-
-  contractServiceHoursPerWeek: number;
-  contractServiceHoursPerQuarter: number;
-  contractServiceHoursQuarterlyActual: number;
-  executiveReview: boolean;
-}
 export interface iDynamicsBudgetProposal {
   IsSuccess: boolean;
   Result: string;
@@ -340,4 +310,54 @@ export interface iDynamicsCrmProgramRevenueSource {
   vsd_cpu_revenuesourcetype?: number;
   vsd_inkindcontribution?: number;
   vsd_programrevenuesourceid?: string;
+}
+
+export interface iDynamicsMonthlyStatisticsQuestions {
+  Businessbceid?: string;
+  CategoryCollection?: iDynamicsMonthlyStatisticsCategory[];
+  Contract?: iDynamicsMonthlyStatisticsQuestionsContract;
+  IsSuccess: boolean;
+  MultipleChoiceCollection?: iDynamicsMonthlyStatisticsQuestionsMcQuestion[];
+  Organization?: iDynamicsMonthlyStatisticsQuestionsOrganization;
+  Program?: iDynamicsMonthlyStatisticsQuestionsProgram;
+  ProgramTypeCollection?: iDynamicsMonthlyStatisticsProgramType[];
+  QuestionCollection?: iDynamicsMonthlyStatisticsQuestionsQuestion[];
+  Result: string;
+  Userbceid?: string;
+}
+export interface iDynamicsMonthlyStatisticsQuestionsOrganization {
+  accountid?: string;
+  name?: string;
+}
+export interface iDynamicsMonthlyStatisticsQuestionsContract {
+  vsd_contractid?: string;
+  _vsd_customer_value?: string;
+  vsd_name?: string;
+}
+export interface iDynamicsMonthlyStatisticsQuestionsProgram {
+  _vsd_serviceproviderid_value?: string;
+  _vsd_contractid_value?: string;
+  _vsd_programtype_value?: string;
+  vsd_name?: string;
+  vsd_programid?: string;
+}
+export interface iDynamicsMonthlyStatisticsQuestionsQuestion {
+  _vsd_categoryid_value?: string;
+  vsd_cpustatisticsmasterdataid?: string;
+  vsd_name?: string;
+  vsd_questionorder?: number;
+  vsd_questiontype?: number;
+}
+export interface iDynamicsMonthlyStatisticsQuestionsMcQuestion {
+  vsd_cpustatisticsmasterdataanswerid?: string;
+  vsd_name?: string;
+  _vsd_questionid_value?: string;
+}
+export interface iDynamicsMonthlyStatisticsCategory {
+  vsd_monthlystatisticscategoryid?: string;
+  vsd_name?: string;
+}
+export interface iDynamicsMonthlyStatisticsProgramType {
+  vsd_programtypeid?: string;
+  vsd_name?: string;
 }

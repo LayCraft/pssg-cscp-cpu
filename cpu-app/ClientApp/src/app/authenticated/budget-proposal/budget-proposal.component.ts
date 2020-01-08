@@ -1,13 +1,15 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
-import { iRevenueSource, RevenueSource } from '../../core/models/revenue-source.class';
-import { iExpenseItem, ExpenseItem } from '../../core/models/budget-proposal.class';
-import { iDynamicsBudgetProposal } from '../../core/models/dynamics-blob';
-import { StateService } from '../../core/services/state.service';
 import { BudgetProposalService } from '../../core/services/budget-proposal.service';
-import { iExpenseTableMeta } from '../subforms/expense-table/expense-table.component';
+import { Component, OnInit } from '@angular/core';
+import { ExpenseItem } from '../../core/models/expense-item.class';
+import { RevenueSource } from '../../core/models/revenue-source.class';
+import { StateService } from '../../core/services/state.service';
 import { TransmogrifierBudgetProposal } from '../../core/models/transmogrifier-budget-proposal.class';
+import { iDynamicsBudgetProposal } from '../../core/models/dynamics-blob';
+import { iExpenseItem } from '../../core/models/expense-item.interface';
+import { iExpenseTableMeta } from '../subforms/expense-table/expense-table.component';
+import { iRevenueSource } from '../../core/models/revenue-source.interface';
+import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 
 @Component({
   selector: 'app-budget-proposal',

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { iPerson } from '../../../core/models/person.class';
+import { iPerson } from '../../../core/models/person.interface';
 import { nameAssemble } from '../../../core/constants/name-assemble';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
