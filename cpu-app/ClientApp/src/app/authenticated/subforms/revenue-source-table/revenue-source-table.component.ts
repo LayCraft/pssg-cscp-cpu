@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { iRevenueSource, RevenueSource } from '../../../core/models/revenue-source.class';
-
+import { RevenueSource } from '../../../core/models/revenue-source.class';
+import { revenueSourceTypes } from '../../../core/constants/revenue-source-type';
+import { iRevenueSource } from '../../../core/models/revenue-source.interface';
 @Component({
   selector: 'app-revenue-source-table',
   templateUrl: './revenue-source-table.component.html',
@@ -15,7 +16,7 @@ export class RevenueSourceTableComponent implements OnInit {
   totalInKind: number = 0;
   totalGrand: number = 0;
   other = 'Other';
-
+  revenueSourceTypes: string[] = revenueSourceTypes;
   constructor() { }
   ngOnInit() {
     this.revenueSources.forEach(r => {

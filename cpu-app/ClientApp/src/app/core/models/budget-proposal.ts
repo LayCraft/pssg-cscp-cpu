@@ -1,5 +1,5 @@
 import { iPerson } from './person.interface';
-import { iRevenueSource } from './revenue-source.class';
+import { iRevenueSource } from './revenue-source.interface';
 import { iExpenseItem } from './expense-item.interface';
 
 export interface iBudgetProposal {

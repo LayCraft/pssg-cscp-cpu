@@ -2,11 +2,13 @@ import { ActivatedRoute } from '@angular/router';
 import { BudgetProposalService } from '../../core/services/budget-proposal.service';
 import { Component, OnInit } from '@angular/core';
 import { ExpenseItem } from '../../core/models/expense-item.class';
+import { RevenueSource } from '../../core/models/revenue-source.class';
 import { StateService } from '../../core/services/state.service';
+import { TransmogrifierBudgetProposal } from '../../core/models/transmogrifier-budget-proposal.class';
 import { iDynamicsBudgetProposal } from '../../core/models/dynamics-blob';
 import { iExpenseItem } from '../../core/models/expense-item.interface';
 import { iExpenseTableMeta } from '../subforms/expense-table/expense-table.component';
-import { iRevenueSource, RevenueSource } from '../../core/models/revenue-source.class';
+import { iRevenueSource } from '../../core/models/revenue-source.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 
 @Component({
@@ -76,7 +78,10 @@ export class BudgetProposalComponent implements OnInit {
 
   ngOnInit() {
     // todo remove hard coding
-    this.budgetProposalService.getBudgetProposal('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4', '0e309304-c4e6-e911-b811-00505683fbf4').subscribe(d => this.data = d);
+    this.budgetProposalService.getBudgetProposal('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4', '0e309304-c4e6-e911-b811-00505683fbf4').subscribe(d => {
+      this.data = d;
+      this.trans = new TransmogrifierBudgetProposal(d);
+    });
     this.revenueSources.push(new RevenueSource());
     this.expenseItems.push(new ExpenseItem());
     this.adminExpenseItems.push(new ExpenseItem());
