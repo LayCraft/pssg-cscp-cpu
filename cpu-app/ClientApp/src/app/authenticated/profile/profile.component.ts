@@ -4,7 +4,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProfileService } from '../../core/services/profile.service';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
-import { Transmogrifier, DynamicsPostOrganization } from '../../core/models/transmogrifier.class';
+import { Transmogrifier } from '../../core/models/transmogrifier.class';
+import { convertContactInformationToDynamics } from '../../core/models/converters/contact-information-to-dynamics';
 import { iContactInformation } from '../../core/models/contact-information.interface';
 import { iDynamicsPostOrg } from '../../core/models/dynamics-post';
 import { iPerson } from '../../core/models/person.interface';
@@ -56,7 +57,7 @@ export class ProfileComponent implements OnInit {
     formValue.executiveContact = this.executiveContact;
     formValue.boardContact = this.boardContact;
     // cast the data into something useful for dynamics
-    const dynamicsPost: iDynamicsPostOrg = DynamicsPostOrganization(this.userId, this.organizationId, this.accountId, formValue);
+    const dynamicsPost: iDynamicsPostOrg = convertContactInformationToDynamics(this.userId, this.organizationId, this.accountId, formValue);
 
 
     // post to the organization

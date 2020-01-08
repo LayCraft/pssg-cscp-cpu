@@ -77,6 +77,3 @@ export class TransmogrifierStatusReport {
   }
 }
 
-export function DynamicsPostStatusReport(trans: TransmogrifierStatusReport): iDynamicsPostStatusReport {
-  return null;
-}
