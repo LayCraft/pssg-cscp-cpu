@@ -31,7 +31,7 @@ export interface iDynamicsAnswer {
   // is this a number boolean or string? Numerically encoded to dynamics.
   vsd_questiontype1: number;
   // answer
-  vsd_number: number;
-  vsd_yesnoboolean: boolean;
-  vsd_textanswer: string;
+  vsd_number?: number;
+  vsd_yesnoboolean?: boolean;
+  vsd_textanswer?: string;
 }
