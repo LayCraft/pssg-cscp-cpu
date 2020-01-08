@@ -1,6 +1,6 @@
 import { iDynamicsMonthlyStatisticsQuestions, iDynamicsMonthlyStatisticsQuestionsQuestion } from "./dynamics-blob";
-import { iQuestionCollection, iQuestion } from "./status-report-question.interface"
-import { uuidv4 } from "../constants/uuidv4";
+import { iQuestion } from "./status-report-question.interface"
+import { iQuestionCollection } from "./question-collection.interface";
 // a collection of the expense item guids as K/V pairs for generating line items
 export class TransmogrifierStatusReport {
   public organizationId: string;

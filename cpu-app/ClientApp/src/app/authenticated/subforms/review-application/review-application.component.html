@@ -13,15 +13,15 @@
     </thead>
     <tbody>
       <tr>
-        <th class="col-4 text-right" scope="row">Email Address</th>
+        <th scope="row">Email Address</th>
         <td>{{tpa?.contactInformation?.emailAddress}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">Phone Number</th>
+        <th scope="row">Phone Number</th>
         <td>{{tpa?.contactInformation?.phoneNumber}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">Fax Number</th>
+        <th scope="row">Fax Number</th>
         <td>{{tpa?.contactInformation?.faxNumber}}</td>
       </tr>
     </tbody>
@@ -34,23 +34,23 @@
     </thead>
     <tbody>
       <tr>
-        <th class="col-4 text-right" scope="row">Line 1</th>
+        <th scope="row">Line 1</th>
         <td>{{tpa?.contactInformation?.mainAddress?.line1}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">Line 2</th>
+        <th scope="row">Line 2</th>
         <td>{{tpa?.contactInformation?.mainAddress?.line2}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">City</th>
+        <th scope="row">City</th>
         <td>{{tpa?.contactInformation?.mainAddress?.city}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">Province</th>
+        <th scope="row">Province</th>
         <td>{{tpa?.contactInformation?.mainAddress?.province}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">Postal Code</th>
+        <th scope="row">Postal Code</th>
         <td>{{tpa?.contactInformation?.mainAddress?.postalCode}}</td>
       </tr>
     </tbody>
@@ -63,23 +63,23 @@
     </thead>
     <tbody>
       <tr>
-        <th class="col-4 text-right" scope="row">Line 1</th>
+        <th scope="row">Line 1</th>
         <td>{{tpa?.contactInformation?.mailingAddress?.line1}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">Line 2</th>
+        <th scope="row">Line 2</th>
         <td>{{tpa?.contactInformation?.mailingAddress?.line2}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">City</th>
+        <th scope="row">City</th>
         <td>{{tpa?.contactInformation?.mailingAddress?.city}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">Province</th>
+        <th scope="row">Province</th>
         <td>{{tpa?.contactInformation?.mailingAddress?.province}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">Postal Code</th>
+        <th scope="row">Postal Code</th>
         <td>{{tpa?.contactInformation?.mailingAddress?.postalCode}}</td>
       </tr>
     </tbody>
@@ -97,15 +97,15 @@
     </thead>
     <tbody>
       <tr>
-        <th class="col-4 text-right" scope="row">Compliant with Employment Standards Act of BC</th>
+        <th scope="row">Compliant with Employment Standards Act of BC</th>
         <td>{{tpa?.administrativeInformation?.compliantEmploymentStandardsAct?'Yes':'No'}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">Compliant with BC's Human Rights Code</th>
+        <th scope="row">Compliant with BC's Human Rights Code</th>
         <td>{{tpa?.administrativeInformation?.compliantHumanRights ?'Yes':'No'}}</td>
       </tr>
       <tr>
-        <th class="col-4 text-right" scope="row">Compliant with Worker's Compensation Act (WorkSafe BC)</th>
+        <th scope="row">Compliant with Worker's Compensation Act (WorkSafe BC)</th>
         <td>{{tpa?.administrativeInformation?.compliantWorkersCompensation ?'Yes':'No'}}</td>
       </tr>
     </tbody>
@@ -119,11 +119,11 @@
     </thead>
     <tbody>
       <tr>
-        <th class="col-4 text-right" scope="row">Staff are union affiliated</th>
+        <th scope="row">Staff are union affiliated</th>
         <td>{{tpa?.administrativeInformation?.staffUnionized?'Yes':'No'}}</td>
       </tr>
       <tr *ngIf="tpa?.administrativeInformation?.staffUnionized">
-        <th class="col-4 text-right" scope="row">Union</th>
+        <th scope="row">Union</th>
         <td>{{tpa?.administrativeInformation?.staffUnion}}</td>
       </tr>
     </tbody>
@@ -137,7 +137,7 @@
     </thead>
     <tbody>
       <tr>
-        <th class="col-4 text-right" scope="row">Member Type</th>
+        <th scope="row">Member Type</th>
         <td>{{tpa?.administrativeInformation?.ccseaMemberType}}</td>
       </tr>
     </tbody>
@@ -151,11 +151,11 @@
     </thead>
     <tbody>
       <tr>
-        <th class="col-4 text-right" scope="row">Staff are subcontracted</th>
+        <th scope="row">Staff are subcontracted</th>
         <td>{{tpa?.administrativeInformation?.staffSubcontracted ?'Yes':'No'}}</td>
       </tr>
       <tr *ngFor="let person of tpa?.administrativeInformation?.staffSubcontractedPersons; let i=index">
-        <th class="col-4 text-right" scope="row">Subcontractor {{i+1}}</th>
+        <th scope="row">Subcontractor {{i+1}}</th>
         <td>{{person.firstName}} {{person.middleName}} {{person.lastName}}{{person.title?' - '+person.title:''}}</td>
       </tr>
     </tbody>
@@ -170,7 +170,7 @@
     </thead>
     <tbody>
       <tr>
-        <th class="col-4 text-right" scope="row">Stated as</th>
+        <th scope="row">Stated as</th>
         <td>{{tpa.cglInsurance}}</td>
       </tr>
     </tbody>

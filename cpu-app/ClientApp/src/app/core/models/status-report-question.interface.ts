@@ -12,7 +12,3 @@ export interface iQuestion {
   questionNumber?: number; // the number that appears beside the question.
 }
 
-export interface iQuestionCollection {
-  name: string;
-  questions: iQuestion[];
-}
