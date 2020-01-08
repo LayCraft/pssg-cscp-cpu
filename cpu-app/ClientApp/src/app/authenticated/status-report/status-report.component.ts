@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
 import { StatusReportService } from '../../core/services/status-report.service';
 import { TransmogrifierStatusReport } from '../../core/models/transmogrifier-status-report.class';
+import { iQuestionCollection } from '../../core/models/question-collection.interface';
 
 @Component({
   selector: 'app-status-report',
@@ -24,9 +25,9 @@ export class StatusReportComponent implements OnInit {
       .subscribe(r => {
         this.response = r;
         this.trans = new TransmogrifierStatusReport(r);
+        this.constructDefaultstepperElements();
       });
-    // clear all of the old stepper elements
-    this.constructDefaultstepperElements();
+
     // stay in sync with
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
@@ -41,40 +42,24 @@ export class StatusReportComponent implements OnInit {
 
   constructDefaultstepperElements() {
     this.stepperService.reset();
-    // write the default beginning
-    [
-      {
-        itemName: 'Program Questions',
-        formState: 'untouched',
-        object: null,
-        discriminator: 'program_questions',
-      },
-      {
-        itemName: 'Program Statistics',
-        formState: 'untouched',
-        object: null,
-        discriminator: 'program_statistics',
-      },
-      {
-        itemName: 'New Client Information',
-        formState: 'untouched',
-        object: null,
-        discriminator: 'new_client_information',
-      },
-      {
-        itemName: 'Referrals Information',
-        formState: 'untouched',
-        object: null,
-        discriminator: 'referrals_information',
-      },
-      {
-        itemName: 'Services Provided',
-        formState: 'untouched',
-        object: null,
-        discriminator: 'services_provided',
-      },
-    ].forEach((f: iStepperElement) => {
-      this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
-    });
+    this.trans.statusReportQuestions
+      // .sort((a, b) => {
+      //   if (a.name < b.name) return -1;
+      //   if (a.name > b.name) return 1;
+      //   return 0;
+      // })
+      .map((srq: iQuestionCollection): iStepperElement => {
+        return {
+          itemName: srq.name,
+          formState: 'untouched',
+          object: null,
+          discriminator: null,
+        }
+      })
+      .forEach((f: iStepperElement) => {
+        this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
+      });
+    // make the first element the selected one.
+    this.stepperService.setToFirstStepperElement();
   }
 }
