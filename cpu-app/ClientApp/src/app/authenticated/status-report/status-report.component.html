@@ -13,7 +13,7 @@
           <div *ngFor="let q of group.questions; let i=index" class="form-group">
             <span *ngIf="q.type==='string'">
               <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
-              <textarea [(ngModel)]="q.string" class="form-control" [id]="q.uuid" rows="3"></textarea>
+              <textarea [(ngModel)]="q.string" class="form-control" [id]="q.uuid" rows="3" placeholder="Type here&hellip;"></textarea>
             </span>
             <span *ngIf="q.type==='boolean'">
               <p class="mb-0">{{i+1}}. {{q.label}}</p>
@@ -32,7 +32,7 @@
             </span>
             <span *ngIf="q.type==='number'">
               <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
-              <input [(ngModel)]="q.number" type="number" class="form-control" [id]="q.uuid">
+              <input [(ngModel)]="q.number" type="number" class="form-control" [id]="q.uuid" placeholder="0">
             </span>
           </div>
         </span>
