@@ -28,6 +28,7 @@ export class TransmogrifierStatusReport {
             if (a.vsd_questionorder < b.vsd_questionorder) {
               return -1;
             }
+            console.log('These items have the same question number.', a, b);
             return 0;
           })
           .map((d: iDynamicsMonthlyStatisticsQuestionsQuestion): iQuestion => {
@@ -36,7 +37,8 @@ export class TransmogrifierStatusReport {
             const q: iQuestion = {
               label: d.vsd_name,
               type,
-              uuid: uuidv4(),
+              uuid: d.vsd_cpustatisticsmasterdataid, // I was generating it but may as well use the one from master data.
+              questionNumber: d.vsd_questionorder,
             }
             // instantiate the correct property with the freshest null value
             q[type] = null;

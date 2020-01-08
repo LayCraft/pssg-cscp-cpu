@@ -44,17 +44,35 @@ export class StatusReportComponent implements OnInit {
     // write the default beginning
     [
       {
-        itemName: 'Page 1',
+        itemName: 'Program Questions',
         formState: 'untouched',
         object: null,
-        discriminator: 'contact_information',
+        discriminator: 'program_questions',
       },
       {
-        itemName: 'Page 2',
+        itemName: 'Program Statistics',
         formState: 'untouched',
         object: null,
-        discriminator: 'administrative_information',
-      }
+        discriminator: 'program_statistics',
+      },
+      {
+        itemName: 'New Client Information',
+        formState: 'untouched',
+        object: null,
+        discriminator: 'new_client_information',
+      },
+      {
+        itemName: 'Referrals Information',
+        formState: 'untouched',
+        object: null,
+        discriminator: 'referrals_information',
+      },
+      {
+        itemName: 'Services Provided',
+        formState: 'untouched',
+        object: null,
+        discriminator: 'services_provided',
+      },
     ].forEach((f: iStepperElement) => {
       this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
     });
