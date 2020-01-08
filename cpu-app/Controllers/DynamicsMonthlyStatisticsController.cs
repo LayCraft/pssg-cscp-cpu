@@ -198,11 +198,10 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 
 			return new Tuple<int, string, HttpResponseMessage>(100, "", null);
 		}
-		[HttpPost]
-		public async Task<IActionResult> AnswerQuestions([FromBody] Models.DynamicsMonthlyStatisticsAnswers model)
+		[HttpPost("{programId}")]
+		public async Task<IActionResult> AnswerQuestions([FromBody] Models.DynamicsMonthlyStatisticsAnswers model, string programId)
 		{
-			// TODO: this post doesn't work
-			string task = "vsd_programs(0e309304-c4e6-e911-b811-00505683fbf4)/Microsoft.Dynamics.CRM.vsd_SetCPUMonthlyStatisticsAnswers";
+			string task = "vsd_programs(" + programId + ")/Microsoft.Dynamics.CRM.vsd_SetCPUMonthlyStatisticsAnswers";
 
 			// note: the model has the both user and business BCeIDs as well as the contract number so do we need to collect params? No.
 			if (model == null)
