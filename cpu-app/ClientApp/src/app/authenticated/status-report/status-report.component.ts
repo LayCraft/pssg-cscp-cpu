@@ -44,7 +44,7 @@ export class StatusReportComponent implements OnInit {
     return false;
   }
   submit() {
-    if (confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
+    if (this.trans.reportingPeriod && confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
       // send the stuff
       this.statusReportService.setStatusReportAnswers(this.trans.programId, convertStatusReportToDynamics(this.trans))
         .subscribe(r => this.response = r);

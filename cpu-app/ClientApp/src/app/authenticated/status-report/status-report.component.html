@@ -12,6 +12,10 @@
       <div *ngIf="trans && stepperElements && currentStepperElement">
         <div class="page-header">
           <h1>Monthly Status Report</h1>
+          {{trans.programName}}<br>
+          {{trans.programType}}<br>
+
+          {{trans.reportingPeriod}}
         </div>
         <span *ngFor="let group of trans.statusReportQuestions">
           <span *ngIf="this.currentStepperElement.itemName===group.name">

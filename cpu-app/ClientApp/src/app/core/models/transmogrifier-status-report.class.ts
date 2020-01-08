@@ -7,6 +7,7 @@ export class TransmogrifierStatusReport {
   public organizationId: string;
   public userId: string;
   public programId: string;
+  public programName: string;
   public programType: string;
   public reportingPeriod: string;
   public statusReportQuestions: iQuestionCollection[] = []; // this is a collection of objects
@@ -15,8 +16,9 @@ export class TransmogrifierStatusReport {
     this.userId = g.Userbceid;// this is the user's bceid
     this.organizationId = g.Businessbceid;// this is the organization's bceid
     this.programId = g.Program.vsd_programid;
-    this.reportingPeriod = null;
-    this.programType = null;
+    this.reportingPeriod = null; // TODO: where does this come from
+    this.programType = g.ProgramTypeCollection.filter(f => g.Program._vsd_programtype_value === f.vsd_programtypeid).map(f => f.vsd_name)[0];
+    this.programName = g.Program.vsd_name;
 
     this.buildStatusReport(g);
   }
