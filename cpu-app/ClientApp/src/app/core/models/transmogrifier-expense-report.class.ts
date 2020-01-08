@@ -1,6 +1,7 @@
-import { iDynamicsScheduleGLineItem, iDynamicsScheduleG, iDynamicsScheduleGResponse, iDynamicsPostScheduleG } from "./dynamics-blob";
+import { iDynamicsScheduleGLineItem, iDynamicsScheduleG, iDynamicsScheduleGResponse } from "./dynamics-blob";
 import { ExpenseItemLabels } from "../constants/expense-item-labels";
 import { iExpenseReport } from "./expense-report.interface";
+import { iDynamicsPostScheduleG } from "./dynamics-post";
 
 // a collection of the expense item guids as K/V pairs for generating line items
 

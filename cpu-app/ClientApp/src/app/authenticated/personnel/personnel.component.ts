@@ -5,7 +5,7 @@ import { PersonService } from '../../core/services/person.service';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { Transmogrifier, convertPersonToCrmContact, DynamicsPostUsers } from '../../core/models/transmogrifier.class';
-import { iDynamicsPostUsers } from '../../core/models/dynamics-blob';
+import { iDynamicsPostUsers } from '../../core/models/dynamics-post';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
 import { iPerson } from '../../core/models/person.interface';

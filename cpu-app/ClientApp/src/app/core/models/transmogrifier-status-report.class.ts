@@ -1,16 +1,21 @@
 import { iDynamicsMonthlyStatisticsQuestions, iDynamicsMonthlyStatisticsQuestionsQuestion } from "./dynamics-blob";
 import { iQuestion } from "./status-report-question.interface"
 import { iQuestionCollection } from "./question-collection.interface";
+import { iDynamicsPostStatusReport } from "./dynamics-post";
 // a collection of the expense item guids as K/V pairs for generating line items
 export class TransmogrifierStatusReport {
   public organizationId: string;
   public userId: string;
   public programType: string;
+  public reportingPeriod: string;
   public statusReportQuestions: iQuestionCollection[] = []; // this is a collection of objects
 
   constructor(g: iDynamicsMonthlyStatisticsQuestions) {
     this.userId = g.Userbceid;// this is the user's bceid
     this.organizationId = g.Businessbceid; // this is the organization's bceid
+    this.reportingPeriod = null;
+    this.programType = null;
+
     this.buildStatusReport(g);
   }
   private buildStatusReport(g: iDynamicsMonthlyStatisticsQuestions): void {
@@ -22,12 +27,8 @@ export class TransmogrifierStatusReport {
           .filter((q: iDynamicsMonthlyStatisticsQuestionsQuestion) => category.vsd_monthlystatisticscategoryid === q._vsd_categoryid_value)
           .sort((a: iDynamicsMonthlyStatisticsQuestionsQuestion, b: iDynamicsMonthlyStatisticsQuestionsQuestion) => {
             // arrange from smallest to largest
-            if (a.vsd_questionorder > b.vsd_questionorder) {
-              return 1;
-            }
-            if (a.vsd_questionorder < b.vsd_questionorder) {
-              return -1;
-            }
+            if (a.vsd_questionorder > b.vsd_questionorder) return 1;
+            if (a.vsd_questionorder < b.vsd_questionorder) return -1;
             console.log('These items have the same question number.', a, b);
             return 0;
           })
@@ -74,4 +75,8 @@ export class TransmogrifierStatusReport {
     }
     return type;
   }
+}
+
+export function DynamicsPostStatusReport(trans: TransmogrifierStatusReport): iDynamicsPostStatusReport {
+  return null;
 }
