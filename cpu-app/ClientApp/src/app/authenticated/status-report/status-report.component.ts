@@ -4,6 +4,7 @@ import { StatusReportService } from '../../core/services/status-report.service';
 import { TransmogrifierStatusReport } from '../../core/models/transmogrifier-status-report.class';
 import { iQuestionCollection } from '../../core/models/question-collection.interface';
 import { convertStatusReportToDynamics } from '../../core/models/converters/status-report-to-dynamics';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-status-report',
@@ -19,6 +20,7 @@ export class StatusReportComponent implements OnInit {
   constructor(
     private stepperService: IconStepperService,
     private statusReportService: StatusReportService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -42,16 +44,17 @@ export class StatusReportComponent implements OnInit {
     return false;
   }
   submit() {
-    // TODO: check for validity
-
-    // send the stuff
-    this.statusReportService
-      .setStatusReportAnswers(this.trans.programId, convertStatusReportToDynamics(this.trans))
-      .subscribe((foo) => {
-        this.response = foo;
-      });
+    if (confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
+      // send the stuff
+      this.statusReportService.setStatusReportAnswers(this.trans.programId, convertStatusReportToDynamics(this.trans))
+        .subscribe(r => this.response = r);
+    }
   }
-
+  exit() {
+    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.router.navigate(['/authenticated/dashboard']);
+    }
+  }
   constructDefaultstepperElements() {
     this.stepperService.reset();
     this.trans.statusReportQuestions

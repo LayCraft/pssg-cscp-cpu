@@ -3,6 +3,8 @@
     <div class="col-md-4">
       <section class="application-nav sticky-top">
         <app-icon-stepper></app-icon-stepper>
+        <button class="btn btn-primary mt-2 mr-2" (click)="submit()">Submit</button>
+        <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
       </section>
     </div>
 
@@ -45,6 +47,6 @@
     </div>
   </div>
 </div>
-<button (click)="submit()">Submit!</button>
+<!-- <button (click)="submit()">Submit!</button>
 <pre>{{response|json}}</pre>
-<pre>{{trans|json}}</pre>
+<pre>{{trans|json}}</pre> -->
