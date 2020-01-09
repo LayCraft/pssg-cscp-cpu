@@ -11,11 +11,29 @@
     <div class="col-md-8">
       <div *ngIf="trans && stepperElements && currentStepperElement">
         <div class="page-header">
-          <h1>Monthly Status Report</h1>
-          {{trans.programName}}<br>
-          {{trans.programType}}<br>
-
-          {{trans.reportingPeriod}}
+          <h1>{{trans.reportingPeriod?trans.reportingPeriod:'Monthly'}} Status Report</h1>
+          <p>
+            {{trans.programName}} - {{trans.programType}}
+          </p>
+          <div class="form-group">
+            <label for="month">
+              Reporting Month
+            </label>
+            <select name="month" [(ngModel)]="trans.reportingPeriod" class="custom-select">
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+          </div>
         </div>
         <span *ngFor="let group of trans.statusReportQuestions">
           <span *ngIf="this.currentStepperElement.itemName===group.name">
