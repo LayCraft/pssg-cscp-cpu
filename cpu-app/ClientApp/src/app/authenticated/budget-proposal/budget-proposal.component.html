@@ -26,7 +26,7 @@
         </div>
       </div>
     </div> -->
-    <div class="col-md-8">
+    <div *ngIf="trans" class="col-md-8">
       <ul class="nav nav-pills mb-2">
         <li *ngFor="let tab of tabs" class="nav-item">
           <a class="nav-link" [class.active]="tab===currentTab" (click)="currentTab=tab">{{tab}}</a>
@@ -55,7 +55,7 @@
           </li>
         </ol>
         <h2 class="blue-header">Program Revenue Sources</h2>
-        <app-revenue-source-table [(revenueSources)]="revenueSources"></app-revenue-source-table>
+        <app-revenue-source-table [(revenueSources)]="trans.revenueSources"></app-revenue-source-table>
         <!-- <pre>RevenueSources{{revenueSources|json}}</pre> -->
       </div>
       <div *ngIf="currentTab===tabs[1]">
