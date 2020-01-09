@@ -11,7 +11,6 @@ export class RevenueSourceTableComponent implements OnInit {
   @Input() revenueSources: iRevenueSource[] = [];
   @Output() revenueSourcesChange = new EventEmitter<RevenueSource[]>();
 
-  revenueSourcesForm: RevenueSource[] = [];
   totalCash: number = 0;
   totalInKind: number = 0;
   totalGrand: number = 0;
@@ -19,23 +18,25 @@ export class RevenueSourceTableComponent implements OnInit {
   revenueSourceTypes: string[] = revenueSourceTypes;
   constructor() { }
   ngOnInit() {
-    this.revenueSources.forEach(r => {
-      this.revenueSourcesForm.push(new RevenueSource(r));
-    });
+    if (!this.revenueSources.length) {
+      this.addRevenueSource();
+    } else {
+      this.calculateTotals();
+    }
   }
   addRevenueSource() {
-    this.revenueSourcesForm.push(new RevenueSource());
+    this.revenueSources.push(new RevenueSource());
     this.calculateTotals();
   }
   removeRevenueSource(index: number): void {
     // splice is acting unpredictably so I'm doing it with a for loop
     const newArray = [];
-    for (let i = 0; i < this.revenueSourcesForm.length; i++) {
+    for (let i = 0; i < this.revenueSources.length; i++) {
       if (i !== index) {
-        newArray.push(this.revenueSourcesForm[i]);
+        newArray.push(this.revenueSources[i]);
       }
     }
-    this.revenueSourcesForm = newArray;
+    this.revenueSources = newArray;
     this.calculateTotals();
   }
 
@@ -49,11 +50,11 @@ export class RevenueSourceTableComponent implements OnInit {
       }
     }
     // totalCash
-    this.totalCash = this.revenueSourcesForm.map(rs => rs.cash).reduce(reducer) || 0;
+    this.totalCash = this.revenueSources.map(rs => rs.cash).reduce(reducer) || 0;
     // totalInKind
-    this.totalInKind = this.revenueSourcesForm.map(rs => rs.inKindContribution).reduce(reducer) || 0;
+    this.totalInKind = this.revenueSources.map(rs => rs.inKindContribution).reduce(reducer) || 0;
     // total cost
-    this.totalGrand = this.revenueSourcesForm.map(rs => {
+    this.totalGrand = this.revenueSources.map(rs => {
       let total = 0;
       if (typeof rs.cash === 'number') total += rs.cash;
       if (typeof rs.inKindContribution === 'number') total += rs.inKindContribution;
@@ -61,6 +62,6 @@ export class RevenueSourceTableComponent implements OnInit {
     }).reduce(reducer) || 0;
 
     // after every calculate, output the json to the parent.
-    this.revenueSourcesChange.emit(this.revenueSourcesForm);
+    this.revenueSourcesChange.emit(this.revenueSources);
   }
 }

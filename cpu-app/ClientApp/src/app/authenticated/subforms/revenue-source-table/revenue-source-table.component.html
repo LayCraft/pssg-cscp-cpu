@@ -1,4 +1,4 @@
-<table *ngIf="revenueSources" class="table table-striped">
+<table class="table table-striped">
   <thead>
     <th scope="col">Revenue Source</th>
     <th scope="col">Cash</th>
@@ -7,7 +7,7 @@
     <th></th>
   </thead>
   <tbody>
-    <tr *ngFor="let source of revenueSourcesForm; let i=index">
+    <tr *ngFor="let source of revenueSources; let i=index">
       <td>
         <select [(ngModel)]="source.revenueSourceName" class="form-control" name="source_{{i}}" id="source_{{i}}">
           <option *ngFor="let type of revenueSourceTypes">{{type}}</option>
@@ -43,4 +43,3 @@
     </tr>
   </tbody>
 </table>
-<pre *ngIf="revenueSources">{{revenueSources|json}}</pre>

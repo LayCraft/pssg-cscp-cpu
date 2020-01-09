@@ -55,8 +55,7 @@
           </li>
         </ol>
         <h2 class="blue-header">Program Revenue Sources</h2>
-        <app-revenue-source-table [(revenueSources)]="trans.revenueSources"></app-revenue-source-table>
-        <!-- <pre>RevenueSources{{revenueSources|json}}</pre> -->
+        <app-revenue-source-table [(revenueSources)]="trans.programBudget.revenueSources"></app-revenue-source-table>
       </div>
       <div *ngIf="currentTab===tabs[1]">
         <!-- Program Expense -->
