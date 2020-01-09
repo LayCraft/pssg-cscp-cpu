@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { iDynamicsMonthlyStatisticsQuestions } from '../models/dynamics-blob';
+import { iDynamicsPostStatusReport } from '../models/dynamics-post';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +17,17 @@ export class StatusReportService {
     private http: HttpClient,
   ) { }
 
-  getStatusReportQuestions(organizationId: string, userId: string, programId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${organizationId}/${userId}/${programId}`, { headers: this.headers }).pipe(
+  getStatusReportQuestions(organizationId: string, userId: string, programId: string): Observable<iDynamicsMonthlyStatisticsQuestions> {
+    return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/${organizationId}/${userId}/${programId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
-  setStatusReport(statusReport: any) {
-    alert('Unimplemented');
+  setStatusReportAnswers(programId: string, answers: iDynamicsPostStatusReport): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${programId}`, answers, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
   }
 
   get headers(): HttpHeaders {

@@ -3,52 +3,72 @@
     <div class="col-md-4">
       <section class="application-nav sticky-top">
         <app-icon-stepper></app-icon-stepper>
+        <button class="btn btn-primary mt-2 mr-2" (click)="submit()">Submit</button>
+        <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
       </section>
     </div>
 
     <div class="col-md-8">
-      <span *ngIf="trans">
-        <span *ngFor="let group of trans.statusReportQuestions">
-          <h2 class="blue-header">{{group.name}}</h2>
-          <div *ngFor="let q of group.questions; let i=index" class="form-group">
-            <span *ngIf="q.type==='string'">
-              <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
-              <textarea [(ngModel)]="q.string" class="form-control" [id]="q.uuid" rows="3"></textarea>
-            </span>
-            <span *ngIf="q.type==='boolean'">
-              <p class="mb-0">{{i+1}}. {{q.label}}</p>
-              <div class="form-check form-check-inline">
-                <input [(ngModel)]="q.boolean" class="form-check-input" type="radio" [name]="q.uuid" [id]="q.uuid" [value]="true">
-                <label class="form-check-label" [for]="q.uuid">
-                  Yes
-                </label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input [(ngModel)]="q.boolean" class="form-check-input" type="radio" [name]="q.uuid" [id]="q.uuid" [value]="false">
-                <label class="form-check-label" [for]="q.uuid">
-                  No
-                </label>
-              </div>
-            </span>
-            <span *ngIf="q.type==='number'">
-              <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
-              <input [(ngModel)]="q.number" type="number" class="form-control" [id]="q.uuid">
-            </span>
-          </div>
-        </span>
-      </span>
-      <!-- <div *ngIf="stepperElements && currentStepperElement">
+      <div *ngIf="trans && stepperElements && currentStepperElement">
         <div class="page-header">
-          <h1>{{currentStepperElement.itemName}}</h1>
-        </div>
-        <div *ngFor="let item of stepperElements">
-          <div *ngIf="isCurrentStepperElement(item)">
-            Stepper element. {{item|json}}
+          <h1>{{trans.reportingPeriod?trans.reportingPeriod:'Monthly'}} Status Report</h1>
+          <p>
+            {{trans.programName}} - {{trans.programType}}
+          </p>
+          <div class="form-group">
+            <label for="month">
+              Reporting Month
+            </label>
+            <select name="month" [(ngModel)]="trans.reportingPeriod" class="custom-select">
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
           </div>
         </div>
-      </div> -->
+        <span *ngFor="let group of trans.statusReportQuestions">
+          <span *ngIf="this.currentStepperElement.itemName===group.name">
+            <h2 class="blue-header">{{group.name}}</h2>
+            <div *ngFor="let q of group.questions; let i=index" class="form-group">
+              <span *ngIf="q.type==='string'">
+                <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
+                <textarea [(ngModel)]="q.string" class="form-control" [id]="q.uuid" rows="3" placeholder="Type here&hellip;"></textarea>
+              </span>
+              <span *ngIf="q.type==='boolean'">
+                <p class="mb-0">{{i+1}}. {{q.label}}</p>
+                <div class="form-check form-check-inline">
+                  <input [(ngModel)]="q.boolean" class="form-check-input" type="radio" [name]="q.uuid" [id]="q.uuid" [value]="true">
+                  <label class="form-check-label" [for]="q.uuid">
+                    Yes
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input [(ngModel)]="q.boolean" class="form-check-input" type="radio" [name]="q.uuid" [id]="q.uuid" [value]="false">
+                  <label class="form-check-label" [for]="q.uuid">
+                    No
+                  </label>
+                </div>
+              </span>
+              <span *ngIf="q.type==='number'">
+                <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
+                <input [(ngModel)]="q.number" type="number" class="form-control" [id]="q.uuid" placeholder="0">
+              </span>
+            </div>
+          </span>
+        </span>
+      </div>
     </div>
   </div>
 </div>
-<!-- <pre>{{response|json}}</pre> -->
-<pre>{{trans|json}}</pre>
+<!-- <button (click)="submit()">Submit!</button>
+<pre>{{response|json}}</pre>
+<pre>{{trans|json}}</pre> -->

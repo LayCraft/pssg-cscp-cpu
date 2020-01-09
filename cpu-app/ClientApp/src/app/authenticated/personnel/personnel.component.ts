@@ -4,11 +4,13 @@ import { Person } from '../../core/models/person.class';
 import { PersonService } from '../../core/services/person.service';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
-import { Transmogrifier, convertPersonToCrmContact, DynamicsPostUsers } from '../../core/models/transmogrifier.class';
-import { iDynamicsPostUsers } from '../../core/models/dynamics-blob';
+import { Transmogrifier } from '../../core/models/transmogrifier.class';
+import { convertPersonToDynamics } from '../../core/models/converters/person-to-dynamics';
+import { iDynamicsPostUsers } from '../../core/models/dynamics-post';
+import { iPerson } from '../../core/models/person.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
-import { iPerson } from '../../core/models/person.interface';
+import { convertPersonnelToDynamics } from '../../core/models/converters/personnel-to-dynamics';
 
 @Component({
   selector: 'app-personnel',
@@ -63,7 +65,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     if (person.firstName && person.lastName) {
       const userId = this.stateService.main.getValue().organizationMeta.userId;
       const organizationId = this.stateService.main.getValue().organizationMeta.organizationId;
-      const post = DynamicsPostUsers(userId, organizationId, [person]);
+      const post = convertPersonnelToDynamics(userId, organizationId, [person]);
       // console.log(post);
       this.personService.setPersons(post).subscribe(
         () => {
@@ -117,7 +119,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       const post: iDynamicsPostUsers = {
         UserBCeID: userId,
         BusinessBCeID: organizationId,
-        StaffCollection: [convertPersonToCrmContact(person)]
+        StaffCollection: [convertPersonToDynamics(person)]
       };
       // post the person
       this.personService.setPersons(post).subscribe(p => {
