@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
+import { Router } from '@angular/router';
 import { StatusReportService } from '../../core/services/status-report.service';
 import { TransmogrifierStatusReport } from '../../core/models/transmogrifier-status-report.class';
-import { iQuestionCollection } from '../../core/models/question-collection.interface';
 import { convertStatusReportToDynamics } from '../../core/models/converters/status-report-to-dynamics';
-import { Router } from '@angular/router';
+import { iDynamicsPostStatusReport } from '../../core/models/dynamics-post';
+import { iQuestionCollection } from '../../core/models/question-collection.interface';
 
 @Component({
   selector: 'app-status-report',
@@ -18,9 +20,10 @@ export class StatusReportComponent implements OnInit {
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
   constructor(
-    private stepperService: IconStepperService,
-    private statusReportService: StatusReportService,
+    private notificationQueueService: NotificationQueueService,
     private router: Router,
+    private statusReportService: StatusReportService,
+    private stepperService: IconStepperService,
   ) { }
 
   ngOnInit() {
@@ -44,11 +47,32 @@ export class StatusReportComponent implements OnInit {
   }
   submit() {
     if (!this.trans.reportingPeriod) {
-      alert('Please select a month before submitting.')
-    } else if (confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
+      alert('Please select a month before submitting.');
+      return;
+    }
+    if (confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
       // send the stuff
-      this.statusReportService.setStatusReportAnswers(this.trans.programId, convertStatusReportToDynamics(this.trans))
-        .subscribe(r => this.response = r);
+      const statusReport: iDynamicsPostStatusReport = convertStatusReportToDynamics(this.trans);
+      // if they have not filled out the form don't submit it.
+      if (!statusReport.AnswerCollection.length) {
+        alert('Please ensure that you have filled out the statistics to the best of your ability before attempting to submit.');
+        // break out of the function right here
+        return;
+      }
+
+      // submit the answers
+      this.statusReportService.setStatusReportAnswers(this.trans.programId, statusReport)
+        .subscribe(
+          r => {
+            console.log(r);
+            this.notificationQueueService.addNotification(`You have successfully submitted ${this.trans.reportingPeriod} statistics.`, 'success');
+            this.router.navigate(['/authenticated/dashboard']);
+          },
+          err => {
+            console.log(err);
+            this.notificationQueueService.addNotification('Monthly statistics could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
+          }
+        );
     }
   }
   exit() {
