@@ -129,7 +129,10 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
   }
-  save() { }
+  save() {
+    alert('Submit!');
+    console.log(this.trans);
+  }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
       this.router.navigate(['/authenticated/dashboard']);
