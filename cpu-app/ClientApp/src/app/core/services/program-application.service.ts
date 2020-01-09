@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
 import { iDynamicsScheduleFResponse } from '../models/dynamics-blob';
@@ -22,7 +22,8 @@ export class ProgramApplicationService {
       catchError(this.handleError)
     );
   }
-  setScheduleF(scheduleF: any) {
+  setScheduleF(scheduleF: any): Observable<any> {
+    return of(null);
   }
 
   get headers(): HttpHeaders {

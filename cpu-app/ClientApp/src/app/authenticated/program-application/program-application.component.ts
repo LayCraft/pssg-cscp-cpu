@@ -130,8 +130,8 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
-    alert('Submit!');
-    console.log(this.trans);
+
+    this.programApplicationService.setScheduleF(null).subscribe(a => { });
   }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
