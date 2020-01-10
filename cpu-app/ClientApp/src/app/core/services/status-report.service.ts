@@ -11,7 +11,7 @@ import { iDynamicsPostStatusReport } from '../models/dynamics-post';
 export class StatusReportService {
   //this service does a "collect questions" and a "set and forget" It is unlike other parts of the application in that the user is expected not to stop and resume the process. Type them all in at once and send it.
 
-  apiUrl = 'api/DynamicsMonthlyStatistics';
+  apiUrl = 'api/DynamicsStatusReport';
 
   constructor(
     private http: HttpClient,
