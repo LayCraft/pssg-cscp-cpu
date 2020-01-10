@@ -5,12 +5,14 @@ export class ExpenseItem implements iExpenseItem {
   tooltip: string;
   totalCost: number;
   fundedFromVscp: number;
+  uuid: string;
   constructor(xi?: iExpenseItem) {
     if (xi) {
       this.itemName = xi.itemName || null;
       this.tooltip = xi.tooltip || null;
       this.totalCost = xi.totalCost || null;
       this.fundedFromVscp = xi.fundedFromVscp || null;
+      this.uuid == xi.uuid || null;
     }
   }
 }
