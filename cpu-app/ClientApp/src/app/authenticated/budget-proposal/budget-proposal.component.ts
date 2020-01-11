@@ -10,6 +10,7 @@ import { iExpenseItem } from '../../core/models/expense-item.interface';
 import { iExpenseTableMeta } from '../subforms/expense-table/expense-table.component';
 import { iRevenueSource } from '../../core/models/revenue-source.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { SalaryAndBenefits } from '../../core/models/salary-and-benefits.class';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -45,7 +46,6 @@ export class BudgetProposalComponent implements OnInit {
     { itemName: 'Volunteer appreciation / honorariums' } as iExpenseItem,
     { itemName: 'Property maintenance' } as iExpenseItem,
   ];
-  employees: iExpenseItem[] = [];
 
   adminExpenseItems: iExpenseItem[] = [];
   defaultAdminExpenseItems: iExpenseItem[] = [
@@ -63,7 +63,7 @@ export class BudgetProposalComponent implements OnInit {
     'Administration Costs',
   ];
 
-  trans: any;
+  trans: TransmogrifierBudgetProposal;
   data: iDynamicsBudgetProposal;
 
   constructor(
@@ -85,7 +85,6 @@ export class BudgetProposalComponent implements OnInit {
     this.revenueSources.push(new RevenueSource());
     this.expenseItems.push(new ExpenseItem());
     this.adminExpenseItems.push(new ExpenseItem());
-    this.employees.push(new ExpenseItem());
     // // this.budgetProposalService.getBudgetProposal('asd','asd')
     // this.route.params.subscribe(p => {
     //   // collect the contract from the route

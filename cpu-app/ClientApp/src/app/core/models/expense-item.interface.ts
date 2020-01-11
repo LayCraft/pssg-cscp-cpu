@@ -1,7 +1,7 @@
 export interface iExpenseItem {
-  fundedFromVscp: number;
-  itemName: string;
-  tooltip?: string;
-  totalCost: number;
   uuid: string;
+  totalCost: number;
+  tooltip?: string;
+  itemName: string;
+  fundedFromVscp: number;
 }

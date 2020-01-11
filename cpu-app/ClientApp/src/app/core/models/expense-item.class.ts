@@ -1,4 +1,5 @@
 import { iExpenseItem } from "./expense-item.interface";
+import { uuidv4 } from "../constants/uuidv4";
 
 export class ExpenseItem implements iExpenseItem {
   itemName: string;
@@ -12,7 +13,9 @@ export class ExpenseItem implements iExpenseItem {
       this.tooltip = xi.tooltip || null;
       this.totalCost = xi.totalCost || null;
       this.fundedFromVscp = xi.fundedFromVscp || null;
-      this.uuid == xi.uuid || null;
+      this.uuid == xi.uuid || uuidv4();
+    } else {
+      this.uuid = uuidv4();
     }
   }
 }
