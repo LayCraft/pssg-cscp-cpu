@@ -9,7 +9,7 @@
     </th>
   </thead>
   <tbody>
-    <tr *ngFor="let line of salariesAndBenefitsForm; let i=index">
+    <tr *ngFor="let line of salariesAndBenefits; let i=index">
       <td>
         <input class="form-control" type="text" [(ngModel)]="line.title" min="0" id="title_{{i}}">
       </td>
