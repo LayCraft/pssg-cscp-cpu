@@ -10,7 +10,7 @@ import { iDynamicsPostScheduleG } from '../models/dynamics-post';
 })
 export class ExpenseReportService {
   // this should query the test api
-  apiUrl = 'api/DynamicsScheduleG';
+  apiUrl = 'api/DynamicsExpenseReport';
 
   constructor(
     private http: HttpClient,

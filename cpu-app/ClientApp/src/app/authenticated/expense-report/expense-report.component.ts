@@ -28,7 +28,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
   };
 
   // expense report
-  er: TransmogrifierExpenseReport;
+  trans: TransmogrifierExpenseReport;
   currentUser: iPerson;
 
   constructor(
@@ -59,7 +59,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
             this.router.navigate(['/authenticated/dashboard']);
           } else {
             // make the transmogrifier for this form
-            this.er = new TransmogrifierExpenseReport(g);
+            this.trans = new TransmogrifierExpenseReport(g);
             this.calculateLineItemSums();
           }
         }
@@ -110,15 +110,15 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
 
   calculateLineItemSums() {
     //annual budgeted amount
-    this.lineItemSums['annualBudgetSum'] = this.er.expenseReport.programExpenseLineItems
+    this.lineItemSums['annualBudgetSum'] = this.trans.expenseReport.programExpenseLineItems
       .map(l => l.annualBudget)
       .reduce((prev, curr) => prev + curr);
     //quarterly budgeted amount
-    this.lineItemSums['quarterlyBudgetSum'] = this.er.expenseReport.programExpenseLineItems
+    this.lineItemSums['quarterlyBudgetSum'] = this.trans.expenseReport.programExpenseLineItems
       .map(l => l.quarterlyBudget)
       .reduce((prev, curr) => prev + curr);
     //actual expendatures this quarter
-    this.lineItemSums['actualSum'] = this.er.expenseReport.programExpenseLineItems
+    this.lineItemSums['actualSum'] = this.trans.expenseReport.programExpenseLineItems
       .map(l => l.actual)
       .reduce((prev, curr) => prev + curr);
     //quarterly variance
@@ -128,7 +128,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
   }
   updateLineItemSums() {
     //actual expendatures this quarter
-    this.lineItemSums['actualSum'] = this.er.expenseReport.programExpenseLineItems
+    this.lineItemSums['actualSum'] = this.trans.expenseReport.programExpenseLineItems
       .map(l => l.actual)
       .reduce((prev, curr) => prev + curr);
     //quarterly variance

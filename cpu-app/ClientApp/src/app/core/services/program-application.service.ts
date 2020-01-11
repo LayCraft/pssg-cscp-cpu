@@ -10,7 +10,7 @@ import { iDynamicsScheduleFResponse } from '../models/dynamics-blob';
 })
 export class ProgramApplicationService {
   // this should query the test api
-  apiUrl = 'api/DynamicsScheduleF';
+  apiUrl = 'api/DynamicsProgramApplication';
 
   constructor(
     private http: HttpClient,

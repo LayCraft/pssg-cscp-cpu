@@ -1,0 +1,44 @@
+<table class="table table-striped">
+  <thead>
+    <th scope="row">Title/Position</th>
+    <th scope="row">Salary</th>
+    <th scope="row">Benefits</th>
+    <th scope="row">Total Cost</th>
+    <th scope="row">Funded From VSCP</th>
+    <th scope="row">
+    </th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let line of salariesAndBenefits; let i=index">
+      <td>
+        <input class="form-control" type="text" [(ngModel)]="line.title" min="0" id="title_{{i}}">
+      </td>
+      <td>
+        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.salary" min="0" id="salary_{{i}}">
+      </td>
+      <td>
+        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.benefits" min="0" id="benefits_{{i}}">
+      </td>
+      <td>
+        <input class="form-control" type="number" [(ngModel)]="line.totalCost" min="0" id="total_cost_{{i}}" disabled>
+      </td>
+      <td>
+        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{i}}">
+      </td>
+      <td (click)="removeExpenseItem(i)" class="align-middle">
+        <i class="fas fa-times-circle text-danger"></i>
+      </td>
+    </tr>
+    <tr>
+      <th scope="col">Total</th>
+      <td>${{totalSalaryCost}}</td>
+      <td>${{totalBenefitsCost}}</td>
+      <td>${{totalTotalCost}}</td>
+      <td>${{totalVscp}}</td>
+      <td (click)="addExpenseItem()" class="align-middle">
+        <i class="fas fa-plus-circle text-success"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- <pre>{{salariesAndBenefits|json}}</pre> -->

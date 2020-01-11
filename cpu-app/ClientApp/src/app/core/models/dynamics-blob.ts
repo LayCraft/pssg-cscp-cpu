@@ -238,8 +238,6 @@ export interface iDynamicsRegionDistrict {
   vsd_name: string;
 }
 
-
-
 export interface iDynamicsBudgetProposal {
   IsSuccess: boolean;
   Result: string;

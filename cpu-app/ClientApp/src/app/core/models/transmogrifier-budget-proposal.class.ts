@@ -4,6 +4,7 @@ import { revenueSourceType } from "../constants/revenue-source-type";
 import { iProgramBudget } from "./program-budget.interface";
 import { iSalaryAndBenefits } from "./salary-and-benefits.interface";
 import { iExpenseItem } from "./expense-item.interface";
+import { uuidv4 } from "../constants/uuidv4";
 
 export class TransmogrifierBudgetProposal {
   public organizationId: string;
@@ -55,6 +56,7 @@ export class TransmogrifierBudgetProposal {
           benefits: e.vsd_cpu_benefits || 0,
           fundedFromVscp: e.vsd_cpu_fundedfromvscp || 0,
           totalCost: e.vsd_totalcost || 0,
+          uuid: e.vsd_programexpenseid || uuidv4(),
         }
       });
   }

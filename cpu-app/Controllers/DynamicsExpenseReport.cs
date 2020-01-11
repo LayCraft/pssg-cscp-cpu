@@ -18,13 +18,13 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 {
 	[Route("api/[controller]")]
 	[Authorize]
-	public class DynamicsScheduleGController : Controller
+	public class DynamicsExpenseReportController : Controller
 	{
 		private readonly IConfiguration _configuration;
 
 		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public DynamicsScheduleGController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+		public DynamicsExpenseReportController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
 		{
 			this._httpContextAccessor = httpContextAccessor;
 			this._configuration = configuration;

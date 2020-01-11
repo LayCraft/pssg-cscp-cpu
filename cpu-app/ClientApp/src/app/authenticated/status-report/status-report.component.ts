@@ -38,7 +38,6 @@ export class StatusReportComponent implements OnInit {
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
   }
-
   isCurrentStepperElement(item: iStepperElement): boolean {
     if (item.id === this.currentStepperElement.id) {
       return true;

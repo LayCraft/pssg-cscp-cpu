@@ -18,27 +18,27 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 {
 	[Route("api/[controller]")]
 	[Authorize]
-	public class DynamicsScheduleFController : Controller
+	public class DynamicsStatusReportController : Controller
 	{
 		private readonly IConfiguration _configuration;
 
 		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public DynamicsScheduleFController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+		public DynamicsStatusReportController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
 		{
 			this._httpContextAccessor = httpContextAccessor;
 			this._configuration = configuration;
 		}
 
-		[HttpGet("{businessBceid}/{userBceid}/{scheduleFId}")]
-		public async Task<IActionResult> GetScheduleF(string businessBceid, string userBceid, string scheduleFId)
+		[HttpGet("{businessBceid}/{userBceid}/{programId}")]
+		public async Task<IActionResult> GetQuestions(string businessBceid, string userBceid, string programId)
 		{
 			try
 			{
 				// convert the parameters to a json string
 				string applicationJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
 				// set the endpoint action
-				string endpointAction = "vsd_contracts(" + scheduleFId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUScheduleF";
+				string endpointAction = "vsd_programs(" + programId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUMonthlyStatisticsQuestions";
 				// get the response
 				Tuple<int, string, HttpResponseMessage> tuple = await GetDynamicsHttpClient(_configuration, applicationJson, endpointAction);
 
@@ -198,9 +198,11 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 
 			return new Tuple<int, string, HttpResponseMessage>(100, "", null);
 		}
-		[HttpPost]
-		public async Task<IActionResult> SetScheduleF([FromBody] Models.DynamicsScheduleF model)
+		[HttpPost("{programId}")]
+		public async Task<IActionResult> AnswerQuestions([FromBody] Models.DynamicsMonthlyStatisticsAnswers model, string programId)
 		{
+			string task = "vsd_programs(" + programId + ")/Microsoft.Dynamics.CRM.vsd_SetCPUMonthlyStatisticsAnswers";
+
 			// note: the model has the both user and business BCeIDs as well as the contract number so do we need to collect params? No.
 			if (model == null)
 			{
@@ -271,7 +273,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				client.DefaultRequestHeaders.Add("Accept", "application/json");
 
 				// build the url for posting to this endpoint
-				string url = _configuration["DYNAMICS_ODATA_URI"] + "vsd_SetCPUOrgContracts";
+				string url = _configuration["DYNAMICS_ODATA_URI"] + task;
 				// construct the http request
 				HttpRequestMessage _httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
 				HttpResponseMessage _httpResponse2 = null;
