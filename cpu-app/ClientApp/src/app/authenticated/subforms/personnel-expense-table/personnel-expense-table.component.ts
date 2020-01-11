@@ -15,6 +15,8 @@ export class PersonnelExpenseTableComponent implements OnInit {
 
   salariesAndBenefitsForm: iSalaryAndBenefits[] = [];
 
+  totalBenefitsCost: number = 0;
+  totalSalaryCost: number = 0;
   totalTotalCost: number = 0;
   totalVscp: number = 0;
   totalGrand: number = 0;
@@ -51,13 +53,20 @@ export class PersonnelExpenseTableComponent implements OnInit {
         return prev;
       }
     }
-    // total of totalCost
-    let totalCostDefaults = 0;
-    let totalCostCustom = 0;
     if (this.salariesAndBenefitsForm.length > 0) {
-      totalCostCustom = this.salariesAndBenefitsForm.map(rs => rs.totalCost).reduce(reducer) || 0;
+      // total of salary
+      this.totalSalaryCost = this.salariesAndBenefitsForm.map(rs => rs.salary).reduce(reducer) || 0;
+      // total of benefits
+      this.totalBenefitsCost = this.salariesAndBenefitsForm.map(rs => rs.benefits).reduce(reducer) || 0;
+      this.salariesAndBenefitsForm.forEach(s => {
+        s.totalCost = s.salary + s.benefits;
+      });
     }
-    this.totalTotalCost = totalCostDefaults + totalCostCustom;
+
+    // total of totalCost
+    if (this.salariesAndBenefitsForm.length > 0) {
+      this.totalTotalCost = this.salariesAndBenefitsForm.map(rs => rs.totalCost).reduce(reducer) || 0;
+    }
 
     // total of vscp
     let totalVscpDefaults = 0;
