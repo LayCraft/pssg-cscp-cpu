@@ -5,27 +5,6 @@
         <app-icon-stepper></app-icon-stepper>
       </section>
     </div>
-
-    <!-- <div class="col-md-8">
-      <div *ngIf="stepperElements && currentStepperElement">
-        <div class="page-header">
-          <h1>{{currentStepperElement.itemName}}</h1>
-        </div>
-        <div *ngFor="let item of stepperElements">
-          <div *ngIf="isCurrentStepperElement(item)">
-            <div *ngIf="item.discriminator === discriminators[0]">
-              Program Overview
-            </div>
-            <div *ngIf="item.discriminator === discriminators[1]">
-              <app-program-budget></app-program-budget>
-            </div>
-            <div *ngIf="item.discriminator === discriminators[2]">
-              <app-program-authorizer [(signature)]="item.object"></app-program-authorizer>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div *ngIf="trans" class="col-md-8">
       <ul class="nav nav-pills mb-2">
         <li *ngFor="let tab of tabs" class="nav-item">
@@ -62,9 +41,9 @@
         <h2 class="blue-header">{{sections[0]}}</h2>
         <app-personnel-expense-table [(salariesAndBenefits)]="trans.programBudget.salariesAndBenefits" (meta)="collectMeta( $event, sections[0])"></app-personnel-expense-table>
         <h2 class="blue-header">{{sections[1]}}</h2>
-        <app-expense-table [(defaultExpenseItems)]="defaultExpenseItems" [(expenseItems)]="expenseItems" [otherDescription]="'Other program-related expenses. Please include memberships one per line.'" (meta)="collectMeta( $event, sections[1])"></app-expense-table>
+        <app-expense-table [(defaultExpenseItems)]="defaultExpenseItems" [(expenseItems)]="trans.programBudget.programDeliveryOtherExpenses" [otherDescription]="'Other program-related expenses. Please include memberships one per line.'" (meta)="collectMeta( $event, sections[1])"></app-expense-table>
         <h2 class="blue-header">{{sections[2]}}</h2>
-        <app-expense-table [(defaultExpenseItems)]="defaultAdminExpenseItems" [(expenseItems)]="adminExpenseItems" [otherDescription]="'Other administration expenses.'" (meta)="collectMeta( $event, sections[2])"></app-expense-table>
+        <app-expense-table [(defaultExpenseItems)]="defaultAdminExpenseItems" [(expenseItems)]="trans.programBudget.administrationOtherExpenses" [otherDescription]="'Other administration expenses.'" (meta)="collectMeta( $event, sections[2])"></app-expense-table>
         <span *ngIf="meta[sections[0]]||	meta[sections[1]]||	meta[sections[2]]">
           <h2 class="blue-header">Total Program Expenditures</h2>
           <table class="table table-striped">
@@ -105,15 +84,6 @@
           </table>
         </span>
       </div>
-      <!-- <h2 class="blue-header">
-        Total Program Expenditures
-      </h2>
-      <h2 class="blue-header">
-        Budget Proposals Summary
-      </h2>
-      <h2 class="blue-header">
-        Authorization
-      </h2> -->
     </div>
   </div>
   <div class="row">
@@ -121,7 +91,6 @@
       <pre>{{data|json}}</pre>
     </div>
     <div class="col-6">
-      <!-- TODO: we need to make an agreed upon format for this data. So a transmogrifier that can hold the contents of this form and convert it from Dynamics.-->
       <pre>{{trans|json}}</pre>
     </div>
   </div>

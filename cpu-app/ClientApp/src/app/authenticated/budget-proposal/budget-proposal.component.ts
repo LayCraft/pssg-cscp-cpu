@@ -33,7 +33,8 @@ export class BudgetProposalComponent implements OnInit {
     'Program Delivery Costs',
     'Administration Costs',
   ];
-
+  defaultExpenseItems = [];
+  defaultAdminExpenseItems = [];
   trans: TransmogrifierBudgetProposal;
   data: iDynamicsBudgetProposal;
 

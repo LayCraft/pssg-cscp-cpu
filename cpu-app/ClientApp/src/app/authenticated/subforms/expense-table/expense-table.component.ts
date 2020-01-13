@@ -30,10 +30,10 @@ export class ExpenseTableComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.defaultExpenseItems.forEach(e => {
+    if (this.defaultExpenseItems) this.defaultExpenseItems.forEach(e => {
       this.defaultExpenseItemsForm.push(e);
     });
-    this.expenseItems.forEach(e => {
+    if (this.expenseItems) this.expenseItems.forEach(e => {
       this.expenseItemsForm.push(e);
     });
   }

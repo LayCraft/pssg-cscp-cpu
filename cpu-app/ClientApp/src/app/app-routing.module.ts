@@ -39,15 +39,7 @@ const routes: Routes = [
         component: BudgetProposalComponent
       },
       {
-        path: 'budget_proposal',
-        component: BudgetProposalComponent
-      },
-      {
         path: 'expense_report/:contractId',
-        component: ExpenseReportComponent
-      },
-      {
-        path: 'expense_report',
         component: ExpenseReportComponent
       },
       {
@@ -55,15 +47,7 @@ const routes: Routes = [
         component: ProgramApplicationComponent
       },
       {
-        path: 'program_application',
-        component: ProgramApplicationComponent
-      },
-      {
         path: 'status_report/:contractId',
-        component: StatusReportComponent
-      },
-      {
-        path: 'status_report',
         component: StatusReportComponent
       },
       {
