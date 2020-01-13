@@ -1,16 +1,12 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { BudgetProposalService } from '../../core/services/budget-proposal.service';
 import { Component, OnInit } from '@angular/core';
-import { ExpenseItem } from '../../core/models/expense-item.class';
-import { RevenueSource } from '../../core/models/revenue-source.class';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { StateService } from '../../core/services/state.service';
 import { TransmogrifierBudgetProposal } from '../../core/models/transmogrifier-budget-proposal.class';
 import { iDynamicsBudgetProposal } from '../../core/models/dynamics-blob';
-import { iExpenseItem } from '../../core/models/expense-item.interface';
 import { iExpenseTableMeta } from '../subforms/expense-table/expense-table.component';
-import { iRevenueSource } from '../../core/models/revenue-source.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
-import { NotificationQueueService } from '../../core/services/notification-queue.service';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -21,7 +17,6 @@ export class BudgetProposalComponent implements OnInit {
   // used for the stepper component
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
-
   currentTab: string;
   tabs: string[];
   meta: {} = {
@@ -32,32 +27,6 @@ export class BudgetProposalComponent implements OnInit {
       totalPercentFundedByVscp: 0,
     }
   };
-
-  revenueSources: iRevenueSource[] = [];
-  expenseItems: iExpenseItem[] = [];
-  defaultExpenseItems: iExpenseItem[] = [];
-  // defaultExpenseItems: iExpenseItem[] = [
-  //   { itemName: 'Program - related' } as iExpenseItem,
-  //   { itemName: 'Program - related office supplies / software' } as iExpenseItem,
-  //   { itemName: 'Program - related travel' } as iExpenseItem,
-  //   { itemName: 'Utilities' } as iExpenseItem,
-  //   { itemName: 'Phone' } as iExpenseItem,
-  //   { itemName: 'Staff training and associated travel' } as iExpenseItem,
-  //   { itemName: 'Resource materials / printing costs' } as iExpenseItem,
-  //   { itemName: 'Volunteer appreciation / honorariums' } as iExpenseItem,
-  //   { itemName: 'Property maintenance' } as iExpenseItem,
-  // ];
-
-  adminExpenseItems: iExpenseItem[] = [];
-  defaultAdminExpenseItems: iExpenseItem[] = [];
-  // defaultAdminExpenseItems: iExpenseItem[] = [
-  //   { itemName: 'Management salary/benefits' } as iExpenseItem,
-  //   { itemName: 'Administrative support wages/benefits' } as iExpenseItem,
-  //   { itemName: 'Administration-related' } as iExpenseItem,
-  //   { itemName: 'Administrative-related utilities' } as iExpenseItem,
-  //   { itemName: 'Bookeeping/bank fees' } as iExpenseItem,
-  // ];
-
   // these are programatically referenced so it is nice to have the constants
   sections: string[] = [
     'Salaries and Benefits',
@@ -69,13 +38,12 @@ export class BudgetProposalComponent implements OnInit {
   data: iDynamicsBudgetProposal;
 
   constructor(
-    private notificationQueueService: NotificationQueueService,
-    private stepperService: IconStepperService,
-    private stateService: StateService,
     private budgetProposalService: BudgetProposalService,
+    private notificationQueueService: NotificationQueueService,
     private route: ActivatedRoute,
     private router: Router,
-
+    private stateService: StateService,
+    private stepperService: IconStepperService,
   ) {
     this.tabs = ['Program Revenue Information', 'Program Expense'];
     this.currentTab = this.tabs[0];
@@ -92,7 +60,7 @@ export class BudgetProposalComponent implements OnInit {
         if (!d.IsSuccess) {
           this.data = d;
           // notify the user of a system error
-          this.notificationQueueService.addNotification('An attempt at getting this program application form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
+          this.notificationQueueService.addNotification('An attempt at getting this budget proposal form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
           console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the standard API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
 
           // route back to the dashboard
@@ -105,11 +73,6 @@ export class BudgetProposalComponent implements OnInit {
         }
       });
     })
-    this.revenueSources.push(new RevenueSource());
-    this.expenseItems.push(new ExpenseItem());
-    this.adminExpenseItems.push(new ExpenseItem());
-
-    this.constructDefaultstepperElements();
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
 
