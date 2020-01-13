@@ -14,7 +14,7 @@ import { iQuestionCollection } from '../../core/models/question-collection.inter
   styleUrls: ['./status-report.component.css']
 })
 export class StatusReportComponent implements OnInit {
-  response: any;
+  data: any;
   trans: TransmogrifierStatusReport;
   // used for the stepper component
   stepperElements: iStepperElement[];
@@ -29,7 +29,7 @@ export class StatusReportComponent implements OnInit {
   ngOnInit() {
     this.statusReportService.getStatusReportQuestions('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4', '0e309304-c4e6-e911-b811-00505683fbf4')
       .subscribe(r => {
-        this.response = r;
+        this.data = r;
         this.trans = new TransmogrifierStatusReport(r);
         this.constructDefaultstepperElements();
       });
