@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BudgetProposalService } from '../../core/services/budget-proposal.service';
 import { Component, OnInit } from '@angular/core';
 import { ExpenseItem } from '../../core/models/expense-item.class';
@@ -10,7 +10,7 @@ import { iExpenseItem } from '../../core/models/expense-item.interface';
 import { iExpenseTableMeta } from '../subforms/expense-table/expense-table.component';
 import { iRevenueSource } from '../../core/models/revenue-source.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
-import { SalaryAndBenefits } from '../../core/models/salary-and-benefits.class';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -69,40 +69,46 @@ export class BudgetProposalComponent implements OnInit {
   data: iDynamicsBudgetProposal;
 
   constructor(
+    private notificationQueueService: NotificationQueueService,
     private stepperService: IconStepperService,
     private stateService: StateService,
     private budgetProposalService: BudgetProposalService,
     private route: ActivatedRoute,
+    private router: Router,
+
   ) {
     this.tabs = ['Program Revenue Information', 'Program Expense'];
     this.currentTab = this.tabs[0];
   }
 
   ngOnInit() {
-    // todo remove hard coding
-    this.budgetProposalService.getBudgetProposal('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4', '0e309304-c4e6-e911-b811-00505683fbf4').subscribe(d => {
-      this.data = d;
-      this.trans = new TransmogrifierBudgetProposal(d);
-    });
+    this.route.params.subscribe(p => {
+      // collect the current user information from the state.
+      const userId: string = this.stateService.main.getValue().organizationMeta.userId;
+      const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
+
+      // get the budget proposal from the budget proposal service.
+      this.budgetProposalService.getBudgetProposal(organizationId, userId, p['contractId']).subscribe(d => {
+        if (!d.IsSuccess) {
+          this.data = d;
+          // notify the user of a system error
+          this.notificationQueueService.addNotification('An attempt at getting this program application form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
+          console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the standard API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+
+          // route back to the dashboard
+          this.router.navigate(['/authenticated/dashboard']);
+        } else {
+          this.data = d;
+          // make the transmogrifier for this form
+          this.trans = new TransmogrifierBudgetProposal(d);
+          this.constructDefaultstepperElements();
+        }
+      });
+    })
     this.revenueSources.push(new RevenueSource());
     this.expenseItems.push(new ExpenseItem());
     this.adminExpenseItems.push(new ExpenseItem());
-    // // this.budgetProposalService.getBudgetProposal('asd','asd')
-    // this.route.params.subscribe(p => {
-    //   // collect the contract from the route
-    //   const contractId = p['contractId'];
-    //   // don't subscribe because this is only used at page load to collect meta
-    //   const contracts: iContract[] = this.stateService.main.getValue().contracts;
-    //   // isolate the correct contract
-    //   for (let contract of contracts) {
-    //     if (contract.contractId == contractId) {
-    //       this.contract = contract;
-    //     }
-    //   }
-    //   // clear all of the old stepper elements
-    //   this.stepperService.reset();
-    //   this.constructDefaultstepperElements();
-    // });
+
     this.constructDefaultstepperElements();
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
