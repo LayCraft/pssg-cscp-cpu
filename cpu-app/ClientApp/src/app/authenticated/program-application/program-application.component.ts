@@ -13,7 +13,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
   styleUrls: ['./program-application.component.css']
 })
 export class ProgramApplicationComponent implements OnInit, OnDestroy {
-
+  data: any;
   trans: TransmogrifierProgramApplication;
   // used for the stepper component
   stepperElements: iStepperElement[];
@@ -45,6 +45,7 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {
+            this.data = f;
             // make the transmogrifier for this form
             this.trans = new TransmogrifierProgramApplication(f);
             this.constructDefaultstepperElements(this.trans);
