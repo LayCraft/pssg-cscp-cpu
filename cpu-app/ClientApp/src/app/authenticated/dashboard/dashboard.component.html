@@ -14,15 +14,13 @@
       <app-ministry-contact-box></app-ministry-contact-box>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="upcomingContracts.length" class="row">
     <div class="col">
-
-      <!-- Contract category can be upcoming current past or none -->
       <div class="card mb-4">
         <div class="card-header">Upcoming Contracts</div>
         <div class="card-body">
-          <span *ngFor="let contract of trans.contracts">
-            <div *ngIf="contract.category===categories[0]" class="row mb-1">
+          <span *ngFor="let contract of upcomingContracts">
+            <div class="row mb-1">
               <div class="col">
                 <app-task-list [contract]="contract"></app-task-list>
               </div>
@@ -32,13 +30,13 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="currentContracts.length" class="row">
     <div class="col">
       <div class="card mb-4">
         <div class="card-header">Current Contracts</div>
         <div class="card-body">
-          <span *ngFor="let contract of trans.contracts">
-            <div *ngIf="contract.category===categories[1]" class="row mb-1">
+          <span *ngFor="let contract of currentContracts">
+            <div class="row mb-1">
               <div class="col">
                 <app-task-list [contract]="contract"></app-task-list>
               </div>
@@ -48,13 +46,13 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="pastContracts.length" class="row">
     <div class="col">
       <div class="card mb-4">
         <div class="card-header">Past Contracts</div>
         <div class="card-body">
-          <span *ngFor="let contract of trans.contracts">
-            <div *ngIf="contract.category===categories[2]" class="row mb-1">
+          <span *ngFor="let contract of pastContracts">
+            <div class="row mb-1">
               <div class="col">
                 <app-task-list [contract]="contract"></app-task-list>
               </div>
