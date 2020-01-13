@@ -29,6 +29,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
 
   // expense report
   trans: TransmogrifierExpenseReport;
+  data: any;
   currentUser: iPerson;
 
   constructor(
@@ -58,6 +59,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {
+            this.data = g;
             // make the transmogrifier for this form
             this.trans = new TransmogrifierExpenseReport(g);
             this.calculateLineItemSums();
