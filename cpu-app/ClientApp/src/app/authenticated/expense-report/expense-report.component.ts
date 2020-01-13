@@ -12,7 +12,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
   templateUrl: './expense-report.component.html',
   styleUrls: ['./expense-report.component.css']
 })
-export class ExpenseReportComponent implements OnInit, OnDestroy {
+export class ExpenseReportComponent implements OnInit {
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
@@ -55,30 +55,27 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
           if (!g.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this expense report was unsuccessful. If this problem persists please notify your ministry contact.', 'danger');
-            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the standard API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the expense report API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {
             this.data = g;
             // make the transmogrifier for this form
             this.trans = new TransmogrifierExpenseReport(g);
+            // construct the stepper
+            this.constructDefaultstepperElements();
+            // initial calculations with whatever comes from the server
             this.calculateLineItemSums();
           }
         }
       );
     });
 
-    // construct the stepper
-    this.constructDefaultstepperElements();
-
     // Subscribe to the stepper elements
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
   }
-  ngOnDestroy() {
-    // clean the stepper
-    this.stepperService.reset();
-  }
+
   constructDefaultstepperElements() {
     // clean out the old things that might be living in the stepper.
     this.stepperService.reset();

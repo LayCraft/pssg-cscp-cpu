@@ -12,7 +12,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
   templateUrl: './program-application.component.html',
   styleUrls: ['./program-application.component.css']
 })
-export class ProgramApplicationComponent implements OnInit, OnDestroy {
+export class ProgramApplicationComponent implements OnInit {
   data: any;
   trans: TransmogrifierProgramApplication;
   // used for the stepper component
@@ -57,10 +57,7 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
   }
-  ngOnDestroy() {
-    // clean the stepper
-    this.stepperService.reset();
-  }
+
 
   programApplicationUpdated(programApplication: iProgramApplication): void {
     // handle the updates to the program budget. Write it out to a service or whatever
