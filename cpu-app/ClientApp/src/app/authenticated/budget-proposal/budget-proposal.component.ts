@@ -35,26 +35,28 @@ export class BudgetProposalComponent implements OnInit {
 
   revenueSources: iRevenueSource[] = [];
   expenseItems: iExpenseItem[] = [];
-  defaultExpenseItems: iExpenseItem[] = [
-    { itemName: 'Program - related' } as iExpenseItem,
-    { itemName: 'Program - related office supplies / software' } as iExpenseItem,
-    { itemName: 'Program - related travel' } as iExpenseItem,
-    { itemName: 'Utilities' } as iExpenseItem,
-    { itemName: 'Phone' } as iExpenseItem,
-    { itemName: 'Staff training and associated travel' } as iExpenseItem,
-    { itemName: 'Resource materials / printing costs' } as iExpenseItem,
-    { itemName: 'Volunteer appreciation / honorariums' } as iExpenseItem,
-    { itemName: 'Property maintenance' } as iExpenseItem,
-  ];
+  defaultExpenseItems: iExpenseItem[] = [];
+  // defaultExpenseItems: iExpenseItem[] = [
+  //   { itemName: 'Program - related' } as iExpenseItem,
+  //   { itemName: 'Program - related office supplies / software' } as iExpenseItem,
+  //   { itemName: 'Program - related travel' } as iExpenseItem,
+  //   { itemName: 'Utilities' } as iExpenseItem,
+  //   { itemName: 'Phone' } as iExpenseItem,
+  //   { itemName: 'Staff training and associated travel' } as iExpenseItem,
+  //   { itemName: 'Resource materials / printing costs' } as iExpenseItem,
+  //   { itemName: 'Volunteer appreciation / honorariums' } as iExpenseItem,
+  //   { itemName: 'Property maintenance' } as iExpenseItem,
+  // ];
 
   adminExpenseItems: iExpenseItem[] = [];
-  defaultAdminExpenseItems: iExpenseItem[] = [
-    { itemName: 'Management salary/benefits' } as iExpenseItem,
-    { itemName: 'Administrative support wages/benefits' } as iExpenseItem,
-    { itemName: 'Administration-related' } as iExpenseItem,
-    { itemName: 'Administrative-related utilities' } as iExpenseItem,
-    { itemName: 'Bookeeping/bank fees' } as iExpenseItem,
-  ];
+  defaultAdminExpenseItems: iExpenseItem[] = [];
+  // defaultAdminExpenseItems: iExpenseItem[] = [
+  //   { itemName: 'Management salary/benefits' } as iExpenseItem,
+  //   { itemName: 'Administrative support wages/benefits' } as iExpenseItem,
+  //   { itemName: 'Administration-related' } as iExpenseItem,
+  //   { itemName: 'Administrative-related utilities' } as iExpenseItem,
+  //   { itemName: 'Bookeeping/bank fees' } as iExpenseItem,
+  // ];
 
   // these are programatically referenced so it is nice to have the constants
   sections: string[] = [

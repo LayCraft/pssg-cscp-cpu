@@ -62,7 +62,6 @@
         <h2 class="blue-header">{{sections[0]}}</h2>
         <app-personnel-expense-table [(salariesAndBenefits)]="trans.programBudget.salariesAndBenefits" (meta)="collectMeta( $event, sections[0])"></app-personnel-expense-table>
         <h2 class="blue-header">{{sections[1]}}</h2>
-
         <app-expense-table [(defaultExpenseItems)]="defaultExpenseItems" [(expenseItems)]="expenseItems" [otherDescription]="'Other program-related expenses. Please include memberships one per line.'" (meta)="collectMeta( $event, sections[1])"></app-expense-table>
         <h2 class="blue-header">{{sections[2]}}</h2>
         <app-expense-table [(defaultExpenseItems)]="defaultAdminExpenseItems" [(expenseItems)]="adminExpenseItems" [otherDescription]="'Other administration expenses.'" (meta)="collectMeta( $event, sections[2])"></app-expense-table>

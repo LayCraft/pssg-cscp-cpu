@@ -66,10 +66,10 @@ export class ExpenseTableComponent implements OnInit {
     let totalCostDefaults = 0;
     let totalCostCustom = 0;
     if (this.defaultExpenseItemsForm.length > 0) {
-      totalCostDefaults = this.defaultExpenseItemsForm.map(rs => rs.totalCost).reduce(reducer) || 0;
+      totalCostDefaults = this.defaultExpenseItemsForm.map(rs => rs.cost).reduce(reducer) || 0;
     }
     if (this.expenseItemsForm.length > 0) {
-      totalCostCustom = this.expenseItemsForm.map(rs => rs.totalCost).reduce(reducer) || 0;
+      totalCostCustom = this.expenseItemsForm.map(rs => rs.cost).reduce(reducer) || 0;
     }
     this.totalTotalCost = totalCostDefaults + totalCostCustom;
 

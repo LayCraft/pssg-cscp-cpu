@@ -248,6 +248,12 @@ export interface iDynamicsBudgetProposal {
   Program: iDynamicsCrmProgramBudget;
   ProgramExpenseCollection: iDynamicsProgramExpense[];
   ProgramRevenueSourceCollection: iDynamicsCrmProgramRevenueSource[];
+  EligibleExpenseItemCollection: iDynamicsEligibleExpenseItem[];
+}
+export interface iDynamicsEligibleExpenseItem {
+  vsd_eligibleexpenseitemid: string;
+  vsd_name: string;
+  vsd_programexpensetype: number;
 }
 export interface iDynamicsProgramExpense {
   _transactioncurrencyid_value?: string;
