@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="trans" class="container">
   <div class="row">
     <div class="col-md-4">
       <section class="application-nav sticky-top">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="col-md-8">
-      <div *ngIf="trans && stepperElements && currentStepperElement">
+      <div *ngIf="stepperElements && currentStepperElement">
         <div class="page-header">
           <h1>{{trans.reportingPeriod?trans.reportingPeriod:'Monthly'}} Status Report</h1>
           <p>

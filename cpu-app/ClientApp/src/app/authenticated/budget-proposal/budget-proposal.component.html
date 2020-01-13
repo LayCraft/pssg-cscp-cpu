@@ -1,11 +1,11 @@
-<div class="container">
+<div *ngIf="trans" class="container">
   <div class="row">
     <div class="col-md-4">
       <section class="application-nav sticky-top">
         <app-icon-stepper></app-icon-stepper>
       </section>
     </div>
-    <div *ngIf="trans" class="col-md-8">
+    <div class="col-md-8">
       <ul class="nav nav-pills mb-2">
         <li *ngFor="let tab of tabs" class="nav-item">
           <a class="nav-link" [class.active]="tab===currentTab" (click)="currentTab=tab">{{tab}}</a>
