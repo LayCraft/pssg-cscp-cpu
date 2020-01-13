@@ -30,6 +30,7 @@ export class StateService {
     // on login collect the information from the organization id
     this.mainService.getBlob(userId, orgId).subscribe(
       (m: iDynamicsBlob) => {
+        console.log('Main Data Blob', m);// TODO: Delete this
         // collect the blob into a useful object
         const mainData = new Transmogrifier(m);
         // save the useful blob of viewmodels

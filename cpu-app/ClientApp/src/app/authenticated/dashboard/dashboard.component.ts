@@ -8,6 +8,7 @@ import { Transmogrifier } from '../../core/models/transmogrifier.class';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  data: any;
   trans: Transmogrifier;
   categories = ['upcoming', 'current', 'past'];
 
