@@ -122,7 +122,8 @@ export class Transmogrifier {
           // isCompleted: this.isCompleted(contract.statecode), //TODO: Is this actually meaningful in the FE?
           programs: this.buildPrograms(b, contract.vsd_contractid),
           status: status[1],
-          tasks: this.buildTasks(b, contract.vsd_contractid),
+          tasks: this.buildTasks(b, contract.vsd_contractid).filter(t => !t.isCompleted) || [],
+          completedTasks: this.buildTasks(b, contract.vsd_contractid).filter(t => t.isCompleted) || [],
         });
       }
     }

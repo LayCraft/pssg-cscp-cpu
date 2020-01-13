@@ -9,4 +9,5 @@ export interface iContract {
   status: string;
   programs?: iProgram[];
   tasks?: iTask[];
+  completedTasks?: iTask[];
 }
