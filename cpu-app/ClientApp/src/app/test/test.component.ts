@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BudgetProposalService } from '../core/services/budget-proposal.service';
 
 @Component({
   selector: 'app-test',
