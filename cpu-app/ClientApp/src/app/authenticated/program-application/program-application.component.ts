@@ -40,7 +40,7 @@ export class ProgramApplicationComponent implements OnInit {
           if (!f.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this program application form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
-            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the standard API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the program application API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
 
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
@@ -56,12 +56,6 @@ export class ProgramApplicationComponent implements OnInit {
     // subscribe to the stepper state
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
-  }
-
-
-  programApplicationUpdated(programApplication: iProgramApplication): void {
-    // handle the updates to the program budget. Write it out to a service or whatever
-    console.log("The program application:", programApplication);
   }
 
   isCurrentStepperElement(item: iStepperElement): boolean {

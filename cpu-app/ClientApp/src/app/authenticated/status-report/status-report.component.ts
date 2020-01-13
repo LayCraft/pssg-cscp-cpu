@@ -44,16 +44,40 @@ export class StatusReportComponent implements OnInit {
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {
+            // make the transmogrifier for this form
             this.data = r;
+            // construct the stepper
             this.trans = new TransmogrifierStatusReport(r);
             this.constructDefaultstepperElements();
           }
         });
     });
 
-    // stay in sync with
+    // Subscribe to the stepper elements
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
+  }
+  constructDefaultstepperElements() {
+    this.stepperService.reset();
+    this.trans.statusReportQuestions
+      // .sort((a, b) => {
+      //   if (a.name < b.name) return -1;
+      //   if (a.name > b.name) return 1;
+      //   return 0;
+      // })
+      .map((srq: iQuestionCollection): iStepperElement => {
+        return {
+          itemName: srq.name,
+          formState: 'untouched',
+          object: null,
+          discriminator: null,
+        }
+      })
+      .forEach((f: iStepperElement) => {
+        this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
+      });
+    // make the first element the selected one.
+    this.stepperService.setToFirstStepperElement();
   }
   isCurrentStepperElement(item: iStepperElement): boolean {
     if (item.id === this.currentStepperElement.id) {
@@ -96,26 +120,5 @@ export class StatusReportComponent implements OnInit {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
-  constructDefaultstepperElements() {
-    this.stepperService.reset();
-    this.trans.statusReportQuestions
-      // .sort((a, b) => {
-      //   if (a.name < b.name) return -1;
-      //   if (a.name > b.name) return 1;
-      //   return 0;
-      // })
-      .map((srq: iQuestionCollection): iStepperElement => {
-        return {
-          itemName: srq.name,
-          formState: 'untouched',
-          object: null,
-          discriminator: null,
-        }
-      })
-      .forEach((f: iStepperElement) => {
-        this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
-      });
-    // make the first element the selected one.
-    this.stepperService.setToFirstStepperElement();
-  }
+
 }
