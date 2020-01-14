@@ -1,9 +1,10 @@
 import { iDynamicsBudgetProposal, iDynamicsCrmProgramRevenueSource, iDynamicsProgramExpense, iDynamicsEligibleExpenseItem, iDynamicsCrmProgramBudget, iDynamicsProgramType } from "./dynamics-blob";
-import { iRevenueSource } from "./revenue-source.interface";
-import { revenueSourceType } from "../constants/revenue-source-type";
-import { iProgramBudget } from "./program-budget.interface";
-import { iSalaryAndBenefits } from "./salary-and-benefits.interface";
 import { iExpenseItem } from "./expense-item.interface";
+import { iProgramBudget } from "./program-budget.interface";
+import { iRevenueSource } from "./revenue-source.interface";
+import { iSalaryAndBenefits } from "./salary-and-benefits.interface";
+import { iSignature } from "../../authenticated/subforms/program-authorizer/program-authorizer.component";
+import { revenueSourceType } from "../constants/revenue-source-type";
 import { uuidv4 } from "../constants/uuidv4";
 
 export class TransmogrifierBudgetProposal {
@@ -12,6 +13,7 @@ export class TransmogrifierBudgetProposal {
   public contractId: string;
   public programBudgets: iProgramBudget[];
   private dict: object;
+  public signature: iSignature = undefined; // this needs initialization before we can use it in a component.
   constructor(g: iDynamicsBudgetProposal) {
     // make private dict for looking up guids
     this.dict = this.buildDict(g);

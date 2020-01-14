@@ -20,7 +20,6 @@ export class BudgetProposalComponent implements OnInit {
 
   trans: TransmogrifierBudgetProposal;
   data: iDynamicsBudgetProposal;
-  persons: any;
   personDict: object = {};
   constructor(
     private budgetProposalService: BudgetProposalService,
@@ -33,7 +32,6 @@ export class BudgetProposalComponent implements OnInit {
 
   ngOnInit() {
     // make a dictionary of names
-    this.persons = this.stateService.main.getValue().persons;
     this.personDict = this.stateService.main.getValue().persons
       .map(p => {
         const tmp = {};
