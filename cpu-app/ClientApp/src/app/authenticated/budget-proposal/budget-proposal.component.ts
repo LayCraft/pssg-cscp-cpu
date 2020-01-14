@@ -87,4 +87,13 @@ export class BudgetProposalComponent implements OnInit {
     // set the stepper to the first item
     this.stepperService.setToFirstStepperElement();
   }
+  save() {
+    alert('Nope!');
+    console.log(this.trans);
+  }
+  exit() {
+    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.router.navigate(['/authenticated/dashboard']);
+    }
+  }
 }
