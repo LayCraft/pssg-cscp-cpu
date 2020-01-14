@@ -1,4 +1,4 @@
-import { iDynamicsBudgetProposal, iDynamicsCrmProgramRevenueSource, iDynamicsProgramExpense, iDynamicsEligibleExpenseItem } from "./dynamics-blob";
+import { iDynamicsBudgetProposal, iDynamicsCrmProgramRevenueSource, iDynamicsProgramExpense, iDynamicsEligibleExpenseItem, iDynamicsCrmProgram, iDynamicsCrmProgramBudget } from "./dynamics-blob";
 import { iRevenueSource } from "./revenue-source.interface";
 import { revenueSourceType } from "../constants/revenue-source-type";
 import { iProgramBudget } from "./program-budget.interface";
@@ -10,47 +10,44 @@ export class TransmogrifierBudgetProposal {
   public organizationId: string;
   public userId: string;
   public contractId: string;
-  public revenueSources: iRevenueSource[];
-  //revenue sources
-  //program budget collection
-
-  public programBudget: iProgramBudget;
+  public programBudgets: iProgramBudget[];
 
   constructor(g: iDynamicsBudgetProposal) {
     this.userId = g.Userbceid;// this is the user's bceid
     this.organizationId = g.Businessbceid; // this is the organization's bceid
-    this.revenueSources = this.buildRevenueSources(g);
-    // this.programBudget = this.buildBudgetProposal(g);
+    this.programBudgets = this.buildBudgetProposals(g);
     this.contractId = g.Contract.vsd_contractid;
   }
-  // private buildBudgetProposal(g: iDynamicsBudgetProposal): iProgramBudget {
-  //   return {
-  //     contractId: g.Contract.vsd_contractid || '',
-  //     programId: g.Program.vsd_programid || '',
-  //     name: g.Program.vsd_name || '',
-  //     email: g.Program.vsd_emailaddress || '',
-  //     revenueSources: this.buildRevenueSources(g),
-  //     salariesAndBenefits: this.buildSalariesAndBenefits(g),
-  //     programDeliveryCosts: this.buildProgramDeliveryCosts(g),
-  //     programDeliveryMemberships: this.buildProgramDeliveryMemberships(g),
-  //     programDeliveryOtherExpenses: this.buildProgramDeliveryOtherExpenses(g),
-  //     administrationCosts: this.buildAdministrationCosts(g),
-  //     administrationOtherExpenses: this.buildAdministrationOtherExpenses(g),
-  //   };
-  // }
-  private buildRevenueSources(g: iDynamicsBudgetProposal): iRevenueSource[] {
-    const rs: iRevenueSource[] = [];
-    // for each revenue source in the collection build it into something useful
-    g.ProgramRevenueSourceCollection.forEach((prs: iDynamicsCrmProgramRevenueSource) => {
-      rs.push({
-        revenueSourceName: revenueSourceType(prs.vsd_cpu_revenuesourcetype) || '',
-        cash: prs.vsd_cashcontribution || 0,
-        inKindContribution: prs.vsd_inkindcontribution || 0,
-        other: prs.vsd_cpu_otherrevenuesource || '',
-      });
+  private buildBudgetProposals(g: iDynamicsBudgetProposal): iProgramBudget[] {
+    return g.ProgramCollection.map((d: iDynamicsCrmProgramBudget): iProgramBudget => {
+      return {
+        contractId: g.Contract.vsd_contractid || '',
+        programId: d.vsd_programid || '',
+        name: d.vsd_name || '',
+        email: d.vsd_emailaddress || '',
+        revenueSources: [],
+        salariesAndBenefits: [],
+        programDeliveryCosts: [],
+        programDeliveryMemberships: [],
+        programDeliveryOtherExpenses: [],
+        administrationCosts: [],
+        administrationOtherExpenses: [],
+      };
     })
-    return rs;
   }
+  // private buildRevenueSources(g: iDynamicsBudgetProposal): iRevenueSource[] {
+  //   const rs: iRevenueSource[] = [];
+  //   // for each revenue source in the collection build it into something useful
+  //   g.ProgramRevenueSourceCollection.forEach((prs: iDynamicsCrmProgramRevenueSource) => {
+  //     rs.push({
+  //       revenueSourceName: revenueSourceType(prs.vsd_cpu_revenuesourcetype) || '',
+  //       cash: prs.vsd_cashcontribution || 0,
+  //       inKindContribution: prs.vsd_inkindcontribution || 0,
+  //       other: prs.vsd_cpu_otherrevenuesource || '',
+  //     });
+  //   })
+  //   return rs;
+  // }
   // private buildSalariesAndBenefits(g: iDynamicsBudgetProposal): iSalaryAndBenefits[] {
   //   return g.ProgramExpenseCollection
   //     // filter all non "salaries and benefits" items
@@ -94,16 +91,16 @@ export class TransmogrifierBudgetProposal {
   //   });
   //   return c;
   // }
-  // private buildProgramDeliveryMemberships(g: iDynamicsBudgetProposal): iExpenseItem[] {
-  //   return [];
-  // }
-  // private buildProgramDeliveryOtherExpenses(g: iDynamicsBudgetProposal): iExpenseItem[] {
-  //   return [];
-  // }
-  // private buildAdministrationCosts(g: iDynamicsBudgetProposal): iExpenseItem[] {
-  //   return [];
-  // }
-  // private buildAdministrationOtherExpenses(g: iDynamicsBudgetProposal): iExpenseItem[] {
-  //   return [];
-  // }
+  private buildProgramDeliveryMemberships(g: iDynamicsBudgetProposal): iExpenseItem[] {
+    return [];
+  }
+  private buildProgramDeliveryOtherExpenses(g: iDynamicsBudgetProposal): iExpenseItem[] {
+    return [];
+  }
+  private buildAdministrationCosts(g: iDynamicsBudgetProposal): iExpenseItem[] {
+    return [];
+  }
+  private buildAdministrationOtherExpenses(g: iDynamicsBudgetProposal): iExpenseItem[] {
+    return [];
+  }
 }
