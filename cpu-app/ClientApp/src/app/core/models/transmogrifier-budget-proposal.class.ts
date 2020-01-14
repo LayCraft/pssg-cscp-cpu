@@ -26,7 +26,7 @@ export class TransmogrifierBudgetProposal {
         name: d.vsd_name || '',
         email: d.vsd_emailaddress || '',
         revenueSources: this.buildRevenueSources(g, d.vsd_programid),
-        salariesAndBenefits: [],
+        salariesAndBenefits: this.buildSalariesAndBenefits(g, d.vsd_programid),
         programDeliveryCosts: [],
         programDeliveryMemberships: [],
         programDeliveryOtherExpenses: [],
@@ -36,6 +36,7 @@ export class TransmogrifierBudgetProposal {
     })
   }
   private buildRevenueSources(g: iDynamicsBudgetProposal, programId: string): iRevenueSource[] {
+    // only program id matching revenue sources returned
     const rs: iRevenueSource[] = [];
     // for each revenue source in the collection build it into something useful
     g.ProgramRevenueSourceCollection
@@ -50,22 +51,22 @@ export class TransmogrifierBudgetProposal {
       })
     return rs;
   }
-  // private buildSalariesAndBenefits(g: iDynamicsBudgetProposal): iSalaryAndBenefits[] {
-  //   return g.ProgramExpenseCollection
-  //     // filter all non "salaries and benefits" items
-  //     .filter((e: iDynamicsProgramExpense) => e.vsd_cpu_programexpensetype === 100000000)
-  //     // data munging
-  //     .map((e: iDynamicsProgramExpense): iSalaryAndBenefits => {
-  //       return {
-  //         title: e.vsd_cpu_titleposition || '',
-  //         salary: e.vsd_cpu_salary || 0,
-  //         benefits: e.vsd_cpu_benefits || 0,
-  //         fundedFromVscp: e.vsd_cpu_fundedfromvscp || 0,
-  //         totalCost: e.vsd_totalcost || 0,
-  //         uuid: e.vsd_programexpenseid || uuidv4(),
-  //       }
-  //     });
-  // }
+  private buildSalariesAndBenefits(g: iDynamicsBudgetProposal, programId: string): iSalaryAndBenefits[] {
+    return g.SalaryAndBenefitCollection
+      // filter all non "salaries and benefits" items
+      .filter((e: iDynamicsProgramExpense) => e._vsd_programid_value === programId)
+      // data munging
+      .map((e: iDynamicsProgramExpense): iSalaryAndBenefits => {
+        return {
+          title: e.vsd_cpu_titleposition || '',
+          salary: e.vsd_cpu_salary || 0,
+          benefits: e.vsd_cpu_benefits || 0,
+          fundedFromVscp: e.vsd_cpu_fundedfromvscp || 0,
+          totalCost: e.vsd_totalcost || 0,
+          uuid: e.vsd_programexpenseid || uuidv4(),
+        }
+      });
+  }
   // private buildProgramDeliveryCosts(g: iDynamicsBudgetProposal): iExpenseItem[] {
   //   const dict = g.EligibleExpenseItemCollection.filter(e => e.vsd_programexpensetype !== 100000000)
   //     .map((s: iDynamicsEligibleExpenseItem) => {
