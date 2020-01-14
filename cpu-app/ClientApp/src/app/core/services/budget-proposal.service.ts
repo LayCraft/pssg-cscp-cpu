@@ -16,8 +16,8 @@ export class BudgetProposalService {
     private http: HttpClient,
   ) { }
 
-  getBudgetProposal(organizationId: string, userId: string, programId: string): Observable<iDynamicsBudgetProposal> {
-    return this.http.get<iDynamicsBudgetProposal>(`${this.apiUrl}/${organizationId}/${userId}/${programId}`, { headers: this.headers }).pipe(
+  getBudgetProposal(organizationId: string, userId: string, contractId: string): Observable<iDynamicsBudgetProposal> {
+    return this.http.get<iDynamicsBudgetProposal>(`${this.apiUrl}/${organizationId}/${userId}/${contractId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
