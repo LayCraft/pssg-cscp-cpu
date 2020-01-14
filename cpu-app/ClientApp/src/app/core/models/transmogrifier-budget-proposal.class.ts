@@ -9,12 +9,14 @@ import { uuidv4 } from "../constants/uuidv4";
 export class TransmogrifierBudgetProposal {
   public organizationId: string;
   public userId: string;
+  public contractId: string;
   public programBudget: iProgramBudget;
 
   constructor(g: iDynamicsBudgetProposal) {
     this.userId = g.Userbceid;// this is the user's bceid
     this.organizationId = g.Businessbceid; // this is the organization's bceid
     this.programBudget = this.buildBudgetProposal(g);
+    this.contractId = g.Contract.vsd_contractid;
   }
   private buildBudgetProposal(g: iDynamicsBudgetProposal): iProgramBudget {
     return {
