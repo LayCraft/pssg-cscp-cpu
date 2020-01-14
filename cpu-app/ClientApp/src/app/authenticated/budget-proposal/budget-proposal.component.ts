@@ -5,8 +5,8 @@ import { NotificationQueueService } from '../../core/services/notification-queue
 import { StateService } from '../../core/services/state.service';
 import { TransmogrifierBudgetProposal } from '../../core/models/transmogrifier-budget-proposal.class';
 import { iDynamicsBudgetProposal } from '../../core/models/dynamics-blob';
-import { iExpenseTableMeta } from '../subforms/expense-table/expense-table.component';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { nameAssemble } from '../../core/constants/name-assemble';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -17,27 +17,11 @@ export class BudgetProposalComponent implements OnInit {
   // used for the stepper component
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
-  currentTab: string;
-  tabs: string[];
-  meta: {} = {
-    totals: {
-      // the default totals collector
-      totalCost: 0,
-      totalVscp: 0,
-      totalPercentFundedByVscp: 0,
-    }
-  };
-  // these are programatically referenced so it is nice to have the constants
-  sections: string[] = [
-    'Salaries and Benefits',
-    'Program Delivery Costs',
-    'Administration Costs',
-  ];
-  defaultExpenseItems = [];
-  defaultAdminExpenseItems = [];
+
   trans: TransmogrifierBudgetProposal;
   data: iDynamicsBudgetProposal;
-
+  persons: any;
+  personDict: object = {};
   constructor(
     private budgetProposalService: BudgetProposalService,
     private notificationQueueService: NotificationQueueService,
@@ -45,12 +29,21 @@ export class BudgetProposalComponent implements OnInit {
     private router: Router,
     private stateService: StateService,
     private stepperService: IconStepperService,
-  ) {
-    this.tabs = ['Program Revenue Information', 'Program Expense'];
-    this.currentTab = this.tabs[0];
-  }
+  ) { }
 
   ngOnInit() {
+    // make a dictionary of names
+    this.persons = this.stateService.main.getValue().persons;
+    this.personDict = this.stateService.main.getValue().persons
+      .map(p => {
+        const tmp = {};
+        tmp[p.personId] = nameAssemble(p.firstName, p.middleName, p.lastName);
+        return tmp;
+      })
+      .reduce((prev, curr) => {
+        return { ...prev, ...curr }
+      });
+    // collect the correct budget proposal
     this.route.params.subscribe(p => {
       // collect the current user information from the state.
       const userId: string = this.stateService.main.getValue().organizationMeta.userId;
@@ -87,56 +80,13 @@ export class BudgetProposalComponent implements OnInit {
   }
   constructDefaultstepperElements() {
     this.stepperService.reset();
-    // write the default top element
-    const topper = {
-      itemName: 'Program Overview',
-      formState: 'info',
-      object: null,
-      discriminator: 'program_overview',
-    };
-    this.stepperService.addStepperElement(topper.object, topper.itemName, topper.formState, topper.discriminator);
-    //
-    const bottom = {
-      itemName: 'Authorization',
-      formState: 'untouched',
-      object: null,
-      discriminator: 'authorization'
-    };
-    this.stepperService.addStepperElement(bottom.object, bottom.itemName, bottom.formState, bottom.discriminator);
-  }
-
-  collectMeta(event: iExpenseTableMeta, name: string) {
-    function percentify(event: iExpenseTableMeta): number {
-      // can't divide by zero
-      if (event.totalCost > 0) {
-        // too many decimal points onscreen
-        return Math.round((event.totalVscp / event.totalCost) * 100);
-      } else {
-        return 0;
-      }
-    }
-
-    // save the event meta for display in the summary boxes.
-    this.meta[name] = {
-      name, totalPercentFundedByVscp: percentify(event), ...event
-    };
-
-    // accumulator object in the meta array
-    this.meta['totals'] = {
-      totalCost: 0,
-      totalVscp: 0,
-      totalPercentFundedByVscp: 0,
-    }
-    for (let i = 0; i < this.sections.length; i++) {
-      // if a value is calculated for the section add it to the grand total
-      if (this.meta[this.sections[i]]) {
-        // check that this is not infinity
-        this.meta['totals'].totalCost = this.meta['totals'].totalCost + this.meta[this.sections[i]].totalCost;
-      }
-      if (this.meta[this.sections[i]]) {
-        this.meta['totals'].totalVscp = this.meta['totals'].totalVscp + this.meta[this.sections[i]].totalVscp;
-      }
-    }
-    this.meta['totals'].totalPercentFundedByVscp = percentify(this.meta['totals']);
+    // add the program overview
+    this.stepperService.addStepperElement(null, 'Overview', 'info', 'program_overview');
+    // add the budget navigation for each item
+    this.trans.programBudgets.forEach(pb => this.stepperService.addStepperElement(null, pb.name, 'untouched', pb.programId));
+    // add the authorization page
+    this.stepperService.addStepperElement(null, 'Authorization', 'untouched', 'authorization');
+    // set the stepper to the first item
+    this.stepperService.setToFirstStepperElement();
   }
 }

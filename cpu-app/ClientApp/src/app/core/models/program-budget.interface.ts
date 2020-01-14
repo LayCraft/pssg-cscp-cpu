@@ -3,12 +3,13 @@ import { iExpenseItem } from "./expense-item.interface";
 import { iSalaryAndBenefits } from "./salary-and-benefits.interface";
 
 export interface iProgramBudget {
+  contactLookupId?: string;
   contractId: string;
-  programId: string;
-  name: string;
-  type?: string;
-  formState?: string; // untouched	incomplete	invalid	complete info
   email: string;
+  formState?: string; // untouched	incomplete	invalid	complete info
+  name: string;
+  programId: string;
+  type?: string;
   administrationCosts: iExpenseItem[];
   administrationOtherExpenses: iExpenseItem[];
   programDeliveryCosts: iExpenseItem[];

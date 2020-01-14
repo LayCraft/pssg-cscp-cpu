@@ -1,4 +1,4 @@
-import { iDynamicsBudgetProposal, iDynamicsCrmProgramRevenueSource, iDynamicsProgramExpense, iDynamicsEligibleExpenseItem, iDynamicsCrmProgramBudget } from "./dynamics-blob";
+import { iDynamicsBudgetProposal, iDynamicsCrmProgramRevenueSource, iDynamicsProgramExpense, iDynamicsEligibleExpenseItem, iDynamicsCrmProgramBudget, iDynamicsProgramType } from "./dynamics-blob";
 import { iRevenueSource } from "./revenue-source.interface";
 import { revenueSourceType } from "../constants/revenue-source-type";
 import { iProgramBudget } from "./program-budget.interface";
@@ -15,17 +15,17 @@ export class TransmogrifierBudgetProposal {
   constructor(g: iDynamicsBudgetProposal) {
     // make private dict for looking up guids
     this.dict = this.buildDict(g);
-
     this.userId = g.Userbceid;// this is the user's bceid
     this.organizationId = g.Businessbceid; // this is the organization's bceid
     this.contractId = g.Contract.vsd_contractid; // the contract's id
     this.programBudgets = this.buildBudgetProposals(g);
   }
   private buildDict(g: iDynamicsBudgetProposal): object {
+    // Note: This only works if all guids in dynamics are unique.
     // create a lookup dictionary. It makes an object where a guid is the property and holds a human readable name as the value.
     // e.g. {qw87e6radsa:"Human name", ew491278938:"Useful description"}
-    return g.EligibleExpenseItemCollection
-      .map((s: iDynamicsEligibleExpenseItem) => {
+    const dict = g.EligibleExpenseItemCollection
+      .map((s: iDynamicsEligibleExpenseItem): object => {
         if (s.vsd_eligibleexpenseitemid && s.vsd_name) {
           // make an object to hold the kv pair
           const tmp = {};
@@ -37,6 +37,13 @@ export class TransmogrifierBudgetProposal {
         // put the objects together into one mega lookup object
         return { ...curr, ...prev }
       });
+    // add all of the program type properties to the dict as well
+    g.ProgramTypeCollection
+      .forEach((p: iDynamicsProgramType) => {
+        dict[p.vsd_programtypeid] = p.vsd_name;
+      });
+
+    return dict;
   }
   private buildBudgetProposals(g: iDynamicsBudgetProposal): iProgramBudget[] {
     return g.ProgramCollection.map((d: iDynamicsCrmProgramBudget): iProgramBudget => {
@@ -44,6 +51,7 @@ export class TransmogrifierBudgetProposal {
         contractId: g.Contract.vsd_contractid || '',
         programId: d.vsd_programid || '',
         name: d.vsd_name || '',
+        type: this.dict[d._vsd_programtype_value] || 'Program type not set.',
         email: d.vsd_emailaddress || '',
         administrationCosts: this.expenseItems(g.AdministrationCostCollection, d.vsd_programid),
         administrationOtherExpenses: this.expenseItems(g.AdministrationCostCollection, d.vsd_programid, true),
@@ -51,6 +59,7 @@ export class TransmogrifierBudgetProposal {
         programDeliveryOtherExpenses: this.expenseItems(g.ProgramDeliveryCostCollection, d.vsd_programid, true),
         revenueSources: this.buildRevenueSources(g, d.vsd_programid),
         salariesAndBenefits: this.buildSalariesAndBenefits(g, d.vsd_programid),
+        contactLookupId: d._vsd_contactlookup_value || null
       };
     })
   }
