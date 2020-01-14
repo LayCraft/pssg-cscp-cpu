@@ -51,6 +51,7 @@ export class Transmogrifier {
     }
     return tasks;
   }
+
   private getCorrectTaskIdByDiscriminator(contractId: string, t: iDynamicsCrmTask, discriminator: string): string {
     // lookups are dumb coming back from Dynamics we unify lookups so that we don't have Dynamics idiocy running wild in the forms.
     // sometimes we look up by a scheduleG ID, sometimes by a contractId, sometimes by a programId. :-(
@@ -60,13 +61,13 @@ export class Transmogrifier {
       return t._vsd_programid_value;
     }
     if (discriminator === 'expense_report') {
-      return t._vsd_schedulegid_value;
+      return t._vsd_schedulegid_value;//works
     }
     if (discriminator === 'status_report') {
-      return contractId;
+      return t._vsd_programid_value;
     }
     if (discriminator === 'program_application') {
-      return contractId;
+      return contractId;//works
     }
     return contractId;
   }

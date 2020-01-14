@@ -35,12 +35,12 @@ export class ProgramApplicationComponent implements OnInit {
       const userId: string = this.stateService.main.getValue().organizationMeta.userId;
       const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
       // get the program application to fill
-      this.programApplicationService.getScheduleF(organizationId, userId, p['contractId']).subscribe(
+      this.programApplicationService.getScheduleF(organizationId, userId, p['taskId']).subscribe(
         f => {
           if (!f.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this program application form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
-            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the program application API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['taskId']} from the program application API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
 
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);

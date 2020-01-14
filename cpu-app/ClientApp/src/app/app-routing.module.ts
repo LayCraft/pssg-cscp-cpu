@@ -35,24 +35,24 @@ const routes: Routes = [
         component: DashboardComponent
       },
       {
-        path: 'budget_proposal/:contractId',
+        path: 'budget_proposal/:taskId',
         component: BudgetProposalComponent
       },
       {
-        path: 'expense_report/:contractId',
+        path: 'expense_report/:taskId',
         component: ExpenseReportComponent
       },
       {
-        path: 'program_application/:contractId',
+        path: 'program_application/:taskId',
         component: ProgramApplicationComponent
       },
       {
-        path: 'status_report/:contractId',
+        path: 'status_report/:taskId',
         component: StatusReportComponent
       },
       {
         // if there is extra information we redirect to the profile page anyhow.
-        path: 'profile/:contractId',
+        path: 'profile/:taskId',
         redirectTo: 'profile'
       },
       {

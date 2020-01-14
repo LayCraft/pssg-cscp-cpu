@@ -50,12 +50,12 @@ export class ExpenseReportComponent implements OnInit {
       const userId: string = this.stateService.main.getValue().organizationMeta.userId;
 
       // get the expense report to fill
-      this.expenseReportService.getScheduleG(organizationId, userId, p['contractId']).subscribe(
+      this.expenseReportService.getScheduleG(organizationId, userId, p['taskId']).subscribe(
         g => {
           if (!g.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this expense report was unsuccessful. If this problem persists please notify your ministry contact.', 'danger');
-            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the expense report API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the expense report API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {

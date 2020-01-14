@@ -57,12 +57,12 @@ export class BudgetProposalComponent implements OnInit {
       const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
 
       // get the budget proposal from the budget proposal service.
-      this.budgetProposalService.getBudgetProposal(organizationId, userId, p['contractId']).subscribe(d => {
+      this.budgetProposalService.getBudgetProposal(organizationId, userId, p['taskId']).subscribe(d => {
         if (!d.IsSuccess) {
           this.data = d;
           // notify the user of a system error
           this.notificationQueueService.addNotification('An attempt at getting this budget proposal form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
-          console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the budget proposal API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+          console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the budget proposal API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
 
           // route back to the dashboard
           this.router.navigate(['/authenticated/dashboard']);
