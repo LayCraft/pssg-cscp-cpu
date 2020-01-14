@@ -10,7 +10,7 @@ export class TransmogrifierBudgetProposal {
   public organizationId: string;
   public userId: string;
   public contractId: string;
-
+  public revenueSources: iRevenueSource[];
   //revenue sources
   //program budget collection
 
@@ -19,6 +19,7 @@ export class TransmogrifierBudgetProposal {
   constructor(g: iDynamicsBudgetProposal) {
     this.userId = g.Userbceid;// this is the user's bceid
     this.organizationId = g.Businessbceid; // this is the organization's bceid
+    this.revenueSources = this.buildRevenueSources(g);
     // this.programBudget = this.buildBudgetProposal(g);
     this.contractId = g.Contract.vsd_contractid;
   }
@@ -37,19 +38,19 @@ export class TransmogrifierBudgetProposal {
   //     administrationOtherExpenses: this.buildAdministrationOtherExpenses(g),
   //   };
   // }
-  // private buildRevenueSources(g: iDynamicsBudgetProposal): iRevenueSource[] {
-  //   const rs: iRevenueSource[] = [];
-  //   // for each revenue source in the collection build it into something useful
-  //   g.ProgramRevenueSourceCollection.forEach((prs: iDynamicsCrmProgramRevenueSource) => {
-  //     rs.push({
-  //       revenueSourceName: revenueSourceType(prs.vsd_cpu_revenuesourcetype) || '',
-  //       cash: prs.vsd_cashcontribution || 0,
-  //       inKindContribution: prs.vsd_inkindcontribution || 0,
-  //       other: prs.vsd_cpu_otherrevenuesource || '',
-  //     });
-  //   })
-  //   return rs;
-  // }
+  private buildRevenueSources(g: iDynamicsBudgetProposal): iRevenueSource[] {
+    const rs: iRevenueSource[] = [];
+    // for each revenue source in the collection build it into something useful
+    g.ProgramRevenueSourceCollection.forEach((prs: iDynamicsCrmProgramRevenueSource) => {
+      rs.push({
+        revenueSourceName: revenueSourceType(prs.vsd_cpu_revenuesourcetype) || '',
+        cash: prs.vsd_cashcontribution || 0,
+        inKindContribution: prs.vsd_inkindcontribution || 0,
+        other: prs.vsd_cpu_otherrevenuesource || '',
+      });
+    })
+    return rs;
+  }
   // private buildSalariesAndBenefits(g: iDynamicsBudgetProposal): iSalaryAndBenefits[] {
   //   return g.ProgramExpenseCollection
   //     // filter all non "salaries and benefits" items
