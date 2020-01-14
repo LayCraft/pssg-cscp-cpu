@@ -25,7 +25,7 @@ export class TransmogrifierBudgetProposal {
         programId: d.vsd_programid || '',
         name: d.vsd_name || '',
         email: d.vsd_emailaddress || '',
-        revenueSources: [],
+        revenueSources: this.buildRevenueSources(g, d.vsd_programid),
         salariesAndBenefits: [],
         programDeliveryCosts: [],
         programDeliveryMemberships: [],
@@ -35,19 +35,21 @@ export class TransmogrifierBudgetProposal {
       };
     })
   }
-  // private buildRevenueSources(g: iDynamicsBudgetProposal): iRevenueSource[] {
-  //   const rs: iRevenueSource[] = [];
-  //   // for each revenue source in the collection build it into something useful
-  //   g.ProgramRevenueSourceCollection.forEach((prs: iDynamicsCrmProgramRevenueSource) => {
-  //     rs.push({
-  //       revenueSourceName: revenueSourceType(prs.vsd_cpu_revenuesourcetype) || '',
-  //       cash: prs.vsd_cashcontribution || 0,
-  //       inKindContribution: prs.vsd_inkindcontribution || 0,
-  //       other: prs.vsd_cpu_otherrevenuesource || '',
-  //     });
-  //   })
-  //   return rs;
-  // }
+  private buildRevenueSources(g: iDynamicsBudgetProposal, programId: string): iRevenueSource[] {
+    const rs: iRevenueSource[] = [];
+    // for each revenue source in the collection build it into something useful
+    g.ProgramRevenueSourceCollection
+      .filter((prs: iDynamicsCrmProgramRevenueSource) => prs._vsd_programid_value === programId)
+      .forEach((prs: iDynamicsCrmProgramRevenueSource) => {
+        rs.push({
+          revenueSourceName: revenueSourceType(prs.vsd_cpu_revenuesourcetype) || '',
+          cash: prs.vsd_cashcontribution || 0,
+          inKindContribution: prs.vsd_inkindcontribution || 0,
+          other: prs.vsd_cpu_otherrevenuesource || '',
+        });
+      })
+    return rs;
+  }
   // private buildSalariesAndBenefits(g: iDynamicsBudgetProposal): iSalaryAndBenefits[] {
   //   return g.ProgramExpenseCollection
   //     // filter all non "salaries and benefits" items
