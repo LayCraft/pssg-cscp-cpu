@@ -58,7 +58,7 @@ export class Transmogrifier {
     // the front end doesn't need to handle guids differently. They all act as a lookup key.
     // this is shorthand for an if statement in an if statement
     if (discriminator === 'budget_proposal') {
-      return t._vsd_programid_value;
+      return contractId;
     }
     if (discriminator === 'expense_report') {
       return t._vsd_schedulegid_value;//works

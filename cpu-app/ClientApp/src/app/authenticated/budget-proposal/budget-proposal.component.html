@@ -6,14 +6,13 @@
       </section>
     </div>
     <div class="col-md-8">
-      <ul class="nav nav-pills mb-2">
+      <!-- <ul class="nav nav-pills mb-2">
         <li *ngFor="let tab of tabs" class="nav-item">
           <a class="nav-link" [class.active]="tab===currentTab" (click)="currentTab=tab">{{tab}}</a>
         </li>
       </ul>
       <h2>{{currentTab}}</h2>
       <div *ngIf="currentTab===tabs[0]">
-        <!-- Program revenue information -->
         <h2 class="blue-header">{{currentTab}}</h2>
         <ol>
           <li>For each program applied for, a separate Budget Proposal must be completed. </li>
@@ -37,7 +36,6 @@
         <app-revenue-source-table [(revenueSources)]="trans.programBudget.revenueSources"></app-revenue-source-table>
       </div>
       <div *ngIf="currentTab===tabs[1]">
-        <!-- Program Expense -->
         <h2 class="blue-header">{{sections[0]}}</h2>
         <app-personnel-expense-table [(salariesAndBenefits)]="trans.programBudget.salariesAndBenefits" (meta)="collectMeta( $event, sections[0])"></app-personnel-expense-table>
         <h2 class="blue-header">{{sections[1]}}</h2>
@@ -83,7 +81,7 @@
             </tbody>
           </table>
         </span>
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="row">
