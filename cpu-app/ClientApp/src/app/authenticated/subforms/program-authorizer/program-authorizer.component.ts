@@ -83,9 +83,8 @@ export class ProgramAuthorizerComponent implements OnInit {
 
   acceptSignature() {
     if (this.wasSigned) {
-      let signatureData = this.signaturePad.toDataURL();
-      this.signature.signature = signatureData;
-      this.signature.signatureDate = new Date()
+      this.signature.signature = this.signaturePad.toDataURL();
+      this.signature.signatureDate = new Date();
     }
   }
   drawStart() {
