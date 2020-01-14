@@ -6,12 +6,16 @@
       </section>
     </div>
     <div class="col-md-8">
-      <!-- <ul class="nav nav-pills mb-2">
+      <ul class="nav nav-pills mb-2">
         <li *ngFor="let tab of tabs" class="nav-item">
           <a class="nav-link" [class.active]="tab===currentTab" (click)="currentTab=tab">{{tab}}</a>
         </li>
       </ul>
       <h2>{{currentTab}}</h2>
+      <div *ngFor="let programBudget of trans.programBudgets">
+        <app-program-budget [(programBudget)]="programBudget"></app-program-budget>
+      </div>
+      <!--
       <div *ngIf="currentTab===tabs[0]">
         <h2 class="blue-header">{{currentTab}}</h2>
         <ol>
