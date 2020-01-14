@@ -9,11 +9,10 @@ export interface iProgramBudget {
   type?: string;
   formState?: string; // untouched	incomplete	invalid	complete info
   email: string;
-  revenueSources: iRevenueSource[];
-  salariesAndBenefits: iSalaryAndBenefits[];
-  programDeliveryCosts: iExpenseItem[];
-  programDeliveryMemberships: iExpenseItem[];
-  programDeliveryOtherExpenses: iExpenseItem[];
   administrationCosts: iExpenseItem[];
   administrationOtherExpenses: iExpenseItem[];
+  programDeliveryCosts: iExpenseItem[];
+  programDeliveryOtherExpenses: iExpenseItem[];
+  revenueSources: iRevenueSource[];
+  salariesAndBenefits: iSalaryAndBenefits[];
 }
