@@ -12,8 +12,10 @@ export interface iExpenseTableMeta {
   styleUrls: ['./expense-table.component.css']
 })
 export class ExpenseTableComponent implements OnInit {
+  // default expense items are the ones sent from dynamics which make up the top of the table
   @Input() defaultExpenseItems: iExpenseItem[] = [];
   @Output() defaultExpenseItemsChange = new EventEmitter<iExpenseItem[]>();
+  // expense items are the ones that the user has entered on their own
   @Input() expenseItems: iExpenseItem[] = [];
   @Output() expenseItemsChange = new EventEmitter<iExpenseItem[]>();
   @Input() otherDescription: string;
@@ -30,12 +32,16 @@ export class ExpenseTableComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // build the main list
     if (this.defaultExpenseItems) this.defaultExpenseItems.forEach(e => {
       this.defaultExpenseItemsForm.push(e);
     });
+    // build the custom list
     if (this.expenseItems) this.expenseItems.forEach(e => {
       this.expenseItemsForm.push(e);
     });
+    // now that we put them all in recalculate the totals
+    this.calculateTotals();
   }
 
   addExpenseItem(): void {

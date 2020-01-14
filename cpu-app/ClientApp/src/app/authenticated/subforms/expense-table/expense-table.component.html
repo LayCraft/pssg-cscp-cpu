@@ -8,15 +8,15 @@
     </th>
   </thead>
   <tbody>
-    <tr *ngFor="let line of defaultExpenseItemsForm; let i=index">
+    <tr *ngFor="let line of defaultExpenseItemsForm">
       <td>
         {{line.itemName}}
       </td>
       <td>
-        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.totalCost" min="0" id="total_cost_{{i}}">
+        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.cost" min="0" id="total_cost_{{line.uuid}}">
       </td>
       <td>
-        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{i}}">
+        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{line.uuid}}">
       </td>
       <td>
         <!-- For spacing only -->
@@ -29,13 +29,13 @@
     </tr>
     <tr *ngFor="let line of expenseItemsForm; let i=index">
       <td>
-        <input class="form-control" type="text" [(ngModel)]="line.itemName" min="0" id="expense_name_{{i}}">
+        <input class="form-control" type="text" [(ngModel)]="line.itemName" min="0" id="expense_name_{{line.uuid}}">
       </td>
       <td>
-        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.totalCost" min="0" id="total_cost_{{i}}">
+        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.cost" min="0" id="total_cost_{{line.uuid}}">
       </td>
       <td>
-        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{i}}">
+        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{line.uuid}}">
       </td>
       <td (click)="removeExpenseItem(i)" class="align-middle">
         <i class="fas fa-times-circle text-danger"></i>
