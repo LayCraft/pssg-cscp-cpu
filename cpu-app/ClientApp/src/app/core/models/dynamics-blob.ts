@@ -239,15 +239,28 @@ export interface iDynamicsRegionDistrict {
 }
 
 export interface iDynamicsBudgetProposal {
-  IsSuccess: boolean;
-  Result: string;
-  Userbceid: string;
+  AdministrationCostCollection: iDynamicsProgramExpense[];
   Businessbceid: string;
   Contract: iDynamicsCrmContract;
+  EligibleExpenseItemCollection: iDynamicsEligibleExpenseItem[];
+  IsSuccess: boolean;
   Organization: iDynamicsOrganization;
-  Program: iDynamicsCrmProgramBudget;
-  ProgramExpenseCollection: iDynamicsProgramExpense[];
+  ProgramCollection: iDynamicsCrmProgramBudget[];
+  ProgramDeliveryCostCollection: iDynamicsProgramExpense[];
   ProgramRevenueSourceCollection: iDynamicsCrmProgramRevenueSource[];
+  Result: string;
+  SalaryAndBenefitCollection: iDynamicsProgramExpense[];
+  Userbceid: string;
+  ProgramTypeCollection: iDynamicsProgramType[];
+}
+export interface iDynamicsProgramType {
+  vsd_programtypeid: string;
+  vsd_name: string;
+}
+export interface iDynamicsEligibleExpenseItem {
+  vsd_eligibleexpenseitemid: string;
+  vsd_name: string;
+  vsd_programexpensetype: number;
 }
 export interface iDynamicsProgramExpense {
   _transactioncurrencyid_value?: string;
@@ -261,6 +274,7 @@ export interface iDynamicsProgramExpense {
   vsd_cpu_salary?: number;
   vsd_inputamount?: number;
   vsd_totalcost?: number;
+  vsd_cpu_otherexpense?: string;
 }
 export interface iDynamicsCrmProgramBudget {
   _transactioncurrencyid_value?: string,

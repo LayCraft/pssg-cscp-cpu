@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="trans" class="container">
   <div class="row">
     <div class="col-md-4">
       <section class="application-nav sticky-top">
@@ -18,7 +18,7 @@
         <h2 class="blue-header">{{currentStepperElement.itemName}}</h2>
         <div *ngFor="let item of stepperElements">
           <!-- check if the expense report has loaded and the current stepper is correct -->
-          <span *ngIf="er && item.id===currentStepperElement.id">
+          <span *ngIf="item.id===currentStepperElement.id">
             <div *ngIf="item.discriminator === discriminators[0]">
               <table class="table table-sm table-striped">
                 <thead class="thead">
@@ -203,6 +203,14 @@
           </span>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <pre>{{data|json}}</pre>
+    </div>
+    <div class="col-6">
+      <pre>{{trans|json}}</pre>
     </div>
   </div>
 </div>

@@ -41,6 +41,7 @@ import { StatusReportComponent } from './authenticated/status-report/status-repo
 import { TaskListComponent } from './authenticated/components/task-list/task-list.component';
 import { TestComponent } from './test/test.component';
 import { PersonnelExpenseTableComponent } from './authenticated/subforms/personnel-expense-table/personnel-expense-table.component';
+import { ProgramBudgetComponent } from './authenticated/subforms/program-budget/program-budget.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { PersonnelExpenseTableComponent } from './authenticated/subforms/personn
     TaskListComponent,
     TestComponent,
     PersonnelExpenseTableComponent,
+    ProgramBudgetComponent,
   ],
   imports: [
     AppRoutingModule,

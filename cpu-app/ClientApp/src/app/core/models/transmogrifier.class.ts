@@ -43,7 +43,7 @@ export class Transmogrifier {
           // make a date from the supplied date. TODO MomentJS
           deadline: task.scheduledend ? new Date(task.scheduledend) : null,
 
-          taskId: this.getCorrectTaskIdByDiscriminator(contractId, task, formType(task._vsd_tasktypeid_value)),
+          taskId: this.getCorrectTaskIdByDiscriminator(contractId, task._vsd_programid_value, task, formType(task._vsd_tasktypeid_value)),
           // what kind of form is this?
           formType: formType(task._vsd_tasktypeid_value),
         });
@@ -51,22 +51,24 @@ export class Transmogrifier {
     }
     return tasks;
   }
-  private getCorrectTaskIdByDiscriminator(contractId: string, t: iDynamicsCrmTask, discriminator: string): string {
+
+  private getCorrectTaskIdByDiscriminator(contractId: string, programId: string, t: iDynamicsCrmTask, discriminator: string): string {
     // lookups are dumb coming back from Dynamics we unify lookups so that we don't have Dynamics idiocy running wild in the forms.
     // sometimes we look up by a scheduleG ID, sometimes by a contractId, sometimes by a programId. :-(
     // the front end doesn't need to handle guids differently. They all act as a lookup key.
     // this is shorthand for an if statement in an if statement
     if (discriminator === 'budget_proposal') {
-      return t._vsd_programid_value;
+      return contractId;//works
     }
     if (discriminator === 'expense_report') {
-      return t._vsd_schedulegid_value;
+      return t._vsd_schedulegid_value;//works
     }
     if (discriminator === 'status_report') {
-      return contractId;
+      console.log('Status report', t);
+      return programId;
     }
     if (discriminator === 'program_application') {
-      return contractId;
+      return contractId;//works
     }
     return contractId;
   }
@@ -122,7 +124,8 @@ export class Transmogrifier {
           // isCompleted: this.isCompleted(contract.statecode), //TODO: Is this actually meaningful in the FE?
           programs: this.buildPrograms(b, contract.vsd_contractid),
           status: status[1],
-          tasks: this.buildTasks(b, contract.vsd_contractid),
+          tasks: this.buildTasks(b, contract.vsd_contractid).filter(t => !t.isCompleted) || [],
+          completedTasks: this.buildTasks(b, contract.vsd_contractid).filter(t => t.isCompleted) || [],
         });
       }
     }

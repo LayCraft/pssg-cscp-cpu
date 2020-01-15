@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { StatusReportService } from '../../core/services/status-report.service';
 import { TransmogrifierStatusReport } from '../../core/models/transmogrifier-status-report.class';
 import { convertStatusReportToDynamics } from '../../core/models/converters/status-report-to-dynamics';
 import { iDynamicsPostStatusReport } from '../../core/models/dynamics-post';
 import { iQuestionCollection } from '../../core/models/question-collection.interface';
+import { StateService } from '../../core/services/state.service';
 
 @Component({
   selector: 'app-status-report',
@@ -14,29 +15,69 @@ import { iQuestionCollection } from '../../core/models/question-collection.inter
   styleUrls: ['./status-report.component.css']
 })
 export class StatusReportComponent implements OnInit {
-  response: any;
+  data: any;
   trans: TransmogrifierStatusReport;
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
   constructor(
     private notificationQueueService: NotificationQueueService,
+    private route: ActivatedRoute,
     private router: Router,
     private statusReportService: StatusReportService,
+    private stateService: StateService,
     private stepperService: IconStepperService,
   ) { }
 
   ngOnInit() {
-    this.statusReportService.getStatusReportQuestions('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4', '0e309304-c4e6-e911-b811-00505683fbf4')
-      .subscribe(r => {
-        this.response = r;
-        this.trans = new TransmogrifierStatusReport(r);
-        this.constructDefaultstepperElements();
-      });
+    this.route.params.subscribe(p => {
+      // collect information for collecting the data
+      const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
+      const userId: string = this.stateService.main.getValue().organizationMeta.userId;
 
-    // stay in sync with
+      this.statusReportService.getStatusReportQuestions(organizationId, userId, p['taskId'])
+        .subscribe(r => {
+          if (!r.IsSuccess) {
+            // notify the user of a system error
+            this.notificationQueueService.addNotification('An attempt at getting this status report was unsuccessful. If this problem persists please notify your ministry contact.', 'danger');
+            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the status report API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+            // route back to the dashboard
+            this.router.navigate(['/authenticated/dashboard']);
+          } else {
+            // make the transmogrifier for this form
+            this.data = r;
+            // construct the stepper
+            this.trans = new TransmogrifierStatusReport(r);
+            this.constructDefaultstepperElements();
+          }
+        });
+    });
+
+    // Subscribe to the stepper elements
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
+  }
+  constructDefaultstepperElements() {
+    this.stepperService.reset();
+    this.trans.statusReportQuestions
+      // .sort((a, b) => {
+      //   if (a.name < b.name) return -1;
+      //   if (a.name > b.name) return 1;
+      //   return 0;
+      // })
+      .map((srq: iQuestionCollection): iStepperElement => {
+        return {
+          itemName: srq.name,
+          formState: 'untouched',
+          object: null,
+          discriminator: null,
+        }
+      })
+      .forEach((f: iStepperElement) => {
+        this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
+      });
+    // make the first element the selected one.
+    this.stepperService.setToFirstStepperElement();
   }
   isCurrentStepperElement(item: iStepperElement): boolean {
     if (item.id === this.currentStepperElement.id) {
@@ -79,26 +120,5 @@ export class StatusReportComponent implements OnInit {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
-  constructDefaultstepperElements() {
-    this.stepperService.reset();
-    this.trans.statusReportQuestions
-      // .sort((a, b) => {
-      //   if (a.name < b.name) return -1;
-      //   if (a.name > b.name) return 1;
-      //   return 0;
-      // })
-      .map((srq: iQuestionCollection): iStepperElement => {
-        return {
-          itemName: srq.name,
-          formState: 'untouched',
-          object: null,
-          discriminator: null,
-        }
-      })
-      .forEach((f: iStepperElement) => {
-        this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
-      });
-    // make the first element the selected one.
-    this.stepperService.setToFirstStepperElement();
-  }
+
 }

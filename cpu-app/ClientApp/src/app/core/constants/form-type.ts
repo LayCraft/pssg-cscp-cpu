@@ -19,14 +19,13 @@ export function formType(discriminator: string, getName = false): string {
       formType = getName ? 'Information checkup' : 'profile';
       break;
     }
-    // todo: why are there two discriminators for one form type? Are they the same form?
     case 'e023659f-e8f5-e911-b811-00505683fbf4': {
-      console.log('Supported program application discriminator: e023659f-e8f5-e911-b811-00505683fbf4');
+      // renew and sign contract (what is the difference between the two?)
       formType = getName ? 'Annual program application' : 'program_application'; // I think this is for renewal maybe?
       break;
     }
     case '47525432-e8f5-e911-b811-00505683fbf4': {
-      console.log('Unsupported program application discriminator: 47525432-e8f5-e911-b811-00505683fbf4');
+      // renew contract application (what is the difference between the two?)
       formType = getName ? 'Annual program application' : 'program_application';
       break;
     }

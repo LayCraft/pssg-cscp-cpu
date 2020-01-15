@@ -12,10 +12,10 @@ export class ProgramBudget implements iProgramBudget {
   type: string;
   formState: string; // untouched	incomplete	invalid	complete info
   email: string;
+  contactLookupId?: string;
   revenueSources: iRevenueSource[];
   salariesAndBenefits: iSalaryAndBenefits[] = [];
   programDeliveryCosts: iExpenseItem[] = [];
-  programDeliveryMemberships: iExpenseItem[] = [];
   programDeliveryOtherExpenses: iExpenseItem[] = [];
   administrationCosts: iExpenseItem[] = [];
   administrationOtherExpenses: iExpenseItem[] = [];
@@ -28,10 +28,10 @@ export class ProgramBudget implements iProgramBudget {
       this.formState = pb.formState || null;
       this.email = pb.email || null;
       this.revenueSources = pb.revenueSources || null;
+      this.contactLookupId = pb.contactLookupId || null;
       // if it exists loop over item and make a new object otherwise set the property to a blank array
       pb.salariesAndBenefits ? pb.salariesAndBenefits.forEach(x => this.salariesAndBenefits.push(new SalaryAndBenefits(x))) : this.salariesAndBenefits = [];
       pb.programDeliveryCosts ? pb.programDeliveryCosts.forEach(x => this.programDeliveryCosts.push(new ExpenseItem(x))) : this.programDeliveryCosts = [];
-      pb.programDeliveryMemberships ? pb.programDeliveryMemberships.forEach(x => this.programDeliveryMemberships.push(new ExpenseItem(x))) : this.programDeliveryMemberships = [];
       pb.programDeliveryOtherExpenses ? pb.programDeliveryOtherExpenses.forEach(x => this.programDeliveryOtherExpenses.push(new ExpenseItem(x))) : this.programDeliveryOtherExpenses = [];
       pb.administrationCosts ? pb.administrationCosts.forEach(x => this.administrationCosts.push(new ExpenseItem(x))) : this.administrationCosts = [];
       pb.administrationOtherExpenses ? pb.administrationOtherExpenses.forEach(x => this.administrationOtherExpenses.push(new ExpenseItem(x))) : this.administrationOtherExpenses = [];

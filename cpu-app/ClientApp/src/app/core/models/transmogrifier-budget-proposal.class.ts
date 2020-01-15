@@ -1,55 +1,90 @@
-import { iDynamicsBudgetProposal, iDynamicsCrmProgramRevenueSource, iDynamicsProgramExpense } from "./dynamics-blob";
-import { iRevenueSource } from "./revenue-source.interface";
-import { revenueSourceType } from "../constants/revenue-source-type";
-import { iProgramBudget } from "./program-budget.interface";
-import { iSalaryAndBenefits } from "./salary-and-benefits.interface";
+import { iDynamicsBudgetProposal, iDynamicsCrmProgramRevenueSource, iDynamicsProgramExpense, iDynamicsEligibleExpenseItem, iDynamicsCrmProgramBudget, iDynamicsProgramType } from "./dynamics-blob";
 import { iExpenseItem } from "./expense-item.interface";
+import { iProgramBudget } from "./program-budget.interface";
+import { iRevenueSource } from "./revenue-source.interface";
+import { iSalaryAndBenefits } from "./salary-and-benefits.interface";
+import { iSignature } from "../../authenticated/subforms/program-authorizer/program-authorizer.component";
+import { revenueSourceType } from "../constants/revenue-source-type";
 import { uuidv4 } from "../constants/uuidv4";
 
 export class TransmogrifierBudgetProposal {
   public organizationId: string;
   public userId: string;
-  public programBudget: iProgramBudget;
-
+  public contractId: string;
+  public programBudgets: iProgramBudget[];
+  private dict: object;
+  public signature: iSignature = undefined; // this needs initialization before we can use it in a component.
   constructor(g: iDynamicsBudgetProposal) {
+    // make private dict for looking up guids
+    this.dict = this.buildDict(g);
     this.userId = g.Userbceid;// this is the user's bceid
     this.organizationId = g.Businessbceid; // this is the organization's bceid
-    this.programBudget = this.buildBudgetProposal(g);
+    this.contractId = g.Contract.vsd_contractid; // the contract's id
+    this.programBudgets = this.buildBudgetProposals(g);
   }
-  buildBudgetProposal(g: iDynamicsBudgetProposal): iProgramBudget {
-    return {
-      contractId: g.Contract.vsd_contractid || '',
-      programId: g.Program.vsd_programid || '',
-      name: g.Program.vsd_name || '',
-      email: g.Program.vsd_emailaddress || '',
-      revenueSources: this.buildRevenueSources(g),
-      salariesAndBenefits: this.buildSalariesAndBenefits(g),
-      programDeliveryCosts: this.buildProgramDeliveryCosts(g),
-      programDeliveryMemberships: this.buildProgramDeliveryMemberships(g),
-      programDeliveryOtherExpenses: this.buildProgramDeliveryOtherExpenses(g),
-      administrationCosts: this.buildAdministrationCosts(g),
-      administrationOtherExpenses: this.buildAdministrationOtherExpenses(g),
-    };
-  }
-  buildRevenueSources(g: iDynamicsBudgetProposal): iRevenueSource[] {
-    const rs: iRevenueSource[] = [];
-    // for each revenue source in the collection build it into something useful
-    g.ProgramRevenueSourceCollection.forEach((prs: iDynamicsCrmProgramRevenueSource) => {
-      rs.push({
-        revenueSourceName: revenueSourceType(prs.vsd_cpu_revenuesourcetype) || '',
-        cash: prs.vsd_cashcontribution || 0,
-        inKindContribution: prs.vsd_inkindcontribution || 0,
-        other: prs.vsd_cpu_otherrevenuesource || '',
+  private buildDict(g: iDynamicsBudgetProposal): object {
+    // Note: This only works if all guids in dynamics are unique.
+    // create a lookup dictionary. It makes an object where a guid is the property and holds a human readable name as the value.
+    // e.g. {qw87e6radsa:"Human name", ew491278938:"Useful description"}
+    const dict = g.EligibleExpenseItemCollection
+      .map((s: iDynamicsEligibleExpenseItem): object => {
+        if (s.vsd_eligibleexpenseitemid && s.vsd_name) {
+          // make an object to hold the kv pair
+          const tmp = {};
+          // assign the name to a property with matching guid
+          tmp[s.vsd_eligibleexpenseitemid] = s.vsd_name;
+          return tmp;
+        }
+      }).reduce((prev, curr) => {
+        // put the objects together into one mega lookup object
+        return { ...curr, ...prev }
       });
-    })
-    return rs;
+    // add all of the program type properties to the dict as well
+    g.ProgramTypeCollection
+      .forEach((p: iDynamicsProgramType) => {
+        dict[p.vsd_programtypeid] = p.vsd_name;
+      });
+
+    return dict;
   }
-  buildSalariesAndBenefits(g: iDynamicsBudgetProposal): iSalaryAndBenefits[] {
-    return g.ProgramExpenseCollection
-      // filter all non "salaries and benefits" items
-      .filter((e: iDynamicsProgramExpense) => e.vsd_cpu_programexpensetype === 100000000)
-      // data munging
+  private buildBudgetProposals(g: iDynamicsBudgetProposal): iProgramBudget[] {
+    return g.ProgramCollection.map((d: iDynamicsCrmProgramBudget): iProgramBudget => {
+      return {
+        contractId: g.Contract.vsd_contractid || '',
+        programId: d.vsd_programid || '',
+        name: d.vsd_name || '',
+        type: this.dict[d._vsd_programtype_value] || 'Program type not set.',
+        email: d.vsd_emailaddress || '',
+        administrationCosts: this.expenseItems(g.AdministrationCostCollection, d.vsd_programid),
+        administrationOtherExpenses: this.expenseItems(g.AdministrationCostCollection, d.vsd_programid, true),
+        programDeliveryCosts: this.expenseItems(g.ProgramDeliveryCostCollection, d.vsd_programid),
+        programDeliveryOtherExpenses: this.expenseItems(g.ProgramDeliveryCostCollection, d.vsd_programid, true),
+        revenueSources: this.buildRevenueSources(g, d.vsd_programid),
+        salariesAndBenefits: this.buildSalariesAndBenefits(g, d.vsd_programid),
+        contactLookupId: d._vsd_contactlookup_value || null
+      };
+    })
+  }
+  private buildRevenueSources(g: iDynamicsBudgetProposal, programId: string): iRevenueSource[] {
+    // for each revenue source in the collection build it into something useful
+    return g.ProgramRevenueSourceCollection
+      // get rid of all other programs
+      .filter((prs: iDynamicsCrmProgramRevenueSource) => prs._vsd_programid_value === programId)
+      .map((prs: iDynamicsCrmProgramRevenueSource): iRevenueSource => {
+        return {
+          revenueSourceName: revenueSourceType(prs.vsd_cpu_revenuesourcetype) || '',
+          cash: prs.vsd_cashcontribution || 0,
+          inKindContribution: prs.vsd_inkindcontribution || 0,
+          other: prs.vsd_cpu_otherrevenuesource || '',
+        };
+      })
+  }
+  private buildSalariesAndBenefits(g: iDynamicsBudgetProposal, programId: string): iSalaryAndBenefits[] {
+    return g.SalaryAndBenefitCollection
+      // get rid of all other programs
+      .filter((e: iDynamicsProgramExpense) => e._vsd_programid_value === programId)
       .map((e: iDynamicsProgramExpense): iSalaryAndBenefits => {
+        // data munging
         return {
           title: e.vsd_cpu_titleposition || '',
           salary: e.vsd_cpu_salary || 0,
@@ -60,20 +95,22 @@ export class TransmogrifierBudgetProposal {
         }
       });
   }
-  buildProgramDeliveryCosts(g: iDynamicsBudgetProposal): iExpenseItem[] {
-    return [];
-
-  }
-  buildProgramDeliveryMemberships(g: iDynamicsBudgetProposal): iExpenseItem[] {
-    return [];
-  }
-  buildProgramDeliveryOtherExpenses(g: iDynamicsBudgetProposal): iExpenseItem[] {
-    return [];
-  }
-  buildAdministrationCosts(g: iDynamicsBudgetProposal): iExpenseItem[] {
-    return [];
-  }
-  buildAdministrationOtherExpenses(g: iDynamicsBudgetProposal): iExpenseItem[] {
-    return [];
+  private expenseItems(items: iDynamicsProgramExpense[], programId: string, other = false): iExpenseItem[] {
+    // by turning on the other variable we return only the "other" category of items from the list
+    // we determine what is considered other by checking if a property exists for "vsd_cpu_otherexpense"
+    return items
+      // get rid of all other programs
+      .filter((pdc: iDynamicsProgramExpense) => pdc._vsd_programid_value === programId)
+      // if we want to return the "other expenses" we check for the existence of the other expense property and if it exists we return true otherwise we pick the values that are missing the "other expense" property
+      .filter((pdc: iDynamicsProgramExpense) => other ? !!pdc.vsd_cpu_otherexpense : !pdc.vsd_cpu_otherexpense)
+      .map((pe: iDynamicsProgramExpense): iExpenseItem => {
+        return {
+          uuid: pe.vsd_programexpenseid || uuidv4(),
+          // if we are returning only the other expenses we use the other expense field as the name
+          itemName: other ? pe.vsd_cpu_otherexpense : this.dict[pe._vsd_eligibleexpenseitemid_value] || 'Name error!',
+          fundedFromVscp: pe.vsd_cpu_fundedfromvscp || 0,
+          cost: pe.vsd_totalcost,
+        }
+      });
   }
 }

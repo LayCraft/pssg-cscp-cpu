@@ -12,8 +12,8 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
   templateUrl: './program-application.component.html',
   styleUrls: ['./program-application.component.css']
 })
-export class ProgramApplicationComponent implements OnInit, OnDestroy {
-
+export class ProgramApplicationComponent implements OnInit {
+  data: any;
   trans: TransmogrifierProgramApplication;
   // used for the stepper component
   stepperElements: iStepperElement[];
@@ -35,16 +35,17 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
       const userId: string = this.stateService.main.getValue().organizationMeta.userId;
       const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
       // get the program application to fill
-      this.programApplicationService.getScheduleF(organizationId, userId, p['contractId']).subscribe(
+      this.programApplicationService.getScheduleF(organizationId, userId, p['taskId']).subscribe(
         f => {
           if (!f.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this program application form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
-            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['contractId']} from the standard API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['taskId']} from the program application API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
 
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {
+            this.data = f;
             // make the transmogrifier for this form
             this.trans = new TransmogrifierProgramApplication(f);
             this.constructDefaultstepperElements(this.trans);
@@ -55,15 +56,6 @@ export class ProgramApplicationComponent implements OnInit, OnDestroy {
     // subscribe to the stepper state
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
-  }
-  ngOnDestroy() {
-    // clean the stepper
-    this.stepperService.reset();
-  }
-
-  programApplicationUpdated(programApplication: iProgramApplication): void {
-    // handle the updates to the program budget. Write it out to a service or whatever
-    console.log("The program application:", programApplication);
   }
 
   isCurrentStepperElement(item: iStepperElement): boolean {
