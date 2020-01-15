@@ -64,7 +64,6 @@ export class Transmogrifier {
       return t._vsd_schedulegid_value;//works
     }
     if (discriminator === 'status_report') {
-      console.log('Status report', t);
       return programId;
     }
     if (discriminator === 'program_application') {
