@@ -7,6 +7,7 @@ import { TransmogrifierBudgetProposal } from '../../core/models/transmogrifier-b
 import { iDynamicsBudgetProposal } from '../../core/models/dynamics-blob';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
+import { convertBudgetProposalToDynamics } from '../../core/models/converters/budget-proposal-to-dynamics';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -88,8 +89,7 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
-    alert('Nope!');
-    console.log(this.trans);
+    const send = convertBudgetProposalToDynamics(this.trans);
   }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {

@@ -6,6 +6,7 @@ import { StateService } from '../../core/services/state.service';
 import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
 import { iProgramApplication } from '../../core/models/program-application.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { convertProgramApplicationToDynamics } from '../../core/models/converters/program-application-to-dynamics';
 
 @Component({
   selector: 'app-program-application',
@@ -122,8 +123,8 @@ export class ProgramApplicationComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
-
-    this.programApplicationService.setScheduleF(null).subscribe(a => { });
+    const send = convertProgramApplicationToDynamics(this.trans);
+    // this.programApplicationService.setScheduleF(send).subscribe(a => { });
   }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
