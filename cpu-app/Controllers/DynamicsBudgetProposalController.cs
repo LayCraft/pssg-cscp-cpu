@@ -329,15 +329,15 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		}
 
 		[HttpPost("foo")]
-		public async Task<IActionResult> TestBudgetCasting([FromBody] Models.DynamicsBudgetProposalPost model)
+		public IActionResult TestBudgetCasting([FromBody] Models.DynamicsBudgetProposalPost model)
 		{
+			return StatusCode(200);
 			// // make options for the json serializer
 			// System.Text.Json.JsonSerializerOptions options = new System.Text.Json.JsonSerializerOptions();
 			// options.IgnoreNullValues = true;
 			// // turn the model into a string
 			// string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
 			// return StatusCode(200, modelString);
-			return StatusCode(200);
 		}
 		internal class DynamicsResponse
 		{

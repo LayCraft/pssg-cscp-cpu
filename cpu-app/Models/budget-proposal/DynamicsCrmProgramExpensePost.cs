@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsCrmProgramExpense
+	public class DynamicsCrmProgramExpensePost
 	{
 
 		public string vsd_EligibleExpenseItemIdfortunecookiebind
