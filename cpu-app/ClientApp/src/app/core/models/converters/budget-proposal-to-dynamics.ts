@@ -7,6 +7,7 @@ import { iRevenueSource } from "../revenue-source.interface";
 import { revenueSourceValue } from "../../constants/revenue-source-type";
 
 const expenseType = {
+  // vsd_cpu_programexpensetype converter
   salaries_and_benefits: 100000000,
   program_delivery: 100000001,
   administrative: 100000002
@@ -29,7 +30,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
     // ADMINISTRATIVE costs the 100000002's as defined in the excel sheet
     pb.administrationCosts.map((e: iExpenseItem): iDynamicsProgramExpense => {
       return {
-        vsd_cpu_programexpensetype: expenseType.salaries_and_benefits,
+        vsd_cpu_programexpensetype: expenseType.administrative,
         vsd_inputamount: e.cost || 0,
         vsd_EligibleExpenseItemIdfortunecookiebind: pb.programId,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
@@ -39,7 +40,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
       .forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
     pb.administrationOtherExpenses.map((e: iExpenseItem): iDynamicsProgramExpense => {
       return {
-        vsd_cpu_programexpensetype: expenseType.salaries_and_benefits,
+        vsd_cpu_programexpensetype: expenseType.administrative,
         vsd_inputamount: e.cost || 0,
         vsd_EligibleExpenseItemIdfortunecookiebind: pb.programId,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
