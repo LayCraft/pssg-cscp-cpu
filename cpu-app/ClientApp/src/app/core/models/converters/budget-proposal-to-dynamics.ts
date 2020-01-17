@@ -36,14 +36,26 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
     // assemble program delivery costs
     pb.programDeliveryCosts.map((e: iExpenseItem) => {
       return {
-        vsd_cpu_programexpensetype: 100000000,
+        vsd_cpu_programexpensetype: 100000001,
         vsd_inputamount: e.cost || 0,
         vsd_EligibleExpenseItemIdfortunecookiebind: pb.programId,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         vsd_ProgramIdfortunecookiebind: e.uuid
       }
     }).forEach((x) => { p.ProgramExpenseCollection.push(x) });
-    // pb.salariesAndBenefits.map((e: iSalaryAndBenefits) => { }).forEach((x)=>{p.ProgramExpenseCollection.push(x)});
+    // assign salaries and benefits
+    pb.salariesAndBenefits.map((e: iSalaryAndBenefits) => {
+      return {
+        vsd_ProgramIdfortunecookiebind: pb.programId,
+        vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
+        vsd_cpu_programexpensetype: 100000000,
+        vsd_cpu_salary: e.salary || 0,
+        vsd_cpu_titleposition: e.title || 'No title',
+        vsd_programexpenseid: e.uuid,
+        vsd_totalcost: e.totalCost || 0,
+        vsd_cpu_benefits: e.benefits || 0,
+      }
+    }).forEach((x) => { p.ProgramExpenseCollection.push(x) });
     // pb.administrationOtherExpenses.map((e: iExpenseItem) => { }).forEach((x)=>{p.ProgramExpenseCollection.push(x)});
     // pb.programDeliveryOtherExpenses.map((e: iExpenseItem) => { }).forEach((x) => { p.ProgramExpenseCollection.push(x) });
     // assemble revenue sources
