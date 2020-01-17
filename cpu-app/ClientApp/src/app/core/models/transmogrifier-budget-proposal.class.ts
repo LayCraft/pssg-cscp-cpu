@@ -92,7 +92,7 @@ export class TransmogrifierBudgetProposal {
           benefits: e.vsd_cpu_benefits || 0,
           fundedFromVscp: e.vsd_cpu_fundedfromvscp || 0,
           totalCost: e.vsd_totalcost || 0,
-          uuid: e.vsd_programexpenseid || uuidv4(),
+          uuid: e.vsd_programexpenseid || null,
         }
       });
   }

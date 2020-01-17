@@ -62,7 +62,7 @@ export function revenueSourceValue(type: string): number {
     }
     default: {
       console.log('An error has occured. This type of revenue source value is not known:\n' + type);
-      value = 100000004;//other
+      value = null;//other
       break;
     }
   }
