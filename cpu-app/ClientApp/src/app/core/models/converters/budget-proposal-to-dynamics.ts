@@ -32,7 +32,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
       return {
         vsd_cpu_programexpensetype: expenseType.administrative,
         vsd_inputamount: e.cost || 0,
-        vsd_EligibleExpenseItemIdfortunecookiebind: pb.programId,
+        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName],
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         vsd_ProgramIdfortunecookiebind: e.uuid,
       }
@@ -42,7 +42,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
       return {
         vsd_cpu_programexpensetype: expenseType.administrative,
         vsd_inputamount: e.cost || 0,
-        vsd_EligibleExpenseItemIdfortunecookiebind: pb.programId,
+        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName],
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         vsd_ProgramIdfortunecookiebind: e.uuid,
       }
@@ -54,18 +54,18 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
       return {
         vsd_cpu_programexpensetype: expenseType.program_delivery,
         vsd_inputamount: e.cost || 0,
-        vsd_EligibleExpenseItemIdfortunecookiebind: pb.programId,
+        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName],
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
-        vsd_ProgramIdfortunecookiebind: e.uuid
+        vsd_ProgramIdfortunecookiebind: e.uuid,
       }
     }).forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
     pb.programDeliveryOtherExpenses.map((e: iExpenseItem): iDynamicsProgramExpense => {
       return {
         vsd_cpu_programexpensetype: expenseType.program_delivery,
         vsd_inputamount: e.cost || 0,
-        vsd_EligibleExpenseItemIdfortunecookiebind: pb.programId,
+        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName],
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
-        vsd_ProgramIdfortunecookiebind: e.uuid
+        vsd_ProgramIdfortunecookiebind: e.uuid,
       }
     }).forEach((x) => { p.ProgramExpenseCollection.push(x) });
 
