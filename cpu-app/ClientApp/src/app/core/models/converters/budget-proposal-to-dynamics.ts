@@ -30,28 +30,28 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
     // ADMINISTRATIVE costs the 100000002's as defined in the excel sheet
     pb.administrationCosts.map((e: iExpenseItem): iDynamicsProgramExpense => {
       return {
-        vsd_cpu_programexpensetype: expenseType.administrative,
-        vsd_inputamount: e.cost || 0,
         // what guid location is the label? Null values get removed serverside
         vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName] || null,
-        vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         // which program is this expense item associated to?
         vsd_ProgramIdfortunecookiebind: pb.programId,
+        vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
+        vsd_cpu_programexpensetype: expenseType.administrative,
+        vsd_inputamount: e.cost || 0,
       }
     })
       .forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
     pb.administrationOtherExpenses.map((e: iExpenseItem): iDynamicsProgramExpense => {
       return {
-        vsd_cpu_programexpensetype: expenseType.administrative,
-        vsd_inputamount: e.cost || 0,
         // what guid location is the label? Null values get removed serverside
         // if null this gets created as a new "other" and will be returned in the eligibleexpenseitems collection on get
         vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName] || null,
         // this is an other expense. Include the text
-        vsd_cpu_otherexpense: e.itemName || null,
-        vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         // which program is this expense item associated to?
         vsd_ProgramIdfortunecookiebind: pb.programId,
+        vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
+        vsd_cpu_otherexpense: e.itemName || null,
+        vsd_cpu_programexpensetype: expenseType.administrative,
+        vsd_inputamount: e.cost || 0,
       }
     })
       .forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
@@ -59,27 +59,27 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
     // PROGRAM DELIVERY costs the 100000001's as defined in the excel sheet
     pb.programDeliveryCosts.map((e: iExpenseItem): iDynamicsProgramExpense => {
       return {
-        vsd_cpu_programexpensetype: expenseType.program_delivery,
-        vsd_inputamount: e.cost || 0,
         // what guid location is the label? Null values get removed serverside
         vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName] || null,
-        vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         // which program is this expense item associated to?
         vsd_ProgramIdfortunecookiebind: pb.programId,
+        vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
+        vsd_cpu_programexpensetype: expenseType.program_delivery,
+        vsd_inputamount: e.cost || 0,
       }
     }).forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
     pb.programDeliveryOtherExpenses.map((e: iExpenseItem): iDynamicsProgramExpense => {
       return {
-        vsd_cpu_programexpensetype: expenseType.program_delivery,
-        vsd_inputamount: e.cost || 0,
         // what guid location is the label? Null values get removed serverside
         // if null this gets created as a new "other" and will be returned in the eligibleexpenseitems collection on get
         vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName] || null,
         // this is an other expense. Include the text
         vsd_cpu_otherexpense: e.itemName || null,
-        vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         // which program is this expense item associated to?
         vsd_ProgramIdfortunecookiebind: pb.programId,
+        vsd_cpu_programexpensetype: expenseType.program_delivery,
+        vsd_inputamount: e.cost || 0,
+        vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
       }
     }).forEach((x) => { p.ProgramExpenseCollection.push(x) });
 
@@ -87,24 +87,23 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
     pb.salariesAndBenefits.map((e: iSalaryAndBenefits): iDynamicsProgramExpense => {
       return {
         vsd_ProgramIdfortunecookiebind: pb.programId,
+        vsd_cpu_benefits: e.benefits || 0,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         vsd_cpu_programexpensetype: expenseType.salaries_and_benefits,
         vsd_cpu_salary: e.salary || 0,
         vsd_cpu_titleposition: e.title || 'No title',
-        vsd_programexpenseid: e.uuid,
-        vsd_totalcost: e.totalCost || 0,
-        vsd_cpu_benefits: e.benefits || 0,
+        vsd_programexpenseid: e.uuid
       }
     }).forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
 
     // REVENUE SOURCES as defined in the excel sheet
     pb.revenueSources.map((e: iRevenueSource): iDynamicsProgramRevenueSource => {
       return {
-        vsd_inkindcontribution: e.inKindContribution || 0,
-        vsd_cpu_revenuesourcetype: revenueSourceValue(e.revenueSourceName),
-        vsd_programrevenuesourceid: e.uuid,
-        vsd_cashcontribution: e.cash,
         vsd_ProgramIdfortunecookiebind: pb.programId,
+        vsd_cashcontribution: e.cash,
+        vsd_cpu_revenuesourcetype: revenueSourceValue(e.revenueSourceName),
+        vsd_inkindcontribution: e.inKindContribution || 0,
+        vsd_programrevenuesourceid: e.uuid,
       }
     }).forEach((x: iDynamicsProgramRevenueSource) => { p.ProgramRevenueSourceCollection.push(x) });
   })
