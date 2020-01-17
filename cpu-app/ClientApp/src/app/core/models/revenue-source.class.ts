@@ -5,12 +5,14 @@ export class RevenueSource implements iRevenueSource {
   cash: number;
   inKindContribution: number;
   other: string;
+  uuid: string;
   constructor(rs?: iRevenueSource) {
     if (rs) {
       this.revenueSourceName = rs.revenueSourceName || null;
       this.cash = rs.cash || null;
       this.inKindContribution = rs.inKindContribution || null;
       this.other = rs.other || null;
+      this.uuid = rs.uuid || null;
     }
   }
 }
