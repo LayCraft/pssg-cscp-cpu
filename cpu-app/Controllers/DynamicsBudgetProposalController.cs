@@ -31,7 +31,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		}
 
 		[HttpGet("{businessBceid}/{userBceid}/{contractId}")]
-		public async Task<IActionResult> GetScheduleF(string businessBceid, string userBceid, string contractId)
+		public async Task<IActionResult> SetBudgetProposal(string businessBceid, string userBceid, string contractId)
 		{
 			try
 			{
@@ -200,9 +200,8 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			return new Tuple<int, string, HttpResponseMessage>(100, "", null);
 		}
 		[HttpPost]
-		public async Task<IActionResult> SetScheduleF([FromBody] Models.DynamicsScheduleF model)
+		public async Task<IActionResult> SetBudgetProposal([FromBody] DynamicsBudgetProposalPost model)
 		{
-			// TODO: this post doesn't work
 			string task = "vsd_SetCPUOrgContracts";
 
 			// note: the model has the both user and business BCeIDs as well as the contract number so do we need to collect params? No.
@@ -329,6 +328,12 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			}
 		}
 
+		[HttpPost("foo")]
+		public IActionResult TestBudgetCasting([FromBody] DynamicsBudgetProposalPost model)
+		{
+			Console.Out.WriteLine(model);
+			return StatusCode(200);
+		}
 		internal class DynamicsResponse
 		{
 			public string fortunecookiecontext { get; set; }

@@ -8,6 +8,10 @@ import { iDynamicsBudgetProposal } from '../../core/models/dynamics-blob';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
 import { convertBudgetProposalToDynamics } from '../../core/models/converters/budget-proposal-to-dynamics';
+import { iProgramBudget } from '../../core/models/program-budget.interface';
+import { SalaryAndBenefits } from '../../core/models/salary-and-benefits.class';
+import { ExpenseItem } from '../../core/models/expense-item.class';
+import { iDynamicsBudgetProposalPost } from '../../core/models/dynamics-post';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -21,6 +25,8 @@ export class BudgetProposalComponent implements OnInit {
 
   trans: TransmogrifierBudgetProposal;
   data: iDynamicsBudgetProposal;
+  out: iDynamicsBudgetProposalPost;
+
   personDict: object = {};
   constructor(
     private budgetProposalService: BudgetProposalService,
@@ -62,6 +68,13 @@ export class BudgetProposalComponent implements OnInit {
           this.data = d;
           // make the transmogrifier for this form
           this.trans = new TransmogrifierBudgetProposal(d);
+          this.trans.programBudgets = this.trans.programBudgets.map((pb: iProgramBudget): iProgramBudget => {
+            // if there is nothing existing add some collectors so that the user sees more than a blank list
+            if (!pb.salariesAndBenefits.length) { pb.salariesAndBenefits.push(new SalaryAndBenefits()); }
+            if (!pb.programDeliveryOtherExpenses.length) { pb.programDeliveryOtherExpenses.push(new ExpenseItem()); }
+            if (!pb.administrationOtherExpenses.length) { pb.administrationOtherExpenses.push(new ExpenseItem()); }
+            return pb;
+          })
           this.constructDefaultstepperElements();
         }
       });
@@ -89,7 +102,20 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
-    const send = convertBudgetProposalToDynamics(this.trans);
+    // TODO: remove this
+    this.out = convertBudgetProposalToDynamics(this.trans);
+
+    this.budgetProposalService.setBudgetProposal(convertBudgetProposalToDynamics(this.trans)).subscribe(
+      r => {
+        console.log(r);
+        this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
+        this.router.navigate(['/authenticated/dashboard']);
+      },
+      err => {
+        console.log(err);
+        this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+      }
+    );
   }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {

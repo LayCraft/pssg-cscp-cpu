@@ -11,6 +11,5 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string UserBCeID { get; set; }
 		public int ReportingPeriod { get; set; }
 		public DynamicsDataCollectionLineItem[] AnswerCollection { get; set; }
-
 	}
 }

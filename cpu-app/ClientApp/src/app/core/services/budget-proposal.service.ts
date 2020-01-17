@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { iDynamicsBudgetProposal } from '../models/dynamics-blob';
+import { iDynamicsBudgetProposalPost } from '../models/dynamics-post';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,11 @@ export class BudgetProposalService {
       catchError(this.handleError)
     );
   }
-  setBudgetProposal(budgetProposal: any) {
+  setBudgetProposal(budgetProposal: iDynamicsBudgetProposalPost): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, budgetProposal, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
   }
 
   get headers(): HttpHeaders {
