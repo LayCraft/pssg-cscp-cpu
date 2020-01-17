@@ -37,3 +37,34 @@ export function revenueSourceType(discriminator: number): string {
   }
   return revenueSourceType;
 }
+export function revenueSourceValue(type: string): number {
+  let value;
+  switch (type) {
+    case revenueSourceTypes[0]: {
+      value = 100000000;
+      break;
+    }
+    case revenueSourceTypes[1]: {
+      value = 100000001;
+      break;
+    }
+    case revenueSourceTypes[2]: {
+      value = 100000002;
+      break;
+    }
+    case revenueSourceTypes[3]: {
+      value = 100000003;
+      break;
+    }
+    case revenueSourceTypes[4]: {
+      value = 100000004;
+      break;
+    }
+    default: {
+      console.log('An error has occured. This type of revenue source value is not known:\n' + type);
+      value = 100000004;//other
+      break;
+    }
+  }
+  return value;
+}

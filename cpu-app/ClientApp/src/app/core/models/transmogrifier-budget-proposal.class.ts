@@ -12,7 +12,7 @@ export class TransmogrifierBudgetProposal {
   public userId: string;
   public contractId: string;
   public programBudgets: iProgramBudget[];
-  private dict: object;
+  public dict: object;
   public signature: iSignature = undefined; // this needs initialization before we can use it in a component.
   constructor(g: iDynamicsBudgetProposal) {
     // make private dict for looking up guids
@@ -76,6 +76,7 @@ export class TransmogrifierBudgetProposal {
           cash: prs.vsd_cashcontribution || 0,
           inKindContribution: prs.vsd_inkindcontribution || 0,
           other: prs.vsd_cpu_otherrevenuesource || '',
+          uuid: prs.vsd_programrevenuesourceid || null,
         };
       })
   }

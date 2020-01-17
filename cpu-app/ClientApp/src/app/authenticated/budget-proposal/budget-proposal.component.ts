@@ -11,6 +11,7 @@ import { convertBudgetProposalToDynamics } from '../../core/models/converters/bu
 import { iProgramBudget } from '../../core/models/program-budget.interface';
 import { SalaryAndBenefits } from '../../core/models/salary-and-benefits.class';
 import { ExpenseItem } from '../../core/models/expense-item.class';
+import { iDynamicsBudgetProposalPost } from 'src/app/core/models/dynamics-post';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -24,6 +25,8 @@ export class BudgetProposalComponent implements OnInit {
 
   trans: TransmogrifierBudgetProposal;
   data: iDynamicsBudgetProposal;
+  out: iDynamicsBudgetProposalPost;
+
   personDict: object = {};
   constructor(
     private budgetProposalService: BudgetProposalService,
@@ -99,7 +102,7 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
-    const send = convertBudgetProposalToDynamics(this.trans);
+    this.out = convertBudgetProposalToDynamics(this.trans);
   }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {

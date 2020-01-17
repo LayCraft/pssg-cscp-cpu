@@ -44,20 +44,20 @@ export interface iDynamicsBudgetProposalPost {
 }
 export interface iDynamicsProgramExpense {
   vsd_cpu_programexpensetype: number;
-  vsd_inputamount?: number;
   vsd_EligibleExpenseItemIdfortunecookiebind?: string;
-  vsd_cpu_fundedfromvscp: number;
-  vsd_totalcost: number;
   vsd_ProgramIdfortunecookiebind: string;
-  vsd_programexpenseid?: string;
+  vsd_cpu_benefits?: number;
+  vsd_cpu_fundedfromvscp: number;
   vsd_cpu_salary?: number;
   vsd_cpu_titleposition?: string;
-  vsd_cpu_benefits?: number;
+  vsd_inputamount?: number;
+  vsd_programexpenseid?: string;
+  vsd_totalcost: number;
 }
 export interface iDynamicsProgramRevenueSource {
-  vsd_inkindcontribution: number;
+  vsd_ProgramIdfortunecookiebind: string;
   vsd_cashcontribution: number;
   vsd_cpu_revenuesourcetype: number;
+  vsd_inkindcontribution: number;
   vsd_programrevenuesourceid?: string;
-  vsd_ProgramIdfortunecookiebind: string;
 }
