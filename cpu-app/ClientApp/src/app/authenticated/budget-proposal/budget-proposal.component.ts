@@ -11,7 +11,7 @@ import { convertBudgetProposalToDynamics } from '../../core/models/converters/bu
 import { iProgramBudget } from '../../core/models/program-budget.interface';
 import { SalaryAndBenefits } from '../../core/models/salary-and-benefits.class';
 import { ExpenseItem } from '../../core/models/expense-item.class';
-import { iDynamicsBudgetProposalPost } from 'src/app/core/models/dynamics-post';
+import { iDynamicsBudgetProposalPost } from '../../core/models/dynamics-post';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -102,7 +102,7 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
-    this.out = convertBudgetProposalToDynamics(this.trans);
+    this.budgetProposalService.setBudgetProposal(convertBudgetProposalToDynamics(this.trans)).subscribe(() => { });
   }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
