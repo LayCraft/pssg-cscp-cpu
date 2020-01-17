@@ -52,7 +52,7 @@ export interface iDynamicsProgramExpense {
   vsd_cpu_titleposition?: string;
   vsd_inputamount?: number;
   vsd_programexpenseid?: string;
-  vsd_totalcost: number;
+  vsd_totalcost?: number;
 }
 export interface iDynamicsProgramRevenueSource {
   vsd_ProgramIdfortunecookiebind: string;

@@ -1,4 +1,4 @@
-import { iDynamicsBudgetProposalPost, iDynamicsProgramRevenueSource } from "../dynamics-post";
+import { iDynamicsBudgetProposalPost, iDynamicsProgramRevenueSource, iDynamicsProgramExpense } from "../dynamics-post";
 import { TransmogrifierBudgetProposal } from "../transmogrifier-budget-proposal.class";
 import { iProgramBudget } from "../program-budget.interface";
 import { iExpenseItem } from "../expense-item.interface";
@@ -23,8 +23,26 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
     ProgramRevenueSourceCollection: [],
   }
   trans.programBudgets.forEach((pb: iProgramBudget) => {
-    // pb.administrationCosts.map((e: iExpenseItem): => { }).forEach((x)=>{p.ProgramExpenseCollection.push(x)});
-    // pb.programDeliveryCosts.map((e: iExpenseItem) => { }).forEach((x)=>{p.ProgramExpenseCollection.push(x)});
+    // assemble administrative costs
+    pb.administrationCosts.map((e: iExpenseItem): iDynamicsProgramExpense => {
+      return {
+        vsd_cpu_programexpensetype: 100000001,
+        vsd_inputamount: e.cost || 0,
+        vsd_EligibleExpenseItemIdfortunecookiebind: pb.programId,
+        vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
+        vsd_ProgramIdfortunecookiebind: e.uuid,
+      }
+    }).forEach((x) => { p.ProgramExpenseCollection.push(x) });
+    // assemble program delivery costs
+    pb.programDeliveryCosts.map((e: iExpenseItem) => {
+      return {
+        vsd_cpu_programexpensetype: 100000000,
+        vsd_inputamount: e.cost || 0,
+        vsd_EligibleExpenseItemIdfortunecookiebind: pb.programId,
+        vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
+        vsd_ProgramIdfortunecookiebind: e.uuid
+      }
+    }).forEach((x) => { p.ProgramExpenseCollection.push(x) });
     // pb.salariesAndBenefits.map((e: iSalaryAndBenefits) => { }).forEach((x)=>{p.ProgramExpenseCollection.push(x)});
     // pb.administrationOtherExpenses.map((e: iExpenseItem) => { }).forEach((x)=>{p.ProgramExpenseCollection.push(x)});
     // pb.programDeliveryOtherExpenses.map((e: iExpenseItem) => { }).forEach((x) => { p.ProgramExpenseCollection.push(x) });
