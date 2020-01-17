@@ -102,7 +102,7 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
-    this.budgetProposalService.setBudgetProposal(convertBudgetProposalToDynamics(this.trans)).subscribe(() => { });
+    this.budgetProposalService.setBudgetProposal(convertBudgetProposalToDynamics(this.trans)).subscribe((d) => { console.log('response', d) });
   }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
