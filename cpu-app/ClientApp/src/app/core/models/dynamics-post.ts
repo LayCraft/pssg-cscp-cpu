@@ -43,11 +43,12 @@ export interface iDynamicsBudgetProposalPost {
   ProgramRevenueSourceCollection: iDynamicsProgramRevenueSource[];
 }
 export interface iDynamicsProgramExpense {
-  vsd_cpu_programexpensetype: number;
   vsd_EligibleExpenseItemIdfortunecookiebind?: string;
   vsd_ProgramIdfortunecookiebind: string;
   vsd_cpu_benefits?: number;
   vsd_cpu_fundedfromvscp: number;
+  vsd_cpu_otherexpense?: string;
+  vsd_cpu_programexpensetype: number;
   vsd_cpu_salary?: number;
   vsd_cpu_titleposition?: string;
   vsd_inputamount?: number;

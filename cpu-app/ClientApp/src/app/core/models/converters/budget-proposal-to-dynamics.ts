@@ -44,7 +44,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         vsd_inputamount: e.cost || 0,
         vsd_EligibleExpenseItemIdfortunecookiebind: pb.programId,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
-        vsd_ProgramIdfortunecookiebind: e.uuid
+        vsd_ProgramIdfortunecookiebind: e.uuid,
       }
     })
       .forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });

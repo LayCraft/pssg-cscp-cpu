@@ -110,7 +110,7 @@ export class TransmogrifierBudgetProposal {
           // if we are returning only the other expenses we use the other expense field as the name
           itemName: other ? pe.vsd_cpu_otherexpense : this.dict[pe._vsd_eligibleexpenseitemid_value] || 'Name error!',
           fundedFromVscp: pe.vsd_cpu_fundedfromvscp || 0,
-          cost: pe.vsd_totalcost,
+          cost: pe.vsd_totalcost
         }
       });
   }
