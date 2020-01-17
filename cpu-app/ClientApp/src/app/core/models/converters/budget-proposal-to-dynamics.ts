@@ -32,7 +32,8 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
       return {
         vsd_cpu_programexpensetype: expenseType.administrative,
         vsd_inputamount: e.cost || 0,
-        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName],
+        // what guid location is the label? Null values get removed serverside
+        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName] || null,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         vsd_ProgramIdfortunecookiebind: e.uuid,
       }
@@ -42,7 +43,11 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
       return {
         vsd_cpu_programexpensetype: expenseType.administrative,
         vsd_inputamount: e.cost || 0,
-        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName],
+        // what guid location is the label? Null values get removed serverside
+        // if null this gets created as a new "other" and will be returned in the eligibleexpenseitems collection on get
+        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName] || null,
+        // this is an other expense. Include the text
+        vsd_cpu_otherexpense: e.itemName || null,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         vsd_ProgramIdfortunecookiebind: e.uuid,
       }
@@ -54,7 +59,8 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
       return {
         vsd_cpu_programexpensetype: expenseType.program_delivery,
         vsd_inputamount: e.cost || 0,
-        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName],
+        // what guid location is the label? Null values get removed serverside
+        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName] || null,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         vsd_ProgramIdfortunecookiebind: e.uuid,
       }
@@ -63,7 +69,11 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
       return {
         vsd_cpu_programexpensetype: expenseType.program_delivery,
         vsd_inputamount: e.cost || 0,
-        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName],
+        // what guid location is the label? Null values get removed serverside
+        // if null this gets created as a new "other" and will be returned in the eligibleexpenseitems collection on get
+        vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName] || null,
+        // this is an other expense. Include the text
+        vsd_cpu_otherexpense: e.itemName || null,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         vsd_ProgramIdfortunecookiebind: e.uuid,
       }
