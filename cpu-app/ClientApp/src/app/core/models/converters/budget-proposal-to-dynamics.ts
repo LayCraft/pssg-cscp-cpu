@@ -35,7 +35,8 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         // what guid location is the label? Null values get removed serverside
         vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName] || null,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
-        vsd_ProgramIdfortunecookiebind: e.uuid,
+        // which program is this expense item associated to?
+        vsd_ProgramIdfortunecookiebind: pb.programId,
       }
     })
       .forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
@@ -49,7 +50,8 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         // this is an other expense. Include the text
         vsd_cpu_otherexpense: e.itemName || null,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
-        vsd_ProgramIdfortunecookiebind: e.uuid,
+        // which program is this expense item associated to?
+        vsd_ProgramIdfortunecookiebind: pb.programId,
       }
     })
       .forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
@@ -62,7 +64,8 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         // what guid location is the label? Null values get removed serverside
         vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName] || null,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
-        vsd_ProgramIdfortunecookiebind: e.uuid,
+        // which program is this expense item associated to?
+        vsd_ProgramIdfortunecookiebind: pb.programId,
       }
     }).forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
     pb.programDeliveryOtherExpenses.map((e: iExpenseItem): iDynamicsProgramExpense => {
@@ -75,7 +78,8 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         // this is an other expense. Include the text
         vsd_cpu_otherexpense: e.itemName || null,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
-        vsd_ProgramIdfortunecookiebind: e.uuid,
+        // which program is this expense item associated to?
+        vsd_ProgramIdfortunecookiebind: pb.programId,
       }
     }).forEach((x) => { p.ProgramExpenseCollection.push(x) });
 
