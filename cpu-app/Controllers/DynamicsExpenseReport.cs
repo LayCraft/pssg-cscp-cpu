@@ -30,15 +30,15 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			this._configuration = configuration;
 		}
 
-		[HttpGet("{businessBceid}/{userBceid}/{scheduleGId}")]
-		public async Task<IActionResult> GetScheduleG(string businessBceid, string userBceid, string scheduleGId)
+		[HttpGet("{businessBceid}/{userBceid}/{expenseReportId}")]
+		public async Task<IActionResult> GetScheduleG(string businessBceid, string userBceid, string expenseReportId)
 		{
 			try
 			{
 				// convert the parameters to a json string
 				string applicationJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
 				// set the endpoint action
-				string endpointAction = "vsd_schedulegs(" + scheduleGId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUScheduleG";
+				string endpointAction = "vsd_schedulegs(" + expenseReportId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUScheduleG";
 				// get the response
 				Tuple<int, string, HttpResponseMessage> tuple = await GetDynamicsHttpClient(_configuration, applicationJson, endpointAction);
 
@@ -198,8 +198,9 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 
 			return new Tuple<int, string, HttpResponseMessage>(100, "", null);
 		}
-		[HttpPost("{scheduleGId}")]
-		public async Task<IActionResult> SetScheduleG([FromBody] Models.DynamicsScheduleG model)
+
+		[HttpPost]
+		public async Task<IActionResult> SetScheduleG([FromBody] DynamicsExpenseReport model)
 		{
 			if (model == null)
 			{

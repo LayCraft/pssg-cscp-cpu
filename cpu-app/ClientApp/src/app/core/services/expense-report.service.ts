@@ -16,13 +16,14 @@ export class ExpenseReportService {
     private http: HttpClient,
   ) { }
 
-  getScheduleG(organizationId: string, userId: string, scheduleGId: string): Observable<iDynamicsScheduleGResponse> {
-    return this.http.get<iDynamicsScheduleGResponse>(`${this.apiUrl}/${organizationId}/${userId}/${scheduleGId}`, { headers: this.headers }).pipe(
+  getExpenseReport(organizationId: string, userId: string, expenseReportId: string): Observable<iDynamicsScheduleGResponse> {
+    return this.http.get<iDynamicsScheduleGResponse>(`${this.apiUrl}/${organizationId}/${userId}/${expenseReportId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
-  setScheduleG(scheduleG: iDynamicsPostScheduleG) {
+  setExpenseReport(scheduleG: iDynamicsPostScheduleG): Observable<any> {
+    return of({});
   }
 
   get headers(): HttpHeaders {
