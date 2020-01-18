@@ -15,9 +15,9 @@ export class SalaryAndBenefits implements iSalaryAndBenefits {
       this.benefits = s.benefits || 0;
       this.fundedFromVscp = s.fundedFromVscp || 0;
       this.totalCost = s.totalCost || 0;
-      this.uuid = s.uuid || uuidv4();
+      this.uuid = s.uuid || null;
     } else {
-      this.uuid = uuidv4();
+      this.uuid = null;
     }
   }
 }

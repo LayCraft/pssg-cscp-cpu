@@ -31,7 +31,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		}
 
 		[HttpGet("{businessBceid}/{userBceid}/{expenseReportId}")]
-		public async Task<IActionResult> GetScheduleG(string businessBceid, string userBceid, string expenseReportId)
+		public async Task<IActionResult> GetExpenseReport(string businessBceid, string userBceid, string expenseReportId)
 		{
 			try
 			{
@@ -200,7 +200,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> SetScheduleG([FromBody] DynamicsExpenseReport model)
+		public async Task<IActionResult> SetExpenseReport([FromBody] DynamicsExpenseReport model)
 		{
 			if (model == null)
 			{
