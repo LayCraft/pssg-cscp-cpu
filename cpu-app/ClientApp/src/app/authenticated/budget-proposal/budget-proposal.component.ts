@@ -72,9 +72,9 @@ export class BudgetProposalComponent implements OnInit {
           this.trans.programBudgets = this.trans.programBudgets.map((pb: iProgramBudget): iProgramBudget => {
             // if there is nothing existing add some collectors so that the user sees more than a blank list
             // this is a problem because if these are unchanged by the user it prevents form submission.
-            if (!pb.salariesAndBenefits.length) { pb.salariesAndBenefits.push(new SalaryAndBenefits()); }
-            if (!pb.programDeliveryOtherExpenses.length) { pb.programDeliveryOtherExpenses.push(new ExpenseItem()); }
-            if (!pb.administrationOtherExpenses.length) { pb.administrationOtherExpenses.push(new ExpenseItem()); }
+            // if (!pb.salariesAndBenefits.length) { pb.salariesAndBenefits.push(new SalaryAndBenefits()); }
+            // if (!pb.programDeliveryOtherExpenses.length) { pb.programDeliveryOtherExpenses.push(new ExpenseItem()); }
+            // if (!pb.administrationOtherExpenses.length) { pb.administrationOtherExpenses.push(new ExpenseItem()); }
             return pb;
           })
           this.constructDefaultstepperElements();
