@@ -3,10 +3,10 @@
     <h1 class="h2">Contract: {{contract.contractNumber}}</h1>
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
-        <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Current{{incompleteTasks.length ? ' ('+incompleteTasks.length+')':''}}</a>
+        <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Current{{contract.tasks.length ? ' ('+contract.tasks.length+')':''}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="setCurrentTab(tabs[1])" [class.active]="currentTab===tabs[1]">Completed{{completeTasks.length ? ' ('+completeTasks.length+')':''}}</a>
+        <a class="nav-link" (click)="setCurrentTab(tabs[1])" [class.active]="currentTab===tabs[1]">Completed{{contract.completedTasks.length ? ' ('+contract.completedTasks.length+')':''}}</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="setCurrentTab(tabs[2])" [class.active]="currentTab===tabs[2]">Programs</a>
@@ -15,10 +15,10 @@
   </div>
   <div class="card-body">
     <span *ngIf="currentTab===tabs[0]">
-      <div class="alert alert-light" *ngIf="!incompleteTasks.length">
+      <div class="alert alert-light" *ngIf="!contract.tasks.length">
         There are no current tasks due.
       </div>
-      <div *ngIf="incompleteTasks.length">
+      <div *ngIf="contract.tasks.length">
         <table class="table table-sm table-striped">
           <thead class="thead">
             <th style="width:15%" scope="col">Status</th>
@@ -28,7 +28,7 @@
             <th style="width:15%" scope="col">Deadline</th>
           </thead>
           <tbody>
-            <tr *ngFor="let task of incompleteTasks">
+            <tr *ngFor="let task of contract.tasks">
               <!-- Completed status items go into a different tab -->
               <td>
                 <!-- Not Started -->
@@ -64,10 +64,10 @@
       </div>
     </span>
     <span *ngIf="currentTab===tabs[1]">
-      <div class="alert alert-light" *ngIf="!completeTasks.length">
+      <div class="alert alert-light" *ngIf="!contract.completedTasks.length">
         There are no completed tasks to show.
       </div>
-      <div *ngIf="completeTasks.length">
+      <div *ngIf="contract.completedTasks.length">
         <table class="table table-sm table-striped">
           <thead class="thead">
             <th style="width:15%" scope="col">Status</th>
@@ -77,7 +77,7 @@
             <th style="width:15%" scope="col">Deadline</th>
           </thead>
           <tbody>
-            <tr *ngFor="let task of completeTasks">
+            <tr *ngFor="let task of contract.completedTasks">
               <!-- Completed status items go into a different tab -->
               <td>
                 <!-- Not Started -->

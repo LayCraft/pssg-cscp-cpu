@@ -17,9 +17,6 @@ export class TaskListComponent implements OnInit {
   statuses: string[];
   formTypes: string[];
 
-  completeTasks: iTask[] = [];
-  incompleteTasks: iTask[] = [];
-
   constructor() {
     this.tabs = ['Current Tasks', 'Completed', 'Programs'];
     this.currentTab = this.tabs[0];
@@ -27,16 +24,7 @@ export class TaskListComponent implements OnInit {
     this.formTypes = FormTypes;
   }
 
-  ngOnInit() {
-    // split tasks into current, completed and programs
-    this.contract.tasks.forEach(task => {
-      if (task.isCompleted) {
-        this.completeTasks.push(task);
-      } else {
-        this.incompleteTasks.push(task);
-      }
-    });
-  }
+  ngOnInit() { }
 
   setCurrentTab(tabname: string) {
     this.currentTab = tabname;
