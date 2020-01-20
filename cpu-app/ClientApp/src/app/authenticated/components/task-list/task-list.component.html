@@ -1,4 +1,4 @@
-<div class="card mb-2">
+<div *ngIf="contract.tasks.length||contract.completedTasks.length" class="card mb-2">
   <div class="card-header">
     <h1 class="h2">Contract: {{contract.contractNumber}}</h1>
     <ul class="nav nav-tabs card-header-tabs">
@@ -71,7 +71,7 @@
         <table class="table table-sm table-striped">
           <thead class="thead">
             <th style="width:15%" scope="col">Status</th>
-            <th style="width:20%" scope="col">Action</th>
+            <th style="width:20%" scope="col">Task</th>
             <th style="width:20%" scope="col">Title</th>
             <th style="width:30%" scope="col">Description</th>
             <th style="width:15%" scope="col">Deadline</th>
@@ -100,9 +100,9 @@
                 </span>
               </td>
               <td>
-                <a routerLink="/authenticated/{{task.formType}}/{{contract.contractId}}">
-                  {{task.taskName}}
-                </a>
+                <!-- <a routerLink="/authenticated/{{task.formType}}/{{contract.contractId}}"> -->
+                {{task.taskName}}
+                <!-- </a> -->
               </td>
               <td>{{task.taskTitle}}</td>
               <td>{{task.taskDescription}}</td>

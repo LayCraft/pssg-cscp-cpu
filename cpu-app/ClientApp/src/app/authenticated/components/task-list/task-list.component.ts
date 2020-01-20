@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { iContract } from '../../../core/models/contract.interface';
 import { TaskStatus } from '../../../core/constants/task-status';
 import { FormTypes } from '../../../core/constants/form-types';
-import { iTask } from '../../../core/models/task.interface';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
