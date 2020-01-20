@@ -26,6 +26,7 @@ export class BudgetProposalComponent implements OnInit {
   trans: TransmogrifierBudgetProposal;
   data: iDynamicsBudgetProposal;
   out: iDynamicsBudgetProposalPost;
+  saving: boolean = false;
 
   personDict: object = {};
   constructor(
@@ -102,10 +103,9 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
-    // TODO: remove this
+    this.saving = true;
     this.out = convertBudgetProposalToDynamics(this.trans);
-
-    this.budgetProposalService.setBudgetProposal(convertBudgetProposalToDynamics(this.trans)).subscribe(
+    this.budgetProposalService.setBudgetProposal(this.out).subscribe(
       r => {
         console.log(r);
         this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
@@ -114,6 +114,7 @@ export class BudgetProposalComponent implements OnInit {
       err => {
         console.log(err);
         this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+        this.saving = false;
       }
     );
   }

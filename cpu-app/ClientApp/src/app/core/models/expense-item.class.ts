@@ -13,9 +13,9 @@ export class ExpenseItem implements iExpenseItem {
       this.tooltip = xi.tooltip || null;
       this.cost = xi.cost || null;
       this.fundedFromVscp = xi.fundedFromVscp || null;
-      this.uuid == xi.uuid || uuidv4();
+      this.uuid == xi.uuid || null;
     } else {
-      this.uuid = uuidv4();
+      this.uuid = null;
     }
   }
 }
