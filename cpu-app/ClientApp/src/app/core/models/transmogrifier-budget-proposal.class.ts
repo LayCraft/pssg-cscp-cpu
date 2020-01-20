@@ -5,7 +5,6 @@ import { iRevenueSource } from "./revenue-source.interface";
 import { iSalaryAndBenefits } from "./salary-and-benefits.interface";
 import { iSignature } from "../../authenticated/subforms/program-authorizer/program-authorizer.component";
 import { revenueSourceType } from "../constants/revenue-source-type";
-import { uuidv4 } from "../constants/uuidv4";
 
 export class TransmogrifierBudgetProposal {
   public organizationId: string;
@@ -106,7 +105,7 @@ export class TransmogrifierBudgetProposal {
       .filter((pdc: iDynamicsProgramExpense) => other ? !!pdc.vsd_cpu_otherexpense : !pdc.vsd_cpu_otherexpense)
       .map((pe: iDynamicsProgramExpense): iExpenseItem => {
         return {
-          uuid: pe.vsd_programexpenseid || uuidv4(),
+          uuid: pe.vsd_programexpenseid || null,
           // if we are returning only the other expenses we use the other expense field as the name
           itemName: other ? pe.vsd_cpu_otherexpense : this.dict[pe._vsd_eligibleexpenseitemid_value] || 'Name error!',
           fundedFromVscp: pe.vsd_cpu_fundedfromvscp || 0,

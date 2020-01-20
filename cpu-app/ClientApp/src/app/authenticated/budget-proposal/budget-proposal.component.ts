@@ -26,6 +26,7 @@ export class BudgetProposalComponent implements OnInit {
   trans: TransmogrifierBudgetProposal;
   data: iDynamicsBudgetProposal;
   out: iDynamicsBudgetProposalPost;
+  saving: boolean = false;
 
   personDict: object = {};
   constructor(
@@ -70,9 +71,10 @@ export class BudgetProposalComponent implements OnInit {
           this.trans = new TransmogrifierBudgetProposal(d);
           this.trans.programBudgets = this.trans.programBudgets.map((pb: iProgramBudget): iProgramBudget => {
             // if there is nothing existing add some collectors so that the user sees more than a blank list
-            if (!pb.salariesAndBenefits.length) { pb.salariesAndBenefits.push(new SalaryAndBenefits()); }
-            if (!pb.programDeliveryOtherExpenses.length) { pb.programDeliveryOtherExpenses.push(new ExpenseItem()); }
-            if (!pb.administrationOtherExpenses.length) { pb.administrationOtherExpenses.push(new ExpenseItem()); }
+            // this is a problem because if these are unchanged by the user it prevents form submission.
+            // if (!pb.salariesAndBenefits.length) { pb.salariesAndBenefits.push(new SalaryAndBenefits()); }
+            // if (!pb.programDeliveryOtherExpenses.length) { pb.programDeliveryOtherExpenses.push(new ExpenseItem()); }
+            // if (!pb.administrationOtherExpenses.length) { pb.administrationOtherExpenses.push(new ExpenseItem()); }
             return pb;
           })
           this.constructDefaultstepperElements();
@@ -102,10 +104,9 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
-    // TODO: remove this
+    this.saving = true;
     this.out = convertBudgetProposalToDynamics(this.trans);
-
-    this.budgetProposalService.setBudgetProposal(convertBudgetProposalToDynamics(this.trans)).subscribe(
+    this.budgetProposalService.setBudgetProposal(this.out).subscribe(
       r => {
         console.log(r);
         this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
@@ -114,6 +115,7 @@ export class BudgetProposalComponent implements OnInit {
       err => {
         console.log(err);
         this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+        this.saving = false;
       }
     );
   }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsScheduleG
+	public class DynamicsExpenseReport
 	{
 		// this is the model that Dynamics expects back to update the organization level information
 		public string BusinessBCeID { get; set; }

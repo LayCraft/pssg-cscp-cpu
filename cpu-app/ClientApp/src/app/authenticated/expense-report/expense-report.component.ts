@@ -50,7 +50,7 @@ export class ExpenseReportComponent implements OnInit {
       const userId: string = this.stateService.main.getValue().organizationMeta.userId;
 
       // get the expense report to fill
-      this.expenseReportService.getScheduleG(organizationId, userId, p['taskId']).subscribe(
+      this.expenseReportService.getExpenseReport(organizationId, userId, p['taskId']).subscribe(
         g => {
           if (!g.IsSuccess) {
             // notify the user of a system error

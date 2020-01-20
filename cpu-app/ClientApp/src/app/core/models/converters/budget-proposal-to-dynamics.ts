@@ -37,6 +37,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         vsd_cpu_programexpensetype: expenseType.administrative,
         vsd_inputamount: e.cost || 0,
+        vsd_programexpenseid: e.uuid || null,
       }
     })
       .forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
@@ -52,6 +53,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         vsd_cpu_otherexpense: e.itemName || null,
         vsd_cpu_programexpensetype: expenseType.administrative,
         vsd_inputamount: e.cost || 0,
+        vsd_programexpenseid: e.uuid || null,
       }
     })
       .forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
@@ -66,6 +68,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         vsd_cpu_programexpensetype: expenseType.program_delivery,
         vsd_inputamount: e.cost || 0,
+        vsd_programexpenseid: e.uuid || null,
       }
     }).forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
     pb.programDeliveryOtherExpenses.map((e: iExpenseItem): iDynamicsProgramExpense => {
@@ -80,6 +83,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         vsd_cpu_programexpensetype: expenseType.program_delivery,
         vsd_inputamount: e.cost || 0,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
+        vsd_programexpenseid: e.uuid || null,
       }
     }).forEach((x) => { p.ProgramExpenseCollection.push(x) });
 
@@ -92,7 +96,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         vsd_cpu_programexpensetype: expenseType.salaries_and_benefits,
         vsd_cpu_salary: e.salary || 0,
         vsd_cpu_titleposition: e.title || 'No title',
-        vsd_programexpenseid: e.uuid
+        vsd_programexpenseid: e.uuid || null,
       }
     }).forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
 
