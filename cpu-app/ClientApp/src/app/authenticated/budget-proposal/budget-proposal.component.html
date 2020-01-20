@@ -3,10 +3,10 @@
     <div class="col-md-4">
       <section class="application-nav sticky-top">
         <app-icon-stepper></app-icon-stepper>
-        <span *ngIf="!saving">
+        <span *ngIf="saving">
           <button class="btn btn-primary mt-2 mr-2" disabled>Saving</button>
         </span>
-        <span *ngIf="saving">
+        <span *ngIf="!saving">
           <button class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
         </span>
         <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
