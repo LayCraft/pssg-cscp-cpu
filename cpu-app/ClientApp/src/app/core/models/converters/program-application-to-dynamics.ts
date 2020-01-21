@@ -3,6 +3,7 @@ import { TransmogrifierProgramApplication } from "../transmogrifier-program-appl
 import { iProgramApplication } from "../program-application.interface";
 import { convertHoursToDynamics } from "./hours-to-dynamics";
 import { iHours } from "../hours.interface";
+import { convertContactInformationToDynamics } from "./contact-information-to-dynamics";
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsScheduleFPost {
   const post: iDynamicsScheduleFPost = {
@@ -104,10 +105,6 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     p.standbyHours
       .map((h: iHours): iDynamicsSchedule => convertHoursToDynamics(h, p.programId, true))
       .forEach((d: iDynamicsSchedule) => post.ScheduleCollection.push(d));
-
-    // push program contacts into program contact collection
-    // push RegionDistrictCollection
-    // push StaffCollection
   });
   return post;
 }
