@@ -1,8 +1,9 @@
 import { iDynamicsScheduleFPost, iDynamicsOrganization } from "../dynamics-blob";
 import { TransmogrifierProgramApplication } from "../transmogrifier-program-application.class";
+import { iProgramApplication } from "../program-application.interface";
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsScheduleFPost {
-  return {
+  const post: iDynamicsScheduleFPost = {
     Businessbceid: trans.organizationId,
     Userbceid: trans.userId,
     Contract: {
@@ -68,4 +69,35 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     RegionDistrictCollection: [],
     StaffCollection: [],
   };
+  trans.programApplications.forEach((p: iProgramApplication) => {
+    // push programs into program collection
+    post.ProgramCollection.push({
+      _vsd_contactlookup_value: p.programContact.personId,
+      _vsd_contractid_value: trans.contractId,
+      _vsd_programtype_value: null, // does this have a value?
+      _vsd_cpu_regiondistrict_value: p.programLocation,
+      _vsd_cpu_regiondistrictlookup2_value: p.programLocation,
+      vsd_addressline1: p.mainAddress.line1,
+      vsd_addressline2: p.mainAddress.line2,
+      vsd_city: p.mainAddress.city,
+      vsd_country: p.mainAddress.country,
+      vsd_emailaddress: p.email,
+      vsd_fax: p.faxNumber,
+      vsd_mailingaddressline1: p.mailingAddress.line1,
+      vsd_mailingaddressline2: p.mailingAddress.line2,
+      vsd_mailingcity: p.mailingAddress.city,
+      vsd_mailingcountry: p.mailingAddress.country,
+      vsd_mailingpostalcodezip: p.mailingAddress.postalCode,
+      vsd_mailingprovincestate: p.mailingAddress.province,
+      vsd_name: p.name,
+      vsd_phonenumber: p.phoneNumber,
+      vsd_postalcodezip: p.mainAddress.postalCode,
+      vsd_programid: p.programId,
+      vsd_provincestate: p.mainAddress.province
+    });
+    // push schedules into schedule collection
+    // push program contacts into program contact collection
+    // push
+  });
+  return post;
 }
