@@ -179,7 +179,7 @@ export class TransmogrifierProgramApplication {
         if (sched._vsd_programid_value === p.vsd_programid) {
           // split the times into something that we can turn into moment
           const open: number[] = sched.vsd_scheduledstarttime.split(':').map(x => parseInt(x));
-          const closed: number[] = sched.vsd_scheduledstarttime.split(':').map(x => parseInt(x));
+          const closed: number[] = sched.vsd_scheduledendtime.split(':').map(x => parseInt(x));
 
           const hours: iHours = {
             //save the hours into moment format.
