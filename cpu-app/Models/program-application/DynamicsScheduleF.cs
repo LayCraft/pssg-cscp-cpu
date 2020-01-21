@@ -11,12 +11,12 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string BusinessBCeID { get; set; }
 		public string UserBCeID { get; set; }
 		// TODO the program model is not consistent so this breaks posts
-		public DynamicsCrmProgramContract ProgramCollection { get; set; }
-		// public DynamicsOrganization OrganizationCollection { get; set; }
-		// public DynamicsCrmSchedule[] ScheduleCollection { get; set; }
-		// public DynamicsCrmProgramContract[] ProgramCollection { get; set; }
-		// public DynamicsCrmContract ContractCollection { get; set; }
-		// public DynamicsCrmContact[] StaffCollection { get; set; }
-		// public DynamicsCrmContact ExecutiveContact { get; set; }
+		public DynamicsProgramApplicationOrganization Organization { get; set; }
+		public DynamicsProgramApplicationContact ExecutiveContact { get; set; }
+		public DynamicsProgramApplicationContact BoardContact { get; set; }
+		public DynamicsProgramApplicationProgram[] ProgramCollection { get; set; }
+		public DynamicsProgramApplicationSchedule[] ScheduleCollection { get; set; }
+		public DynamicsProgramApplicationContact[] ProgramContactCollection { get; set; }
+		public DynamicsProgramApplicationContact[] StaffCollection { get; set; }
 	}
 }
