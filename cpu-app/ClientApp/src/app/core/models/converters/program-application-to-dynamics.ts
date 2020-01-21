@@ -3,14 +3,17 @@ import { TransmogrifierProgramApplication } from "../transmogrifier-program-appl
 import { iProgramApplication } from "../program-application.interface";
 import { convertHoursToDynamics } from "./hours-to-dynamics";
 import { iHours } from "../hours.interface";
-import { convertContactInformationToDynamics } from "./contact-information-to-dynamics";
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsScheduleFPost {
   const post: iDynamicsScheduleFPost = {
     Businessbceid: trans.organizationId,
     Userbceid: trans.userId,
     Contract: {
+      _vsd_contactlookup1_value: trans.contactInformation.executiveContact.personId,
+      _vsd_contactlookup2_value: trans.contactInformation.boardContact.personId,
       vsd_contractid: trans.contractId,
+      vsd_cpu_specificunion: trans.administrativeInformation.staffUnion,
+      vsd_name: trans.contractName,
     },
     Organization: {
       address1_city: trans.contactInformation.mainAddress.city,
@@ -39,11 +42,11 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       address1_stateorprovince: trans.contactInformation.executiveContact.address.province,
       contactid: trans.contactInformation.executiveContact.personId,
       emailaddress1: trans.contactInformation.executiveContact.email,
+      fax: trans.contactInformation.executiveContact.fax,
       firstname: trans.contactInformation.executiveContact.firstName,
       jobtitle: trans.contactInformation.executiveContact.title,
       lastname: trans.contactInformation.executiveContact.lastName,
       middlename: trans.contactInformation.executiveContact.middleName,
-      fax: trans.contactInformation.executiveContact.fax,
       mobilephone: trans.contactInformation.executiveContact.phone,
       vsd_bceid: trans.contactInformation.executiveContact.userId,
       vsd_contact_vsd_programid: null,
@@ -57,11 +60,11 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       address1_stateorprovince: trans.contactInformation.boardContact.address.province,
       contactid: trans.contactInformation.boardContact.personId,
       emailaddress1: trans.contactInformation.boardContact.email,
+      fax: trans.contactInformation.boardContact.fax,
       firstname: trans.contactInformation.boardContact.firstName,
       jobtitle: trans.contactInformation.boardContact.title,
       lastname: trans.contactInformation.boardContact.lastName,
       middlename: trans.contactInformation.boardContact.middleName,
-      fax: trans.contactInformation.boardContact.fax,
       mobilephone: trans.contactInformation.boardContact.phone,
       vsd_bceid: trans.contactInformation.boardContact.userId,
       vsd_contact_vsd_programid: null,
@@ -77,9 +80,12 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     post.ProgramCollection.push({
       _vsd_contactlookup_value: p.programContact.personId,
       _vsd_contractid_value: trans.contractId,
-      _vsd_programtype_value: null, // does this have a value?
       _vsd_cpu_regiondistrict_value: p.programLocation,
       _vsd_cpu_regiondistrictlookup2_value: p.programLocation,
+      _vsd_programtype_value: null, // does this have a value?
+      _vsd_serviceproviderid_value: null,
+      statecode: null,
+      statuscode: null,
       vsd_addressline1: p.mainAddress.line1,
       vsd_addressline2: p.mainAddress.line2,
       vsd_city: p.mainAddress.city,
@@ -96,7 +102,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_phonenumber: p.phoneNumber,
       vsd_postalcodezip: p.mainAddress.postalCode,
       vsd_programid: p.programId,
-      vsd_provincestate: p.mainAddress.province
+      vsd_provincestate: p.mainAddress.province,
     });
     // push hours into schedule collection
     p.operationHours
