@@ -1,6 +1,7 @@
 import { iDynamicsScheduleFPost, iDynamicsOrganization } from "../dynamics-blob";
 import { TransmogrifierProgramApplication } from "../transmogrifier-program-application.class";
 import { iProgramApplication } from "../program-application.interface";
+import { convertHoursToDynamics } from "./hours-to-dynamics";
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsScheduleFPost {
   const post: iDynamicsScheduleFPost = {
@@ -95,9 +96,12 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_programid: p.programId,
       vsd_provincestate: p.mainAddress.province
     });
-    // push schedules into schedule collection
+    // push hours into schedule collection
+
+    // post.ScheduleCollection.push(convertHoursToDynamics());
     // push program contacts into program contact collection
     // push
   });
   return post;
 }
+
