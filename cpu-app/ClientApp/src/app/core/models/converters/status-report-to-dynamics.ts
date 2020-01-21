@@ -2,6 +2,7 @@ import { TransmogrifierStatusReport } from "../transmogrifier-status-report.clas
 import { iDynamicsPostStatusReport, iDynamicsAnswer } from "../dynamics-post";
 import { iQuestionCollection } from "../question-collection.interface";
 import { iQuestion } from "../status-report-question.interface";
+import { months as monthDict } from "../../constants/month-codes";
 
 export function convertStatusReportToDynamics(trans: TransmogrifierStatusReport): iDynamicsPostStatusReport {
   const types = {
@@ -9,20 +10,6 @@ export function convertStatusReportToDynamics(trans: TransmogrifierStatusReport)
     'boolean': 100000001,
     'string': 100000002,
   };
-  const months = {
-    "January": 100000000,
-    "February": 100000001,
-    "March": 100000002,
-    "April": 100000003,
-    "May": 100000004,
-    "June": 100000005,
-    "July": 100000006,
-    "August": 100000007,
-    "September": 100000008,
-    "October": 100000009,
-    "November": 100000010,
-    "December": 100000011,
-  }
   // build the answers into a flatter dynamics form
   const answers: iDynamicsAnswer[] = [];
 
@@ -47,7 +34,7 @@ export function convertStatusReportToDynamics(trans: TransmogrifierStatusReport)
   return {
     BusinessBCeID: trans.organizationId,
     UserBCeID: trans.userId,
-    ReportingPeriod: months[trans.reportingPeriod] || 0,
+    ReportingPeriod: monthDict[trans.reportingPeriod] || 0,
     // get rid of any answers are missing a value. Otherwise dynamics 204's.
     AnswerCollection: answers.filter(v => v.vsd_yesnoboolean || v.vsd_textanswer || v.vsd_number)
   };
