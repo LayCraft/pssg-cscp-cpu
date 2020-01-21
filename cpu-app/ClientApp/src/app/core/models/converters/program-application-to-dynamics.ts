@@ -1,4 +1,71 @@
-export function convertProgramApplicationToDynamics(trans: any): any {
-  console.log('No conversion of program application yet.', trans);
-  return trans;
+import { iDynamicsScheduleFPost, iDynamicsOrganization } from "../dynamics-blob";
+import { TransmogrifierProgramApplication } from "../transmogrifier-program-application.class";
+
+export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsScheduleFPost {
+  return {
+    Businessbceid: trans.organizationId,
+    Userbceid: trans.userId,
+    Contract: {
+      vsd_contractid: trans.contractId,
+    },
+    Organization: {
+      address1_city: trans.contactInformation.mainAddress.city,
+      address1_country: trans.contactInformation.mainAddress.country,
+      address1_line1: trans.contactInformation.mainAddress.line1,
+      address1_line2: trans.contactInformation.mainAddress.line2,
+      address1_postalcode: trans.contactInformation.mainAddress.postalCode,
+      address1_stateorprovince: trans.contactInformation.mainAddress.province,
+      address2_city: trans.contactInformation.mailingAddress.city,
+      address2_country: trans.contactInformation.mailingAddress.country,
+      address2_line1: trans.contactInformation.mailingAddress.line1,
+      address2_line2: trans.contactInformation.mailingAddress.line2,
+      address2_postalcode: trans.contactInformation.mailingAddress.postalCode,
+      address2_stateorprovince: trans.contactInformation.mailingAddress.province,
+      emailaddress1: trans.contactInformation.emailAddress,
+      fax: trans.contactInformation.faxNumber,
+      name: trans.organizationName,
+      telephone1: trans.contactInformation.phoneNumber,
+    },
+    ExecutiveContact: {
+      address1_city: trans.contactInformation.executiveContact.address.city,
+      address1_country: trans.contactInformation.executiveContact.address.country,
+      address1_line1: trans.contactInformation.executiveContact.address.line1,
+      address1_line2: trans.contactInformation.executiveContact.address.line2,
+      address1_postalcode: trans.contactInformation.executiveContact.address.postalCode,
+      address1_stateorprovince: trans.contactInformation.executiveContact.address.province,
+      contactid: trans.contactInformation.executiveContact.personId,
+      emailaddress1: trans.contactInformation.executiveContact.email,
+      firstname: trans.contactInformation.executiveContact.firstName,
+      jobtitle: trans.contactInformation.executiveContact.title,
+      lastname: trans.contactInformation.executiveContact.lastName,
+      middlename: trans.contactInformation.executiveContact.middleName,
+      fax: trans.contactInformation.executiveContact.fax,
+      mobilephone: trans.contactInformation.executiveContact.phone,
+      vsd_bceid: trans.contactInformation.executiveContact.userId,
+      vsd_contact_vsd_programid: null,
+    },
+    BoardContact: {
+      address1_city: trans.contactInformation.boardContact.address.city,
+      address1_country: trans.contactInformation.boardContact.address.country,
+      address1_line1: trans.contactInformation.boardContact.address.line1,
+      address1_line2: trans.contactInformation.boardContact.address.line2,
+      address1_postalcode: trans.contactInformation.boardContact.address.postalCode,
+      address1_stateorprovince: trans.contactInformation.boardContact.address.province,
+      contactid: trans.contactInformation.boardContact.personId,
+      emailaddress1: trans.contactInformation.boardContact.email,
+      firstname: trans.contactInformation.boardContact.firstName,
+      jobtitle: trans.contactInformation.boardContact.title,
+      lastname: trans.contactInformation.boardContact.lastName,
+      middlename: trans.contactInformation.boardContact.middleName,
+      fax: trans.contactInformation.boardContact.fax,
+      mobilephone: trans.contactInformation.boardContact.phone,
+      vsd_bceid: trans.contactInformation.boardContact.userId,
+      vsd_contact_vsd_programid: null,
+    },
+    ProgramCollection: [],
+    ScheduleCollection: [],
+    ProgramContactCollection: [],
+    RegionDistrictCollection: [],
+    StaffCollection: [],
+  };
 }
