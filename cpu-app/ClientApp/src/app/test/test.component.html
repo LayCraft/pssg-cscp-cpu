@@ -1,7 +1,8 @@
 <!-- <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)" > -->
 <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)" multiple>
-<button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Upload</button>
-
+<button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Browse...</button>
+<button class="btn btn-warning ml-2" (click)="upload()">Upload</button>
+<br>
 <button class="btn btn-danger ml-2" (click)="download()">Download</button>
 
 <pre>

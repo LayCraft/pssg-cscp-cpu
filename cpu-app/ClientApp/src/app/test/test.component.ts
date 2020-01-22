@@ -23,12 +23,23 @@ export class TestComponent implements OnInit {
   ngOnInit() { }
 
   // what are the names of the files in the filedata array
-  fileNames = [];
+  fileNames: string[] = [];
   // base64 encoded file turned into a string
-  fileData = [];
+  fileData: string[] = [];
 
   upload() {
-    this.fileService.upload(null, null, null).subscribe((d) => console.log('Upload', d));
+    const file: iDynamicsFile = {
+      "Businessbceid": "fd889a40-14b2-e811-8163-480fcff4f621",
+      "Userbceid": "9e9b5111-51c9-e911-b80f-00505683fbf4",
+      DocumentCollection: [
+        {
+          fortunecookietype: "#Microsoft.Dynamics.CRM.activitymimeattachment",
+          filename: this.fileNames[0],
+          body: this.fileData[0],
+        }
+      ]
+    };
+    this.fileService.upload('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4', file).subscribe((d) => console.log('Uploaded', d));
   }
 
   fakeBrowseClick(): void {
