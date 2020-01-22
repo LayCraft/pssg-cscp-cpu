@@ -1,2 +1,11 @@
-<button class="btn btn-warning" (click)="upload()">Upload</button>
+<input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)" multiple>
+<button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Upload</button>
+
 <button class="btn btn-danger ml-2" (click)="download()">Download</button>
+
+<pre>
+{{fileNames|json}}
+</pre>
+<pre>
+{{fileData|json}}
+</pre>

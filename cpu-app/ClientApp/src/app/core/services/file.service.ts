@@ -21,12 +21,11 @@ export class FileService {
       catchError(this.handleError)
     );
   }
-  upload(organizationId: string, userId: string, file: any): Observable<any> {
-    // return this.http.post<any>(`${this.apiUrl}/${organizationId}/${userId}`, file, { headers: this.headers }).pipe(
-    //   retry(3),
-    //   catchError(this.handleError)
-    // );
-    return of(null);
+  upload(organizationId: string, userId: string, file: iDynamicsFile): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${organizationId}/${userId}`, file, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
   }
 
   get headers(): HttpHeaders {
