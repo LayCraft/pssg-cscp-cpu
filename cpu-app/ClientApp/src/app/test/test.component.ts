@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DownloadService } from '../core/services/download.service';
 
 @Component({
   selector: 'app-test',
@@ -7,12 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private downloadService: DownloadService
+  ) { }
   ngOnInit() { }
   upload() {
-    alert('upload');
+    this.downloadService.download(null, null).subscribe((d) => console.log('Upload', d))
   }
   download() {
-    alert('download');
+    this.downloadService.upload(null, null, null).subscribe((d) => console.log('Download', d))
   }
 }
