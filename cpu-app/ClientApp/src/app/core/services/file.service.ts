@@ -6,20 +6,19 @@ import { retry, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class DownloadService {
+export class FileService {
 
-  apiUrl = 'api/file';
+  apiUrl = 'api/DynamicsFile';
 
   constructor(
     private http: HttpClient,
   ) { }
 
   download(organizationId: string, userId: string): Observable<any> {
-    // return this.http.get<any>(`${this.apiUrl}/${organizationId}/${userId}`, { headers: this.headers }).pipe(
-    //   retry(3),
-    //   catchError(this.handleError)
-    // );
-    return of(null);
+    return this.http.get<any>(`${this.apiUrl}/${organizationId}/${userId}`, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
   }
   upload(organizationId: string, userId: string, file: any): Observable<any> {
     // return this.http.post<any>(`${this.apiUrl}/${organizationId}/${userId}`, file, { headers: this.headers }).pipe(

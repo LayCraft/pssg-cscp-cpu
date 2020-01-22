@@ -21,9 +21,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 	public class DynamicsFileController : Controller
 	{
 		private readonly IConfiguration _configuration;
-
 		private readonly IHttpContextAccessor _httpContextAccessor;
-
 		public DynamicsFileController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
 		{
 			this._httpContextAccessor = httpContextAccessor;
@@ -38,7 +36,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 				// convert the parameters to a json string
 				string applicationJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
 				// set the endpoint action
-				string endpointAction = "vsd_GetCPUOrgContracts";
+				string endpointAction = "vsd_contracts(" + userBceid + ")/Microsoft.Dynamics.CRM.vsd_GetCPUContractDocuments";
 				// get the response
 				Tuple<int, string, HttpResponseMessage> tuple = await GetDynamicsHttpClient(_configuration, applicationJson, endpointAction);
 
@@ -58,6 +56,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 
 			string dynamicsOdataUri = Configuration["DYNAMICS_ODATA_URI"]; // Dynamics ODATA endpoint
 			string dynamicsJobName = endPointName;// Configuration["DYNAMICS_JOB_NAME"]; // Dynamics Job Name
+
 
 			if (string.IsNullOrEmpty(dynamicsOdataUri))
 			{

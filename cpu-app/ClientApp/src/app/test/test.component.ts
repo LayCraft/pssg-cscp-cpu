@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DownloadService } from '../core/services/download.service';
+import { FileService } from '../core/services/file.service';
 
 @Component({
   selector: 'app-test',
@@ -9,13 +9,13 @@ import { DownloadService } from '../core/services/download.service';
 export class TestComponent implements OnInit {
 
   constructor(
-    private downloadService: DownloadService
+    private fileService: FileService
   ) { }
   ngOnInit() { }
   upload() {
-    this.downloadService.download(null, null).subscribe((d) => console.log('Upload', d))
+    this.fileService.download('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4').subscribe((d) => console.log('Upload', d));
   }
   download() {
-    this.downloadService.upload(null, null, null).subscribe((d) => console.log('Download', d))
+    this.fileService.upload(null, null, null).subscribe((d) => console.log('Download', d));
   }
 }
