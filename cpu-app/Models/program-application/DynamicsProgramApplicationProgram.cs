@@ -12,24 +12,23 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string vsd_totalscheduledhours { get; set; }
 
 		// DYNAMICS SCHEDULE F POSTBACK STUFF (Trust me when I say that I hate this code more than you do.)
+		private string _vsd_ContactLookupfortunecookiebind;
 		public string vsd_ContactLookupfortunecookiebind
 		{
 			// executive contact on schedule f
 			get
 			{
-				if (vsd_ContactLookupfortunecookiebind != null)
+				if (_vsd_ContactLookupfortunecookiebind != null)
 				{
-					return "/contacts(" + vsd_ContactLookupfortunecookiebind + ")";
+					return "/contacts(" + _vsd_ContactLookupfortunecookiebind + ")";
 				}
 				else
 				{
 					return null;
 				}
 			}
-			set { vsd_ContactLookupfortunecookiebind = value; }
+			set { _vsd_ContactLookupfortunecookiebind = value; }
 		}
-		public int statecode { set; get; }
-		public int statuscode { set; get; }
 		public string _vsd_contactlookup_value { set; get; }
 		public string _vsd_contractid_value { set; get; }
 		public string _vsd_cpu_regiondistrict_value { set; get; }

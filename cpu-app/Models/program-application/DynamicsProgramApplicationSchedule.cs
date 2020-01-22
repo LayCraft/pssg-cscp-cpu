@@ -7,21 +7,22 @@ namespace Gov.Cscp.VictimServices.Public.Models
 {
 	public class DynamicsProgramApplicationSchedule
 	{
+		private string _vsd_ProgramIdfortunecookiebind;
 		public string vsd_ProgramIdfortunecookiebind
 		{
 			// executive contact on schedule f
 			get
 			{
-				if (vsd_ProgramIdfortunecookiebind != null)
+				if (_vsd_ProgramIdfortunecookiebind != null)
 				{
-					return "/vsd_programs(" + vsd_ProgramIdfortunecookiebind + ")";
+					return "/vsd_programs(" + _vsd_ProgramIdfortunecookiebind + ")";
 				}
 				else
 				{
 					return null;
 				}
 			}
-			set { vsd_ProgramIdfortunecookiebind = value; }
+			set { _vsd_ProgramIdfortunecookiebind = value; }
 		}
 		public string _vsd_programid_value { get; set; }
 		public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.vsd_schedule"; } }
