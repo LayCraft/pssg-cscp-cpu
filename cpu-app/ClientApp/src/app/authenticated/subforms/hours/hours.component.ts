@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { uuidv4 } from '../../../core/constants/uuidv4';
-import { Hours } from '../../../core/models/hours.class';
+import { iHours } from '../../../core/models/hours.interface';
 
 @Component({
   selector: 'app-hours',
@@ -8,9 +8,9 @@ import { Hours } from '../../../core/models/hours.class';
   styleUrls: ['./hours.component.css']
 })
 export class HoursComponent implements OnInit {
-  @Input() hours: Hours;
-  @Output() hoursChange = new EventEmitter<Hours>();
-  @Input() title: string = 'Hours (24hr)';
+  @Input() hours: iHours;
+  @Output() hoursChange = new EventEmitter<iHours>();
+  @Input() title: string = 'Hours';
   uuid: string;
   constructor() { }
 

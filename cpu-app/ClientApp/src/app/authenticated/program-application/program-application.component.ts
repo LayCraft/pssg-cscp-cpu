@@ -15,11 +15,14 @@ import { convertProgramApplicationToDynamics } from '../../core/models/converter
 })
 export class ProgramApplicationComponent implements OnInit {
   data: any;
+  out: any;
   trans: TransmogrifierProgramApplication;
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
+  saving: boolean = false;
+
   constructor(
     private notificationQueueService: NotificationQueueService,
     private programApplicationService: ProgramApplicationService,
@@ -123,8 +126,20 @@ export class ProgramApplicationComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
-    const send = convertProgramApplicationToDynamics(this.trans);
-    // this.programApplicationService.setScheduleF(send).subscribe(a => { });
+    this.saving = true;
+    this.out = convertProgramApplicationToDynamics(this.trans);
+    this.programApplicationService.setScheduleF(this.out).subscribe(
+      r => {
+        console.log(r);
+        this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
+        this.router.navigate(['/authenticated/dashboard']);
+      },
+      err => {
+        console.log(err);
+        this.notificationQueueService.addNotification('The program application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+        this.saving = false;
+      }
+    );
   }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {

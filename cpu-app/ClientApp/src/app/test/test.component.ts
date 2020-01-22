@@ -4,7 +4,7 @@ import { TransmogrifierBudgetProposal } from '../core/models/transmogrifier-budg
 import { iDynamicsScheduleFResponse, iDynamicsScheduleFPost } from '../core/models/dynamics-blob';
 import { TransmogrifierProgramApplication } from '../core/models/transmogrifier-program-application.class';
 import { convertProgramApplicationToDynamics } from '../core/models/converters/program-application-to-dynamics';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -18,6 +18,7 @@ export class TestComponent implements OnInit {
     this.tween = new TransmogrifierProgramApplication(this.foo);
     this.out = convertProgramApplicationToDynamics(this.tween);
   }
+
   foo: iDynamicsScheduleFResponse = {
     "IsSuccess": true,
     "Result": "CPU Schedule F found..",

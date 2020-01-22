@@ -81,6 +81,7 @@
     <div *ngFor="let hours of programApplication.operationHours; let i=index">
       <app-hours [(hours)]="hours"></app-hours>
       <a (click)="removeOperationHours(i)" class="btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
+      <pre>{{hours|json}}</pre>
     </div>
     <button class="btn btn-secondary mb-4 mt-2" (click)="addOperationHours()">Add Operation Hours</button>
     <h2 class="blue-header">Program On-call / Stand-by Hours of Operation</h2>
@@ -93,7 +94,6 @@
   <div *ngIf="currentTab===tabs[2]">
     <h2 class="blue-header">Reporting Requirements</h2>
     <div class="form-group">
-
       <pre>If not set from the system are these CYA questions? Can we turn them into a TOS?
 We need to know what year is the previous year.
 We need to know if this is a renewal.

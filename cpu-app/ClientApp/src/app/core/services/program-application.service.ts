@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
-import { iDynamicsScheduleFResponse } from '../models/dynamics-blob';
+import { iDynamicsScheduleFResponse, iDynamicsScheduleFPost } from '../models/dynamics-blob';
 
 
 @Injectable({
@@ -22,8 +22,11 @@ export class ProgramApplicationService {
       catchError(this.handleError)
     );
   }
-  setScheduleF(scheduleF: any): Observable<any> {
-    return of(null);
+  setScheduleF(budgetProposal: iDynamicsScheduleFPost): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, budgetProposal, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
   }
 
   get headers(): HttpHeaders {
