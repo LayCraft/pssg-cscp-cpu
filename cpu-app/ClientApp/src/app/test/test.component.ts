@@ -34,9 +34,11 @@ export class TestComponent implements OnInit {
   fakeBrowseClick(): void {
     // the UI element for the native element is completely useless and ugly so we hide it and fake the user click.
     this.myInputVariable.nativeElement.click();
-    console.log('Native button is clicked.');
   }
   onFilesAdded(files: FileList): void {
+    // this is built intially to support multiple files but I'm returning it to single files
+    this.fileNames = [];
+    this.fileData = [];
     // for each file added we go through the same conversion process.
     for (let i = 0; i < files.length; i++) {
       // convert the file to base64 for upload
