@@ -26,7 +26,11 @@ export class IconStepperComponent implements OnInit {
 
   ngOnInit() {
     // subscribe to all of the changes
-    this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
+    this.stepperService.currentStepperElement.subscribe(e => {
+      this.currentStepperElement = e;
+      // whenever someone clicks to another link scroll to the top of the viewport.
+      window.scrollTo(0, 0);
+    });
     this.stepperService.stepperElements.subscribe(s => this.stepperElements = s);
   }
 

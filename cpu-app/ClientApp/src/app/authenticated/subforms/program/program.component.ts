@@ -45,8 +45,6 @@ export class ProgramComponent implements OnInit {
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.persons = m.persons;
     });
-    this.addOperationHours();
-    this.addStandbyHours();
     this.onInput();
   }
 
