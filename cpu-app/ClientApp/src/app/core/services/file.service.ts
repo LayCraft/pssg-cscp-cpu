@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { iDynamicsFile } from '../models/dynamics-file.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class FileService {
     private http: HttpClient,
   ) { }
 
-  download(organizationId: string, userId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${organizationId}/${userId}`, { headers: this.headers }).pipe(
+  download(organizationId: string, userId: string): Observable<iDynamicsFile> {
+    return this.http.get<iDynamicsFile>(`${this.apiUrl}/${organizationId}/${userId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
