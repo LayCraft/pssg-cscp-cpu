@@ -234,6 +234,19 @@ export interface iDynamicsScheduleFResponse {
   Businessbceid: string;
   BoardContact?: iDynamicsCrmContact;
 }
+export interface iDynamicsScheduleFPost {
+  BoardContact?: iDynamicsCrmContact;
+  Businessbceid: string;
+  Contract?: iDynamicsCrmContract;
+  ExecutiveContact?: iDynamicsCrmContact;
+  Organization?: iDynamicsOrganization;
+  ProgramCollection?: iDynamicsCrmProgram[];
+  ProgramContactCollection?: iDynamicsCrmContact[];
+  RegionDistrictCollection?: iDynamicsRegionDistrict[];
+  ScheduleCollection?: iDynamicsSchedule[];
+  StaffCollection?: iDynamicsCrmContact[];
+  Userbceid?: string;
+}
 export interface iDynamicsRegionDistrict {
   vsd_name: string;
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsCrmProgramContract
+	public class DynamicsProgramApplicationContract
 	{
 		public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.vsd_program"; } }
 		public string vsd_programid { get; set; }

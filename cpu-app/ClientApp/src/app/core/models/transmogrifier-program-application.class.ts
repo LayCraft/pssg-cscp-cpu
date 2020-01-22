@@ -1,4 +1,3 @@
-import * as moment from 'moment';
 import { decodeCcseaMemberType } from '../constants/decode-ccsea-member-type';
 import { decodeCglInsurance } from '../constants/decode-cgl-insurance-type';
 import { decodeToWeekDays } from '../constants/decode-to-week-days';
@@ -9,6 +8,7 @@ import { iHours } from "./hours.interface";
 import { iPerson } from "./person.interface";
 import { iProgramApplication } from "./program-application.interface";
 import { iSignature } from '../../authenticated/subforms/program-authorizer/program-authorizer.component';
+import { makeViewTimeString } from './converters/hours-to-dynamics';
 
 export class TransmogrifierProgramApplication {
   contractId: string;
@@ -178,13 +178,10 @@ export class TransmogrifierProgramApplication {
         // if the schedule matches this program collect it.
         if (sched._vsd_programid_value === p.vsd_programid) {
           // split the times into something that we can turn into moment
-          const open: number[] = sched.vsd_scheduledstarttime.split(':').map(x => parseInt(x));
-          const closed: number[] = sched.vsd_scheduledstarttime.split(':').map(x => parseInt(x));
-
           const hours: iHours = {
             //save the hours into moment format.
-            open: moment().hours(open[0]).minutes(open[1]).toString(),
-            closed: moment().hours(closed[0]).minutes(closed[1]).toString(),
+            open: makeViewTimeString(sched.vsd_scheduledstarttime),
+            closed: makeViewTimeString(sched.vsd_scheduledendtime),
             // save the identifier for the post back to dynamics
             hoursId: sched.vsd_scheduleid,
             // convert the nasty comma seperated string version to useful week day boolean
