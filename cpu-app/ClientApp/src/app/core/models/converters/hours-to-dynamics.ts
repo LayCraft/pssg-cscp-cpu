@@ -5,8 +5,8 @@ import * as moment from 'moment';
 
 export function convertHoursToDynamics(hours: iHours, programId: string, standByHours = false): iDynamicsSchedule {
   return {
-    vsd_scheduledendtime: convertToDynamicsTimeString(hours.open),
-    vsd_scheduledstarttime: convertToDynamicsTimeString(hours.closed),
+    vsd_scheduledendtime: convertToDynamicsTimeString(hours.closed),
+    vsd_scheduledstarttime: convertToDynamicsTimeString(hours.open),
     vsd_days: encodeToWeekDayCodes(hours),
     vsd_scheduleid: hours.hoursId,
     _vsd_programid_value: programId,
