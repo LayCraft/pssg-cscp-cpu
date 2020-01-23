@@ -87,7 +87,7 @@ export interface iDynamicsScheduleFPost {
   ContractCollection?: iDynamicsCrmContractPost[];
   Organization?: iDynamicsOrganization;
   ProgramCollection?: iDynamicsCrmProgram[];
-  ProgramContactCollection?: iDynamicsCrmContact[];
+  ProgramContactCollection?: iDynamicsProgramContactPost[];
   ScheduleCollection?: iDynamicsSchedule[];
   StaffCollection?: iDynamicsProgramContactPost[];
   Userbceid?: string;

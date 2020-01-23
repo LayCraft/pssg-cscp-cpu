@@ -12,40 +12,40 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		{
 			get { return "#Microsoft.Dynamics.CRM.vsd_contract"; }
 		}
-		private string __vsd_ContactLookup1fortunecookiebind;
-		public string _vsd_ContactLookup1fortunecookiebind
+		private string _vsd_ContactLookup1fortunecookiebind;
+		public string vsd_ContactLookup1fortunecookiebind
 		{
 			// executive contact on schedule f
 			get
 			{
-				if (__vsd_ContactLookup1fortunecookiebind != null)
+				if (_vsd_ContactLookup1fortunecookiebind != null)
 				{
-					return "/contacts(" + __vsd_ContactLookup1fortunecookiebind + ")";
+					return "/contacts(" + _vsd_ContactLookup1fortunecookiebind + ")";
 				}
 				else
 				{
 					return null;
 				}
 			}
-			set { __vsd_ContactLookup1fortunecookiebind = value; }
+			set { _vsd_ContactLookup1fortunecookiebind = value; }
 		}
 
-		private string __vsd_contactLookup2fortunecookiebind;
-		public string _vsd_contactLookup2fortunecookiebind
+		private string _vsd_ContactLookup2fortunecookiebind;
+		public string vsd_ContactLookup2fortunecookiebind
 		{
 			// executive contact on schedule f
 			get
 			{
-				if (__vsd_contactLookup2fortunecookiebind != null)
+				if (_vsd_ContactLookup2fortunecookiebind != null)
 				{
-					return "/contacts(" + __vsd_contactLookup2fortunecookiebind + ")";
+					return "/contacts(" + _vsd_ContactLookup2fortunecookiebind + ")";
 				}
 				else
 				{
 					return null;
 				}
 			}
-			set { __vsd_contactLookup2fortunecookiebind = value; }
+			set { _vsd_ContactLookup2fortunecookiebind = value; }
 		}
 
 		public string _vsd_contactlookup1_value { get; set; }
