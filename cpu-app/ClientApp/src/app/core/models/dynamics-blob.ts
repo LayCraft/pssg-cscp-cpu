@@ -249,6 +249,7 @@ export interface iDynamicsScheduleFPost {
 }
 export interface iDynamicsRegionDistrict {
   vsd_name: string;
+  vsd_regiondistrictid: string;
 }
 
 export interface iDynamicsBudgetProposal {

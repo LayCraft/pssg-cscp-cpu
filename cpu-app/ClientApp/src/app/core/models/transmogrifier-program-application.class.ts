@@ -145,7 +145,7 @@ export class TransmogrifierProgramApplication {
         name: p.vsd_name,
         phoneNumber: p.vsd_phonenumber,
         programId: p.vsd_programid,
-        programLocation: p._vsd_cpu_regiondistrict_value,
+        programLocation: g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid)[0].vsd_name,
         serviceArea: p._vsd_cpu_regiondistrict_value,
         mainAddress: {
           line1: p.vsd_addressline1 || null,
