@@ -44,8 +44,8 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     post.ProgramCollection.push({
       _vsd_contactlookup_value: p.programContact.personId,
       _vsd_contractid_value: trans.contractId,
-      _vsd_cpu_regiondistrict_value: p.programLocation,
-      _vsd_cpu_regiondistrictlookup2_value: p.programLocation,
+      // _vsd_cpu_regiondistrict_value: p.programLocation,
+      // _vsd_cpu_regiondistrictlookup2_value: p.programLocation,
       _vsd_programtype_value: null, // does this have a value?
       _vsd_serviceproviderid_value: null,
       statecode: null,
