@@ -7,28 +7,52 @@ namespace Gov.Cscp.VictimServices.Public.Models
 {
 	public class DynamicsProgramApplicationContract
 	{
-		public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.vsd_program"; } }
-		public string vsd_programid { get; set; }
-		public string vsd_totaloncallstandbyhours { get; set; }
-		public string vsd_totalscheduledhours { get; set; }
 
-		// DYNAMICS SCHEDULE F POSTBACK STUFF (Trust me when I say that I hate this code more than you do.)
-		private string _vsd_ContactLookupfortunecookiebind;
-		public string vsd_ContactLookupfortunecookiebind
+		public string fortunecookietype
+		{
+			get { return "#Microsoft.Dynamics.CRM.vsd_contract"; }
+		}
+		private string __vsd_contactLookup1fortunecookiebind;
+		public string _vsd_contactLookup1fortunecookiebind
 		{
 			// executive contact on schedule f
 			get
 			{
-				if (_vsd_ContactLookupfortunecookiebind != null)
+				if (__vsd_contactLookup1fortunecookiebind != null)
 				{
-					return "/contacts(" + _vsd_ContactLookupfortunecookiebind + ")";
+					return "/contacts(" + __vsd_contactLookup1fortunecookiebind + ")";
 				}
 				else
 				{
 					return null;
 				}
 			}
-			set { _vsd_ContactLookupfortunecookiebind = value; }
+			set { __vsd_contactLookup1fortunecookiebind = value; }
 		}
+
+		private string __vsd_contactLookup2fortunecookiebind;
+		public string _vsd_contactLookup2fortunecookiebind
+		{
+			// executive contact on schedule f
+			get
+			{
+				if (__vsd_contactLookup2fortunecookiebind != null)
+				{
+					return "/contacts(" + __vsd_contactLookup2fortunecookiebind + ")";
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set { __vsd_contactLookup2fortunecookiebind = value; }
+		}
+
+		public string _vsd_contactlookup1_value { get; set; }
+		public string _vsd_contactlookup2_value { get; set; }
+		public string _vsd_customer_value { get; set; }
+		public string vsd_contractid { get; set; }
+		public string vsd_cpu_specificunion { get; set; }
+		public string vsd_name { get; set; }
 	}
 }

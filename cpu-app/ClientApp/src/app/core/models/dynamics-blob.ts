@@ -237,7 +237,7 @@ export interface iDynamicsScheduleFResponse {
 export interface iDynamicsScheduleFPost {
   BoardContact?: iDynamicsCrmContact;
   Businessbceid: string;
-  Contract?: iDynamicsCrmContract;
+  ContractCollection?: iDynamicsCrmContract[];
   ExecutiveContact?: iDynamicsCrmContact;
   Organization?: iDynamicsOrganization;
   ProgramCollection?: iDynamicsCrmProgram[];
