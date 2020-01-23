@@ -35,16 +35,12 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       name: trans.organizationName,
       telephone1: trans.contactInformation.phoneNumber,
       accountid: trans.accountId,
-    },
-    ProgramCollection: [],
-    ScheduleCollection: [],
-    ProgramContactCollection: [],
-    RegionDistrictCollection: [],
-    StaffCollection: [],
+    }
   };
+  const programCollection = [];
   trans.programApplications.forEach((p: iProgramApplication) => {
     // push programs into program collection
-    post.ProgramCollection.push({
+    programCollection.push({
       vsd_addressline1: p.mainAddress.line1,
       vsd_addressline2: p.mainAddress.line2,
       vsd_city: p.mainAddress.city,
@@ -61,23 +57,20 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_postalcodezip: p.mainAddress.postalCode,
       vsd_programid: p.programId,
       vsd_provincestate: p.mainAddress.province,
-      // _vsd_contactlookup_value: p.programContact.personId,
-      // _vsd_contractid_value: trans.contractId,
-      // _vsd_cpu_regiondistrict_value: p.programLocation,
-      // _vsd_cpu_regiondistrictlookup2_value: p.programLocation,
-      // _vsd_programtype_value: null, // does this have a value?
-      // _vsd_serviceproviderid_value: null,
-      // statecode: null,
-      // statuscode: null,
-      // vsd_name: p.name,
     });
+    // if there are elements in the array add the item.
+    if (programCollection.length) post.ProgramCollection = programCollection;
+
     // push hours into schedule collection
+    const scheduleCollection = [];
     p.operationHours
       .map((h: iHours): iDynamicsSchedule => convertHoursToDynamics(h, p.programId))
-      .forEach((d: iDynamicsSchedule) => post.ScheduleCollection.push(d));
+      .forEach((d: iDynamicsSchedule) => scheduleCollection.push(d));
     p.standbyHours
       .map((h: iHours): iDynamicsSchedule => convertHoursToDynamics(h, p.programId, true))
-      .forEach((d: iDynamicsSchedule) => post.ScheduleCollection.push(d));
+      .forEach((d: iDynamicsSchedule) => scheduleCollection.push(d));
+    // if there are elements in the schedule collection then add them to the post
+    if (scheduleCollection.length) post.ScheduleCollection = scheduleCollection;
   });
   return post;
 }

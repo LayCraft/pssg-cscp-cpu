@@ -196,6 +196,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		[HttpPost]
 		public async Task<IActionResult> SetBudgetProposal([FromBody] DynamicsFile model)
 		{
+			// return null because this needs to be handled as files.
 			return null;
 			string task = "vsd_SetCPUOrgContracts";
 
