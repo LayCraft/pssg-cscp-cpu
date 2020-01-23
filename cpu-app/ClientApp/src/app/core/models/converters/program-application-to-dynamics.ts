@@ -9,11 +9,13 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     Businessbceid: trans.organizationId,
     Userbceid: trans.userId,
     Contract: {
+      // TODO: lookup fields need update in back end
       _vsd_contactlookup1_value: trans.contactInformation.executiveContact.personId,
+      // TODO: lookup fields need update in back end
       _vsd_contactlookup2_value: trans.contactInformation.boardContact.personId,
       vsd_contractid: trans.contractId,
       vsd_cpu_specificunion: trans.administrativeInformation.staffUnion,
-      vsd_name: trans.contractName,
+      // vsd_name: trans.contractName,
     },
     Organization: {
       address1_city: trans.contactInformation.mainAddress.city,
@@ -32,6 +34,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       fax: trans.contactInformation.faxNumber,
       name: trans.organizationName,
       telephone1: trans.contactInformation.phoneNumber,
+      accountid: trans.accountId,
     },
     ProgramCollection: [],
     ScheduleCollection: [],
@@ -42,14 +45,14 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
   trans.programApplications.forEach((p: iProgramApplication) => {
     // push programs into program collection
     post.ProgramCollection.push({
-      _vsd_contactlookup_value: p.programContact.personId,
-      _vsd_contractid_value: trans.contractId,
+      // _vsd_contactlookup_value: p.programContact.personId,
+      // _vsd_contractid_value: trans.contractId,
       // _vsd_cpu_regiondistrict_value: p.programLocation,
       // _vsd_cpu_regiondistrictlookup2_value: p.programLocation,
-      _vsd_programtype_value: null, // does this have a value?
-      _vsd_serviceproviderid_value: null,
-      statecode: null,
-      statuscode: null,
+      // _vsd_programtype_value: null, // does this have a value?
+      // _vsd_serviceproviderid_value: null,
+      // statecode: null,
+      // statuscode: null,
       vsd_addressline1: p.mainAddress.line1,
       vsd_addressline2: p.mainAddress.line2,
       vsd_city: p.mainAddress.city,
@@ -62,7 +65,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_mailingcountry: p.mailingAddress.country,
       vsd_mailingpostalcodezip: p.mailingAddress.postalCode,
       vsd_mailingprovincestate: p.mailingAddress.province,
-      vsd_name: p.name,
+      // vsd_name: p.name,
       vsd_phonenumber: p.phoneNumber,
       vsd_postalcodezip: p.mainAddress.postalCode,
       vsd_programid: p.programId,

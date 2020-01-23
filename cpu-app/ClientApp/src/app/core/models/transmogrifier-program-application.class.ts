@@ -11,19 +11,21 @@ import { iSignature } from '../../authenticated/subforms/program-authorizer/prog
 import { makeViewTimeString } from './converters/hours-to-dynamics';
 
 export class TransmogrifierProgramApplication {
+  accountId: string;// this is the dynamics account
+  administrativeInformation: iAdministrativeInformation;
+  cglInsurance: string; // commercial general liability insurance detail string picked from options.
+  contactInformation: iContactInformation;
   contractId: string;
   contractName: string;
   contractNumber: string;
   organizationId: string;
   organizationName: string;
-  userId: string;
-  administrativeInformation: iAdministrativeInformation;
-  cglInsurance: string; // commercial general liability insurance detail string picked from options.
-  contactInformation: iContactInformation;
   programApplications: iProgramApplication[];
   signature: iSignature;
+  userId: string;
 
   constructor(g: iDynamicsScheduleFResponse) {
+    this.accountId = g.Organization.accountid;
     this.contractId = g.Contract.vsd_contractid;
     this.contractName = g.Contract.vsd_name;
     this.contractNumber = g.Contract.vsd_name;
