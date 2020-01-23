@@ -20,7 +20,7 @@ import { takeUntil, tap } from 'rxjs/operators';
 })
 export class ContactInformationComponent implements OnInit {
 
-  @Input() title: string = 'Primary Contact Information';
+  @Input() title: string = 'Organization Contact Information';
   @Input() required: boolean = false;
   private _onChange = (_: any) => { };
   private _onTouched = () => { };
