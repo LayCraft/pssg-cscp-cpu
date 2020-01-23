@@ -1,3 +1,5 @@
+import { iDynamicsCrmContractPost } from "./dynamics-post";
+
 // This is what we expect dynamics to dump on us.
 // to make changes to how this comes in. we should make a change here, to the transmogrifier, and to the postback converter function that lives in the transmogrifier file
 // The strategy is to get the dynamics things which include a bunch of messy useless information and then construct a matching transmogrifier
@@ -234,19 +236,7 @@ export interface iDynamicsScheduleFResponse {
   Businessbceid: string;
   BoardContact?: iDynamicsCrmContact;
 }
-export interface iDynamicsScheduleFPost {
-  BoardContact?: iDynamicsCrmContact;
-  Businessbceid: string;
-  ContractCollection?: iDynamicsCrmContract[];
-  ExecutiveContact?: iDynamicsCrmContact;
-  Organization?: iDynamicsOrganization;
-  ProgramCollection?: iDynamicsCrmProgram[];
-  ProgramContactCollection?: iDynamicsCrmContact[];
-  RegionDistrictCollection?: iDynamicsRegionDistrict[];
-  ScheduleCollection?: iDynamicsSchedule[];
-  StaffCollection?: iDynamicsCrmContact[];
-  Userbceid?: string;
-}
+
 export interface iDynamicsRegionDistrict {
   vsd_name: string;
   vsd_regiondistrictid: string;

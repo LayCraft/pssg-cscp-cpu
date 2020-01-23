@@ -1,21 +1,20 @@
-import { iDynamicsScheduleFPost, iDynamicsOrganization, iDynamicsSchedule } from "../dynamics-blob";
+import { iDynamicsSchedule } from "../dynamics-blob";
 import { TransmogrifierProgramApplication } from "../transmogrifier-program-application.class";
 import { iProgramApplication } from "../program-application.interface";
 import { convertHoursToDynamics } from "./hours-to-dynamics";
 import { iHours } from "../hours.interface";
+import { iDynamicsScheduleFPost, iDynamicsProgramContactPost } from "../dynamics-post";
+import { iPerson } from "../person.interface";
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsScheduleFPost {
   const post: iDynamicsScheduleFPost = {
     Businessbceid: trans.organizationId,
     Userbceid: trans.userId,
     ContractCollection: [{
-      // TODO: lookup fields need update in back end
-      _vsd_contactlookup1_value: trans.contactInformation.executiveContact.personId,
-      // TODO: lookup fields need update in back end
-      _vsd_contactlookup2_value: trans.contactInformation.boardContact.personId,
+      vsd_ContactLookup1fortunecookiebind: trans.contactInformation.executiveContact.personId,
+      vsd_ContactLookup2fortunecookiebind: trans.contactInformation.boardContact.personId,
       vsd_contractid: trans.contractId,
       vsd_cpu_specificunion: trans.administrativeInformation.staffUnion,
-      // vsd_name: trans.contractName,
     }],
     Organization: {
       address1_city: trans.contactInformation.mainAddress.city,
@@ -35,8 +34,24 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       name: trans.organizationName,
       telephone1: trans.contactInformation.phoneNumber,
       accountid: trans.accountId,
-    }
+    },
   };
+
+  const programContactCollection: iDynamicsProgramContactPost[] = [];
+  trans.programApplications.forEach((pa: iProgramApplication) => {
+    // in each program add the list of staff by their id
+    pa.additionalStaff.forEach((s: iPerson): void => {
+      const contact: iDynamicsProgramContactPost = {
+        contactid: s.personId,
+        vsd_programid: pa.programId,
+      };
+      // add the contact
+      programContactCollection.push(contact);
+    });
+  });
+  // if there are elements in the array add the item.
+  if (programContactCollection.length) post.ProgramContactCollection = programContactCollection;
+
   const programCollection = [];
   trans.programApplications.forEach((p: iProgramApplication) => {
     // push programs into program collection

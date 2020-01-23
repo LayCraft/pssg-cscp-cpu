@@ -12,22 +12,22 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		{
 			get { return "#Microsoft.Dynamics.CRM.vsd_contract"; }
 		}
-		private string __vsd_contactLookup1fortunecookiebind;
-		public string _vsd_contactLookup1fortunecookiebind
+		private string __vsd_ContactLookup1fortunecookiebind;
+		public string _vsd_ContactLookup1fortunecookiebind
 		{
 			// executive contact on schedule f
 			get
 			{
-				if (__vsd_contactLookup1fortunecookiebind != null)
+				if (__vsd_ContactLookup1fortunecookiebind != null)
 				{
-					return "/contacts(" + __vsd_contactLookup1fortunecookiebind + ")";
+					return "/contacts(" + __vsd_ContactLookup1fortunecookiebind + ")";
 				}
 				else
 				{
 					return null;
 				}
 			}
-			set { __vsd_contactLookup1fortunecookiebind = value; }
+			set { __vsd_ContactLookup1fortunecookiebind = value; }
 		}
 
 		private string __vsd_contactLookup2fortunecookiebind;
