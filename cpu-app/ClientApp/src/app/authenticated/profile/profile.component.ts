@@ -55,23 +55,12 @@ export class ProfileComponent implements OnInit {
     return !!c.emailAddress && !!c.phoneNumber && !!c.mainAddress.line1 && !!c.mainAddress.city && !!c.mainAddress.province && !!c.mainAddress.postalCode;
   }
   onSave(): void {
-    // assemble the contact with executive and
-    const formValue: iContactInformation = this.contactInformationForm.value.contactInformation;
-    formValue.executiveContact = this.executiveContact;
-    formValue.boardContact = this.boardContact;
-    // cast the data into something useful for dynamics
-    const dynamicsPost: iDynamicsPostOrg = convertContactInformationToDynamics(this.userId, this.organizationId, this.accountId, formValue);
-
 
     // post to the organization
-    this.profileService.updateOrg(dynamicsPost).subscribe(
+    this.profileService.updateOrg(convertContactInformationToDynamics(this.trans)).subscribe(
       (res: any) => {
-        // console.log(res);
-        // success. Collect the transmogrifier and modify it.
-        const temp: Transmogrifier = this.stateService.main.getValue();
-        temp.organizationMeta.contactInformation = new ContactInformation(formValue);
         //update it in the state service
-        this.stateService.main.next(temp);
+        this.stateService.main.next(new Transmogrifier(res));
         // route to another page
         this.router.navigate([this.stateService.homeRoute.getValue()]);
       },

@@ -1,16 +1,18 @@
 import { Person } from "./person.class";
 import { Address } from "./address.class";
 import { iContactInformation } from "./contact-information.interface";
+import { iAddress } from "./address.interface";
+import { iPerson } from "./person.interface";
 
 export class ContactInformation implements iContactInformation {
   emailAddress: string;
   phoneNumber: string;
   faxNumber: string;
-  mainAddress: Address;
-  mailingAddress: Address;
+  mainAddress: iAddress;
+  mailingAddress: iAddress;
 
-  executiveContact: Person;
-  boardContact: Person;
+  executiveContact: iPerson;
+  boardContact: iPerson;
 
   constructor(info?: iContactInformation) {
     if (info) {

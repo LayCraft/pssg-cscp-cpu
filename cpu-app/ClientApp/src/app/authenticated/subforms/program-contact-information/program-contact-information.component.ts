@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ContactInformation } from '../../../core/models/contact-information.class';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Person } from '../../../core/models/person.class';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { iContactInformation } from '../../../core/models/contact-information.interface';
@@ -23,7 +22,7 @@ export class ProgramContactInformationComponent implements OnInit {
 
   // formHelper = new FormHelper();
   contactInformationForm: FormGroup;
-  persons: Person[] = [];
+  persons: iPerson[] = [];
   hasBoardOfDirectors: boolean = false;
 
   constructor(

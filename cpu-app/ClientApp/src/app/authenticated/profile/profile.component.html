@@ -1,18 +1,8 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <div [formGroup]="contactInformationForm">
-        <app-contact-information formControlName="contactInformation"></app-contact-information>
-      </div>
-      <!-- TODO add board and executive contact -->
-      <div class="form-group">
-        <h2 class="blue-header">Executive Contact</h2>
-        <app-person-picker [(person)]="executiveContact"></app-person-picker>
-      </div>
-      <div class="form-group">
-        <h2 class="blue-header">Board Contact</h2>
-        <app-person-picker [(person)]="boardContact"></app-person-picker>
-      </div>
+      <h1>Update Organization Information</h1>
+      <app-program-contact-information [(contactInformation)]="trans.organizationMeta.contactInformation"></app-program-contact-information>
     </div>
   </div>
   <div class="row mt-4">
