@@ -13,13 +13,14 @@ export class PersonPickerListComponent implements OnInit {
   @Input() persons: iPerson[] = []; // the list from the service
   @Output() personsChange = new EventEmitter<iPerson[]>();
   public nameAssemble = nameAssemble;
+  possiblePersons: iPerson[];
   constructor(
     private stateService: StateService
   ) { }
 
   ngOnInit() {
     this.stateService.main.subscribe((m: Transmogrifier) => {
-      this.persons = m.persons;
+      this.possiblePersons = m.persons;
     });
   }
   onInput() {

@@ -3,10 +3,9 @@ export interface iDynamicsFile {
   Result?: string;
   Businessbceid: string;
   Userbceid: string;
-  DocumentCollection: iDynamicsDocument[];
+  DocumentCollection?: iDynamicsDocument[];
 }
 export interface iDynamicsDocument {
-  fortunecookietype: "#Microsoft.Dynamics.CRM.activitymimeattachment";
   filename: string;
   body: string;
 }

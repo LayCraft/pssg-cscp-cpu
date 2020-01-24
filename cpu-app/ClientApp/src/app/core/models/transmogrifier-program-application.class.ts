@@ -3,7 +3,7 @@ import { decodeCglInsurance } from '../constants/decode-cgl-insurance-type';
 import { decodeToWeekDays } from '../constants/decode-to-week-days';
 import { iAdministrativeInformation } from "./administrative-information.interface";
 import { iContactInformation } from "./contact-information.interface";
-import { iDynamicsScheduleFResponse, iDynamicsCrmContact } from "./dynamics-blob";
+import { iDynamicsScheduleFResponse, iDynamicsCrmContact, iDynamicsCrmContract } from "./dynamics-blob";
 import { iHours } from "./hours.interface";
 import { iPerson } from "./person.interface";
 import { iProgramApplication } from "./program-application.interface";
@@ -147,7 +147,7 @@ export class TransmogrifierProgramApplication {
         name: p.vsd_name,
         phoneNumber: p.vsd_phonenumber,
         programId: p.vsd_programid,
-        programLocation: g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid)[0].vsd_name,
+        programLocation: g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid)[0].vsd_name || null,
         serviceArea: p._vsd_cpu_regiondistrict_value,
         mainAddress: {
           line1: p.vsd_addressline1 || null,
@@ -167,11 +167,11 @@ export class TransmogrifierProgramApplication {
         },
         programContact: g.StaffCollection
           .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
-          .map(p => this.makePerson(p))[0],
+          .map(p => this.makePerson(g, p.contactid))[0] || null,
         // revenueSources: [],//iRevenueSource[];
         additionalStaff: g.ProgramContactCollection
           .filter((c: iDynamicsCrmContact) => c.vsd_programid = p.vsd_programid)
-          .map(p => this.makePerson(p)),// iPerson[];
+          .map(p => this.makePerson(g, p.contactid)) || null,// iPerson[];
         operationHours: [],//iHours[];
         standbyHours: [],//iHours[];
       }
@@ -204,26 +204,30 @@ export class TransmogrifierProgramApplication {
     }
     return applications;
   }
-  private makePerson(c: iDynamicsCrmContact): iPerson {
-    return {
-      email: c.emailaddress1 || null,
-      fax: c.fax || null,
-      firstName: c.firstname || null,
-      lastName: c.lastname || null,
-      middleName: c.middlename || null,
-      personId: c.contactid || null,
-      phone: c.mobilephone || null,
-      title: c.jobtitle || null,
-      userId: c.vsd_bceid || null,
-      address: {
-        line1: c.address1_line1 || null,
-        line2: c.address1_line2 || null,
-        city: c.address1_city || null,
-        postalCode: c.address1_postalcode || null,
-        province: c.address1_stateorprovince || null,
-        country: c.address1_country || 'Canada',
-      },
-    }
+  private makePerson(g: iDynamicsScheduleFResponse, c: string): iPerson {
+    // return whole person
+    return g.ProgramContactCollection
+      .filter((p: iDynamicsCrmContact) => p.contactid === c)
+      .map((p: iDynamicsCrmContact): iPerson => {
+        return {
+          email: p.emailaddress1 || null,
+          fax: p.fax || null,
+          firstName: p.firstname || null,
+          lastName: p.lastname || null,
+          middleName: p.middlename || null,
+          personId: p.contactid || null,
+          phone: p.mobilephone || null,
+          title: p.jobtitle || null,
+          userId: p.vsd_bceid || null,
+          address: {
+            line1: p.address1_line1 || null,
+            line2: p.address1_line2 || null,
+            city: p.address1_city || null,
+            postalCode: p.address1_postalcode || null,
+            province: p.address1_stateorprovince || null,
+            country: p.address1_country || 'Canada',
+          },
+        }
+      })[0];
   }
 }
-
