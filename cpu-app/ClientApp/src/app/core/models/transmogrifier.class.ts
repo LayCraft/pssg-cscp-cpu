@@ -140,7 +140,7 @@ export class Transmogrifier {
   }
   private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
     // collect the organization meta and structure it into a new shape
-    return {
+    const meta: iOrganizationMeta = {
       userId: b.Userbceid || null,
       accountId: b.Organization.accountid || null, // the dynamics id must be included when posting back sometimes.
       organizationId: b.Businessbceid || null,
@@ -163,42 +163,43 @@ export class Transmogrifier {
           postalCode: b.Organization.address2_postalcode || null,
           province: b.Organization.address2_stateorprovince || null,
         } || null,
-        executiveContact: {
-          email: b.ExecutiveContact.emailaddress1 || null,
-          fax: b.ExecutiveContact.fax || null,
-          firstName: b.ExecutiveContact.firstname || null,
-          lastName: b.ExecutiveContact.lastname || null,
-          middleName: b.ExecutiveContact.middlename || null,
-          personId: b.ExecutiveContact.contactid || null,
-          phone: b.ExecutiveContact.mobilephone || null,
-          title: b.ExecutiveContact.jobtitle || null,
-          address: {
-            city: b.ExecutiveContact.address1_city || null,
-            line1: b.ExecutiveContact.address1_line1 || null,
-            line2: b.ExecutiveContact.address1_line2 || null,
-            postalCode: b.ExecutiveContact.address1_postalcode || null,
-            province: b.ExecutiveContact.address1_stateorprovince || null,
-          } || null
-        },
-        boardContact: {
-          email: b.BoardContact.emailaddress1 || null,
-          fax: b.BoardContact.fax || null,
-          firstName: b.BoardContact.firstname || null,
-          lastName: b.BoardContact.lastname || null,
-          middleName: b.BoardContact.middlename || null,
-          personId: b.BoardContact.contactid || null,
-          phone: b.BoardContact.mobilephone || null,
-          title: b.BoardContact.jobtitle || null,
-          address: {
-            city: b.BoardContact.address1_city || null,
-            line1: b.BoardContact.address1_line1 || null,
-            line2: b.BoardContact.address1_line2 || null,
-            postalCode: b.BoardContact.address1_postalcode || null,
-            province: b.BoardContact.address1_stateorprovince || null,
-          } || null
-        },
       } || null
-    } as iOrganizationMeta;
+    };
+    if (b.ExecutiveContact) meta.contactInformation.executiveContact = {
+      email: b.ExecutiveContact.emailaddress1 || null,
+      fax: b.ExecutiveContact.fax || null,
+      firstName: b.ExecutiveContact.firstname || null,
+      lastName: b.ExecutiveContact.lastname || null,
+      middleName: b.ExecutiveContact.middlename || null,
+      personId: b.ExecutiveContact.contactid || null,
+      phone: b.ExecutiveContact.mobilephone || null,
+      title: b.ExecutiveContact.jobtitle || null,
+      address: {
+        city: b.ExecutiveContact.address1_city || null,
+        line1: b.ExecutiveContact.address1_line1 || null,
+        line2: b.ExecutiveContact.address1_line2 || null,
+        postalCode: b.ExecutiveContact.address1_postalcode || null,
+        province: b.ExecutiveContact.address1_stateorprovince || null,
+      } || null
+    };
+    if (b.BoardContact) meta.contactInformation.boardContact = {
+      email: b.BoardContact.emailaddress1 || null,
+      fax: b.BoardContact.fax || null,
+      firstName: b.BoardContact.firstname || null,
+      lastName: b.BoardContact.lastname || null,
+      middleName: b.BoardContact.middlename || null,
+      personId: b.BoardContact.contactid || null,
+      phone: b.BoardContact.mobilephone || null,
+      title: b.BoardContact.jobtitle || null,
+      address: {
+        city: b.BoardContact.address1_city || null,
+        line1: b.BoardContact.address1_line1 || null,
+        line2: b.BoardContact.address1_line2 || null,
+        postalCode: b.BoardContact.address1_postalcode || null,
+        province: b.BoardContact.address1_stateorprovince || null,
+      } || null
+    };
+    return meta;
   }
   private buildPersons(b: iDynamicsBlob): iPerson[] {
     const personList: iPerson[] = [];
