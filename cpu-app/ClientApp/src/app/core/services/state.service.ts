@@ -30,6 +30,15 @@ export class StateService {
     // on login collect the information from the organization id
     this.mainService.getBlob(userId, orgId).subscribe(
       (m: iDynamicsBlob) => {
+
+        // TODO: this user should be added to the dynamics part
+        // check for actual error message
+        if (m.Result.includes('BusinessBCeID doesn\'t match to which the Contact belongs to')) {
+          this.notificationQueueService.addNotification('Your organization\'s BCeID does not match one in our records.', 'danger');
+        } else if (m.Result.includes('No contact found with the supplied BCeID')) {
+          this.notificationQueueService.addNotification('Your user BCeID does not match one in our records.', 'danger');
+        }
+
         console.log('Main Data Blob', m);// TODO: Delete this
         // collect the blob into a useful object
         const mainData = new Transmogrifier(m);
