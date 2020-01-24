@@ -90,21 +90,6 @@
     </div>
     <button class="btn btn-secondary mb-4 mt-2" (click)="addStandbyHours()">Add On-call/Stand-by Hours</button>
   </div>
-  <div *ngIf="currentTab===tabs[2]">
-    <h2 class="blue-header">Reporting Requirements</h2>
-    <div class="form-group">
-      <pre>If not set from the system are these CYA questions? Can we turn them into a TOS?
-We need to know what year is the previous year.
-We need to know if this is a renewal.
-We need to know if this is a victim's service program.
-We need to know if this is a Violence Against Women Program.</pre>
-
-      <p>Have you submitted Schedule H Descriptive report for first six months of FY 2019-20</p>
-      <p>Have you submitted Schedule G Financial report for the first two quarters of FY 2019-20</p>
-      <p>For Victims Service Programs only Have you submitted monthly OPRA reports to the end of Nov 2019</p>
-      <p>For Violence Against Women Programs only Have you submitted monthly STV-DES reports to the end of Nov 2019</p>
-    </div>
-  </div>
 </form>
 <!-- <span *ngIf="programApplication">
   <pre>{{programApplication|json}}</pre>

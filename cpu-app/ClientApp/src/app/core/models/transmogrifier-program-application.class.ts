@@ -43,39 +43,39 @@ export class TransmogrifierProgramApplication {
     return undefined;
   }
   private buildAdministrativeInformation(b: iDynamicsScheduleFResponse): iAdministrativeInformation {
-    const staffSubcontractedPersons: iPerson[] = [];
-    b.StaffCollection.map((s: iDynamicsCrmContact): iPerson => {
-      return {
-        email: s.emailaddress1 || null,
-        fax: s.fax || null,
-        firstName: s.firstname || null,
-        lastName: s.lastname || null,
-        middleName: s.middlename || null,
-        personId: s.contactid || null,
-        phone: s.mobilephone || null,
-        title: s.jobtitle || null,
-        userId: s.vsd_bceid || null,
-        address: {
-          city: s.address1_city || null,
-          country: s.address1_country || 'Canada',
-          line1: s.address1_line1 || null,
-          line2: s.address1_line2 || null,
-          postalCode: s.address1_postalcode || null,
-          province: s.address1_stateorprovince || null,
-        },
-      };
-    });
-
     return {
-      ccseaMemberType: decodeCcseaMemberType(b.Contract.vsd_cpu_memberofcssea),
-      compliantEmploymentStandardsAct: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000000") : null,
-      compliantHumanRights: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000001") : null,
-      compliantWorkersCompensation: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000002") : null,
-      staffSubcontractedPersons,
+      ccseaMemberType: decodeCcseaMemberType(parseInt(b.Contract.vsd_cpu_memberofcssea)),
+      compliantEmploymentStandardsAct:
+        b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000000") : false,
+      compliantHumanRights:
+        b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000001") : false,
+      compliantWorkersCompensation:
+        b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000002") : false,
+      staffSubcontractedPersons: b.StaffCollection.map((s: iDynamicsCrmContact): iPerson => {
+        return {
+          email: s.emailaddress1 || null,
+          fax: s.fax || null,
+          firstName: s.firstname || null,
+          lastName: s.lastname || null,
+          middleName: s.middlename || null,
+          personId: s.contactid || null,
+          phone: s.mobilephone || null,
+          title: s.jobtitle || null,
+          userId: s.vsd_bceid || null,
+          address: {
+            city: s.address1_city || null,
+            country: s.address1_country || 'Canada',
+            line1: s.address1_line1 || null,
+            line2: s.address1_line2 || null,
+            postalCode: s.address1_postalcode || null,
+            province: s.address1_stateorprovince || null,
+          },
+        };
+      }) || [],
       staffUnion: b.Contract.vsd_cpu_specificunion,
       staffSubcontracted: b.Contract.vsd_cpu_programstaffsubcontracted,
       staffUnionized: b.Contract.vsd_cpu_staffunionized,
-    };
+    }
   }
   private buildContactInformation(b: iDynamicsScheduleFResponse): iContactInformation {
     const c: iContactInformation = {

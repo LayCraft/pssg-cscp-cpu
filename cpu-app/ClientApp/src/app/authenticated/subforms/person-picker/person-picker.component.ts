@@ -3,6 +3,7 @@ import { iPerson } from '../../../core/models/person.interface';
 import { nameAssemble } from '../../../core/constants/name-assemble';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
+import { Person } from '../../../core/models/person.class';
 
 @Component({
   selector: 'app-person-picker',
@@ -13,7 +14,7 @@ export class PersonPickerComponent implements OnInit {
   // this is a person form control that uses template binding.
 
   @Input() title = 'Select Person';
-  @Input() person: iPerson;
+  @Input() person: iPerson = new Person();
   @Output() personChange = new EventEmitter<iPerson>();
   @Input() showCard = true;
   public nameAssemble = nameAssemble;

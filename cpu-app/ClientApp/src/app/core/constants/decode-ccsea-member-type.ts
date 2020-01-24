@@ -1,10 +1,10 @@
-export function decodeCcseaMemberType(code: string): string {
+export function decodeCcseaMemberType(code: number): string {
   switch (code) {
-    case '100000000':
+    case 100000000:
       return 'Member';
-    case '100000001':
+    case 100000001:
       return 'Associate';
-    case '100000002':
+    case 100000002:
       return 'Non-Member';
     default:
       return null;
