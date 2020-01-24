@@ -11,6 +11,7 @@ import { ProfileComponent } from './authenticated/profile/profile.component';
 import { ProgramApplicationComponent } from './authenticated/program-application/program-application.component';
 import { StatusReportComponent } from './authenticated/status-report/status-report.component';
 import { TestComponent } from './test/test.component';
+import { NotUserComponent } from './authenticated/not-user/not-user.component';
 
 const routes: Routes = [
   {
@@ -62,6 +63,10 @@ const routes: Routes = [
       {
         path: 'personnel',
         component: PersonnelComponent
+      },
+      {
+        path: 'not_user',
+        component: NotUserComponent
       },
     ]
   },
