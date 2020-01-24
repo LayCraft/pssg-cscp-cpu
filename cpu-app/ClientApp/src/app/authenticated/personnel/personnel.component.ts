@@ -23,6 +23,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   // used for the stepper component
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
+  trans: Transmogrifier;
 
   constructor(
     private router: Router,
@@ -37,11 +38,11 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     // when main changes refresh the data
-    this.stateService.main.subscribe((m: Transmogrifier) => {
-      if (m) {
-        // set the default top and bottom list
-        this.constructStepperElements(m);
-      }
+    this.stateService.main.subscribe((trans: Transmogrifier) => {
+      this.trans = trans;
+      // set the default top and bottom list
+      this.constructStepperElements(trans);
+
     });
   }
   ngOnDestroy() {
@@ -76,6 +77,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         err => this.notificationQueueService.addNotification(err, 'danger')
       );
     } else {
+      console.log(person);
       // notify the user that this user was not saved.
       this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
     }
