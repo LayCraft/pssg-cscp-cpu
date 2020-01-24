@@ -141,10 +141,11 @@ export class Transmogrifier {
   private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
     // collect the organization meta and structure it into a new shape
     const meta: iOrganizationMeta = {
-      userId: b.Userbceid || null,
       accountId: b.Organization.accountid || null, // the dynamics id must be included when posting back sometimes.
+      contracts: [],
       organizationId: b.Businessbceid || null,
       organizationName: b.Organization.name || null,
+      userId: b.Userbceid || null,
       contactInformation: {
         phoneNumber: b.Organization.telephone1 || null,
         emailAddress: b.Organization.emailaddress1 || null,
@@ -163,7 +164,7 @@ export class Transmogrifier {
           postalCode: b.Organization.address2_postalcode || null,
           province: b.Organization.address2_stateorprovince || null,
         } || null,
-      } || null
+      } || null,
     };
     if (b.ExecutiveContact) meta.contactInformation.executiveContact = {
       email: b.ExecutiveContact.emailaddress1 || null,
