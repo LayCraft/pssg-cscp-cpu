@@ -55,17 +55,15 @@ export class ProfileComponent implements OnInit {
     return !!c.emailAddress && !!c.phoneNumber && !!c.mainAddress.line1 && !!c.mainAddress.city && !!c.mainAddress.province && !!c.mainAddress.postalCode;
   }
   onSave(): void {
-
     // post to the organization
-    this.profileService.updateOrg(convertContactInformationToDynamics(this.trans)).subscribe(
-      (res: any) => {
-        //update it in the state service
-        this.stateService.main.next(new Transmogrifier(res));
-        // route to another page
-        this.router.navigate([this.stateService.homeRoute.getValue()]);
-      },
-      err => console.log(err)
-    )
+    this.profileService.updateOrg(convertContactInformationToDynamics(this.trans))
+      .subscribe(
+        (res: any) => {
+          // route to another page
+          this.router.navigate([this.stateService.homeRoute.getValue()]);
+        },
+        err => console.log(err)
+      );
   }
   onExit() {
     if (confirm("All unsaved changes will be lost. Are you sure you want to return to the dashboard?")) {
