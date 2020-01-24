@@ -204,10 +204,10 @@ export class TransmogrifierProgramApplication {
     }
     return applications;
   }
-  private makePerson(g: iDynamicsScheduleFResponse, c: string): iPerson {
+  private makePerson(g: iDynamicsScheduleFResponse, personId: string): iPerson {
     // return whole person
     return g.ProgramContactCollection
-      .filter((p: iDynamicsCrmContact) => p.contactid === c)
+      .filter((p: iDynamicsCrmContact) => p.contactid === personId)
       .map((p: iDynamicsCrmContact): iPerson => {
         return {
           email: p.emailaddress1 || null,

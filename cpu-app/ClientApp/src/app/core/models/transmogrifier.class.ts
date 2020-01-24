@@ -155,14 +155,14 @@ export class Transmogrifier {
           line2: b.Organization.address1_line2 || null,
           postalCode: b.Organization.address1_postalcode || null,
           province: b.Organization.address1_stateorprovince || null,
-        } as iAddress,
+        } || null,
         mailingAddress: {
           city: b.Organization.address2_city || null,
           line1: b.Organization.address2_line1 || null,
           line2: b.Organization.address2_line2 || null,
           postalCode: b.Organization.address2_postalcode || null,
           province: b.Organization.address2_stateorprovince || null,
-        } as iAddress,
+        } || null,
         executiveContact: {
           email: b.ExecutiveContact.emailaddress1 || null,
           fax: b.ExecutiveContact.fax || null,
@@ -178,7 +178,7 @@ export class Transmogrifier {
             line2: b.ExecutiveContact.address1_line2 || null,
             postalCode: b.ExecutiveContact.address1_postalcode || null,
             province: b.ExecutiveContact.address1_stateorprovince || null,
-          } as iAddress
+          } || null
         },
         boardContact: {
           email: b.BoardContact.emailaddress1 || null,
@@ -195,9 +195,9 @@ export class Transmogrifier {
             line2: b.BoardContact.address1_line2 || null,
             postalCode: b.BoardContact.address1_postalcode || null,
             province: b.BoardContact.address1_stateorprovince || null,
-          } as iAddress
+          } || null
         },
-      } as iContactInformation
+      } || null
     } as iOrganizationMeta;
   }
   private buildPersons(b: iDynamicsBlob): iPerson[] {
