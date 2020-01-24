@@ -16,7 +16,7 @@ import { iPerson } from '../../core/models/person.interface';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
+  trans: Transmogrifier;
   contactInformationForm: FormGroup;
   executiveContact: iPerson = null;
   boardContact: iPerson = null;
@@ -33,6 +33,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     // subscribe to main
     this.stateService.main.subscribe((m: Transmogrifier) => {
+      // save the transmogrifier
+      this.trans = m;
+
       this.contactInformationForm = new FormGroup({
         'contactInformation': new FormControl('', Validators.required)
       });
