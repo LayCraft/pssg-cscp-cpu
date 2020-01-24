@@ -40,6 +40,9 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     // when main changes refresh the data
     this.stateService.main.subscribe((trans: Transmogrifier) => {
       this.trans = trans;
+
+      // TODO: find out why this isn't adding first and last name at minimum
+      console.log(trans.persons);
       // set the default top and bottom list
       this.constructStepperElements(trans);
 
