@@ -26,16 +26,11 @@ export class ProgramContactInformationComponent implements OnInit {
   persons: Person[] = [];
   hasBoardOfDirectors: boolean = false;
 
-  executiveContact: iPerson;
-  boardContact: iPerson;
-
   constructor(
     private stateService: StateService,
   ) { }
 
   ngOnInit() {
-    this.executiveContact = this.contactInformation.executiveContact;
-    this.boardContact = this.contactInformation.boardContact;
     this.hasBoardOfDirectors = this.contactInformation.boardContact ? true : false;
     // create a new contact information form
     this.contactInformationForm = new FormGroup({
@@ -51,15 +46,15 @@ export class ProgramContactInformationComponent implements OnInit {
   onInput() {
     // emittable
     const ci: ContactInformation = this.contactInformationForm.value['contactInformation'];
-    ci.boardContact = this.boardContact;
-    ci.executiveContact = this.executiveContact;
+    ci.boardContact = this.contactInformation.boardContact;
+    ci.executiveContact = this.contactInformation.executiveContact;
     // emit the information
     this.contactInformationChange.emit(this.contactInformationForm.value['contactInformation']);
   }
   cleanBoardContact() {
     // if the board of directors is false we need to remove the object.
     if (!this.hasBoardOfDirectors) {
-      this.boardContact = null;
+      this.contactInformation.boardContact = null;
     }
   }
 }

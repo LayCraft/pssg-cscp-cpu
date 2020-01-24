@@ -24,7 +24,6 @@ namespace Gov.Cscp.VictimServices.Public.Models
 			}
 			set { _vsd_ProgramIdfortunecookiebind = value; }
 		}
-		public string _vsd_programid_value { get; set; }
 		public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.vsd_schedule"; } }
 		public string vsd_days { get; set; }
 		public string vsd_scheduledendtime { get; set; }

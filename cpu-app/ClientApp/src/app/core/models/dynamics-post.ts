@@ -1,4 +1,4 @@
-import { iDynamicsScheduleG, iDynamicsScheduleGLineItem, iDynamicsOrganization, iDynamicsCrmContact } from "./dynamics-blob";
+import { iDynamicsScheduleG, iDynamicsScheduleGLineItem, iDynamicsOrganization, iDynamicsCrmContact, iDynamicsCrmProgram, iDynamicsRegionDistrict, iDynamicsSchedule } from "./dynamics-blob";
 
 export interface iDynamicsPostScheduleG {
   UserBCeID: string;
@@ -61,4 +61,34 @@ export interface iDynamicsProgramRevenueSource {
   vsd_cpu_revenuesourcetype: number;
   vsd_inkindcontribution: number;
   vsd_programrevenuesourceid?: string;
+}
+export interface iDynamicsCrmContractPost {
+  vsd_ContactLookup1fortunecookiebind?: string;
+  vsd_ContactLookup2fortunecookiebind?: string;
+  _vsd_customer_value?: string;
+  fortunecookieetag?: string;
+  fortunecookietype?: string;
+  statuscode?: number;
+  vsd_contractid?: string;
+  vsd_cpu_humanresourcepolicies?: string; // this is actually an array that comes in wrong
+  vsd_cpu_insuranceoptions?: number;
+  vsd_cpu_memberofcssea?: string;
+  vsd_cpu_programstaffsubcontracted?: boolean;
+  vsd_cpu_specificunion?: string;
+  vsd_cpu_staffunionized?: boolean;
+  vsd_name?: string;
+}
+export interface iDynamicsProgramContactPost {
+  contactid: string;
+  vsd_programid: string; // added when contact is listed in a program
+}
+export interface iDynamicsScheduleFPost {
+  Businessbceid: string;
+  ContractCollection?: iDynamicsCrmContractPost[];
+  Organization?: iDynamicsOrganization;
+  ProgramCollection?: iDynamicsCrmProgram[];
+  ProgramContactCollection?: iDynamicsProgramContactPost[];
+  ScheduleCollection?: iDynamicsSchedule[];
+  StaffCollection?: iDynamicsProgramContactPost[];
+  Userbceid?: string;
 }

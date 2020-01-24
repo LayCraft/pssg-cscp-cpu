@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FileService } from '../core/services/file.service';
-import { iDynamicsFile } from '../core/models/dynamics-file.interface';
+import { iDynamicsFile, iDynamicsDocument } from '../core/models/dynamics-file.interface';
 interface FileBundle {
   // list of file names (same order as file array)
   fileName: string[];
@@ -22,6 +22,7 @@ export class TestComponent implements OnInit {
   ) { }
   ngOnInit() { }
 
+  ///----------------------------------ALL THINGS BELOW ARE FOR FILE UPLOAD ----- DO NOT DELETE
   // what are the names of the files in the filedata array
   fileNames: string[] = [];
   // base64 encoded file turned into a string
@@ -31,14 +32,14 @@ export class TestComponent implements OnInit {
     const file: iDynamicsFile = {
       "Businessbceid": "fd889a40-14b2-e811-8163-480fcff4f621",
       "Userbceid": "9e9b5111-51c9-e911-b80f-00505683fbf4",
-      DocumentCollection: [
-        {
-          fortunecookietype: "#Microsoft.Dynamics.CRM.activitymimeattachment",
-          filename: this.fileNames[0],
-          body: this.fileData[0],
-        }
-      ]
     };
+    const documentCollection: iDynamicsDocument[] = this.fileNames.map((fileName: string, i: number): iDynamicsDocument => {
+      return {
+        filename: fileName,
+        body: this.fileData[i]
+      }
+    });
+
     this.fileService.upload('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4', file).subscribe((d) => console.log('Uploaded', d));
   }
 

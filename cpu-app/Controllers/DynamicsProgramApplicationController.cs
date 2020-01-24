@@ -167,9 +167,9 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 					var _responseString = _httpResponse2.ToString();
 					var _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
 
-					Console.Out.WriteLine(model);
-					Console.Out.WriteLine(_responseString);
-					Console.Out.WriteLine(_responseContent2);
+					// Console.Out.WriteLine(model);
+					// Console.Out.WriteLine(_responseString);
+					// Console.Out.WriteLine(_responseContent2);
 
 					return new Tuple<int, string, HttpResponseMessage>((int)_statusCode, _responseContent2, _httpResponse2);
 					// End of scheduled task

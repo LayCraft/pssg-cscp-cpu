@@ -10,22 +10,22 @@ import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 })
 export class PersonPickerListComponent implements OnInit {
   @Input() label = "Select all people who apply."
+  @Input() persons: iPerson[] = []; // the list from the service
   @Output() personsChange = new EventEmitter<iPerson[]>();
-  persons: iPerson[]; // the list from the service
-  personsList: iPerson[] = [];
   public nameAssemble = nameAssemble;
+  possiblePersons: iPerson[];
   constructor(
     private stateService: StateService
   ) { }
 
   ngOnInit() {
     this.stateService.main.subscribe((m: Transmogrifier) => {
-      this.persons = m.persons;
+      this.possiblePersons = m.persons;
     });
   }
   onInput() {
     // build a list for outputting.
-    this.personsChange.emit(this.personsList);
+    this.personsChange.emit(this.persons);
   }
   addPerson(id: string) {
     const matchingPersons: boolean = this.personInPersonsList(id);
@@ -34,7 +34,7 @@ export class PersonPickerListComponent implements OnInit {
       // if the item is not in the list we add it
       for (let person of this.persons) {
         if (person.personId === id) {
-          this.personsList.push(person);
+          this.persons.push(person);
         }
       }
       // emit
@@ -42,10 +42,10 @@ export class PersonPickerListComponent implements OnInit {
     }
   }
   personInPersonsList(id: string): boolean {
-    return !!this.personsList.filter(p => p.personId === id).length;
+    return !!this.persons.filter(p => p.personId === id).length;
   }
   removePerson(id: string) {
-    this.personsList = this.personsList.filter(p => !(p.personId === id));
+    this.persons = this.persons.filter(p => !(p.personId === id));
     this.onInput();
   }
 }

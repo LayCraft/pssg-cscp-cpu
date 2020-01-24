@@ -11,11 +11,6 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string UserBCeID { get; set; }
 		public DynamicsCrmProgramExpensePost[] ProgramExpenseCollection { get; set; }
 		public DynamicsCrmProgramRevenueSourcePost[] ProgramRevenueSourceCollection { get; set; }
-		// 		{
-		// 	"BusinessBCeID": "fd889a40-14b2-e811-8163-480fcff4f621",
-		// 	"UserBCeID": "9e9b5111-51c9-e911-b80f-00505683fbf4",
-		// 	"ProgramExpenseCollection": [],
-		// 	"ProgramRevenueSourceCollection": []
-		// }
+
 	}
 }

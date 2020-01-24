@@ -14,6 +14,20 @@
       <app-ministry-contact-box></app-ministry-contact-box>
     </div>
   </div>
+  <div *ngIf="!upcomingContracts.length&&!currentContracts.length&&!pastContracts.length" class="row">
+    <div class="col">
+      <div class="card mb-4">
+        <div class="card-header">No active contracts</div>
+        <div class="card-body">
+          <div class="row mb-1">
+            <div class="col">
+              There are no active contracts associated with your account. Your contracts will appear here soon.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div *ngIf="upcomingContracts.length" class="row">
     <div class="col">
       <div class="card mb-4">
