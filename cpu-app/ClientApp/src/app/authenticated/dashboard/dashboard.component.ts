@@ -21,12 +21,14 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     // always display the current main collection
-    this.stateService.main.subscribe((m: Transmogrifier) => {
-      this.trans = m;
+    this.stateService.main.subscribe((trans: Transmogrifier) => {
+      this.trans = trans;
       // split the contracts into something useful for the dashboard view
-      this.upcomingContracts = m.contracts.filter((c: iContract) => c.category === this.categories[0]);
-      this.currentContracts = m.contracts.filter((c: iContract) => c.category === this.categories[1]);
-      this.pastContracts = m.contracts.filter((c: iContract) => c.category === this.categories[2]);
+      if (trans.contracts) {
+        this.upcomingContracts = trans.contracts.filter((c: iContract) => c.category === this.categories[0]);
+        this.currentContracts = trans.contracts.filter((c: iContract) => c.category === this.categories[1]);
+        this.pastContracts = trans.contracts.filter((c: iContract) => c.category === this.categories[2]);
+      }
     });
   }
 }
