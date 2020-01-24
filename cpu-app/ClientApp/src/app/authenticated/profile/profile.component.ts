@@ -70,7 +70,7 @@ export class ProfileComponent implements OnInit {
         //update it in the state service
         this.stateService.main.next(temp);
         // route to another page
-        this.router.navigate(['/authenticated/dashboard']);
+        this.router.navigate([this.stateService.homeRoute.getValue()]);
       },
       err => console.log(err)
     )
@@ -78,7 +78,7 @@ export class ProfileComponent implements OnInit {
   onExit() {
     if (confirm("All unsaved changes will be lost. Are you sure you want to return to the dashboard?")) {
       // send the user back to the dashboard
-      this.router.navigate(['/authenticated/dashboard']);
+      this.router.navigate([this.stateService.homeRoute.getValue()]);
     }
   }
   onExecutiveContactChange(event: iPerson) {

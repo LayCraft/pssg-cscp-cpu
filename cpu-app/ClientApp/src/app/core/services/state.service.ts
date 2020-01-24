@@ -17,6 +17,9 @@ export class StateService {
   public currentUser: BehaviorSubject<iPerson> = new BehaviorSubject<iPerson>(null);
   // global state of the login
   public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public newUser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public homeRoute: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
 
   constructor(
     private mainService: MainService,
@@ -24,32 +27,51 @@ export class StateService {
   ) { }
 
   login() {
-    const userId = '9e9b5111-51c9-e911-b80f-00505683fbf4';
+    const userId = '9e9b5111-51c9-e911-b80f-00505683fbf4a';
     const orgId = 'fd889a40-14b2-e811-8163-480fcff4f621';
 
     // on login collect the information from the organization id
     this.mainService.getBlob(userId, orgId).subscribe(
       (m: iDynamicsBlob) => {
-
-        // TODO: this user should be added to the dynamics part
         // check for actual error message
         if (m.Result.includes('BusinessBCeID doesn\'t match to which the Contact belongs to')) {
           this.notificationQueueService.addNotification('Your organization\'s BCeID does not match one in our records.', 'danger');
+          this.currentUser.next({
+            userId,
+            orgId,
+            firstName: 'New',
+            lastName: 'User',
+            email: ''
+          });
+          // set the logged in state
+          this.homeRoute.next('authenticated/new_user');
+          this.loggedIn.next(true);
         } else if (m.Result.includes('No contact found with the supplied BCeID')) {
           this.notificationQueueService.addNotification('Your user BCeID does not match one in our records.', 'danger');
-        }
+          this.currentUser.next({
+            userId,
+            orgId,
+            firstName: 'New',
+            lastName: 'User',
+            email: ''
+          });
+          // set the logged in state
+          this.homeRoute.next('authenticated/new_user');
+          this.loggedIn.next(true);
+        } else {
+          // collect the blob into a useful object
+          const mainData = new Transmogrifier(m);
+          // save the useful blob of viewmodels
+          this.main.next(mainData);
+          // save the user that matches the current bceid
+          this.currentUser.next(mainData.persons.filter(p => p.userId === userId)[0]);
+          // give a notification
+          this.notificationQueueService.addNotification(`${mainData.organizationMeta.organizationName} has been logged in successfully.`, 'success');
 
-        console.log('Main Data Blob', m);// TODO: Delete this
-        // collect the blob into a useful object
-        const mainData = new Transmogrifier(m);
-        // save the useful blob of viewmodels
-        this.main.next(mainData);
-        // save the user that matches the current bceid
-        this.currentUser.next(mainData.persons.filter(p => p.userId === userId)[0]);
-        // give a notification
-        this.notificationQueueService.addNotification(`${mainData.organizationMeta.organizationName} has been logged in successfully.`, 'success');
-        // set the logged in state
-        this.loggedIn.next(true);
+          // set the home button link and set log in to true (IN THAT ORDER)
+          this.homeRoute.next('authenticated/dashboard');
+          this.loggedIn.next(true);
+        }
       }
     );
   }
@@ -60,6 +82,9 @@ export class StateService {
     this.currentUser.next(null);
     //notification about the login
     this.notificationQueueService.addNotification('User has logged out.', 'warning');
+
+    // set the home button link and set logout to false (IN THAT ORDER)
+    this.homeRoute.next('');
     this.loggedIn.next(false);
   }
   refresh() {

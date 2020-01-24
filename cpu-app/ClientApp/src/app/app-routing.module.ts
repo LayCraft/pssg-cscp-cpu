@@ -65,7 +65,7 @@ const routes: Routes = [
         component: PersonnelComponent
       },
       {
-        path: 'not_user',
+        path: 'new_user',
         component: NotUserComponent
       },
     ]
