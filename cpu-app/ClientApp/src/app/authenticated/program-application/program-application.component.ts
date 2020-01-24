@@ -68,7 +68,7 @@ export class ProgramApplicationComponent implements OnInit {
     }
     return false;
   }
-  constructDefaultstepperElements(trans: TransmogrifierProgramApplication) {
+  constructDefaultstepperElements(m: TransmogrifierProgramApplication) {
     // clean out the old things that might be living in the stepper.
     this.stepperService.reset();
     // write the default beginning
