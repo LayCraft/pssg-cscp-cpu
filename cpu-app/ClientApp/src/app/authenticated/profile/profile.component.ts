@@ -9,6 +9,7 @@ import { convertContactInformationToDynamics } from '../../core/models/converter
 import { iContactInformation } from '../../core/models/contact-information.interface';
 import { iDynamicsPostOrg } from '../../core/models/dynamics-post';
 import { iPerson } from '../../core/models/person.interface';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
 
 @Component({
   selector: 'app-profile',
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private stateService: StateService,
     private profileService: ProfileService,
+    private notificationQueueService: NotificationQueueService
   ) { }
 
   ngOnInit() {
@@ -59,6 +61,8 @@ export class ProfileComponent implements OnInit {
     this.profileService.updateOrg(convertContactInformationToDynamics(this.trans))
       .subscribe(
         (res: any) => {
+          // notify
+          this.notificationQueueService.addNotification('The contact information for your organization has been updated.', 'Success');
           // route to another page
           this.router.navigate([this.stateService.homeRoute.getValue()]);
         },
