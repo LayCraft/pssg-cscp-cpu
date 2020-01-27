@@ -41,3 +41,12 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
+
+// get rid of ugly red borders around fields
+:not(output):-moz-ui-invalid:not(:focus) {
+  box-shadow: none;
+}
+
+:not(output):-moz-ui-invalid:-moz-focusring:not(:focus) {
+  box-shadow: none;
+}

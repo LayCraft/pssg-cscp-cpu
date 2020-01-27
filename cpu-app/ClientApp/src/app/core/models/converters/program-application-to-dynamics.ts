@@ -61,7 +61,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_addressline2: p.mainAddress.line2,
       vsd_city: p.mainAddress.city,
       vsd_country: p.mainAddress.country,
-      vsd_emailaddress: p.email,
+      vsd_emailaddress: p.emailAddress,
       vsd_fax: p.faxNumber,
       vsd_mailingaddressline1: p.mailingAddress.line1,
       vsd_mailingaddressline2: p.mailingAddress.line2,

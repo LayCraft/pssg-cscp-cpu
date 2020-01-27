@@ -142,7 +142,7 @@ export class TransmogrifierProgramApplication {
     for (let p of g.ProgramCollection) {
       let temp: iProgramApplication = {
         contractId: p._vsd_contractid_value,
-        email: p.vsd_emailaddress || g.Organization.emailaddress1 || null, // fallback to organization email address
+        emailAddress: p.vsd_emailaddress || g.Organization.emailaddress1 || null, // fallback to organization email address
         faxNumber: p.vsd_fax,
         formState: 'untouched',// untouched	incomplete invalid complete info,
         name: p.vsd_name,
