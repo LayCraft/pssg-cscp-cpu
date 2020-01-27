@@ -28,15 +28,16 @@
 
       <!-- Does the org have a board of directors? -->
       <div class="form-check mt-4">
-        <input [(ngModel)]="trans.organizationMeta.hasBoardOfDirectors" type="checkbox" id="hasBoardOfDirectors" name="hasBoardOfDirectors" class="form-check-input">
+        <input [(ngModel)]="trans.organizationMeta.contactInformation.hasBoardContact" type="checkbox" id="hasBoardOfDirectors" name="hasBoardOfDirectors" class="form-check-input">
         <label for="hasBoardOfDirectors">
           Does your organization have a board of directors?
         </label>
       </div>
       <!-- If there is a board of directors who is it? -->
-      <span *ngIf="trans.organizationMeta.hasBoardOfDirectors">
+      <span *ngIf="trans.organizationMeta.contactInformation.hasBoardContact">
         <app-person-picker [title]="'Board Contact (For societies only)'" [(person)]="trans.organizationMeta.contactInformation.boardContact"></app-person-picker>
       </span>
+
     </div>
   </div>
 

@@ -1,31 +1,36 @@
-import { contractCode } from '../constants/contract-code';
-import { formType } from '../constants/form-type';
-import { iAddress } from './address.interface';
-import { iContactInformation } from './contact-information.interface';
-import { iContract } from './contract.interface';
-import { iDynamicsBlob, iDynamicsCrmTask } from './dynamics-blob';
-import { iMinistryUser } from './ministry-user.interface';
-import { iOrganizationMeta } from './organization-meta.interface';
-import { iPerson } from './person.interface';
-import { iProgram } from './program.interface';
-import { iTask } from './task.interface';
 import { taskCode } from '../constants/task-code';
+import { iTask } from './task.interface';
+import { iProgram } from './program.interface';
+import { iPerson } from './person.interface';
+import { iMinistryUser } from './ministry-user.interface';
+import { iDynamicsBlob, iDynamicsCrmTask } from './dynamics-blob';
+import { iContract } from './contract.interface';
+import { iContactInformation } from './contact-information.interface';
+import { formType } from '../constants/form-type';
+import { contractCode } from '../constants/contract-code';
 
 export class Transmogrifier {
   // collections of viewmodels
-  public organizationMeta: iOrganizationMeta;
+
+  public accountId: string; // this is the ID to identify an organization in dynamics. NOT A BCEID
+  public contactInformation: iContactInformation;
+  public organizationId: string;
+  public organizationName: string;
+  public userId: string;
   public persons: iPerson[];
   public contracts: iContract[];
   public ministryContact: iMinistryUser;
 
   constructor(b: iDynamicsBlob) {
-    this.organizationMeta = this.buildOrganizationMeta(b);
+    this.accountId = b.Organization.accountid || null; // the dynamics id must be included when posting back sometimes.
+    this.contracts = [];
+    this.organizationId = b.Businessbceid || null;
+    this.organizationName = b.Organization.name || null;
+    this.userId = b.Userbceid || null;
+    this.contactInformation = this.buildContactInformation(b);
     this.persons = this.buildPersons(b);
     this.ministryContact = this.buildMinistryContact(b);
     this.contracts = this.buildContracts(b);
-    if (!this.organizationMeta.organizationId || !this.organizationMeta.userId) {
-      alert('There is a major problem with the content returned from the backend. BCEID information is missing which makes it impossible to interact in a meaningful way.');
-    }
   }
   private buildTasks(b: iDynamicsBlob, contractId: string): iTask[] {
     const tasks: iTask[] = [];
@@ -138,35 +143,29 @@ export class Transmogrifier {
       phone: b.MinistryUser.address1_telephone1,
     };
   }
-  private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
+  private buildContactInformation(b: iDynamicsBlob): iContactInformation {
     // collect the organization meta and structure it into a new shape
-    const meta: iOrganizationMeta = {
-      accountId: b.Organization.accountid || null, // the dynamics id must be included when posting back sometimes.
-      contracts: [],
-      organizationId: b.Businessbceid || null,
-      organizationName: b.Organization.name || null,
-      userId: b.Userbceid || null,
-      contactInformation: {
-        phoneNumber: b.Organization.telephone1 || null,
-        emailAddress: b.Organization.emailaddress1 || null,
-        faxNumber: b.Organization.fax || null,
-        mainAddress: {
-          city: b.Organization.address1_city || null,
-          line1: b.Organization.address1_line1 || null,
-          line2: b.Organization.address1_line2 || null,
-          postalCode: b.Organization.address1_postalcode || null,
-          province: b.Organization.address1_stateorprovince || null,
-        } || null,
-        mailingAddress: {
-          city: b.Organization.address2_city || null,
-          line1: b.Organization.address2_line1 || null,
-          line2: b.Organization.address2_line2 || null,
-          postalCode: b.Organization.address2_postalcode || null,
-          province: b.Organization.address2_stateorprovince || null,
-        } || null,
+    const ci: iContactInformation = {
+      phoneNumber: b.Organization.telephone1 || null,
+      emailAddress: b.Organization.emailaddress1 || null,
+      faxNumber: b.Organization.fax || null,
+      mainAddress: {
+        city: b.Organization.address1_city || null,
+        line1: b.Organization.address1_line1 || null,
+        line2: b.Organization.address1_line2 || null,
+        postalCode: b.Organization.address1_postalcode || null,
+        province: b.Organization.address1_stateorprovince || null,
       } || null,
-    };
-    if (b.ExecutiveContact) meta.contactInformation.executiveContact = {
+      mailingAddress: {
+        city: b.Organization.address2_city || null,
+        line1: b.Organization.address2_line1 || null,
+        line2: b.Organization.address2_line2 || null,
+        postalCode: b.Organization.address2_postalcode || null,
+        province: b.Organization.address2_stateorprovince || null,
+      } || null,
+    } || null;
+
+    if (b.ExecutiveContact) ci.executiveContact = {
       email: b.ExecutiveContact.emailaddress1 || null,
       fax: b.ExecutiveContact.fax || null,
       firstName: b.ExecutiveContact.firstname || null,
@@ -183,7 +182,7 @@ export class Transmogrifier {
         province: b.ExecutiveContact.address1_stateorprovince || null,
       } || null
     };
-    if (b.BoardContact) meta.contactInformation.boardContact = {
+    if (b.BoardContact) ci.boardContact = {
       email: b.BoardContact.emailaddress1 || null,
       fax: b.BoardContact.fax || null,
       firstName: b.BoardContact.firstname || null,
@@ -200,7 +199,7 @@ export class Transmogrifier {
         province: b.BoardContact.address1_stateorprovince || null,
       } || null
     };
-    return meta;
+    return ci;
   }
   private buildPersons(b: iDynamicsBlob): iPerson[] {
     const personList: iPerson[] = [];
