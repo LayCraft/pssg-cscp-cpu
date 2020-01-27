@@ -67,8 +67,8 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   save(person: iPerson) {
     // a person needs minimum a first and last name to be submitted
     if (person.firstName && person.lastName) {
-      const userId = this.stateService.main.getValue().organizationMeta.userId;
-      const organizationId = this.stateService.main.getValue().organizationMeta.organizationId;
+      const userId = this.stateService.main.getValue().userId;
+      const organizationId = this.stateService.main.getValue().organizationId;
       const post = convertPersonnelToDynamics(userId, organizationId, [person]);
       // console.log(post);
       this.personService.setPersons(post).subscribe(
@@ -119,8 +119,8 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     } else if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
       // set deactivated state
       person.deactivated = true;
-      const userId = this.stateService.main.getValue().organizationMeta.userId;
-      const organizationId = this.stateService.main.getValue().organizationMeta.organizationId;
+      const userId = this.stateService.main.getValue().userId;
+      const organizationId = this.stateService.main.getValue().organizationId;
       const post: iDynamicsPostUsers = {
         UserBCeID: userId,
         BusinessBCeID: organizationId,

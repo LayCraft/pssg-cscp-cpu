@@ -4,38 +4,38 @@
       <h1>Update Organization Information</h1>
       <h2 class="blue-header">Primary Program Contact Information</h2>
       <!-- Primary organization contact information header -->
-      <app-primary-contact-info [(contactInformation)]="trans.organizationMeta.contactInformation"></app-primary-contact-info>
+      <app-primary-contact-info [(contactInformation)]="trans.contactInformation"></app-primary-contact-info>
       <!-- Primary address form -->
-      <app-address2 [(address)]="trans.organizationMeta.contactInformation.mainAddress"></app-address2>
+      <app-address2 [(address)]="trans.contactInformation.mainAddress"></app-address2>
 
       <!-- Mailing address checkbox -->
       <div class="form-check">
-        <input [(ngModel)]="trans.organizationMeta.contactInformation.hasMailingAddress" class="form-check-input" type="checkbox" id="mailingAddressCheckbox">
+        <input [(ngModel)]="trans.contactInformation.hasMailingAddress" class="form-check-input" type="checkbox" id="mailingAddressCheckbox">
         <label class="form-check-label" for="mailingAddressCheckbox">
           Different mailing address from main address.
         </label>
       </div>
       <!-- Mailing address form -->
-      <span *ngIf="trans.organizationMeta.contactInformation.hasMailingAddress">
+      <span *ngIf="trans.contactInformation.hasMailingAddress">
         <h2 class="blue-header mt-4">Mailing Address</h2>
-        <app-address2 [(address)]="trans.organizationMeta.contactInformation.mailingAddress"></app-address2>
+        <app-address2 [(address)]="trans.contactInformation.mailingAddress"></app-address2>
       </span>
 
       <!-- Primary contact the ministry calls when they want to contact the org -->
       <h2 class="blue-header mt-4">Organization Contact(s)</h2>
       <p>If the executive or board contact information has inaccuracy please update personnel contact information for your organization before submitting this program application.</p>
-      <app-person-picker [title]="'Executive Contact'" [(person)]="trans.organizationMeta.contactInformation.executiveContact"></app-person-picker>
+      <app-person-picker [title]="'Executive Contact'" [(person)]="trans.contactInformation.executiveContact"></app-person-picker>
 
       <!-- Does the org have a board of directors? -->
       <div class="form-check mt-4">
-        <input [(ngModel)]="trans.organizationMeta.contactInformation.hasBoardContact" type="checkbox" id="hasBoardOfDirectors" name="hasBoardOfDirectors" class="form-check-input">
+        <input [(ngModel)]="trans.contactInformation.hasBoardContact" type="checkbox" id="hasBoardOfDirectors" name="hasBoardOfDirectors" class="form-check-input">
         <label for="hasBoardOfDirectors">
           Does your organization have a board of directors?
         </label>
       </div>
       <!-- If there is a board of directors who is it? -->
-      <span *ngIf="trans.organizationMeta.contactInformation.hasBoardContact">
-        <app-person-picker [title]="'Board Contact (For societies only)'" [(person)]="trans.organizationMeta.contactInformation.boardContact"></app-person-picker>
+      <span *ngIf="trans.contactInformation.hasBoardContact">
+        <app-person-picker [title]="'Board Contact (For societies only)'" [(person)]="trans.contactInformation.boardContact"></app-person-picker>
       </span>
 
     </div>

@@ -37,7 +37,7 @@ export class ProgramContactInformationComponent implements OnInit {
     });
     this.stateService.main.subscribe((m: Transmogrifier) => {
       // fill the contact information into the form
-      this.contactInformationForm.controls['contactInformation'].setValue(m.organizationMeta.contactInformation);
+      this.contactInformationForm.controls['contactInformation'].setValue(m.contactInformation);
       // collect persons into this component for use
       this.persons = m.persons;
     });

@@ -66,7 +66,7 @@ export class StateService {
           // save the user that matches the current bceid
           this.currentUser.next(mainData.persons.filter(p => p.userId === userId)[0]);
           // give a notification
-          this.notificationQueueService.addNotification(`${mainData.organizationMeta.organizationName} has been logged in successfully.`, 'success');
+          this.notificationQueueService.addNotification(`${mainData.organizationName} has been logged in successfully.`, 'success');
 
           // set the home button link and set log in to true (IN THAT ORDER)
           this.homeRoute.next('authenticated/dashboard');
@@ -89,8 +89,8 @@ export class StateService {
   }
   refresh() {
     // quick refresh of data
-    const userId = this.main.getValue().organizationMeta.userId;
-    const organizationId = this.main.getValue().organizationMeta.organizationId;
+    const userId = this.main.getValue().userId;
+    const organizationId = this.main.getValue().organizationId;
     // only perform this get blob if the required information has been returned at least once
     // we need the user and organization id to do this
     if (userId && organizationId) {
