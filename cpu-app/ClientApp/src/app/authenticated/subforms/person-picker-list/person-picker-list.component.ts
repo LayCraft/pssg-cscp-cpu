@@ -21,9 +21,10 @@ export class PersonPickerListComponent implements OnInit {
     this.stateService.main.subscribe((m: Transmogrifier) => this.trans = m);
   }
   addPerson(personId: string) {
-    const person: iPerson = this.persons.filter(p => p.personId === personId)[0] || null;
+    const personInList: boolean = !!this.persons.filter(p => p.personId === personId).length;
     // only add someone if they are not in there already
-    if (!person) {
+    if (!personInList) {
+      const person: iPerson = this.trans.persons.filter(p => p.personId === personId)[0];
       // the person is not in the list so we add them
       this.persons.push(person);
       this.personsChange.emit(this.persons);
