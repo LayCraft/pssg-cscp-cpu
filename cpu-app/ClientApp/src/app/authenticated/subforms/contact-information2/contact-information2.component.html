@@ -40,7 +40,6 @@
   </div>
 </div>
 <app-address2 [(address)]="contactInformation.mainAddress"></app-address2>
-<h2 class="blue-header">Mailing Address</h2>
 <div class="form-check">
   <!-- Mailing address checkbox -->
   <input [(ngModel)]="contactInformation.hasMailingAddress" class="form-check-input" type="checkbox" id="mailingAddressCheckbox">
@@ -48,5 +47,8 @@
     Different mailing address from main address.
   </label>
 </div>
-<app-address2 [(address)]="contactInformation.mailingAddress"></app-address2>
-<pre>ContactInformation:{{contactInformation|json}}</pre>
+<span *ngIf="contactInformation.hasMailingAddress">
+  <h2 class="blue-header mt-4">Mailing Address</h2>
+  <app-address2 [(address)]="contactInformation.mailingAddress"></app-address2>
+  <pre>ContactInformation:{{contactInformation|json}}</pre>
+</span>
