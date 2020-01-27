@@ -43,6 +43,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { StatusReportComponent } from './authenticated/status-report/status-report.component';
 import { TaskListComponent } from './authenticated/components/task-list/task-list.component';
 import { TestComponent } from './test/test.component';
+import { ContactInformation2Component } from './authenticated/subforms/contact-information2/contact-information2.component';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { TestComponent } from './test/test.component';
     PersonnelExpenseTableComponent,
     ProgramBudgetComponent,
     NotUserComponent,
+    ContactInformation2Component,
   ],
   imports: [
     AppRoutingModule,
