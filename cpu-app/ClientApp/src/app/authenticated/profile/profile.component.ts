@@ -13,7 +13,6 @@ import { NotificationQueueService } from '../../core/services/notification-queue
 })
 export class ProfileComponent implements OnInit {
   trans: Transmogrifier;
-  hasBoardOfDirectors: boolean;
 
   constructor(
     private router: Router,

@@ -45,6 +45,7 @@ import { TaskListComponent } from './authenticated/components/task-list/task-lis
 import { TestComponent } from './test/test.component';
 import { ContactInformation2Component } from './authenticated/subforms/contact-information2/contact-information2.component';
 import { AdministrativeInformation2Component } from './authenticated/subforms/administrative-information2/administrative-information2.component';
+import { PrimaryContactInfoComponent } from './authenticated/subforms/primary-contact-info/primary-contact-info.component';
 
 
 @NgModule({
@@ -86,6 +87,7 @@ import { AdministrativeInformation2Component } from './authenticated/subforms/ad
     NotUserComponent,
     ContactInformation2Component,
     AdministrativeInformation2Component,
+    PrimaryContactInfoComponent,
   ],
   imports: [
     AppRoutingModule,

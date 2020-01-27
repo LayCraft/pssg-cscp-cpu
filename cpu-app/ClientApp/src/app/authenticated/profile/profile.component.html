@@ -2,17 +2,32 @@
   <div class="row">
     <div class="col">
       <h1>Update Organization Information</h1>
-      <app-contact-information2 [(contactInformation)]="trans.organizationMeta.contactInformation"></app-contact-information2>
-      <h2 class="blue-header">Organization Contact(s)</h2>
+      <h2 class="blue-header">Primary Program Contact Information</h2>
+      <app-primary-contact-info [(contactInformation)]="trans.organizationMeta.contactInformation"></app-primary-contact-info>
+      <app-address2 [(address)]="trans.organizationMeta.contactInformation.mainAddress"></app-address2>
+      <div class="form-check">
+        <!-- Mailing address checkbox -->
+        <input [(ngModel)]="trans.organizationMeta.contactInformation.hasMailingAddress" class="form-check-input" type="checkbox" id="mailingAddressCheckbox">
+        <label class="form-check-label" for="mailingAddressCheckbox">
+          Different mailing address from main address.
+        </label>
+      </div>
+      <span *ngIf="trans.organizationMeta.contactInformation.hasMailingAddress">
+        <h2 class="blue-header mt-4">Mailing Address</h2>
+        <app-address2 [(address)]="trans.organizationMeta.contactInformation.mailingAddress"></app-address2>
+      </span>
+
+      <h2 class="blue-header mt-4">Organization Contact(s)</h2>
       <p>If the executive or board contact information has inaccuracy please update personnel contact information for your organization before submitting this program application.</p>
       <app-person-picker [title]="'Executive Contact'" [(person)]="trans.organizationMeta.contactInformation.executiveContact"></app-person-picker>
       <div class="form-check mt-2">
-        <input [(ngModel)]="hasBoardOfDirectors" type="checkbox" id="hasBoardOfDirectors" name="hasBoardOfDirectors" class="form-check-input">
+        <input [(ngModel)]="trans.organizationMeta.hasBoardOfDirectors" type="checkbox" id="hasBoardOfDirectors" name="hasBoardOfDirectors" class="form-check-input">
         <label for="hasBoardOfDirectors">
           Does your organization have a board of directors?
         </label>
       </div>
-      <span *ngIf="this.hasBoardOfDirectors">
+
+      <span *ngIf="trans.organizationMeta.hasBoardOfDirectors">
         <!-- <h2 class="blue-header">Organization Board of Directors</h2> -->
         <app-person-picker [title]="'Board Contact (For societies only)'" [(person)]="trans.organizationMeta.contactInformation.boardContact"></app-person-picker>
       </span>

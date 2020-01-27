@@ -7,4 +7,5 @@ export interface iOrganizationMeta {
   organizationId: string;
   organizationName: string;
   userId: string;
+  hasBoardOfDirectors?: boolean;
 }
