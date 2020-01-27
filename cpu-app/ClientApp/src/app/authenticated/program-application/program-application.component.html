@@ -39,7 +39,7 @@
                 </div>
               </div>
               <!-- Primary contact information -->
-              <app-program-contact-information [(contactInformation)]="trans.contactInformation"></app-program-contact-information>
+              <app-contact-information2 [(contactInformation)]="trans.contactInformation"></app-contact-information2>
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
               <app-administrative-information [(administrativeInformation)]="trans.administrativeInformation"></app-administrative-information>

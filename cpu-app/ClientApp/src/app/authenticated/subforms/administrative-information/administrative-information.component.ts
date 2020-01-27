@@ -1,7 +1,6 @@
 import { iPerson } from '../../../core/models/person.interface';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { StateService } from '../../../core/services/state.service';
-import { PersonService } from '../../../core/services/person.service';
 import { NgForm, AbstractControl } from '@angular/forms';
 import { Component, OnInit, ViewChild, EventEmitter, Input, Output } from '@angular/core';
 import { AdministrativeInformation } from '../../../core/models/administrative-information.class';
@@ -28,7 +27,6 @@ export class AdministrativeInformationComponent implements OnInit {
   persons: iPerson[] = [];
 
   constructor(
-    private personService: PersonService,
     private stateService: StateService,
   ) { }
 
