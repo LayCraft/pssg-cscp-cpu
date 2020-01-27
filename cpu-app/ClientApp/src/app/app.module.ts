@@ -44,7 +44,6 @@ import { StatusReportComponent } from './authenticated/status-report/status-repo
 import { TaskListComponent } from './authenticated/components/task-list/task-list.component';
 import { TestComponent } from './test/test.component';
 import { ContactInformation2Component } from './authenticated/subforms/contact-information2/contact-information2.component';
-import { AdministrativeInformation2Component } from './authenticated/subforms/administrative-information2/administrative-information2.component';
 import { PrimaryContactInfoComponent } from './authenticated/subforms/primary-contact-info/primary-contact-info.component';
 
 
@@ -56,6 +55,7 @@ import { PrimaryContactInfoComponent } from './authenticated/subforms/primary-co
     AppComponent,
     BudgetProposalComponent,
     CgLiabilityComponent,
+    ContactInformation2Component,
     ContactInformationComponent,
     ContractTombstoneComponent,
     DashboardComponent,
@@ -64,6 +64,7 @@ import { PrimaryContactInfoComponent } from './authenticated/subforms/primary-co
     HoursComponent,
     LandingPageComponent,
     MinistryContactBoxComponent,
+    NotUserComponent,
     OrganizationProfileBoxComponent,
     PersonCardComponent,
     PersonEditorComponent,
@@ -71,9 +72,12 @@ import { PrimaryContactInfoComponent } from './authenticated/subforms/primary-co
     PersonPickerListComponent,
     PersonTableComponent,
     PersonnelComponent,
+    PersonnelExpenseTableComponent,
+    PrimaryContactInfoComponent,
     ProfileComponent,
     ProgramApplicationComponent,
     ProgramAuthorizerComponent,
+    ProgramBudgetComponent,
     ProgramComponent,
     ProgramContactInformationComponent,
     ProgramSummaryTableComponent,
@@ -82,12 +86,6 @@ import { PrimaryContactInfoComponent } from './authenticated/subforms/primary-co
     StatusReportComponent,
     TaskListComponent,
     TestComponent,
-    PersonnelExpenseTableComponent,
-    ProgramBudgetComponent,
-    NotUserComponent,
-    ContactInformation2Component,
-    AdministrativeInformation2Component,
-    PrimaryContactInfoComponent,
   ],
   imports: [
     AppRoutingModule,

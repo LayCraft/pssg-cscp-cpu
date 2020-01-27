@@ -10,7 +10,7 @@
 <div class="form-group">
   <label for="personPicker">{{label}}</label>
   <select class="form-control" name="personPicker" id="personPicker">
-    <option *ngFor="let person of possiblePersons" (click)="addPerson(person.personId)" [value]="person.personId" [class.disabled]="personInPersonsList(person.personId)">
+    <option *ngFor="let person of trans.persons" (click)="addPerson(person.personId)" [value]="person.personId">
       <!-- The person comes with a title if they have one -->
       {{nameAssemble(person.firstName,person.middleName,person.lastName)}} {{person.title?' - '+person.title:''}}
     </option>

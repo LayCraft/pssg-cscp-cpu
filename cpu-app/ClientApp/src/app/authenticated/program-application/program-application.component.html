@@ -77,7 +77,7 @@
 
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
-              <app-administrative-information [(administrativeInformation)]="trans.administrativeInformation"></app-administrative-information>
+              <app-administrative-information [(transmogrifierProgramApplication)]="trans"></app-administrative-information>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">
               <app-cg-liability [(cgLiability)]="trans.cglInsurance"></app-cg-liability>
