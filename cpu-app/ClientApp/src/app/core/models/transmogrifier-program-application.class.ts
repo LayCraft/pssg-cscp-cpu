@@ -46,11 +46,11 @@ export class TransmogrifierProgramApplication {
     return {
       ccseaMemberType: decodeCcseaMemberType(parseInt(b.Contract.vsd_cpu_memberofcssea)),
       compliantEmploymentStandardsAct:
-        b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000000") : false,
+        b.Contract.vsd_cpu_humanresourcepolices ? b.Contract.vsd_cpu_humanresourcepolices.includes("100000000") : false,
       compliantHumanRights:
-        b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000001") : false,
+        b.Contract.vsd_cpu_humanresourcepolices ? b.Contract.vsd_cpu_humanresourcepolices.includes("100000001") : false,
       compliantWorkersCompensation:
-        b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000002") : false,
+        b.Contract.vsd_cpu_humanresourcepolices ? b.Contract.vsd_cpu_humanresourcepolices.includes("100000002") : false,
       staffSubcontractedPersons: b.StaffCollection.map((s: iDynamicsCrmContact): iPerson => {
         return {
           email: s.emailaddress1 || null,
