@@ -32,8 +32,8 @@ export class TransmogrifierProgramApplication {
     this.organizationId = g.Businessbceid;
     this.organizationName = g.Organization.name;
     this.userId = g.Userbceid;
-    this.cglInsurance = decodeCglInsurance(g.Contract.vsd_cpu_insuranceoptions);
     this.administrativeInformation = this.buildAdministrativeInformation(g);
+    this.cglInsurance = decodeCglInsurance(g.Contract.vsd_cpu_insuranceoptions);
     this.contactInformation = this.buildContactInformation(g);
     this.programApplications = this.buildProgramApplications(g);
     this.signature = this.buildSignature(g);
@@ -148,7 +148,6 @@ export class TransmogrifierProgramApplication {
         name: p.vsd_name,
         phoneNumber: p.vsd_phonenumber,
         programId: p.vsd_programid,
-        programLocation: g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid)[0].vsd_name || null,
         serviceArea: p._vsd_cpu_regiondistrict_value,
         mainAddress: {
           line1: p.vsd_addressline1 || null,
@@ -175,7 +174,16 @@ export class TransmogrifierProgramApplication {
           .map(p => this.makePerson(g, p.contactid)) || null,// iPerson[];
         operationHours: [],//iHours[];
         standbyHours: [],//iHours[];
+      } as iProgramApplication;
+
+      const programLocations = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid);
+      if (programLocations.length) {
+        //if there is a match we add it otherwise skip it. Done like this because Dynamics has the tendency to mess up the regiondistrict collection and that causes errors.
+        temp.programLocation = programLocations[0].vsd_name;
+      } else {
+        temp.programLocation = 'Unknown';
       }
+
       // add operation and standby hours
       for (let sched of g.ScheduleCollection) {
         // if the schedule matches this program collect it.
