@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
-import { iPerson } from '../../core/models/person.interface';
 import { nameAssemble } from '../../core/constants/name-assemble'
 
 @Component({
@@ -14,6 +13,7 @@ export class HeaderComponent implements OnInit {
   currentUser: string;
   nameAssemble;
   loggedIn: boolean = false;
+  loading = false;
   constructor(
     private router: Router,
     private stateService: StateService,
@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit {
         this.currentUser = nameAssemble(u.firstName, u.middleName, u.lastName);
       }
     });
+    this.stateService.loading.subscribe(l => this.loading = l);
   }
   login() {
     this.stateService.login();

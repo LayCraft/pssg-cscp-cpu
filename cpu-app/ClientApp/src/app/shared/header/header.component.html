@@ -19,7 +19,14 @@
         <!-- <a href="logout">Sign Out</a> -->
       </span>
       <span class="navbar-text" *ngIf="!loggedIn">
-        <a (click)="login()">Log In</a>
+        <span *ngIf="!loading">
+          <a href="javascript:void(0)" (click)="login()">Log In</a>
+        </span>
+        <span *ngIf="loading">
+          <a href="javascript:void(0)">
+            Loading...
+          </a>
+        </span>
         <!-- This is for siteminder login -->
         <!-- <a href="login/" tabindex="1">Log In</a> -->
       </span>
