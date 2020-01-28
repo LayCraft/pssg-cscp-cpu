@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Person } from '../../../core/models/person.class';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { iPerson } from '../../../core/models/person.interface';
@@ -14,7 +13,7 @@ export class PersonPickerComponent implements OnInit {
   // this is a person form control that uses template binding.
 
   @Input() title = 'Select Person';
-  @Input() person: iPerson = new Person();
+  @Input() person: iPerson;
   @Output() personChange = new EventEmitter<iPerson>();
   @Input() showCard = true;
   public nameAssemble = nameAssemble;
@@ -25,11 +24,19 @@ export class PersonPickerComponent implements OnInit {
   ) { }
   ngOnInit() {
     // make a new person object from what was handed to this picker.
-    this.stateService.main.subscribe((m: Transmogrifier) => this.trans = m);
+    this.stateService.main.subscribe((m: Transmogrifier) => {
+      this.trans = m;
+      // load the person into the picker on initialization or just the first person in the list
+      this.setPerson(this.person.personId);
+    });
   }
-
+  setPerson(personId: string): void {
+    // assign the person into the person object
+    this.person = this.trans.persons.filter(p => p.personId === this.person.personId)[0];
+  }
   onChange() {
-    // console.log(this.person);
+    // set the person into the picker before emitting
+    this.setPerson(this.person.personId);
     this.personChange.emit(this.person);
   }
 }
