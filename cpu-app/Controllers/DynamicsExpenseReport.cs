@@ -201,7 +201,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> SetExpenseReport([FromBody] DynamicsExpenseReportPost model)
+		public async Task<IActionResult> SetExpenseReport([FromBody] ExpenseReportPost model)
 		{
 			if (model == null)
 			{

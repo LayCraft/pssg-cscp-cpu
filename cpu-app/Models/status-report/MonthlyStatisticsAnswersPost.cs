@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsExpenseReportPost
+	public class MonthlyStatisticsAnswers
 	{
 		public string BusinessBCeID { get; set; }
 		public string UserBCeID { get; set; }
-
-		public DynamicsScheduleGCollectionPost[] ScheduleGCollection { get; set; }
-		public DynamicsScheduleGLineItemCollectionPost[] ScheduleGLineItemCollection { get; set; }
+		public int ReportingPeriod { get; set; }
+		public DynamicsDataCollectionLineItemPost[] AnswerCollection { get; set; }
 	}
 }

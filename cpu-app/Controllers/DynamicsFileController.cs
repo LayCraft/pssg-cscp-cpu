@@ -194,7 +194,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			return new Tuple<int, string, HttpResponseMessage>(100, "", null);
 		}
 		[HttpPost]
-		public async Task<IActionResult> SetBudgetProposal([FromBody] DynamicsFilePost model)
+		public async Task<IActionResult> SetBudgetProposal([FromBody] FilePost model)
 		{
 			// return null because this needs to be handled as files.
 			return null;

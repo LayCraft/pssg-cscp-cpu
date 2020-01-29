@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsFilePost
+	public class FilePost
 	{
 
 		public string Buseinessbceid { get; set; }

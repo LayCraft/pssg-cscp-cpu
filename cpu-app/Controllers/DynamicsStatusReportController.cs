@@ -199,7 +199,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			return new Tuple<int, string, HttpResponseMessage>(100, "", null);
 		}
 		[HttpPost("{programId}")]
-		public async Task<IActionResult> AnswerQuestions([FromBody] Models.DynamicsMonthlyStatisticsAnswers model, string programId)
+		public async Task<IActionResult> AnswerQuestions([FromBody] MonthlyStatisticsAnswers model, string programId)
 		{
 			string task = "vsd_programs(" + programId + ")/Microsoft.Dynamics.CRM.vsd_SetCPUMonthlyStatisticsAnswers";
 

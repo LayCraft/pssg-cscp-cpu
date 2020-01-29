@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsProgramApplicationPost
+	public class ProgramApplicationPost
 	{
 		public string BusinessBCeID { get; set; }
 		public string UserBCeID { get; set; }

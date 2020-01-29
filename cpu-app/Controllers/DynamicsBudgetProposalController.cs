@@ -200,7 +200,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			return new Tuple<int, string, HttpResponseMessage>(100, "", null);
 		}
 		[HttpPost]
-		public async Task<IActionResult> SetBudgetProposal([FromBody] DynamicsBudgetProposalPost model)
+		public async Task<IActionResult> SetBudgetProposal([FromBody] BudgetProposalPost model)
 		{
 			string task = "vsd_SetCPUOrgContracts";
 
@@ -329,7 +329,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		}
 
 		[HttpPost("foo")]
-		public IActionResult TestBudgetCasting([FromBody] DynamicsBudgetProposalPost model)
+		public IActionResult TestBudgetCasting([FromBody] BudgetProposalPost model)
 		{
 			Console.Out.WriteLine(model);
 			return StatusCode(200);

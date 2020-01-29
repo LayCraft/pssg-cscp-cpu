@@ -37,7 +37,7 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Create([FromBody] Models.DynamicsOrgPost model)
+		public async Task<IActionResult> Create([FromBody] Models.OrganizationPost model)
 		{
 			if (model == null)
 			{
