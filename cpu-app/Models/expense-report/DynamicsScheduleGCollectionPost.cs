@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsScheduleGCollection
+	public class DynamicsScheduleGCollectionPost
 	{
 		public float vsd_actualhoursthisquarter { get; set; }
 		public float vsd_contractedservicehoursthisquarter { get; set; }
