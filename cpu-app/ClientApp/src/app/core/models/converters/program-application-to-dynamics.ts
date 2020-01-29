@@ -7,10 +7,9 @@ import { iDynamicsScheduleFPost, iDynamicsProgramContactPost } from "../dynamics
 import { iHours } from "../hours.interface";
 import { iPerson } from "../person.interface";
 import { iProgramApplication } from "../program-application.interface";
+import { encodeCcseaMemberType } from "../../constants/encode-ccsea-member-type";
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsScheduleFPost {
-
-
   const post: iDynamicsScheduleFPost = {
     Businessbceid: trans.organizationId,
     Userbceid: trans.userId,
@@ -23,6 +22,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_cpu_programstaffsubcontracted: trans.administrativeInformation.staffSubcontracted,
       vsd_cpu_specificunion: trans.administrativeInformation.staffUnion,
       vsd_cpu_staffunionized: trans.administrativeInformation.staffUnionized,
+      vsd_cpu_memberofcssea: encodeCcseaMemberType(trans.administrativeInformation.ccseaMemberType)
     }],
     Organization: {
       address1_city: trans.contactInformation.mainAddress.city,
