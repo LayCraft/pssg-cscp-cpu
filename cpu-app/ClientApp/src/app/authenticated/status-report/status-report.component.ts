@@ -32,8 +32,8 @@ export class StatusReportComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(p => {
       // collect information for collecting the data
-      const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
-      const userId: string = this.stateService.main.getValue().organizationMeta.userId;
+      const organizationId: string = this.stateService.main.getValue().organizationId;
+      const userId: string = this.stateService.main.getValue().userId;
 
       this.statusReportService.getStatusReportQuestions(organizationId, userId, p['taskId'])
         .subscribe(r => {

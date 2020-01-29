@@ -46,8 +46,8 @@ export class ExpenseReportComponent implements OnInit {
     this.stateService.currentUser.subscribe(u => this.currentUser = u);
     this.route.params.subscribe(p => {
       // collect information for collecting the data
-      const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
-      const userId: string = this.stateService.main.getValue().organizationMeta.userId;
+      const organizationId: string = this.stateService.main.getValue().organizationId;
+      const userId: string = this.stateService.main.getValue().userId;
 
       // get the expense report to fill
       this.expenseReportService.getExpenseReport(organizationId, userId, p['taskId']).subscribe(

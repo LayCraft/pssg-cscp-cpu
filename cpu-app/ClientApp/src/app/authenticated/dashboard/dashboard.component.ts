@@ -24,9 +24,11 @@ export class DashboardComponent implements OnInit {
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
       // split the contracts into something useful for the dashboard view
-      this.upcomingContracts = m.contracts.filter((c: iContract) => c.category === this.categories[0]);
-      this.currentContracts = m.contracts.filter((c: iContract) => c.category === this.categories[1]);
-      this.pastContracts = m.contracts.filter((c: iContract) => c.category === this.categories[2]);
+      if (m.contracts) {
+        this.upcomingContracts = m.contracts.filter((c: iContract) => c.category === this.categories[0]);
+        this.currentContracts = m.contracts.filter((c: iContract) => c.category === this.categories[1]);
+        this.pastContracts = m.contracts.filter((c: iContract) => c.category === this.categories[2]);
+      }
     });
   }
 }

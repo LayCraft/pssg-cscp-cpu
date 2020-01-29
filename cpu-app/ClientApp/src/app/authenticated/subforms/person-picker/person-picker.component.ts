@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { iPerson } from '../../../core/models/person.interface';
-import { nameAssemble } from '../../../core/constants/name-assemble';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
+import { iPerson } from '../../../core/models/person.interface';
+import { nameAssemble } from '../../../core/constants/name-assemble';
 
 @Component({
   selector: 'app-person-picker',
@@ -17,7 +17,7 @@ export class PersonPickerComponent implements OnInit {
   @Output() personChange = new EventEmitter<iPerson>();
   @Input() showCard = true;
   public nameAssemble = nameAssemble;
-  persons: iPerson[];
+  trans: Transmogrifier;
 
   constructor(
     private stateService: StateService,
@@ -25,12 +25,18 @@ export class PersonPickerComponent implements OnInit {
   ngOnInit() {
     // make a new person object from what was handed to this picker.
     this.stateService.main.subscribe((m: Transmogrifier) => {
-      this.persons = m.persons;
+      this.trans = m;
+      // load the person into the picker on initialization or just the first person in the list
+      this.setPerson(this.person.personId);
     });
   }
-
+  setPerson(personId: string): void {
+    // assign the person into the person object
+    this.person = this.trans.persons.filter(p => p.personId === this.person.personId)[0];
+  }
   onChange() {
-    // console.log(this.person);
+    // set the person into the picker before emitting
+    this.setPerson(this.person.personId);
     this.personChange.emit(this.person);
   }
 }

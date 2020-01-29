@@ -1,6 +1,6 @@
 import { Address } from '../../../core/models/address.class';
 import { COUNTRIES_ADDRESS_2 } from '../../../core/constants/country-list';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormHelper } from '../../../core/form-helper';
 import { POSTAL_CODE } from '../../../core/constants/regex.constants';
 import { iAddress } from '../../../core/models/address.interface';
@@ -26,9 +26,7 @@ export class Address2Component implements OnInit {
     this.country = this.address && this.address.country ? COUNTRIES_ADDRESS_2[this.address.country] : COUNTRIES_ADDRESS_2['Canada'];
   }
 
-  ngOnInit() {
-    this.address = this.address ? new Address(this.address) : new Address();
-  }
+  ngOnInit() { }
   onChange() {
     this.addressChange.emit(this.address);
   }

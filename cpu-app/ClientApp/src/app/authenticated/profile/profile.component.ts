@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ContactInformation } from '../../core/models/contact-information.class';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProfileService } from '../../core/services/profile.service';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { convertContactInformationToDynamics } from '../../core/models/converters/contact-information-to-dynamics';
-import { iContactInformation } from '../../core/models/contact-information.interface';
-import { iDynamicsPostOrg } from '../../core/models/dynamics-post';
-import { iPerson } from '../../core/models/person.interface';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,77 +12,39 @@ import { iPerson } from '../../core/models/person.interface';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
-  contactInformationForm: FormGroup;
-  executiveContact: iPerson = null;
-  boardContact: iPerson = null;
-  userId: string;
-  organizationId: string;
-  accountId: string;
+  trans: Transmogrifier;
 
   constructor(
     private router: Router,
     private stateService: StateService,
     private profileService: ProfileService,
+    private notificationQueueService: NotificationQueueService
   ) { }
 
   ngOnInit() {
     // subscribe to main
     this.stateService.main.subscribe((m: Transmogrifier) => {
-      this.contactInformationForm = new FormGroup({
-        'contactInformation': new FormControl('', Validators.required)
-      });
-      // console.log(m.organizationMeta.contactInformation);
-      this.contactInformationForm.controls['contactInformation'].setValue(m.organizationMeta.contactInformation);
-      this.executiveContact = m.organizationMeta.contactInformation.executiveContact;
-      this.boardContact = m.organizationMeta.contactInformation.boardContact;
-      // save the postback IDs
-      this.userId = m.organizationMeta.userId;
-      this.organizationId = m.organizationMeta.organizationId;
-      this.accountId = m.organizationMeta.accountId;
+      // save the transmogrifier
+      this.trans = m;
     });
   }
-  hasCriticalParts(): boolean {
-    // TODO: this isn't the place to get the validity of the form overall but I want a cheat for the required info
-    const c = this.contactInformationForm.value.contactInformation as iContactInformation;
-    return !!c.emailAddress && !!c.phoneNumber && !!c.mainAddress.line1 && !!c.mainAddress.city && !!c.mainAddress.province && !!c.mainAddress.postalCode;
-  }
-  onSave(): void {
-    // assemble the contact with executive and
-    const formValue: iContactInformation = this.contactInformationForm.value.contactInformation;
-    formValue.executiveContact = this.executiveContact;
-    formValue.boardContact = this.boardContact;
-    // cast the data into something useful for dynamics
-    const dynamicsPost: iDynamicsPostOrg = convertContactInformationToDynamics(this.userId, this.organizationId, this.accountId, formValue);
-
-
+  save(): void {
     // post to the organization
-    this.profileService.updateOrg(dynamicsPost).subscribe(
-      (res: any) => {
-        // console.log(res);
-        // success. Collect the transmogrifier and modify it.
-        const temp: Transmogrifier = this.stateService.main.getValue();
-        temp.organizationMeta.contactInformation = new ContactInformation(formValue);
-        //update it in the state service
-        this.stateService.main.next(temp);
-        // route to another page
-        this.router.navigate(['/authenticated/dashboard']);
-      },
-      err => console.log(err)
-    )
+    this.profileService.updateOrg(convertContactInformationToDynamics(this.trans))
+      .subscribe(
+        (res: any) => {
+          // notify
+          this.notificationQueueService.addNotification('The contact information for your organization has been updated.', 'Success');
+          // route to another page
+          this.router.navigate([this.stateService.homeRoute.getValue()]);
+        },
+        err => console.log(err)
+      );
   }
   onExit() {
     if (confirm("All unsaved changes will be lost. Are you sure you want to return to the dashboard?")) {
       // send the user back to the dashboard
-      this.router.navigate(['/authenticated/dashboard']);
+      this.router.navigate([this.stateService.homeRoute.getValue()]);
     }
-  }
-  onExecutiveContactChange(event: iPerson) {
-    // cast the personish object to a person
-    this.executiveContact = event;
-  }
-  onBoardContactChange(event: iPerson) {
-    // cast the personish object to a person
-    this.boardContact = event;
   }
 }

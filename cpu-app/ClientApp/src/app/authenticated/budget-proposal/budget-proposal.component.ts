@@ -9,8 +9,6 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { nameAssemble } from '../../core/constants/name-assemble';
 import { convertBudgetProposalToDynamics } from '../../core/models/converters/budget-proposal-to-dynamics';
 import { iProgramBudget } from '../../core/models/program-budget.interface';
-import { SalaryAndBenefits } from '../../core/models/salary-and-benefits.class';
-import { ExpenseItem } from '../../core/models/expense-item.class';
 import { iDynamicsBudgetProposalPost } from '../../core/models/dynamics-post';
 
 @Component({
@@ -52,8 +50,8 @@ export class BudgetProposalComponent implements OnInit {
     // collect the correct budget proposal
     this.route.params.subscribe(p => {
       // collect the current user information from the state.
-      const userId: string = this.stateService.main.getValue().organizationMeta.userId;
-      const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
+      const userId: string = this.stateService.main.getValue().userId;
+      const organizationId: string = this.stateService.main.getValue().organizationId;
 
       // get the budget proposal from the budget proposal service.
       this.budgetProposalService.getBudgetProposal(organizationId, userId, p['taskId']).subscribe(d => {

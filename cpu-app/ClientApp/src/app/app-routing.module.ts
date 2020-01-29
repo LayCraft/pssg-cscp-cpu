@@ -12,6 +12,7 @@ import { ProgramApplicationComponent } from './authenticated/program-application
 import { StatusReportComponent } from './authenticated/status-report/status-report.component';
 import { TestComponent } from './test/test.component';
 import { NotUserComponent } from './authenticated/not-user/not-user.component';
+import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
         component: StatusReportComponent
       },
       {
+        path: 'sign_contract/:taskId',
+        component: SignContractComponent
+      },
+      {
         // if there is extra information we redirect to the profile page anyhow.
         path: 'profile/:taskId',
         redirectTo: 'profile'
@@ -65,7 +70,7 @@ const routes: Routes = [
         component: PersonnelComponent
       },
       {
-        path: 'not_user',
+        path: 'new_user',
         component: NotUserComponent
       },
     ]

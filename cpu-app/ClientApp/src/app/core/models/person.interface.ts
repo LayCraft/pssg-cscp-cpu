@@ -1,8 +1,6 @@
 import { iAddress } from "./address.interface";
 
 export interface iPerson {
-  personId: string;
-  userId?: string;
   address?: iAddress;
   deactivated?: boolean; // if true this deactivates
   email: string;
@@ -11,6 +9,9 @@ export interface iPerson {
   lastName: string;
   me?: boolean; // is this the current user? If so this is "me".
   middleName?: string;
+  orgId?: string;
+  personId?: string;
   phone?: string;
   title?: string;
+  userId?: string;
 }

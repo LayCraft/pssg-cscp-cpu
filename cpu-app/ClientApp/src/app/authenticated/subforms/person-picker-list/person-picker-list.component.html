@@ -1,4 +1,4 @@
-<ul class="list-group mb-2">
+<ul *ngIf="persons" class="list-group mb-2">
   <!-- Only show the entry if they are in the list -->
   <li *ngFor="let person of persons" class="list-group-item d-flex justify-content-between align-items-center">
     {{nameAssemble(person.firstName,person.middleName,person.lastName)}} {{person.title?' - '+person.title:''}}
@@ -7,10 +7,10 @@
     </span>
   </li>
 </ul>
-<div class="form-group">
+<div *ngIf="trans.persons" class="form-group">
   <label for="personPicker">{{label}}</label>
   <select class="form-control" name="personPicker" id="personPicker">
-    <option *ngFor="let person of possiblePersons" (click)="addPerson(person.personId)" [value]="person.personId" [class.disabled]="personInPersonsList(person.personId)">
+    <option *ngFor="let person of trans.persons" (click)="addPerson(person.personId)" [value]="person.personId">
       <!-- The person comes with a title if they have one -->
       {{nameAssemble(person.firstName,person.middleName,person.lastName)}} {{person.title?' - '+person.title:''}}
     </option>

@@ -1,31 +1,28 @@
-import { iDynamicsOrganization } from "../dynamics-blob";
-import { iContactInformation } from "../contact-information.interface";
 import { iDynamicsPostOrg } from "../dynamics-post";
+import { Transmogrifier } from "../transmogrifier.class";
 
 // this is a mapper function for posting the organization back to dynamics
-export function convertContactInformationToDynamics(userId: string, organizationId: string, accountId: string, f: iContactInformation): iDynamicsPostOrg {
-  const org: iDynamicsOrganization = {};
-  // map contact info to the dynamics format
-  if (f.boardContact && f.boardContact.personId) org.vsd_BoardContactIdfortunecookiebind = f.boardContact.personId;
-  if (f.emailAddress) org.emailaddress1 = f.emailAddress;
-  if (f.executiveContact && f.executiveContact.personId) org.vsd_ExecutiveContactIdfortunecookiebind = f.executiveContact.personId;
-  if (f.faxNumber) org.fax = f.faxNumber;
-  if (f.mailingAddress && f.mailingAddress.city) org.address2_city = f.mailingAddress.city;
-  if (f.mailingAddress && f.mailingAddress.line1) org.address2_line1 = f.mailingAddress.line1;
-  if (f.mailingAddress && f.mailingAddress.line2) org.address2_line2 = f.mailingAddress.line2;
-  if (f.mailingAddress && f.mailingAddress.postalCode) org.address2_postalcode = f.mailingAddress.postalCode;
-  if (f.mailingAddress && f.mailingAddress.province) org.address2_stateorprovince = f.mailingAddress.province;
-  if (f.mainAddress && f.mainAddress.city) org.address1_city = f.mainAddress.city;
-  if (f.mainAddress && f.mainAddress.line1) org.address1_line1 = f.mainAddress.line1;
-  if (f.mainAddress && f.mainAddress.line2) org.address1_line2 = f.mainAddress.line2;
-  if (f.mainAddress && f.mainAddress.postalCode) org.address1_postalcode = f.mainAddress.postalCode;
-  if (f.mainAddress && f.mainAddress.province) org.address1_stateorprovince = f.mainAddress.province;
-  if (f.phoneNumber) org.telephone1 = f.phoneNumber;
-  // add the account id to the object
-  org["accountid"] = accountId;
+export function convertContactInformationToDynamics(trans: Transmogrifier): iDynamicsPostOrg {
   return {
-    BusinessBCeID: organizationId,
-    UserBCeID: userId,
-    Organization: org,
-  } as iDynamicsPostOrg;
+    BusinessBCeID: trans.organizationId,
+    UserBCeID: trans.userId,
+    Organization: {
+      vsd_BoardContactIdfortunecookiebind: trans.contactInformation.boardContact.personId || null,
+      emailaddress1: trans.contactInformation.emailAddress || null,
+      vsd_ExecutiveContactIdfortunecookiebind: trans.contactInformation.executiveContact.personId || null,
+      fax: trans.contactInformation.faxNumber || null,
+      address2_city: trans.contactInformation.mailingAddress.city || null,
+      address2_line1: trans.contactInformation.mailingAddress.line1 || null,
+      address2_line2: trans.contactInformation.mailingAddress.line2 || null,
+      address2_postalcode: trans.contactInformation.mailingAddress.postalCode || null,
+      address2_stateorprovince: trans.contactInformation.mailingAddress.province || null,
+      address1_city: trans.contactInformation.mainAddress.city || null,
+      address1_line1: trans.contactInformation.mainAddress.line1 || null,
+      address1_line2: trans.contactInformation.mainAddress.line2 || null,
+      address1_postalcode: trans.contactInformation.mainAddress.postalCode || null,
+      address1_stateorprovince: trans.contactInformation.mainAddress.province || null,
+      telephone1: trans.contactInformation.phoneNumber || null,
+      accountid: trans.accountId || null,
+    }
+  };
 }

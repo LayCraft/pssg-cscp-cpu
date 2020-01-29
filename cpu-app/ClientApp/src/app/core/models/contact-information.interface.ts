@@ -6,6 +6,8 @@ export interface iContactInformation {
   emailAddress: string;
   executiveContact?: iPerson;
   faxNumber: string;
+  hasBoardContact?: boolean;
+  hasMailingAddress?: boolean;
   mailingAddress: iAddress;
   mainAddress: iAddress;
   phoneNumber: string;

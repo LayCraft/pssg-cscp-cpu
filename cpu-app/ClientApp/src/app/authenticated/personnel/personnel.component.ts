@@ -38,25 +38,25 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     // when main changes refresh the data
-    this.stateService.main.subscribe((trans: Transmogrifier) => {
-      this.trans = trans;
+    this.stateService.main.subscribe((m: Transmogrifier) => {
+      this.trans = m;
 
       // TODO: find out why this isn't adding first and last name at minimum
-      console.log(trans.persons);
+      console.log(m.persons);
       // set the default top and bottom list
-      this.constructStepperElements(trans);
+      this.constructStepperElements(m);
 
     });
   }
   ngOnDestroy() {
     this.stepperService.reset();
   }
-  constructStepperElements(main?: Transmogrifier): void {
-    if (!main) { main = this.stateService.main.getValue(); }
+  constructStepperElements(m?: Transmogrifier): void {
+    if (!m) { m = this.stateService.main.getValue(); }
     // clear the stepper of existing elements
     this.stepperService.reset();
-    if (main.persons) {
-      main.persons.forEach(person => {
+    if (m.persons) {
+      m.persons.forEach(person => {
         this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
       });
       // set the stepper to the first element
@@ -67,8 +67,8 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   save(person: iPerson) {
     // a person needs minimum a first and last name to be submitted
     if (person.firstName && person.lastName) {
-      const userId = this.stateService.main.getValue().organizationMeta.userId;
-      const organizationId = this.stateService.main.getValue().organizationMeta.organizationId;
+      const userId = this.stateService.main.getValue().userId;
+      const organizationId = this.stateService.main.getValue().organizationId;
       const post = convertPersonnelToDynamics(userId, organizationId, [person]);
       // console.log(post);
       this.personService.setPersons(post).subscribe(
@@ -119,8 +119,8 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     } else if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
       // set deactivated state
       person.deactivated = true;
-      const userId = this.stateService.main.getValue().organizationMeta.userId;
-      const organizationId = this.stateService.main.getValue().organizationMeta.organizationId;
+      const userId = this.stateService.main.getValue().userId;
+      const organizationId = this.stateService.main.getValue().organizationId;
       const post: iDynamicsPostUsers = {
         UserBCeID: userId,
         BusinessBCeID: organizationId,

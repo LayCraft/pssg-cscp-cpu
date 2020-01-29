@@ -1,26 +1,52 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <div [formGroup]="contactInformationForm">
-        <app-contact-information formControlName="contactInformation"></app-contact-information>
+      <h1>Update Organization Information</h1>
+      <h2 class="blue-header">Primary Program Contact Information</h2>
+      <!-- Primary organization contact information header -->
+      <app-primary-contact-info [(contactInformation)]="trans.contactInformation"></app-primary-contact-info>
+      <!-- Primary address form -->
+      <app-address2 [(address)]="trans.contactInformation.mainAddress"></app-address2>
+
+      <!-- Mailing address checkbox -->
+      <div class="form-check">
+        <input [(ngModel)]="trans.contactInformation.hasMailingAddress" class="form-check-input" type="checkbox" id="mailingAddressCheckbox">
+        <label class="form-check-label" for="mailingAddressCheckbox">
+          Different mailing address from main address.
+        </label>
       </div>
-      <!-- TODO add board and executive contact -->
-      <div class="form-group">
-        <h2 class="blue-header">Executive Contact</h2>
-        <app-person-picker [(person)]="executiveContact"></app-person-picker>
+      <!-- Mailing address form -->
+      <span *ngIf="trans.contactInformation.hasMailingAddress">
+        <h2 class="blue-header mt-4">Mailing Address</h2>
+        <app-address2 [(address)]="trans.contactInformation.mailingAddress"></app-address2>
+      </span>
+
+      <!-- Primary contact the ministry calls when they want to contact the org -->
+      <h2 class="blue-header mt-4">Organization Contact(s)</h2>
+      <p>If the executive or board contact information has inaccuracy please update personnel contact information for your organization before submitting this program application.</p>
+      <app-person-picker [title]="'Executive Contact'" [(person)]="trans.contactInformation.executiveContact"></app-person-picker>
+
+      <!-- Does the org have a board of directors? -->
+      <div class="form-check mt-4">
+        <input [(ngModel)]="trans.contactInformation.hasBoardContact" type="checkbox" id="hasBoardOfDirectors" name="hasBoardOfDirectors" class="form-check-input">
+        <label for="hasBoardOfDirectors">
+          Does your organization have a board of directors?
+        </label>
       </div>
-      <div class="form-group">
-        <h2 class="blue-header">Board Contact</h2>
-        <app-person-picker [(person)]="boardContact"></app-person-picker>
-      </div>
+      <!-- If there is a board of directors who is it? -->
+      <span *ngIf="trans.contactInformation.hasBoardContact">
+        <app-person-picker [title]="'Board Contact (For societies only)'" [(person)]="trans.contactInformation.boardContact"></app-person-picker>
+      </span>
+
     </div>
   </div>
+
   <div class="row mt-4">
     <div class="col">
-      <!-- Button states for the form: Can submit, Can't submit, (TODO: in process of submitting) -->
-      <button *ngIf="hasCriticalParts()" (click)="onSave()" class="btn btn-primary">Save</button>
+      <button (click)="save()" class="btn btn-primary">Save</button>
       <!-- <button *ngIf="!hasCriticalParts()" class="btn btn-primary" disabled>Save</button> -->
       <button class="btn btn-primary ml-2" (click)="onExit()">Exit</button>
     </div>
   </div>
 </div>
+<pre>{{trans|json}}</pre>

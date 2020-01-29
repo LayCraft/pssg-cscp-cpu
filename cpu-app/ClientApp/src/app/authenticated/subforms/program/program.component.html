@@ -18,11 +18,12 @@
     </div>
 
     <h2 class="blue-header">Primary Program Contact Information</h2>
+    <app-primary-contact-info [(contactInformation)]="programApplication"></app-primary-contact-info>
     <div class="form-row">
       <div class="col-md">
         <div class="form-group">
           <label for="emailAddress">Email</label>
-          <input type="text" class="form-control" id="emailAddress" name="emailAddress" [(ngModel)]="programApplication.email" #emailAddress="ngModel" [pattern]="emailRegex">
+          <input type="text" class="form-control" id="emailAddress" name="emailAddress" [(ngModel)]="programApplication.emailAddress" #emailAddress="ngModel" [pattern]="emailRegex">
           <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)">
             Ok
           </div>
@@ -74,7 +75,7 @@
     </span>
     <h2 class="blue-header mt-2">Program Staff</h2>
     <p>Missing staff can be added by name and set at an organizational level.</p>
-    <app-person-picker-list (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
+    <app-person-picker-list [(persons)]="programApplication.additionalStaff"></app-person-picker-list>
   </div>
   <div *ngIf="currentTab===tabs[1]">
     <h2 class="blue-header">Program Schedule Hours of Operation (not including on-call / stand-by hours)</h2>
@@ -89,21 +90,6 @@
       <a (click)="removeStandbyHours(i)" class="btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
     </div>
     <button class="btn btn-secondary mb-4 mt-2" (click)="addStandbyHours()">Add On-call/Stand-by Hours</button>
-  </div>
-  <div *ngIf="currentTab===tabs[2]">
-    <h2 class="blue-header">Reporting Requirements</h2>
-    <div class="form-group">
-      <pre>If not set from the system are these CYA questions? Can we turn them into a TOS?
-We need to know what year is the previous year.
-We need to know if this is a renewal.
-We need to know if this is a victim's service program.
-We need to know if this is a Violence Against Women Program.</pre>
-
-      <p>Have you submitted Schedule H Descriptive report for first six months of FY 2019-20</p>
-      <p>Have you submitted Schedule G Financial report for the first two quarters of FY 2019-20</p>
-      <p>For Victims Service Programs only Have you submitted monthly OPRA reports to the end of Nov 2019</p>
-      <p>For Violence Against Women Programs only Have you submitted monthly STV-DES reports to the end of Nov 2019</p>
-    </div>
   </div>
 </form>
 <!-- <span *ngIf="programApplication">

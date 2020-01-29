@@ -36,8 +36,8 @@ export class ProgramApplicationComponent implements OnInit {
     // get the right contract by route
     this.route.params.subscribe(p => {
       // collect the current user information from the state.
-      const userId: string = this.stateService.main.getValue().organizationMeta.userId;
-      const organizationId: string = this.stateService.main.getValue().organizationMeta.organizationId;
+      const userId: string = this.stateService.main.getValue().userId;
+      const organizationId: string = this.stateService.main.getValue().organizationId;
       // get the program application to fill
       this.programApplicationService.getScheduleF(organizationId, userId, p['taskId']).subscribe(
         f => {
@@ -68,7 +68,7 @@ export class ProgramApplicationComponent implements OnInit {
     }
     return false;
   }
-  constructDefaultstepperElements(trans: TransmogrifierProgramApplication) {
+  constructDefaultstepperElements(m: TransmogrifierProgramApplication) {
     // clean out the old things that might be living in the stepper.
     this.stepperService.reset();
     // write the default beginning

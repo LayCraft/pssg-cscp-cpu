@@ -32,8 +32,8 @@ export class TransmogrifierProgramApplication {
     this.organizationId = g.Businessbceid;
     this.organizationName = g.Organization.name;
     this.userId = g.Userbceid;
-    this.cglInsurance = decodeCglInsurance(g.Contract.vsd_cpu_insuranceoptions);
     this.administrativeInformation = this.buildAdministrativeInformation(g);
+    this.cglInsurance = decodeCglInsurance(g.Contract.vsd_cpu_insuranceoptions);
     this.contactInformation = this.buildContactInformation(g);
     this.programApplications = this.buildProgramApplications(g);
     this.signature = this.buildSignature(g);
@@ -43,39 +43,39 @@ export class TransmogrifierProgramApplication {
     return undefined;
   }
   private buildAdministrativeInformation(b: iDynamicsScheduleFResponse): iAdministrativeInformation {
-    const staffSubcontractedPersons: iPerson[] = [];
-    b.StaffCollection.map((s: iDynamicsCrmContact): iPerson => {
-      return {
-        email: s.emailaddress1 || null,
-        fax: s.fax || null,
-        firstName: s.firstname || null,
-        lastName: s.lastname || null,
-        middleName: s.middlename || null,
-        personId: s.contactid || null,
-        phone: s.mobilephone || null,
-        title: s.jobtitle || null,
-        userId: s.vsd_bceid || null,
-        address: {
-          city: s.address1_city || null,
-          country: s.address1_country || 'Canada',
-          line1: s.address1_line1 || null,
-          line2: s.address1_line2 || null,
-          postalCode: s.address1_postalcode || null,
-          province: s.address1_stateorprovince || null,
-        },
-      };
-    });
-
     return {
-      ccseaMemberType: decodeCcseaMemberType(b.Contract.vsd_cpu_memberofcssea),
-      compliantEmploymentStandardsAct: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000000") : null,
-      compliantHumanRights: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000001") : null,
-      compliantWorkersCompensation: b.Contract.vsd_cpu_humanresourcepolicies ? b.Contract.vsd_cpu_humanresourcepolicies.includes("100000002") : null,
-      staffSubcontractedPersons,
+      ccseaMemberType: decodeCcseaMemberType(parseInt(b.Contract.vsd_cpu_memberofcssea)),
+      compliantEmploymentStandardsAct:
+        b.Contract.vsd_cpu_humanresourcepolices ? b.Contract.vsd_cpu_humanresourcepolices.includes("100000000") : false,
+      compliantHumanRights:
+        b.Contract.vsd_cpu_humanresourcepolices ? b.Contract.vsd_cpu_humanresourcepolices.includes("100000001") : false,
+      compliantWorkersCompensation:
+        b.Contract.vsd_cpu_humanresourcepolices ? b.Contract.vsd_cpu_humanresourcepolices.includes("100000002") : false,
+      staffSubcontractedPersons: b.StaffCollection.map((s: iDynamicsCrmContact): iPerson => {
+        return {
+          email: s.emailaddress1 || null,
+          fax: s.fax || null,
+          firstName: s.firstname || null,
+          lastName: s.lastname || null,
+          middleName: s.middlename || null,
+          personId: s.contactid || null,
+          phone: s.mobilephone || null,
+          title: s.jobtitle || null,
+          userId: s.vsd_bceid || null,
+          address: {
+            city: s.address1_city || null,
+            country: s.address1_country || 'Canada',
+            line1: s.address1_line1 || null,
+            line2: s.address1_line2 || null,
+            postalCode: s.address1_postalcode || null,
+            province: s.address1_stateorprovince || null,
+          },
+        };
+      }) || [],
       staffUnion: b.Contract.vsd_cpu_specificunion,
       staffSubcontracted: b.Contract.vsd_cpu_programstaffsubcontracted,
       staffUnionized: b.Contract.vsd_cpu_staffunionized,
-    };
+    }
   }
   private buildContactInformation(b: iDynamicsScheduleFResponse): iContactInformation {
     const c: iContactInformation = {
@@ -142,13 +142,12 @@ export class TransmogrifierProgramApplication {
     for (let p of g.ProgramCollection) {
       let temp: iProgramApplication = {
         contractId: p._vsd_contractid_value,
-        email: p.vsd_emailaddress || g.Organization.emailaddress1 || null, // fallback to organization email address
+        emailAddress: p.vsd_emailaddress || g.Organization.emailaddress1 || null, // fallback to organization email address
         faxNumber: p.vsd_fax,
         formState: 'untouched',// untouched	incomplete invalid complete info,
         name: p.vsd_name,
         phoneNumber: p.vsd_phonenumber,
         programId: p.vsd_programid,
-        programLocation: g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid)[0].vsd_name || null,
         serviceArea: p._vsd_cpu_regiondistrict_value,
         mainAddress: {
           line1: p.vsd_addressline1 || null,
@@ -175,7 +174,16 @@ export class TransmogrifierProgramApplication {
           .map(p => this.makePerson(g, p.contactid)) || null,// iPerson[];
         operationHours: [],//iHours[];
         standbyHours: [],//iHours[];
+      } as iProgramApplication;
+
+      const programLocations = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid);
+      if (programLocations.length) {
+        //if there is a match we add it otherwise skip it. Done like this because Dynamics has the tendency to mess up the regiondistrict collection and that causes errors.
+        temp.programLocation = programLocations[0].vsd_name;
+      } else {
+        temp.programLocation = 'Unknown';
       }
+
       // add operation and standby hours
       for (let sched of g.ScheduleCollection) {
         // if the schedule matches this program collect it.

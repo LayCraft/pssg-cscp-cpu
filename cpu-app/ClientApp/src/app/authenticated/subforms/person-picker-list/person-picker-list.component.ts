@@ -13,39 +13,25 @@ export class PersonPickerListComponent implements OnInit {
   @Input() persons: iPerson[] = []; // the list from the service
   @Output() personsChange = new EventEmitter<iPerson[]>();
   public nameAssemble = nameAssemble;
-  possiblePersons: iPerson[];
-  constructor(
-    private stateService: StateService
-  ) { }
+  trans: Transmogrifier;
+
+  constructor(private stateService: StateService) { }
 
   ngOnInit() {
-    this.stateService.main.subscribe((m: Transmogrifier) => {
-      this.possiblePersons = m.persons;
-    });
+    this.stateService.main.subscribe((m: Transmogrifier) => this.trans = m);
   }
-  onInput() {
-    // build a list for outputting.
-    this.personsChange.emit(this.persons);
-  }
-  addPerson(id: string) {
-    const matchingPersons: boolean = this.personInPersonsList(id);
+  addPerson(personId: string) {
+    const personInList: boolean = !!this.persons.filter(p => p.personId === personId).length;
     // only add someone if they are not in there already
-    if (!matchingPersons) {
-      // if the item is not in the list we add it
-      for (let person of this.persons) {
-        if (person.personId === id) {
-          this.persons.push(person);
-        }
-      }
-      // emit
-      this.onInput();
+    if (!personInList) {
+      const person: iPerson = this.trans.persons.filter(p => p.personId === personId)[0];
+      // the person is not in the list so we add them
+      this.persons.push(person);
+      this.personsChange.emit(this.persons);
     }
   }
-  personInPersonsList(id: string): boolean {
-    return !!this.persons.filter(p => p.personId === id).length;
-  }
-  removePerson(id: string) {
-    this.persons = this.persons.filter(p => !(p.personId === id));
-    this.onInput();
+  removePerson(personId: string) {
+    this.persons = this.persons.filter(p => p.personId !== personId);
+    this.personsChange.emit(this.persons);
   }
 }

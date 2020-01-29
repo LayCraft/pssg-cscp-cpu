@@ -1,4 +1,3 @@
-import * as moment from 'moment';
 import { Component, OnInit, Input } from '@angular/core';
 import { TransmogrifierProgramApplication } from '../../../core/models/transmogrifier-program-application.class';
 import { iProgramApplication } from '../../../core/models/program-application.interface';
@@ -9,7 +8,7 @@ import { iProgramApplication } from '../../../core/models/program-application.in
   styleUrls: ['./review-application.component.css']
 })
 export class ReviewApplicationComponent implements OnInit {
-  @Input() tpa: TransmogrifierProgramApplication;
+  @Input() trans: TransmogrifierProgramApplication;
 
   currentTab: string = 'Application Information';
   tabs: string[] = ['Application Information'];
@@ -17,7 +16,7 @@ export class ReviewApplicationComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.tpa.programApplications.forEach((p: iProgramApplication) => { this.tabs.push(p.name) });
+    this.trans.programApplications.forEach((p: iProgramApplication) => { this.tabs.push(p.name) });
   }
   nextPage() {
     const index = this.tabs.indexOf(this.currentTab);

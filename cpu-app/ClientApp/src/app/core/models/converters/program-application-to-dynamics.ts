@@ -1,10 +1,13 @@
-import { iDynamicsSchedule } from "../dynamics-blob";
 import { TransmogrifierProgramApplication } from "../transmogrifier-program-application.class";
-import { iProgramApplication } from "../program-application.interface";
 import { convertHoursToDynamics } from "./hours-to-dynamics";
-import { iHours } from "../hours.interface";
+import { encodeCglInsurance } from "../../constants/encode-cgl-insurance-type";
+import { encodeHrPolicies } from "../../constants/encode-hr-policies";
+import { iDynamicsSchedule } from "../dynamics-blob";
 import { iDynamicsScheduleFPost, iDynamicsProgramContactPost } from "../dynamics-post";
+import { iHours } from "../hours.interface";
 import { iPerson } from "../person.interface";
+import { iProgramApplication } from "../program-application.interface";
+import { encodeCcseaMemberType } from "../../constants/encode-ccsea-member-type";
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsScheduleFPost {
   const post: iDynamicsScheduleFPost = {
@@ -14,7 +17,12 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_ContactLookup1fortunecookiebind: trans.contactInformation.executiveContact.personId,
       vsd_ContactLookup2fortunecookiebind: trans.contactInformation.boardContact.personId,
       vsd_contractid: trans.contractId,
+      vsd_cpu_humanresourcepolicies: encodeHrPolicies(trans.administrativeInformation),
+      vsd_cpu_insuranceoptions: encodeCglInsurance(trans.cglInsurance),
+      vsd_cpu_programstaffsubcontracted: trans.administrativeInformation.staffSubcontracted,
       vsd_cpu_specificunion: trans.administrativeInformation.staffUnion,
+      vsd_cpu_staffunionized: trans.administrativeInformation.staffUnionized,
+      vsd_cpu_memberofcssea: encodeCcseaMemberType(trans.administrativeInformation.ccseaMemberType)
     }],
     Organization: {
       address1_city: trans.contactInformation.mainAddress.city,
@@ -61,7 +69,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_addressline2: p.mainAddress.line2,
       vsd_city: p.mainAddress.city,
       vsd_country: p.mainAddress.country,
-      vsd_emailaddress: p.email,
+      vsd_emailaddress: p.emailAddress,
       vsd_fax: p.faxNumber,
       vsd_mailingaddressline1: p.mailingAddress.line1,
       vsd_mailingaddressline2: p.mailingAddress.line2,
@@ -89,5 +97,6 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     if (scheduleCollection.length) post.ScheduleCollection = scheduleCollection;
   });
   return post;
+
 }
 

@@ -1,10 +1,11 @@
 import { iPerson } from "./person.interface";
 import { iHours } from './hours.interface';
 import { iAddress } from "./address.interface";
+import { iContactInformation } from "./contact-information.interface";
 
-export interface iProgramApplication {
+export interface iProgramApplication extends iContactInformation {
   contractId: string;
-  email: string;
+  emailAddress: string;
   faxNumber: string;
   formState: string;
   name: string;
@@ -12,6 +13,7 @@ export interface iProgramApplication {
   programId: string;
   programLocation: string;
   serviceArea: string;
+  hasMailingAddress?: boolean;
 
   // revenueSources: iRevenueSource[];
   additionalStaff: iPerson[];

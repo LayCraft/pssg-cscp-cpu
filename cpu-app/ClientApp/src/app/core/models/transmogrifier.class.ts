@@ -1,31 +1,36 @@
-import { contractCode } from '../constants/contract-code';
-import { formType } from '../constants/form-type';
-import { iAddress } from './address.interface';
-import { iContactInformation } from './contact-information.interface';
-import { iContract } from './contract.interface';
-import { iDynamicsBlob, iDynamicsCrmTask } from './dynamics-blob';
-import { iMinistryUser } from './ministry-user.interface';
-import { iOrganizationMeta } from './organization-meta.interface';
-import { iPerson } from './person.interface';
-import { iProgram } from './program.interface';
-import { iTask } from './task.interface';
 import { taskCode } from '../constants/task-code';
+import { iTask } from './task.interface';
+import { iProgram } from './program.interface';
+import { iPerson } from './person.interface';
+import { iMinistryUser } from './ministry-user.interface';
+import { iDynamicsBlob, iDynamicsCrmTask } from './dynamics-blob';
+import { iContract } from './contract.interface';
+import { iContactInformation } from './contact-information.interface';
+import { formType } from '../constants/form-type';
+import { contractCode } from '../constants/contract-code';
 
 export class Transmogrifier {
   // collections of viewmodels
-  public organizationMeta: iOrganizationMeta;
+
+  public accountId: string; // this is the ID to identify an organization in dynamics. NOT A BCEID
+  public contactInformation: iContactInformation;
+  public organizationId: string;
+  public organizationName: string;
+  public userId: string;
   public persons: iPerson[];
   public contracts: iContract[];
   public ministryContact: iMinistryUser;
 
   constructor(b: iDynamicsBlob) {
-    this.organizationMeta = this.buildOrganizationMeta(b);
+    this.accountId = b.Organization.accountid || null; // the dynamics id must be included when posting back sometimes.
+    this.contracts = [];
+    this.organizationId = b.Businessbceid || null;
+    this.organizationName = b.Organization.name || null;
+    this.userId = b.Userbceid || null;
+    this.contactInformation = this.buildContactInformation(b);
     this.persons = this.buildPersons(b);
     this.ministryContact = this.buildMinistryContact(b);
     this.contracts = this.buildContracts(b);
-    if (!this.organizationMeta.organizationId || !this.organizationMeta.userId) {
-      alert('There is a major problem with the content returned from the backend. BCEID information is missing which makes it impossible to interact in a meaningful way.');
-    }
   }
   private buildTasks(b: iDynamicsBlob, contractId: string): iTask[] {
     const tasks: iTask[] = [];
@@ -69,6 +74,11 @@ export class Transmogrifier {
     if (discriminator === 'program_application') {
       return contractId;//works
     }
+    if (discriminator === 'sign_contract') {
+      // TODO: UNKNOWN AND UNTESTED
+      return contractId;
+    }
+
     return contractId;
   }
   private buildPrograms(b: iDynamicsBlob, contractId: string): iProgram[] {
@@ -138,69 +148,76 @@ export class Transmogrifier {
       phone: b.MinistryUser.address1_telephone1,
     };
   }
-  private buildOrganizationMeta(b: iDynamicsBlob): iOrganizationMeta {
+  private buildContactInformation(b: iDynamicsBlob): iContactInformation {
     // collect the organization meta and structure it into a new shape
-    const meta: iOrganizationMeta = {
-      accountId: b.Organization.accountid || null, // the dynamics id must be included when posting back sometimes.
-      contracts: [],
-      organizationId: b.Businessbceid || null,
-      organizationName: b.Organization.name || null,
-      userId: b.Userbceid || null,
-      contactInformation: {
-        phoneNumber: b.Organization.telephone1 || null,
-        emailAddress: b.Organization.emailaddress1 || null,
-        faxNumber: b.Organization.fax || null,
-        mainAddress: {
-          city: b.Organization.address1_city || null,
-          line1: b.Organization.address1_line1 || null,
-          line2: b.Organization.address1_line2 || null,
-          postalCode: b.Organization.address1_postalcode || null,
-          province: b.Organization.address1_stateorprovince || null,
-        } || null,
-        mailingAddress: {
-          city: b.Organization.address2_city || null,
-          line1: b.Organization.address2_line1 || null,
-          line2: b.Organization.address2_line2 || null,
-          postalCode: b.Organization.address2_postalcode || null,
-          province: b.Organization.address2_stateorprovince || null,
-        } || null,
-      } || null,
-    };
-    if (b.ExecutiveContact) meta.contactInformation.executiveContact = {
-      email: b.ExecutiveContact.emailaddress1 || null,
-      fax: b.ExecutiveContact.fax || null,
-      firstName: b.ExecutiveContact.firstname || null,
-      lastName: b.ExecutiveContact.lastname || null,
-      middleName: b.ExecutiveContact.middlename || null,
-      personId: b.ExecutiveContact.contactid || null,
-      phone: b.ExecutiveContact.mobilephone || null,
-      title: b.ExecutiveContact.jobtitle || null,
-      address: {
-        city: b.ExecutiveContact.address1_city || null,
-        line1: b.ExecutiveContact.address1_line1 || null,
-        line2: b.ExecutiveContact.address1_line2 || null,
-        postalCode: b.ExecutiveContact.address1_postalcode || null,
-        province: b.ExecutiveContact.address1_stateorprovince || null,
-      } || null
-    };
-    if (b.BoardContact) meta.contactInformation.boardContact = {
-      email: b.BoardContact.emailaddress1 || null,
-      fax: b.BoardContact.fax || null,
-      firstName: b.BoardContact.firstname || null,
-      lastName: b.BoardContact.lastname || null,
-      middleName: b.BoardContact.middlename || null,
-      personId: b.BoardContact.contactid || null,
-      phone: b.BoardContact.mobilephone || null,
-      title: b.BoardContact.jobtitle || null,
-      address: {
-        city: b.BoardContact.address1_city || null,
-        line1: b.BoardContact.address1_line1 || null,
-        line2: b.BoardContact.address1_line2 || null,
-        postalCode: b.BoardContact.address1_postalcode || null,
-        province: b.BoardContact.address1_stateorprovince || null,
-      } || null
-    };
-    return meta;
+    const ci: iContactInformation = {
+      phoneNumber: b.Organization.telephone1 || null,
+      emailAddress: b.Organization.emailaddress1 || null,
+      faxNumber: b.Organization.fax || null,
+      mainAddress: {
+        city: b.Organization.address1_city || null,
+        line1: b.Organization.address1_line1 || null,
+        line2: b.Organization.address1_line2 || null,
+        postalCode: b.Organization.address1_postalcode || null,
+        province: b.Organization.address1_stateorprovince || null,
+        country: 'Canada'
+      }
+    } as iContactInformation;
+
+    // if there are any values in the returned data for the
+    if (b.Organization && (b.Organization.address2_city || b.Organization.address2_line1 || b.Organization.address2_line2 || b.Organization.address2_postalcode || b.Organization.address2_stateorprovince)) {
+      ci.mailingAddress = {
+        city: b.Organization.address2_city || null,
+        line1: b.Organization.address2_line1 || null,
+        line2: b.Organization.address2_line2 || null,
+        postalCode: b.Organization.address2_postalcode || null,
+        province: b.Organization.address2_stateorprovince || null,
+        country: 'Canada'
+      };
+      ci.hasMailingAddress = true;
+    }
+    if (b.Organization._vsd_executivecontactid_value)
+      if (b.ExecutiveContact) ci.executiveContact = {
+        email: b.ExecutiveContact.emailaddress1 || null,
+        fax: b.ExecutiveContact.fax || null,
+        firstName: b.ExecutiveContact.firstname || null,
+        lastName: b.ExecutiveContact.lastname || null,
+        middleName: b.ExecutiveContact.middlename || null,
+        personId: b.ExecutiveContact.contactid || null,
+        phone: b.ExecutiveContact.mobilephone || null,
+        title: b.ExecutiveContact.jobtitle || null,
+        address: {
+          city: b.ExecutiveContact.address1_city || null,
+          line1: b.ExecutiveContact.address1_line1 || null,
+          line2: b.ExecutiveContact.address1_line2 || null,
+          postalCode: b.ExecutiveContact.address1_postalcode || null,
+          province: b.ExecutiveContact.address1_stateorprovince || null,
+        } || null
+      };
+
+    // if there is a contact bound to this organization
+    if (b.Organization._vsd_boardcontactid_value) {
+      ci.boardContact = {
+        email: b.BoardContact.emailaddress1 || null,
+        fax: b.BoardContact.fax || null,
+        firstName: b.BoardContact.firstname || null,
+        lastName: b.BoardContact.lastname || null,
+        middleName: b.BoardContact.middlename || null,
+        personId: b.BoardContact.contactid || null,
+        phone: b.BoardContact.mobilephone || null,
+        title: b.BoardContact.jobtitle || null,
+        address: {
+          city: b.BoardContact.address1_city || null,
+          line1: b.BoardContact.address1_line1 || null,
+          line2: b.BoardContact.address1_line2 || null,
+          postalCode: b.BoardContact.address1_postalcode || null,
+          province: b.BoardContact.address1_stateorprovince || null,
+        } || null
+      };
+      // save that this exists
+      ci.hasBoardContact = true;
+    }
+    return ci;
   }
   private buildPersons(b: iDynamicsBlob): iPerson[] {
     const personList: iPerson[] = [];
