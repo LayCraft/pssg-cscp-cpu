@@ -7,7 +7,6 @@ namespace Gov.Cscp.VictimServices.Public.Models
 {
 	public class DynamicsExpenseReport
 	{
-		// this is the model that Dynamics expects back to update the organization level information
 		public string BusinessBCeID { get; set; }
 		public string UserBCeID { get; set; }
 

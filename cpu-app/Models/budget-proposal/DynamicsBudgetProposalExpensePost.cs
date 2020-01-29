@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsCrmProgramExpensePost
+	public class DynamicsBudgetProposalExpensePost
 	{
 		public string vsd_cpu_titleposition { get; set; }
 		public string fortunecookietype { get { return "#Microsoft.Dynamics.CRM.vsd_programexpense"; } }

@@ -9,8 +9,8 @@ namespace Gov.Cscp.VictimServices.Public.Models
 	{
 		public string BusinessBCeID { get; set; }
 		public string UserBCeID { get; set; }
-		public DynamicsCrmProgramExpensePost[] ProgramExpenseCollection { get; set; }
-		public DynamicsCrmProgramRevenueSourcePost[] ProgramRevenueSourceCollection { get; set; }
+		public DynamicsBudgetProposalExpensePost[] ProgramExpenseCollection { get; set; }
+		public DynamicsBudgetProposalRevenueSourcePost[] ProgramRevenueSourceCollection { get; set; }
 
 	}
 }

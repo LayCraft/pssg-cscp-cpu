@@ -12,7 +12,6 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string vsd_totaloncallstandbyhours { get; set; }
 		public string vsd_totalscheduledhours { get; set; }
 
-		// DYNAMICS SCHEDULE F POSTBACK STUFF (Trust me when I say that I hate this code more than you do.)
 		private string _vsd_ContactLookupfortunecookiebind;
 		public string vsd_ContactLookupfortunecookiebind
 		{
