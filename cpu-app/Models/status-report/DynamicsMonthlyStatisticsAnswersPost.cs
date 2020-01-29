@@ -10,6 +10,6 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string BusinessBCeID { get; set; }
 		public string UserBCeID { get; set; }
 		public int ReportingPeriod { get; set; }
-		public DynamicsDataCollectionLineItem[] AnswerCollection { get; set; }
+		public DynamicsDataCollectionLineItemPost[] AnswerCollection { get; set; }
 	}
 }

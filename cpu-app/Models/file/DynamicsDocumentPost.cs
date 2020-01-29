@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsDocument
+	public class DynamicsDocumentPost
 	{
 		public string body { get; set; }
 		public string filename { get; set; }

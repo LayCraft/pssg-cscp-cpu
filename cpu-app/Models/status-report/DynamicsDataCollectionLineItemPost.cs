@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsDataCollectionLineItem
+	public class DynamicsDataCollectionLineItemPost
 	{
 		public string fortunecookietype
 		{
