@@ -9,8 +9,6 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { nameAssemble } from '../../core/constants/name-assemble';
 import { convertBudgetProposalToDynamics } from '../../core/models/converters/budget-proposal-to-dynamics';
 import { iProgramBudget } from '../../core/models/program-budget.interface';
-import { SalaryAndBenefits } from '../../core/models/salary-and-benefits.class';
-import { ExpenseItem } from '../../core/models/expense-item.class';
 import { iDynamicsBudgetProposalPost } from '../../core/models/dynamics-post';
 
 @Component({

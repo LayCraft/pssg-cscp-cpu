@@ -25,26 +25,30 @@ export class TransmogrifierBudgetProposal {
     // Note: This only works if all guids in dynamics are unique.
     // create a lookup dictionary. It makes an object where a guid is the property and holds a human readable name as the value.
     // e.g. {qw87e6radsa:"Human name", ew491278938:"Useful description"}
-    const dict = g.EligibleExpenseItemCollection
-      .map((s: iDynamicsEligibleExpenseItem): object => {
-        if (s.vsd_eligibleexpenseitemid && s.vsd_name) {
-          // make an object to hold the kv pair
-          const tmp = {};
-          // assign the name to a property with matching guid
-          tmp[s.vsd_eligibleexpenseitemid] = s.vsd_name;
-          return tmp;
-        }
-      }).reduce((prev, curr) => {
-        // put the objects together into one mega lookup object
-        return { ...curr, ...prev }
-      });
-    // add all of the program type properties to the dict as well
-    g.ProgramTypeCollection
-      .forEach((p: iDynamicsProgramType) => {
-        dict[p.vsd_programtypeid] = p.vsd_name;
-      });
-
-    return dict;
+    // in the case that there are no eligible expense items how can we reduce? Null check to avoid reducing an empty set.
+    if (g.EligibleExpenseItemCollection && g.EligibleExpenseItemCollection.length) {
+      const dict = g.EligibleExpenseItemCollection
+        .map((s: iDynamicsEligibleExpenseItem): object => {
+          if (s.vsd_eligibleexpenseitemid && s.vsd_name) {
+            // make an object to hold the kv pair
+            const tmp = {};
+            // assign the name to a property with matching guid
+            tmp[s.vsd_eligibleexpenseitemid] = s.vsd_name;
+            return tmp;
+          }
+        }).reduce((prev, curr) => {
+          // put the objects together into one mega lookup object
+          return { ...curr, ...prev }
+        });
+      // add all of the program type properties to the dict as well
+      g.ProgramTypeCollection
+        .forEach((p: iDynamicsProgramType) => {
+          dict[p.vsd_programtypeid] = p.vsd_name;
+        });
+      return dict;
+    } else {
+      return {};
+    }
   }
   private buildBudgetProposals(g: iDynamicsBudgetProposal): iProgramBudget[] {
     return g.ProgramCollection.map((d: iDynamicsCrmProgramBudget): iProgramBudget => {
@@ -52,7 +56,7 @@ export class TransmogrifierBudgetProposal {
         contractId: g.Contract.vsd_contractid || '',
         programId: d.vsd_programid || '',
         name: d.vsd_name || '',
-        type: this.dict[d._vsd_programtype_value] || 'Program type not set.',
+        type: this.dict[d._vsd_programtype_value] ? this.dict[d._vsd_programtype_value] : 'Program type not set.',
         email: d.vsd_emailaddress || '',
         administrationCosts: this.expenseItems(g.AdministrationCostCollection, d.vsd_programid),
         administrationOtherExpenses: this.expenseItems(g.AdministrationCostCollection, d.vsd_programid, true),
