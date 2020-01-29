@@ -39,7 +39,7 @@ export class ProgramApplicationComponent implements OnInit {
       const userId: string = this.stateService.main.getValue().userId;
       const organizationId: string = this.stateService.main.getValue().organizationId;
       // get the program application to fill
-      this.programApplicationService.getScheduleF(organizationId, userId, p['taskId']).subscribe(
+      this.programApplicationService.getProgramApplication(organizationId, userId, p['taskId']).subscribe(
         f => {
           if (!f.IsSuccess) {
             // notify the user of a system error
@@ -128,7 +128,7 @@ export class ProgramApplicationComponent implements OnInit {
   save() {
     this.saving = true;
     this.out = convertProgramApplicationToDynamics(this.trans);
-    this.programApplicationService.setScheduleF(this.out).subscribe(
+    this.programApplicationService.setProgramApplication(this.out).subscribe(
       r => {
         console.log(r);
         this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
