@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsOrganization
+	public class DynamicsOrganizationPost
 	{
 		public string _ownerid_value { get; set; }
 		public string _vsd_boardcontactid_value { get; set; }

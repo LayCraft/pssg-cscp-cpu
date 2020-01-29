@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsCrmContact
+	public class DynamicsOrganizationContactPost
 	{
 		public string _parentcustomerid_value { get; set; }
 		public string address1_city { get; set; }

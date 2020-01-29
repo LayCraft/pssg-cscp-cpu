@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsOrg
+	public class DynamicsOrgPost
 	{
 		// this is the model that Dynamics expects back to update the organization level information
 		public string BusinessBCeID { get; set; }
 		public string UserBCeID { get; set; }
-		public DynamicsOrganization Organization { get; set; }
-		public DynamicsCrmContact[] StaffCollection { get; set; }
+		public DynamicsOrganizationPost Organization { get; set; }
+		public DynamicsOrganizationContactPost[] StaffCollection { get; set; }
 	}
 }
