@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.VictimServices.Public.Models
 {
-	public class DynamicsProgramApplicationContract
+	public class DynamicsProgramApplicationContractPost
 	{
 
 		public string fortunecookietype
