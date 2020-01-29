@@ -21,12 +21,22 @@ export function formType(discriminator: string, getName = false): string {
     }
     case 'e023659f-e8f5-e911-b811-00505683fbf4': {
       // renew and sign contract (what is the difference between the two?)
-      formType = getName ? 'Annual program application' : 'program_application'; // I think this is for renewal maybe?
+      formType = getName ? 'Renew annual program application' : 'program_application'; // I think this is for renewal maybe?
       break;
     }
     case '47525432-e8f5-e911-b811-00505683fbf4': {
       // renew contract application (what is the difference between the two?)
       formType = getName ? 'Annual program application' : 'program_application';
+      break;
+    }
+    case 'b13ae814-1e33-ea11-b814-00505683fbf4': {
+      // renew contract application (what is the difference between the two?)
+      formType = getName ? 'Review cover letter' : 'cover_letter';
+      break;
+    }
+    case 'foooooooooooooooooobaaaaaaaaaaaaaaar': {
+      // TODO: there is no known GUID for the
+      formType = getName ? 'Sign contract' : 'sign_contract';
       break;
     }
     default: {

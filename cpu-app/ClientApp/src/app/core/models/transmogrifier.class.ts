@@ -74,6 +74,11 @@ export class Transmogrifier {
     if (discriminator === 'program_application') {
       return contractId;//works
     }
+    if (discriminator === 'sign_contract') {
+      // TODO: UNKNOWN AND UNTESTED
+      return contractId;
+    }
+
     return contractId;
   }
   private buildPrograms(b: iDynamicsBlob, contractId: string): iProgram[] {
