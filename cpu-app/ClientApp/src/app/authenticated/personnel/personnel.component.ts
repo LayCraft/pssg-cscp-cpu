@@ -24,7 +24,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
   trans: Transmogrifier;
-
+  public nameAssemble = nameAssemble;
   constructor(
     private router: Router,
     private personService: PersonService,
@@ -40,24 +40,19 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     // when main changes refresh the data
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
-
-      // TODO: find out why this isn't adding first and last name at minimum
-      console.log(m.persons);
       // set the default top and bottom list
       this.constructStepperElements(m);
-
     });
   }
   ngOnDestroy() {
     this.stepperService.reset();
   }
-  constructStepperElements(m?: Transmogrifier): void {
-    if (!m) { m = this.stateService.main.getValue(); }
+  constructStepperElements(m: Transmogrifier): void {
     // clear the stepper of existing elements
     this.stepperService.reset();
     if (m.persons) {
       m.persons.forEach(person => {
-        this.stepperService.addStepperElement(new Person(person), nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
+        this.stepperService.addStepperElement(person, nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
       });
       // set the stepper to the first element
       this.stepperService.setToFirstStepperElement();
@@ -73,7 +68,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       // console.log(post);
       this.personService.setPersons(post).subscribe(
         () => {
-          this.notificationQueueService.addNotification('Personnel Saved', 'success');
+          this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
           // refresh the list of people on save
           this.stateService.refresh();
         },
@@ -93,26 +88,11 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   }
 
   add() {
-    const element: iPerson = {
-      address: null,
-      deactivated: false,
-      email: '',
-      fax: '',
-      firstName: '',
-      lastName: '',
-      me: false,
-      middleName: '',
-      personId: '',
-      phone: '',
-      title: '',
-      userId: null,
-    };
+    const element = new Person();
     this.stepperService.addStepperElement(element, 'New Person', null, 'person');
+    this.trans.persons.push(element);
   }
-  remove(stepperElement: iStepperElement) {
-    // collect the person as an object for deletion
-    const person: iPerson = stepperElement.object as iPerson;
-
+  remove(person: iPerson) {
     // if the person didn't exist we simple remove them. We do not post back to the server
     if (!person.personId) {
       this.stateService.refresh();
