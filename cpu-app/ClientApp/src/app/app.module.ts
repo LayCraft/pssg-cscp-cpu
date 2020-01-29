@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { BudgetProposalComponent } from './authenticated/budget-proposal/budget-proposal.component';
 import { CgLiabilityComponent } from './authenticated/subforms/cg-liability/cg-liability.component';
-import { ContactInformationComponent } from './authenticated/subforms/contact-information/contact-information.component';
 import { ContractTombstoneComponent } from './authenticated/subforms/contract-tombstone/contract-tombstone.component';
 import { DashboardComponent } from './authenticated/dashboard/dashboard.component';
 import { ExpenseReportComponent } from './authenticated/expense-report/expense-report.component';
@@ -57,7 +56,6 @@ import { SignContractComponent } from './authenticated/sign-contract/sign-contra
     BudgetProposalComponent,
     CgLiabilityComponent,
     ContactInformation2Component,
-    ContactInformationComponent,
     ContractTombstoneComponent,
     DashboardComponent,
     ExpenseReportComponent,
