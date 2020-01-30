@@ -60,6 +60,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   }
 
   save(person: iPerson) {
+    console.log(person);
     // a person needs minimum a first and last name to be submitted
     if (person.firstName && person.lastName) {
       const userId = this.stateService.main.getValue().userId;
@@ -75,7 +76,6 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         err => this.notificationQueueService.addNotification(err, 'danger')
       );
     } else {
-      console.log(person);
       // notify the user that this user was not saved.
       this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
     }
