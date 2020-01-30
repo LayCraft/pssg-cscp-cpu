@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FileService } from '../../core/services/file.service';
 import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
-import { iDynamicsDocument, iDynamicsFile } from '../../core/models/dynamics-file.interface';
-import { NotificationQueueService } from '../../core/services/notification-queue.service';
-import { iDynamicsFilePost, iDynamicsDocumentPost } from 'src/app/core/models/dynamics-post';
+import { iDynamicsFilePost, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
+import { iDynamicsFile } from '../../core/models/dynamics-file.interface';
 
 interface FileBundle {
   // list of file names (same order as file array)
@@ -28,6 +28,18 @@ export class SignContractComponent implements OnInit {
   saving: boolean = false;
   currentStepperElement: iStepperElement;
 
+  // what are the names of the files in the filedata array
+  fileNames: string[] = [];
+  // how large each file is in bytes
+  fileSizes: string[] = [];
+  // base64 encoded file turned into a string
+  fileData: string[] = [];
+
+  //TODO: take out all of this hard coding otherwise the village of burns lake is going to be annoyed. >:-(
+  organizationId: string = 'fd889a40-14b2-e811-8163-480fcff4f621';
+  userId: string = '9e9b5111-51c9-e911-b80f-00505683fbf4';
+  contractId: string = 'aa041c5d-4d3e-ea11-b814-00505683fbf4';
+
   constructor(
     private fileService: FileService,
     private stepperService: IconStepperService,
@@ -38,6 +50,11 @@ export class SignContractComponent implements OnInit {
 
   ngOnInit() {
     this.stepperService.currentStepperElement.subscribe(s => this.currentStepperElement = s);
+    // TODO: save credentials for postback
+    // this.organizationId = this.stateService.main.getValue().organizationId;
+    // this.userId = this.stateService.main.getValue().userId;
+    // collect the contract number from the route.
+
     this.constructDefaultstepperElements();
   }
 
@@ -47,19 +64,6 @@ export class SignContractComponent implements OnInit {
       this.saving = false;
       console.log('Saved');
     }, 100);
-    // this.out = convertProgramApplicationToDynamics(this.trans);
-    // this.programApplicationService.setProgramApplication(this.out).subscribe(
-    //   r => {
-    //     console.log(r);
-    //     this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
-    //     this.router.navigate(['/authenticated/dashboard']);
-    //   },
-    //   err => {
-    //     console.log(err);
-    //     this.notificationQueueService.addNotification('The program application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-    //     this.saving = false;
-    //   }
-    // );
   }
   exit() {
     // if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
@@ -72,13 +76,13 @@ export class SignContractComponent implements OnInit {
     // write the default beginning
     [
       {
-        itemName: 'Download',
+        itemName: 'Download Contract',
         formState: 'untouched',
         object: null,
         discriminator: 'download',
       },
       {
-        itemName: 'Upload',
+        itemName: 'Upload Contract',
         formState: 'untouched',
         object: null,
         discriminator: 'upload',
@@ -90,33 +94,22 @@ export class SignContractComponent implements OnInit {
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
   }
-
-  ///----------------------------------ALL THINGS BELOW ARE FOR FILE UPLOAD ----- DO NOT DELETE
-  // what are the names of the files in the filedata array
-  fileNames: string[] = [];
-  fileSizes: number[] = [];
-  // base64 encoded file turned into a string
-  fileData: string[] = [];
   removeFile(i: number) {
     //remove the file from the collection at this index
     this.fileData.splice(i, 1);
     this.fileNames.splice(i, 1);
     this.fileSizes.splice(i, 1);
-
   }
   upload() {
     // assemble the file into a collection to return to dynamics
     const file: iDynamicsFilePost = {
-      Businessbceid: '',
-      Userbceid: '',
-      DocumentCollection: this.fileNames.map((fileName: string, i: number): iDynamicsDocument => {
-        return {
-          filename: fileName,
-          body: this.fileData[i]
-        }
+      Businessbceid: this.organizationId,
+      Userbceid: this.userId,
+      DocumentCollection: this.fileNames.map((fileName: string, i: number): iDynamicsDocumentPost => {
+        return { filename: fileName, body: this.fileData[i] }
       })
     }
-    this.fileService.upload('contract_id_goes_here', file).subscribe((d) => console.log('Uploaded', d));
+    this.fileService.upload(this.contractId, file).subscribe((d) => console.log('Uploaded', d));
   }
 
   fakeBrowseClick(): void {
@@ -138,13 +131,13 @@ export class SignContractComponent implements OnInit {
         if (fileNumber >= 0) {
           // save the result over the old result
           fileData[fileNumber] = reader.result.toString();
-          fileSizes[fileNumber] = files.item(i).size
+          fileSizes[fileNumber] = this.toFileSize(files.item(i).size)
 
         } else {
           // push a fresh file name and file contents
           fileNames.push(files.item(i).name);
           fileData.push(reader.result.toString());
-          fileSizes.push(files.item(i).size);
+          fileSizes.push(this.toFileSize(files.item(i).size));
         }
       };
       reader.onerror = error => console.log('Error: ', error);
@@ -155,7 +148,7 @@ export class SignContractComponent implements OnInit {
   }
 
   download() {
-    this.fileService.download('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4', 'aa041c5d-4d3e-ea11-b814-00505683fbf4')
+    this.fileService.download(this.organizationId, this.userId, this.contractId)
       .subscribe(
         (d: iDynamicsFile) => {
           console.log(d);
@@ -177,5 +170,14 @@ export class SignContractComponent implements OnInit {
           }
         }
       );
+  }
+  toFileSize(bytes: number): string {
+    let fileSize: string = "0 bytes";
+    if (bytes >= 1073741824) { fileSize = (bytes / 1073741824).toFixed(2) + " GB"; }
+    else if (bytes >= 1048576) { fileSize = (bytes / 1048576).toFixed(2) + " MB"; }
+    else if (bytes >= 1024) { fileSize = (bytes / 1024).toFixed(2) + " KB"; }
+    else if (bytes > 1) { fileSize = bytes + " bytes"; }
+    else if (bytes == 1) { fileSize = bytes + " byte"; }
+    return fileSize;
   }
 }

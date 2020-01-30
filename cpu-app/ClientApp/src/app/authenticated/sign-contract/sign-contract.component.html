@@ -10,9 +10,17 @@
     </div>
     <div class="col">
       <div *ngIf="currentStepperElement">
-        <h1>{{currentStepperElement.itemName}}</h1>
+        <div class="page-header">
+          <h1>{{currentStepperElement.itemName}}</h1>
+        </div>
         <div *ngIf="currentStepperElement.discriminator==='download'">
           <!-- Download file area -->
+          <ol>
+            <li>Download the document from the link</li>
+            <li>Open and sign the document with a PDF reader and add your signature. (Need a pdf reader? <a href="https://get.adobe.com/reader" target="_blank">Download Adobe Acrobat Reader</a>)</li>
+            <li>Use the upload tab to upload the signed PDF.</li>
+          </ol>
+
           <button class="btn btn-danger" (click)="download()">Save</button>
         </div>
         <div *ngIf="currentStepperElement.discriminator==='upload'">
@@ -20,7 +28,7 @@
           <ul *ngIf="fileNames.length" class="list-group mb-2">
             <!-- Only show the entry if they are in the list -->
             <li *ngFor="let fileName of fileNames; let i=index" class="list-group-item d-flex justify-content-between align-items-center">
-              {{fileName}}
+              {{fileName}}{{' ('+fileSizes[i]+')'}}
               <span (click)="removeFile(i)">
                 <i class="fas fa-times-circle text-danger"></i>
               </span>
