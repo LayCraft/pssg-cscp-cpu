@@ -4,6 +4,7 @@ import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/i
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { iDynamicsDocument, iDynamicsFile } from '../../core/models/dynamics-file.interface';
+import { NotificationQueueService } from '../../core/services/notification-queue.service';
 
 interface FileBundle {
   // list of file names (same order as file array)
@@ -31,6 +32,7 @@ export class SignContractComponent implements OnInit {
     private stepperService: IconStepperService,
     private router: Router,
     private stateService: StateService,
+    private notificationQueueService: NotificationQueueService,
   ) { }
 
   ngOnInit() {
@@ -60,7 +62,7 @@ export class SignContractComponent implements OnInit {
   }
   exit() {
     // if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
-    this.router.navigate(['/authenticated/dashboard']);
+    this.router.navigate([this.stateService.homeRoute.getValue()]);
     // }
   }
   constructDefaultstepperElements() {
@@ -87,12 +89,17 @@ export class SignContractComponent implements OnInit {
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
   }
+
   ///----------------------------------ALL THINGS BELOW ARE FOR FILE UPLOAD ----- DO NOT DELETE
   // what are the names of the files in the filedata array
   fileNames: string[] = [];
   // base64 encoded file turned into a string
   fileData: string[] = [];
-
+  removeFile(i: number) {
+    //remove the file from the collection at this index
+    this.fileNames.splice(i, 1);
+    this.fileData.splice(i, 1);
+  }
   upload() {
     const file: iDynamicsFile = {
       "Businessbceid": "fd889a40-14b2-e811-8163-480fcff4f621",
@@ -112,6 +119,11 @@ export class SignContractComponent implements OnInit {
     // the UI element for the native element is completely useless and ugly so we hide it and fake the user click.
     this.myInputVariable.nativeElement.click();
   }
+  // onFileAdded(files: FileList): void {
+  //   let fileName = files[0].name;
+  //   let fileData = files[0].size;
+  //   files[0].name
+  // }
   onFilesAdded(files: FileList): void {
     // this is built intially to support multiple files but I'm returning it to single files
     this.fileNames = [];
@@ -137,13 +149,17 @@ export class SignContractComponent implements OnInit {
   }
 
   download() {
-    this.fileService.download('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4')
+    this.fileService.download('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4', 'aa041c5d-4d3e-ea11-b814-00505683fbf4')
       .subscribe(
         (d: iDynamicsFile) => {
-          if (d['error']['code']) {
+          console.log(d);
+          if (d['error'] && d['error']['code']) {
             // something has gone wrong. Show the developer the error
-            alert(d['error']['code'] + ' Please look in the console.');
+            alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
             console.log('Dynamics has returned: ', d);
+          } else if (d.DocumentCollection.length === 0) {
+            this.notificationQueueService.addNotification('There are no files available to download. Please let your ministry contract know that you cannot download the contract.');
+            console.log('No files to download');
           } else {
             let element = document.createElement('a');
             element.setAttribute('href', 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + d.DocumentCollection[0].body);

@@ -11,13 +11,24 @@
     <div class="col">
       <div *ngIf="currentStepperElement">
         <h1>{{currentStepperElement.itemName}}</h1>
-        <div *ngIf="currentStepperElement.discriminator==='upload'">
-          <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)" multiple>
-          <button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Browse...</button>
-          <button class="btn btn-warning ml-2" (click)="upload()">Upload</button>
-        </div>
         <div *ngIf="currentStepperElement.discriminator==='download'">
+          <!-- Download file area -->
           <button class="btn btn-danger" (click)="download()">Save</button>
+        </div>
+        <div *ngIf="currentStepperElement.discriminator==='upload'">
+          <!-- Upload file area -->
+          <ul *ngIf="fileNames.length" class="list-group mb-2">
+            <!-- Only show the entry if they are in the list -->
+            <li *ngFor="let fileName of fileNames; let i=index" class="list-group-item d-flex justify-content-between align-items-center">
+              {{fileName}}
+              <span (click)="removeFile(i)">
+                <i class="fas fa-times-circle text-danger"></i>
+              </span>
+            </li>
+          </ul>
+          <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)">
+          <button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Attach File</button>
+          <button class="btn btn-warning ml-2" (click)="upload()">Upload Files</button>
         </div>
       </div>
     </div>

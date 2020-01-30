@@ -27,15 +27,15 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			this._configuration = configuration;
 		}
 
-		[HttpGet("{businessBceid}/{userBceid}")]
-		public async Task<IActionResult> GetFile(string userBceid, string businessBceid)
+		[HttpGet("{businessBceid}/{userBceid}/{contractId}")]
+		public async Task<IActionResult> GetFile(string userBceid, string businessBceid, string contractId)
 		{
 			try
 			{
 				// convert the parameters to a json string
 				string applicationJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
 				// set the endpoint action
-				string endpointAction = "vsd_contracts(" + userBceid + ")/Microsoft.Dynamics.CRM.vsd_GetCPUContractDocuments";
+				string endpointAction = "vsd_contracts(" + contractId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUContractDocuments";
 				// get the response
 				Tuple<int, string, HttpResponseMessage> tuple = await GetDynamicsHttpClient(_configuration, applicationJson, endpointAction);
 

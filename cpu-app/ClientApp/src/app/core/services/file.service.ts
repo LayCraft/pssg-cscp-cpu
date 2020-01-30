@@ -15,8 +15,8 @@ export class FileService {
     private http: HttpClient,
   ) { }
 
-  download(organizationId: string, userId: string): Observable<iDynamicsFile> {
-    return this.http.get<iDynamicsFile>(`${this.apiUrl}/${organizationId}/${userId}`, { headers: this.headers }).pipe(
+  download(organizationId: string, userId: string, contractId: string): Observable<iDynamicsFile> {
+    return this.http.get<iDynamicsFile>(`${this.apiUrl}/${organizationId}/${userId}/${contractId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
