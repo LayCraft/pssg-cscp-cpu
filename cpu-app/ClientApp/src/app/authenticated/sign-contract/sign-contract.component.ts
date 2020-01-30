@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { iDynamicsDocument, iDynamicsFile } from '../../core/models/dynamics-file.interface';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
+import { iDynamicsFilePost, iDynamicsDocumentPost } from 'src/app/core/models/dynamics-post';
 
 interface FileBundle {
   // list of file names (same order as file array)
@@ -93,59 +94,64 @@ export class SignContractComponent implements OnInit {
   ///----------------------------------ALL THINGS BELOW ARE FOR FILE UPLOAD ----- DO NOT DELETE
   // what are the names of the files in the filedata array
   fileNames: string[] = [];
+  fileSizes: number[] = [];
   // base64 encoded file turned into a string
   fileData: string[] = [];
   removeFile(i: number) {
     //remove the file from the collection at this index
-    this.fileNames.splice(i, 1);
     this.fileData.splice(i, 1);
+    this.fileNames.splice(i, 1);
+    this.fileSizes.splice(i, 1);
+
   }
   upload() {
-    const file: iDynamicsFile = {
-      "Businessbceid": "fd889a40-14b2-e811-8163-480fcff4f621",
-      "Userbceid": "9e9b5111-51c9-e911-b80f-00505683fbf4",
-    };
-    const documentCollection: iDynamicsDocument[] = this.fileNames.map((fileName: string, i: number): iDynamicsDocument => {
-      return {
-        filename: fileName,
-        body: this.fileData[i]
-      }
-    });
-
-    this.fileService.upload('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4', file).subscribe((d) => console.log('Uploaded', d));
+    // assemble the file into a collection to return to dynamics
+    const file: iDynamicsFilePost = {
+      Businessbceid: '',
+      Userbceid: '',
+      DocumentCollection: this.fileNames.map((fileName: string, i: number): iDynamicsDocument => {
+        return {
+          filename: fileName,
+          body: this.fileData[i]
+        }
+      })
+    }
+    this.fileService.upload('contract_id_goes_here', file).subscribe((d) => console.log('Uploaded', d));
   }
 
   fakeBrowseClick(): void {
     // the UI element for the native element is completely useless and ugly so we hide it and fake the user click.
     this.myInputVariable.nativeElement.click();
   }
-  // onFileAdded(files: FileList): void {
-  //   let fileName = files[0].name;
-  //   let fileData = files[0].size;
-  //   files[0].name
-  // }
   onFilesAdded(files: FileList): void {
     // this is built intially to support multiple files but I'm returning it to single files
-    this.fileNames = [];
-    this.fileData = [];
+    const fileNames = this.fileNames;
+    const fileSizes = this.fileSizes;
+    const fileData = this.fileData;
     // for each file added we go through the same conversion process.
     for (let i = 0; i < files.length; i++) {
       // convert the file to base64 for upload
       const reader: FileReader = new FileReader();
       reader.readAsDataURL(files.item(i));
       reader.onload = () => {
-        if (this.fileNames.indexOf(files.item(i).name) >= 0) {
+        const fileNumber = fileNames.indexOf(files.item(i).name);
+        if (fileNumber >= 0) {
           // save the result over the old result
-          this.fileData[this.fileNames.indexOf(files.item(i).name)] = reader.result.toString();
+          fileData[fileNumber] = reader.result.toString();
+          fileSizes[fileNumber] = files.item(i).size
+
         } else {
           // push a fresh file name and file contents
-          this.fileNames.push(files.item(i).name);
-          this.fileData.push(reader.result.toString());
-          // console.log('Adding new file');
+          fileNames.push(files.item(i).name);
+          fileData.push(reader.result.toString());
+          fileSizes.push(files.item(i).size);
         }
       };
       reader.onerror = error => console.log('Error: ', error);
     }
+    this.fileData = fileData;
+    this.fileSizes = fileSizes;
+    this.fileData = fileData;
   }
 
   download() {

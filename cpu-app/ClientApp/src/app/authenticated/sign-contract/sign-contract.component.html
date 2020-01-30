@@ -26,7 +26,7 @@
               </span>
             </li>
           </ul>
-          <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)">
+          <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)" multiple>
           <button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Attach File</button>
           <button class="btn btn-warning ml-2" (click)="upload()">Upload Files</button>
         </div>
@@ -36,3 +36,4 @@
 </div>
 <pre>{{fileNames|json}}</pre>
 <pre>{{fileData|json}}</pre>
+<pre>{{fileSizes|json}}</pre>
