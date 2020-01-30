@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FileService } from '../../core/services/file.service';
 import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
+import { Router } from '@angular/router';
+import { StateService } from '../../core/services/state.service';
 import { iDynamicsDocument, iDynamicsFile } from '../../core/models/dynamics-file.interface';
 
 interface FileBundle {
@@ -27,6 +29,8 @@ export class SignContractComponent implements OnInit {
   constructor(
     private fileService: FileService,
     private stepperService: IconStepperService,
+    private router: Router,
+    private stateService: StateService,
   ) { }
 
   ngOnInit() {
@@ -56,7 +60,7 @@ export class SignContractComponent implements OnInit {
   }
   exit() {
     // if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
-    //   this.router.navigate(['/authenticated/dashboard']);
+    this.router.navigate(['/authenticated/dashboard']);
     // }
   }
   constructDefaultstepperElements() {
@@ -136,13 +140,19 @@ export class SignContractComponent implements OnInit {
     this.fileService.download('fd889a40-14b2-e811-8163-480fcff4f621', '9e9b5111-51c9-e911-b80f-00505683fbf4')
       .subscribe(
         (d: iDynamicsFile) => {
-          let element = document.createElement('a');
-          element.setAttribute('href', 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + d.DocumentCollection[0].body);
-          element.setAttribute('download', d.DocumentCollection[0].filename);
-          element.style.display = 'none';
-          document.body.appendChild(element);
-          element.click();
-          document.body.removeChild(element);
+          if (d['error']['code']) {
+            // something has gone wrong. Show the developer the error
+            alert(d['error']['code'] + ' Please look in the console.');
+            console.log('Dynamics has returned: ', d);
+          } else {
+            let element = document.createElement('a');
+            element.setAttribute('href', 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + d.DocumentCollection[0].body);
+            element.setAttribute('download', d.DocumentCollection[0].filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+          }
         }
       );
   }

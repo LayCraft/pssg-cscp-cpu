@@ -5,19 +5,20 @@
         <div style="max-height: 90%;">
           <app-icon-stepper></app-icon-stepper>
         </div>
-        <button class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
         <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
       </section>
     </div>
     <div class="col">
-      <pre>{{currentStepperElement|json}}</pre>
-      <div *ngIf="currentStepperElement.discriminator==='upload'">
-        <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)" multiple>
-        <button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Browse...</button>
-        <button class="btn btn-warning ml-2" (click)="upload()">Upload</button>
-      </div>
-      <div *ngIf="currentStepperElement.discriminator==='download'">
-        <button class="btn btn-danger" (click)="download()">Save</button>
+      <div *ngIf="currentStepperElement">
+        <h1>{{currentStepperElement.itemName}}</h1>
+        <div *ngIf="currentStepperElement.discriminator==='upload'">
+          <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)" multiple>
+          <button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Browse...</button>
+          <button class="btn btn-warning ml-2" (click)="upload()">Upload</button>
+        </div>
+        <div *ngIf="currentStepperElement.discriminator==='download'">
+          <button class="btn btn-danger" (click)="download()">Save</button>
+        </div>
       </div>
     </div>
   </div>
