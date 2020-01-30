@@ -22,13 +22,17 @@ export class SignContractComponent implements OnInit {
 
   // is this uploading/saving
   saving: boolean = false;
+  currentStepperElement: iStepperElement;
 
   constructor(
     private fileService: FileService,
     private stepperService: IconStepperService,
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.stepperService.currentStepperElement.subscribe(s => this.currentStepperElement = s);
+    this.constructDefaultstepperElements();
+  }
 
   save() {
     this.saving = true;
@@ -61,16 +65,16 @@ export class SignContractComponent implements OnInit {
     // write the default beginning
     [
       {
-        itemName: 'Download files',
+        itemName: 'Download',
         formState: 'untouched',
         object: null,
-        discriminator: 'contact_information',
+        discriminator: 'download',
       },
       {
-        itemName: 'Upload files',
+        itemName: 'Upload',
         formState: 'untouched',
         object: null,
-        discriminator: 'administrative_information',
+        discriminator: 'upload',
       }
     ].forEach((f: iStepperElement) => {
       this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
