@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FileService } from '../../core/services/file.service';
-import { iDynamicsFile, iDynamicsDocument } from '../../core/models/dynamics-file.interface';
+import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
+import { iDynamicsDocument, iDynamicsFile } from '../../core/models/dynamics-file.interface';
 
 interface FileBundle {
   // list of file names (same order as file array)
@@ -19,11 +20,65 @@ export class SignContractComponent implements OnInit {
   @ViewChild('files')
   myInputVariable: ElementRef;
 
+  // is this uploading/saving
+  saving: boolean = false;
+
   constructor(
-    private fileService: FileService
+    private fileService: FileService,
+    private stepperService: IconStepperService,
   ) { }
+
   ngOnInit() { }
 
+  save() {
+    this.saving = true;
+    setTimeout(() => {
+      this.saving = false;
+      console.log('Saved');
+    }, 100);
+    // this.out = convertProgramApplicationToDynamics(this.trans);
+    // this.programApplicationService.setProgramApplication(this.out).subscribe(
+    //   r => {
+    //     console.log(r);
+    //     this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
+    //     this.router.navigate(['/authenticated/dashboard']);
+    //   },
+    //   err => {
+    //     console.log(err);
+    //     this.notificationQueueService.addNotification('The program application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+    //     this.saving = false;
+    //   }
+    // );
+  }
+  exit() {
+    // if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+    //   this.router.navigate(['/authenticated/dashboard']);
+    // }
+  }
+  constructDefaultstepperElements() {
+    // clean out the old things that might be living in the stepper.
+    this.stepperService.reset();
+    // write the default beginning
+    [
+      {
+        itemName: 'Download files',
+        formState: 'untouched',
+        object: null,
+        discriminator: 'contact_information',
+      },
+      {
+        itemName: 'Upload files',
+        formState: 'untouched',
+        object: null,
+        discriminator: 'administrative_information',
+      }
+    ].forEach((f: iStepperElement) => {
+      this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
+    });
+
+    // put the page naviagation to the first page
+    this.stepperService.setToFirstStepperElement();
+  }
   ///----------------------------------ALL THINGS BELOW ARE FOR FILE UPLOAD ----- DO NOT DELETE
   // what are the names of the files in the filedata array
   fileNames: string[] = [];
