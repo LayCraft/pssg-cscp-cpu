@@ -45,6 +45,7 @@ import { TestComponent } from './test/test.component';
 import { ContactInformation2Component } from './authenticated/subforms/contact-information2/contact-information2.component';
 import { PrimaryContactInfoComponent } from './authenticated/subforms/primary-contact-info/primary-contact-info.component';
 import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
+import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.component';
 
 
 @NgModule({
@@ -86,6 +87,7 @@ import { SignContractComponent } from './authenticated/sign-contract/sign-contra
     TaskListComponent,
     TestComponent,
     SignContractComponent,
+    CoverLetterComponent,
   ],
   imports: [
     AppRoutingModule,

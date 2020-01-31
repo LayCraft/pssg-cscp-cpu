@@ -13,6 +13,7 @@ import { StatusReportComponent } from './authenticated/status-report/status-repo
 import { TestComponent } from './test/test.component';
 import { NotUserComponent } from './authenticated/not-user/not-user.component';
 import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
+import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,10 @@ const routes: Routes = [
       {
         path: 'sign_contract/:taskId',
         component: SignContractComponent
+      },
+      {
+        path: 'cover_letter/:taskId',
+        component: CoverLetterComponent
       },
       {
         // if there is extra information we redirect to the profile page anyhow.

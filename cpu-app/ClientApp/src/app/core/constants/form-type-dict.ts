@@ -8,7 +8,7 @@ export const formTypeDict = {
   '9d0ef880-e8f5-e911-b811-00505683fbf4': ['expense_report', 'Quarterly expense report'],
   'e023659f-e8f5-e911-b811-00505683fbf4': ['program_application', 'Renew annual program application'],
   '47525432-e8f5-e911-b811-00505683fbf4': ['program_application', 'Annual program application'],
-  'b13ae814-1e33-ea11-b814-00505683fbf4': ['cover_letter', 'Review Cover Letter - Estimated Budget'],
-  '4f044044-1e33-ea11-b814-00505683fbf4': ['cover_letter', 'Review Cover Letter - Approved Budget'],
+  'b13ae814-1e33-ea11-b814-00505683fbf4': ['cover_letter', 'Estimated Budget Cover Letter'],
+  '4f044044-1e33-ea11-b814-00505683fbf4': ['cover_letter', 'Approved Budget Cover Letter'],
   '8fa3b7ae-e8f5-e911-b811-00505683fbf4': ['profile', 'Update Contact Information'],
 }
