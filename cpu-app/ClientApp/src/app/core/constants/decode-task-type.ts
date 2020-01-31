@@ -1,6 +1,6 @@
 import { formTypeDict } from "./form-type-dict";
 
-export function formType(discriminator: string, getName = false): string {
+export function decodeTaskType(discriminator: string, getName = false): string {
   // this discriminator is used to let the system know which form to open up using a patern known as single table inheritance
   // https://www.martinfowler.com/eaaCatalog/singleTableInheritance.html
 

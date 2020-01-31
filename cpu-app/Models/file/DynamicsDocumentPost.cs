@@ -7,8 +7,8 @@ namespace Gov.Cscp.VictimServices.Public.Models
 {
 	public class DynamicsDocumentPost
 	{
+		public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.activitymimeattachment"; } }
 		public string body { get; set; }
 		public string filename { get; set; }
-		public string fortunecookietype { get { return "#Microsoft.Dynamics.CRM.activitymimeattachment"; } }
 	}
 }

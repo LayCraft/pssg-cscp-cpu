@@ -8,8 +8,8 @@ namespace Gov.Cscp.VictimServices.Public.Models
 	public class FilePost
 	{
 
-		public string Buseinessbceid { get; set; }
-		public string Userbceid { get; set; }
+		public string BusinessBCeID { get; set; }
+		public string UserBCeID { get; set; }
 
 		public DynamicsDocumentPost[] DocumentCollection { get; set; }
 	}

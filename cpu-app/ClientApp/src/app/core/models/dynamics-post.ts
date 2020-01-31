@@ -1,4 +1,5 @@
 import { iDynamicsScheduleG, iDynamicsScheduleGLineItem, iDynamicsOrganization, iDynamicsCrmContact, iDynamicsCrmProgram, iDynamicsRegionDistrict, iDynamicsSchedule } from "./dynamics-blob";
+import { iDynamicsDocument } from "./dynamics-file.interface";
 
 export interface iDynamicsPostScheduleG {
   UserBCeID: string;
@@ -91,4 +92,13 @@ export interface iDynamicsScheduleFPost {
   ScheduleCollection?: iDynamicsSchedule[];
   StaffCollection?: iDynamicsProgramContactPost[];
   Userbceid?: string;
+}
+export interface iDynamicsFilePost {
+  Businessbceid: string;
+  Userbceid: string;
+  DocumentCollection?: iDynamicsDocument[];
+}
+export interface iDynamicsDocumentPost {
+  filename: string;
+  body: string;
 }

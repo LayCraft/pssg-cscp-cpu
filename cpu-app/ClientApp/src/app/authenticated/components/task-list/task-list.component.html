@@ -21,7 +21,7 @@
       <div *ngIf="contract.tasks.length">
         <table class="table table-sm table-striped">
           <thead class="thead">
-            <th style="width:15%" scope="col">Status</th>
+            <!-- <th style="width:15%" scope="col">Status</th> -->
             <th style="width:20%" scope="col">Action</th>
             <th style="width:20%" scope="col">Title</th>
             <th style="width:30%" scope="col">Description</th>
@@ -30,26 +30,26 @@
           <tbody>
             <tr *ngFor="let task of contract.tasks">
               <!-- Completed status items go into a different tab -->
-              <td>
-                <!-- Not Started -->
-                <i *ngIf="task.status === statuses[0]" class="fas fa-ellipsis-h text-secondary"></i>
-                <!-- In Progress -->
-                <i *ngIf="task.status === statuses[1]" class="far fa-file text-success"></i>
-                <!-- Waiting -->
-                <i *ngIf="task.status === statuses[2]" class="fas fa-stopwatch text-info"></i>
-                <!-- Deferred -->
-                <i *ngIf="task.status === statuses[3]" class="fas fa-pause-circle text-warning"></i>
-                <!-- Completed -->
-                <i *ngIf="task.status === statuses[4]" class="fas fa-check-circle text-success"></i>
-                <!-- Cancelled -->
-                <i *ngIf="task.status === statuses[5]" class="far fa-stop-circle text-danger"></i>
-                <!-- No Status -->
-                <i *ngIf="task.status === statuses[6]" class="fas fa-bacon text-danger"></i>
-                <!-- colour the text the same -->
-                <span class="ml-1" [class.text-secondary]='task.status === statuses[0]' [class.text-success]='task.status === statuses[1]' [class.text-info]='task.status === statuses[2]' [class.text-warning]='task.status === statuses[3]' [class.text-success]='task.status === statuses[4]' [class.text-danger]='task.status === statuses[5]' [class.text-danger]='task.status === statuses[6]'>
-                  {{task.status}}
-                </span>
-              </td>
+              <!-- <td> -->
+              <!-- Not Started -->
+              <!-- <i *ngIf="task.status === statuses[0]" class="fas fa-ellipsis-h text-secondary"></i> -->
+              <!-- In Progress -->
+              <!-- <i *ngIf="task.status === statuses[1]" class="far fa-file text-success"></i> -->
+              <!-- Waiting -->
+              <!-- <i *ngIf="task.status === statuses[2]" class="fas fa-stopwatch text-info"></i> -->
+              <!-- Deferred -->
+              <!-- <i *ngIf="task.status === statuses[3]" class="fas fa-pause-circle text-warning"></i> -->
+              <!-- Completed -->
+              <!-- <i *ngIf="task.status === statuses[4]" class="fas fa-check-circle text-success"></i> -->
+              <!-- Cancelled -->
+              <!-- <i *ngIf="task.status === statuses[5]" class="far fa-stop-circle text-danger"></i> -->
+              <!-- No Status -->
+              <!-- <i *ngIf="task.status === statuses[6]" class="fas fa-bacon text-danger"></i> -->
+              <!-- colour the text the same -->
+              <!-- <span class="ml-1" [class.text-secondary]='task.status === statuses[0]' [class.text-success]='task.status === statuses[1]' [class.text-info]='task.status === statuses[2]' [class.text-warning]='task.status === statuses[3]' [class.text-success]='task.status === statuses[4]' [class.text-danger]='task.status === statuses[5]' [class.text-danger]='task.status === statuses[6]'> -->
+              <!-- {{task.status}} -->
+              <!-- </span> -->
+              <!-- </td> -->
               <td>
                 <a routerLink="/authenticated/{{task.formType}}/{{task.taskId}}">
                   {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
@@ -70,7 +70,7 @@
       <div *ngIf="contract.completedTasks.length">
         <table class="table table-sm table-striped">
           <thead class="thead">
-            <th style="width:15%" scope="col">Status</th>
+            <!-- <th style="width:15%" scope="col">Status</th> -->
             <th style="width:20%" scope="col">Task</th>
             <th style="width:20%" scope="col">Title</th>
             <th style="width:30%" scope="col">Description</th>
@@ -79,26 +79,26 @@
           <tbody>
             <tr *ngFor="let task of contract.completedTasks">
               <!-- Completed status items go into a different tab -->
-              <td>
-                <!-- Not Started -->
-                <i *ngIf="task.status === statuses[0]" class="fas fa-ellipsis-h text-secondary"></i>
-                <!-- In Progress -->
-                <i *ngIf="task.status === statuses[1]" class="far fa-file text-success"></i>
-                <!-- Waiting -->
-                <i *ngIf="task.status === statuses[2]" class="fas fa-stopwatch text-info"></i>
-                <!-- Deferred -->
-                <i *ngIf="task.status === statuses[3]" class="fas fa-pause-circle text-warning"></i>
-                <!-- Completed -->
-                <i *ngIf="task.status === statuses[4]" class="fas fa-check-circle text-success"></i>
-                <!-- Cancelled -->
-                <i *ngIf="task.status === statuses[5]" class="far fa-stop-circle text-danger"></i>
-                <!-- No Status -->
-                <i *ngIf="task.status === statuses[6]" class="fas fa-bacon text-danger"></i>
-                <!-- colour the text the same -->
-                <span class="ml-1" [class.text-secondary]='task.status === statuses[0]' [class.text-success]='task.status === statuses[1]' [class.text-info]='task.status === statuses[2]' [class.text-warning]='task.status === statuses[3]' [class.text-success]='task.status === statuses[4]' [class.text-danger]='task.status === statuses[5]' [class.text-danger]='task.status === statuses[6]'>
-                  {{task.status}}
-                </span>
-              </td>
+              <!-- <td> -->
+              <!-- Not Started -->
+              <!-- <i *ngIf="task.status === statuses[0]" class="fas fa-ellipsis-h text-secondary"></i> -->
+              <!-- In Progress -->
+              <!-- <i *ngIf="task.status === statuses[1]" class="far fa-file text-success"></i> -->
+              <!-- Waiting -->
+              <!-- <i *ngIf="task.status === statuses[2]" class="fas fa-stopwatch text-info"></i> -->
+              <!-- Deferred -->
+              <!-- <i *ngIf="task.status === statuses[3]" class="fas fa-pause-circle text-warning"></i> -->
+              <!-- Completed -->
+              <!-- <i *ngIf="task.status === statuses[4]" class="fas fa-check-circle text-success"></i> -->
+              <!-- Cancelled -->
+              <!-- <i *ngIf="task.status === statuses[5]" class="far fa-stop-circle text-danger"></i> -->
+              <!-- No Status -->
+              <!-- <i *ngIf="task.status === statuses[6]" class="fas fa-bacon text-danger"></i> -->
+              <!-- colour the text the same -->
+              <!-- <span class="ml-1" [class.text-secondary]='task.status === statuses[0]' [class.text-success]='task.status === statuses[1]' [class.text-info]='task.status === statuses[2]' [class.text-warning]='task.status === statuses[3]' [class.text-success]='task.status === statuses[4]' [class.text-danger]='task.status === statuses[5]' [class.text-danger]='task.status === statuses[6]'> -->
+              <!-- {{task.status}} -->
+              <!-- </span> -->
+              <!-- </td> -->
               <td>
                 <!-- <a routerLink="/authenticated/{{task.formType}}/{{contract.contractId}}"> -->
                 {{task.taskName}}

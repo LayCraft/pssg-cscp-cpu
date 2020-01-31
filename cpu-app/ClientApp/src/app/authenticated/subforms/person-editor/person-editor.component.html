@@ -1,93 +1,93 @@
-<div *ngIf="internalFormGroup">
-  <fieldset [formGroup]="internalFormGroup" (input)="onChanges()">
-    <h2 class="blue-header">Personal Information {{person.firstName}}</h2>
-    <div class="form-row">
-      <div class="col-md">
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input formControlName="firstName" type="text" class="form-control" id="firstName" name="firstName" [required]="formHelper.isDirtyOrTouched(firstName)" maxlength="50">
-          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(firstName)" style="display: inherit">
+<div *ngIf="person">
+  <div class="form-row">
+    <div class="col-md">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <span *ngIf="!me">
+          <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="person.firstName" #firstName="ngModel" [pattern]="wordRegex">
+          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(firstName)">
             Ok
           </div>
-          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(firstName)" style="display: inherit">
-            Try Again.
-          </div>
-        </div>
-      </div>
-      <div class="col-md">
-        <div class="form-group">
-          <label for="middleName">Middle Name (optional)</label>
-          <input formControlName="middleName" type="text" class="form-control" id="middleName" name="middleName" maxlength="50">
-          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(middleName)" style="display: inherit">
-            Ok
-          </div>
-          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(middleName)" style="display: inherit">
-            Try Again.
-          </div>
-        </div>
-      </div>
-      <div class="col-md">
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input formControlName="lastName" type="text" class="form-control" id="lastName" name="lastName" [required]="formHelper.isDirtyOrTouched(lastName)" maxlength="50">
-          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(lastName)" style="display: inherit">
-            Ok
-          </div>
-          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(lastName)" style="display: inherit">
-            Try Again.
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="col-md">
-        <div class="form-group">
-          <label for="city">Email</label>
-          <input type="text" class="form-control" id="email" name="email" formControlName="email" [required]="formHelper.isDirtyOrTouched(email)">
-          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(email)" style="display: inherit">
-            Ok
-          </div>
-          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(email)" style="display: inherit">
+          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(firstName)">
             Try Again
           </div>
-        </div>
+        </span>
+        <span *ngIf="me">
+          <input type="text" class="form-control" id="firstName" name="firstName" [value]="person.firstName" disabled>
+        </span>
       </div>
     </div>
-    <div class="form-row">
-      <div class="col-md">
-        <div class="form-group">
-          <label for="city">Phone Number</label>
-          <input type="text" class="form-control" id="phone" name="phone" formControlName="phone" [required]="formHelper.isDirtyOrTouched(phone)">
-          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phone)" style="display: inherit">
+    <div class="col-md">
+      <div class="form-group">
+        <label for="middleName">Middle Name (optional)</label>
+        <input type="text" class="form-control" id="middleName" name="middleName" [(ngModel)]="person.middleName" #middleName="ngModel">
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <span *ngIf="!me">
+          <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="person.lastName" #lastName="ngModel" [pattern]="wordRegex">
+          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(lastName)">
             Ok
           </div>
-          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(phone)" style="display: inherit">
+          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(lastName)">
             Try Again
           </div>
-        </div>
+        </span>
+        <span *ngIf="me">
+          <input type="text" class="form-control" id="firstName" name="firstName" [value]="person.firstName" disabled>
+        </span>
       </div>
-      <div class="col-md">
-        <div class="form-group">
-          <label for="fax">Fax Number (optional)</label>
-          <input type="text" class="form-control" id="fax" name="fax" formControlName="fax">
-          <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(fax)" style="display: inherit">
-            Ok
-          </div>
-          <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(fax)" style="display: inherit">
-            Try Again
-          </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" name="title" [(ngModel)]="person.title" #title="ngModel">
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md">
+      <div class="form-group">
+        <label for="emailAddress">Email</label>
+        <input type="text" class="form-control" id="emailAddress" name="emailAddress" [(ngModel)]="person.email" #emailAddress="ngModel" [pattern]="emailRegex">
+        <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)">
+          Ok
+        </div>
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(emailAddress)">
+          Try Again
         </div>
       </div>
     </div>
-    <div class="form-row">
-      <div class="col-md">
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input formControlName="title" type="text" class="form-control" id="title">
+  </div>
+  <div class="form-row">
+    <div class="col-md">
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="person.phone" #phoneNumber="ngModel" [pattern]="phoneRegex">
+        <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber)">
+          Ok
+        </div>
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(phoneNumber)">
+          Try Again
         </div>
       </div>
     </div>
-    <h2 class="blue-header">Mailing Address</h2>
-    <app-address formControlName="address"></app-address>
-  </fieldset>
+    <div class="col-md">
+      <div class="form-group">
+        <label for="faxNumber">Fax Number</label>
+        <input type="text" class="form-control" id="faxNumber" name="faxNumber" [(ngModel)]="person.fax" #faxNumber="ngModel" [pattern]="phoneRegex">
+        <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(faxNumber)">
+          Ok
+        </div>
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(faxNumber)">
+          Try Again
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-address2 [(address)]="person.address"></app-address2>
 </div>

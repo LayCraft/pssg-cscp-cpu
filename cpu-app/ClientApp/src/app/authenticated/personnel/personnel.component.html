@@ -18,7 +18,7 @@
         <div *ngFor="let person of trans.persons">
           <span *ngIf="person===currentStepperElement.object">
             <div class="page-header">
-              <h1>{{nameAssemble(person.firstName, person.middleName, person.lastName)}}</h1>
+              <h1>{{nameAssemble(person.firstName, person.middleName, person.lastName)||'Person'}}</h1>
             </div>
             <app-person-editor [(person)]="person"></app-person-editor>
             <button *ngIf="!person.me" class="btn btn-danger mt-2 mr-2" (click)="remove(person)">Deactivate</button>

@@ -6,8 +6,9 @@ import { iMinistryUser } from './ministry-user.interface';
 import { iDynamicsBlob, iDynamicsCrmTask } from './dynamics-blob';
 import { iContract } from './contract.interface';
 import { iContactInformation } from './contact-information.interface';
-import { formType } from '../constants/form-type';
+
 import { contractCode } from '../constants/contract-code';
+import { decodeTaskType } from '../constants/decode-task-type';
 
 export class Transmogrifier {
   // collections of viewmodels
@@ -42,15 +43,14 @@ export class Transmogrifier {
           status: taskCode(task.statuscode),
           // convert the numeric completion state from meaningless dynamics number to a useful boolean
           isCompleted: this.isCompleted(task.statecode),
-          taskName: formType(task._vsd_tasktypeid_value, true),
+          taskName: decodeTaskType(task._vsd_tasktypeid_value, true),
           taskTitle: task.subject,
           taskDescription: task.description,
           // make a date from the supplied date. TODO MomentJS
           deadline: task.scheduledend ? new Date(task.scheduledend) : null,
-
-          taskId: this.getCorrectTaskIdByDiscriminator(contractId, task._vsd_programid_value, task, formType(task._vsd_tasktypeid_value)),
+          taskId: this.getCorrectTaskIdByDiscriminator(contractId, task._vsd_programid_value, task, decodeTaskType(task._vsd_tasktypeid_value)),
           // what kind of form is this?
-          formType: formType(task._vsd_tasktypeid_value),
+          formType: decodeTaskType(task._vsd_tasktypeid_value),
         });
       }
     }
@@ -75,10 +75,12 @@ export class Transmogrifier {
       return contractId;//works
     }
     if (discriminator === 'sign_contract') {
+      return contractId;
+    }
+    if (discriminator === 'cover_letter') {
       // TODO: UNKNOWN AND UNTESTED
       return contractId;
     }
-
     return contractId;
   }
   private buildPrograms(b: iDynamicsBlob, contractId: string): iProgram[] {
