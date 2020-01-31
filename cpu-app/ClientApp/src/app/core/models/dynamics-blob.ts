@@ -331,23 +331,25 @@ export interface iDynamicsMonthlyStatisticsQuestionsOrganization {
   name?: string;
 }
 export interface iDynamicsMonthlyStatisticsQuestionsContract {
-  vsd_contractid?: string;
   _vsd_customer_value?: string;
+  vsd_contractid?: string;
   vsd_name?: string;
 }
 export interface iDynamicsMonthlyStatisticsQuestionsProgram {
-  _vsd_serviceproviderid_value?: string;
   _vsd_contractid_value?: string;
   _vsd_programtype_value?: string;
+  _vsd_serviceproviderid_value?: string;
   vsd_name?: string;
   vsd_programid?: string;
 }
 export interface iDynamicsMonthlyStatisticsQuestionsQuestion {
   _vsd_categoryid_value?: string;
+  _vsd_cpuprogramtype_value?: string;
   vsd_cpustatisticsmasterdataid?: string;
   vsd_name?: string;
   vsd_questionorder?: number;
   vsd_questiontype?: number;
+  vsd_tooltip?: string;
 }
 export interface iDynamicsMonthlyStatisticsQuestionsMcQuestion {
   vsd_cpustatisticsmasterdataanswerid?: string;
@@ -355,10 +357,11 @@ export interface iDynamicsMonthlyStatisticsQuestionsMcQuestion {
   _vsd_questionid_value?: string;
 }
 export interface iDynamicsMonthlyStatisticsCategory {
+  vsd_categoryorder?: number;
   vsd_monthlystatisticscategoryid?: string;
   vsd_name?: string;
 }
 export interface iDynamicsMonthlyStatisticsProgramType {
-  vsd_programtypeid?: string;
   vsd_name?: string;
+  vsd_programtypeid?: string;
 }
