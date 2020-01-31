@@ -125,22 +125,27 @@ export class SignContractComponent implements OnInit {
     for (let i = 0; i < files.length; i++) {
       // convert the file to base64 for upload
       const reader: FileReader = new FileReader();
-      reader.readAsDataURL(files.item(i));
-      reader.onload = () => {
-        const fileNumber = fileNames.indexOf(files.item(i).name);
-        if (fileNumber >= 0) {
-          // save the result over the old result
-          fileData[fileNumber] = reader.result.toString();
-          fileSizes[fileNumber] = this.toFileSize(files.item(i).size)
+      // if there is a big file  don't add it.
+      if (files.item(i).size > 10000000) {
+        this.notificationQueueService.addNotification(`The file "${files.item(i).name}" is too large. If this is an image or collection of images please add compression or lower the resolution.`, 'danger');
+      } else {
+        reader.readAsDataURL(files.item(i));
+        reader.onload = () => {
+          const fileNumber = fileNames.indexOf(files.item(i).name);
+          if (fileNumber >= 0) {
+            // save the result over the old result
+            fileData[fileNumber] = reader.result.toString();
+            fileSizes[fileNumber] = this.toFileSize(files.item(i).size)
 
-        } else {
-          // push a fresh file name and file contents
-          fileNames.push(files.item(i).name);
-          fileData.push(reader.result.toString());
-          fileSizes.push(this.toFileSize(files.item(i).size));
-        }
-      };
-      reader.onerror = error => console.log('Error: ', error);
+          } else {
+            // push a fresh file name and file contents
+            fileNames.push(files.item(i).name);
+            fileData.push(reader.result.toString());
+            fileSizes.push(this.toFileSize(files.item(i).size));
+          }
+        };
+        reader.onerror = error => console.log('Error: ', error);
+      }
     }
     this.fileData = fileData;
     this.fileSizes = fileSizes;
