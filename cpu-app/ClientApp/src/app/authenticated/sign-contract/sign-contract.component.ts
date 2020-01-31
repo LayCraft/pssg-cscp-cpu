@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FileService } from '../../core/services/file.service';
 import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { iDynamicsFilePost, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
 import { iDynamicsFile } from '../../core/models/dynamics-file.interface';
@@ -35,10 +35,9 @@ export class SignContractComponent implements OnInit {
   // base64 encoded file turned into a string
   fileData: string[] = [];
 
-  //TODO: take out all of this hard coding otherwise the village of burns lake is going to be annoyed. >:-(
-  organizationId: string = 'fd889a40-14b2-e811-8163-480fcff4f621';
-  userId: string = '9e9b5111-51c9-e911-b80f-00505683fbf4';
-  contractId: string = 'aa041c5d-4d3e-ea11-b814-00505683fbf4';
+  organizationId: string;
+  userId: string;
+  contractId: string;
 
   constructor(
     private fileService: FileService,
@@ -46,16 +45,21 @@ export class SignContractComponent implements OnInit {
     private router: Router,
     private stateService: StateService,
     private notificationQueueService: NotificationQueueService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
     this.stepperService.currentStepperElement.subscribe(s => this.currentStepperElement = s);
-    // TODO: save credentials for postback
-    // this.organizationId = this.stateService.main.getValue().organizationId;
-    // this.userId = this.stateService.main.getValue().userId;
-    // collect the contract number from the route.
+    this.route.params.subscribe(p => {
+      // collect the current user information from the state.
+      this.userId = this.stateService.main.getValue().userId;
+      this.organizationId = this.stateService.main.getValue().organizationId;
+      // collect the "contract id" which is the id included with the task.
+      this.contractId = p['taskId'];
+      //
+      this.constructDefaultstepperElements();
+    });
 
-    this.constructDefaultstepperElements();
   }
 
   save() {
@@ -109,7 +113,7 @@ export class SignContractComponent implements OnInit {
         return { filename: fileName, body: this.fileData[i] }
       })
     }
-    this.fileService.upload(this.contractId, file).subscribe((d) => console.log('Uploaded', d));
+    this.fileService.upload(file).subscribe((d) => console.log('Uploaded', d));
   }
 
   fakeBrowseClick(): void {

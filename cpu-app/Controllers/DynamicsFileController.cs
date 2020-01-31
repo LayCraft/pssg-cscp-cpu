@@ -194,10 +194,9 @@ namespace Gov.Cscp.VictimServices.Public.Controllers
 			return new Tuple<int, string, HttpResponseMessage>(100, "", null);
 		}
 		[HttpPost]
-		public async Task<IActionResult> SetBudgetProposal([FromBody] FilePost model)
+		public async Task<IActionResult> SetFiles([FromBody] FilePost model)
 		{
 			// return null because this needs to be handled as files.
-			return null;
 			string task = "vsd_SetCPUOrgContracts";
 
 			// note: the model has the both user and business BCeIDs as well as the contract number so do we need to collect params? No.

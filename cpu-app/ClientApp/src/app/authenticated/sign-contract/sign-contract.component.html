@@ -42,5 +42,8 @@
     </div>
   </div>
 </div>
-<pre>{{fileNames|json}}</pre>
-<pre>{{fileSizes|json}}</pre>
+<span *ngFor="let f of fileNames;let i=index;">
+  {{f}}- {{fileSizes[i]}}<br>
+  <small>Truncated file: {{fileData[i]|slice:0:200}}</small>
+  <hr>
+</span>

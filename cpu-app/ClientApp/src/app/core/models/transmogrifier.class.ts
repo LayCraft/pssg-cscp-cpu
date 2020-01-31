@@ -75,7 +75,6 @@ export class Transmogrifier {
       return contractId;//works
     }
     if (discriminator === 'sign_contract') {
-      // TODO: UNKNOWN AND UNTESTED
       return contractId;
     }
     if (discriminator === 'cover_letter') {
