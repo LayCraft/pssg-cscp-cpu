@@ -10,5 +10,13 @@ export interface iQuestion {
   type: string; // These match JSON types: boolean string number
   uuid: string; // this is used to unique-ify different fields so that html labels can be procedurally generated
   questionNumber?: number; // the number that appears beside the question.
+
+  categoryID?: string; // _vsd_categoryid_value field - for determining if this is a drop down box
+  multiChoiceAnswers?: iMultipleChoice[];
 }
 
+export interface iMultipleChoice {
+  label: string; // This is the text that will appear in the drop down
+  uuid: string; // This links to the corresponding value in iQuestion
+  masterDataID: string; // this is used to uniquely identify the field
+}
