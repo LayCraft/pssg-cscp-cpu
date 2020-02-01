@@ -4,7 +4,7 @@ import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/i
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
-import { iDynamicsFilePost, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
+import { iDynamicsPostFile, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
 import { iDynamicsFile } from 'src/app/core/models/dynamics-blob';
 
 interface FileBundle {
@@ -106,7 +106,7 @@ export class SignContractComponent implements OnInit {
   }
   upload() {
     // assemble the file into a collection to return to dynamics
-    const file: iDynamicsFilePost = {
+    const file: iDynamicsPostFile = {
       Businessbceid: this.organizationId,
       Userbceid: this.userId,
       DocumentCollection: this.fileNames.map((fileName: string, i: number): iDynamicsDocumentPost => {
