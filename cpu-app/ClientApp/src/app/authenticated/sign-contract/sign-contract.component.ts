@@ -5,7 +5,7 @@ import { NotificationQueueService } from '../../core/services/notification-queue
 import { Router, ActivatedRoute } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { iDynamicsFilePost, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
-import { iDynamicsFile } from '../../core/models/dynamics-file.interface';
+import { iDynamicsFile } from 'src/app/core/models/dynamics-blob';
 
 interface FileBundle {
   // list of file names (same order as file array)

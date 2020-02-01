@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { iDynamicsFile } from '../models/dynamics-file.interface';
 import { iDynamicsFilePost } from '../models/dynamics-post';
+import { iDynamicsFile } from '../models/dynamics-blob';
 
 @Injectable({
   providedIn: 'root'

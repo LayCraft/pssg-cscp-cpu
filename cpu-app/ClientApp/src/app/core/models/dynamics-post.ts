@@ -1,5 +1,3 @@
-import { iDynamicsDocument } from "./dynamics-file.interface";
-
 export interface iDynamicsPostScheduleG {
   UserBCeID: string;
   BusinessBCeID: string;
@@ -11,7 +9,6 @@ export interface iDynamicsPostOrg {
   BusinessBCeID: string;
   Organization: iDynamicsOrganizationPost;
 }
-
 export interface iDynamicsPostUsers {
   UserBCeID: string;
   BusinessBCeID: string;
@@ -23,6 +20,28 @@ export interface iDynamicsPostStatusReport {
   ReportingPeriod: number;
   AnswerCollection: iDynamicsAnswer[];
 }
+export interface iDynamicsPostFile {
+  Businessbceid: string;
+  Userbceid: string;
+  DocumentCollection?: iDynamicsDocumentPost[];
+}
+export interface iDynamicsPostScheduleF {
+  Businessbceid: string;
+  ContractCollection?: iDynamicsCrmContractPost[];
+  Organization?: iDynamicsOrganizationPost;
+  ProgramCollection?: iDynamicsCrmProgramPost[];
+  ProgramContactCollection?: iDynamicsProgramContactPost[];
+  ScheduleCollection?: iDynamicsSchedulePost[];
+  StaffCollection?: iDynamicsProgramContactPost[];
+  Userbceid: string;
+}
+export interface iDynamicsPostBudgetProposal {
+  BusinessBCeID: string;
+  UserBCeID: string;
+  ProgramExpenseCollection: iDynamicsProgramExpense[];
+  ProgramRevenueSourceCollection: iDynamicsProgramRevenueSource[];
+}
+//------------------------------------------------------------------------------
 export interface iDynamicsAnswer {
   // the text of the question
   vsd_name: string;
@@ -35,13 +54,6 @@ export interface iDynamicsAnswer {
   vsd_number?: number;
   vsd_yesnoboolean?: boolean;
   vsd_textanswer?: string;
-}
-
-export interface iDynamicsBudgetProposalPost {
-  BusinessBCeID: string;
-  UserBCeID: string;
-  ProgramExpenseCollection: iDynamicsProgramExpense[];
-  ProgramRevenueSourceCollection: iDynamicsProgramRevenueSource[];
 }
 export interface iDynamicsProgramExpense {
   vsd_EligibleExpenseItemIdfortunecookiebind?: string;
@@ -64,12 +76,10 @@ export interface iDynamicsProgramRevenueSource {
   vsd_programrevenuesourceid?: string;
 }
 export interface iDynamicsCrmContractPost {
+  _vsd_customer_value?: string;
+  statuscode?: number;
   vsd_ContactLookup1fortunecookiebind?: string;
   vsd_ContactLookup2fortunecookiebind?: string;
-  _vsd_customer_value?: string;
-  fortunecookieetag?: string;
-  fortunecookietype?: string;
-  statuscode?: number;
   vsd_contractid?: string;
   vsd_cpu_humanresourcepolicies?: string; // this is actually an array that comes in wrong
   vsd_cpu_insuranceoptions?: number;
@@ -79,28 +89,13 @@ export interface iDynamicsCrmContractPost {
   vsd_cpu_staffunionized?: boolean;
   vsd_name?: string;
 }
-export interface iDynamicsProgramContactPost {
-  contactid: string;
-  vsd_programid: string; // added when contact is listed in a program
-}
-export interface iDynamicsScheduleFPost {
-  Businessbceid: string;
-  ContractCollection?: iDynamicsCrmContractPost[];
-  Organization?: iDynamicsOrganizationPost;
-  ProgramCollection?: iDynamicsCrmProgramPost[];
-  ProgramContactCollection?: iDynamicsProgramContactPost[];
-  ScheduleCollection?: iDynamicsSchedulePost[];
-  StaffCollection?: iDynamicsProgramContactPost[];
-  Userbceid?: string;
-}
-export interface iDynamicsFilePost {
-  Businessbceid: string;
-  Userbceid: string;
-  DocumentCollection?: iDynamicsDocument[];
-}
 export interface iDynamicsDocumentPost {
   filename: string;
   body: string;
+}
+export interface iDynamicsProgramContactPost {
+  contactid: string;
+  vsd_programid: string; // added when contact is listed in a program
 }
 export interface iDynamicsOrganizationPost {
   _ownerid_value?: string;
@@ -121,7 +116,6 @@ export interface iDynamicsOrganizationPost {
   address2_stateorprovince?: string;
   emailaddress1?: string;
   fax?: string;
-  fortunecookieetag?: string;
   name?: string;
   telephone1?: string;
   vsd_BoardContactIdfortunecookiebind?: string;
@@ -129,8 +123,6 @@ export interface iDynamicsOrganizationPost {
   vsd_bceid?: string;
 }
 export interface iDynamicsScheduleGPost {
-  fortunecookieetag?: string;
-  fortunecookietype?: string;
   _vsd_serviceprovider_value?: string;
   _vsd_program_value?: string;
   _vsd_contract_value?: string;
@@ -173,8 +165,6 @@ export interface iDynamicsScheduleGPost {
   vsd_actualhoursthisquarter?: number;
 }
 export interface iDynamicsScheduleGLineItemPost {
-  fortunecookieetag?: string;
-  fortunecookietype?: string;
   _transactioncurrencyid_value?: string;
   _vsd_expenselineitem_value?: string;
   _vsd_schedulegid_value?: string;
@@ -198,8 +188,6 @@ export interface iDynamicsCrmContactPost {
   emailaddress1?: string;
   fax?: string;
   firstname?: string;
-  fortunecookieetag?: string;
-  fortunecookietype?: string;
   jobtitle?: string;
   lastname?: string;
   middlename?: string;
@@ -216,8 +204,6 @@ export interface iDynamicsCrmProgramPost {
   _vsd_cpu_regiondistrictlookup2_value?: string;
   _vsd_programtype_value?: string;
   _vsd_serviceproviderid_value?: string;
-  fortunecookieetag?: string;
-  fortunecookietype?: string;
   statecode?: number;
   statuscode?: number;
   vsd_addressline1?: string;
@@ -243,8 +229,6 @@ export interface iDynamicsCrmProgramPost {
 }
 export interface iDynamicsSchedulePost {
   _vsd_programid_value?: string;
-  fortunecookieetag?: string;
-  fortunecookietype?: string;
   vsd_days?: string;
   vsd_scheduledendtime?: string;
   vsd_scheduledstarttime?: string;
