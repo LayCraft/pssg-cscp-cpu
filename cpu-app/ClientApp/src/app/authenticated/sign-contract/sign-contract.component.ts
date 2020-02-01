@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FileService } from '../../core/services/file.service';
-import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
-import { iDynamicsFilePost, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
-import { iDynamicsFile } from '../../core/models/dynamics-file.interface';
+import { iDynamicsFile } from '../../core/models/dynamics-blob';
+import { iDynamicsPostFile, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
+import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 
 interface FileBundle {
   // list of file names (same order as file array)
@@ -106,7 +106,7 @@ export class SignContractComponent implements OnInit {
   }
   upload() {
     // assemble the file into a collection to return to dynamics
-    const file: iDynamicsFilePost = {
+    const file: iDynamicsPostFile = {
       Businessbceid: this.organizationId,
       Userbceid: this.userId,
       DocumentCollection: this.fileNames.map((fileName: string, i: number): iDynamicsDocumentPost => {

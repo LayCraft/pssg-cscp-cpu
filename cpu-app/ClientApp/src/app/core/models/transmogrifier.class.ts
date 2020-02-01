@@ -177,6 +177,8 @@ export class Transmogrifier {
         country: 'Canada'
       };
       ci.hasMailingAddress = true;
+    } else {
+      ci.hasMailingAddress = false;
     }
     if (b.Organization._vsd_executivecontactid_value)
       if (b.ExecutiveContact) ci.executiveContact = {
@@ -218,6 +220,8 @@ export class Transmogrifier {
       };
       // save that this exists
       ci.hasBoardContact = true;
+    } else {
+      ci.hasBoardContact = false;
     }
     return ci;
   }

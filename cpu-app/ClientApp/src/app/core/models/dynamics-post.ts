@@ -1,21 +1,18 @@
-import { iDynamicsScheduleG, iDynamicsScheduleGLineItem, iDynamicsOrganization, iDynamicsCrmContact, iDynamicsCrmProgram, iDynamicsRegionDistrict, iDynamicsSchedule } from "./dynamics-blob";
-import { iDynamicsDocument } from "./dynamics-file.interface";
-
 export interface iDynamicsPostScheduleG {
   UserBCeID: string;
   BusinessBCeID: string;
-  ScheduleGCollection: iDynamicsScheduleG[];
-  ScheduleGLineItemCollection: iDynamicsScheduleGLineItem[];
+  ScheduleGCollection: iDynamicsScheduleGPost[];
+  ScheduleGLineItemCollection: iDynamicsScheduleGLineItemPost[];
 }
 export interface iDynamicsPostOrg {
   UserBCeID: string;
   BusinessBCeID: string;
-  Organization: iDynamicsOrganization;
+  Organization: iDynamicsOrganizationPost;
 }
 export interface iDynamicsPostUsers {
   UserBCeID: string;
   BusinessBCeID: string;
-  StaffCollection: iDynamicsCrmContact[];
+  StaffCollection: iDynamicsCrmContactPost[];
 }
 export interface iDynamicsPostStatusReport {
   BusinessBCeID: string;
@@ -23,6 +20,28 @@ export interface iDynamicsPostStatusReport {
   ReportingPeriod: number;
   AnswerCollection: iDynamicsAnswer[];
 }
+export interface iDynamicsPostFile {
+  Businessbceid: string;
+  Userbceid: string;
+  DocumentCollection?: iDynamicsDocumentPost[];
+}
+export interface iDynamicsPostScheduleF {
+  Businessbceid: string;
+  ContractCollection?: iDynamicsCrmContractPost[];
+  Organization?: iDynamicsOrganizationPost;
+  ProgramCollection?: iDynamicsCrmProgramPost[];
+  ProgramContactCollection?: iDynamicsProgramContactPost[];
+  ScheduleCollection?: iDynamicsSchedulePost[];
+  StaffCollection?: iDynamicsProgramContactPost[];
+  Userbceid: string;
+}
+export interface iDynamicsPostBudgetProposal {
+  BusinessBCeID: string;
+  UserBCeID: string;
+  ProgramExpenseCollection: iDynamicsProgramExpense[];
+  ProgramRevenueSourceCollection: iDynamicsProgramRevenueSource[];
+}
+//------------------------------------------------------------------------------
 export interface iDynamicsAnswer {
   // the text of the question
   vsd_name: string;
@@ -35,13 +54,6 @@ export interface iDynamicsAnswer {
   vsd_number?: number;
   vsd_yesnoboolean?: boolean;
   vsd_textanswer?: string;
-}
-
-export interface iDynamicsBudgetProposalPost {
-  BusinessBCeID: string;
-  UserBCeID: string;
-  ProgramExpenseCollection: iDynamicsProgramExpense[];
-  ProgramRevenueSourceCollection: iDynamicsProgramRevenueSource[];
 }
 export interface iDynamicsProgramExpense {
   vsd_EligibleExpenseItemIdfortunecookiebind?: string;
@@ -64,12 +76,10 @@ export interface iDynamicsProgramRevenueSource {
   vsd_programrevenuesourceid?: string;
 }
 export interface iDynamicsCrmContractPost {
+  _vsd_customer_value?: string;
+  statuscode?: number;
   vsd_ContactLookup1fortunecookiebind?: string;
   vsd_ContactLookup2fortunecookiebind?: string;
-  _vsd_customer_value?: string;
-  fortunecookieetag?: string;
-  fortunecookietype?: string;
-  statuscode?: number;
   vsd_contractid?: string;
   vsd_cpu_humanresourcepolicies?: string; // this is actually an array that comes in wrong
   vsd_cpu_insuranceoptions?: number;
@@ -79,26 +89,149 @@ export interface iDynamicsCrmContractPost {
   vsd_cpu_staffunionized?: boolean;
   vsd_name?: string;
 }
+export interface iDynamicsDocumentPost {
+  filename: string;
+  body: string;
+}
 export interface iDynamicsProgramContactPost {
   contactid: string;
   vsd_programid: string; // added when contact is listed in a program
 }
-export interface iDynamicsScheduleFPost {
-  Businessbceid: string;
-  ContractCollection?: iDynamicsCrmContractPost[];
-  Organization?: iDynamicsOrganization;
-  ProgramCollection?: iDynamicsCrmProgram[];
-  ProgramContactCollection?: iDynamicsProgramContactPost[];
-  ScheduleCollection?: iDynamicsSchedule[];
-  StaffCollection?: iDynamicsProgramContactPost[];
-  Userbceid?: string;
+export interface iDynamicsOrganizationPost {
+  _ownerid_value?: string;
+  _vsd_boardcontactid_value?: string;
+  _vsd_executivecontactid_value?: string;
+  accountid?: string;
+  address1_city?: string;
+  address1_country?: string;
+  address1_line1?: string;
+  address1_line2?: string;
+  address1_postalcode?: string;
+  address1_stateorprovince?: string;
+  address2_city?: string;
+  address2_country?: string;
+  address2_line1?: string;
+  address2_line2?: string;
+  address2_postalcode?: string;
+  address2_stateorprovince?: string;
+  emailaddress1?: string;
+  fax?: string;
+  name?: string;
+  telephone1?: string;
+  vsd_BoardContactIdfortunecookiebind?: string;
+  vsd_ExecutiveContactIdfortunecookiebind?: string;
+  vsd_bceid?: string;
 }
-export interface iDynamicsFilePost {
-  Businessbceid: string;
-  Userbceid: string;
-  DocumentCollection?: iDynamicsDocument[];
+export interface iDynamicsScheduleGPost {
+  _vsd_serviceprovider_value?: string;
+  _vsd_program_value?: string;
+  _vsd_contract_value?: string;
+  _vsd_contact_value?: string;
+  _transactioncurrencyid_value?: string;
+
+  vsd_programadministrationbudgeted?: number;
+  vsd_programadministrationcurrentquarter?: number;
+  vsd_programadministrationexplanation?: string;
+  vsd_quarterlybudgetedprogramadministration?: number;
+  vsd_yeartodateprogramadministration?: number;
+  vsd_yeartodatevarianceprogramadministration?: number;
+  vsd_quarterlyvarianceprogramadministration?: number;
+
+  vsd_programdeliverybudgeted?: number;
+  vsd_programdeliverycurrentquarter?: number;
+  vsd_programdeliveryexplanations?: string;
+  vsd_quarterlybudgetedprogramdelivery?: number;
+  vsd_yeartodateprogramdelivery?: number;
+  vsd_yeartodatevarianceprogramdelivery?: number;
+  vsd_quarterlyvarianceprogramdelivery?: number;
+
+  vsd_quarterlybudgetedsalariesbenefits?: number;
+  vsd_salariesandbenefitsexplanation?: string;
+  vsd_salariesbenefitscurrentquarter?: number;
+  vsd_salaryandbenefitsbudgeted?: number;
+  vsd_yeartodatesalariesandbenefits?: number;
+  vsd_yeartodatevariancesalariesbenefits?: number;
+  vsd_quarterlyvariancesalariesbenefits?: number;
+
+  vsd_submitteddate?: string;
+
+  vsd_schedulegid?: string;
+  vsd_reportreviewed?: boolean;
+  vsd_cpu_reportingperiod?: number;
+
+  // number of hours contracted area
+  vsd_cpu_numberofhours?: number;
+  vsd_contractedservicehrsthisquarter?: number;
+  vsd_actualhoursthisquarter?: number;
 }
-export interface iDynamicsDocumentPost {
-  filename: string;
-  body: string;
+export interface iDynamicsScheduleGLineItemPost {
+  _transactioncurrencyid_value?: string;
+  _vsd_expenselineitem_value?: string;
+  _vsd_schedulegid_value?: string;
+  vsd_actualexpendituresyeartodate?: number;
+  vsd_scheduleglineitemid?: string;
+  vsd_annualbudgetedamount?: number;
+  vsd_quarterlybudgetedamount?: number;
+  vsd_actualexpensescurrentquarter?: number;
+  vsd_yeartodatevariance?: number;
+  vsd_quarterlyvariance?: number;
+}
+export interface iDynamicsCrmContactPost {
+  _parentcustomerid_value?: string;
+  address1_city?: string;
+  address1_country?: string;
+  address1_line1?: string;
+  address1_line2?: string;
+  address1_postalcode?: string;
+  address1_stateorprovince?: string;
+  contactid?: string;
+  emailaddress1?: string;
+  fax?: string;
+  firstname?: string;
+  jobtitle?: string;
+  lastname?: string;
+  middlename?: string;
+  mobilephone?: string;
+  statecode?: number;
+  vsd_bceid?: string;
+  vsd_contact_vsd_programid?: string; // added when contact is listed in a program. Which program id are they under
+  vsd_programid?: string; // added when contact is listed in a program
+}
+export interface iDynamicsCrmProgramPost {
+  _vsd_contactlookup_value?: string;
+  _vsd_contractid_value?: string;
+  _vsd_cpu_regiondistrict_value?: string;
+  _vsd_cpu_regiondistrictlookup2_value?: string;
+  _vsd_programtype_value?: string;
+  _vsd_serviceproviderid_value?: string;
+  statecode?: number;
+  statuscode?: number;
+  vsd_addressline1?: string;
+  vsd_addressline2?: string;
+  vsd_city?: string;
+  vsd_country?: string;
+  vsd_cpu_numberofhours?: number;
+  vsd_emailaddress?: string;
+  vsd_fax?: string;
+  vsd_mailingaddressline1?: string;
+  vsd_mailingaddressline2?: string;
+  vsd_mailingcity?: string;
+  vsd_mailingcountry?: string;
+  vsd_mailingpostalcodezip?: string;
+  vsd_mailingprovincestate?: string;
+  vsd_name?: string;
+  vsd_phonenumber?: string;
+  vsd_postalcodezip?: string;
+  vsd_programid?: string;
+  vsd_provincestate?: string;
+  vsd_totaloncallstandbyhours?: number;
+  vsd_totalscheduledhours?: number;
+}
+export interface iDynamicsSchedulePost {
+  _vsd_programid_value?: string;
+  vsd_days?: string;
+  vsd_scheduledendtime?: string;
+  vsd_scheduledstarttime?: string;
+  vsd_scheduleid?: string;
+  vsd_cpu_scheduletype?: number;
 }

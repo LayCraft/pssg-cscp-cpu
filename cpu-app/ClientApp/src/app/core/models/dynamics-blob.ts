@@ -1,5 +1,3 @@
-import { iDynamicsCrmContractPost } from "./dynamics-post";
-
 // This is what we expect dynamics to dump on us.
 // to make changes to how this comes in. we should make a change here, to the transmogrifier, and to the postback converter function that lives in the transmogrifier file
 // The strategy is to get the dynamics things which include a bunch of messy useless information and then construct a matching transmogrifier
@@ -29,10 +27,12 @@ export interface iDynamicsOrganization {
   address2_stateorprovince?: string;
   emailaddress1?: string;
   fax?: string;
+  fortunecookieetag?: string;
   name?: string;
   telephone1?: string;
   vsd_BoardContactIdfortunecookiebind?: string;
   vsd_ExecutiveContactIdfortunecookiebind?: string;
+  vsd_bceid?: string;
 }
 export interface iDynamicsCrmContact {
   _parentcustomerid_value?: string;
@@ -97,6 +97,7 @@ export interface iDynamicsCrmProgram {
   vsd_addressline2?: string;
   vsd_city?: string;
   vsd_country?: string;
+  vsd_cpu_numberofhours?: number;
   vsd_emailaddress?: string;
   vsd_fax?: string;
   vsd_mailingaddressline1?: string;
@@ -143,7 +144,6 @@ export interface iDynamicsBlob {
   fortunecookiecontext?: string;
 };
 
-// SCHEDULE G STUFF
 export interface iDynamicsScheduleG {
   fortunecookieetag?: string;
   fortunecookietype?: string;
@@ -364,4 +364,59 @@ export interface iDynamicsMonthlyStatisticsCategory {
 export interface iDynamicsMonthlyStatisticsProgramType {
   vsd_name?: string;
   vsd_programtypeid?: string;
+}
+export interface iDynamicsScheduleGPost {
+  fortunecookieetag?: string;
+  fortunecookietype?: string;
+  _vsd_serviceprovider_value?: string;
+  _vsd_program_value?: string;
+  _vsd_contract_value?: string;
+  _vsd_contact_value?: string;
+  _transactioncurrencyid_value?: string;
+
+  vsd_programadministrationbudgeted?: number;
+  vsd_programadministrationcurrentquarter?: number;
+  vsd_programadministrationexplanation?: string;
+  vsd_quarterlybudgetedprogramadministration?: number;
+  vsd_yeartodateprogramadministration?: number;
+  vsd_yeartodatevarianceprogramadministration?: number;
+  vsd_quarterlyvarianceprogramadministration?: number;
+
+  vsd_programdeliverybudgeted?: number;
+  vsd_programdeliverycurrentquarter?: number;
+  vsd_programdeliveryexplanations?: string;
+  vsd_quarterlybudgetedprogramdelivery?: number;
+  vsd_yeartodateprogramdelivery?: number;
+  vsd_yeartodatevarianceprogramdelivery?: number;
+  vsd_quarterlyvarianceprogramdelivery?: number;
+
+  vsd_quarterlybudgetedsalariesbenefits?: number;
+  vsd_salariesandbenefitsexplanation?: string;
+  vsd_salariesbenefitscurrentquarter?: number;
+  vsd_salaryandbenefitsbudgeted?: number;
+  vsd_yeartodatesalariesandbenefits?: number;
+  vsd_yeartodatevariancesalariesbenefits?: number;
+  vsd_quarterlyvariancesalariesbenefits?: number;
+
+  vsd_submitteddate?: string;
+
+  vsd_schedulegid?: string;
+  vsd_reportreviewed?: boolean;
+  vsd_cpu_reportingperiod?: number;
+
+  // number of hours contracted area
+  vsd_cpu_numberofhours?: number;
+  vsd_contractedservicehrsthisquarter?: number;
+  vsd_actualhoursthisquarter?: number;
+}
+export interface iDynamicsFile {
+  IsSuccess?: boolean;
+  Result?: string;
+  Businessbceid: string;
+  Userbceid: string;
+  DocumentCollection?: iDynamicsDocument[];
+}
+export interface iDynamicsDocument {
+  filename: string;
+  body: string;
 }

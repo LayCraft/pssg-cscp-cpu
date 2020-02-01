@@ -1,4 +1,4 @@
-import { iDynamicsBudgetProposalPost, iDynamicsProgramRevenueSource, iDynamicsProgramExpense } from "../dynamics-post";
+import { iDynamicsPostBudgetProposal, iDynamicsProgramRevenueSource, iDynamicsProgramExpense } from "../dynamics-post";
 import { TransmogrifierBudgetProposal } from "../transmogrifier-budget-proposal.class";
 import { iProgramBudget } from "../program-budget.interface";
 import { iExpenseItem } from "../expense-item.interface";
@@ -12,7 +12,7 @@ const expenseType = {
   program_delivery: 100000001,
   administrative: 100000002
 };
-export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetProposal): iDynamicsBudgetProposalPost {
+export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetProposal): iDynamicsPostBudgetProposal {
   // when we need the matching guid we can look it up from the text. this flips the dict's property and value. Which is fine because it is a string.
   const reverseDict = {};
   for (let property in trans.dict) {
@@ -20,7 +20,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
       reverseDict[trans.dict[property]] = property;
     }
   }
-  const p: iDynamicsBudgetProposalPost = {
+  const p: iDynamicsPostBudgetProposal = {
     BusinessBCeID: trans.organizationId,
     UserBCeID: trans.userId,
     ProgramExpenseCollection: [],
