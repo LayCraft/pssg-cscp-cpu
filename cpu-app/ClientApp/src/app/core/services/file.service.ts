@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { iDynamicsFilePost } from '../models/dynamics-post';
+import { iDynamicsPostFile } from '../models/dynamics-post';
 import { iDynamicsFile } from '../models/dynamics-blob';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class FileService {
       catchError(this.handleError)
     );
   }
-  upload(file: iDynamicsFilePost): Observable<any> {
+  upload(file: iDynamicsPostFile): Observable<any> {
     // may need to add the contract id into this postback
     return this.http.post<any>(`${this.apiUrl}`, file, { headers: this.headers }).pipe(
       retry(3),
