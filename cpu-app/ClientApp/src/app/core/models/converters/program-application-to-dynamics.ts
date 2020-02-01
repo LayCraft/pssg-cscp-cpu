@@ -3,14 +3,14 @@ import { convertHoursToDynamics } from "./hours-to-dynamics";
 import { encodeCglInsurance } from "../../constants/encode-cgl-insurance-type";
 import { encodeHrPolicies } from "../../constants/encode-hr-policies";
 import { iDynamicsSchedule } from "../dynamics-blob";
-import { iDynamicsScheduleFPost, iDynamicsProgramContactPost } from "../dynamics-post";
+import { iDynamicsPostScheduleF, iDynamicsProgramContactPost } from "../dynamics-post";
 import { iHours } from "../hours.interface";
 import { iPerson } from "../person.interface";
 import { iProgramApplication } from "../program-application.interface";
 import { encodeCcseaMemberType } from "../../constants/encode-ccsea-member-type";
 
-export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsScheduleFPost {
-  const post: iDynamicsScheduleFPost = {
+export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsPostScheduleF {
+  const post: iDynamicsPostScheduleF = {
     Businessbceid: trans.organizationId,
     Userbceid: trans.userId,
     ContractCollection: [{

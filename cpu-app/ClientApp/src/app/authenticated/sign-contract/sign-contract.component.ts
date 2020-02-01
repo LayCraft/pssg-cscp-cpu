@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FileService } from '../../core/services/file.service';
-import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
+import { iDynamicsFile } from '../../core/models/dynamics-blob';
 import { iDynamicsPostFile, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
-import { iDynamicsFile } from 'src/app/core/models/dynamics-blob';
+import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 
 interface FileBundle {
   // list of file names (same order as file array)
