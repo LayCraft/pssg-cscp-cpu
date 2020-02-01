@@ -126,7 +126,7 @@ export interface iDynamicsOrganizationPost {
   telephone1?: string;
   vsd_BoardContactIdfortunecookiebind?: string;
   vsd_ExecutiveContactIdfortunecookiebind?: string;
-  vsd_bceid: string;
+  vsd_bceid?: string;
 }
 export interface iDynamicsScheduleGPost {
   fortunecookieetag?: string;
