@@ -16,7 +16,7 @@ export interface iDynamicsPostOrg {
 export interface iDynamicsPostUsers {
   UserBCeID: string;
   BusinessBCeID: string;
-  StaffCollection: iDynamicsCrmContact[];
+  StaffCollection: iDynamicsCrmContactPost[];
 }
 export interface iDynamicsPostStatusReport {
   BusinessBCeID: string;
@@ -186,4 +186,27 @@ export interface iDynamicsScheduleGLineItemPost {
   vsd_actualexpensescurrentquarter?: number;
   vsd_yeartodatevariance?: number;
   vsd_quarterlyvariance?: number;
+}
+export interface iDynamicsCrmContactPost {
+  _parentcustomerid_value?: string;
+  address1_city?: string;
+  address1_country?: string;
+  address1_line1?: string;
+  address1_line2?: string;
+  address1_postalcode?: string;
+  address1_stateorprovince?: string;
+  contactid?: string;
+  emailaddress1?: string;
+  fax?: string;
+  firstname?: string;
+  fortunecookieetag?: string;
+  fortunecookietype?: string;
+  jobtitle?: string;
+  lastname?: string;
+  middlename?: string;
+  mobilephone?: string;
+  statecode?: number;
+  vsd_bceid?: string;
+  vsd_contact_vsd_programid?: string; // added when contact is listed in a program. Which program id are they under
+  vsd_programid?: string; // added when contact is listed in a program
 }
