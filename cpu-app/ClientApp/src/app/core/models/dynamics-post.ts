@@ -1,4 +1,3 @@
-import { iDynamicsSchedule } from "./dynamics-blob";
 import { iDynamicsDocument } from "./dynamics-file.interface";
 
 export interface iDynamicsPostScheduleG {
@@ -90,7 +89,7 @@ export interface iDynamicsScheduleFPost {
   Organization?: iDynamicsOrganizationPost;
   ProgramCollection?: iDynamicsCrmProgramPost[];
   ProgramContactCollection?: iDynamicsProgramContactPost[];
-  ScheduleCollection?: iDynamicsSchedule[];
+  ScheduleCollection?: iDynamicsSchedulePost[];
   StaffCollection?: iDynamicsProgramContactPost[];
   Userbceid?: string;
 }
@@ -241,4 +240,14 @@ export interface iDynamicsCrmProgramPost {
   vsd_provincestate?: string;
   vsd_totaloncallstandbyhours?: number;
   vsd_totalscheduledhours?: number;
+}
+export interface iDynamicsSchedulePost {
+  _vsd_programid_value?: string;
+  fortunecookieetag?: string;
+  fortunecookietype?: string;
+  vsd_days?: string;
+  vsd_scheduledendtime?: string;
+  vsd_scheduledstarttime?: string;
+  vsd_scheduleid?: string;
+  vsd_cpu_scheduletype?: number;
 }
