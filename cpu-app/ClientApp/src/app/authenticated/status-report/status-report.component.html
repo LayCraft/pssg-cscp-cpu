@@ -40,8 +40,14 @@
             <h2 class="blue-header">{{group.name}}</h2>
             <div *ngFor="let q of group.questions; let i=index" class="form-group">
               <span *ngIf="q.type==='string'">
-                <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
-                <textarea [(ngModel)]="q.string" class="form-control" [id]="q.uuid" rows="3" placeholder="Type here&hellip;"></textarea>
+                <span *ngIf="q.multiChoiceAnswers==null">
+                  <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
+                  <textarea [(ngModel)]="q.string" class="form-control" [id]="q.uuid" rows="3" placeholder="Type here&hellip;"></textarea>
+                </span>
+                <span *ngIf="q.multiChoiceAnswers!=null">
+                  <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
+                  <textarea [(ngModel)]="q.string" class="form-control" [id]="q.uuid" rows="1" placeholder="Oops here&hellip;"></textarea>
+                </span>
               </span>
               <span *ngIf="q.type==='boolean'">
                 <p class="mb-0">{{i+1}}. {{q.label}}</p>

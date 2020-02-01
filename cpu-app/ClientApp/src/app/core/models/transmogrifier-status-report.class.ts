@@ -1,5 +1,5 @@
-import { iDynamicsMonthlyStatisticsQuestions, iDynamicsMonthlyStatisticsQuestionsQuestion } from "./dynamics-blob";
-import { iQuestion } from "./status-report-question.interface"
+import { iDynamicsMonthlyStatisticsQuestions, iDynamicsMonthlyStatisticsQuestionsQuestion, iDynamicsMonthlyStatisticsQuestionsMcQuestion } from "./dynamics-blob";
+import { iQuestion, iMultipleChoice } from "./status-report-question.interface"
 import { iQuestionCollection } from "./question-collection.interface";
 import { iDynamicsPostStatusReport } from "./dynamics-post";
 // a collection of the expense item guids as K/V pairs for generating line items
@@ -44,6 +44,8 @@ export class TransmogrifierStatusReport {
               type,
               uuid: d.vsd_cpustatisticsmasterdataid, // I was generating it but may as well use the one from master data.
               questionNumber: d.vsd_questionorder,
+              categoryID: d._vsd_categoryid_value,
+              multiChoiceAnswers: this.getMultipleChoice(d.vsd_cpustatisticsmasterdataid, g.MultipleChoiceCollection),
             }
             // instantiate the correct property with the freshest null value
             q[type] = null;
@@ -53,6 +55,27 @@ export class TransmogrifierStatusReport {
       };
       // push the status report questions
       this.statusReportQuestions.push(q);
+    }
+  }
+
+  private getMultipleChoice(id: string, questionCollection: iDynamicsMonthlyStatisticsQuestionsMcQuestion[]): iMultipleChoice[] {
+    // Get multiple choice options for this question - returns only ones related to this question
+    let tempQuestionCollection: iMultipleChoice[] = [];
+    for (let mcQuestion of questionCollection) {
+      const mc: iMultipleChoice = {
+        label: mcQuestion.vsd_name,
+        masterDataID: mcQuestion.vsd_cpustatisticsmasterdataanswerid,
+        uuid: mcQuestion._vsd_questionid_value,
+      }
+      if (mc.uuid == id) {
+        tempQuestionCollection.push(mc);
+      }
+    }
+    if (tempQuestionCollection.length > 0) {
+      return tempQuestionCollection;
+    }
+    else {
+      return; 
     }
   }
 
