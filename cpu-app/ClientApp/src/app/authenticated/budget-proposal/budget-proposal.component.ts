@@ -9,7 +9,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { nameAssemble } from '../../core/constants/name-assemble';
 import { convertBudgetProposalToDynamics } from '../../core/models/converters/budget-proposal-to-dynamics';
 import { iProgramBudget } from '../../core/models/program-budget.interface';
-import { iDynamicsBudgetProposalPost } from '../../core/models/dynamics-post';
+import { iDynamicsPostBudgetProposal } from '../../core/models/dynamics-post';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -23,7 +23,7 @@ export class BudgetProposalComponent implements OnInit {
 
   trans: TransmogrifierBudgetProposal;
   data: iDynamicsBudgetProposal;
-  out: iDynamicsBudgetProposalPost;
+  out: iDynamicsPostBudgetProposal;
   saving: boolean = false;
 
   personDict: object = {};
