@@ -1,4 +1,4 @@
-import { iDynamicsCrmContact, iDynamicsCrmProgram, iDynamicsSchedule } from "./dynamics-blob";
+import { iDynamicsSchedule } from "./dynamics-blob";
 import { iDynamicsDocument } from "./dynamics-file.interface";
 
 export interface iDynamicsPostScheduleG {
@@ -88,7 +88,7 @@ export interface iDynamicsScheduleFPost {
   Businessbceid: string;
   ContractCollection?: iDynamicsCrmContractPost[];
   Organization?: iDynamicsOrganizationPost;
-  ProgramCollection?: iDynamicsCrmProgram[];
+  ProgramCollection?: iDynamicsCrmProgramPost[];
   ProgramContactCollection?: iDynamicsProgramContactPost[];
   ScheduleCollection?: iDynamicsSchedule[];
   StaffCollection?: iDynamicsProgramContactPost[];
@@ -209,4 +209,36 @@ export interface iDynamicsCrmContactPost {
   vsd_bceid?: string;
   vsd_contact_vsd_programid?: string; // added when contact is listed in a program. Which program id are they under
   vsd_programid?: string; // added when contact is listed in a program
+}
+export interface iDynamicsCrmProgramPost {
+  _vsd_contactlookup_value?: string;
+  _vsd_contractid_value?: string;
+  _vsd_cpu_regiondistrict_value?: string;
+  _vsd_cpu_regiondistrictlookup2_value?: string;
+  _vsd_programtype_value?: string;
+  _vsd_serviceproviderid_value?: string;
+  fortunecookieetag?: string;
+  fortunecookietype?: string;
+  statecode?: number;
+  statuscode?: number;
+  vsd_addressline1?: string;
+  vsd_addressline2?: string;
+  vsd_city?: string;
+  vsd_country?: string;
+  vsd_cpu_numberofhours?: number;
+  vsd_emailaddress?: string;
+  vsd_fax?: string;
+  vsd_mailingaddressline1?: string;
+  vsd_mailingaddressline2?: string;
+  vsd_mailingcity?: string;
+  vsd_mailingcountry?: string;
+  vsd_mailingpostalcodezip?: string;
+  vsd_mailingprovincestate?: string;
+  vsd_name?: string;
+  vsd_phonenumber?: string;
+  vsd_postalcodezip?: string;
+  vsd_programid?: string;
+  vsd_provincestate?: string;
+  vsd_totaloncallstandbyhours?: number;
+  vsd_totalscheduledhours?: number;
 }
