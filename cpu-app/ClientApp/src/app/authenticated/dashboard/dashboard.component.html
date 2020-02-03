@@ -28,11 +28,11 @@
       </div>
     </div>
   </div>
-  <div *ngIf="upcomingContracts.length" class="row">
+  <div class="row">
     <div class="col">
       <div class="card mb-4">
         <div class="card-header">Upcoming Contracts</div>
-        <div class="card-body">
+        <div *ngIf="upcomingContracts.length" class="card-body">
           <span *ngFor="let contract of upcomingContracts">
             <div class="row mb-1">
               <div class="col">
@@ -41,14 +41,21 @@
             </div>
           </span>
         </div>
+        <div *ngIf="upcomingContracts.length==0" class="card-body">
+          <div class="row mb-1">
+            <div class="col">
+              No upcoming contracts at this time.
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div *ngIf="currentContracts.length" class="row">
+  <div class="row">
     <div class="col">
       <div class="card mb-4">
         <div class="card-header">Current Contracts</div>
-        <div class="card-body">
+        <div *ngIf="currentContracts.length" class="card-body">
           <span *ngFor="let contract of currentContracts">
             <div class="row mb-1">
               <div class="col">
@@ -57,14 +64,21 @@
             </div>
           </span>
         </div>
+        <div *ngIf="currentContracts.length==0" class="card-body">
+          <div class="row mb-1">
+            <div class="col">
+              No current contracts at this time.
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div *ngIf="pastContracts.length" class="row">
+  <div class="row">
     <div class="col">
       <div class="card mb-4">
         <div class="card-header">Past Contracts</div>
-        <div class="card-body">
+        <div *ngIf="pastContracts.length" class="card-body">
           <span *ngFor="let contract of pastContracts">
             <div class="row mb-1">
               <div class="col">
@@ -72,6 +86,13 @@
               </div>
             </div>
           </span>
+        </div>
+        <div *ngIf="pastContracts.length==0" class="card-body">
+          <div class="row mb-1">
+            <div class="col">
+              No past contracts at this time.
+            </div>
+          </div>
         </div>
       </div>
     </div>
