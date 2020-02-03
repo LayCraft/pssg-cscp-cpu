@@ -99,24 +99,27 @@ export class TransmogrifierProgramApplication {
         province: b.Organization.address1_stateorprovince || null
       }
     }
-    if (b.BoardContact) c.boardContact = {
-      email: b.BoardContact.emailaddress1 || null,
-      fax: b.BoardContact.fax || null,
-      firstName: b.BoardContact.firstname || null,
-      lastName: b.BoardContact.lastname || null,
-      middleName: b.BoardContact.middlename || null,
-      personId: b.BoardContact.contactid || null,
-      phone: b.BoardContact.mobilephone || null,
-      title: b.BoardContact.jobtitle || null,
-      address: {
-        city: b.BoardContact.address1_city || null,
-        country: b.BoardContact.address1_country || 'Canada',
-        line1: b.BoardContact.address1_line1 || null,
-        line2: b.BoardContact.address1_line2 || null,
-        postalCode: b.BoardContact.address1_postalcode || null,
-        province: b.BoardContact.address1_stateorprovince || null
-      },
-    };
+    if (b.BoardContact) {
+      c.boardContact = {
+        email: b.BoardContact.emailaddress1 || null,
+        fax: b.BoardContact.fax || null,
+        firstName: b.BoardContact.firstname || null,
+        lastName: b.BoardContact.lastname || null,
+        middleName: b.BoardContact.middlename || null,
+        personId: b.BoardContact.contactid || null,
+        phone: b.BoardContact.mobilephone || null,
+        title: b.BoardContact.jobtitle || null,
+        address: {
+          city: b.BoardContact.address1_city || null,
+          country: b.BoardContact.address1_country || 'Canada',
+          line1: b.BoardContact.address1_line1 || null,
+          line2: b.BoardContact.address1_line2 || null,
+          postalCode: b.BoardContact.address1_postalcode || null,
+          province: b.BoardContact.address1_stateorprovince || null
+        }
+      };
+      c.hasBoardContact = true;
+    }
     if (b.ExecutiveContact) c.executiveContact = {
       email: b.ExecutiveContact.emailaddress1 || null,
       fax: b.ExecutiveContact.fax || null,
