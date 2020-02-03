@@ -102,7 +102,8 @@ export class TransmogrifierProgramApplication {
       hasMailingAddress: !!(b.Organization.address2_city || b.Organization.address2_line1 || b.Organization.address2_line2 || b.Organization.address2_stateorprovince || b.Organization.address2_postalcode)
 
     }
-    if (b.BoardContact) {
+    // when the board contact and the executive contact are the same person then we simply don't fill in executive contact information and set the flag to false
+    if (b.BoardContact && (b.Organization._vsd_boardcontactid_value !== b.Organization._vsd_executivecontactid_value)) {
       c.boardContact = {
         email: b.BoardContact.emailaddress1 || null,
         fax: b.BoardContact.fax || null,
@@ -121,8 +122,10 @@ export class TransmogrifierProgramApplication {
           province: b.BoardContact.address1_stateorprovince || null
         }
       };
-      c.hasBoardContact = true;
     }
+    // the board contact's existence determines whether or not this flag is true or false.
+    c.hasBoardContact = !!c.boardContact;
+
     if (b.ExecutiveContact) c.executiveContact = {
       email: b.ExecutiveContact.emailaddress1 || null,
       fax: b.ExecutiveContact.fax || null,

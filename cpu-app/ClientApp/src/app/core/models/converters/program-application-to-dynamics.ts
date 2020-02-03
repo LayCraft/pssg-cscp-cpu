@@ -15,7 +15,8 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     Userbceid: trans.userId,
     ContractCollection: [{
       vsd_ContactLookup1fortunecookiebind: trans.contactInformation.executiveContact.personId,
-      vsd_ContactLookup2fortunecookiebind: trans.contactInformation.boardContact.personId,
+      // if the user has requested not to have a board contact we duplicate the id of the executive contact
+      vsd_ContactLookup2fortunecookiebind: trans.contactInformation.hasBoardContact ? trans.contactInformation.boardContact.personId : trans.contactInformation.executiveContact.personId,
       vsd_contractid: trans.contractId,
       vsd_cpu_humanresourcepolicies: encodeHrPolicies(trans.administrativeInformation),
       vsd_cpu_insuranceoptions: encodeCglInsurance(trans.cglInsurance),
@@ -46,6 +47,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       address2_stateorprovince: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.province : '',
     },
   };
+  // if there is no board contact we should remove the board con
 
   const programContactCollection: iDynamicsProgramContactPost[] = [];
   trans.programApplications.forEach((pa: iProgramApplication) => {
