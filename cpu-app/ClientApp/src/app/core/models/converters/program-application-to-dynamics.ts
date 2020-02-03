@@ -11,11 +11,11 @@ import { encodeCcseaMemberType } from "../../constants/encode-ccsea-member-type"
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsPostScheduleF {
   const post: iDynamicsPostScheduleF = {
-    Businessbceid: trans.organizationId,
-    Userbceid: trans.userId,
+    BusinessBCeID: trans.organizationId,
+    UserBCeID: trans.userId,
     ContractCollection: [{
       vsd_ContactLookup1fortunecookiebind: trans.contactInformation.executiveContact.personId,
-      // if the user has requested not to have a board contact we duplicate the id of the executive contact
+      // if the user has requested not to have a board contact we simply duplicate the link to the the executive contact
       vsd_ContactLookup2fortunecookiebind: trans.contactInformation.hasBoardContact ? trans.contactInformation.boardContact.personId : trans.contactInformation.executiveContact.personId,
       vsd_contractid: trans.contractId,
       vsd_cpu_humanresourcepolicies: encodeHrPolicies(trans.administrativeInformation),
@@ -47,7 +47,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       address2_stateorprovince: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.province : '',
     },
   };
-  // if there is no board contact we should remove the board con
+  // if there is no board contact we should remove the board contact before submitting.
 
   const programContactCollection: iDynamicsProgramContactPost[] = [];
   trans.programApplications.forEach((pa: iProgramApplication) => {
