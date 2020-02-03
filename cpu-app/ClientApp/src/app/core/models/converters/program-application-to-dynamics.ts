@@ -25,23 +25,25 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_cpu_memberofcssea: encodeCcseaMemberType(trans.administrativeInformation.ccseaMemberType)
     }],
     Organization: {
+      accountid: trans.accountId,
       address1_city: trans.contactInformation.mainAddress.city,
       address1_country: trans.contactInformation.mainAddress.country,
       address1_line1: trans.contactInformation.mainAddress.line1,
       address1_line2: trans.contactInformation.mainAddress.line2,
       address1_postalcode: trans.contactInformation.mainAddress.postalCode,
       address1_stateorprovince: trans.contactInformation.mainAddress.province,
-      address2_city: trans.contactInformation.mailingAddress.city,
-      address2_country: trans.contactInformation.mailingAddress.country,
-      address2_line1: trans.contactInformation.mailingAddress.line1,
-      address2_line2: trans.contactInformation.mailingAddress.line2,
-      address2_postalcode: trans.contactInformation.mailingAddress.postalCode,
-      address2_stateorprovince: trans.contactInformation.mailingAddress.province,
       emailaddress1: trans.contactInformation.emailAddress,
       fax: trans.contactInformation.faxNumber,
       name: trans.organizationName,
       telephone1: trans.contactInformation.phoneNumber,
-      accountid: trans.accountId,
+      // if the mailing address is false we set all mailing address info to blank to copy over the existing non-null values in Dynamics.
+      // there is no procedure to request "remove mailing address from organization"
+      address2_city: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.city : '',
+      address2_country: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.country : '',
+      address2_line1: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.line1 : '',
+      address2_line2: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.line2 : '',
+      address2_postalcode: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.postalCode : '',
+      address2_stateorprovince: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.province : '',
     },
   };
 
