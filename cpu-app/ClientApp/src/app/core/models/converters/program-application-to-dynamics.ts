@@ -11,11 +11,12 @@ import { encodeCcseaMemberType } from "../../constants/encode-ccsea-member-type"
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsPostScheduleF {
   const post: iDynamicsPostScheduleF = {
-    Businessbceid: trans.organizationId,
-    Userbceid: trans.userId,
+    BusinessBCeID: trans.organizationId,
+    UserBCeID: trans.userId,
     ContractCollection: [{
       vsd_ContactLookup1fortunecookiebind: trans.contactInformation.executiveContact.personId,
-      vsd_ContactLookup2fortunecookiebind: trans.contactInformation.boardContact.personId,
+      // if the user has requested not to have a board contact we simply duplicate the link to the the executive contact
+      vsd_ContactLookup2fortunecookiebind: trans.contactInformation.hasBoardContact ? trans.contactInformation.boardContact.personId : trans.contactInformation.executiveContact.personId,
       vsd_contractid: trans.contractId,
       vsd_cpu_humanresourcepolicies: encodeHrPolicies(trans.administrativeInformation),
       vsd_cpu_insuranceoptions: encodeCglInsurance(trans.cglInsurance),
@@ -25,25 +26,28 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_cpu_memberofcssea: encodeCcseaMemberType(trans.administrativeInformation.ccseaMemberType)
     }],
     Organization: {
+      accountid: trans.accountId,
       address1_city: trans.contactInformation.mainAddress.city,
       address1_country: trans.contactInformation.mainAddress.country,
       address1_line1: trans.contactInformation.mainAddress.line1,
       address1_line2: trans.contactInformation.mainAddress.line2,
       address1_postalcode: trans.contactInformation.mainAddress.postalCode,
       address1_stateorprovince: trans.contactInformation.mainAddress.province,
-      address2_city: trans.contactInformation.mailingAddress.city,
-      address2_country: trans.contactInformation.mailingAddress.country,
-      address2_line1: trans.contactInformation.mailingAddress.line1,
-      address2_line2: trans.contactInformation.mailingAddress.line2,
-      address2_postalcode: trans.contactInformation.mailingAddress.postalCode,
-      address2_stateorprovince: trans.contactInformation.mailingAddress.province,
       emailaddress1: trans.contactInformation.emailAddress,
       fax: trans.contactInformation.faxNumber,
       name: trans.organizationName,
       telephone1: trans.contactInformation.phoneNumber,
-      accountid: trans.accountId,
+      // if the mailing address is false we set all mailing address info to blank to copy over the existing non-null values in Dynamics.
+      // there is no procedure to request "remove mailing address from organization"
+      address2_city: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.city : '',
+      address2_country: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.country : '',
+      address2_line1: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.line1 : '',
+      address2_line2: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.line2 : '',
+      address2_postalcode: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.postalCode : '',
+      address2_stateorprovince: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.province : '',
     },
   };
+  // if there is no board contact we should remove the board contact before submitting.
 
   const programContactCollection: iDynamicsProgramContactPost[] = [];
   trans.programApplications.forEach((pa: iProgramApplication) => {

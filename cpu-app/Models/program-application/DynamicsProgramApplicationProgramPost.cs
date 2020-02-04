@@ -7,10 +7,7 @@ namespace Gov.Cscp.VictimServices.Public.Models
 {
 	public class DynamicsProgramApplicationProgramPost
 	{
-		public string fortunecookietype
-		{
-			get { return "#Microsoft.Dynamics.CRM.vsd_program"; }
-		}
+		public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.vsd_program"; } }
 		public string vsd_addressline1 { get; set; }
 		public string vsd_addressline2 { get; set; }
 		public string vsd_city { get; set; }
@@ -27,5 +24,21 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string vsd_postalcodezip { get; set; }
 		public string vsd_programid { get; set; }
 		public string vsd_provincestate { get; set; }
+		private string _vsd_ContactLookupfortunecookiebind;
+		public string vsd_ContactLookupfortunecookiebind
+		{
+			get
+			{
+				if (_vsd_ContactLookupfortunecookiebind != null)
+				{
+					return "/contacts(" + _vsd_ContactLookupfortunecookiebind + ")";
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set { _vsd_ContactLookupfortunecookiebind = value; }
+		}
 	}
 }

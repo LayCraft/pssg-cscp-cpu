@@ -26,14 +26,14 @@ export interface iDynamicsPostFile {
   DocumentCollection?: iDynamicsDocumentPost[];
 }
 export interface iDynamicsPostScheduleF {
-  Businessbceid: string;
+  BusinessBCeID: string;
   ContractCollection?: iDynamicsCrmContractPost[];
   Organization?: iDynamicsOrganizationPost;
   ProgramCollection?: iDynamicsCrmProgramPost[];
   ProgramContactCollection?: iDynamicsProgramContactPost[];
   ScheduleCollection?: iDynamicsSchedulePost[];
   StaffCollection?: iDynamicsProgramContactPost[];
-  Userbceid: string;
+  UserBCeID: string;
 }
 export interface iDynamicsPostBudgetProposal {
   BusinessBCeID: string;

@@ -82,6 +82,14 @@ export class TransmogrifierProgramApplication {
       emailAddress: b.Organization.emailaddress1 || null,
       faxNumber: b.Organization.fax || null,
       phoneNumber: b.Organization.telephone1 || null,
+      mainAddress: {
+        city: b.Organization.address1_city || null,
+        country: b.Organization.address1_country || 'Canada',
+        line1: b.Organization.address1_line1 || null,
+        line2: b.Organization.address1_line2 || null,
+        postalCode: b.Organization.address1_postalcode || null,
+        province: b.Organization.address1_stateorprovince || null
+      },
       mailingAddress: {
         city: b.Organization.address2_city || null,
         country: b.Organization.address2_country || 'Canada',
@@ -90,33 +98,34 @@ export class TransmogrifierProgramApplication {
         postalCode: b.Organization.address2_postalcode || null,
         province: b.Organization.address2_stateorprovince || null
       },
-      mainAddress: {
-        city: b.Organization.address1_city || null,
-        country: b.Organization.address1_country || 'Canada',
-        line1: b.Organization.address1_line1 || null,
-        line2: b.Organization.address1_line2 || null,
-        postalCode: b.Organization.address1_postalcode || null,
-        province: b.Organization.address1_stateorprovince || null
-      }
+      // if any of the properties besides the country is not null then they have a mailing address (API limitation)
+      hasMailingAddress: !!(b.Organization.address2_city || b.Organization.address2_line1 || b.Organization.address2_line2 || b.Organization.address2_stateorprovince || b.Organization.address2_postalcode)
+
     }
-    if (b.BoardContact) c.boardContact = {
-      email: b.BoardContact.emailaddress1 || null,
-      fax: b.BoardContact.fax || null,
-      firstName: b.BoardContact.firstname || null,
-      lastName: b.BoardContact.lastname || null,
-      middleName: b.BoardContact.middlename || null,
-      personId: b.BoardContact.contactid || null,
-      phone: b.BoardContact.mobilephone || null,
-      title: b.BoardContact.jobtitle || null,
-      address: {
-        city: b.BoardContact.address1_city || null,
-        country: b.BoardContact.address1_country || 'Canada',
-        line1: b.BoardContact.address1_line1 || null,
-        line2: b.BoardContact.address1_line2 || null,
-        postalCode: b.BoardContact.address1_postalcode || null,
-        province: b.BoardContact.address1_stateorprovince || null
-      },
-    };
+    // when the board contact and the executive contact are the same person then we simply don't fill in executive contact information and set the flag to false
+    if (b.BoardContact && (b.Organization._vsd_boardcontactid_value !== b.Organization._vsd_executivecontactid_value)) {
+      c.boardContact = {
+        email: b.BoardContact.emailaddress1 || null,
+        fax: b.BoardContact.fax || null,
+        firstName: b.BoardContact.firstname || null,
+        lastName: b.BoardContact.lastname || null,
+        middleName: b.BoardContact.middlename || null,
+        personId: b.BoardContact.contactid || null,
+        phone: b.BoardContact.mobilephone || null,
+        title: b.BoardContact.jobtitle || null,
+        address: {
+          city: b.BoardContact.address1_city || null,
+          country: b.BoardContact.address1_country || 'Canada',
+          line1: b.BoardContact.address1_line1 || null,
+          line2: b.BoardContact.address1_line2 || null,
+          postalCode: b.BoardContact.address1_postalcode || null,
+          province: b.BoardContact.address1_stateorprovince || null
+        }
+      };
+    }
+    // the board contact's existence determines whether or not this flag is true or false.
+    c.hasBoardContact = !!c.boardContact;
+
     if (b.ExecutiveContact) c.executiveContact = {
       email: b.ExecutiveContact.emailaddress1 || null,
       fax: b.ExecutiveContact.fax || null,

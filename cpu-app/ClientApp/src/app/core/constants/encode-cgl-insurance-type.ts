@@ -7,5 +7,5 @@ export function encodeCglInsurance(description: string): number {
       reverseDict[cglInsuranceDict[property]] = property;
     }
   }
-  return reverseDict[description] || null;
+  return parseInt(reverseDict[description]) || null;
 }
