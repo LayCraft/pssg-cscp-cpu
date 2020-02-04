@@ -18,6 +18,7 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string address1_stateorprovince { get; set; }
 		public string address2_city { get; set; }
 		public string address2_composite { get; set; }
+		public string address2_country { get; set; }
 		public string address2_line1 { get; set; }
 		public string address2_line2 { get; set; }
 		public string address2_postalcode { get; set; }
