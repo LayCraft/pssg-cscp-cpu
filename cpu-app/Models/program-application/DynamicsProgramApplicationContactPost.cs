@@ -9,6 +9,6 @@ namespace Gov.Cscp.VictimServices.Public.Models
 	{
 		public string contactid { get; set; }
 		public string vsd_programid { get; set; }
-		public string fortunecookietype { get { return "#Microsoft.Dynamics.CRM.vsd_contact_vsd_program"; } }
+		public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.vsd_contact_vsd_program"; } }
 	}
 }

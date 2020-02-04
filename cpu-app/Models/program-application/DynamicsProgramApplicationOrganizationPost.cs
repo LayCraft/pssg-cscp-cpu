@@ -7,11 +7,7 @@ namespace Gov.Cscp.VictimServices.Public.Models
 {
 	public class DynamicsProgramApplicationOrganizationPost
 	{
-		private string _vsd_BoardContactIdfortunecookiebind;
-		private string _vsd_ExecutiveContactIdfortunecookiebind;
 		public string _ownerid_value { get; set; }
-		public string _vsd_boardcontactid_value { get; set; }
-		public string _vsd_executivecontactid_value { get; set; }
 		public string accountid { get; set; }
 		public string address1_city { get; set; }
 		public string address1_composite { get; set; }
@@ -31,6 +27,7 @@ namespace Gov.Cscp.VictimServices.Public.Models
 		public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.account"; } }
 		public string name { get; set; }
 		public string telephone1 { get; set; }
+		private string _vsd_ExecutiveContactIdfortunecookiebind;
 
 		public string vsd_ExecutiveContactIdfortunecookiebind
 		{
@@ -47,6 +44,7 @@ namespace Gov.Cscp.VictimServices.Public.Models
 			}
 			set { _vsd_ExecutiveContactIdfortunecookiebind = value; }
 		}
+		private string _vsd_BoardContactIdfortunecookiebind;
 		public string vsd_BoardContactIdfortunecookiebind
 		{
 			get

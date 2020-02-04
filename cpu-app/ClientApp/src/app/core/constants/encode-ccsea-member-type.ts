@@ -7,5 +7,5 @@ export function encodeCcseaMemberType(description: string): number {
       reverseDict[ccseaMemberTypeDict[property]] = property;
     }
   }
-  return reverseDict[description] || null;
+  return parseInt(reverseDict[description]) || null;
 }
