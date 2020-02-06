@@ -1,5 +1,6 @@
 //using Gov.Cscp.VictimServices.Interfaces;
 //using Gov.Cscp.VictimServices.Public.Authentication;
+using Gov.Cscp.Public.Authentication;
 using Gov.Cscp.VictimServices.Public.Authorization;
 //using Gov.Cscp.VictimServices.Public.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -109,6 +110,13 @@ namespace Gov.Cscp.VictimServices.Public
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            // setup siteminder authentication
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
+                options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
+            }).AddSiteminderAuth();
 
             // allow for large files to be uploaded
             services.Configure<FormOptions>(options =>

@@ -77,7 +77,6 @@
   
 
   <ItemGroup>
-    <Compile Remove="Authentication\SiteminderAuthenticationHandler.cs" />
     <Compile Remove="Authentication\UserSettings.cs" />
     <Compile Remove="Controllers\AccountController.cs" />
     <Compile Remove="Controllers\ContactController.cs" />
@@ -120,10 +119,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ODataClient.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Authentication\" />
   </ItemGroup>
 
   <ItemGroup>
