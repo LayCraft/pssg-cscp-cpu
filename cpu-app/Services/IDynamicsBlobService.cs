@@ -1,0 +1,12 @@
+using Gov.Cscp.Victims.Public.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
+
+namespace Gov.Cscp.Victims.Public.Services
+{
+	public interface IDynamicsBlobService
+	{
+		Task<DynamicsResult> GetBlobAsync();
+	}
+}
