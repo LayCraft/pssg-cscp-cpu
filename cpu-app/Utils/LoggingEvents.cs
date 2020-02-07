@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Gov.Cscp.VictimServices.Public.Utils
+namespace Gov.Cscp.Victims.Public.Utils
 {
     public static class LoggingEvents
     {

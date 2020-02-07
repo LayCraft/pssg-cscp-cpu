@@ -1,4 +1,4 @@
-﻿namespace Gov.Cscp.VictimServices.Public.ViewModels
+﻿namespace Gov.Cscp.Victims.Public.ViewModels
 {
     public class Address
     {

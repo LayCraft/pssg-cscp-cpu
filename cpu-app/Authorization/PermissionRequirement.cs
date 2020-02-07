@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 
-namespace Gov.Cscp.VictimServices.Public.Authorization
+namespace Gov.Cscp.Victims.Public.Authorization
 {
     /// <summary>
     /// Permission Requirements

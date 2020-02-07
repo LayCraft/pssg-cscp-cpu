@@ -1,4 +1,4 @@
-using Gov.Cscp.VictimServices.Public.Models;
+using Gov.Cscp.Victims.Public.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System;
 
-namespace Gov.Cscp.VictimServices.Public.Controllers
+namespace Gov.Cscp.Victims.Public.Controllers
 {
 	[Route("api/[controller]")]
 	[Authorize]

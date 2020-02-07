@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Gov.Cscp.VictimServices.Public.Controllers
+namespace Gov.Cscp.Victims.Public.Controllers
 {
     [Route("404")]
     public class NotFoundController : Controller

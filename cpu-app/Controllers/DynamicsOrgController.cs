@@ -1,4 +1,4 @@
-using Gov.Cscp.VictimServices.Public.ViewModels;
+using Gov.Cscp.Victims.Public.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System;
 
-namespace Gov.Cscp.VictimServices.Public.Controllers
+namespace Gov.Cscp.Victims.Public.Controllers
 {
 
 	[Route("api/[controller]")]
