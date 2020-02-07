@@ -22,19 +22,19 @@ namespace Gov.Cscp.Victims.Public.Controllers
 	{
 		private readonly IConfiguration _configuration;
 		private readonly IHttpContextAccessor _httpContextAccessor;
-		private readonly IDynamicsBlobService _dynamicsBlobService;
+		private readonly IDynamicsResultService _dynamicsResultService;
 
-		public DynamicsBlobController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDynamicsBlobService dynamicsBlobService)
+		public DynamicsBlobController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDynamicsResultService dynamicsResultService)
 		{
 			this._httpContextAccessor = httpContextAccessor;
 			this._configuration = configuration;
-			this._dynamicsBlobService = dynamicsBlobService;
+			this._dynamicsResultService = dynamicsResultService;
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> GetActionResult()
 		{
-			DynamicsResult result = await _dynamicsBlobService.GetBlobAsync();
+			DynamicsResult result = await _dynamicsResultService.GetResultAsync();
 			// this is a dummy endpoint
 			return StatusCode(200, result.result.ToString());
 		}

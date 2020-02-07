@@ -39,7 +39,7 @@ namespace Gov.Cscp.Victims.Public
 		{
 			// add singleton to allow Controllers to query the Request object
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-			services.AddSingleton<IDynamicsBlobService, DynamicsBlobService>();
+			services.AddSingleton<IDynamicsResultService, DynamicsResultService>();
 
 			// determine if we wire up Dynamics.
 			if (!string.IsNullOrEmpty(Configuration["DYNAMICS_ODATA_URI"]))

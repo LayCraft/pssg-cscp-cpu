@@ -5,8 +5,8 @@ using System;
 
 namespace Gov.Cscp.Victims.Public.Services
 {
-	public interface IDynamicsBlobService
+	public interface IDynamicsResultService
 	{
-		Task<DynamicsResult> GetBlobAsync();
+		Task<DynamicsResult> GetResultAsync();
 	}
 }

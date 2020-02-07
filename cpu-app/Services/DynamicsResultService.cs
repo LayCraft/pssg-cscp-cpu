@@ -9,11 +9,11 @@ using Newtonsoft.Json.Linq;
 
 namespace Gov.Cscp.Victims.Public.Services
 {
-	public class DynamicsBlobService : IDynamicsBlobService
+	public class DynamicsResultService : IDynamicsResultService
 	{
 		// this collects a "blob" which is the main collection from Dynamics API
 		// Passing a result json is a cheat way of not casting the result to models
-		public Task<DynamicsResult> GetBlobAsync()
+		public Task<DynamicsResult> GetResultAsync()
 		{
 			// make a new fake response for testing the service layer
 			DynamicsResult blob = new DynamicsResult();
