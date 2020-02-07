@@ -30,6 +30,12 @@ namespace Gov.Cscp.Victims.Public.Controllers
 			this._configuration = configuration;
 		}
 
+		[HttpGet]
+		public async Task<IActionResult> GetActionResult()
+		{
+			// this is a dummy endpoint
+			return StatusCode(200, "You got it bruh");
+		}
 		[HttpGet("{businessBceid}/{userBceid}")]
 		public async Task<IActionResult> GetBlob(string userBceid, string businessBceid)
 		{
