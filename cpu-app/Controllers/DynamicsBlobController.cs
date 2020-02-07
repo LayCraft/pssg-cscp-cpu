@@ -13,7 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System;
-
+using Gov.Cscp.Victims.Public.Services;
 namespace Gov.Cscp.Victims.Public.Controllers
 {
 	[Route("api/[controller]")]
@@ -21,20 +21,22 @@ namespace Gov.Cscp.Victims.Public.Controllers
 	public class DynamicsBlobController : Controller
 	{
 		private readonly IConfiguration _configuration;
-
 		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly IDynamicsBlobService _dynamicsBlobService;
 
-		public DynamicsBlobController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+		public DynamicsBlobController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDynamicsBlobService dynamicsBlobService)
 		{
 			this._httpContextAccessor = httpContextAccessor;
 			this._configuration = configuration;
+			this._dynamicsBlobService = dynamicsBlobService;
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> GetActionResult()
 		{
+			DynamicsResult result = await _dynamicsBlobService.GetBlobAsync();
 			// this is a dummy endpoint
-			return StatusCode(200, "You got it bruh");
+			return StatusCode(200, result.result.ToString());
 		}
 		[HttpGet("{businessBceid}/{userBceid}")]
 		public async Task<IActionResult> GetBlob(string userBceid, string businessBceid)

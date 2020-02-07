@@ -31,7 +31,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
 		}
 
 		[HttpGet("{businessBceid}/{userBceid}/{contractId}")]
-		public async Task<IActionResult> SetBudgetProposal(string businessBceid, string userBceid, string contractId)
+		public async Task<IActionResult> GetBudgetProposal(string businessBceid, string userBceid, string contractId)
 		{
 			try
 			{
@@ -328,12 +328,6 @@ namespace Gov.Cscp.Victims.Public.Controllers
 			}
 		}
 
-		[HttpPost("foo")]
-		public IActionResult TestBudgetCasting([FromBody] BudgetProposalPost model)
-		{
-			Console.Out.WriteLine(model);
-			return StatusCode(200);
-		}
 		internal class DynamicsResponse
 		{
 			public string fortunecookiecontext { get; set; }

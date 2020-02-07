@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Gov.Cscp.Victims.Public.Models;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace Gov.Cscp.Victims.Public.Services
@@ -15,8 +16,9 @@ namespace Gov.Cscp.Victims.Public.Services
 		public Task<DynamicsResult> GetBlobAsync()
 		{
 			// make a new fake response for testing the service layer
-			var blob = new DynamicsResult();
-			blob.result = JsonDocument.Parse("{\"foo\":\"bar\"}");
+			DynamicsResult blob = new DynamicsResult();
+			blob.result = JObject.Parse("{\"foo\":\"baz\"}");
+
 			return Task.FromResult(blob);
 		}
 	}
