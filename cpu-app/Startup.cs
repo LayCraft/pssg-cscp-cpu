@@ -27,18 +27,18 @@ namespace Gov.Cscp.Victims.Public
 {
 	public class Startup
 	{
+		public IConfiguration Configuration { get; }
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
 		}
-
-		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			// add singleton to allow Controllers to query the Request object
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			services.AddSingleton<IDynamicsResultService, DynamicsResultService>();
 			services.AddSingleton<IDynamicsResultService, DynamicsResultService>();
 
 			// determine if we wire up Dynamics.

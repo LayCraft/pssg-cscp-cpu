@@ -65,7 +65,6 @@ namespace Gov.Cscp.Victims.Public.Controllers
 			var Configuration = builder.Build();
 
 			string dynamicsOdataUri = Configuration["DYNAMICS_ODATA_URI"]; // Dynamics ODATA endpoint
-			string dynamicsJobName = endPointName;// Configuration["DYNAMICS_JOB_NAME"]; // Dynamics Job Name
 
 			if (string.IsNullOrEmpty(dynamicsOdataUri))
 			{
@@ -103,6 +102,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
 				string token = authenticationResult.CreateAuthorizationHeader().Substring("Bearer ".Length);
 				serviceClientCredentials = new TokenCredentials(token);
 			}
+
 			if (!string.IsNullOrEmpty(adfsOauth2Uri) &&
 									!string.IsNullOrEmpty(applicationGroupResource) &&
 									!string.IsNullOrEmpty(applicationGroupClientId) &&
@@ -167,7 +167,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
 					//client.DefaultRequestHeaders.Add("content-type", "application/json");
 					//client.DefaultRequestHeaders.Add("Content-Type", "application/json; charset=utf-8");
 
-					string url = dynamicsOdataUri + dynamicsJobName;
+					string url = dynamicsOdataUri + endPointName;
 
 					HttpRequestMessage _httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
 					_httpRequest.Content = new StringContent(model, Encoding.UTF8, "application/json");
