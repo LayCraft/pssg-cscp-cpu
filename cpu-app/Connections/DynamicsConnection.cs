@@ -15,6 +15,7 @@ namespace Gov.Cscp.Victims.Public.Services
 	public class DynamicsConnection
 	{
 		private PersistentConnection _dynamicsConnection;
+
 		DynamicsConnection(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
 		{
 			this._dynamicsConnection = new PersistentConnection(configuration, httpContextAccessor);
@@ -30,6 +31,7 @@ namespace Gov.Cscp.Victims.Public.Services
 		private class PersistentConnection
 		{
 			private IConfiguration _configuration;
+			private IHttpContextAccessor _httpContextAccessor;
 			private HttpClient _client;
 			public PersistentConnection(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
 			{
