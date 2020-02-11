@@ -53,12 +53,5 @@ namespace Gov.Cscp.Victims.Public.Controllers
 			}
 			finally { }
 		}
-
-		internal class DynamicsResponse
-		{
-			public string fortunecookiecontext { get; set; }
-			public bool IsSuccess { get; set; }
-			public string Result { get; set; }
-		}
 	}
 }
