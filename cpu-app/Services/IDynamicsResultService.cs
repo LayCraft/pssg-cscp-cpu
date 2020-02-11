@@ -7,6 +7,6 @@ namespace Gov.Cscp.Victims.Public.Services
 {
 	public interface IDynamicsResultService
 	{
-		Task<DynamicsResult> GetResultAsync();
+		Task<DynamicsResult> GetResultAsync(string endpointUrl, string requestJson);
 	}
 }

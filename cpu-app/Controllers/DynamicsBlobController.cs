@@ -34,7 +34,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetActionResult()
 		{
-			DynamicsResult result = await _dynamicsResultService.GetResultAsync();
+			DynamicsResult result = await _dynamicsResultService.GetResultAsync("vsd_GetCPUOrgContracts", "{\"UserBCeID\":\"fd889a40-14b2-e811-8163-480fcff4f621\",\"BusinessBCeID\":\"9e9b5111-51c9-e911-b80f-00505683fbf4\"}");
 			// this is a dummy endpoint
 			return StatusCode(200, result.result.ToString());
 		}
