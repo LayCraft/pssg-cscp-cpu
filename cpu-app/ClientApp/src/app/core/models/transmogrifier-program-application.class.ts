@@ -37,6 +37,12 @@ export class TransmogrifierProgramApplication {
     this.contactInformation = this.buildContactInformation(g);
     this.programApplications = this.buildProgramApplications(g);
     this.signature = this.buildSignature(g);
+
+    console.log("transmogrifier program application:");
+    console.log("contact info");
+    console.log(this.contactInformation);
+    console.log("admin info:");
+    console.log(this.administrativeInformation);
   }
   private buildSignature(b: iDynamicsScheduleFResponse): iSignature {
     // @TODO: Get signature and load it

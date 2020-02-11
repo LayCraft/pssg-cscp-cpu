@@ -81,7 +81,7 @@ export interface iDynamicsCrmContractPost {
   vsd_ContactLookup1fortunecookiebind?: string;
   vsd_ContactLookup2fortunecookiebind?: string;
   vsd_contractid?: string;
-  vsd_cpu_humanresourcepolicies?: string; // this is actually an array that comes in wrong
+  vsd_cpu_humanresourcepolices?: string; // this is actually an array that comes in as a comma seperated string
   vsd_cpu_insuranceoptions?: number;
   vsd_cpu_memberofcssea?: number;
   vsd_cpu_programstaffsubcontracted?: boolean;
