@@ -34,9 +34,6 @@ namespace Gov.Cscp.Victims.Public.Services
 			// TODO: should check for a connection before diving into this request stuff.
 			// add the dynamics url
 			endpointUrl = _configuration["DYNAMICS_ODATA_URI"] + endpointUrl;
-			Console.Out.WriteLine("NUBA");
-			Console.Out.WriteLine(endpointUrl);
-
 
 			HttpRequestMessage _httpRequest = new HttpRequestMessage(HttpMethod.Post, endpointUrl);
 			_httpRequest.Content = new StringContent(requestJson, System.Text.Encoding.UTF8, "application/json");
