@@ -10,7 +10,6 @@ namespace Gov.Cscp.Victims.Public.Models
 
 		public string BusinessBCeID { get; set; }
 		public string UserBCeID { get; set; }
-
 		public DynamicsDocumentPost[] DocumentCollection { get; set; }
 	}
 }
