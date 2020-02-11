@@ -26,19 +26,30 @@ namespace Gov.Cscp.Victims.Public.Services
 			this.MakeConnection();
 		}
 
-		// this collects a "blob" which is the main collection from Dynamics API
-		// Passing a result json is a cheat way of not casting the result to models
 		public async Task<DynamicsResult> GetResultAsync(string endpointUrl, string requestJson)
 		{
-			DynamicsResult blob = await GetDynamicsResultAsync(endpointUrl, requestJson);
+			DynamicsResult blob = await DynamicsResultAsync(endpointUrl, requestJson);
 			return blob;
 		}
 
-		private async Task<DynamicsResult> GetDynamicsResultAsync(string endpointUrl, string requestJson)
+		public async Task<DynamicsResult> SetDataAsync(string endpointUrl, string modelJson)
+		{
+			// collection object
+			DynamicsResult blob = await DynamicsResultAsync(endpointUrl, modelJson);
+			return blob;
+		}
+
+		private async Task<DynamicsResult> DynamicsResultAsync(string endpointUrl, string requestJson)
 		{
 			// TODO: should check for a connection before diving into this request stuff.
 			// add the dynamics url
 			endpointUrl = _configuration["DYNAMICS_ODATA_URI"] + endpointUrl;
+			// replace all the fortune cookies with @odata.
+			requestJson = requestJson.Replace("fortunecookie", "@odata.");
+
+			Console.Out.WriteLine("DYNAMICS SET OR GET");
+			Console.Out.WriteLine(endpointUrl);
+			Console.Out.WriteLine(requestJson);
 
 			HttpRequestMessage _httpRequest = new HttpRequestMessage(HttpMethod.Post, endpointUrl);
 			_httpRequest.Content = new StringContent(requestJson, System.Text.Encoding.UTF8, "application/json");
@@ -58,6 +69,7 @@ namespace Gov.Cscp.Victims.Public.Services
 			// send the result back
 			return result;
 		}
+
 		private void MakeConnection()
 		{
 			// Collect all configuration into a configuration object
@@ -197,5 +209,7 @@ namespace Gov.Cscp.Victims.Public.Services
 				throw new Exception("No configured connection to Dynamics.");
 			}
 		}
+
 	}
+
 }
