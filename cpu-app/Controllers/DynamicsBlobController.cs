@@ -1,18 +1,7 @@
 using Gov.Cscp.Victims.Public.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Rest;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using System;
 using Gov.Cscp.Victims.Public.Services;
 namespace Gov.Cscp.Victims.Public.Controllers
 {

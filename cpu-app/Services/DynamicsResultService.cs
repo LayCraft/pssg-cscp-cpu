@@ -1,21 +1,8 @@
 using Gov.Cscp.Victims.Public.Models;
-using Gov.Cscp.Victims.Public.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Rest;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Collections;
 using System.Net.Http;
 using System.Net;
-using System.Security.Claims;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Text;
 using System.Threading.Tasks;
 using System;
 
@@ -56,11 +43,13 @@ namespace Gov.Cscp.Victims.Public.Services
 
 			var _responseString = _httpResponse2.ToString();
 			var _responseContent2 = await _httpResponse2.Content.ReadAsStringAsync();
+			// replace the odata with a string that can be converted to a dotnet core property
 
+			// save the result to a returnable object
 			var result = new DynamicsResult();
 			result.statusCode = _statusCode;
 			result.responseMessage = _httpResponse2;
-			result.result = Newtonsoft.Json.Linq.JObject.Parse(_responseContent2);
+			result.result = Newtonsoft.Json.Linq.JObject.Parse(_responseContent2.Replace("@odata.", "fortunecookie"));
 			// send the result back
 			return result;
 		}
