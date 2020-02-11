@@ -1,4 +1,5 @@
 using Gov.Cscp.Victims.Public.Models;
+using Gov.Cscp.Victims.Public.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,12 +23,13 @@ namespace Gov.Cscp.Victims.Public.Controllers
 	{
 		private readonly IConfiguration _configuration;
 
-		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly IHttpContextAccessor _httpContextAccessor; private readonly IDynamicsResultService _dynamicsResultService;
 
-		public DynamicsProgramApplicationController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+		public DynamicsProgramApplicationController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDynamicsResultService dynamicsResultService)
 		{
 			this._httpContextAccessor = httpContextAccessor;
 			this._configuration = configuration;
+			this._dynamicsResultService = dynamicsResultService;
 		}
 
 		[HttpGet("{businessBceid}/{userBceid}/{scheduleFId}")]
@@ -36,15 +38,14 @@ namespace Gov.Cscp.Victims.Public.Controllers
 			try
 			{
 				// convert the parameters to a json string
-				string applicationJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
+				string requestJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
 				// set the endpoint action
-				string endpointAction = "vsd_contracts(" + scheduleFId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUScheduleF";
-				// get the response
-				Tuple<int, string, HttpResponseMessage> tuple = await GetDynamicsHttpClient(_configuration, applicationJson, endpointAction);
+				string endpointUrl = "vsd_contracts(" + scheduleFId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUScheduleF";
 
-				string response = tuple.Item2.Replace("@odata.", "fortunecookie");
-				// convert response string into a json object and return it
-				return new JsonResult(JsonConvert.DeserializeObject(response));
+				// get the response
+				DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+
+				return StatusCode(200, result.result.ToString());
 			}
 			finally { }
 		}
