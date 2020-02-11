@@ -13,6 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System;
+using Gov.Cscp.Victims.Public.Services;
 
 namespace Gov.Cscp.Victims.Public.Controllers
 {
@@ -21,13 +22,14 @@ namespace Gov.Cscp.Victims.Public.Controllers
 	public class DynamicsStatusReportController : Controller
 	{
 		private readonly IConfiguration _configuration;
-
+		private readonly IDynamicsResultService _dynamicsResultService;
 		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public DynamicsStatusReportController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+		public DynamicsStatusReportController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDynamicsResultService dynamicsResultService)
 		{
 			this._httpContextAccessor = httpContextAccessor;
 			this._configuration = configuration;
+			this._dynamicsResultService = dynamicsResultService;
 		}
 
 		[HttpGet("{businessBceid}/{userBceid}/{programId}")]
@@ -36,15 +38,14 @@ namespace Gov.Cscp.Victims.Public.Controllers
 			try
 			{
 				// convert the parameters to a json string
-				string applicationJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
+				string requestJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
 				// set the endpoint action
-				string endpointAction = "vsd_programs(" + programId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUMonthlyStatisticsQuestions";
-				// get the response
-				Tuple<int, string, HttpResponseMessage> tuple = await GetDynamicsHttpClient(_configuration, applicationJson, endpointAction);
+				string endpointUrl = "vsd_programs(" + programId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUMonthlyStatisticsQuestions";
 
-				string response = tuple.Item2.Replace("@odata.", "fortunecookie");
-				// convert response string into a json object and return it
-				return new JsonResult(JsonConvert.DeserializeObject(response));
+				// get the response
+				DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+
+				return StatusCode(200, result.result.ToString());
 			}
 			finally { }
 		}
