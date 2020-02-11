@@ -1,6 +1,9 @@
 using Gov.Cscp.Victims.Public.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Rest;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
 using System.Threading.Tasks;
@@ -18,6 +21,8 @@ namespace Gov.Cscp.Victims.Public.Services
 		{
 			this._configuration = configuration;
 			this._httpContextAccessor = httpContextAccessor;
+
+			//TODO: is there a point where the bearer token times out?
 			this.MakeConnection();
 		}
 
@@ -100,13 +105,13 @@ namespace Gov.Cscp.Victims.Public.Services
 			if (!string.IsNullOrEmpty(appRegistrationClientId) && !string.IsNullOrEmpty(appRegistrationClientKey) && !string.IsNullOrEmpty(serverAppIdUri) && !string.IsNullOrEmpty(aadTenantId))
 			// Cloud authentication - using an App Registration's client ID, client key.  Add the App Registration to Dynamics as an Application User.
 			{
-				var authenticationContext = new Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext("https://login.windows.net/" + aadTenantId);
-				var clientCredential = new Microsoft.IdentityModel.Clients.ActiveDirectory.ClientCredential(appRegistrationClientId, appRegistrationClientKey);
+				var authenticationContext = new AuthenticationContext("https://login.windows.net/" + aadTenantId);
+				var clientCredential = new ClientCredential(appRegistrationClientId, appRegistrationClientKey);
 				var task = authenticationContext.AcquireTokenAsync(serverAppIdUri, clientCredential);
 				task.Wait();
 				var authenticationResult = task.Result;
 				string token = authenticationResult.CreateAuthorizationHeader().Substring("Bearer ".Length);
-				serviceClientCredentials = new Microsoft.Rest.TokenCredentials(token);
+				serviceClientCredentials = new TokenCredentials(token);
 			}
 
 			// if all credentials are in place for ADFS authorization
@@ -128,16 +133,16 @@ namespace Gov.Cscp.Victims.Public.Services
 				stsClient.DefaultRequestHeaders.Add("Accept", "application/json");
 
 				// Construct the body of the request
-				var pairs = new System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string, string>>
+				var pairs = new List<KeyValuePair<string, string>>
 					{
-						new System.Collections.Generic.KeyValuePair<string, string>("resource", applicationGroupResource),
-						new System.Collections.Generic.KeyValuePair<string, string>("client_id", applicationGroupClientId),
-						new System.Collections.Generic.KeyValuePair<string, string>("client_secret", applicationGroupSecret),
-						new System.Collections.Generic.KeyValuePair<string, string>("username", serviceAccountUsername),
-						new System.Collections.Generic.KeyValuePair<string, string>("password", serviceAccountPassword),
-						new System.Collections.Generic.KeyValuePair<string, string>("scope", "openid"),
-						new System.Collections.Generic.KeyValuePair<string, string>("response_mode", "form_post"),
-						new System.Collections.Generic.KeyValuePair<string, string>("grant_type", "password")
+						new KeyValuePair<string, string>("resource", applicationGroupResource),
+						new KeyValuePair<string, string>("client_id", applicationGroupClientId),
+						new KeyValuePair<string, string>("client_secret", applicationGroupSecret),
+						new KeyValuePair<string, string>("username", serviceAccountUsername),
+						new KeyValuePair<string, string>("password", serviceAccountPassword),
+						new KeyValuePair<string, string>("scope", "openid"),
+						new KeyValuePair<string, string>("response_mode", "form_post"),
+						new KeyValuePair<string, string>("grant_type", "password")
 						};
 
 				// This will also set the content type of the request
@@ -148,11 +153,11 @@ namespace Gov.Cscp.Victims.Public.Services
 				var _responseContent = _httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 				try
 				{
-					System.Collections.Generic.Dictionary<string, string> result =
-					Newtonsoft.Json.JsonConvert.DeserializeObject<System.Collections.Generic.Dictionary<string, string>>(_responseContent);
+					Dictionary<string, string> result =
+					Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(_responseContent);
 					string token = result["access_token"];
 					// set the bearer token.
-					serviceClientCredentials = new Microsoft.Rest.TokenCredentials(token);
+					serviceClientCredentials = new TokenCredentials(token);
 
 					// Code to perform Scheduled task
 					_client = new HttpClient();
@@ -181,7 +186,7 @@ namespace Gov.Cscp.Victims.Public.Services
 			else if (!string.IsNullOrEmpty(ssgUsername) && !string.IsNullOrEmpty(ssgPassword))
 			// Authenticate using BASIC authentication - used for API Gateways with BASIC authentication.  Add the NTLM user associated with the API gateway entry to Dynamics as a user.            
 			{
-				serviceClientCredentials = new Microsoft.Rest.BasicAuthenticationCredentials()
+				serviceClientCredentials = new BasicAuthenticationCredentials()
 				{
 					UserName = ssgUsername,
 					Password = ssgPassword
