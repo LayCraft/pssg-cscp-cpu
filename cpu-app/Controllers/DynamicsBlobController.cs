@@ -1,8 +1,8 @@
 using Gov.Cscp.Victims.Public.Models;
+using Gov.Cscp.Victims.Public.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Gov.Cscp.Victims.Public.Services;
 namespace Gov.Cscp.Victims.Public.Controllers
 {
 	[Route("api/[controller]")]
@@ -25,6 +25,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
 				string requestJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
 				// set the endpoint action
 				string endpointUrl = "vsd_GetCPUOrgContracts";
+
 				// get the response
 				DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
 
