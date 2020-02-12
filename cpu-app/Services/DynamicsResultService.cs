@@ -23,38 +23,61 @@ namespace Gov.Cscp.Victims.Public.Services
 		{
 			this._configuration = configuration;
 			this._httpContextAccessor = httpContextAccessor;
-
-			//TODO: is there a point where the bearer token times out?
-			this.MakeConnection();
+			// we set the datetime to now because when the first request happens it will trigger the authentication to Dynamics
+			this._accessTokenExpiration = DateTime.Now;
 		}
 
 		public async Task<DynamicsResult> GetResultAsync(string endpointUrl, string requestJson)
 		{
+			//Note:  get and set are the same for now but we want to make it easy to know which action to take
 			DynamicsResult blob = await DynamicsResultAsync(endpointUrl, requestJson);
 			return blob;
 		}
 
 		public async Task<DynamicsResult> SetDataAsync(string endpointUrl, string modelJson)
 		{
-			// collection object
+			//Note:  get and set are the same for now but we want to make it easy to know which action to take
 			DynamicsResult blob = await DynamicsResultAsync(endpointUrl, modelJson);
 			return blob;
 		}
 
 		private async Task<DynamicsResult> DynamicsResultAsync(string endpointUrl, string requestJson)
 		{
-			// TODO: should check for a connection before diving into this request stuff.
-			// is the token expiration in the past? still valid? No? reestablish a connection 
-			// yes? Do the request.
+			// if the value of the return is greater than zero we know that "now" is after expiry of the token
+			// if there is no access token expiration then this must be a new instance that has never handled a connection yet.
+			if (DateTime.Now.CompareTo(_accessTokenExpiration) > 0)
+			{
+				// we need a new connection and perform action
+				bool success = await MakeConnection();
+				if (success)
+				{
+					// perform action is the thing that we want to wait on the return for
+					return await PerformAction(_client, endpointUrl, requestJson);
+				}
+				else
+				{
+					// there is a problem. Return it to the user.
+					DynamicsResult r = new DynamicsResult();
+					r.statusCode = System.Net.HttpStatusCode.BadGateway;
+					r.result = JObject.Parse("{\"message\":\"A connection to Dynamics couldn't be established for some reason.\"}");
+					return r;
+				}
+			}
+			else
+			{
+				// perform action is the thing that we want to wait on the return for
+				// this else will happen when there is a fresh connection
+				return await PerformAction(_client, endpointUrl, requestJson);
+			}
+		}
+		private async Task<DynamicsResult> PerformAction(HttpClient client, string endpointUrl, string requestJson)
+		{
 
+			// this is a generic action for dynamics. It could be set or get.
 			// add the dynamics url
 			endpointUrl = _configuration["DYNAMICS_ODATA_URI"] + endpointUrl;
 			// replace all the fortune cookies with @odata.
 			requestJson = requestJson.Replace("fortunecookie", "@odata.");
-
-			Console.Out.WriteLine("DYNAMICS SET OR GET");
-			Console.Out.WriteLine(endpointUrl);
-			Console.Out.WriteLine(requestJson);
 
 			HttpRequestMessage _httpRequest = new HttpRequestMessage(HttpMethod.Post, endpointUrl);
 			_httpRequest.Content = new StringContent(requestJson, System.Text.Encoding.UTF8, "application/json");
@@ -70,88 +93,80 @@ namespace Gov.Cscp.Victims.Public.Services
 			var result = new DynamicsResult();
 			result.statusCode = _statusCode;
 			result.responseMessage = _httpResponse2;
-			result.result = Newtonsoft.Json.Linq.JObject.Parse(_responseContent2.Replace("@odata.", "fortunecookie"));
+			var clean = _responseContent2.Replace("@odata.", "fortunecookie");
+			result.result = Newtonsoft.Json.Linq.JObject.Parse(clean);
 			// send the result back
 			return result;
 		}
 
-		private void MakeConnection()
+		private async Task<bool> MakeConnection()
 		{
-
-			// Collect all configuration into a configuration object
-			// Note: must also define a project guid for secrets in the .csproj add tag <UserSecretsId> containing a guid
-			var builder = new ConfigurationBuilder()
-				.AddEnvironmentVariables()
-				.AddUserSecrets<Program>();
-			_configuration = builder.Build();
-
-			// Dynamics ODATA endpoint null check
-			if (string.IsNullOrEmpty(_configuration["DYNAMICS_ODATA_URI"]))
+			try
 			{
-				throw new Exception("Configuration setting DYNAMICS_ODATA_URI is blank.");
-			}
+				// ****************COLLECT CONFIGURATION*************
+				// Cloud AAD Tenant ID
+				string aadTenantId = _configuration["DYNAMICS_AAD_TENANT_ID"];
+				// Cloud Server App ID URI
+				string serverAppIdUri = _configuration["DYNAMICS_SERVER_APP_ID_URI"];
+				// Cloud App Registration Client Key
+				string appRegistrationClientKey = _configuration["DYNAMICS_APP_REG_CLIENT_KEY"];
+				// Cloud App Registration Client Id
+				string appRegistrationClientId = _configuration["DYNAMICS_APP_REG_CLIENT_ID"];
 
-			// Cloud AAD Tenant ID
-			string aadTenantId = _configuration["DYNAMICS_AAD_TENANT_ID"];
-			// Cloud Server App ID URI
-			string serverAppIdUri = _configuration["DYNAMICS_SERVER_APP_ID_URI"];
-			// Cloud App Registration Client Key
-			string appRegistrationClientKey = _configuration["DYNAMICS_APP_REG_CLIENT_KEY"];
-			// Cloud App Registration Client Id
-			string appRegistrationClientId = _configuration["DYNAMICS_APP_REG_CLIENT_ID"];
+				// One Premise ADFS (2016)
+				// ADFS OAUTH2 URI - usually /adfs/oauth2/token on STS
+				string adfsOauth2Uri = _configuration["ADFS_OAUTH2_URI"];
+				// ADFS 2016 Application Group resource (URI)
+				string applicationGroupResource = _configuration["DYNAMICS_APP_GROUP_RESOURCE"];
+				// ADFS 2016 Application Group Client ID
+				string applicationGroupClientId = _configuration["DYNAMICS_APP_GROUP_CLIENT_ID"];
+				// ADFS 2016 Application Group Secret
+				string applicationGroupSecret = _configuration["DYNAMICS_APP_GROUP_SECRET"];
 
-			// One Premise ADFS (2016)
-			// ADFS OAUTH2 URI - usually /adfs/oauth2/token on STS
-			string adfsOauth2Uri = _configuration["ADFS_OAUTH2_URI"];
-			// ADFS 2016 Application Group resource (URI)
-			string applicationGroupResource = _configuration["DYNAMICS_APP_GROUP_RESOURCE"];
-			// ADFS 2016 Application Group Client ID
-			string applicationGroupClientId = _configuration["DYNAMICS_APP_GROUP_CLIENT_ID"];
-			// ADFS 2016 Application Group Secret
-			string applicationGroupSecret = _configuration["DYNAMICS_APP_GROUP_SECRET"];
+				// Service account username
+				string serviceAccountUsername = _configuration["DYNAMICS_USERNAME"];
+				// Service account password
+				string serviceAccountPassword = _configuration["DYNAMICS_PASSWORD"];
 
-			// Service account username
-			string serviceAccountUsername = _configuration["DYNAMICS_USERNAME"];
-			// Service account password
-			string serviceAccountPassword = _configuration["DYNAMICS_PASSWORD"];
+				// API Gateway to NTLM user.  This is used in v8 environments.  Note that the SSG Username and password are not the same as the NTLM user.
+				// BASIC authentication username
+				string ssgUsername = _configuration["SSG_USERNAME"];
+				// BASIC authentication password
+				string ssgPassword = _configuration["SSG_PASSWORD"];
 
-			// API Gateway to NTLM user.  This is used in v8 environments.  Note that the SSG Username and password are not the same as the NTLM user.
-			string ssgUsername = _configuration["SSG_USERNAME"];  // BASIC authentication username
-			string ssgPassword = _configuration["SSG_PASSWORD"];  // BASIC authentication password
+				Microsoft.Rest.ServiceClientCredentials serviceClientCredentials = null;
+				if (!string.IsNullOrEmpty(appRegistrationClientId) && !string.IsNullOrEmpty(appRegistrationClientKey) && !string.IsNullOrEmpty(serverAppIdUri) && !string.IsNullOrEmpty(aadTenantId))
+				// Cloud authentication - using an App Registration's client ID, client key.  Add the App Registration to Dynamics as an Application User.
+				{
+					var authenticationContext = new AuthenticationContext("https://login.windows.net/" + aadTenantId);
+					var clientCredential = new ClientCredential(appRegistrationClientId, appRegistrationClientKey);
+					var task = authenticationContext.AcquireTokenAsync(serverAppIdUri, clientCredential);
+					task.Wait();
+					var authenticationResult = task.Result;
+					string token = authenticationResult.CreateAuthorizationHeader().Substring("Bearer ".Length);
+					serviceClientCredentials = new TokenCredentials(token);
+				}
 
-			Microsoft.Rest.ServiceClientCredentials serviceClientCredentials = null;
-			if (!string.IsNullOrEmpty(appRegistrationClientId) && !string.IsNullOrEmpty(appRegistrationClientKey) && !string.IsNullOrEmpty(serverAppIdUri) && !string.IsNullOrEmpty(aadTenantId))
-			// Cloud authentication - using an App Registration's client ID, client key.  Add the App Registration to Dynamics as an Application User.
-			{
-				var authenticationContext = new AuthenticationContext("https://login.windows.net/" + aadTenantId);
-				var clientCredential = new ClientCredential(appRegistrationClientId, appRegistrationClientKey);
-				var task = authenticationContext.AcquireTokenAsync(serverAppIdUri, clientCredential);
-				task.Wait();
-				var authenticationResult = task.Result;
-				string token = authenticationResult.CreateAuthorizationHeader().Substring("Bearer ".Length);
-				serviceClientCredentials = new TokenCredentials(token);
-			}
+				// if all credentials are in place for ADFS authorization
+				if (!string.IsNullOrEmpty(adfsOauth2Uri) &&
+					!string.IsNullOrEmpty(applicationGroupResource) &&
+					!string.IsNullOrEmpty(applicationGroupClientId) &&
+					!string.IsNullOrEmpty(applicationGroupSecret) &&
+					!string.IsNullOrEmpty(serviceAccountUsername) &&
+					!string.IsNullOrEmpty(serviceAccountPassword))
+				{
+					// create a new HTTP client that is just used to get a token.
+					var stsClient = new HttpClient();
 
-			// if all credentials are in place for ADFS authorization
-			if (!string.IsNullOrEmpty(adfsOauth2Uri) &&
-				!string.IsNullOrEmpty(applicationGroupResource) &&
-				!string.IsNullOrEmpty(applicationGroupClientId) &&
-				!string.IsNullOrEmpty(applicationGroupSecret) &&
-				!string.IsNullOrEmpty(serviceAccountUsername) &&
-				!string.IsNullOrEmpty(serviceAccountPassword))
-			{
-				// create a new HTTP client that is just used to get a token.
-				var stsClient = new HttpClient();
+					stsClient.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
+					stsClient.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
+					stsClient.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
+					stsClient.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
+					stsClient.DefaultRequestHeaders.Add("return-client-request-id", "true");
+					stsClient.DefaultRequestHeaders.Add("Accept", "application/json");
 
-				stsClient.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
-				stsClient.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
-				stsClient.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
-				stsClient.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
-				stsClient.DefaultRequestHeaders.Add("return-client-request-id", "true");
-				stsClient.DefaultRequestHeaders.Add("Accept", "application/json");
-
-				// Construct the body of the request
-				var pairs = new List<KeyValuePair<string, string>>
+					// Construct the body of the request
+					var pairs = new List<KeyValuePair<string, string>>
 					{
 						new KeyValuePair<string, string>("resource", applicationGroupResource),
 						new KeyValuePair<string, string>("client_id", applicationGroupClientId),
@@ -163,80 +178,80 @@ namespace Gov.Cscp.Victims.Public.Services
 						new KeyValuePair<string, string>("grant_type", "password")
 						};
 
-				// This will also set the content type of the request
-				var content = new FormUrlEncodedContent(pairs);
-				// send the request to the ADFS server
-				var _httpResponse = stsClient.PostAsync(adfsOauth2Uri, content).GetAwaiter().GetResult();
-				// response should be in JSON format.
-				var _responseContent = _httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+					// This will also set the content type of the request
+					var content = new FormUrlEncodedContent(pairs);
+					// send the request to the ADFS server
+					var _httpResponse = await stsClient.PostAsync(adfsOauth2Uri, content);
+					// response should be in JSON format.
+					var _responseContent = await _httpResponse.Content.ReadAsStringAsync();
 
-				try
-				{
-					// make a JObject that we can query without worrying about casting
-					JObject ree = JObject.Parse(_httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+					try
+					{
+						// make a JObject that we can query without worrying about casting
+						JObject response = JObject.Parse(_httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+						// grab the token
+						string token = response.GetValue("access_token").ToString();
+						// grab the time offset
+						int expirationSeconds;
+						bool secondsParsed = int.TryParse(response.GetValue("expires_in").ToString(), out expirationSeconds);
 
-					// TODO: what is all of this then? Check if the above is a better way
-					Console.Out.WriteLine("Rigatoni");
-					Console.Out.WriteLine(ree);
+						if (!secondsParsed)
+						{
+							expirationSeconds = 3600;
+							throw new Exception("The expiration seconds were not parsed so a default of one hour is used.");
+						}
+						if (token == null)
+						{
+							//token problem
+							return false;
+							throw new Exception("The token couldn't be parsed.");
+						}
 
-					Dictionary<string, string> result =
-					Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(_responseContent);
-					string token = result["access_token"];
-					// collect the token for the timer
-					var tokenTimeout = result["expires_in"];
+						// set global access token expiry time to the value returned subtract 60 seconds for minute long authentication communication delays
+						this._accessTokenExpiration = DateTime.Now.AddSeconds(expirationSeconds - 60);
 
-					// TODO: we need to set a token timeout
-					Console.Out.WriteLine("Futzbar");
-					Console.Out.WriteLine(tokenTimeout.GetType() == typeof(int));
+						// set the bearer token.
+						serviceClientCredentials = new TokenCredentials(token);
 
-					//TODO: Add timeout functionality. Re-establish the connection
-					// set global timeout so we can check that the connection is fresh before we use it.
-					// make a date
-					// make an offset by subtracting five minutes from the seconds in the expires_in area
-					// add the offset to the date.
+						// Code to perform Scheduled task
+						_client = new HttpClient();
+						_client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
+						_client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
+						_client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
+						_client.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
+						_client.DefaultRequestHeaders.Add("return-client-request-id", "true");
+						_client.DefaultRequestHeaders.Add("Accept", "application/json");
 
-					// set the bearer token.
-					serviceClientCredentials = new TokenCredentials(token);
+						// Collect the client in the global client and save an expiration time in the global expiration
+						_client = new HttpClient();
+						_client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+						_client.DefaultRequestHeaders.Add("OData-MaxVersion", "4.0");
+						_client.DefaultRequestHeaders.Add("OData-Version", "4.0");
+						_client.DefaultRequestHeaders.Add("Accept", "application/json");
 
-					// Code to perform Scheduled task
-					_client = new HttpClient();
-					_client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
-					_client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
-					_client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
-					_client.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
-					_client.DefaultRequestHeaders.Add("return-client-request-id", "true");
-					_client.DefaultRequestHeaders.Add("Accept", "application/json");
-
-					_client = new HttpClient();
-					var Authorization = $"Bearer {token}";
-					_client.DefaultRequestHeaders.Add("Authorization", Authorization);
-					_client.DefaultRequestHeaders.Add("OData-MaxVersion", "4.0");
-					_client.DefaultRequestHeaders.Add("OData-Version", "4.0");
-					_client.DefaultRequestHeaders.Add("Accept", "application/json");
+						// return the client 
+						return true;
+					}
+					catch (Exception e)
+					{
+						// we couldn't make an appropriate object from what was returned to establish a connection
+						return false;
+						throw new Exception(e.Message);
+					}
 				}
-				catch (Exception e)
+				else
 				{
-					// todo: console out
-					// return new Tuple<int, string, HttpResponseMessage>(100, "", null);
-					throw new Exception(e.Message);
+					// something went wrong because we failed during the connection process
+					return false;
+					throw new Exception("No configured connection to Dynamics.");
 				}
-
 			}
-			else if (!string.IsNullOrEmpty(ssgUsername) && !string.IsNullOrEmpty(ssgPassword))
-			// Authenticate using BASIC authentication - used for API Gateways with BASIC authentication.  Add the NTLM user associated with the API gateway entry to Dynamics as a user.            
+			catch (Exception e)
 			{
-				serviceClientCredentials = new BasicAuthenticationCredentials()
-				{
-					UserName = ssgUsername,
-					Password = ssgPassword
-				};
-			}
-			else
-			{
-				throw new Exception("No configured connection to Dynamics.");
+				// generic error catchall
+				return true;
+				throw e;
 			}
 		}
-
 	}
-
 }
