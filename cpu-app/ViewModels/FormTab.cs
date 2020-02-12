@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Gov.Cscp.VictimServices.Public.ViewModels
+namespace Gov.Cscp.Victims.Public.ViewModels
 {
     public class FormTab
     {

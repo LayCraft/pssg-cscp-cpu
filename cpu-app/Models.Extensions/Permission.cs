@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Gov.Cscp.VictimServices.Public.Models
+namespace Gov.Cscp.Victims.Public.Models
 {
     /// <summary>
     /// Permission Database Model Extension

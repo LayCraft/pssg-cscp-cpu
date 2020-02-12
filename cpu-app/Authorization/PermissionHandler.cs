@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
-namespace Gov.Cscp.VictimServices.Public.Authorization
+namespace Gov.Cscp.Victims.Public.Authorization
 {
     /// <summary>
     /// Permission Handler Extension

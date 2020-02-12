@@ -1,4 +1,4 @@
-﻿namespace Gov.Cscp.VictimServices.Public.Models
+﻿namespace Gov.Cscp.Victims.Public.Models
 {
     /// <summary>
     /// User Extension (to support authorization)

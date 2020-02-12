@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Gov.Cscp.VictimServices.Public.Models
+namespace Gov.Cscp.Victims.Public.Models
 {
     /// <summary>
     /// Role Permission Database Model

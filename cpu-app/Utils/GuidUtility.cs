@@ -3,7 +3,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Gov.Cscp.VictimServices.Public.Utils
+namespace Gov.Cscp.Victims.Public.Utils
 {
 	/// <summary>
 	/// Helper methods for working with <see cref="Guid"/>.
