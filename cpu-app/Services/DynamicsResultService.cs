@@ -17,6 +17,7 @@ namespace Gov.Cscp.Victims.Public.Services
 		private IConfiguration _configuration;
 		private IHttpContextAccessor _httpContextAccessor;
 		private HttpClient _client;
+		private DateTime _accessTokenExpiration;
 
 		public DynamicsResultService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
 		{
@@ -43,6 +44,9 @@ namespace Gov.Cscp.Victims.Public.Services
 		private async Task<DynamicsResult> DynamicsResultAsync(string endpointUrl, string requestJson)
 		{
 			// TODO: should check for a connection before diving into this request stuff.
+			// is the token expiration in the past? still valid? No? reestablish a connection 
+			// yes? Do the request.
+
 			// add the dynamics url
 			endpointUrl = _configuration["DYNAMICS_ODATA_URI"] + endpointUrl;
 			// replace all the fortune cookies with @odata.
@@ -73,6 +77,7 @@ namespace Gov.Cscp.Victims.Public.Services
 
 		private void MakeConnection()
 		{
+
 			// Collect all configuration into a configuration object
 			// Note: must also define a project guid for secrets in the .csproj add tag <UserSecretsId> containing a guid
 			var builder = new ConfigurationBuilder()
@@ -183,6 +188,12 @@ namespace Gov.Cscp.Victims.Public.Services
 					// TODO: we need to set a token timeout
 					Console.Out.WriteLine("Futzbar");
 					Console.Out.WriteLine(tokenTimeout.GetType() == typeof(int));
+
+					//TODO: Add timeout functionality. Re-establish the connection
+					// set global timeout so we can check that the connection is fresh before we use it.
+					// make a date
+					// make an offset by subtracting five minutes from the seconds in the expires_in area
+					// add the offset to the date.
 
 					// set the bearer token.
 					serviceClientCredentials = new TokenCredentials(token);
