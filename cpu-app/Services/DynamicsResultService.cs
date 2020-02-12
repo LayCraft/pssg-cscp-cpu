@@ -135,19 +135,21 @@ namespace Gov.Cscp.Victims.Public.Services
 				string ssgPassword = _configuration["SSG_PASSWORD"];
 
 				Microsoft.Rest.ServiceClientCredentials serviceClientCredentials = null;
-				if (!string.IsNullOrEmpty(appRegistrationClientId) && !string.IsNullOrEmpty(appRegistrationClientKey) && !string.IsNullOrEmpty(serverAppIdUri) && !string.IsNullOrEmpty(aadTenantId))
-				// Cloud authentication - using an App Registration's client ID, client key.  Add the App Registration to Dynamics as an Application User.
-				{
-					var authenticationContext = new AuthenticationContext("https://login.windows.net/" + aadTenantId);
-					var clientCredential = new ClientCredential(appRegistrationClientId, appRegistrationClientKey);
-					var task = authenticationContext.AcquireTokenAsync(serverAppIdUri, clientCredential);
-					task.Wait();
-					var authenticationResult = task.Result;
-					string token = authenticationResult.CreateAuthorizationHeader().Substring("Bearer ".Length);
-					serviceClientCredentials = new TokenCredentials(token);
-				}
 
-				// if all credentials are in place for ADFS authorization
+				// TODO: This is dead code because we are not using this part of the authentication
+				// if (!string.IsNullOrEmpty(appRegistrationClientId) && !string.IsNullOrEmpty(appRegistrationClientKey) && !string.IsNullOrEmpty(serverAppIdUri) && !string.IsNullOrEmpty(aadTenantId))
+				// // Cloud authentication - using an App Registration's client ID, client key.  Add the App Registration to Dynamics as an Application User.
+				// {
+				// 	var authenticationContext = new AuthenticationContext("https://login.windows.net/" + aadTenantId);
+				// 	var clientCredential = new ClientCredential(appRegistrationClientId, appRegistrationClientKey);
+				// 	var task = authenticationContext.AcquireTokenAsync(serverAppIdUri, clientCredential);
+				// 	task.Wait();
+				// 	var authenticationResult = task.Result;
+				// 	string token = authenticationResult.CreateAuthorizationHeader().Substring("Bearer ".Length);
+				// 	serviceClientCredentials = new TokenCredentials(token);
+				// }
+
+				// all credentials must be in place for ADFS authorization
 				if (!string.IsNullOrEmpty(adfsOauth2Uri) &&
 					!string.IsNullOrEmpty(applicationGroupResource) &&
 					!string.IsNullOrEmpty(applicationGroupClientId) &&
@@ -213,14 +215,15 @@ namespace Gov.Cscp.Victims.Public.Services
 						// set the bearer token.
 						serviceClientCredentials = new TokenCredentials(token);
 
-						// Code to perform Scheduled task
-						_client = new HttpClient();
-						_client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
-						_client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
-						_client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
-						_client.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
-						_client.DefaultRequestHeaders.Add("return-client-request-id", "true");
-						_client.DefaultRequestHeaders.Add("Accept", "application/json");
+						// TODO: This looks like dead code. Comment out
+						// // Code to perform Scheduled task
+						// _client = new HttpClient();
+						// _client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
+						// _client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
+						// _client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
+						// _client.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
+						// _client.DefaultRequestHeaders.Add("return-client-request-id", "true");
+						// _client.DefaultRequestHeaders.Add("Accept", "application/json");
 
 						// Collect the client in the global client and save an expiration time in the global expiration
 						_client = new HttpClient();
