@@ -1,4 +1,4 @@
-﻿using Gov.Cscp.VictimServices.Public.DataInterfaces;
+﻿using Gov.Cscp.Victims.Public.DataInterfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -174,11 +174,11 @@ namespace Gov.Cscp.Public.Authentication
 //using Microsoft.AspNetCore.Http.Extensions;
 //using Microsoft.Extensions.Logging;
 //using Microsoft.Extensions.Options;
-//using Gov.Cscp.VictimServices.Public.Models;
-//using Gov.Cscp.VictimServices.Interfaces;
-//using Gov.Cscp.VictimServices.Public.Utils;
+//using Gov.Cscp.Victims.Public.Models;
+//using Gov.Cscp.Victims.Interfaces;
+//using Gov.Cscp.Victims.Public.Utils;
 
-//namespace Gov.Cscp.VictimServices.Public.Authentication
+//namespace Gov.Cscp.Victims.Public.Authentication
 //{
 //    #region SiteMinder Authentication Options
 //    /// <summary>

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Gov.Cscp.VictimServices.Public.Models;
+using Gov.Cscp.Victims.Public.Models;
 
-namespace Gov.Cscp.VictimServices.Public.Authorization
+namespace Gov.Cscp.Victims.Public.Authorization
 {
     /// <summary>
     /// MVC Options Extension
