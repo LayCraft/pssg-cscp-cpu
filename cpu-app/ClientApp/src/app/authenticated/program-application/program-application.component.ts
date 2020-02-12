@@ -50,8 +50,14 @@ export class ProgramApplicationComponent implements OnInit {
             this.router.navigate(['/authenticated/dashboard']);
           } else {
             this.data = f;
+            // console.log("program application dynamics info");
+            // console.log(f);
+
             // make the transmogrifier for this form
             this.trans = new TransmogrifierProgramApplication(f);
+            // console.log("Program application transmogrifier");
+            // console.log(this.trans);
+
             this.constructDefaultstepperElements(this.trans);
           }
         }

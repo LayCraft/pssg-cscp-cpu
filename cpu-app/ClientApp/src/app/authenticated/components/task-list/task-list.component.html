@@ -1,15 +1,15 @@
 <div *ngIf="contract.tasks.length||contract.completedTasks.length" class="card mb-2">
   <div class="card-header">
-    <h1 class="h2">Contract: {{contract.contractNumber}}</h1>
+    <h4 class="h4">Contract: {{contract.contractNumber}}</h4>
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
-        <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Current{{contract.tasks.length ? ' ('+contract.tasks.length+')':''}}</a>
+        <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Tasks Due{{contract.tasks.length ? ' ('+contract.tasks.length+')':''}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="setCurrentTab(tabs[1])" [class.active]="currentTab===tabs[1]">Completed{{contract.completedTasks.length ? ' ('+contract.completedTasks.length+')':''}}</a>
+        <a class="nav-link" (click)="setCurrentTab(tabs[1])" [class.active]="currentTab===tabs[1]">Completed Tasks{{contract.completedTasks.length ? ' ('+contract.completedTasks.length+')':''}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="setCurrentTab(tabs[2])" [class.active]="currentTab===tabs[2]">Programs</a>
+        <a class="nav-link" (click)="setCurrentTab(tabs[2])" [class.active]="currentTab===tabs[2]">Edit Program Information</a>
       </li>
     </ul>
   </div>

@@ -103,7 +103,7 @@ export class TransmogrifierProgramApplication {
 
     }
     // when the board contact and the executive contact are the same person then we simply don't fill in executive contact information and set the flag to false
-    if (b.BoardContact && (b.Organization._vsd_boardcontactid_value !== b.Organization._vsd_executivecontactid_value)) {
+    if (b.BoardContact && (b.Contract._vsd_contactlookup1_value !== b.Contract._vsd_contactlookup2_value)) {
       c.boardContact = {
         email: b.BoardContact.emailaddress1 || null,
         fax: b.BoardContact.fax || null,

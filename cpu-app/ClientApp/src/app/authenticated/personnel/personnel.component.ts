@@ -51,6 +51,11 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     // clear the stepper of existing elements
     this.stepperService.reset();
     if (m.persons) {
+      m.persons.sort(function (a, b) {
+        let name1 = nameAssemble(a.firstName, a.middleName, a.lastName);
+        let name2 = nameAssemble(b.firstName, b.middleName, b.lastName);
+        return name1 > name2 ? 1 : name1 < name2 ? -1 : 0;
+      });
       m.persons.forEach(person => {
         this.stepperService.addStepperElement(person, nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
       });
