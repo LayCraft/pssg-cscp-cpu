@@ -60,6 +60,8 @@ export class StateService {
           this.loggedIn.next(true);
         } else {
           // collect the blob into a useful object
+          console.log("Dynamics blob");
+          console.log(JSON.parse(JSON.stringify(m)));
           const mainData = new Transmogrifier(m);
           // save the useful blob of viewmodels
           this.main.next(mainData);

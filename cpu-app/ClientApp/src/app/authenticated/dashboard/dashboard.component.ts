@@ -23,6 +23,9 @@ export class DashboardComponent implements OnInit {
     // always display the current main collection
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
+
+      console.log("dashboard subscribed data");
+      console.log(this.trans);
       // split the contracts into something useful for the dashboard view
       if (m.contracts) {
         this.upcomingContracts = m.contracts.filter((c: iContract) => c.category === this.categories[0]);
