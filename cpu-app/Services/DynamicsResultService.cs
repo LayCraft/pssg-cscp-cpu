@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
@@ -163,11 +164,26 @@ namespace Gov.Cscp.Victims.Public.Services
 				var _httpResponse = stsClient.PostAsync(adfsOauth2Uri, content).GetAwaiter().GetResult();
 				// response should be in JSON format.
 				var _responseContent = _httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
 				try
 				{
+					// make a JObject that we can query without worrying about casting
+					JObject ree = JObject.Parse(_httpResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+
+					// TODO: what is all of this then? Check if the above is a better way
+					Console.Out.WriteLine("Rigatoni");
+					Console.Out.WriteLine(ree);
+
 					Dictionary<string, string> result =
 					Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(_responseContent);
 					string token = result["access_token"];
+					// collect the token for the timer
+					var tokenTimeout = result["expires_in"];
+
+					// TODO: we need to set a token timeout
+					Console.Out.WriteLine("Futzbar");
+					Console.Out.WriteLine(tokenTimeout.GetType() == typeof(int));
+
 					// set the bearer token.
 					serviceClientCredentials = new TokenCredentials(token);
 
