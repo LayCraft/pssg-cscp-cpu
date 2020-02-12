@@ -18,7 +18,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       // if the user has requested not to have a board contact we simply duplicate the link to the the executive contact
       vsd_ContactLookup2fortunecookiebind: trans.contactInformation.hasBoardContact ? trans.contactInformation.boardContact.personId : trans.contactInformation.executiveContact.personId,
       vsd_contractid: trans.contractId,
-      vsd_cpu_humanresourcepolicies: encodeHrPolicies(trans.administrativeInformation),
+      vsd_cpu_humanresourcepolices: encodeHrPolicies(trans.administrativeInformation),
       vsd_cpu_insuranceoptions: encodeCglInsurance(trans.cglInsurance),
       vsd_cpu_programstaffsubcontracted: trans.administrativeInformation.staffSubcontracted,
       vsd_cpu_specificunion: trans.administrativeInformation.staffUnion,
