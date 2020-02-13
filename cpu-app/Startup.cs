@@ -3,6 +3,8 @@
 using Gov.Cscp.Victims.Public.Authentication;
 using Gov.Cscp.Victims.Public.Authorization;
 using Gov.Cscp.Victims.Public.Services;
+using Gov.Cscp.Victims.Public.Models;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -89,9 +91,8 @@ namespace Gov.Cscp.Victims.Public
 			// setup authorization
 			services.AddAuthorization(options =>
 			{
-				// TODO:
-				// options.AddPolicy("Business-User", policy =>
-				// policy.RequireClaim(User.UserTypeClaim, "Business"));
+				options.AddPolicy("Business-User", policy =>
+				policy.RequireClaim(User.UserTypeClaim, "Business"));
 			});
 			services.RegisterPermissionHandler();
 

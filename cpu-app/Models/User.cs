@@ -184,56 +184,54 @@ namespace Gov.Cscp.Victims.Public.Models
 			if (other is null) { return false; }
 			if (ReferenceEquals(this, other)) { return true; }
 
-			// TODO: there is no true equivalent functionality built in for user comparison
-			return true;
-			// (
-			// 		ContactId == other.ContactId ||
-			// 		ContactId.Equals(other.ContactId)
-			// ) &&
-			// (
-			// 		GivenName == other.GivenName ||
-			// 		GivenName != null &&
-			// 		GivenName.Equals(other.GivenName)
-			// ) &&
-			// (
-			// 		Surname == other.Surname ||
-			// 		Surname != null &&
-			// 		Surname.Equals(other.Surname)
-			// ) &&
-			// (
-			// 		Active == other.Active ||
-			// 		Active.Equals(other.Active)
-			// ) &&
-			// (
-			// 		Initials == other.Initials ||
-			// 		Initials != null &&
-			// 		Initials.Equals(other.Initials)
-			// ) &&
-			// (
-			// 		Email == other.Email ||
-			// 		Email != null &&
-			// 		Email.Equals(other.Email)
-			// ) &&
-			// (
-			// 		SmUserId == other.SmUserId ||
-			// 		SmUserId != null &&
-			// 		SmUserId.Equals(other.SmUserId)
-			// ) &&
-			// (
-			// 		AccountId == other.AccountId ||
-			// 		AccountId != null &&
-			// 		AccountId.Equals(other.AccountId)
-			// ) &&
-			// (
-			// 		UserType == other.UserType ||
-			// 		UserType != null &&
-			// 		UserType.Equals(other.UserType)
-			// ) &&
-			// (
-			// 		UserRoles == other.UserRoles ||
-			// 		UserRoles != null &&
-			// 		UserRoles.SequenceEqual(other.UserRoles)
-			// );
+			return (
+					ContactId == other.ContactId ||
+					ContactId.Equals(other.ContactId)
+			) &&
+			(
+					GivenName == other.GivenName ||
+					GivenName != null &&
+					GivenName.Equals(other.GivenName)
+			) &&
+			(
+					Surname == other.Surname ||
+					Surname != null &&
+					Surname.Equals(other.Surname)
+			) &&
+			(
+					Active == other.Active ||
+					Active.Equals(other.Active)
+			) &&
+			(
+					Initials == other.Initials ||
+					Initials != null &&
+					Initials.Equals(other.Initials)
+			) &&
+			(
+					Email == other.Email ||
+					Email != null &&
+					Email.Equals(other.Email)
+			) &&
+			(
+					SmUserId == other.SmUserId ||
+					SmUserId != null &&
+					SmUserId.Equals(other.SmUserId)
+			) &&
+			(
+					AccountId == other.AccountId ||
+					AccountId != null &&
+					AccountId.Equals(other.AccountId)
+			) &&
+			(
+					UserType == other.UserType ||
+					UserType != null &&
+					UserType.Equals(other.UserType)
+			) &&
+			(
+					UserRoles == other.UserRoles ||
+					UserRoles != null &&
+					UserRoles.SequenceEqual(other.UserRoles)
+			);
 		}
 
 		// /// <summary>
