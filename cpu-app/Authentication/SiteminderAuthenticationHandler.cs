@@ -59,14 +59,14 @@ namespace Gov.Cscp.Victims.Public.Authentication
 			SiteMinderBusinessGuidKey = ConstSiteMinderBusinessGuidKey;
 			SiteMinderUserGuidKey = ConstSiteMinderUserGuidKey;
 			//         SiteMinderUserIdentifierKey = ConstSiteMinderUserIdentifierKey;
-			//         SiteMinderUniversalIdKey = ConstSiteMinderUniversalIdKey;
-			//         SiteMinderUserNameKey = ConstSiteMinderUserNameKey;
+			SiteMinderUniversalIdKey = ConstSiteMinderUniversalIdKey;
+			SiteMinderUserNameKey = ConstSiteMinderUserNameKey;
 			//         SiteMinderUserDisplayNameKey = ConstSiteMinderUserDisplayNameKey;
-			//         SiteMinderUserTypeKey = ConstSiteMinderUserType;
+			SiteMinderUserTypeKey = ConstSiteMinderUserType;
 			//         SiteMinderBirthDate = ConstSiteMinderUserType;
-			//         MissingSiteMinderUserIdError = ConstMissingSiteMinderUserIdError;
-			//         MissingSiteMinderUserTypeError = ConstMissingSiteMinderUserIdError;
-			//         MissingSiteMinderGuidError = ConstMissingSiteMinderGuidError;
+			MissingSiteMinderUserIdError = ConstMissingSiteMinderUserIdError;
+			MissingSiteMinderUserTypeError = ConstMissingSiteMinderUserIdError;
+			MissingSiteMinderGuidError = ConstMissingSiteMinderGuidError;
 			//         MissingDbUserIdError = ConstMissingDbUserIdError;
 			//         InactivegDbUserIdError = ConstInactivegDbUserIdError;
 			//         InvalidPermissions = ConstInvalidPermissions;
@@ -101,45 +101,45 @@ namespace Gov.Cscp.Victims.Public.Authentication
 		//     /// </summary>
 		//     public string SiteMinderUserIdentifierKey { get; set; }
 
-		//     /// <summary>
-		//     /// User Id
-		//     /// </summary>
-		//     public string SiteMinderUniversalIdKey { get; set; }
+		/// <summary>
+		/// User Id
+		/// </summary>
+		public string SiteMinderUniversalIdKey { get; set; }
 
-		//     /// <summary>
-		//     /// User Name
-		//     /// </summary>
-		//     public string SiteMinderUserNameKey { get; set; }
+		/// <summary>
+		/// User Name
+		/// </summary>
+		public string SiteMinderUserNameKey { get; set; }
 
 		//     /// <summary>
 		//     /// User's Display Name
 		//     /// </summary>
 		//     public string SiteMinderUserDisplayNameKey { get; set; }
 
-		//     ///<summary>
-		//     ///User's Type (BCeID or BC services card)
-		//     /// </summary>
-		//     public string SiteMinderUserTypeKey { get; set; }
+		///<summary>
+		///User's Type (BCeID or BC services card)
+		/// </summary>
+		public string SiteMinderUserTypeKey { get; set; }
 
 		//     /// <summary>
 		//     /// BC Service Card - Birth Date field.
 		//     /// </summary>
 		//     public string SiteMinderBirthDate { get; set; }
 
-		//     /// <summary>
-		//     /// Missing SiteMinder User Type Error
-		//     /// </summary>
-		//     public string MissingSiteMinderUserTypeError { get; set; }
+		/// <summary>
+		/// Missing SiteMinder User Type Error
+		/// </summary>
+		public string MissingSiteMinderUserTypeError { get; set; }
 
-		//     /// <summary>
-		//     /// Missing SiteMinder UserId Error
-		//     /// </summary>
-		//     public string MissingSiteMinderUserIdError { get; set; }
+		/// <summary>
+		/// Missing SiteMinder UserId Error
+		/// </summary>
+		public string MissingSiteMinderUserIdError { get; set; }
 
-		//     /// <summary>
-		//     /// Missing SiteMinder Guid Error
-		//     /// </summary>
-		//     public string MissingSiteMinderGuidError { get; set; }
+		/// <summary>
+		/// Missing SiteMinder Guid Error
+		/// </summary>
+		public string MissingSiteMinderGuidError { get; set; }
 
 		//     /// <summary>
 		//     /// Missing Database UserId Error
@@ -344,48 +344,48 @@ namespace Gov.Cscp.Victims.Public.Authentication
 					userSettings.BusinessLegalName = smgov_businesslegalname;
 				}
 
-				//             // **************************************************
-				//             // Authenticate based on SiteMinder Headers
-				//             // **************************************************
+				// **************************************************
+				// Authenticate based on SiteMinder Headers
+				// **************************************************
 				//             _logger.LogDebug("Parsing the HTTP headers for SiteMinder authentication credential");
 
-				//             // At this point userID would only be set if we are logging in through as a DEV user
+				// At this point userID would only be set if we are logging in through as a DEV user
 
-				//             if (string.IsNullOrEmpty(userId))
-				//             {
-				//                 _logger.LogDebug("Getting user data from headers");
+				if (string.IsNullOrEmpty(userId))
+				{
+					_logger.LogDebug("Getting user data from headers");
 
-				//                 userId = context.Request.Headers[options.SiteMinderUserNameKey];
-				//                 if (string.IsNullOrEmpty(userId))
-				//                 {
-				//                     userId = context.Request.Headers[options.SiteMinderUniversalIdKey];
-				//                 }
+					userId = context.Request.Headers[options.SiteMinderUserNameKey];
+					if (string.IsNullOrEmpty(userId))
+					{
+						userId = context.Request.Headers[options.SiteMinderUniversalIdKey];
+					}
 
-				//                 siteMinderGuid = context.Request.Headers[options.SiteMinderUserGuidKey];
-				//                 siteMinderBusinessGuid = context.Request.Headers[options.SiteMinderBusinessGuidKey];
-				//                 siteMinderUserType = context.Request.Headers[options.SiteMinderUserTypeKey];
+					siteMinderGuid = context.Request.Headers[options.SiteMinderUserGuidKey];
+					siteMinderBusinessGuid = context.Request.Headers[options.SiteMinderBusinessGuidKey];
+					siteMinderUserType = context.Request.Headers[options.SiteMinderUserTypeKey];
 
 
-				//                 // **************************************************
-				//                 // Validate credentials
-				//                 // **************************************************
-				//                 if (string.IsNullOrEmpty(userId))
-				//                 {
-				//                     _logger.LogDebug(options.MissingSiteMinderUserIdError);
-				//                     return AuthenticateResult.Fail(options.MissingSiteMinderGuidError);
-				//                 }
+					// **************************************************
+					// Validate credentials
+					// **************************************************
+					if (string.IsNullOrEmpty(userId))
+					{
+						_logger.LogDebug(options.MissingSiteMinderUserIdError);
+						return AuthenticateResult.Fail(options.MissingSiteMinderGuidError);
+					}
 
-				//                 if (string.IsNullOrEmpty(siteMinderGuid))
-				//                 {
-				//                     _logger.LogDebug(options.MissingSiteMinderGuidError);
-				//                     return AuthenticateResult.Fail(options.MissingSiteMinderGuidError);
-				//                 }
-				//                 if (string.IsNullOrEmpty(siteMinderUserType))
-				//                 {
-				//                     _logger.LogDebug(options.MissingSiteMinderUserTypeError);
-				//                     return AuthenticateResult.Fail(options.MissingSiteMinderUserTypeError);
-				//                 }
-				//             }
+					if (string.IsNullOrEmpty(siteMinderGuid))
+					{
+						_logger.LogDebug(options.MissingSiteMinderGuidError);
+						return AuthenticateResult.Fail(options.MissingSiteMinderGuidError);
+					}
+					if (string.IsNullOrEmpty(siteMinderUserType))
+					{
+						_logger.LogDebug(options.MissingSiteMinderUserTypeError);
+						return AuthenticateResult.Fail(options.MissingSiteMinderUserTypeError);
+					}
+				}
 				//             else // DEV user, setup a fake session and SiteMinder headers.
 				//             {
 				//                 if (isDeveloperLogin && _dynamicsClient != null)
