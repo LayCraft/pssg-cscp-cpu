@@ -1,6 +1,7 @@
 ﻿using Gov.Cscp.Victims.Public.Authentication;
 using Gov.Cscp.Victims.Public.Models;
 using Gov.Cscp.Victims.Public.Utils;
+using Gov.Cscp.Victims.Public.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -201,6 +202,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
 	public class SiteminderAuthenticationHandler : AuthenticationHandler<SiteMinderAuthOptions>
 	{
 		private readonly ILogger _logger;
+		private IDynamicsResultService _dynamicsResultService;
 
 		/// <summary>
 		/// Siteminder Authentication Constructir
@@ -213,10 +215,12 @@ namespace Gov.Cscp.Victims.Public.Authentication
 			IOptionsMonitor<SiteMinderAuthOptions> configureOptions,
 			ILoggerFactory loggerFactory,
 			UrlEncoder encoder,
-			ISystemClock clock
+			ISystemClock clock,
+			IDynamicsResultService dynamicsResultService
 			) : base(configureOptions, loggerFactory, encoder, clock)
 		{
 			_logger = loggerFactory.CreateLogger(typeof(SiteminderAuthenticationHandler));
+			_dynamicsResultService = dynamicsResultService;
 		}
 
 		/// <summary>
@@ -427,10 +431,27 @@ namespace Gov.Cscp.Victims.Public.Authentication
 				//                 }
 				//             }
 
-				//             // Previously the code would do a database lookup here.  However there is no backing database for the users table now,
-				//             // so we just do a Dynamics lookup on the siteMinderGuid.
+				// Previously the code would do a database lookup here.  However there is no backing database for the users table now,
+				// so we just do a Dynamics lookup on the siteMinderGuid.
 
 				//             _logger.LogDebug("Loading user external id = " + siteMinderGuid);
+
+				if (_dynamicsResultService != null)
+				{
+					var businessBceid = siteMinderBusinessGuid;
+					// TODO: the Dynamics service should be hooked up to fetch the existin user information here.
+					DynamicsResult massiveGainsDoYouEvenLift = await _dynamicsResultService.GetResultAsync("some endpoint url", "{\"UserBCeID\":\"" + siteMinderGuid + "\",\"BusinessBCeID\":\"" + siteMinderBusinessGuid + "\"}");
+					/*
+					From here on out what we have to do is to get the user information from Dynamics for this person
+					We determine if the person is an existing user that is valid and etc.
+					decide what to return if this is a new user. Probably redirect the user to a form in the front end to collect their information. We should know what their business is at minimum.
+					Set up the login and logout controllers to handle the things coming from siteminder.
+					If there are missing properties in the header that make this hard/impossible to look the user up we need siteminder configuration changes from WAM
+					*/
+					userSettings.AuthenticatedUser = new User(new Guid(), "Bill", "Octoroc", true, "BO", "octoroc@foo.gov", "smUserId", "accountId", "userType", null);
+				}
+
+				// OLD CODE INCOMING
 				//             if (_dynamicsClient != null)
 				//             {
 				//                 userSettings.AuthenticatedUser = await _dynamicsClient.LoadUser(siteMinderGuid, context.Request.Headers, _logger);
