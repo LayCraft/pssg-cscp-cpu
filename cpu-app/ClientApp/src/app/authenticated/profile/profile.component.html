@@ -1,7 +1,18 @@
 <div class="container">
   <div class="row">
+    <div class="col-md-4">
+
+      <section class="application-nav sticky-top">
+        <div style="max-height: 90%;">
+          <app-organization-profile-box [type]="'profile'"></app-organization-profile-box>
+        </div>
+      </section>
+    </div>
+
     <div class="col">
-      <h1>Update Organization Information</h1>
+      <div class="page-header">
+        <h1>Update Organization Information</h1>
+      </div>
       <h2 class="blue-header">Primary Program Contact Information</h2>
       <!-- Primary organization contact information header -->
       <app-primary-contact-info [(contactInformation)]="trans.contactInformation"></app-primary-contact-info>
@@ -10,7 +21,8 @@
 
       <!-- Mailing address checkbox -->
       <div class="form-check">
-        <input [(ngModel)]="trans.contactInformation.hasMailingAddress" class="form-check-input" type="checkbox" id="mailingAddressCheckbox">
+        <input [(ngModel)]="trans.contactInformation.hasMailingAddress" class="form-check-input" type="checkbox"
+          id="mailingAddressCheckbox">
         <label class="form-check-label" for="mailingAddressCheckbox">
           Different mailing address from main address.
         </label>
@@ -23,25 +35,30 @@
 
       <!-- Primary contact the ministry calls when they want to contact the org -->
       <h2 class="blue-header mt-4">Organization Contact(s)</h2>
-      <p>If the executive or board contact information has inaccuracy please update personnel contact information for your organization before submitting this program application.</p>
-      <app-person-picker [title]="'Contractor Contact'" [(person)]="trans.contactInformation.executiveContact"></app-person-picker>
+      <p>If the executive or board contact information has inaccuracy please update personnel contact information for
+        your organization before submitting this program application.</p>
+      <app-person-picker [title]="'Contractor Contact'" [(person)]="trans.contactInformation.executiveContact">
+      </app-person-picker>
 
       <!-- Does the org have a board of directors? -->
       <div class="form-check mt-4">
-        <input [(ngModel)]="trans.contactInformation.hasBoardContact" type="checkbox" id="hasBoardOfDirectors" name="hasBoardOfDirectors" class="form-check-input">
+        <input [(ngModel)]="trans.contactInformation.hasBoardContact" type="checkbox" id="hasBoardOfDirectors"
+          name="hasBoardOfDirectors" class="form-check-input">
         <label for="hasBoardOfDirectors">
           Does your organization have a board of directors?
         </label>
       </div>
       <!-- If there is a board of directors who is it? -->
       <span *ngIf="trans.contactInformation.hasBoardContact">
-        <app-person-picker [title]="'Board Contact (For societies only)'" [(person)]="trans.contactInformation.boardContact"></app-person-picker>
+        <app-person-picker [title]="'Board Contact (For societies only)'"
+          [(person)]="trans.contactInformation.boardContact"></app-person-picker>
       </span>
 
     </div>
   </div>
 
   <div class="row mt-4">
+    <div class="col-md-4"></div>
     <div class="col">
       <button (click)="save()" class="btn btn-primary">Save</button>
       <!-- <button *ngIf="!hasCriticalParts()" class="btn btn-primary" disabled>Save</button> -->

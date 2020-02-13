@@ -29,7 +29,7 @@ namespace Gov.Cscp.Victims.Public.Models
 		{
 			get
 			{
-				if (_vsd_ContactLookupfortunecookiebind != null)
+				if (!String.IsNullOrEmpty(_vsd_ContactLookupfortunecookiebind))
 				{
 					return "/contacts(" + _vsd_ContactLookupfortunecookiebind + ")";
 				}
