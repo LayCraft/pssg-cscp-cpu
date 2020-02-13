@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.Victims.Public.DataInterfaces
 {
-    public interface IDataInterface
-    {
-    }
+	public interface IDataInterface
+	{
+	}
 }
 
 
-//using Gov.Jag.Embc.Public.Services.Registrations;
-//using Gov.Jag.Embc.Public.Utils;
-//using Gov.Jag.Embc.Public.ViewModels;
-//using Gov.Jag.Embc.Public.ViewModels.Search;
+//using Gov.Cscp.Victims.Public.Services.Registrations;
+//using Gov.Cscp.Victims.Public.Utils;
+//using Gov.Cscp.Victims.Public.ViewModels;
+//using Gov.Cscp.Victims.Public.ViewModels.Search;
 //using System.Collections.Generic;
 //using System.Threading.Tasks;
 
-//namespace Gov.Jag.Embc.Public.DataInterfaces
+//namespace Gov.Cscp.Victims.Public.DataInterfaces
 //{
 //    public interface IDataInterface
 //    {
