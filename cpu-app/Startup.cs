@@ -1,6 +1,6 @@
 //using Gov.Cscp.Victims.Interfaces;
 //using Gov.Cscp.Victims.Public.Authentication;
-using Gov.Cscp.Public.Authentication;
+// using Gov.Cscp.Public.Authentication;
 using Gov.Cscp.Victims.Public.Authorization;
 using Gov.Cscp.Victims.Public.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -112,11 +112,12 @@ namespace Gov.Cscp.Victims.Public
 			});
 
 			// setup siteminder authentication
-			services.AddAuthentication(options =>
-			{
-				options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-				options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-			}).AddSiteminderAuth();
+			// TODO: this is commented out because the siteminder authentication handler is not impleme
+			// services.AddAuthentication(options =>
+			// {
+			// 	options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
+			// 	options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
+			// }).AddSiteminderAuth();
 
 			// allow for large files to be uploaded
 			services.Configure<FormOptions>(options =>
