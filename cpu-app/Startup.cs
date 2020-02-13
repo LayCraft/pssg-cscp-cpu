@@ -78,12 +78,13 @@ namespace Gov.Cscp.Victims.Public
 					});
 
 			// setup siteminder authentication (core 2.0)
-			services.AddAuthentication(options =>
+			services
+			.AddAuthentication(options =>
 			{
 				options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
 				options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-			});
-			// .AddSiteminderAuth(options =>{});
+			})
+			.AddSiteminderAuth(options => { });
 
 			// setup authorization
 			services.AddAuthorization(options =>
