@@ -14,166 +14,166 @@ using Gov.Cscp.Victims.Public.Utils;
 
 namespace Gov.Cscp.Victims.Public.Authentication
 {
-	// #region SiteMinder Authentication Options
-	// /// <summary>
-	// /// Options required for setting up SiteMinder Authentication
-	// /// </summary>
-	// public class SiteMinderAuthOptions : AuthenticationSchemeOptions
-	// {
-	//     // note that header keys are case insensitive, thus the reason why the keys are all lower case.
+	#region SiteMinder Authentication Options
+	/// <summary>
+	/// Options required for setting up SiteMinder Authentication
+	/// </summary>
+	public class SiteMinderAuthOptions : AuthenticationSchemeOptions
+	{
+		// note that header keys are case insensitive, thus the reason why the keys are all lower case.
 
-	//     private const string ConstDevAuthenticationTokenKey = "DEV-USER";
-	//     private const string ConstDevBCSCAuthenticationTokenKey = "DEV-BCSC-USER";
-	//     private const string ConstDevDefaultUserId = "TMcTesterson";
-	//     private const string ConstSiteMinderUserGuidKey = "smgov_userguid"; //deprecated -- smgov_useridentifier
-	//     private const string ConstSiteMinderUserIdentifierKey = "smgov_useridentifier";
-	//     private const string ConstSiteMinderUniversalIdKey = "sm_universalid";
-	//     private const string ConstSiteMinderUserNameKey = "sm_user";
+		//     private const string ConstDevAuthenticationTokenKey = "DEV-USER";
+		//     private const string ConstDevBCSCAuthenticationTokenKey = "DEV-BCSC-USER";
+		//     private const string ConstDevDefaultUserId = "TMcTesterson";
+		private const string ConstSiteMinderUserGuidKey = "smgov_userguid"; //deprecated -- smgov_useridentifier
+		private const string ConstSiteMinderUserIdentifierKey = "smgov_useridentifier";
+		private const string ConstSiteMinderUniversalIdKey = "sm_universalid";
+		private const string ConstSiteMinderUserNameKey = "sm_user";
 
-	//     //BCeId Values
-	//     private const string ConstSiteMinderBusinessGuidKey = "smgov_businessguid";
-	//     private const string ConstSiteMinderBusinessLegalNameKey = "smgov_businesslegalname";
+		//     //BCeId Values
+		private const string ConstSiteMinderBusinessGuidKey = "smgov_businessguid";
+		private const string ConstSiteMinderBusinessLegalNameKey = "smgov_businesslegalname";
 
-	//     //BC Services Card
-	//     private const string ConstSiteMinderBirthDate = "smgov_birthdate";
+		//     //BC Services Card
+		//     private const string ConstSiteMinderBirthDate = "smgov_birthdate";
 
-	//     //BCeID or BC Services Card
-	//     private const string ConstSiteMinderUserType = "smgov_usertype"; // get the type values from siteminder header this will be bceid or bcservices
+		//BCeID or BC Services Card
+		private const string ConstSiteMinderUserType = "smgov_usertype"; // get the type values from siteminder header this will be bceid or bcservices
 
-	//     private const string ConstSiteMinderUserDisplayNameKey = "smgov_userdisplayname";
+		private const string ConstSiteMinderUserDisplayNameKey = "smgov_userdisplayname";
 
-	//     private const string ConstMissingSiteMinderUserIdError = "Missing SiteMinder UserId";
-	//     private const string ConstMissingSiteMinderGuidError = "Missing SiteMinder Guid";
-	//     private const string ConstMissingSiteMinderUserTypeError = "Missing SiteMinder User Type";
-	//     private const string ConstMissingDbUserIdError = "Could not find UserId in the database";
-	//     private const string ConstUnderageError = "You must be 19 years of age or older to access this website.";
+		private const string ConstMissingSiteMinderUserIdError = "Missing SiteMinder UserId";
+		private const string ConstMissingSiteMinderGuidError = "Missing SiteMinder Guid";
+		private const string ConstMissingSiteMinderUserTypeError = "Missing SiteMinder User Type";
+		// private const string ConstMissingDbUserIdError = "Could not find UserId in the database";
+		// private const string ConstUnderageError = "You must be 19 years of age or older to access this website.";
 
-	//     private const string ConstInactivegDbUserIdError = "Database UserId is inactive";
-	//     private const string ConstInvalidPermissions = "UserId does not have valid permissions";
+		// private const string ConstInactivegDbUserIdError = "Database UserId is inactive";
+		// private const string ConstInvalidPermissions = "UserId does not have valid permissions";
 
-	//     /// <summary>
-	//     /// DEfault Constructor
-	//     /// </summary>
-	//     public SiteMinderAuthOptions()
-	//     {
-	//         SiteMinderBusinessGuidKey = ConstSiteMinderBusinessGuidKey;
-	//         SiteMinderUserGuidKey = ConstSiteMinderUserGuidKey;
-	//         SiteMinderUserIdentifierKey = ConstSiteMinderUserIdentifierKey;
-	//         SiteMinderUniversalIdKey = ConstSiteMinderUniversalIdKey;
-	//         SiteMinderUserNameKey = ConstSiteMinderUserNameKey;
-	//         SiteMinderUserDisplayNameKey = ConstSiteMinderUserDisplayNameKey;
-	//         SiteMinderUserTypeKey = ConstSiteMinderUserType;
-	//         SiteMinderBirthDate = ConstSiteMinderUserType;
-	//         MissingSiteMinderUserIdError = ConstMissingSiteMinderUserIdError;
-	//         MissingSiteMinderUserTypeError = ConstMissingSiteMinderUserIdError;
-	//         MissingSiteMinderGuidError = ConstMissingSiteMinderGuidError;
-	//         MissingDbUserIdError = ConstMissingDbUserIdError;
-	//         InactivegDbUserIdError = ConstInactivegDbUserIdError;
-	//         InvalidPermissions = ConstInvalidPermissions;
-	//         DevAuthenticationTokenKey = ConstDevAuthenticationTokenKey;
-	//         DevBCSCAuthenticationTokenKey = ConstDevBCSCAuthenticationTokenKey;
-	//         DevDefaultUserId = ConstDevDefaultUserId;
-	//         UnderageError = ConstUnderageError;
-	//     }
+		/// <summary>
+		/// DEfault Constructor
+		/// </summary>
+		// public SiteMinderAuthOptions()
+		//     {
+		//         SiteMinderBusinessGuidKey = ConstSiteMinderBusinessGuidKey;
+		//         SiteMinderUserGuidKey = ConstSiteMinderUserGuidKey;
+		//         SiteMinderUserIdentifierKey = ConstSiteMinderUserIdentifierKey;
+		//         SiteMinderUniversalIdKey = ConstSiteMinderUniversalIdKey;
+		//         SiteMinderUserNameKey = ConstSiteMinderUserNameKey;
+		//         SiteMinderUserDisplayNameKey = ConstSiteMinderUserDisplayNameKey;
+		//         SiteMinderUserTypeKey = ConstSiteMinderUserType;
+		//         SiteMinderBirthDate = ConstSiteMinderUserType;
+		//         MissingSiteMinderUserIdError = ConstMissingSiteMinderUserIdError;
+		//         MissingSiteMinderUserTypeError = ConstMissingSiteMinderUserIdError;
+		//         MissingSiteMinderGuidError = ConstMissingSiteMinderGuidError;
+		//         MissingDbUserIdError = ConstMissingDbUserIdError;
+		//         InactivegDbUserIdError = ConstInactivegDbUserIdError;
+		//         InvalidPermissions = ConstInvalidPermissions;
+		//         DevAuthenticationTokenKey = ConstDevAuthenticationTokenKey;
+		//         DevBCSCAuthenticationTokenKey = ConstDevBCSCAuthenticationTokenKey;
+		//         DevDefaultUserId = ConstDevDefaultUserId;
+		//         UnderageError = ConstUnderageError;
+		//     }
 
-	//     /// <summary>
-	//     /// Default Scheme Name
-	//     /// </summary>
-	//     public static string AuthenticationSchemeName => "site-minder-auth";
+		/// <summary>
+		/// Default Scheme Name
+		/// </summary>
+		public static string AuthenticationSchemeName => "site-minder-auth";
 
-	//     /// <summary>
-	//     /// SiteMinder Authentication Scheme Name
-	//     /// </summary>
-	//     public string Scheme => AuthenticationSchemeName;
+		/// <summary>
+		/// SiteMinder Authentication Scheme Name
+		/// </summary>
+		public string Scheme => AuthenticationSchemeName;
 
-	//     public string SiteMinderBusinessGuidKey { get; set; }
+		//     public string SiteMinderBusinessGuidKey { get; set; }
 
-	//     /// <summary>
-	//     /// User GUID
-	//     /// </summary>
-	//     public string SiteMinderUserGuidKey { get; set; }
+		//     /// <summary>
+		//     /// User GUID
+		//     /// </summary>
+		//     public string SiteMinderUserGuidKey { get; set; }
 
-	//     /// <summary>
-	//     /// User Identifier
-	//     /// </summary>
-	//     public string SiteMinderUserIdentifierKey { get; set; }
+		//     /// <summary>
+		//     /// User Identifier
+		//     /// </summary>
+		//     public string SiteMinderUserIdentifierKey { get; set; }
 
-	//     /// <summary>
-	//     /// User Id
-	//     /// </summary>
-	//     public string SiteMinderUniversalIdKey { get; set; }
+		//     /// <summary>
+		//     /// User Id
+		//     /// </summary>
+		//     public string SiteMinderUniversalIdKey { get; set; }
 
-	//     /// <summary>
-	//     /// User Name
-	//     /// </summary>
-	//     public string SiteMinderUserNameKey { get; set; }
+		//     /// <summary>
+		//     /// User Name
+		//     /// </summary>
+		//     public string SiteMinderUserNameKey { get; set; }
 
-	//     /// <summary>
-	//     /// User's Display Name
-	//     /// </summary>
-	//     public string SiteMinderUserDisplayNameKey { get; set; }
+		//     /// <summary>
+		//     /// User's Display Name
+		//     /// </summary>
+		//     public string SiteMinderUserDisplayNameKey { get; set; }
 
-	//     ///<summary>
-	//     ///User's Type (BCeID or BC services card)
-	//     /// </summary>
-	//     public string SiteMinderUserTypeKey { get; set; }
+		//     ///<summary>
+		//     ///User's Type (BCeID or BC services card)
+		//     /// </summary>
+		//     public string SiteMinderUserTypeKey { get; set; }
 
-	//     /// <summary>
-	//     /// BC Service Card - Birth Date field.
-	//     /// </summary>
-	//     public string SiteMinderBirthDate { get; set; }
+		//     /// <summary>
+		//     /// BC Service Card - Birth Date field.
+		//     /// </summary>
+		//     public string SiteMinderBirthDate { get; set; }
 
-	//     /// <summary>
-	//     /// Missing SiteMinder User Type Error
-	//     /// </summary>
-	//     public string MissingSiteMinderUserTypeError { get; set; }
+		//     /// <summary>
+		//     /// Missing SiteMinder User Type Error
+		//     /// </summary>
+		//     public string MissingSiteMinderUserTypeError { get; set; }
 
-	//     /// <summary>
-	//     /// Missing SiteMinder UserId Error
-	//     /// </summary>
-	//     public string MissingSiteMinderUserIdError { get; set; }
+		//     /// <summary>
+		//     /// Missing SiteMinder UserId Error
+		//     /// </summary>
+		//     public string MissingSiteMinderUserIdError { get; set; }
 
-	//     /// <summary>
-	//     /// Missing SiteMinder Guid Error
-	//     /// </summary>
-	//     public string MissingSiteMinderGuidError { get; set; }
+		//     /// <summary>
+		//     /// Missing SiteMinder Guid Error
+		//     /// </summary>
+		//     public string MissingSiteMinderGuidError { get; set; }
 
-	//     /// <summary>
-	//     /// Missing Database UserId Error
-	//     /// </summary>
-	//     public string MissingDbUserIdError { get; set; }
+		//     /// <summary>
+		//     /// Missing Database UserId Error
+		//     /// </summary>
+		//     public string MissingDbUserIdError { get; set; }
 
-	//     /// <summary>
-	//     /// Inactive Database UserId Error
-	//     /// </summary>
-	//     public string InactivegDbUserIdError { get; set; }
+		//     /// <summary>
+		//     /// Inactive Database UserId Error
+		//     /// </summary>
+		//     public string InactivegDbUserIdError { get; set; }
 
-	//     /// <summary>
-	//     /// Inactive Database UserId Error
-	//     /// </summary>
-	//     public string UnderageError { get; set; }
+		//     /// <summary>
+		//     /// Inactive Database UserId Error
+		//     /// </summary>
+		//     public string UnderageError { get; set; }
 
-	//     /// <summary>
-	//     /// User does not jave active / valid permissions
-	//     /// </summary>
-	//     public string InvalidPermissions { get; set; }
+		//     /// <summary>
+		//     /// User does not jave active / valid permissions
+		//     /// </summary>
+		//     public string InvalidPermissions { get; set; }
 
-	//     /// <summary>
-	//     /// Development Environment Authentication Key
-	//     /// </summary>
-	//     public string DevAuthenticationTokenKey { get; set; }
+		//     /// <summary>
+		//     /// Development Environment Authentication Key
+		//     /// </summary>
+		//     public string DevAuthenticationTokenKey { get; set; }
 
-	//     /// <summary>
-	//     /// Development Environment Authentication Key
-	//     /// </summary>
-	//     public string DevBCSCAuthenticationTokenKey { get; set; }
+		//     /// <summary>
+		//     /// Development Environment Authentication Key
+		//     /// </summary>
+		//     public string DevBCSCAuthenticationTokenKey { get; set; }
 
-	//     /// <summary>
-	//     /// Development Environment efault UserId
-	//     /// </summary>
-	//     public string DevDefaultUserId { get; set; }
-	// }
-	// #endregion    
+		//     /// <summary>
+		//     /// Development Environment efault UserId
+		//     /// </summary>
+		//     public string DevDefaultUserId { get; set; }
+	}
+	#endregion
 
 	// /// <summary>
 	// /// Setup Siteminder Authentication Handler
