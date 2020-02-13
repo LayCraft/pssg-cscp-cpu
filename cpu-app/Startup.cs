@@ -145,13 +145,42 @@ namespace Gov.Cscp.Victims.Public
 
 			app.Use(async (ctx, next) =>
 			{
-				ctx.Response.Headers.Add("Content-Security-Policy",
-																			 "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://apis.google.com https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com https://code.jquery.com https://stackpath.bootstrapcdn.com https://fonts.googleapis.com");
 				ctx.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
 				await next();
 			});
+
+			// X-Content-Type-Options header
 			app.UseXContentTypeOptions();
-			app.UseXfo(xfo => xfo.Deny());
+			// Referrer-Policy header.
+			app.UseReferrerPolicy(opts => opts.NoReferrer());
+			// X-Xss-Protection header
+			app.UseXXssProtection(options => options.EnabledWithBlockMode());
+			// X-Frame-Options header
+			app.UseXfo(options => options.Deny());
+
+			if (!env.IsDevelopment())  // when running locally we can't have a strict CSP
+			{
+				// Content-Security-Policy header
+				app.UseCsp(opts =>
+				{
+					opts
+						.BlockAllMixedContent()
+						.StyleSources(s => s.Self().UnsafeInline().CustomSources("https://use.fontawesome.com",
+								"https://stackpath.bootstrapcdn.com"))
+						.FontSources(s => s.Self().CustomSources("https://use.fontawesome.com"))
+						.FormActions(s => s.Self())
+						.FrameAncestors(s => s.Self())
+						.ImageSources(s => s.Self())
+						.DefaultSources(s => s.Self())
+						.ScriptSources(s => s.Self().CustomSources("https://apis.google.com",
+						"https://maxcdn.bootstrapcdn.com",
+						"https://cdnjs.cloudflare.com",
+						"https://code.jquery.com",
+						"https://stackpath.bootstrapcdn.com",
+						"https://fonts.googleapis.com"));
+
+				});
+			}
 
 			StaticFileOptions staticFileOptions = new StaticFileOptions
 			{
@@ -167,15 +196,19 @@ namespace Gov.Cscp.Victims.Public
 
 			app.UseStaticFiles(staticFileOptions);
 			app.UseSpaStaticFiles(staticFileOptions);
-			app.UseXXssProtection(options => options.EnabledWithBlockMode());
+
 			app.UseNoCacheHttpHeaders();
 			// IMPORTANT: This session call MUST go before UseMvc()
 			app.UseSession();
-			//app.UseAuthentication();
+			app.UseAuthentication();
+
 			app.UseMvc(routes =>
 			{
-				routes.MapRoute(name: "default", template: "{controller}/{action=Index}/{id?}");
+				routes.MapRoute(
+					name: "default",
+					template: "{controller}/{action=Index}/{id?}");
 			});
+
 			app.UseSpa(spa =>
 			{
 				// To learn more about options for serving an Angular SPA from ASP.NET Core, see https://go.microsoft.com/fwlink/?linkid=864501
@@ -184,7 +217,6 @@ namespace Gov.Cscp.Victims.Public
 				// Only run the angular CLI Server in Development mode (not staging or test.)
 				if (env.IsDevelopment())
 				{
-					spa.Options.StartupTimeout = TimeSpan.FromSeconds(120);  // Bypass initial load timeout issue
 					spa.UseAngularCliServer(npmScript: "start");
 				}
 			});
