@@ -91,7 +91,7 @@ namespace Gov.Cscp.Victims.Public
 			{
 				// TODO:
 				// options.AddPolicy("Business-User", policy =>
-				// 	policy.RequireClaim(User.UserTypeClaim, "Business"));
+				// policy.RequireClaim(User.UserTypeClaim, "Business"));
 			});
 			services.RegisterPermissionHandler();
 
