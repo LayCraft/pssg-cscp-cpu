@@ -63,7 +63,13 @@ namespace Gov.Cscp.Victims.Public.Authentication
 			}
 
 			logger.LogDebug($"smAuthToken: {smAuthToken.ToString()}");
-			var claims = Context.Session.GetString("app.principal");
+			string claims = "";
+			try
+			{
+				claims = Context.Session.GetString("app.principal");
+			}
+			catch (ApplicationException e) { return AuthenticateResult.Fail(e.Message); }
+
 			if (!string.IsNullOrEmpty(claims))
 			{
 				var principal = claims.FromJwt();

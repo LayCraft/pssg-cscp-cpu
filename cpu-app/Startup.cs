@@ -63,11 +63,13 @@ namespace Gov.Cscp.Victims.Public
 						opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 					});
 
-			services.AddAuthentication(options =>
+			services
+			.AddAuthentication(options =>
 			{
 				options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
 				options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-			}).AddSiteminderAuth();
+			})
+			.AddSiteminderAuth();
 			services.Configure<CookiePolicyOptions>(options =>
 			{
 				options.Secure = environment.IsDevelopment()
