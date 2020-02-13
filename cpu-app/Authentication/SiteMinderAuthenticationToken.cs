@@ -1,9 +1,9 @@
-﻿using Gov.Cscp.Victims.Public.Utils;
+using Gov.Cscp.Victims.Public.Utils;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
 
-namespace Gov.Cscp.Public.Authentication
+namespace Gov.Cscp.Victims.Public.Authentication
 {
 	public static class SiteMinderClaimTypes
 	{
@@ -105,15 +105,3 @@ namespace Gov.Cscp.Public.Authentication
 		}
 	}
 }
-
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
-
-//namespace Gov.Cscp.Victims.Public.Authentication
-//{
-//    public class SiteMinderAuthenticationToken
-//    {
-//    }
-//}
