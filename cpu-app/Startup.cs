@@ -40,11 +40,6 @@ namespace Gov.Cscp.Victims.Public
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 			services.AddSingleton<IDynamicsResultService, DynamicsResultService>();
 
-			// determine if we wire up Dynamics.
-			if (!string.IsNullOrEmpty(Configuration["DYNAMICS_ODATA_URI"]))
-			{
-				SetupDynamics(services);
-			}
 
 			// Add a memory cache
 			services.AddMemoryCache();
@@ -82,21 +77,22 @@ namespace Gov.Cscp.Victims.Public
 						opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 					});
 
-
-			//services.AddAuthentication(options => options.DefaultChallengeScheme = IISOptions.);
 			// setup siteminder authentication (core 2.0)
-			//services.AddAuthentication(options =>
-			//{
-			//    options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-			//    options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-			//});
-			//services.Add
+			services.AddAuthentication(options =>
+			{
+				// TODO:
+				//  options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
+				//  options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
+			});
+			// .AddSiteminderAuth(options =>{});
+
 			// setup authorization
-			//services.AddAuthorization(options =>
-			//{
-			//    options.AddPolicy("Business-User", policy =>
-			//            policy.RequireClaim(User.UserTypeClaim, "Business"));
-			//});
+			services.AddAuthorization(options =>
+			{
+				// TODO:
+				// options.AddPolicy("Business-User", policy =>
+				// 	policy.RequireClaim(User.UserTypeClaim, "Business"));
+			});
 			services.RegisterPermissionHandler();
 
 			// setup key ring to persist in storage.
@@ -110,14 +106,6 @@ namespace Gov.Cscp.Victims.Public
 			{
 				configuration.RootPath = "ClientApp/dist";
 			});
-
-			// setup siteminder authentication
-			// TODO: this is commented out because the siteminder authentication handler is not impleme
-			// services.AddAuthentication(options =>
-			// {
-			// 	options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-			// 	options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-			// }).AddSiteminderAuth();
 
 			// allow for large files to be uploaded
 			services.Configure<FormOptions>(options =>
@@ -133,99 +121,6 @@ namespace Gov.Cscp.Victims.Public
 			});
 
 			services.AddSession();
-		}
-
-		private void SetupDynamics(IServiceCollection services)
-		{
-			string dynamicsOdataUri = Configuration["DYNAMICS_ODATA_URI"];
-			string aadTenantId = Configuration["DYNAMICS_AAD_TENANT_ID"];
-			string serverAppIdUri = Configuration["DYNAMICS_SERVER_APP_ID_URI"];
-			string clientKey = Configuration["DYNAMICS_CLIENT_KEY"];
-			string clientId = Configuration["DYNAMICS_CLIENT_ID"];
-
-			string ssgUsername = Configuration["SSG_USERNAME"];
-			string ssgPassword = Configuration["SSG_PASSWORD"];
-
-			//AuthenticationResult authenticationResult = null;
-			//// authenticate using ADFS.
-			//if (string.IsNullOrEmpty(ssgUsername) || string.IsNullOrEmpty(ssgPassword))
-			//{
-			//    var authenticationContext = new AuthenticationContext(
-			//        "https://login.windows.net/" + aadTenantId);
-			//    ClientCredential clientCredential = new ClientCredential(clientId, clientKey);
-			//    var task = authenticationContext.AcquireTokenAsync(serverAppIdUri, clientCredential);
-			//    task.Wait();
-			//    authenticationResult = task.Result;
-			//}
-
-
-
-			//services.AddTransient(new Func<IServiceProvider, IDynamicsClient>((serviceProvider) =>
-			//{
-
-			//    ServiceClientCredentials serviceClientCredentials = null;
-
-			//    if (string.IsNullOrEmpty(ssgUsername) || string.IsNullOrEmpty(ssgPassword))
-			//    {
-			//        var authenticationContext = new AuthenticationContext(
-			//        "https://login.windows.net/" + aadTenantId);
-			//        ClientCredential clientCredential = new ClientCredential(clientId, clientKey);
-			//        var task = authenticationContext.AcquireTokenAsync(serverAppIdUri, clientCredential);
-			//        task.Wait();
-			//        authenticationResult = task.Result;
-			//        string token = authenticationResult.CreateAuthorizationHeader().Substring("Bearer ".Length);
-			//        serviceClientCredentials = new TokenCredentials(token);
-			//    }
-			//    else
-			//    {
-			//        serviceClientCredentials = new BasicAuthenticationCredentials()
-			//        {
-			//            UserName = ssgUsername,
-			//            Password = ssgPassword
-			//        };
-			//    }
-
-			//    IDynamicsClient client = new DynamicsClient(new Uri(Configuration["DYNAMICS_ODATA_URI"]), serviceClientCredentials);
-
-
-			//    // set the native client URI
-			//    if (string.IsNullOrEmpty(Configuration["DYNAMICS_NATIVE_ODATA_URI"]))
-			//    {
-			//        client.NativeBaseUri = new Uri(Configuration["DYNAMICS_ODATA_URI"]);
-			//    }
-			//    else
-			//    {
-			//        client.NativeBaseUri = new Uri(Configuration["DYNAMICS_NATIVE_ODATA_URI"]);
-			//    }
-
-			//    return client;
-			//}));
-
-			// add SharePoint.
-
-			//string sharePointServerAppIdUri = Configuration["SHAREPOINT_SERVER_APPID_URI"];
-			//string sharePointOdataUri = Configuration["SHAREPOINT_ODATA_URI"];
-			//string sharePointWebname = Configuration["SHAREPOINT_WEBNAME"];
-			//string sharePointAadTenantId = Configuration["SHAREPOINT_AAD_TENANTID"];
-			//string sharePointClientId = Configuration["SHAREPOINT_CLIENT_ID"];
-			//string sharePointCertFileName = Configuration["SHAREPOINT_CERTIFICATE_FILENAME"];
-			//string sharePointCertPassword = Configuration["SHAREPOINT_CERTIFICATE_PASSWORD"];
-			//string sharePointNativeBaseURI = Configuration["SHAREPOINT_NATIVE_BASE_URI"];
-			//if (! string.IsNullOrEmpty(sharePointOdataUri))
-			//{
-			//    services.AddTransient<SharePointFileManager>(_ => new SharePointFileManager(sharePointServerAppIdUri, sharePointOdataUri, sharePointWebname, sharePointAadTenantId, sharePointClientId, sharePointCertFileName, sharePointCertPassword, ssgUsername, ssgPassword, sharePointNativeBaseURI));
-			//}
-
-
-			//// add BCeID Web Services
-
-			//string bceidUrl = Configuration["BCEID_SERVICE_URL"];
-			//string bceidSvcId = Configuration["BCEID_SERVICE_SVCID"];
-			//string bceidUserid = Configuration["BCEID_SERVICE_USER"];
-			//string bceidPasswd = Configuration["BCEID_SERVICE_PASSWD"];
-
-			//services.AddTransient<BCeIDBusinessQuery>(_ => new BCeIDBusinessQuery(bceidSvcId, bceidUserid, bceidPasswd, bceidUrl));
-
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
