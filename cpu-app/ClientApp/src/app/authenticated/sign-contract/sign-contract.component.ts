@@ -71,6 +71,7 @@ export class SignContractComponent implements OnInit {
   }
   exit() {
     // if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+    this.stateService.refresh();
     this.router.navigate([this.stateService.homeRoute.getValue()]);
     // }
   }

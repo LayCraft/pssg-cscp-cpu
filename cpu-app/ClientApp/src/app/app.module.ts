@@ -46,6 +46,7 @@ import { ContactInformation2Component } from './authenticated/subforms/contact-i
 import { PrimaryContactInfoComponent } from './authenticated/subforms/primary-contact-info/primary-contact-info.component';
 import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
 import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.component';
+import { ProgramContactComponent } from './authenticated/program-contact/program-contact.component';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.
     ProgramAuthorizerComponent,
     ProgramBudgetComponent,
     ProgramComponent,
+    ProgramContactComponent,
     ProgramContactInformationComponent,
     ProgramSummaryTableComponent,
     RevenueSourceTableComponent,

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
+import { nameAssemble } from '../../../core/constants/name-assemble';
+import { iProgramApplication } from '../../../core/models/program-application.interface';
 
 @Component({
   selector: 'app-organization-profile-box',
@@ -8,6 +10,9 @@ import { Transmogrifier } from '../../../core/models/transmogrifier.class';
   styleUrls: ['./organization-profile-box.component.scss']
 })
 export class OrganizationProfileBoxComponent implements OnInit {
+  @Input() type: string;
+  @Input() programInfo: iProgramApplication;
+  public nameAssemble = nameAssemble;
   trans: Transmogrifier;
   constructor(
     private stateService: StateService

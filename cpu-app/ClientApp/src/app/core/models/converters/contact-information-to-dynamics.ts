@@ -7,9 +7,9 @@ export function convertContactInformationToDynamics(trans: Transmogrifier): iDyn
     BusinessBCeID: trans.organizationId,
     UserBCeID: trans.userId,
     Organization: {
-      vsd_BoardContactIdfortunecookiebind: trans.contactInformation.boardContact.personId || null,
+      vsd_BoardContactIdfortunecookiebind: trans.contactInformation.hasBoardContact && trans.contactInformation.boardContact && trans.contactInformation.boardContact.personId || null,
       emailaddress1: trans.contactInformation.emailAddress || null,
-      vsd_ExecutiveContactIdfortunecookiebind: trans.contactInformation.executiveContact.personId || null,
+      vsd_ExecutiveContactIdfortunecookiebind: trans.contactInformation.executiveContact && trans.contactInformation.executiveContact.personId || null,
       fax: trans.contactInformation.faxNumber || null,
       address2_city: trans.contactInformation.mailingAddress.city || null,
       address2_line1: trans.contactInformation.mailingAddress.line1 || null,

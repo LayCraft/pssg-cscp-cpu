@@ -14,6 +14,7 @@ import { TestComponent } from './test/test.component';
 import { NotUserComponent } from './authenticated/not-user/not-user.component';
 import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
 import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.component';
+import { ProgramContactComponent } from './authenticated/program-contact/program-contact.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,10 @@ const routes: Routes = [
       {
         path: 'new_user',
         component: NotUserComponent
+      },
+      {
+        path: 'program/:contractId/:programId',
+        component: ProgramContactComponent
       },
     ]
   },

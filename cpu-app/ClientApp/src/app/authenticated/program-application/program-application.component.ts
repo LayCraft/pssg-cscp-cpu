@@ -50,8 +50,14 @@ export class ProgramApplicationComponent implements OnInit {
             this.router.navigate(['/authenticated/dashboard']);
           } else {
             this.data = f;
+            console.log("program application dynamics info");
+            console.log(f);
+
             // make the transmogrifier for this form
             this.trans = new TransmogrifierProgramApplication(f);
+            console.log("Program application transmogrifier");
+            console.log(this.trans);
+
             this.constructDefaultstepperElements(this.trans);
           }
         }
@@ -143,6 +149,7 @@ export class ProgramApplicationComponent implements OnInit {
   }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }
   }

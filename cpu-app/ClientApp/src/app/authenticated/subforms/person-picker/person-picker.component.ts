@@ -3,6 +3,7 @@ import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { iPerson } from '../../../core/models/person.interface';
 import { nameAssemble } from '../../../core/constants/name-assemble';
+import { Person } from '../../../core/models/person.class';
 
 @Component({
   selector: 'app-person-picker',
@@ -26,6 +27,11 @@ export class PersonPickerComponent implements OnInit {
     // make a new person object from what was handed to this picker.
     this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
+
+      //if no person provided, initialize as empty person
+      if (!this.person) {
+        this.person = new Person();
+      }
       // load the person into the picker on initialization or just the first person in the list
       this.setPerson(this.person.personId);
     });

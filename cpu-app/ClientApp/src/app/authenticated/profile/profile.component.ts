@@ -43,6 +43,8 @@ export class ProfileComponent implements OnInit {
   }
   onExit() {
     if (confirm("All unsaved changes will be lost. Are you sure you want to return to the dashboard?")) {
+      //refresh info back to original state
+      this.stateService.refresh();
       // send the user back to the dashboard
       this.router.navigate([this.stateService.homeRoute.getValue()]);
     }

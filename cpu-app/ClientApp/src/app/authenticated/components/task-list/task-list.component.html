@@ -1,15 +1,15 @@
 <div *ngIf="contract.tasks.length||contract.completedTasks.length" class="card mb-2">
   <div class="card-header">
-    <h1 class="h2">Contract: {{contract.contractNumber}}</h1>
+    <h4 class="h4">Contract: {{contract.contractNumber}}</h4>
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
-        <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Current{{contract.tasks.length ? ' ('+contract.tasks.length+')':''}}</a>
+        <a class="nav-link" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Tasks Due{{contract.tasks.length ? ' ('+contract.tasks.length+')':''}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="setCurrentTab(tabs[1])" [class.active]="currentTab===tabs[1]">Completed{{contract.completedTasks.length ? ' ('+contract.completedTasks.length+')':''}}</a>
+        <a class="nav-link" (click)="setCurrentTab(tabs[1])" [class.active]="currentTab===tabs[1]">Completed Tasks{{contract.completedTasks.length ? ' ('+contract.completedTasks.length+')':''}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="setCurrentTab(tabs[2])" [class.active]="currentTab===tabs[2]">Programs</a>
+        <a class="nav-link" (click)="setCurrentTab(tabs[2])" [class.active]="currentTab===tabs[2]">Edit Program Information</a>
       </li>
     </ul>
   </div>
@@ -123,7 +123,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let program of contract.programs; let i=index">
+          <tr *ngFor="let program of contract.programs; let i=index;">
             <th scope="row">
               {{(i|number)+1}}
             </th>
@@ -133,7 +133,7 @@
               <strong>Email: </strong>{{program.email}}<br>
               <strong>Phone: </strong>{{program.phone}}<br>
             </td>
-            <td><a routerLink="/authenticated/profile">Update Contact</a></td>
+            <td><a routerLink="/authenticated/program/{{contract.contractId}}/{{program.programId}}">Update Contact</a></td>
           </tr>
         </tbody>
       </table>
