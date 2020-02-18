@@ -88,6 +88,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
 
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }
   }

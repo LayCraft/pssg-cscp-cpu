@@ -15,9 +15,6 @@ import { TransmogrifierProgramApplication } from '../../core/models/transmogrifi
 import { convertProgramApplicationToDynamics } from '../../core/models/converters/program-application-to-dynamics';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 
-//Copy pasted from progam.component.ts
-//TODO - update as needed for this form
-
 @Component({
   selector: 'app-program-contact',
   templateUrl: './program-contact.component.html',
@@ -31,7 +28,8 @@ export class ProgramContactComponent implements OnInit {
   differentProgramContact: boolean = false;
   persons: iPerson[] = [];
   programContactInformation: iContactInformation;
-  trans: TransmogrifierProgramApplication;
+  programTrans: TransmogrifierProgramApplication;
+  trans: Transmogrifier;
   // helpers for setting form state
   public formHelper = new FormHelper();
   emailRegex: RegExp;
@@ -69,10 +67,21 @@ export class ProgramContactComponent implements OnInit {
             console.log(f);
 
             // make the transmogrifier for this form
-            this.trans = new TransmogrifierProgramApplication(f);
-            this.programApplication = this.trans.programApplications.find(pa => pa.programId === p['programId']);
+            this.programTrans = new TransmogrifierProgramApplication(f);
+            this.programApplication = this.programTrans.programApplications.find(pa => pa.programId === p['programId']);
+
+
             console.log("desired program info...");
             console.log(this.programApplication);
+
+            this.stateService.main.subscribe((m: Transmogrifier) => {
+              this.trans = m;
+              //program contact seems to only bring over the personId, and not any name info or stuff like that. But main transmogrifier does have that info in persons array - so get that
+              if (this.programApplication.programContact && this.programApplication.programContact.personId) {
+                this.programApplication.programContact = this.trans.persons.find(p => p.personId === this.programApplication.programContact.personId);
+              }
+
+            });
             //TODO - if !this.programApplication
 
           }
@@ -124,7 +133,7 @@ export class ProgramContactComponent implements OnInit {
   }
   save(): void {
     // this.saving = true;
-    this.out = convertProgramApplicationToDynamics(this.trans);
+    this.out = convertProgramApplicationToDynamics(this.programTrans);
     this.programApplicationService.setProgramApplication(this.out).subscribe(
       r => {
         console.log(r);
@@ -140,6 +149,7 @@ export class ProgramContactComponent implements OnInit {
   }
   onExit() {
     if (confirm("All unsaved changes will be lost. Are you sure you want to return to the dashboard?")) {
+      this.stateService.refresh();
       // send the user back to the dashboard
       this.router.navigate([this.stateService.homeRoute.getValue()]);
     }

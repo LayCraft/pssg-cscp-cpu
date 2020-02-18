@@ -26,8 +26,8 @@
             name="serviceArea" disabled>
         </div>
 
-        <h2 class="blue-header">Primary Program Contact Information</h2>
-        <app-primary-contact-info [(contactInformation)]="programApplication"></app-primary-contact-info>
+        <!-- <h2 class="blue-header">Primary Program Contact Information</h2> -->
+        <!-- <app-primary-contact-info [(contactInformation)]="programApplication"></app-primary-contact-info> -->
         <div class="form-row">
           <div class="col-md">
             <div class="form-group">
@@ -71,15 +71,22 @@
             </div>
           </div>
         </div>
+
+        <!-- <h2 class="blue-header mt-4">Main Address</h2> -->
         <app-address2 [(address)]="programApplication.mainAddress"></app-address2>
-        <h2 class="blue-header">Mailing Address</h2>
+
+        <h2 class="blue-header mt-4">Mailing Address</h2>
         <app-address2 [(address)]="programApplication.mailingAddress"></app-address2>
+
+        <!-- <h2 class="blue-header">Mailing Address</h2>
+        <app-address2 [(address)]="programApplication.mailingAddress"></app-address2> -->
 
         <div class="form-group">
         </div>
         <span class="mb-4">
           <h2 class="blue-header">Program Contact</h2>
-          <app-person-picker [title]="'Please select a program contact.'" [(person)]="programApplication.programContact">
+          <app-person-picker [title]="'Please select a program contact.'"
+            [(person)]="programApplication.programContact">
           </app-person-picker>
         </span>
       </div>

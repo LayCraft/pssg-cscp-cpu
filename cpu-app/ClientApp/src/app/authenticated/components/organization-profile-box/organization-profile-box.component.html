@@ -16,8 +16,8 @@
         <strong>Executive Contact</strong><br>
         {{nameAssemble(trans.contactInformation.executiveContact.firstName,trans.contactInformation.executiveContact.middleName,trans.contactInformation.executiveContact.lastName)}}
       </p>
-      <p class="card-text" *ngIf="trans.contactInformation.boardContact">
-        <strong>Executive Contact</strong><br>
+      <p class="card-text" *ngIf="trans.contactInformation.hasBoardContact && trans.contactInformation.boardContact">
+        <strong>Board Contact</strong><br>
         {{nameAssemble(trans.contactInformation.boardContact.firstName,trans.contactInformation.boardContact.middleName,trans.contactInformation.boardContact.lastName)}}
       </p>
     </div>
