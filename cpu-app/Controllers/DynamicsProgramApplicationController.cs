@@ -62,7 +62,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
                 DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
 
-                return StatusCode(200, result.result.ToString());
+                return StatusCode((int)result.statusCode, result.result.ToString());
             }
             finally { }
         }
