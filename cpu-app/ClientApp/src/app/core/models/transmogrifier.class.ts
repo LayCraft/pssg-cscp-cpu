@@ -178,6 +178,14 @@ export class Transmogrifier {
       };
       ci.hasMailingAddress = true;
     } else {
+      ci.mailingAddress = {
+        city: null,
+        line1: null,
+        line2: null,
+        postalCode: null,
+        province: null,
+        country: 'Canada'
+      };
       ci.hasMailingAddress = false;
     }
     if (b.Organization._vsd_executivecontactid_value)

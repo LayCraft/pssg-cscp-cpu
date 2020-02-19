@@ -35,6 +35,7 @@ export class ProgramContactComponent implements OnInit {
   emailRegex: RegExp;
   phoneRegex: RegExp;
   out: any;
+  errorState: boolean = false;
 
   constructor(
     private notificationQueueService: NotificationQueueService,
@@ -73,6 +74,11 @@ export class ProgramContactComponent implements OnInit {
 
             console.log("desired program info...");
             console.log(this.programApplication);
+
+            if (!this.programApplication) {
+              this.notificationQueueService.addNotification('An attempt at getting this program information was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
+              this.errorState = true;
+            }
 
             this.stateService.main.subscribe((m: Transmogrifier) => {
               this.trans = m;
