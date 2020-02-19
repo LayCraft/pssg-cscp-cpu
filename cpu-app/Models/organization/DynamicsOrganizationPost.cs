@@ -8,8 +8,8 @@ namespace Gov.Cscp.Victims.Public.Models
 	public class DynamicsOrganizationPost
 	{
 		public string _ownerid_value { get; set; }
-		public string _vsd_boardcontactid_value { get; set; }
-		public string _vsd_executivecontactid_value { get; set; }
+		// public string _vsd_boardcontactid_value { get; set; }
+		// public string _vsd_executivecontactid_value { get; set; }
 		private string _vsd_ExecutiveContactIdfortunecookiebind;
 		public string vsd_ExecutiveContactIdfortunecookiebind
 		{
