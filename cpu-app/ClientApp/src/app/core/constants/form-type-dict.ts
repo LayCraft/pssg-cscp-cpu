@@ -1,12 +1,12 @@
 export const formTypeDict = {
+  '768faf46-e8f5-e911-b811-00505683fbf4': ['budget_proposal', 'Annual budget proposal'],
+  '9d0ef880-e8f5-e911-b811-00505683fbf4': ['expense_report', 'Quarterly expense report'],
+  '47525432-e8f5-e911-b811-00505683fbf4': ['program_application', 'Annual program application'],
+  'c84daf8d-e8f5-e911-b811-00505683fbf4': ['status_report', 'Statistics report'],
   '3e9826e5-e8f5-e911-b811-00505683fbf4': ['3e9826e5-e8f5-e911-b811-00505683fbf4', 'Financial Statement'],
   '315b18c9-e8f5-e911-b811-00505683fbf4': ['315b18c9-e8f5-e911-b811-00505683fbf4', 'Modification Agreement'],
   '50eeb9ba-e8f5-e911-b811-00505683fbf4': ['50eeb9ba-e8f5-e911-b811-00505683fbf4', 'Program Surplus'],
-  '768faf46-e8f5-e911-b811-00505683fbf4': ['budget_proposal', 'Annual budget proposal'],
-  'c84daf8d-e8f5-e911-b811-00505683fbf4': ['status_report', 'Statistics report'],
-  '9d0ef880-e8f5-e911-b811-00505683fbf4': ['expense_report', 'Quarterly expense report'],
-  '47525432-e8f5-e911-b811-00505683fbf4': ['program_application', 'Annual program application'],
-  '1581f216-5d48-ea11-b816-00505683fbf4': ['sign_contract', 'Sign contract']
+  '1581f216-5d48-ea11-b816-00505683fbf4': ['sign_contract', 'Sign contract'] //potentially download documents page
 }
 
 

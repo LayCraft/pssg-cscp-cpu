@@ -23,7 +23,8 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_cpu_programstaffsubcontracted: trans.administrativeInformation.staffSubcontracted,
       vsd_cpu_specificunion: trans.administrativeInformation.staffUnion,
       vsd_cpu_staffunionized: trans.administrativeInformation.staffUnionized,
-      vsd_cpu_memberofcssea: encodeCcseaMemberType(trans.administrativeInformation.ccseaMemberType)
+      vsd_cpu_memberofcssea: encodeCcseaMemberType(trans.administrativeInformation.ccseaMemberType),
+      vsd_name: trans.contractNumber
     }],
     Organization: {
       accountid: trans.accountId,
