@@ -176,11 +176,11 @@ export class TransmogrifierProgramApplication {
         },
         programContact: g.StaffCollection
           .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
-          .map(p => this.makePerson(g, p.contactid))[0] || null,
+          .map(s => this.makePersonFromStaffCollection(g, s.contactid))[0] || null,
         // revenueSources: [],//iRevenueSource[];
         additionalStaff: g.ProgramContactCollection
           .filter((c: iDynamicsCrmContact) => c.vsd_programid = p.vsd_programid)
-          .map(p => this.makePerson(g, p.contactid)) || null,// iPerson[];
+          .map(s => this.makePersonFromProgramContactCollection(g, s.contactid)) || null,// iPerson[];
         operationHours: [],//iHours[];
         standbyHours: [],//iHours[];
       } as iProgramApplication;
@@ -222,7 +222,34 @@ export class TransmogrifierProgramApplication {
     }
     return applications;
   }
-  private makePerson(g: iDynamicsScheduleFResponse, personId: string): iPerson {
+  private makePersonFromStaffCollection(g: iDynamicsScheduleFResponse, personId: string): iPerson {
+    // return whole person
+    return g.StaffCollection
+      .filter((p: iDynamicsCrmContact) => p.contactid === personId)
+      .map((p: iDynamicsCrmContact): iPerson => {
+        return {
+          email: p.emailaddress1 || null,
+          fax: p.fax || null,
+          firstName: p.firstname || null,
+          lastName: p.lastname || null,
+          middleName: p.middlename || null,
+          personId: p.contactid || null,
+          phone: p.mobilephone || null,
+          title: p.jobtitle || null,
+          userId: p.vsd_bceid || null,
+          address: {
+            line1: p.address1_line1 || null,
+            line2: p.address1_line2 || null,
+            city: p.address1_city || null,
+            postalCode: p.address1_postalcode || null,
+            province: p.address1_stateorprovince || null,
+            country: p.address1_country || 'Canada',
+          },
+        }
+      })[0];
+  }
+
+  private makePersonFromProgramContactCollection(g: iDynamicsScheduleFResponse, personId: string): iPerson {
     // return whole person
     return g.ProgramContactCollection
       .filter((p: iDynamicsCrmContact) => p.contactid === personId)
