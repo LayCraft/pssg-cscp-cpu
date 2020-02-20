@@ -23,6 +23,7 @@ export function convertContactInformationToDynamics(trans: Transmogrifier): iDyn
       address1_stateorprovince: trans.contactInformation.mainAddress.province || null,
       telephone1: trans.contactInformation.phoneNumber || null,
       accountid: trans.accountId || null,
+      name: trans.organizationName
     }
   };
 }
