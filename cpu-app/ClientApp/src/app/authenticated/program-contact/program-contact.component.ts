@@ -36,6 +36,7 @@ export class ProgramContactComponent implements OnInit {
   phoneRegex: RegExp;
   out: any;
   errorState: boolean = false;
+  saving: boolean = false;
 
   constructor(
     private notificationQueueService: NotificationQueueService,
@@ -138,7 +139,7 @@ export class ProgramContactComponent implements OnInit {
 
   }
   save(): void {
-    // this.saving = true;
+    this.saving = true;
     this.out = convertProgramApplicationToDynamics(this.programTrans);
     this.programApplicationService.setProgramApplication(this.out).subscribe(
       r => {
@@ -149,7 +150,7 @@ export class ProgramContactComponent implements OnInit {
       err => {
         console.log(err);
         this.notificationQueueService.addNotification('The program contact could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-        // this.saving = false;
+        this.saving = false;
       }
     );
   }

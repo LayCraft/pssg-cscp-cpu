@@ -13,6 +13,7 @@ import { NotificationQueueService } from '../../core/services/notification-queue
 })
 export class ProfileComponent implements OnInit {
   trans: Transmogrifier;
+  saving: boolean = false;
 
   constructor(
     private router: Router,
@@ -30,9 +31,11 @@ export class ProfileComponent implements OnInit {
   }
   save(): void {
     // post to the organization
+    this.saving = true;
     this.profileService.updateOrg(convertContactInformationToDynamics(this.trans))
       .subscribe(
         (res: any) => {
+          this.saving = false;
           // notify
           this.notificationQueueService.addNotification('The contact information for your organization has been updated.', 'Success');
           // route to another page

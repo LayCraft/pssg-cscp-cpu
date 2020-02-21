@@ -29,4 +29,15 @@ export class FormHelper {
       return null;
     }
   }
+  areWarningsShowing() {
+    let invalid_divs: HTMLCollectionOf<Element> = document.getElementsByClassName("invalid-feedback");
+
+    for (let i = 0; i < invalid_divs.length; ++i) {
+      if (window.getComputedStyle(invalid_divs.item(i)).display !== "none") {
+        return  true;
+      }
+    }
+
+    return false;
+  }
 }

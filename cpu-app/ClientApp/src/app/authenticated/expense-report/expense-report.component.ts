@@ -17,6 +17,7 @@ export class ExpenseReportComponent implements OnInit {
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
   discriminators: string[] = ['salary_benefits', 'program_expense', 'authorization']
+  saving: boolean = false;
 
   // for variable length line item sums
   lineItemSums = {
@@ -135,7 +136,15 @@ export class ExpenseReportComponent implements OnInit {
     //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
   }
-  save() { }
+  save() { 
+    //TODO
+    this.saving = true;
+
+
+
+
+    this.saving = false;
+  }
   exit() {
     if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
       this.stateService.refresh();

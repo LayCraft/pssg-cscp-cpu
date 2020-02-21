@@ -11,6 +11,7 @@ import { iPerson } from '../../core/models/person.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
 import { convertPersonnelToDynamics } from '../../core/models/converters/personnel-to-dynamics';
+import { FormHelper } from '../../core/form-helper';
 
 @Component({
   selector: 'app-personnel',
@@ -24,13 +25,16 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
   trans: Transmogrifier;
+  saving: boolean = false;
   public nameAssemble = nameAssemble;
+  private formHelper = new FormHelper();
   constructor(
     private router: Router,
     private personService: PersonService,
     private notificationQueueService: NotificationQueueService,
     private stepperService: IconStepperService,
     private stateService: StateService,
+    // private formHelper: FormHelper
   ) { }
 
   ngOnInit() {
@@ -65,7 +69,13 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   }
 
   save(person: iPerson) {
+    if (this.formHelper.areWarningsShowing()) {
+      this.notificationQueueService.addNotification('Please fix problems first. ', 'warning');
+      return;
+    }
+
     console.log(person);
+    this.saving = true;
     // a person needs minimum a first and last name to be submitted
     if (person.firstName && person.lastName) {
       const userId = this.stateService.main.getValue().userId;
@@ -74,6 +84,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       // console.log(post);
       this.personService.setPersons(post).subscribe(
         () => {
+          this.saving = false;
           this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
           // refresh the list of people on save
           this.stateService.refresh();
@@ -81,6 +92,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         err => this.notificationQueueService.addNotification(err, 'danger')
       );
     } else {
+      this.saving = false;
       // notify the user that this user was not saved.
       this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
     }
@@ -104,6 +116,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       this.stateService.refresh();
     } else if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
       // set deactivated state
+      this.saving = true;
       person.deactivated = true;
       const userId = this.stateService.main.getValue().userId;
       const organizationId = this.stateService.main.getValue().organizationId;
@@ -114,6 +127,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       };
       // post the person
       this.personService.setPersons(post).subscribe(p => {
+        this.saving = false;
         // refresh the results
         this.stateService.refresh();
       });

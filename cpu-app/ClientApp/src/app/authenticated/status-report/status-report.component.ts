@@ -20,6 +20,7 @@ export class StatusReportComponent implements OnInit {
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
+  saving: boolean = false;
   constructor(
     private notificationQueueService: NotificationQueueService,
     private route: ActivatedRoute,
@@ -92,11 +93,13 @@ export class StatusReportComponent implements OnInit {
     }
     if (confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
       // Convert the form to a postable format
+      this.saving = true;
       const statusReport: iDynamicsPostStatusReport = convertStatusReportToDynamics(this.trans);
       // if they have not filled out the form don't submit it.
       if (!statusReport.AnswerCollection.length) {
         alert('Please ensure that you have filled out the statistics to the best of your ability before attempting to submit.');
         // break out of the function right here
+        this.saving = false;
         return;
       }
 
@@ -104,11 +107,13 @@ export class StatusReportComponent implements OnInit {
       this.statusReportService.setStatusReportAnswers(this.trans.programId, statusReport)
         .subscribe(
           r => {
+            this.saving = false;
             console.log(r);
             this.notificationQueueService.addNotification(`You have successfully submitted ${this.trans.reportingPeriod} statistics.`, 'success');
             this.router.navigate(['/authenticated/dashboard']);
           },
           err => {
+            this.saving = false;
             console.log(err);
             this.notificationQueueService.addNotification('Monthly statistics could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
           }

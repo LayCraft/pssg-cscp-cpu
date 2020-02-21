@@ -95,7 +95,7 @@
     <div class="row mt-4">
       <div class="col-md-4"></div>
       <div class="col">
-        <button (click)="save()" class="btn btn-primary">Save</button>
+        <button (click)="save()" [class.is-disabled]="saving" class="btn btn-primary">Save</button>
         <button class="btn btn-primary ml-2" (click)="onExit()">Exit</button>
       </div>
     </div>
