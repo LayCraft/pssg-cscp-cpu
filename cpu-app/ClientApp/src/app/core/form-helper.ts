@@ -1,4 +1,5 @@
 import { AbstractControl } from '@angular/forms';
+import { NotificationQueueService } from './services/notification-queue.service';
 
 // form helpers. Validity hints and hide/show toggles
 export class FormHelper {
@@ -29,15 +30,17 @@ export class FormHelper {
       return null;
     }
   }
-  areWarningsShowing() {
-    let invalid_divs: HTMLCollectionOf<Element> = document.getElementsByClassName("invalid-feedback");
-
-    for (let i = 0; i < invalid_divs.length; ++i) {
-      if (window.getComputedStyle(invalid_divs.item(i)).display !== "none") {
-        return  true;
-      }
+  isFormDirty(){
+    if (document.getElementsByClassName("ng-dirty").length > 0) {
+      return true;
     }
-
     return false;
+  }
+  isFormValid(notificationQueueService: NotificationQueueService) { //notificationQueueService: NotificationQueueService
+    if (document.getElementsByClassName("ng-invalid").length > 0) {
+      notificationQueueService.addNotification('All fields must be in a valid format.', 'warning');
+      return false;
+    }
+    return true;
   }
 }

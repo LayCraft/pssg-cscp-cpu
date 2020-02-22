@@ -8,6 +8,7 @@ import { convertStatusReportToDynamics } from '../../core/models/converters/stat
 import { iDynamicsPostStatusReport } from '../../core/models/dynamics-post';
 import { iQuestionCollection } from '../../core/models/question-collection.interface';
 import { StateService } from '../../core/services/state.service';
+import { FormHelper } from '../../core/form-helper';
 
 @Component({
   selector: 'app-status-report',
@@ -21,6 +22,7 @@ export class StatusReportComponent implements OnInit {
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
   saving: boolean = false;
+  private formHelper = new FormHelper();
   constructor(
     private notificationQueueService: NotificationQueueService,
     private route: ActivatedRoute,
@@ -91,6 +93,9 @@ export class StatusReportComponent implements OnInit {
       alert('Please select a month before submitting.');
       return;
     }
+    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+    //   return;
+    // }
     if (confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
       // Convert the form to a postable format
       this.saving = true;
@@ -121,7 +126,11 @@ export class StatusReportComponent implements OnInit {
     }
   }
   exit() {
-    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.stateService.refresh();
+      this.router.navigate(['/authenticated/dashboard']);
+    }
+    else {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }

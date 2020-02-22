@@ -10,7 +10,7 @@ export function convertPersonToDynamics(person: iPerson): iDynamicsCrmContact {
   if (person.address && person.address.line2) p.address1_line2 = person.address.line2;
   if (person.address && person.address.postalCode) p.address1_postalcode = person.address.postalCode;
   if (person.address && person.address.province) p.address1_stateorprovince = person.address.province;
-  if (person.deactivated) p.statecode = 1; // sending a 1 statuscode means soft delete the record
+  if (person.deactivated) p.statecode = 1; else p.statecode = 0; // sending a 1 statuscode means soft delete the record
   if (person.email) p.emailaddress1 = person.email;
   if (person.fax) p.fax = person.fax;
   if (person.firstName) p.firstname = person.firstName;

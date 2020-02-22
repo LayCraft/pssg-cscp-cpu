@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterContentChecked } from '@angular/core';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Person } from '../../core/models/person.class';
 import { PersonService } from '../../core/services/person.service';
@@ -12,6 +12,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { nameAssemble } from '../../core/constants/name-assemble';
 import { convertPersonnelToDynamics } from '../../core/models/converters/personnel-to-dynamics';
 import { FormHelper } from '../../core/form-helper';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-personnel',
@@ -27,7 +28,9 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   trans: Transmogrifier;
   saving: boolean = false;
   public nameAssemble = nameAssemble;
-  private formHelper = new FormHelper();
+  public formHelper = new FormHelper();
+  personForm: FormGroup;
+  didLoad: boolean = false;
   constructor(
     private router: Router,
     private personService: PersonService,
@@ -46,6 +49,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       this.trans = m;
       // set the default top and bottom list
       this.constructStepperElements(m);
+      this.didLoad = true;
     });
   }
   ngOnDestroy() {
@@ -64,13 +68,13 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         this.stepperService.addStepperElement(person, nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
       });
       // set the stepper to the first element
-      this.stepperService.setToFirstStepperElement();
+      if (!this.didLoad)
+        this.stepperService.setToFirstStepperElement();
     }
   }
 
   save(person: iPerson) {
-    if (this.formHelper.areWarningsShowing()) {
-      this.notificationQueueService.addNotification('Please fix problems first. ', 'warning');
+    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
       return;
     }
 
@@ -89,7 +93,10 @@ export class PersonnelComponent implements OnInit, OnDestroy {
           // refresh the list of people on save
           this.stateService.refresh();
         },
-        err => this.notificationQueueService.addNotification(err, 'danger')
+        err => {
+          this.notificationQueueService.addNotification(err, 'danger');
+          this.saving = false;
+        }
       );
     } else {
       this.saving = false;
@@ -99,7 +106,11 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   }
 
   exit() {
-    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.stateService.refresh();
+      this.router.navigate(['/authenticated/dashboard']);
+    }
+    else {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }

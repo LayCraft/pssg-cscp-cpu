@@ -10,6 +10,7 @@ import { nameAssemble } from '../../core/constants/name-assemble';
 import { convertBudgetProposalToDynamics } from '../../core/models/converters/budget-proposal-to-dynamics';
 import { iProgramBudget } from '../../core/models/program-budget.interface';
 import { iDynamicsPostBudgetProposal } from '../../core/models/dynamics-post';
+import { FormHelper } from '../../core/form-helper';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -27,6 +28,7 @@ export class BudgetProposalComponent implements OnInit {
   saving: boolean = false;
 
   personDict: object = {};
+  private formHelper = new FormHelper();
   constructor(
     private budgetProposalService: BudgetProposalService,
     private notificationQueueService: NotificationQueueService,
@@ -102,6 +104,9 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
+    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+    //   return;
+    // }
     this.saving = true;
     this.out = convertBudgetProposalToDynamics(this.trans);
     this.budgetProposalService.setBudgetProposal(this.out).subscribe(
@@ -118,7 +123,11 @@ export class BudgetProposalComponent implements OnInit {
     );
   }
   exit() {
-    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.stateService.refresh();
+      this.router.navigate(['/authenticated/dashboard']);
+    }
+    else {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }

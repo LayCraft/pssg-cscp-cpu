@@ -5,6 +5,7 @@ import { StateService } from '../../core/services/state.service';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { convertContactInformationToDynamics } from '../../core/models/converters/contact-information-to-dynamics';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
+import { FormHelper } from '../../core/form-helper';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ export class ProfileComponent implements OnInit {
   trans: Transmogrifier;
   saving: boolean = false;
 
+  private formHelper = new FormHelper();
   constructor(
     private router: Router,
     private stateService: StateService,
@@ -30,6 +32,9 @@ export class ProfileComponent implements OnInit {
     });
   }
   save(): void {
+    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+    //   return;
+    // }
     // post to the organization
     this.saving = true;
     this.profileService.updateOrg(convertContactInformationToDynamics(this.trans))
@@ -45,11 +50,13 @@ export class ProfileComponent implements OnInit {
       );
   }
   onExit() {
-    if (confirm("All unsaved changes will be lost. Are you sure you want to return to the dashboard?")) {
-      //refresh info back to original state
+    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
       this.stateService.refresh();
-      // send the user back to the dashboard
-      this.router.navigate([this.stateService.homeRoute.getValue()]);
+      this.router.navigate(['/authenticated/dashboard']);
+    }
+    else {
+      this.stateService.refresh();
+      this.router.navigate(['/authenticated/dashboard']);
     }
   }
 }

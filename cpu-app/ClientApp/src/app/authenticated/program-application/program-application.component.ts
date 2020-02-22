@@ -7,6 +7,7 @@ import { TransmogrifierProgramApplication } from '../../core/models/transmogrifi
 import { iProgramApplication } from '../../core/models/program-application.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { convertProgramApplicationToDynamics } from '../../core/models/converters/program-application-to-dynamics';
+import { FormHelper } from '../../core/form-helper';
 
 @Component({
   selector: 'app-program-application',
@@ -22,6 +23,8 @@ export class ProgramApplicationComponent implements OnInit {
   currentStepperElement: iStepperElement;
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
   saving: boolean = false;
+
+  private formHelper = new FormHelper();
 
   constructor(
     private notificationQueueService: NotificationQueueService,
@@ -132,6 +135,9 @@ export class ProgramApplicationComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save() {
+    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+    //   return;
+    // }
     this.saving = true;
     this.out = convertProgramApplicationToDynamics(this.trans);
     this.programApplicationService.setProgramApplication(this.out).subscribe(
@@ -148,7 +154,11 @@ export class ProgramApplicationComponent implements OnInit {
     );
   }
   exit() {
-    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.stateService.refresh();
+      this.router.navigate(['/authenticated/dashboard']);
+    }
+    else {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }

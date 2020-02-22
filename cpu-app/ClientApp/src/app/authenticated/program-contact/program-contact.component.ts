@@ -31,7 +31,7 @@ export class ProgramContactComponent implements OnInit {
   programTrans: TransmogrifierProgramApplication;
   trans: Transmogrifier;
   // helpers for setting form state
-  public formHelper = new FormHelper();
+  private formHelper = new FormHelper();
   emailRegex: RegExp;
   phoneRegex: RegExp;
   out: any;
@@ -139,6 +139,9 @@ export class ProgramContactComponent implements OnInit {
 
   }
   save(): void {
+    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+    //   return;
+    // }
     this.saving = true;
     this.out = convertProgramApplicationToDynamics(this.programTrans);
     this.programApplicationService.setProgramApplication(this.out).subscribe(
@@ -155,10 +158,13 @@ export class ProgramContactComponent implements OnInit {
     );
   }
   onExit() {
-    if (confirm("All unsaved changes will be lost. Are you sure you want to return to the dashboard?")) {
+    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
       this.stateService.refresh();
-      // send the user back to the dashboard
-      this.router.navigate([this.stateService.homeRoute.getValue()]);
+      this.router.navigate(['/authenticated/dashboard']);
+    }
+    else {
+      this.stateService.refresh();
+      this.router.navigate(['/authenticated/dashboard']);
     }
   }
 }
