@@ -3,9 +3,24 @@
     <div class="col-md-4">
       <section class="application-nav sticky-top">
         <div style="max-height: 90%;">
+          <div class="card organization-box" *ngIf="trans">
+            <div class="card-header">
+              {{ trans.organizationName ||'Organization'}}
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <strong>Contract No</strong><br>
+                {{trans.contractNumber}}
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="max-height: 90%;">
           <app-icon-stepper></app-icon-stepper>
         </div>
-        <button class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
+        <button class="btn btn-primary mt-2 mr-2" [class.is-disabled]="saving" (click)="save()">Save</button>
         <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
       </section>
     </div>
@@ -26,7 +41,8 @@
                 <div class="col-md">
                   <div class="form-group">
                     <label for="orgName">Legal Name of Organization</label>
-                    <input [value]="trans.organizationName" type="text" class="form-control" id="orgName" name="orgName" disabled>
+                    <input [value]="trans.organizationName" type="text" class="form-control" id="orgName" name="orgName"
+                      disabled>
                   </div>
                 </div>
               </div>
@@ -34,7 +50,8 @@
                 <div class="col-md">
                   <div class="form-group">
                     <label for="city">Contract Number</label>
-                    <input [value]="trans.contractNumber" type="text" class="form-control" id="contractNumber" name="contractNumber" disabled>
+                    <input [value]="trans.contractNumber" type="text" class="form-control" id="contractNumber"
+                      name="contractNumber" disabled>
                   </div>
                 </div>
               </div>
@@ -47,7 +64,8 @@
 
               <!-- Mailing address checkbox -->
               <div class="form-check">
-                <input [(ngModel)]="trans.contactInformation.hasMailingAddress" class="form-check-input" type="checkbox" id="mailingAddressCheckbox">
+                <input [(ngModel)]="trans.contactInformation.hasMailingAddress" class="form-check-input" type="checkbox"
+                  id="mailingAddressCheckbox">
                 <label class="form-check-label" for="mailingAddressCheckbox">
                   Different mailing address from main address.
                 </label>
@@ -60,24 +78,29 @@
 
               <!-- Primary contact the ministry calls when they want to contact the org -->
               <h2 class="blue-header mt-4">Organization Contact(s)</h2>
-              <p>If the executive or board contact information has inaccuracy please update personnel contact information for your organization before submitting this program application.</p>
-              <app-person-picker [title]="'Contractor Contact'" [(person)]="trans.contactInformation.executiveContact"></app-person-picker>
+              <p>If the executive or board contact information has inaccuracy please update personnel contact
+                information for your organization before submitting this program application.</p>
+              <app-person-picker [title]="'Contractor Contact'" [(person)]="trans.contactInformation.executiveContact">
+              </app-person-picker>
 
               <!-- Does the org have a board of directors? -->
               <div class="form-check mt-4">
-                <input [(ngModel)]="trans.contactInformation.hasBoardContact" type="checkbox" id="hasBoardOfDirectors" name="hasBoardOfDirectors" class="form-check-input">
+                <input [(ngModel)]="trans.contactInformation.hasBoardContact" type="checkbox" id="hasBoardOfDirectors"
+                  name="hasBoardOfDirectors" class="form-check-input">
                 <label for="hasBoardOfDirectors">
                   Does your organization have a board of directors?
                 </label>
               </div>
               <!-- If there is a board of directors who is it? -->
               <span *ngIf="trans.contactInformation.hasBoardContact">
-                <app-person-picker [title]="'Board Contact (For societies only)'" [(person)]="trans.contactInformation.boardContact"></app-person-picker>
+                <app-person-picker [title]="'Board Contact (For societies only)'"
+                  [(person)]="trans.contactInformation.boardContact"></app-person-picker>
               </span>
 
             </div>
             <div *ngIf="item.discriminator === discriminators[1]">
-              <app-administrative-information [(transmogrifierProgramApplication)]="trans"></app-administrative-information>
+              <app-administrative-information [(transmogrifierProgramApplication)]="trans">
+              </app-administrative-information>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">
               <app-cg-liability [(cgLiability)]="trans.cglInsurance"></app-cg-liability>
@@ -102,6 +125,16 @@
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-8">
+      <span><button *ngIf="stepperIndex > 0" class="btn btn-primary mt-2 previous-button" (click)="setPreviousStepper()">Previous</button></span>
+      <span><button *ngIf="stepperIndex < stepperElements.length -1" class="btn btn-primary mt-2" (click)="setNextStepper()">Next</button></span>
+    </div>
+  </div>
+
   <!-- <div class="row">
     <div class="col-4">
       <pre>{{data|json}}</pre>

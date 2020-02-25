@@ -16,7 +16,7 @@ export class PersonService {
   ) { }
 
   setPersons(users: iDynamicsPostUsers): Observable<any> {
-    // console.log(users);
+    // console.log(users); 
     let full_endpoint = `${this.apiUrl}/SetStaff`;
     return this.http.post<any>(full_endpoint, users, { headers: this.headers }).pipe(
       retry(3),

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterContentChecked } from '@angular/core';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Person } from '../../core/models/person.class';
 import { PersonService } from '../../core/services/person.service';
@@ -11,6 +11,8 @@ import { iPerson } from '../../core/models/person.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { nameAssemble } from '../../core/constants/name-assemble';
 import { convertPersonnelToDynamics } from '../../core/models/converters/personnel-to-dynamics';
+import { FormHelper } from '../../core/form-helper';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-personnel',
@@ -22,15 +24,21 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   reload = false;
   // used for the stepper component
   currentStepperElement: iStepperElement;
+  stepperIndex: number = 0;
   stepperElements: iStepperElement[];
   trans: Transmogrifier;
+  saving: boolean = false;
   public nameAssemble = nameAssemble;
+  public formHelper = new FormHelper();
+  personForm: FormGroup;
+  didLoad: boolean = false;
   constructor(
     private router: Router,
     private personService: PersonService,
     private notificationQueueService: NotificationQueueService,
     private stepperService: IconStepperService,
     private stateService: StateService,
+    // private formHelper: FormHelper
   ) { }
 
   ngOnInit() {
@@ -42,6 +50,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       this.trans = m;
       // set the default top and bottom list
       this.constructStepperElements(m);
+      this.didLoad = true;
     });
   }
   ngOnDestroy() {
@@ -60,12 +69,22 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         this.stepperService.addStepperElement(person, nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
       });
       // set the stepper to the first element
-      this.stepperService.setToFirstStepperElement();
+      if (!this.didLoad) {
+        this.stepperService.setToFirstStepperElement();
+      }
+      else {
+        this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+      }
     }
   }
 
   save(person: iPerson) {
+    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      return;
+    }
+
     console.log(person);
+    this.saving = true;
     // a person needs minimum a first and last name to be submitted
     if (person.firstName && person.lastName) {
       const userId = this.stateService.main.getValue().userId;
@@ -74,20 +93,30 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       // console.log(post);
       this.personService.setPersons(post).subscribe(
         () => {
+          this.saving = false;
           this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
           // refresh the list of people on save
+          this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
           this.stateService.refresh();
         },
-        err => this.notificationQueueService.addNotification(err, 'danger')
+        err => {
+          this.notificationQueueService.addNotification(err, 'danger');
+          this.saving = false;
+        }
       );
     } else {
+      this.saving = false;
       // notify the user that this user was not saved.
       this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
     }
   }
 
   exit() {
-    if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.stateService.refresh();
+      this.router.navigate(['/authenticated/dashboard']);
+    }
+    else {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }
@@ -104,6 +133,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       this.stateService.refresh();
     } else if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
       // set deactivated state
+      this.saving = true;
       person.deactivated = true;
       const userId = this.stateService.main.getValue().userId;
       const organizationId = this.stateService.main.getValue().organizationId;
@@ -114,6 +144,9 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       };
       // post the person
       this.personService.setPersons(post).subscribe(p => {
+        this.saving = false;
+
+        if (this.stepperIndex > 0) --this.stepperIndex;
         // refresh the results
         this.stateService.refresh();
       });

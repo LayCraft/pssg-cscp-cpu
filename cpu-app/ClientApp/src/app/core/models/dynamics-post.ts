@@ -1,41 +1,45 @@
-export interface iDynamicsPostScheduleG {
+export interface iDynamicsPostScheduleG { //no controller setup to receive this yet
   UserBCeID: string;
   BusinessBCeID: string;
   ScheduleGCollection: iDynamicsScheduleGPost[];
   ScheduleGLineItemCollection: iDynamicsScheduleGLineItemPost[];
 }
-export interface iDynamicsPostOrg {
+export interface iDynamicsPostOrg { //maps to OrganizationPost
   UserBCeID: string;
   BusinessBCeID: string;
   Organization: iDynamicsOrganizationPost;
+  //this doesn't include staff collection...
+  //StaffCollection: iDynamicsCrmContactPost[];
 }
-export interface iDynamicsPostUsers {
+export interface iDynamicsPostUsers { //maps to OrganizationPost
   UserBCeID: string;
   BusinessBCeID: string;
+  //this doesn't include Organization...
+  //Organization: iDynamicsOrganizationPost;
   StaffCollection: iDynamicsCrmContactPost[];
 }
-export interface iDynamicsPostStatusReport {
+export interface iDynamicsPostStatusReport { //maps to MonthlyStatisticsAnswers
   BusinessBCeID: string;
   UserBCeID: string;
   ReportingPeriod: number;
   AnswerCollection: iDynamicsAnswer[];
 }
-export interface iDynamicsPostFile {
+export interface iDynamicsPostFile { //maps to FilePost
   Businessbceid: string;
   Userbceid: string;
   DocumentCollection?: iDynamicsDocumentPost[];
 }
-export interface iDynamicsPostScheduleF {
+export interface iDynamicsPostScheduleF { //maps to ProgramApplicationPost
   BusinessBCeID: string;
-  ContractCollection?: iDynamicsCrmContractPost[];
+  UserBCeID: string;
+  ProgramContactCollection?: iDynamicsProgramContactPost[];
   Organization?: iDynamicsOrganizationPost;
   ProgramCollection?: iDynamicsCrmProgramPost[];
-  ProgramContactCollection?: iDynamicsProgramContactPost[];
-  ScheduleCollection?: iDynamicsSchedulePost[];
-  StaffCollection?: iDynamicsProgramContactPost[];
-  UserBCeID: string;
+  ContractCollection?: iDynamicsCrmContractPost[];
+  StaffCollection?: iDynamicsProgramContactPost[];  //commented out on the controller side...
+  ScheduleCollection?: iDynamicsSchedulePost[];     //commented out on the controller side...
 }
-export interface iDynamicsPostBudgetProposal {
+export interface iDynamicsPostBudgetProposal { //maps to BudgetProposalPost
   BusinessBCeID: string;
   UserBCeID: string;
   ProgramExpenseCollection: iDynamicsProgramExpense[];
@@ -99,8 +103,10 @@ export interface iDynamicsProgramContactPost {
 }
 export interface iDynamicsOrganizationPost {
   _ownerid_value?: string;
-  _vsd_boardcontactid_value?: string;
-  _vsd_executivecontactid_value?: string;
+  vsd_ExecutiveContactIdfortunecookiebind?: string;
+  vsd_BoardContactIdfortunecookiebind?: string;
+  // _vsd_boardcontactid_value?: string;
+  // _vsd_executivecontactid_value?: string;
   accountid?: string;
   address1_city?: string;
   address1_country?: string;
@@ -118,8 +124,6 @@ export interface iDynamicsOrganizationPost {
   fax?: string;
   name?: string;
   telephone1?: string;
-  vsd_BoardContactIdfortunecookiebind?: string;
-  vsd_ExecutiveContactIdfortunecookiebind?: string;
   vsd_bceid?: string;
 }
 export interface iDynamicsScheduleGPost {
@@ -179,7 +183,7 @@ export interface iDynamicsScheduleGLineItemPost {
 export interface iDynamicsCrmContactPost {
   _parentcustomerid_value?: string;
   address1_city?: string;
-  address1_country?: string;
+  address1_country?: string; //doesn't exist on C# model, so doesn't matter if we don't send this...
   address1_line1?: string;
   address1_line2?: string;
   address1_postalcode?: string;

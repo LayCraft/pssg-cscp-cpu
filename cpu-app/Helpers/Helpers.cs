@@ -9,6 +9,8 @@ namespace Gov.Cscp.Victims.Public.Helpers
     {
         public static string updateFortunecookieBindNull(string modelString)
         {
+
+            //TODO - statecode or  can't be null
             string ret = "";
             string toCheck = modelString;
             var regex = new System.Text.RegularExpressions.Regex("\"[a-zA-Z0-9_]*fortunecookiebind\"");
@@ -35,7 +37,20 @@ namespace Gov.Cscp.Victims.Public.Helpers
             }
 
             ret += toCheck;
+
+            ret = ret.Replace(",\"statecode\":null", "");
+            ret = ret.Replace("\"statecode\":null,", "");
+            ret = ret.Replace("\"statecode\":null", "");
             return ret;
         }
+        public static string removeNullsForStaffUpdate(string modelString)
+        {
+            string ret = modelString.Replace("\"_parentcustomerid_value\":null,", "");
+            ret = ret.Replace("\"Organization\":null,", "");
+            ret = ret.Replace("\"vsd_bceid\":null,", "");
+            ret = ret.Replace("\"contactid\":null,", "");
+            return ret;
+        }
+
     }
 }

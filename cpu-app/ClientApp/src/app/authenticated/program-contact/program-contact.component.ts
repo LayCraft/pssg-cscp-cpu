@@ -36,6 +36,7 @@ export class ProgramContactComponent implements OnInit {
   phoneRegex: RegExp;
   out: any;
   errorState: boolean = false;
+  saving: boolean = false;
 
   constructor(
     private notificationQueueService: NotificationQueueService,
@@ -138,7 +139,10 @@ export class ProgramContactComponent implements OnInit {
 
   }
   save(): void {
-    // this.saving = true;
+    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+    //   return;
+    // }
+    this.saving = true;
     this.out = convertProgramApplicationToDynamics(this.programTrans);
     this.programApplicationService.setProgramApplication(this.out).subscribe(
       r => {
@@ -149,15 +153,18 @@ export class ProgramContactComponent implements OnInit {
       err => {
         console.log(err);
         this.notificationQueueService.addNotification('The program contact could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-        // this.saving = false;
+        this.saving = false;
       }
     );
   }
   onExit() {
-    if (confirm("All unsaved changes will be lost. Are you sure you want to return to the dashboard?")) {
+    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
       this.stateService.refresh();
-      // send the user back to the dashboard
-      this.router.navigate([this.stateService.homeRoute.getValue()]);
+      this.router.navigate(['/authenticated/dashboard']);
+    }
+    else {
+      this.stateService.refresh();
+      this.router.navigate(['/authenticated/dashboard']);
     }
   }
 }

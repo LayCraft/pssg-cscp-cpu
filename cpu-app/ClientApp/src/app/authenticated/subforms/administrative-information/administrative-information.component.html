@@ -46,28 +46,10 @@
     Union name is
   </div>
 </div>
-<label>
-  What is your organization's membership status with the Community Social Services Employers Association of BC (CSSEA)?
-</label>
+
 <div class="form-group">
-  <div class="form-check form-check-inline">
-    <input #ccseaMemberType="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType1" id="ccseaMemberType1" value="Member">
-    <label class="form-check-label" for="ccseaMemberType1">
-      Member
-    </label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input #ccseaMemberType="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType2" id="ccseaMemberType2" value="Associate">
-    <label class="form-check-label" for="ccseaMemberType2">
-      Associate member
-    </label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input #ccseaMemberType="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.ccseaMemberType" class="form-check-input" type="radio" name="ccseaMemberType3" id="ccseaMemberType3" value="Non-Member">
-    <label class="form-check-label" for="ccseaMemberType3">
-      Non-member
-    </label>
-  </div>
+    <label for="ccseaMemberType">Is your organization a member of the Community Social Services Employers Association of BC (CSSEA)</label>
+    <input [value]="transmogrifierProgramApplication.administrativeInformation.ccseaMemberType || 'Unknown'" type="text" class="form-control" id="ccseaMemberType" name="ccseaMemberType"disabled>
 </div>
 
 <label>

@@ -9,6 +9,7 @@ import { iPerson } from "./person.interface";
 import { iProgramApplication } from "./program-application.interface";
 import { iSignature } from '../../authenticated/subforms/program-authorizer/program-authorizer.component';
 import { makeViewTimeString } from './converters/hours-to-dynamics';
+import { ngDevModeResetPerfCounters } from '@angular/core/src/render3/ng_dev_mode';
 
 export class TransmogrifierProgramApplication {
   accountId: string;// this is the dynamics account
@@ -157,7 +158,7 @@ export class TransmogrifierProgramApplication {
         name: p.vsd_name,
         phoneNumber: p.vsd_phonenumber,
         programId: p.vsd_programid,
-        serviceArea: p._vsd_cpu_regiondistrict_value,
+        serviceArea: g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrictlookup2_value === x.vsd_regiondistrictid).map(a => a.vsd_name)[0] || 'Unknown', //p._vsd_cpu_regiondistrictlookup2_value,
         mainAddress: {
           line1: p.vsd_addressline1 || null,
           line2: p.vsd_addressline2 || null,
@@ -176,22 +177,24 @@ export class TransmogrifierProgramApplication {
         },
         programContact: g.StaffCollection
           .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
-          .map(s => this.makePersonFromStaffCollection(g, s.contactid))[0] || null,
+          .map(s => this.makePerson(g, s.contactid))[0] || null,
         // revenueSources: [],//iRevenueSource[];
         additionalStaff: g.ProgramContactCollection
           .filter((c: iDynamicsCrmContact) => c.vsd_programid = p.vsd_programid)
-          .map(s => this.makePersonFromProgramContactCollection(g, s.contactid)) || null,// iPerson[];
+          .map(s => this.makePerson(g, s.contactid)) || null,// iPerson[];
         operationHours: [],//iHours[];
         standbyHours: [],//iHours[];
       } as iProgramApplication;
 
-      const programLocations = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid);
-      if (programLocations.length) {
-        //if there is a match we add it otherwise skip it. Done like this because Dynamics has the tendency to mess up the regiondistrict collection and that causes errors.
-        temp.programLocation = programLocations[0].vsd_name;
-      } else {
-        temp.programLocation = 'Unknown';
-      }
+      temp.programLocation = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid).map(a => a.vsd_name)[0] || 'Unknown';
+
+      // const programLocations = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid);
+      // if (programLocations.length) {
+      //   //if there is a match we add it otherwise skip it. Done like this because Dynamics has the tendency to mess up the regiondistrict collection and that causes errors.
+      //   temp.programLocation = programLocations[0].vsd_name;
+      // } else {
+      //   temp.programLocation = 'Unknown';
+      // }
 
       // add operation and standby hours
       for (let sched of g.ScheduleCollection) {
@@ -222,7 +225,7 @@ export class TransmogrifierProgramApplication {
     }
     return applications;
   }
-  private makePersonFromStaffCollection(g: iDynamicsScheduleFResponse, personId: string): iPerson {
+  private makePerson(g: iDynamicsScheduleFResponse, personId: string): iPerson {
     // return whole person
     return g.StaffCollection
       .filter((p: iDynamicsCrmContact) => p.contactid === personId)

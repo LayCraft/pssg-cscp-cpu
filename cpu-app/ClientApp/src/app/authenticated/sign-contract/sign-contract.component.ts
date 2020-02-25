@@ -6,6 +6,7 @@ import { StateService } from '../../core/services/state.service';
 import { iDynamicsFile } from '../../core/models/dynamics-blob';
 import { iDynamicsPostFile, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { FormHelper } from '../../core/form-helper';
 
 interface FileBundle {
   // list of file names (same order as file array)
@@ -39,6 +40,7 @@ export class SignContractComponent implements OnInit {
   userId: string;
   contractId: string;
 
+  private formHelper = new FormHelper();
   constructor(
     private fileService: FileService,
     private stepperService: IconStepperService,
@@ -63,17 +65,24 @@ export class SignContractComponent implements OnInit {
   }
 
   save() {
+    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+    //   return;
+    // }
     this.saving = true;
     setTimeout(() => {
       this.saving = false;
-      console.log('Saved');
+      console.log('"Saved"');
     }, 100);
   }
   exit() {
-    // if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
-    this.stateService.refresh();
-    this.router.navigate([this.stateService.homeRoute.getValue()]);
-    // }
+    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+      this.stateService.refresh();
+      this.router.navigate(['/authenticated/dashboard']);
+    }
+    else {
+      this.stateService.refresh();
+      this.router.navigate(['/authenticated/dashboard']);
+    }
   }
   constructDefaultstepperElements() {
     // clean out the old things that might be living in the stepper.
