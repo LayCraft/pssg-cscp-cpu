@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { ProgramApplicationService } from '../../core/services/program-application.service';
 import { StateService } from '../../core/services/state.service';
@@ -8,6 +8,7 @@ import { iProgramApplication } from '../../core/models/program-application.inter
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { convertProgramApplicationToDynamics } from '../../core/models/converters/program-application-to-dynamics';
 import { FormHelper } from '../../core/form-helper';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-program-application',
@@ -21,6 +22,8 @@ export class ProgramApplicationComponent implements OnInit {
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
+  tempStepperElement: iStepperElement = null;
+  stepperIndex: number = 0;
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
   saving: boolean = false;
 
@@ -32,7 +35,7 @@ export class ProgramApplicationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private stateService: StateService,
-    private stepperService: IconStepperService
+    private stepperService: IconStepperService,
   ) { }
 
   ngOnInit() {
@@ -67,7 +70,6 @@ export class ProgramApplicationComponent implements OnInit {
       );
     });
     // subscribe to the stepper state
-    this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
   }
 
@@ -133,18 +135,34 @@ export class ProgramApplicationComponent implements OnInit {
     });
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
+
+    this.stepperService.currentStepperElement.subscribe(e => {
+      if (this.currentStepperElement) {
+        //TODO - figure out state of form...
+        this.tempStepperElement = _.cloneDeep(this.currentStepperElement);
+        this.currentStepperElement.formState = this.formHelper.getFormState();
+      }
+      this.currentStepperElement = e;
+
+      if (this.currentStepperElement && this.stepperElements) {
+        this.stepperIndex = this.stepperElements.findIndex(e => e.id === this.currentStepperElement.id);
+      }
+    });
   }
-  save() {
-    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-    //   return;
-    // }
+  save(showNotification: boolean = true) {
+    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      return;
+    }
     this.saving = true;
     this.out = convertProgramApplicationToDynamics(this.trans);
     this.programApplicationService.setProgramApplication(this.out).subscribe(
       r => {
         console.log(r);
-        this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
-        this.router.navigate(['/authenticated/dashboard']);
+        if (showNotification) {
+          this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
+        }
+        this.saving = false;
+        // this.router.navigate(['/authenticated/dashboard']);
       },
       err => {
         console.log(err);
@@ -162,5 +180,22 @@ export class ProgramApplicationComponent implements OnInit {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }
+  }
+  setNextStepper() {
+    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      this.currentStepperElement.formState = this.formHelper.getFormState();
+      //testing
+      // setTimeout(() => {
+      //   console.log(this.formHelper.isFormValid(this.notificationQueueService));
+      // }, 1000);
+      return;
+    }
+    this.save(false);
+    ++this.stepperIndex;
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+  }
+  setPreviousStepper() {
+    --this.stepperIndex;
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
   }
 }

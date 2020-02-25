@@ -177,11 +177,11 @@ export class TransmogrifierProgramApplication {
         },
         programContact: g.StaffCollection
           .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
-          .map(s => this.makePersonFromStaffCollection(g, s.contactid))[0] || null,
+          .map(s => this.makePerson(g, s.contactid))[0] || null,
         // revenueSources: [],//iRevenueSource[];
         additionalStaff: g.ProgramContactCollection
           .filter((c: iDynamicsCrmContact) => c.vsd_programid = p.vsd_programid)
-          .map(s => this.makePersonFromProgramContactCollection(g, s.contactid)) || null,// iPerson[];
+          .map(s => this.makePerson(g, s.contactid)) || null,// iPerson[];
         operationHours: [],//iHours[];
         standbyHours: [],//iHours[];
       } as iProgramApplication;
@@ -225,7 +225,7 @@ export class TransmogrifierProgramApplication {
     }
     return applications;
   }
-  private makePersonFromStaffCollection(g: iDynamicsScheduleFResponse, personId: string): iPerson {
+  private makePerson(g: iDynamicsScheduleFResponse, personId: string): iPerson {
     // return whole person
     return g.StaffCollection
       .filter((p: iDynamicsCrmContact) => p.contactid === personId)

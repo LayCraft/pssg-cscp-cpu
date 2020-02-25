@@ -46,7 +46,7 @@ namespace Gov.Cscp.Victims.Public.Helpers
         public static string removeNullsForStaffUpdate(string modelString)
         {
             string ret = modelString.Replace("\"_parentcustomerid_value\":null,", "");
-            ret = modelString.Replace("\"Organization\":null,", "");
+            ret = ret.Replace("\"Organization\":null,", "");
             return ret;
         }
 

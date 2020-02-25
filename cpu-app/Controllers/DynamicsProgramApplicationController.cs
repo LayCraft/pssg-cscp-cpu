@@ -60,6 +60,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 // turn the model into a string
                 string modelString = System.Text.Json.JsonSerializer.Serialize(model);
                 modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
+                //_ownerid_value on the Organization is already ignored by the CRM API, so don't need to remove it
                 DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
 
                 return StatusCode((int)result.statusCode, result.result.ToString());

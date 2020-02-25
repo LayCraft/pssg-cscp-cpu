@@ -41,6 +41,21 @@ export class FormHelper {
       notificationQueueService.addNotification('All fields must be in a valid format.', 'warning');
       return false;
     }
+    if (document.getElementsByClassName("tab-invalid").length > 0) {
+      notificationQueueService.addNotification('There is a problem on another tab preventing save.', 'warning');
+      return false;
+    }
     return true;
+  }
+  getFormState() {
+    if (document.getElementsByClassName("ng-invalid").length > 0) {
+      return 'invalid';
+    }
+    if (document.getElementsByClassName("ng-dirty").length > 0) {
+      return 'incomplete';
+    }
+    //TODO - check for complete? info? untouched?
+    return 'untouched';
+    
   }
 }

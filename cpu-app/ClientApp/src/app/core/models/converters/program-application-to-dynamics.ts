@@ -17,13 +17,13 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_ContactLookup1fortunecookiebind: trans.contactInformation.executiveContact.personId,
       // if the user has requested not to have a board contact we simply duplicate the link to the the executive contact
       vsd_ContactLookup2fortunecookiebind: trans.contactInformation.hasBoardContact ? trans.contactInformation.boardContact.personId : trans.contactInformation.executiveContact.personId,
+      vsd_cpu_programstaffsubcontracted: trans.administrativeInformation.staffSubcontracted,
+      vsd_cpu_staffunionized: trans.administrativeInformation.staffUnionized,
+      vsd_cpu_insuranceoptions: encodeCglInsurance(trans.cglInsurance),
+      vsd_cpu_memberofcssea: encodeCcseaMemberType(trans.administrativeInformation.ccseaMemberType),
       vsd_contractid: trans.contractId,
       vsd_cpu_humanresourcepolices: encodeHrPolicies(trans.administrativeInformation),
-      vsd_cpu_insuranceoptions: encodeCglInsurance(trans.cglInsurance),
-      vsd_cpu_programstaffsubcontracted: trans.administrativeInformation.staffSubcontracted,
       vsd_cpu_specificunion: trans.administrativeInformation.staffUnion,
-      vsd_cpu_staffunionized: trans.administrativeInformation.staffUnionized,
-      vsd_cpu_memberofcssea: encodeCcseaMemberType(trans.administrativeInformation.ccseaMemberType),
       vsd_name: trans.contractNumber
     }],
     Organization: {
@@ -34,10 +34,6 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       address1_line2: trans.contactInformation.mainAddress.line2,
       address1_postalcode: trans.contactInformation.mainAddress.postalCode,
       address1_stateorprovince: trans.contactInformation.mainAddress.province,
-      emailaddress1: trans.contactInformation.emailAddress,
-      fax: trans.contactInformation.faxNumber,
-      name: trans.organizationName,
-      telephone1: trans.contactInformation.phoneNumber,
       // if the mailing address is false we set all mailing address info to blank to copy over the existing non-null values in Dynamics.
       // there is no procedure to request "remove mailing address from organization"
       address2_city: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.city : '',
@@ -46,6 +42,11 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       address2_line2: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.line2 : '',
       address2_postalcode: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.postalCode : '',
       address2_stateorprovince: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.province : '',
+
+      emailaddress1: trans.contactInformation.emailAddress,
+      fax: trans.contactInformation.faxNumber,
+      name: trans.organizationName,
+      telephone1: trans.contactInformation.phoneNumber,
     },
   };
   // if there is no board contact we should remove the board contact before submitting.

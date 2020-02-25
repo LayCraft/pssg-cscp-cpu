@@ -31,7 +31,7 @@ export class ProgramContactComponent implements OnInit {
   programTrans: TransmogrifierProgramApplication;
   trans: Transmogrifier;
   // helpers for setting form state
-  private formHelper = new FormHelper();
+  public formHelper = new FormHelper();
   emailRegex: RegExp;
   phoneRegex: RegExp;
   out: any;
