@@ -51,6 +51,10 @@ export class StatusReportComponent implements OnInit {
             this.data = r;
             // construct the stepper
             this.trans = new TransmogrifierStatusReport(r);
+            console.log("dynamics data status report:");
+            console.log(r);
+            console.log("trans");
+            console.log(this.trans);
             this.constructDefaultstepperElements();
           }
         });
@@ -107,6 +111,8 @@ export class StatusReportComponent implements OnInit {
         this.saving = false;
         return;
       }
+
+      console.log(statusReport);
 
       // submit the answers
       this.statusReportService.setStatusReportAnswers(this.trans.programId, statusReport)

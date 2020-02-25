@@ -48,7 +48,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
 				string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
 				DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
 
-				return StatusCode(200, result.result.ToString());
+				return StatusCode((int)result.statusCode, result.result.ToString());
 			}
 			finally { }
 		}
