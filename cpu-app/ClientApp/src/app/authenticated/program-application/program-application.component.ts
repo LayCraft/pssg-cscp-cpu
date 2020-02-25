@@ -181,6 +181,9 @@ export class ProgramApplicationComponent implements OnInit {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
+  submit() {
+    this.notificationQueueService.addNotification(`TODO`, 'warning');
+  }
   setNextStepper() {
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {
       this.currentStepperElement.formState = this.formHelper.getFormState();
