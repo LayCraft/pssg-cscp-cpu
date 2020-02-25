@@ -62,7 +62,7 @@
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(postalCode)" style="display: inherit">
           Ok
         </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(postalCode)" style="display: inherit">
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackTest(address.postalCode, postalRegex, postalCode)" style="display: inherit">
           Try Again
         </div>
       </div>

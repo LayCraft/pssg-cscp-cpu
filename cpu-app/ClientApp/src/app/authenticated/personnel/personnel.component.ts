@@ -24,6 +24,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   reload = false;
   // used for the stepper component
   currentStepperElement: iStepperElement;
+  stepperIndex: number = 0;
   stepperElements: iStepperElement[];
   trans: Transmogrifier;
   saving: boolean = false;
@@ -68,8 +69,12 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         this.stepperService.addStepperElement(person, nameAssemble(person.firstName, person.middleName, person.lastName), null, 'person');
       });
       // set the stepper to the first element
-      if (!this.didLoad)
+      if (!this.didLoad) {
         this.stepperService.setToFirstStepperElement();
+      }
+      else {
+        this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+      }
     }
   }
 
@@ -91,6 +96,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
           this.saving = false;
           this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
           // refresh the list of people on save
+          this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
           this.stateService.refresh();
         },
         err => {
@@ -139,6 +145,8 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       // post the person
       this.personService.setPersons(post).subscribe(p => {
         this.saving = false;
+
+        if (this.stepperIndex > 0) --this.stepperIndex;
         // refresh the results
         this.stateService.refresh();
       });

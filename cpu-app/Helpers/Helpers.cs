@@ -47,6 +47,8 @@ namespace Gov.Cscp.Victims.Public.Helpers
         {
             string ret = modelString.Replace("\"_parentcustomerid_value\":null,", "");
             ret = ret.Replace("\"Organization\":null,", "");
+            ret = ret.Replace("\"vsd_bceid\":null,", "");
+            ret = ret.Replace("\"contactid\":null,", "");
             return ret;
         }
 

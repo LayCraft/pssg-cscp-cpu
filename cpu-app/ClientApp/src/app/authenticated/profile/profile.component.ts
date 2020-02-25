@@ -32,9 +32,9 @@ export class ProfileComponent implements OnInit {
     });
   }
   save(): void {
-    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-    //   return;
-    // }
+    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      return;
+    }
     // post to the organization
     this.saving = true;
     this.profileService.updateOrg(convertContactInformationToDynamics(this.trans))
@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit {
         (res: any) => {
           this.saving = false;
           // notify
-          this.notificationQueueService.addNotification('The contact information for your organization has been updated.', 'Success');
+          this.notificationQueueService.addNotification('The contact information for your organization has been updated.', 'success');
           // route to another page
           this.router.navigate([this.stateService.homeRoute.getValue()]);
         },
@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }
-    else {
+    else if (!this.formHelper.isFormDirty()) {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }

@@ -1,5 +1,7 @@
 import { AbstractControl } from '@angular/forms';
 import { NotificationQueueService } from './services/notification-queue.service';
+import { EMAIL, PHONE_NUMBER } from '../core/constants/regex.constants';
+import * as _ from 'lodash';
 
 // form helpers. Validity hints and hide/show toggles
 export class FormHelper {
@@ -8,6 +10,9 @@ export class FormHelper {
   }
   showInvalidFeedback(control: AbstractControl): boolean {
     return !(control.value && control.invalid && this.isDirtyOrTouched(control));
+  }
+  showInvalidFeedbackTest(value: any, pattern: RegExp, control: AbstractControl) {
+    return (!value || pattern.test(value));
   }
   isRequired(control: AbstractControl, required: boolean) {
     if (required && control.value && this.isDirtyOrTouched(control)) {
@@ -30,19 +35,19 @@ export class FormHelper {
       return null;
     }
   }
-  isFormDirty(){
+  isFormDirty() {
     if (document.getElementsByClassName("ng-dirty").length > 0) {
       return true;
     }
     return false;
   }
-  isFormValid(notificationQueueService: NotificationQueueService) { //notificationQueueService: NotificationQueueService
+  isFormValid(notificationQueueService: NotificationQueueService = null) { //notificationQueueService: NotificationQueueService
     if (document.getElementsByClassName("ng-invalid").length > 0) {
-      notificationQueueService.addNotification('All fields must be in a valid format.', 'warning');
+      if (notificationQueueService) notificationQueueService.addNotification('All fields must be in a valid format.', 'warning');
       return false;
     }
     if (document.getElementsByClassName("tab-invalid").length > 0) {
-      notificationQueueService.addNotification('There is a problem on another tab preventing save.', 'warning');
+      if (notificationQueueService) notificationQueueService.addNotification('There is a problem on another tab preventing save.', 'warning');
       return false;
     }
     return true;
@@ -56,6 +61,6 @@ export class FormHelper {
     }
     //TODO - check for complete? info? untouched?
     return 'untouched';
-    
+
   }
 }

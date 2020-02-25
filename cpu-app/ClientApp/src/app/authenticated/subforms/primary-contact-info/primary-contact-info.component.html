@@ -7,7 +7,7 @@
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)">
           Ok
         </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(emailAddress)">
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackTest(contactInformation.emailAddress, emailRegex, emailAddress)">
           Try Again
         </div>
       </div>
@@ -21,7 +21,7 @@
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber)">
           Ok
         </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(phoneNumber)">
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackTest(contactInformation.phoneNumber, phoneRegex, phoneNumber)">
           Try Again
         </div>
       </div>
@@ -33,7 +33,7 @@
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(faxNumber)">
           Ok
         </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(faxNumber)">
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackTest(contactInformation.faxNumber, phoneRegex, faxNumber)">
           Try Again
         </div>
       </div>
