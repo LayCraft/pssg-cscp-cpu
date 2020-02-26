@@ -48,7 +48,6 @@ namespace Gov.Cscp.Victims.Public.Models
         public string vsd_cpu_humanresourcepolices { get; set; }
         public string vsd_cpu_specificunion { get; set; }
         public string vsd_name { get; set; }
-        public string vsd_authorizedsigningdate { get; set; }
         public string vsd_authorizedsigningofficersignature { get; set; }
         public string vsd_signingofficersname { get; set; }
         public string vsd_signingofficertitle { get; set; }

@@ -9,7 +9,6 @@ namespace Gov.Cscp.Victims.Public.Models
     {
         public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.vsd_program"; } }
         public string vsd_programid { get; set; }
-        public string vsd_budgetproposalsignaturedate { get; set; }
         public string vsd_signingofficersignature { get; set; }
         public string vsd_signingofficerfullname { get; set; }
         public string vsd_signingofficertitle { get; set; }
