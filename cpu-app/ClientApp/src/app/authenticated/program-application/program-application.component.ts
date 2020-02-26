@@ -190,6 +190,7 @@ export class ProgramApplicationComponent implements OnInit {
 
         this.notificationQueueService.addNotification(`You have successfully submitted the program application.`, 'success');
         this.saving = false;
+        this.stateService.refresh();
         this.router.navigate(['/authenticated/dashboard']);
       },
       err => {

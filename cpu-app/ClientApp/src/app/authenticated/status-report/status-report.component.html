@@ -47,7 +47,7 @@
                 <span *ngIf="q.multiChoiceAnswers!=null">
                   <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
                   <select [(ngModel)]="q.string" class="form-control" [id]="q.uuid" placeholder="Oops here&hellip;">
-                    <option *ngFor="let choices of q.multiChoiceAnswers" [value]="choices.masterDataID">{{choices.label}}</option>
+                    <option *ngFor="let choices of q.multiChoiceAnswers" [value]="choices.label">{{choices.label}}</option>
                   </select>
                 </span>
               </span>

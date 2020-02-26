@@ -97,9 +97,9 @@ export class StatusReportComponent implements OnInit {
       alert('Please select a month before submitting.');
       return;
     }
-    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-    //   return;
-    // }
+    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      return;
+    }
     if (confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
       // Convert the form to a postable format
       this.saving = true;

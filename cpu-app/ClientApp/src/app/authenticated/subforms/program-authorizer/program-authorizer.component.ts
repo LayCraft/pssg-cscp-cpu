@@ -10,7 +10,6 @@ export interface iSignature {
   signer: iPerson;
   signature?: any;
   signatureDate?: Date;
-  signatureDateString?: string;
   termsConfirmation: boolean;
 }
 @Component({
@@ -86,8 +85,6 @@ export class ProgramAuthorizerComponent implements OnInit {
     if (this.wasSigned) {
       this.signature.signature = this.signaturePad.toDataURL();
       this.signature.signatureDate = new Date();
-      let dateParts = this.signature.signatureDate.toLocaleString().split(/[\/,]/);
-      this.signature.signatureDateString = dateParts[2] + "-" + dateParts[0] + "-" + dateParts[1];
     }
   }
   drawStart() {

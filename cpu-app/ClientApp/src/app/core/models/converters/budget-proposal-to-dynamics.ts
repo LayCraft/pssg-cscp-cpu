@@ -5,6 +5,8 @@ import { iExpenseItem } from "../expense-item.interface";
 import { iSalaryAndBenefits } from "../salary-and-benefits.interface";
 import { iRevenueSource } from "../revenue-source.interface";
 import { revenueSourceValue } from "../../constants/revenue-source-type";
+import { nameAssemble } from "../../constants/name-assemble";
+import { formatSignatureDateForProgram } from "../../constants/program-signature-date";
 
 const expenseType = {
   // vsd_cpu_programexpensetype converter
@@ -25,6 +27,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
     UserBCeID: trans.userId,
     ProgramExpenseCollection: [],
     ProgramRevenueSourceCollection: [],
+    ProgramCollection: [],
   }
   trans.programBudgets.forEach((pb: iProgramBudget) => {
     // ADMINISTRATIVE costs the 100000002's as defined in the excel sheet
@@ -110,6 +113,16 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         vsd_programrevenuesourceid: e.uuid,
       }
     }).forEach((x: iDynamicsProgramRevenueSource) => { p.ProgramRevenueSourceCollection.push(x) });
-  })
+
+    p.ProgramCollection.push({
+      vsd_programid: pb.programId,
+      vsd_budgetproposalsignaturedate: trans.signature.signatureDate ? formatSignatureDateForProgram(trans.signature.signatureDate) : "",
+      vsd_signingofficersignature: trans.signature.signature,
+      vsd_signingofficerfullname: trans.signature.signer ? nameAssemble(trans.signature.signer.firstName, trans.signature.signer.middleName, trans.signature.signer.lastName) : "",
+      vsd_signingofficertitle: trans.signature.signer ? trans.signature.signer.title : ""
+    });
+    
+
+  });
   return p;
 }

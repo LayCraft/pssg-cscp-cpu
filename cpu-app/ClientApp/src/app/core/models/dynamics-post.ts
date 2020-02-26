@@ -44,6 +44,7 @@ export interface iDynamicsPostBudgetProposal { //maps to BudgetProposalPost
   UserBCeID: string;
   ProgramExpenseCollection: iDynamicsProgramExpense[];
   ProgramRevenueSourceCollection: iDynamicsProgramRevenueSource[];
+  ProgramCollection: iDynamicsBudgetProposalProgram[];
 }
 //------------------------------------------------------------------------------
 export interface iDynamicsAnswer {
@@ -78,6 +79,13 @@ export interface iDynamicsProgramRevenueSource {
   vsd_cpu_revenuesourcetype: number;
   vsd_inkindcontribution: number;
   vsd_programrevenuesourceid?: string;
+}
+export interface iDynamicsBudgetProposalProgram {
+  vsd_programid?: string;
+  vsd_budgetproposalsignaturedate?: string;
+  vsd_signingofficersignature?: string;
+  vsd_signingofficerfullname?: string;
+  vsd_signingofficertitle?: string;
 }
 export interface iDynamicsCrmContractPost {
   _vsd_customer_value?: string;

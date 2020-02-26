@@ -76,6 +76,11 @@ export class BudgetProposalComponent implements OnInit {
             // if (!pb.salariesAndBenefits.length) { pb.salariesAndBenefits.push(new SalaryAndBenefits()); }
             // if (!pb.programDeliveryOtherExpenses.length) { pb.programDeliveryOtherExpenses.push(new ExpenseItem()); }
             // if (!pb.administrationOtherExpenses.length) { pb.administrationOtherExpenses.push(new ExpenseItem()); }
+
+            console.log("dynamics data:");
+            console.log(d);
+            console.log("trans");
+            console.log(this.trans);
             return pb;
           })
           this.constructDefaultstepperElements();
@@ -112,7 +117,7 @@ export class BudgetProposalComponent implements OnInit {
     // set the stepper to the first item
     this.stepperService.setToFirstStepperElement();
   }
-  save(showNotification: boolean = true) {
+  save() {
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {
       return;
     }
@@ -122,6 +127,7 @@ export class BudgetProposalComponent implements OnInit {
       r => {
         console.log(r);
         this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
+        this.stateService.refresh();
         this.router.navigate(['/authenticated/dashboard']);
         this.saving = false;
       },
@@ -142,17 +148,17 @@ export class BudgetProposalComponent implements OnInit {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
-  setNextStepper() {
-    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-      this.currentStepperElement.formState = this.formHelper.getFormState();
-      return;
-    }
-    this.save(false);
-    ++this.stepperIndex;
-    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
-  }
-  setPreviousStepper() {
-    --this.stepperIndex;
-    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
-  }
+  // setNextStepper() {
+  //   if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+  //     this.currentStepperElement.formState = this.formHelper.getFormState();
+  //     return;
+  //   }
+  //   this.save(false);
+  //   ++this.stepperIndex;
+  //   this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+  // }
+  // setPreviousStepper() {
+  //   --this.stepperIndex;
+  //   this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+  // }
 }
