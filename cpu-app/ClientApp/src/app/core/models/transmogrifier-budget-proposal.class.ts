@@ -12,7 +12,7 @@ export class TransmogrifierBudgetProposal {
   public contractId: string;
   public programBudgets: iProgramBudget[];
   public dict: object;
-  public signature: iSignature = undefined; // this needs initialization before we can use it in a component.
+  public signature: iSignature; // this needs initialization before we can use it in a component.
   constructor(g: iDynamicsBudgetProposal) {
     // make private dict for looking up guids
     this.dict = this.buildDict(g);
@@ -20,6 +20,15 @@ export class TransmogrifierBudgetProposal {
     this.organizationId = g.Businessbceid; // this is the organization's bceid
     this.contractId = g.Contract.vsd_contractid; // the contract's id
     this.programBudgets = this.buildBudgetProposals(g);
+    this.signature = this.buildSignature(g);
+  }
+  private buildSignature(b: iDynamicsBudgetProposal): iSignature {
+    return {
+      signer: undefined,
+      signature: "",
+      signatureDate: undefined,
+      termsConfirmation: false
+    };
   }
   private buildDict(g: iDynamicsBudgetProposal): object {
     // Note: This only works if all guids in dynamics are unique.

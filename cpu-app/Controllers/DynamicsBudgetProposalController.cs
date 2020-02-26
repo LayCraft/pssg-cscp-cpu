@@ -41,19 +41,39 @@ namespace Gov.Cscp.Victims.Public.Controllers
 		public async Task<IActionResult> SetBudgetProposal([FromBody] BudgetProposalPost model)
 		{
 			try
-			{
-				string endpointUrl = "vsd_SetCPUOrgContracts";
+            {
+                if (model == null)
+                {
+                    return StatusCode(502);
 
-				// make options for the json serializer
-				JsonSerializerOptions options = new JsonSerializerOptions();
-				options.IgnoreNullValues = true;
-				// turn the model into a string
-				string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
-				DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+                }
 
-				return StatusCode(200, result.result.ToString());
-			}
-			finally { }
+                string endpointUrl = "vsd_SetCPUOrgContracts";
+                // turn the model into a string
+                string modelString = System.Text.Json.JsonSerializer.Serialize(model);
+                modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
+                //_ownerid_value on the Organization is already ignored by the CRM API, so don't need to remove it
+				modelString = "{\"BusinessBCeID\":\"fd889a40-14b2-e811-8163-480fcff4f621\",\"UserBCeID\":\"9e9b5111-51c9-e911-b80f-00505683fbf4\",\"ProgramRevenueSourceCollection\":[{\"fortunecookietype\":\"#Microsoft.Dynamics.CRM.vsd_programrevenuesource\",\"vsd_programrevenuesourceid\":\"ce2128c3-9b52-ea11-b816-00505683fbf4\",\"vsd_cpu_revenuesourcetype\":100000000,\"vsd_cashcontribution\":60000,\"vsd_inkindcontribution\":0,\"vsd_ProgramIdfortunecookiebind\":\"/vsd_programs(6c533c61-9b52-ea11-b816-00505683fbf4)\"}]}";
+                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+
+                return StatusCode((int)result.statusCode, result.result.ToString());
+            }
+            finally { }
+
+			// try
+			// {
+			// 	string endpointUrl = "vsd_SetCPUOrgContracts";
+
+			// 	// make options for the json serializer
+			// 	JsonSerializerOptions options = new JsonSerializerOptions();
+			// 	options.IgnoreNullValues = true;
+			// 	// turn the model into a string
+			// 	string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
+			// 	DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+
+			// 	return StatusCode(200, result.result.ToString());
+			// }
+			// finally { }
 		}
 	}
 }

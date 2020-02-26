@@ -21,6 +21,7 @@ export class BudgetProposalComponent implements OnInit {
   // used for the stepper component
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
+  stepperIndex: number = 0;
 
   trans: TransmogrifierBudgetProposal;
   data: iDynamicsBudgetProposal;
@@ -81,13 +82,21 @@ export class BudgetProposalComponent implements OnInit {
         }
       });
     })
-    this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
+    this.stepperService.currentStepperElement.subscribe(e => {
+      if (this.currentStepperElement) {
+        this.currentStepperElement.formState = this.formHelper.getFormState();
+      }
+      this.currentStepperElement = e;
+
+      if (this.currentStepperElement && this.stepperElements) {
+        this.stepperIndex = this.stepperElements.findIndex(e => e.id === this.currentStepperElement.id);
+      }
+    });
   }
 
   isCurrentStepperElement(item: iStepperElement): boolean {
     if (item.id === this.currentStepperElement.id) {
-      // names match? must be the same. Makes the assumption that all names are unique.
       return true;
     }
     return false;
@@ -103,10 +112,10 @@ export class BudgetProposalComponent implements OnInit {
     // set the stepper to the first item
     this.stepperService.setToFirstStepperElement();
   }
-  save() {
-    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-    //   return;
-    // }
+  save(showNotification: boolean = true) {
+    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      return;
+    }
     this.saving = true;
     this.out = convertBudgetProposalToDynamics(this.trans);
     this.budgetProposalService.setBudgetProposal(this.out).subscribe(
@@ -114,6 +123,7 @@ export class BudgetProposalComponent implements OnInit {
         console.log(r);
         this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
         this.router.navigate(['/authenticated/dashboard']);
+        this.saving = false;
       },
       err => {
         console.log(err);
@@ -131,5 +141,18 @@ export class BudgetProposalComponent implements OnInit {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }
+  }
+  setNextStepper() {
+    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      this.currentStepperElement.formState = this.formHelper.getFormState();
+      return;
+    }
+    this.save(false);
+    ++this.stepperIndex;
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+  }
+  setPreviousStepper() {
+    --this.stepperIndex;
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
   }
 }

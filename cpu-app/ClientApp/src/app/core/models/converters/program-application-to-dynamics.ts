@@ -26,7 +26,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_cpu_humanresourcepolices: encodeHrPolicies(trans.administrativeInformation),
       vsd_cpu_specificunion: trans.administrativeInformation.staffUnion,
       vsd_name: trans.contractNumber,
-      vsd_authorizedsigningdate: trans.signature.signatureDate,
+      vsd_authorizedsigningdate: trans.signature.signatureDateString,
       vsd_authorizedsigningofficersignature: trans.signature.signature,
       vsd_signingofficersname: trans.signature.signer ? nameAssemble(trans.signature.signer.firstName, trans.signature.signer.middleName, trans.signature.signer.lastName) : "",
       vsd_signingofficertitle: trans.signature.signer ? trans.signature.signer.title : ""
