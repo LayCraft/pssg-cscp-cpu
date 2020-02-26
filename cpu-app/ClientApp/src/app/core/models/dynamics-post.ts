@@ -82,7 +82,6 @@ export interface iDynamicsProgramRevenueSource {
 }
 export interface iDynamicsBudgetProposalProgram {
   vsd_programid?: string;
-  vsd_budgetproposalsignaturedate?: string;
   vsd_signingofficersignature?: string;
   vsd_signingofficerfullname?: string;
   vsd_signingofficertitle?: string;
@@ -100,7 +99,6 @@ export interface iDynamicsCrmContractPost {
   vsd_cpu_specificunion?: string;
   vsd_cpu_staffunionized?: boolean;
   vsd_name?: string;
-  vsd_authorizedsigningdate?: string;
   vsd_authorizedsigningofficersignature?: string;
   vsd_signingofficertitle?: string;
   vsd_signingofficersname?: string;
