@@ -9,6 +9,7 @@ import { iPerson } from "../person.interface";
 import { iProgramApplication } from "../program-application.interface";
 import { encodeCcseaMemberType } from "../../constants/encode-ccsea-member-type";
 import { nameAssemble } from "../../constants/name-assemble";
+import { formatSignatureDateForContract } from "../../constants/contract-signature-date";
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsPostScheduleF {
   const post: iDynamicsPostScheduleF = {
@@ -26,7 +27,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_cpu_humanresourcepolices: encodeHrPolicies(trans.administrativeInformation),
       vsd_cpu_specificunion: trans.administrativeInformation.staffUnion,
       vsd_name: trans.contractNumber,
-      vsd_authorizedsigningdate: trans.signature.signatureDate,
+      vsd_authorizedsigningdate: trans.signature.signatureDate ? formatSignatureDateForContract(trans.signature.signatureDate) : "",
       vsd_authorizedsigningofficersignature: trans.signature.signature,
       vsd_signingofficersname: trans.signature.signer ? nameAssemble(trans.signature.signer.firstName, trans.signature.signer.middleName, trans.signature.signer.lastName) : "",
       vsd_signingofficertitle: trans.signature.signer ? trans.signature.signer.title : ""

@@ -41,19 +41,24 @@ namespace Gov.Cscp.Victims.Public.Controllers
 		public async Task<IActionResult> SetBudgetProposal([FromBody] BudgetProposalPost model)
 		{
 			try
-			{
-				string endpointUrl = "vsd_SetCPUOrgContracts";
+            {
+                if (model == null)
+                {
+                    return StatusCode(502);
 
-				// make options for the json serializer
-				JsonSerializerOptions options = new JsonSerializerOptions();
-				options.IgnoreNullValues = true;
-				// turn the model into a string
-				string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
-				DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+                }
 
-				return StatusCode(200, result.result.ToString());
-			}
-			finally { }
+                string endpointUrl = "vsd_SetCPUOrgContracts";
+                // turn the model into a string
+                string modelString = System.Text.Json.JsonSerializer.Serialize(model);
+                modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
+                modelString = Helpers.Helpers.removeNullsForBudgetProposal(modelString);
+
+                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+
+                return StatusCode((int)result.statusCode, result.result.ToString());
+            }
+            finally { }
 		}
 	}
 }

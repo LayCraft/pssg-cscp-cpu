@@ -8,7 +8,6 @@ import { iProgramApplication } from '../../core/models/program-application.inter
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { convertProgramApplicationToDynamics } from '../../core/models/converters/program-application-to-dynamics';
 import { FormHelper } from '../../core/form-helper';
-import * as _ from 'lodash';
 import { iDynamicsPostScheduleF } from '../../core/models/dynamics-post';
 
 @Component({
@@ -23,8 +22,8 @@ export class ProgramApplicationComponent implements OnInit {
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
-  tempStepperElement: iStepperElement = null;
   stepperIndex: number = 0;
+
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
   saving: boolean = false;
 
@@ -72,6 +71,16 @@ export class ProgramApplicationComponent implements OnInit {
     });
     // subscribe to the stepper state
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
+    this.stepperService.currentStepperElement.subscribe(e => {
+      if (this.currentStepperElement) {
+        this.currentStepperElement.formState = this.formHelper.getFormState();
+      }
+      this.currentStepperElement = e;
+
+      if (this.currentStepperElement && this.stepperElements) {
+        this.stepperIndex = this.stepperElements.findIndex(e => e.id === this.currentStepperElement.id);
+      }
+    });
   }
 
   isCurrentStepperElement(item: iStepperElement): boolean {
@@ -136,19 +145,6 @@ export class ProgramApplicationComponent implements OnInit {
     });
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
-
-    this.stepperService.currentStepperElement.subscribe(e => {
-      if (this.currentStepperElement) {
-        //TODO - figure out state of form...
-        this.tempStepperElement = _.cloneDeep(this.currentStepperElement);
-        this.currentStepperElement.formState = this.formHelper.getFormState();
-      }
-      this.currentStepperElement = e;
-
-      if (this.currentStepperElement && this.stepperElements) {
-        this.stepperIndex = this.stepperElements.findIndex(e => e.id === this.currentStepperElement.id);
-      }
-    });
   }
   save(showNotification: boolean = true) {
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {
@@ -188,12 +184,13 @@ export class ProgramApplicationComponent implements OnInit {
     }
     this.saving = true;
     this.out = convertProgramApplicationToDynamics(this.trans);
-    this.programApplicationService.setProgramApplication(this.out).subscribe( 
+    this.programApplicationService.setProgramApplication(this.out).subscribe(
       r => {
         console.log(r);
 
         this.notificationQueueService.addNotification(`You have successfully submitted the program application.`, 'success');
         this.saving = false;
+        this.stateService.refresh();
         this.router.navigate(['/authenticated/dashboard']);
       },
       err => {
@@ -206,10 +203,6 @@ export class ProgramApplicationComponent implements OnInit {
   setNextStepper() {
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {
       this.currentStepperElement.formState = this.formHelper.getFormState();
-      //testing
-      // setTimeout(() => {
-      //   console.log(this.formHelper.isFormValid(this.notificationQueueService));
-      // }, 1000);
       return;
     }
     this.save(false);

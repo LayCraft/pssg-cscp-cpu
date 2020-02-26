@@ -56,5 +56,12 @@ namespace Gov.Cscp.Victims.Public.Helpers
             return ret;
         }
 
+        public static string removeNullsForBudgetProposal(string modelString)
+        {
+            string ret = modelString.Replace("\"ProgramExpenseCollection\":[],", "");
+            ret = ret.Replace("\"ProgramRevenueSourceCollection\":[],", "");
+            return ret;
+        }
+
     }
 }
