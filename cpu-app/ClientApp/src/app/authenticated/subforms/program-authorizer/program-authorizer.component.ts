@@ -8,8 +8,8 @@ import { iPerson } from '../../../core/models/person.interface';
 
 export interface iSignature {
   signer: iPerson;
-  signature?: any; // TODO: not sure how the signature collection part works yet
-  signatureDate?: Date;
+  signature?: any;
+  signatureDate?: string;
   termsConfirmation: boolean;
 }
 @Component({
@@ -84,7 +84,7 @@ export class ProgramAuthorizerComponent implements OnInit {
   acceptSignature() {
     if (this.wasSigned) {
       this.signature.signature = this.signaturePad.toDataURL();
-      this.signature.signatureDate = new Date();
+      this.signature.signatureDate = new Date().toISOString().split('T')[0];
     }
   }
   drawStart() {

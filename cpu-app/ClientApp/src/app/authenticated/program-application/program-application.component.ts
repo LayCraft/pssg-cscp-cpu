@@ -9,6 +9,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { convertProgramApplicationToDynamics } from '../../core/models/converters/program-application-to-dynamics';
 import { FormHelper } from '../../core/form-helper';
 import * as _ from 'lodash';
+import { iDynamicsPostScheduleF } from '../../core/models/dynamics-post';
 
 @Component({
   selector: 'app-program-application',
@@ -17,7 +18,7 @@ import * as _ from 'lodash';
 })
 export class ProgramApplicationComponent implements OnInit {
   data: any;
-  out: any;
+  out: iDynamicsPostScheduleF;
   trans: TransmogrifierProgramApplication;
   // used for the stepper component
   stepperElements: iStepperElement[];
@@ -182,7 +183,25 @@ export class ProgramApplicationComponent implements OnInit {
     }
   }
   submit() {
-    this.notificationQueueService.addNotification(`TODO`, 'warning');
+    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      return;
+    }
+    this.saving = true;
+    this.out = convertProgramApplicationToDynamics(this.trans);
+    this.programApplicationService.setProgramApplication(this.out).subscribe( 
+      r => {
+        console.log(r);
+
+        this.notificationQueueService.addNotification(`You have successfully submitted the program application.`, 'success');
+        this.saving = false;
+        this.router.navigate(['/authenticated/dashboard']);
+      },
+      err => {
+        console.log(err);
+        this.notificationQueueService.addNotification('The program application could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
+        this.saving = false;
+      }
+    );
   }
   setNextStepper() {
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {

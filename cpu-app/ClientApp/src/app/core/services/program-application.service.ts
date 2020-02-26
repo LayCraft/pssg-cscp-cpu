@@ -24,8 +24,6 @@ export class ProgramApplicationService {
     );
   }
   setProgramApplication(budgetProposal: iDynamicsPostScheduleF): Observable<any> {
-    console.log("setting program application");
-    console.log(budgetProposal);
     return this.http.post<any>(`${this.apiUrl}`, budgetProposal, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
