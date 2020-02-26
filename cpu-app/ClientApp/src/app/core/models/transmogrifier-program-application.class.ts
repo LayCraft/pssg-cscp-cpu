@@ -40,8 +40,12 @@ export class TransmogrifierProgramApplication {
     this.signature = this.buildSignature(g);
   }
   private buildSignature(b: iDynamicsScheduleFResponse): iSignature {
-    // @TODO: Get signature and load it
-    return undefined;
+    return {
+      signer: undefined,
+      signature: "", // TODO: not sure how the signature collection part works yet
+      signatureDate: undefined,
+      termsConfirmation: false
+    };
   }
   private buildAdministrativeInformation(b: iDynamicsScheduleFResponse): iAdministrativeInformation {
     return {

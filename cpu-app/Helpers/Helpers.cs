@@ -41,6 +41,10 @@ namespace Gov.Cscp.Victims.Public.Helpers
             ret = ret.Replace(",\"statecode\":null", "");
             ret = ret.Replace("\"statecode\":null,", "");
             ret = ret.Replace("\"statecode\":null", "");
+
+            ret = ret.Replace(",\"statuscode\":null", "");
+            ret = ret.Replace("\"statuscode\":null,", "");
+            ret = ret.Replace("\"statuscode\":null", "");
             return ret;
         }
         public static string removeNullsForStaffUpdate(string modelString)
