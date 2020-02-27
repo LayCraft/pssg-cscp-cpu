@@ -279,6 +279,7 @@ export interface iDynamicsProgramExpense {
   vsd_inputamount?: number;
   vsd_totalcost?: number;
   vsd_cpu_otherexpense?: string;
+  statecode?: number;
 }
 export interface iDynamicsCrmProgramBudget {
   _transactioncurrencyid_value?: string,
@@ -311,6 +312,7 @@ export interface iDynamicsCrmProgramRevenueSource {
   vsd_cpu_revenuesourcetype?: number;
   vsd_inkindcontribution?: number;
   vsd_programrevenuesourceid?: string;
+  statecode?: number;
 }
 
 export interface iDynamicsMonthlyStatisticsQuestions {

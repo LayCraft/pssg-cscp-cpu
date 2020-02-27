@@ -88,7 +88,8 @@ export class TransmogrifierBudgetProposal {
           cash: prs.vsd_cashcontribution || 0,
           inKindContribution: prs.vsd_inkindcontribution || 0,
           other: prs.vsd_cpu_otherrevenuesource || '',
-          uuid: prs.vsd_programrevenuesourceid || null,
+          revenueSourceId: prs.vsd_programrevenuesourceid || null,
+          isActive: true,
         };
       })
   }
@@ -105,6 +106,7 @@ export class TransmogrifierBudgetProposal {
           fundedFromVscp: e.vsd_cpu_fundedfromvscp || 0,
           totalCost: e.vsd_totalcost || 0,
           uuid: e.vsd_programexpenseid || null,
+          isActive: true,
         }
       });
   }
@@ -115,14 +117,24 @@ export class TransmogrifierBudgetProposal {
       // get rid of all other programs
       .filter((pdc: iDynamicsProgramExpense) => pdc._vsd_programid_value === programId)
       // if we want to return the "other expenses" we check for the existence of the other expense property and if it exists we return true otherwise we pick the values that are missing the "other expense" property
-      .filter((pdc: iDynamicsProgramExpense) => other ? !!pdc.vsd_cpu_otherexpense : !pdc.vsd_cpu_otherexpense)
+      .filter((pdc: iDynamicsProgramExpense) => {
+        let name = this.dict[pdc._vsd_eligibleexpenseitemid_value];
+        if (other) {
+          return !!pdc.vsd_cpu_otherexpense || name === "Other Program Related Expenses" || name === "Other Administration Costs";
+        }
+        else {
+          return !pdc.vsd_cpu_otherexpense && name !== "Other Program Related Expenses" && name !== "Other Administration Costs";
+        }
+      })
       .map((pe: iDynamicsProgramExpense): iExpenseItem => {
         return {
           uuid: pe.vsd_programexpenseid || null,
           // if we are returning only the other expenses we use the other expense field as the name
-          itemName: other ? pe.vsd_cpu_otherexpense : this.dict[pe._vsd_eligibleexpenseitemid_value] || 'Name error!',
+          itemName: this.dict[pe._vsd_eligibleexpenseitemid_value] || 'Name error!',
+          otherExpenseDescription: other ? pe.vsd_cpu_otherexpense : null,
           fundedFromVscp: pe.vsd_cpu_fundedfromvscp || 0,
-          cost: pe.vsd_totalcost
+          cost: pe.vsd_totalcost,
+          isActive: true,
         }
       });
   }

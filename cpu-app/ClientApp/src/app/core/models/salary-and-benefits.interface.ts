@@ -6,4 +6,5 @@ export interface iSalaryAndBenefits {
   benefits: number;
   totalCost: number;
   fundedFromVscp: number;
+  isActive: boolean;
 }

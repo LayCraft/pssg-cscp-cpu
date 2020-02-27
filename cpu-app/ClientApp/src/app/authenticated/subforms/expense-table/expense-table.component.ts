@@ -49,14 +49,24 @@ export class ExpenseTableComponent implements OnInit {
     this.calculateTotals();
   }
   removeExpenseItem(index: number): void {
-    // splice is acting unpredictably so I'm doing it with a for loop
-    const newArray = [];
-    for (let i = 0; i < this.expenseItemsForm.length; i++) {
-      if (i !== index) {
-        newArray.push(this.expenseItemsForm[i]);
-      }
+    let expenseToRemove = this.expenseItemsForm[index];
+    console.log(expenseToRemove);
+    if (expenseToRemove.uuid) {
+      console.log("setting active to false");
+      expenseToRemove.isActive = false;
     }
-    this.expenseItemsForm = newArray;
+    else {
+      this.expenseItemsForm.splice(index, 1);
+    }
+
+    // splice is acting unpredictably so I'm doing it with a for loop
+    // const newArray = [];
+    // for (let i = 0; i < this.expenseItemsForm.length; i++) {
+    //   if (i !== index) {
+    //     newArray.push(this.expenseItemsForm[i]);
+    //   }
+    // }
+    // this.expenseItemsForm = newArray;
     this.calculateTotals();
   }
   calculateTotals() {
@@ -68,25 +78,28 @@ export class ExpenseTableComponent implements OnInit {
         return prev;
       }
     }
+
+    let activeExpenseItems = this.expenseItemsForm.filter(ex => ex.isActive);
     // total of totalCost
     let totalCostDefaults = 0;
     let totalCostCustom = 0;
     if (this.defaultExpenseItemsForm.length > 0) {
       totalCostDefaults = this.defaultExpenseItemsForm.map(rs => rs.cost).reduce(reducer) || 0;
     }
-    if (this.expenseItemsForm.length > 0) {
-      totalCostCustom = this.expenseItemsForm.map(rs => rs.cost).reduce(reducer) || 0;
+    if (activeExpenseItems.length > 0) {
+      totalCostCustom = activeExpenseItems.map(rs => rs.cost).reduce(reducer) || 0;
     }
     this.totalTotalCost = totalCostDefaults + totalCostCustom;
 
     // total of vscp
     let totalVscpDefaults = 0;
     let totalVscpCustom = 0;
+    this.totalVscp = 0;
     if (this.defaultExpenseItemsForm.length > 0) {
       totalVscpDefaults = this.defaultExpenseItemsForm.map(rs => rs.fundedFromVscp).reduce(reducer) || 0;
     }
-    if (this.expenseItemsForm.length > 0) {
-      totalVscpCustom = this.expenseItemsForm.map(rs => rs.fundedFromVscp).reduce(reducer) || 0;
+    if (activeExpenseItems.length > 0) {
+      totalVscpCustom = activeExpenseItems.map(rs => rs.fundedFromVscp).reduce(reducer) || 0;
     }
     this.totalVscp = totalVscpDefaults + totalVscpCustom;
 

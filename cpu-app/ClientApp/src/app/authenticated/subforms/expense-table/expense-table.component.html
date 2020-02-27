@@ -13,10 +13,12 @@
         {{line.itemName}}
       </td>
       <td>
-        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.cost" min="0" id="total_cost_{{line.uuid}}">
+        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.cost" min="0"
+          id="total_cost_{{line.uuid}}">
       </td>
       <td>
-        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{line.uuid}}">
+        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0"
+          id="vscp_{{line.uuid}}">
       </td>
       <td>
         <!-- For spacing only -->
@@ -28,18 +30,23 @@
       </th>
     </tr>
     <tr *ngFor="let line of expenseItemsForm; let i=index">
-      <td>
-        <input class="form-control" type="text" [(ngModel)]="line.itemName" min="0" id="expense_name_{{line.uuid}}">
-      </td>
-      <td>
-        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.cost" min="0" id="total_cost_{{line.uuid}}">
-      </td>
-      <td>
-        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{line.uuid}}">
-      </td>
-      <td (click)="removeExpenseItem(i)" class="align-middle">
-        <i class="fas fa-times-circle text-danger"></i>
-      </td>
+      <ng-container *ngIf="line.isActive">
+        <td>
+          <input class="form-control" type="text" [(ngModel)]="line.otherExpenseDescription" min="0"
+            id="expense_name_{{line.uuid}}">
+        </td>
+        <td>
+          <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.cost" min="0"
+            id="total_cost_{{line.uuid}}">
+        </td>
+        <td>
+          <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp"
+            min="0" id="vscp_{{line.uuid}}">
+        </td>
+        <td (click)="removeExpenseItem(i)" class="align-middle">
+          <i class="fas fa-times-circle text-danger"></i>
+        </td>
+      </ng-container>
     </tr>
     <tr>
       <th scope="col">Total</th>

@@ -52,10 +52,11 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         // which program is this expense item associated to?
         vsd_ProgramIdfortunecookiebind: pb.programId,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
-        vsd_cpu_otherexpense: e.itemName || null,
+        vsd_cpu_otherexpense: e.otherExpenseDescription || null,
         vsd_cpu_programexpensetype: expenseType.administrative,
         vsd_inputamount: e.cost || 0,
         vsd_programexpenseid: e.uuid || null,
+        statecode: e.isActive ? 0 : 1,
       }
     })
       .forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
@@ -79,13 +80,14 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         // if null this gets created as a new "other" and will be returned in the eligibleexpenseitems collection on get
         vsd_EligibleExpenseItemIdfortunecookiebind: reverseDict[e.itemName] || null,
         // this is an other expense. Include the text
-        vsd_cpu_otherexpense: e.itemName || null,
+        vsd_cpu_otherexpense: e.otherExpenseDescription || null,
         // which program is this expense item associated to?
         vsd_ProgramIdfortunecookiebind: pb.programId,
         vsd_cpu_programexpensetype: expenseType.program_delivery,
         vsd_inputamount: e.cost || 0,
         vsd_cpu_fundedfromvscp: e.fundedFromVscp || 0,
         vsd_programexpenseid: e.uuid || null,
+        statecode: e.isActive ? 0 : 1,
       }
     }).forEach((x) => { p.ProgramExpenseCollection.push(x) });
 
@@ -99,6 +101,7 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         vsd_cpu_salary: e.salary || 0,
         vsd_cpu_titleposition: e.title || 'No title',
         vsd_programexpenseid: e.uuid || null,
+        statecode: e.isActive ? 0 : 1,
       }
     }).forEach((x: iDynamicsProgramExpense) => { p.ProgramExpenseCollection.push(x) });
 
@@ -108,8 +111,11 @@ export function convertBudgetProposalToDynamics(trans: TransmogrifierBudgetPropo
         vsd_ProgramIdfortunecookiebind: pb.programId,
         vsd_cashcontribution: e.cash,
         vsd_cpu_revenuesourcetype: revenueSourceValue(e.revenueSourceName),
-        vsd_inkindcontribution: e.inKindContribution || 0,
-        vsd_programrevenuesourceid: e.uuid,
+        vsd_inkindcontribution: e.inKindContribution,
+        vsd_programrevenuesourceid: e.revenueSourceId,
+        statecode: e.isActive ? 0 : 1,
+        vsd_cpu_otherrevenuesource: e.other || null,
+        
       }
     }).forEach((x: iDynamicsProgramRevenueSource) => { p.ProgramRevenueSourceCollection.push(x) });
 

@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RevenueSource } from '../../../core/models/revenue-source.class';
 import { revenueSourceTypes } from '../../../core/constants/revenue-source-type';
 import { iRevenueSource } from '../../../core/models/revenue-source.interface';
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-revenue-source-table',
   templateUrl: './revenue-source-table.component.html',
@@ -25,18 +27,19 @@ export class RevenueSourceTableComponent implements OnInit {
     }
   }
   addRevenueSource() {
-    this.revenueSources.push(new RevenueSource());
+    let rev = new RevenueSource();
+    rev.revenueSourceName = revenueSourceTypes[4];
+    this.revenueSources.push(rev);
     this.calculateTotals();
   }
   removeRevenueSource(index: number): void {
-    // splice is acting unpredictably so I'm doing it with a for loop
-    const newArray = [];
-    for (let i = 0; i < this.revenueSources.length; i++) {
-      if (i !== index) {
-        newArray.push(this.revenueSources[i]);
-      }
+    let revToRemove = this.revenueSources[index];
+    if (revToRemove.revenueSourceId) {
+      revToRemove.isActive = false;
     }
-    this.revenueSources = newArray;
+    else {
+      this.revenueSources.splice(index, 1);
+    }
     this.calculateTotals();
   }
 
@@ -49,17 +52,24 @@ export class RevenueSourceTableComponent implements OnInit {
         return prev;
       }
     }
-    // totalCash
-    this.totalCash = this.revenueSources.map(rs => rs.cash).reduce(reducer) || 0;
-    // totalInKind
-    this.totalInKind = this.revenueSources.map(rs => rs.inKindContribution).reduce(reducer) || 0;
-    // total cost
-    this.totalGrand = this.revenueSources.map(rs => {
-      let total = 0;
-      if (typeof rs.cash === 'number') total += rs.cash;
-      if (typeof rs.inKindContribution === 'number') total += rs.inKindContribution;
-      return total;
-    }).reduce(reducer) || 0;
+
+    let activeRev = this.revenueSources.filter(rs => rs.isActive);
+
+    if (activeRev.length > 0) {
+
+
+      // totalCash
+      this.totalCash = activeRev.map(rs => rs.cash).reduce(reducer) || 0;
+      // totalInKind
+      this.totalInKind = activeRev.map(rs => rs.inKindContribution).reduce(reducer) || 0;
+      // total cost
+      this.totalGrand = activeRev.map(rs => {
+        let total = 0;
+        if (typeof rs.cash === 'number') total += rs.cash;
+        if (typeof rs.inKindContribution === 'number') total += rs.inKindContribution;
+        return total;
+      }).reduce(reducer) || 0;
+    }
 
     // after every calculate, output the json to the parent.
     this.revenueSourcesChange.emit(this.revenueSources);
