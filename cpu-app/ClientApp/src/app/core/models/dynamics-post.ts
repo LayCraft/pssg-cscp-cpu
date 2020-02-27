@@ -177,14 +177,13 @@ export interface iDynamicsScheduleGPost {
   vsd_cpu_reportingperiod?: number;
 
   // number of hours contracted area
-  vsd_cpu_numberofhours?: number;
   vsd_contractedservicehrsthisquarter?: number;
   vsd_actualhoursthisquarter?: number;
 }
 export interface iDynamicsScheduleGLineItemPost {
   _transactioncurrencyid_value?: string;
   _vsd_expenselineitem_value?: string;
-  _vsd_schedulegid_value?: string;
+  // _vsd_schedulegid_value?: string;
   vsd_actualexpendituresyeartodate?: number;
   vsd_scheduleglineitemid?: string;
   vsd_annualbudgetedamount?: number;

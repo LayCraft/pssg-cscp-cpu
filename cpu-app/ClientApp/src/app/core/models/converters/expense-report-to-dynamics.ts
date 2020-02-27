@@ -1,52 +1,57 @@
 import { iDynamicsScheduleG, iDynamicsScheduleGLineItem } from "../dynamics-blob";
-import { iDynamicsPostScheduleG } from "../dynamics-post";
+import { iDynamicsPostScheduleG, iDynamicsScheduleGLineItemPost } from "../dynamics-post";
 import { iExpenseReport } from "../expense-report.interface";
+import { TransmogrifierExpenseReport } from "../transmogrifier-expense-report.class";
 
-export function convertExpenseReportToDynamics(userId: string, organizationId: string, expenseReportId: string, e: iExpenseReport): iDynamicsPostScheduleG {
+//userId: string, organizationId: string, expenseReportId: string, e: iExpenseReport
+export function convertExpenseReportToDynamics(trans: TransmogrifierExpenseReport): iDynamicsPostScheduleG {
   // schedule g's
   const g: iDynamicsScheduleG = {};
 
-  if (e.administrationValue) g.vsd_programadministrationcurrentquarter = e.administrationValue;
+  if (trans.expenseReport.administrationValue) g.vsd_programadministrationcurrentquarter = trans.expenseReport.administrationValue;
   // administration costs
-  if (e.administrationAnnualBudget) g.vsd_yeartodateprogramadministration = e.administrationAnnualBudget;
-  if (e.administrationDescription) g.vsd_programadministrationexplanation = e.administrationDescription;
-  if (e.administrationQuarterlyBudget) g.vsd_quarterlybudgetedprogramadministration = e.administrationQuarterlyBudget;
-  if (e.administrationValue) g.vsd_programadministrationcurrentquarter = e.administrationValue;
+  if (trans.expenseReport.administrationAnnualBudget) g.vsd_yeartodateprogramadministration = trans.expenseReport.administrationAnnualBudget;
+  if (trans.expenseReport.administrationDescription) g.vsd_programadministrationexplanation = trans.expenseReport.administrationDescription;
+  if (trans.expenseReport.administrationQuarterlyBudget) g.vsd_quarterlybudgetedprogramadministration = trans.expenseReport.administrationQuarterlyBudget;
+  if (trans.expenseReport.administrationValue) g.vsd_programadministrationcurrentquarter = trans.expenseReport.administrationValue;
 
   // program delivery costs
-  if (e.programDeliveryAnnualBudget) g.vsd_yeartodateprogramdelivery = e.programDeliveryAnnualBudget;
-  if (e.programDeliveryDescription) g.vsd_programdeliveryexplanations = e.programDeliveryDescription;
-  if (e.programDeliveryQuarterlyBudget) g.vsd_quarterlybudgetedprogramdelivery = e.programDeliveryQuarterlyBudget;
-  if (e.programDeliveryValue) g.vsd_programdeliverycurrentquarter = e.programDeliveryValue;
+  if (trans.expenseReport.programDeliveryAnnualBudget) g.vsd_yeartodateprogramdelivery = trans.expenseReport.programDeliveryAnnualBudget;
+  if (trans.expenseReport.programDeliveryDescription) g.vsd_programdeliveryexplanations = trans.expenseReport.programDeliveryDescription;
+  if (trans.expenseReport.programDeliveryQuarterlyBudget) g.vsd_quarterlybudgetedprogramdelivery = trans.expenseReport.programDeliveryQuarterlyBudget;
+  if (trans.expenseReport.programDeliveryValue) g.vsd_programdeliverycurrentquarter = trans.expenseReport.programDeliveryValue;
 
   // salaries and benefits costs
-  if (e.salariesBenefitsAnnualBudget) g.vsd_yeartodatesalariesandbenefits = e.salariesBenefitsAnnualBudget;
-  if (e.salariesBenefitsDescription) g.vsd_salariesandbenefitsexplanation = e.salariesBenefitsDescription;
-  if (e.salariesBenefitsQuarterlyBudget) g.vsd_quarterlybudgetedsalariesbenefits = e.salariesBenefitsQuarterlyBudget;
-  if (e.salariesBenefitsValue) g.vsd_salariesbenefitscurrentquarter = e.salariesBenefitsValue;
+  if (trans.expenseReport.salariesBenefitsAnnualBudget) g.vsd_yeartodatesalariesandbenefits = trans.expenseReport.salariesBenefitsAnnualBudget;
+  if (trans.expenseReport.salariesBenefitsDescription) g.vsd_salariesandbenefitsexplanation = trans.expenseReport.salariesBenefitsDescription;
+  if (trans.expenseReport.salariesBenefitsQuarterlyBudget) g.vsd_quarterlybudgetedsalariesbenefits = trans.expenseReport.salariesBenefitsQuarterlyBudget;
+  if (trans.expenseReport.salariesBenefitsValue) g.vsd_salariesbenefitscurrentquarter = trans.expenseReport.salariesBenefitsValue;
 
   // contract service hours
-  if (e.contractServiceHoursQuarterlyActual) g.vsd_actualhoursthisquarter = e.contractServiceHoursQuarterlyActual;
-  if (e.contractServiceHoursPerWeek) g.vsd_contractedservicehrsthisquarter = e.contractServiceHoursPerWeek;
-  if (e.contractServiceHoursPerQuarter) g.vsd_cpu_numberofhours = e.contractServiceHoursPerQuarter;
-  if (e.executiveReview) g.vsd_reportreviewed = e.executiveReview;
+  if (trans.expenseReport.contractServiceHoursQuarterlyActual) g.vsd_actualhoursthisquarter = trans.expenseReport.contractServiceHoursQuarterlyActual;
+  if (trans.expenseReport.contractServiceHoursPerWeek) g.vsd_contractedservicehrsthisquarter = trans.expenseReport.contractServiceHoursPerWeek;
+  if (trans.expenseReport.contractServiceHoursPerQuarter) g.vsd_contractedservicehrsthisquarter = trans.expenseReport.contractServiceHoursPerQuarter;
+  if (trans.expenseReport.executiveReview) g.vsd_reportreviewed = trans.expenseReport.executiveReview;
 
   // save the identifier for this form
-  if (expenseReportId) g.vsd_schedulegid = expenseReportId;
+  if (trans.expenseReport.expenseReportId) g.vsd_schedulegid = trans.expenseReport.expenseReportId;
+
+  //save if report has been reviewed
+  if (trans.expenseReport.executiveReview) g.vsd_reportreviewed = trans.expenseReport.executiveReview;
 
   // schedule g line items;
-  const glis: iDynamicsScheduleGLineItem[] = [];
-  for (let y of e.programExpenseLineItems) {
-    const lineItem: iDynamicsScheduleGLineItem = {
-      vsd_scheduleglineitemid: expenseReportId,
+  const glis: iDynamicsScheduleGLineItemPost[] = [];
+  for (let y of trans.expenseReport.programExpenseLineItems) {
+    const lineItem: iDynamicsScheduleGLineItemPost = {
+      vsd_scheduleglineitemid: y.itemId,
       vsd_actualexpensescurrentquarter: y.actual || 0,
     };
     glis.push(lineItem);
   }
 
   return {
-    BusinessBCeID: organizationId,
-    UserBCeID: userId,
+    BusinessBCeID: trans.organizationId,
+    UserBCeID: trans.userId,
     ScheduleGCollection: [g],
     ScheduleGLineItemCollection: glis,
   } as iDynamicsPostScheduleG;
