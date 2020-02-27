@@ -19,6 +19,7 @@ export class ExpenseReportComponent implements OnInit {
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
+  stepperIndex: number = 0;
   discriminators: string[] = ['salary_benefits', 'program_expense', 'authorization']
   saving: boolean = false;
 
@@ -84,8 +85,21 @@ export class ExpenseReportComponent implements OnInit {
     });
 
     // Subscribe to the stepper elements
-    this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
+    this.stepperService.currentStepperElement.subscribe(e => {
+      if (this.currentStepperElement) {
+        let formState = this.formHelper.getFormState();
+        //in this case there has been a previous update on this tab, and we've come back to that tab and left again. So we don't want to wipe away the incomplete status
+        if (this.currentStepperElement.formState !== "incomplete" || formState != "untouched") {
+          this.currentStepperElement.formState = formState;
+        }
+      }
+      this.currentStepperElement = e;
+
+      if (this.currentStepperElement && this.stepperElements) {
+        this.stepperIndex = this.stepperElements.findIndex(e => e.id === this.currentStepperElement.id);
+      }
+    });
   }
 
   constructDefaultstepperElements() {

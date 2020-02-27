@@ -1,7 +1,7 @@
 <!-- <pre>{{programBudget|json}}</pre> -->
 <ul class="nav nav-pills mb-2">
   <li *ngFor="let tab of tabs" class="nav-item">
-    <a class="nav-link" [class.active]="tab===currentTab" (click)="currentTab=tab">{{tab}}</a>
+    <a class="nav-link" [class.active]="tab===currentTab" (click)="setCurrentTab(tab)">{{tab}}</a>
   </li>
 </ul>
 <div *ngIf="currentTab===tabs[0]">

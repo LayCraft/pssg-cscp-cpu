@@ -90,7 +90,12 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     this.stepperService.currentStepperElement.subscribe(e => {
       if (this.currentStepperElement) {
-        this.currentStepperElement.formState = this.formHelper.getFormState();
+        let formState = this.formHelper.getFormState();
+
+        //in this case there has been a previous update on this tab, and we've come back to that tab and left again. So we don't want to wipe away the incomplete status
+        if (this.currentStepperElement.formState !== "incomplete" || formState != "untouched") {
+          this.currentStepperElement.formState = formState;
+        }
       }
       this.currentStepperElement = e;
 

@@ -50,7 +50,6 @@ namespace Gov.Cscp.Victims.Public.Controllers
             if (model == null)
             {
                 return StatusCode(502);
-
             }
 
             string endpointUrl = "vsd_SetCPUOrgContracts";
