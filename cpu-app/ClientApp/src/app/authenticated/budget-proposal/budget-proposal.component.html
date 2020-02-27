@@ -42,7 +42,7 @@
       <div *ngFor="let programBudget of trans.programBudgets">
         <span *ngIf="programBudget.programId===currentStepperElement.discriminator">
           <h2>{{programBudget.name}}</h2>
-          <app-program-budget [(programBudget)]="programBudget"></app-program-budget>
+          <app-program-budget [(programBudget)]="programBudget" [(currentStepperElement)]="currentStepperElement"></app-program-budget>
         </span>
       </div>
       <div *ngIf="currentStepperElement.discriminator==='authorization'">
@@ -56,20 +56,7 @@
     <div class="col-md-4">
     </div>
     <div class="col-md-8">
-      <!-- <span><button *ngIf="stepperIndex > 0" class="btn btn-primary mt-2 previous-button" (click)="setPreviousStepper()">Previous</button></span>
-      <span><button *ngIf="stepperIndex < stepperElements.length - 1" class="btn btn-primary mt-2 next-button" (click)="setNextStepper()">Next</button></span> -->
       <span><button *ngIf="stepperIndex == stepperElements.length -1" class="btn btn-primary mt-2 submit-button" [class.is-disabled]="!trans.signature.signatureDate" (click)="save()">Submit</button></span>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="col-4">
-      <pre>{{data|json}}</pre>
-    </div>
-    <div class="col-4">
-      <pre>{{trans|json}}</pre>
-    </div>
-    <div class="col-4">
-      <pre>{{out|json}}</pre>
-    </div>
-  </div> -->
 </div>

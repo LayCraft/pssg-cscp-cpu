@@ -5,7 +5,7 @@
         <div style="max-height: 90%;">
           <app-icon-stepper></app-icon-stepper>
         </div>
-        <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
+        <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" [class.is-disabled]="trans.expenseReport.executiveReview" (click)="save()">Save</button>
         <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
       </section>
     </div>
@@ -205,12 +205,12 @@
       </div>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="col-6">
-      <pre>{{data|json}}</pre>
+
+  <div class="row">
+    <div class="col-md-4">
     </div>
-    <div class="col-6">
-      <pre>{{trans|json}}</pre>
+    <div class="col-md-8">
+      <span><button *ngIf="stepperIndex == stepperElements.length - 1" class="btn btn-primary mt-2 submit-button" [class.is-disabled]="!trans.expenseReport.executiveReview" (click)="save()">Submit</button></span>
     </div>
-  </div> -->
+  </div>
 </div>

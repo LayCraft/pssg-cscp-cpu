@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iProgramBudget } from '../../../core/models/program-budget.interface';
 import { iExpenseTableMeta } from '../../subforms/expense-table/expense-table.component';
+import { iStepperElement } from '../../../shared/icon-stepper/icon-stepper.service';
+import { FormHelper } from '../../../core/form-helper';
 
 @Component({
   selector: 'app-program-budget',
@@ -9,6 +11,7 @@ import { iExpenseTableMeta } from '../../subforms/expense-table/expense-table.co
 })
 export class ProgramBudgetComponent implements OnInit {
   @Input() programBudget: iProgramBudget;
+  @Input() currentStepperElement: iStepperElement;
   @Output() programBudgetChange = new EventEmitter<iProgramBudget>();
 
   tabs: string[];
@@ -22,6 +25,8 @@ export class ProgramBudgetComponent implements OnInit {
       totalPercentFundedByVscp: 0,
     }
   };
+
+  private formHelper = new FormHelper();
 
   constructor() {
     this.tabs = ['Program Revenue Information', 'Program Expense'];
@@ -68,5 +73,16 @@ export class ProgramBudgetComponent implements OnInit {
       }
     }
     this.meta['totals'].totalPercentFundedByVscp = percentify(this.meta['totals']);
+  }
+
+  setCurrentTab(tab: string) {
+    let formState = this.formHelper.getFormState();
+
+    //in this case there has been a previous update on this tab, and we've come back to that tab and left again. So we don't want to wipe away the incomplete status
+    if (this.currentStepperElement.formState !== "incomplete" || formState != "untouched") {
+      this.currentStepperElement.formState = formState;
+    }
+
+    this.currentTab = tab;
   }
 }
