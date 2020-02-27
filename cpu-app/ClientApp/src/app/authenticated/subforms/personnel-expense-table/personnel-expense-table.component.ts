@@ -30,14 +30,16 @@ export class PersonnelExpenseTableComponent implements OnInit {
     this.calculateTotals();
   }
   removeExpenseItem(index: number): void {
-    // splice is acting unpredictably so I'm doing it with a for loop
-    const newArray = [];
-    for (let i = 0; i < this.salariesAndBenefits.length; i++) {
-      if (i !== index) {
-        newArray.push(this.salariesAndBenefits[i]);
-      }
+    let expenseToRemove = this.salariesAndBenefits[index];
+    console.log(expenseToRemove);
+    if (expenseToRemove.uuid) {
+      console.log("setting active to false");
+      expenseToRemove.isActive = false;
     }
-    this.salariesAndBenefits = newArray;
+    else {
+      this.salariesAndBenefits.splice(index, 1);
+    }
+    
     this.calculateTotals();
   }
   calculateTotals() {
@@ -49,26 +51,31 @@ export class PersonnelExpenseTableComponent implements OnInit {
         return prev;
       }
     }
-    if (this.salariesAndBenefits.length > 0) {
+
+    let activeSB = this.salariesAndBenefits.filter(sb => sb.isActive);
+    this.totalSalaryCost = 0;
+    this.totalBenefitsCost = 0;
+    if (activeSB.length > 0) {
       // total of salary
-      this.totalSalaryCost = this.salariesAndBenefits.map(rs => rs.salary).reduce(reducer) || 0;
+      this.totalSalaryCost = activeSB.map(rs => rs.salary).reduce(reducer) || 0;
       // total of benefits
-      this.totalBenefitsCost = this.salariesAndBenefits.map(rs => rs.benefits).reduce(reducer) || 0;
-      this.salariesAndBenefits.forEach(s => {
+      this.totalBenefitsCost = activeSB.map(rs => rs.benefits).reduce(reducer) || 0;
+      activeSB.forEach(s => {
         s.totalCost = s.salary + s.benefits;
       });
     }
 
     // total of totalCost
-    if (this.salariesAndBenefits.length > 0) {
-      this.totalTotalCost = this.salariesAndBenefits.map(rs => rs.totalCost).reduce(reducer) || 0;
+    this.totalTotalCost = 0;
+    if (activeSB.length > 0) {
+      this.totalTotalCost = activeSB.map(rs => rs.totalCost).reduce(reducer) || 0;
     }
 
     // total of vscp
     let totalVscpDefaults = 0;
     let totalVscpCustom = 0;
-    if (this.salariesAndBenefits.length > 0) {
-      totalVscpCustom = this.salariesAndBenefits.map(rs => rs.fundedFromVscp).reduce(reducer) || 0;
+    if (activeSB.length > 0) {
+      totalVscpCustom = activeSB.map(rs => rs.fundedFromVscp).reduce(reducer) || 0;
     }
     this.totalVscp = totalVscpDefaults + totalVscpCustom;
 

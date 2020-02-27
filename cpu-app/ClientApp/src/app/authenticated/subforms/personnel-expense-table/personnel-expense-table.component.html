@@ -10,6 +10,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let line of salariesAndBenefits; let i=index">
+      <ng-container *ngIf="line.isActive">
       <td>
         <input class="form-control" type="text" [(ngModel)]="line.title" min="0" id="title_{{i}}">
       </td>
@@ -28,6 +29,7 @@
       <td (click)="removeExpenseItem(i)" class="align-middle">
         <i class="fas fa-times-circle text-danger"></i>
       </td>
+    </ng-container>
     </tr>
     <tr>
       <th scope="col">Total</th>

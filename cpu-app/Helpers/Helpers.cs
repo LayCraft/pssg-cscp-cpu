@@ -60,6 +60,8 @@ namespace Gov.Cscp.Victims.Public.Helpers
         {
             string ret = modelString.Replace("\"ProgramExpenseCollection\":[],", "");
             ret = ret.Replace("\"ProgramRevenueSourceCollection\":[],", "");
+            ret = ret.Replace("\"vsd_programrevenuesourceid\":null,", "");
+            ret = ret.Replace("\"vsd_programexpenseid\":null,", "");
             return ret;
         }
 

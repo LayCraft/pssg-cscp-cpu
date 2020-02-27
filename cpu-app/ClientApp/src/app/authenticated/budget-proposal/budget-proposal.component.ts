@@ -122,6 +122,7 @@ export class BudgetProposalComponent implements OnInit {
       return;
     }
     this.saving = true;
+    console.log(this.trans);
     this.out = convertBudgetProposalToDynamics(this.trans);
     this.budgetProposalService.setBudgetProposal(this.out).subscribe(
       r => {

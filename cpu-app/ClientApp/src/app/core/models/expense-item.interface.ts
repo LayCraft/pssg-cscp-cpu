@@ -4,4 +4,6 @@ export interface iExpenseItem {
   itemName: string;
   uuid: string;
   tooltip?: string;
+  otherExpenseDescription?: string;
+  isActive?: boolean;
 }

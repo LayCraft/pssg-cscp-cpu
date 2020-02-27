@@ -8,6 +8,7 @@ export class SalaryAndBenefits implements iSalaryAndBenefits {
   benefits: number;
   fundedFromVscp: number;
   totalCost: number;
+  isActive: boolean;
   constructor(s?: iSalaryAndBenefits) {
     if (s) {
       this.title = s.title || '';
@@ -16,7 +17,9 @@ export class SalaryAndBenefits implements iSalaryAndBenefits {
       this.fundedFromVscp = s.fundedFromVscp || 0;
       this.totalCost = s.totalCost || 0;
       this.uuid = s.uuid || null;
+      this.isActive = s.isActive || true;
     } else {
+      this.isActive = true;
       this.uuid = null;
     }
   }

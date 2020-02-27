@@ -72,13 +72,16 @@ export interface iDynamicsProgramExpense {
   vsd_inputamount?: number;
   vsd_programexpenseid?: string;
   vsd_totalcost?: number;
+  statecode?: number;
 }
 export interface iDynamicsProgramRevenueSource {
   vsd_ProgramIdfortunecookiebind: string;
   vsd_cashcontribution: number;
   vsd_cpu_revenuesourcetype: number;
+  vsd_cpu_otherrevenuesource: string;
   vsd_inkindcontribution: number;
   vsd_programrevenuesourceid?: string;
+  statecode?: number;
 }
 export interface iDynamicsBudgetProposalProgram {
   vsd_programid?: string;
