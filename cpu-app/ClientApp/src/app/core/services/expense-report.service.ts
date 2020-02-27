@@ -23,7 +23,10 @@ export class ExpenseReportService {
     );
   }
   setExpenseReport(scheduleG: iDynamicsPostScheduleG): Observable<any> {
-    return of({});
+    return this.http.post<any>(`${this.apiUrl}`, scheduleG, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
   }
 
   get headers(): HttpHeaders {

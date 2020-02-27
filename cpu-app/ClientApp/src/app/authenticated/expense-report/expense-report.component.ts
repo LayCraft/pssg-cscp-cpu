@@ -7,6 +7,8 @@ import { TransmogrifierExpenseReport } from '../../core/models/transmogrifier-ex
 import { iPerson } from '../../core/models/person.interface';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { FormHelper } from '../../core/form-helper';
+import { convertExpenseReportToDynamics } from '../../core/models/converters/expense-report-to-dynamics';
+import { iDynamicsPostScheduleG } from '../../core/models/dynamics-post';
 
 @Component({
   selector: 'app-expense-report',
@@ -32,6 +34,7 @@ export class ExpenseReportComponent implements OnInit {
   // expense report
   trans: TransmogrifierExpenseReport;
   data: any;
+  out: iDynamicsPostScheduleG;
   currentUser: iPerson;
 
   private formHelper = new FormHelper();
@@ -66,6 +69,11 @@ export class ExpenseReportComponent implements OnInit {
             this.data = g;
             // make the transmogrifier for this form
             this.trans = new TransmogrifierExpenseReport(g);
+
+            console.log("from dynamics");
+            console.log(g);
+            console.log("trans");
+            console.log(this.trans);
             // construct the stepper
             this.constructDefaultstepperElements();
             // initial calculations with whatever comes from the server
@@ -140,16 +148,26 @@ export class ExpenseReportComponent implements OnInit {
     this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
   }
   save() { 
-    //TODO
-    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-    //   return;
-    // }
+    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      return;
+    }
     this.saving = true;
-
-
-
-
-    this.saving = false;
+    console.log(this.trans);
+    this.out = convertExpenseReportToDynamics(this.trans);
+    this.expenseReportService.setExpenseReport(this.out).subscribe(
+      r => {
+        console.log(r);
+        this.notificationQueueService.addNotification(`You have successfully saved the expense report.`, 'success');
+        this.stateService.refresh();
+        this.router.navigate(['/authenticated/dashboard']);
+        this.saving = false;
+      },
+      err => {
+        console.log(err);
+        this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+        this.saving = false;
+      }
+    );
   }
   exit() {
     if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {

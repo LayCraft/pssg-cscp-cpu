@@ -16,6 +16,7 @@ export class TransmogrifierExpenseReport {
   buildExpenseReport(g: iDynamicsScheduleGResponse): iExpenseReport {
     // for every item in the schedule g's
     const e: iExpenseReport = {
+      expenseReportId: g.ScheduleG.vsd_schedulegid || null,
 
       // administration costs
       administrationAnnualBudget: g.ScheduleG.vsd_yeartodateprogramadministration || 0,
@@ -38,7 +39,7 @@ export class TransmogrifierExpenseReport {
       // contract service hours
       contractServiceHoursQuarterlyActual: g.ScheduleG.vsd_actualhoursthisquarter || 0,
       contractServiceHoursPerWeek: g.ScheduleG.vsd_contractedservicehrsthisquarter || 0,
-      contractServiceHoursPerQuarter: g.ScheduleG.vsd_cpu_numberofhours || 0,
+      contractServiceHoursPerQuarter: g.ScheduleG.vsd_contractedservicehrsthisquarter || 0,
       executiveReview: g.ScheduleG.vsd_reportreviewed || false,
       // placeholder
       programExpenseLineItems: [],
