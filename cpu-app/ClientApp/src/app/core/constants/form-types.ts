@@ -4,5 +4,5 @@ export const formTypes: string[] = [
   'expense_report',
   'program_application',
   'status_report',
-  'sign_contract'
+  'download_document'
 ];

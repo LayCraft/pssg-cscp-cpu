@@ -9,6 +9,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { FormHelper } from '../../core/form-helper';
 import { convertExpenseReportToDynamics } from '../../core/models/converters/expense-report-to-dynamics';
 import { iDynamicsPostScheduleG } from '../../core/models/dynamics-post';
+import { Transmogrifier } from '../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-expense-report',
@@ -32,6 +33,10 @@ export class ExpenseReportComponent implements OnInit {
     annualVarianceSum: null,
   };
 
+  //org/program info
+  mainTrans: Transmogrifier;
+  contractNumber: string;
+
   // expense report
   trans: TransmogrifierExpenseReport;
   data: any;
@@ -50,6 +55,10 @@ export class ExpenseReportComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.stateService.main.subscribe((m: Transmogrifier) => {
+      // save the transmogrifier
+      this.mainTrans = m;
+    });
     // collect current user from the user state.
     this.stateService.currentUser.subscribe(u => this.currentUser = u);
     this.route.params.subscribe(p => {
@@ -59,7 +68,7 @@ export class ExpenseReportComponent implements OnInit {
 
       // get the expense report to fill
       this.expenseReportService.getExpenseReport(organizationId, userId, p['taskId']).subscribe(
-        g => {
+        (g: any) => {
           if (!g.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this expense report was unsuccessful. If this problem persists please notify your ministry contact.', 'danger');
@@ -75,6 +84,8 @@ export class ExpenseReportComponent implements OnInit {
             console.log(g);
             console.log("trans");
             console.log(this.trans);
+
+            this.contractNumber = this.mainTrans.contracts.find(c => c.contractId === g.Contract.vsd_contractid).contractNumber;
             // construct the stepper
             this.constructDefaultstepperElements();
             // initial calculations with whatever comes from the server

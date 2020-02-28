@@ -3,6 +3,24 @@
     <div class="col-md-4">
       <section class="application-nav sticky-top">
         <div style="max-height: 90%;">
+          <div class="card organization-box" *ngIf="trans">
+            <div class="card-header">
+              {{ mainTrans.organizationName ||'Organization'}}
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <strong>Contract No</strong><br>
+                {{contractNumber}}
+              </p>
+              <p class="card-text">
+                <strong>Program</strong><br>
+                {{data.Program.vsd_name}}
+              </p>
+            </div>
+          </div>
+
+        </div>
+        <div style="max-height: 90%;">
           <app-icon-stepper></app-icon-stepper>
         </div>
         <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" [class.is-disabled]="trans.expenseReport.executiveReview" (click)="save()">Save</button>

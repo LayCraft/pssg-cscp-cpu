@@ -6,7 +6,7 @@ export const formTypeDict = {
   '3e9826e5-e8f5-e911-b811-00505683fbf4': ['3e9826e5-e8f5-e911-b811-00505683fbf4', 'Financial Statement'],
   '315b18c9-e8f5-e911-b811-00505683fbf4': ['315b18c9-e8f5-e911-b811-00505683fbf4', 'Modification Agreement'],
   '50eeb9ba-e8f5-e911-b811-00505683fbf4': ['50eeb9ba-e8f5-e911-b811-00505683fbf4', 'Program Surplus'],
-  '1581f216-5d48-ea11-b816-00505683fbf4': ['sign_contract', 'Sign contract'] //potentially download documents page
+  '1581f216-5d48-ea11-b816-00505683fbf4': ['download_document', 'Download Documents'] //potentially download documents page
 }
 
 

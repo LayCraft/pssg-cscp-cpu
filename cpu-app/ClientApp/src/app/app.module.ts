@@ -44,9 +44,9 @@ import { TaskListComponent } from './authenticated/components/task-list/task-lis
 import { TestComponent } from './test/test.component';
 import { ContactInformation2Component } from './authenticated/subforms/contact-information2/contact-information2.component';
 import { PrimaryContactInfoComponent } from './authenticated/subforms/primary-contact-info/primary-contact-info.component';
-import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
 import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.component';
 import { ProgramContactComponent } from './authenticated/program-contact/program-contact.component';
+import { DownloadDocumentComponent } from './authenticated/download-document/download-document.component';
 
 
 @NgModule({
@@ -88,7 +88,7 @@ import { ProgramContactComponent } from './authenticated/program-contact/program
     StatusReportComponent,
     TaskListComponent,
     TestComponent,
-    SignContractComponent,
+    DownloadDocumentComponent,
     CoverLetterComponent,
   ],
   imports: [

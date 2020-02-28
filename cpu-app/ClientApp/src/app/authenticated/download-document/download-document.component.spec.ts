@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SignContractComponent } from './sign-contract.component';
+import { DownloadDocumentComponent } from './download-document.component';
 
-describe('SignContractComponent', () => {
-  let component: SignContractComponent;
-  let fixture: ComponentFixture<SignContractComponent>;
+describe('DownloadDocumentComponent', () => {
+  let component: DownloadDocumentComponent;
+  let fixture: ComponentFixture<DownloadDocumentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SignContractComponent ]
+      declarations: [ DownloadDocumentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SignContractComponent);
+    fixture = TestBed.createComponent(DownloadDocumentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

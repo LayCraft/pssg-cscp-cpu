@@ -15,11 +15,11 @@ interface FileBundle {
   fileData: string[];
 }
 @Component({
-  selector: 'app-sign-contract',
-  templateUrl: './sign-contract.component.html',
-  styleUrls: ['./sign-contract.component.css']
+  selector: 'app-download-document',
+  templateUrl: './download-document.component.html',
+  styleUrls: ['./download-document.component.css']
 })
-export class SignContractComponent implements OnInit {
+export class DownloadDocumentComponent implements OnInit {
 
   // collect the element reference from the child so that we can access native parts of the files element
   @ViewChild('files')
@@ -90,13 +90,13 @@ export class SignContractComponent implements OnInit {
     // write the default beginning
     [
       {
-        itemName: 'Download Contract',
+        itemName: 'Download File',
         formState: 'untouched',
         object: null,
         discriminator: 'download',
       },
       {
-        itemName: 'Upload Contract',
+        itemName: 'Upload File',
         formState: 'untouched',
         object: null,
         discriminator: 'upload',
