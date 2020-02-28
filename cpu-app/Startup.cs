@@ -219,6 +219,7 @@ namespace Gov.Cscp.Victims.Public
 				if (env.IsDevelopment())
 				{
 					spa.UseAngularCliServer(npmScript: "start");
+					spa.Options.StartupTimeout = TimeSpan.FromSeconds(200);
 				}
 			});
 		}

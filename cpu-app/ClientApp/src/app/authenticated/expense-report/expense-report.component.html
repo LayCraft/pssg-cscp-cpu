@@ -152,8 +152,8 @@
                 <tbody>
                   <tr *ngFor="let item of trans.expenseReport.programExpenseLineItems">
                     <th scope="row">{{item.label}}</th>
-                    <td>${{item.annualBudget||0}}</td>
-                    <td>${{item.quarterlyBudget||0}}</td>
+                    <td>${{item.annualBudget||0 | number}}</td>
+                    <td>${{item.quarterlyBudget||0 | number}}</td>
                     <td>
                       <input [(ngModel)]="item.actual" (input)="updateLineItemSums()" type="number" class="form-control" [id]="item.itemId" [name]="item.itemId">
                     </td>

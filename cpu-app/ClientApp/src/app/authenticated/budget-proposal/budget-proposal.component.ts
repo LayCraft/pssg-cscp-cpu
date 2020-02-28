@@ -131,7 +131,7 @@ export class BudgetProposalComponent implements OnInit {
     // set the stepper to the first item
     this.stepperService.setToFirstStepperElement();
   }
-  save() {
+  save(isSubmit: boolean = false) {
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {
       return;
     }
@@ -143,7 +143,7 @@ export class BudgetProposalComponent implements OnInit {
         console.log(r);
         this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
         this.stateService.refresh();
-        this.router.navigate(['/authenticated/dashboard']);
+        if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
         this.saving = false;
       },
       err => {

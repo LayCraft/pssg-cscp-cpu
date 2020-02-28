@@ -3,10 +3,11 @@ import { FileService } from '../../core/services/file.service';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
-import { iDynamicsFile } from '../../core/models/dynamics-blob';
+import { iDynamicsFile, iDynamicsDocument } from '../../core/models/dynamics-blob';
 import { iDynamicsPostFile, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { FormHelper } from '../../core/form-helper';
+import { Transmogrifier } from '../../core/models/transmogrifier.class';
 
 interface FileBundle {
   // list of file names (same order as file array)
@@ -27,8 +28,12 @@ export class DownloadDocumentComponent implements OnInit {
 
   // is this uploading/saving
   saving: boolean = false;
+  stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
+  stepperIndex: number = 0;
 
+  documentCollection: iDynamicsDocument[] = [];
+  documentsToAdd: iDynamicsDocument[] = [];
   // what are the names of the files in the filedata array
   fileNames: string[] = [];
   // how large each file is in bytes
@@ -36,6 +41,8 @@ export class DownloadDocumentComponent implements OnInit {
   // base64 encoded file turned into a string
   fileData: string[] = [];
 
+  trans: Transmogrifier;
+  contractNumber: string;
   organizationId: string;
   userId: string;
   contractId: string;
@@ -51,6 +58,11 @@ export class DownloadDocumentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.stateService.main.subscribe((m: Transmogrifier) => {
+      // save the transmogrifier
+      this.trans = m;
+    });
+
     this.stepperService.currentStepperElement.subscribe(s => this.currentStepperElement = s);
     this.route.params.subscribe(p => {
       // collect the current user information from the state.
@@ -58,21 +70,40 @@ export class DownloadDocumentComponent implements OnInit {
       this.organizationId = this.stateService.main.getValue().organizationId;
       // collect the "contract id" which is the id included with the task.
       this.contractId = p['taskId'];
+
+      this.contractNumber = this.trans.contracts.find(c => c.contractId == this.contractId).contractNumber;
+
+
+
+      this.fileService.download(this.organizationId, this.userId, this.contractId).subscribe(
+        (d: iDynamicsFile) => {
+          console.log(d);
+          if (d['error'] && d['error']['code']) {
+            // something has gone wrong. Show the developer the error
+            alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
+            console.log('Dynamics has returned: ', d);
+          } else {
+            this.documentCollection = d.DocumentCollection;
+          }
+        }
+      );
       //
       this.constructDefaultstepperElements();
     });
 
+    this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
+    this.stepperService.currentStepperElement.subscribe(e => {
+      this.currentStepperElement = e;
+
+      if (this.currentStepperElement && this.stepperElements) {
+        this.stepperIndex = this.stepperElements.findIndex(e => e.id === this.currentStepperElement.id);
+      }
+    });
+
   }
 
-  save() {
-    // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-    //   return;
-    // }
-    this.saving = true;
-    setTimeout(() => {
-      this.saving = false;
-      console.log('"Saved"');
-    }, 100);
+  submit() {
+    this.notificationQueueService.addNotification(`TODO`, 'success');
   }
   exit() {
     if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
@@ -113,17 +144,22 @@ export class DownloadDocumentComponent implements OnInit {
     this.fileData.splice(i, 1);
     this.fileNames.splice(i, 1);
     this.fileSizes.splice(i, 1);
+    this.documentsToAdd.splice(i, 1);
   }
   upload() {
+    this.saving = true;
     // assemble the file into a collection to return to dynamics
     const file: iDynamicsPostFile = {
       Businessbceid: this.organizationId,
       Userbceid: this.userId,
-      DocumentCollection: this.fileNames.map((fileName: string, i: number): iDynamicsDocumentPost => {
-        return { filename: fileName, body: this.fileData[i] }
-      })
+      DocumentCollection: this.documentsToAdd
     }
-    this.fileService.upload(file).subscribe((d) => console.log('Uploaded', d));
+    this.fileService.upload(file).subscribe((d) => {
+      this.saving = false;
+      this.documentsToAdd = [];
+      this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
+      console.log('Uploaded', d);
+    });
   }
 
   fakeBrowseClick(): void {
@@ -156,6 +192,11 @@ export class DownloadDocumentComponent implements OnInit {
             fileNames.push(files.item(i).name);
             fileData.push(reader.result.toString());
             fileSizes.push(this.toFileSize(files.item(i).size));
+
+            this.documentsToAdd.push({
+              filename: files.item(i).name,
+              body: reader.result.toString()
+            });
           }
         };
         reader.onerror = error => console.log('Error: ', error);
@@ -190,6 +231,15 @@ export class DownloadDocumentComponent implements OnInit {
         }
       );
   }
+  downloadDocument(doc: iDynamicsDocument) {
+    let element = document.createElement('a');
+    element.setAttribute('href', 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + doc.body);
+    element.setAttribute('download', doc.filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
   toFileSize(bytes: number): string {
     let fileSize: string = "0 bytes";
     if (bytes >= 1073741824) { fileSize = (bytes / 1073741824).toFixed(2) + " GB"; }
@@ -198,5 +248,13 @@ export class DownloadDocumentComponent implements OnInit {
     else if (bytes > 1) { fileSize = bytes + " bytes"; }
     else if (bytes == 1) { fileSize = bytes + " byte"; }
     return fileSize;
+  }
+  setNextStepper() {
+    ++this.stepperIndex;
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+  }
+  setPreviousStepper() {
+    --this.stepperIndex;
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
   }
 }

@@ -35,8 +35,12 @@
     </p>
   </div>
 
-<!-- card for program contact page -->
+  <!-- card for program contact page -->
   <div class="card-body" *ngIf="type === 'program-contact'">
+    <p class="card-text">
+      <strong>Contract No</strong><br>
+      {{contractNumber}}
+    </p>
     <p class="card-text">
       <strong>Phone</strong><br>
       <a href="tel:{{trans.contactInformation.phoneNumber}}">{{trans.contactInformation.phoneNumber}}</a>

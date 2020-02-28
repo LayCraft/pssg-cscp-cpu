@@ -43,9 +43,9 @@
     </tr>
     <tr>
       <th>Total </th>
-      <th>${{totalCash}}</th>
-      <th>${{totalInKind}}</th>
-      <th>${{totalGrand}}</th>
+      <th>${{totalCash | number}}</th>
+      <th>${{totalInKind | number}}</th>
+      <th>${{totalGrand | number}}</th>
       <td (click)="addRevenueSource()" class="align-middle">
         <div class="form-group">
           <i class="fas fa-plus-circle text-success"></i>
