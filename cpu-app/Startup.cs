@@ -78,20 +78,20 @@ namespace Gov.Cscp.Victims.Public
 					});
 
 			// setup siteminder authentication (core 2.0)
-			// services
-			// .AddAuthentication(options =>
-			// {
-			// 	options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-			// 	options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-			// })
-			// .AddSiteminderAuth(options => { });
+			services
+			.AddAuthentication(options =>
+			{
+				options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
+				options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
+			})
+			.AddSiteminderAuth(options => { });
 
-			// // setup authorization
-			// services.AddAuthorization(options =>
-			// {
-			// 	options.AddPolicy("Business-User", policy =>
-			// 	policy.RequireClaim(User.UserTypeClaim, "Business"));
-			// });
+			// setup authorization
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("Business-User", policy =>
+				policy.RequireClaim(User.UserTypeClaim, "Business"));
+			});
 			// end of siteminder section
 
 			services.RegisterPermissionHandler();
