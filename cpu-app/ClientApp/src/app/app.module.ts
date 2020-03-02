@@ -47,6 +47,7 @@ import { PrimaryContactInfoComponent } from './authenticated/subforms/primary-co
 import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.component';
 import { ProgramContactComponent } from './authenticated/program-contact/program-contact.component';
 import { DownloadDocumentComponent } from './authenticated/download-document/download-document.component';
+import { LoginPageComponent } from './login/login.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { DownloadDocumentComponent } from './authenticated/download-document/dow
     ExpenseTableComponent,
     HoursComponent,
     LandingPageComponent,
+    LoginPageComponent,
     MinistryContactBoxComponent,
     NotUserComponent,
     OrganizationProfileBoxComponent,

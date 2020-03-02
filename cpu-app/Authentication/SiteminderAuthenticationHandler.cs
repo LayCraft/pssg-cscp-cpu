@@ -265,51 +265,51 @@ namespace Gov.Cscp.Victims.Public.Authentication
                 // if (!hostingEnv.IsProduction())
                 // {
                 //                 // check for a fake BCeID login in dev mode
-                string temp = context.Request.Cookies[options.DevAuthenticationTokenKey];
+                // string temp = context.Request.Cookies[options.DevAuthenticationTokenKey];
 
-                if (string.IsNullOrEmpty(temp)) // could be an automated test user.
-                {
-                    temp = context.Request.Headers["DEV-USER"];
-                }
+                // if (string.IsNullOrEmpty(temp)) // could be an automated test user.
+                // {
+                //     temp = context.Request.Headers["DEV-USER"];
+                // }
 
-                if (!string.IsNullOrEmpty(temp))
-                {
-                    if (temp.Contains("::"))
-                    {
-                        var temp2 = temp.Split("::");
-                        userId = temp2[0];
-                        if (temp2.Length >= 2)
-                            devCompanyId = temp2[1];
-                        else
-                            devCompanyId = temp2[0];
-                    }
-                    else
-                    {
-                        userId = temp;
-                        devCompanyId = temp;
-                    }
-                    isDeveloperLogin = true;
+                // if (!string.IsNullOrEmpty(temp))
+                // {
+                //     if (temp.Contains("::"))
+                //     {
+                //         var temp2 = temp.Split("::");
+                //         userId = temp2[0];
+                //         if (temp2.Length >= 2)
+                //             devCompanyId = temp2[1];
+                //         else
+                //             devCompanyId = temp2[0];
+                //     }
+                //     else
+                //     {
+                //         userId = temp;
+                //         devCompanyId = temp;
+                //     }
+                //     isDeveloperLogin = true;
 
-                    _logger.LogDebug("Got user from dev cookie = " + userId + ", company = " + devCompanyId);
-                }
-                else
-                {
-                    // same set of tests for a BC Services Card dev login
-                    temp = context.Request.Cookies[options.DevBCSCAuthenticationTokenKey];
+                //     _logger.LogDebug("Got user from dev cookie = " + userId + ", company = " + devCompanyId);
+                // }
+                // else
+                // {
+                //     // same set of tests for a BC Services Card dev login
+                //     temp = context.Request.Cookies[options.DevBCSCAuthenticationTokenKey];
 
-                    if (string.IsNullOrEmpty(temp)) // could be an automated test user.
-                    {
-                        temp = context.Request.Headers["DEV-BCSC-USER"];
-                    }
+                //     if (string.IsNullOrEmpty(temp)) // could be an automated test user.
+                //     {
+                //         temp = context.Request.Headers["DEV-BCSC-USER"];
+                //     }
 
-                    if (!string.IsNullOrEmpty(temp))
-                    {
-                        userId = temp;
-                        isBCSCDeveloperLogin = true;
+                //     if (!string.IsNullOrEmpty(temp))
+                //     {
+                //         userId = temp;
+                //         isBCSCDeveloperLogin = true;
 
-                        _logger.LogDebug("Got user from dev cookie = " + userId);
-                    }
-                }
+                //         _logger.LogDebug("Got user from dev cookie = " + userId);
+                //     }
+                // }
                 // }
                 // The session is not created
                 // **************************************************
@@ -320,6 +320,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     _logger.LogInformation("Checking user session");
                     userSettings = UserSettings.ReadUserSettings(context);
                     _logger.LogDebug("UserSettings found: " + userSettings.GetJson());
+                    Console.WriteLine("UserSettings found: " + userSettings.GetJson());
                 }
                 catch
                 {
@@ -463,6 +464,12 @@ namespace Gov.Cscp.Victims.Public.Authentication
 					*/
                     //userSettings.AuthenticatedUser = new User(new Guid(), "Bill", "Octoroc", true, "BO", "octoroc@foo.gov", "smUserId", "accountId", "userType", null);
 
+                    string requestJson = "{\"UserBCeID\":\"" + siteMinderGuid + "\",\"BusinessBCeID\":\"" + siteMinderBusinessGuid + "\"}";
+                    // set the endpoint action
+                    string endpointUrl = "vsd_GetCPUOrgContracts";
+                    DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+
+                    Console.WriteLine(result);
 
                     //userSettings.AuthenticatedUser = await _dynamicsClient.LoadUser(siteMinderGuid, context.Request.Headers, _logger);
                     Console.WriteLine("Test");
@@ -470,10 +477,8 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     userSettings.UserType = siteMinderUserType;
                     Console.WriteLine("UserSettings: " + userSettings.GetJson());
                     principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
-
+                    Console.WriteLine("Principal: " + principal);
                     return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
-                    // Console.WriteLine("Test fail auth");
-                    // return AuthenticateResult.Fail("Testing");
                 }
 
                 // OLD CODE INCOMING

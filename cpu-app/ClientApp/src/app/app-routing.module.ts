@@ -15,6 +15,7 @@ import { NotUserComponent } from './authenticated/not-user/not-user.component';
 import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.component';
 import { ProgramContactComponent } from './authenticated/program-contact/program-contact.component';
 import { DownloadDocumentComponent } from './authenticated/download-document/download-document.component';
+import { LoginPageComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'test',
     component: TestComponent
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent
   },
   {
     path: 'authenticated',
