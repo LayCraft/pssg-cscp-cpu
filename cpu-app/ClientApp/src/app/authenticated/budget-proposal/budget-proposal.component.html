@@ -2,12 +2,29 @@
   <div class="row">
     <div class="col-md-4">
       <section class="application-nav sticky-top">
-        <app-icon-stepper></app-icon-stepper>
+        <div style="max-height: 90%;">
+          <div class="card organization-box" *ngIf="trans">
+            <div class="card-header">
+              {{ mainTrans.organizationName ||'Organization'}}
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <strong>Contract No</strong><br>
+                {{contractNumber}}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="max-height: 90%;">
+          <app-icon-stepper></app-icon-stepper>
+        </div>
         <!-- <span *ngIf="saving">
           <button class="btn btn-primary mt-2 mr-2" disabled>Saving</button>
         </span> -->
-        <span >
-          <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" [class.is-disabled]="saving || trans.signature.signatureDate" (click)="save()">Save</button>
+        <span>
+          <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2"
+            [class.is-disabled]="saving || trans.signature.signatureDate" (click)="save()">Save</button>
         </span>
         <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
       </section>
@@ -33,7 +50,9 @@
               </tr>
               <tr>
                 <th scope="row">Program Manager</th>
-                <td>{{personDict[program.contactLookupId]?personDict[program.contactLookupId]:'The user previously listed as the primary contact is not active. Please be sure to update this contact.'}}</td>
+                <td>
+                  {{personDict[program.contactLookupId]?personDict[program.contactLookupId]:'The user previously listed as the primary contact is not active. Please be sure to update this contact.'}}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -42,7 +61,8 @@
       <div *ngFor="let programBudget of trans.programBudgets">
         <span *ngIf="programBudget.programId===currentStepperElement.discriminator">
           <h2>{{programBudget.name}}</h2>
-          <app-program-budget [(programBudget)]="programBudget" [(currentStepperElement)]="currentStepperElement"></app-program-budget>
+          <app-program-budget [(programBudget)]="programBudget" [(currentStepperElement)]="currentStepperElement">
+          </app-program-budget>
         </span>
       </div>
       <div *ngIf="currentStepperElement.discriminator==='authorization'">
@@ -56,7 +76,8 @@
     <div class="col-md-4">
     </div>
     <div class="col-md-8">
-      <span><button *ngIf="stepperIndex == stepperElements.length -1" class="btn btn-primary mt-2 submit-button" [class.is-disabled]="!trans.signature.signatureDate" (click)="save()">Submit</button></span>
+      <span><button *ngIf="stepperIndex == stepperElements.length -1" class="btn btn-primary mt-2 submit-button"
+          [class.is-disabled]="!trans.signature.signatureDate" (click)="save(true)">Submit</button></span>
     </div>
   </div>
 </div>

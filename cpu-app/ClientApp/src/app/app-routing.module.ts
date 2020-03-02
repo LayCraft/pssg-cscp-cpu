@@ -12,9 +12,9 @@ import { ProgramApplicationComponent } from './authenticated/program-application
 import { StatusReportComponent } from './authenticated/status-report/status-report.component';
 import { TestComponent } from './test/test.component';
 import { NotUserComponent } from './authenticated/not-user/not-user.component';
-import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
 import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.component';
 import { ProgramContactComponent } from './authenticated/program-contact/program-contact.component';
+import { DownloadDocumentComponent } from './authenticated/download-document/download-document.component';
 
 const routes: Routes = [
   {
@@ -55,8 +55,8 @@ const routes: Routes = [
         component: StatusReportComponent
       },
       {
-        path: 'sign_contract/:taskId',
-        component: SignContractComponent
+        path: 'download_document/:taskId',
+        component: DownloadDocumentComponent
       },
       {
         path: 'cover_letter/:taskId',

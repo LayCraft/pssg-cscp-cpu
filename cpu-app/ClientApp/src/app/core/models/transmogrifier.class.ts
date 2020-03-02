@@ -74,7 +74,7 @@ export class Transmogrifier {
     if (discriminator === 'program_application') {
       return contractId;//works
     }
-    if (discriminator === 'sign_contract') {
+    if (discriminator === 'download_document') {
       return contractId;
     }
     if (discriminator === 'cover_letter') {

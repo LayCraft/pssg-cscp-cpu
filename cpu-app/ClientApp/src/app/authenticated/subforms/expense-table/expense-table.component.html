@@ -50,8 +50,8 @@
     </tr>
     <tr>
       <th scope="col">Total</th>
-      <td>${{totalTotalCost}}</td>
-      <td>${{totalVscp}}</td>
+      <td>${{totalTotalCost | number}}</td>
+      <td>${{totalVscp | number}}</td>
       <td (click)="addExpenseItem()" class="align-middle">
         <i class="fas fa-plus-circle text-success"></i>
       </td>

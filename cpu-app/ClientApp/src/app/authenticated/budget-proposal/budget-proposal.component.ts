@@ -11,6 +11,7 @@ import { convertBudgetProposalToDynamics } from '../../core/models/converters/bu
 import { iProgramBudget } from '../../core/models/program-budget.interface';
 import { iDynamicsPostBudgetProposal } from '../../core/models/dynamics-post';
 import { FormHelper } from '../../core/form-helper';
+import { Transmogrifier } from '../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -23,6 +24,8 @@ export class BudgetProposalComponent implements OnInit {
   stepperElements: iStepperElement[];
   stepperIndex: number = 0;
 
+  mainTrans: Transmogrifier;
+  contractNumber: string;
   trans: TransmogrifierBudgetProposal;
   data: iDynamicsBudgetProposal;
   out: iDynamicsPostBudgetProposal;
@@ -40,6 +43,10 @@ export class BudgetProposalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.stateService.main.subscribe((m: Transmogrifier) => {
+      // save the transmogrifier
+      this.mainTrans = m;
+    });
     // make a dictionary of names
     this.personDict = this.stateService.main.getValue().persons
       .map(p => {
@@ -81,6 +88,8 @@ export class BudgetProposalComponent implements OnInit {
             console.log(d);
             console.log("trans");
             console.log(this.trans);
+
+            this.contractNumber = this.mainTrans.contracts.find(c => c.contractId === d.Contract.vsd_contractid).contractNumber;
             return pb;
           })
           this.constructDefaultstepperElements();
@@ -122,7 +131,7 @@ export class BudgetProposalComponent implements OnInit {
     // set the stepper to the first item
     this.stepperService.setToFirstStepperElement();
   }
-  save() {
+  save(isSubmit: boolean = false) {
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {
       return;
     }
@@ -134,7 +143,7 @@ export class BudgetProposalComponent implements OnInit {
         console.log(r);
         this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
         this.stateService.refresh();
-        this.router.navigate(['/authenticated/dashboard']);
+        if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
         this.saving = false;
       },
       err => {

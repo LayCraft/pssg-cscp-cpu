@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <section class="application-nav sticky-top">
+        <div style="max-height: 90%;">
+          <div class="card organization-box" *ngIf="trans">
+            <div class="card-header">
+              {{ trans.organizationName ||'Organization'}}
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <strong>Contract No</strong><br>
+                {{contractNumber}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div style="max-height: 90%;">
+          <app-icon-stepper></app-icon-stepper>
+        </div>
+        <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
+      </section>
+    </div>
+    <div class="col">
+      <div *ngIf="currentStepperElement">
+        <div class="page-header">
+          <h1>{{currentStepperElement.itemName}}</h1>
+        </div>
+        <div *ngIf="currentStepperElement.discriminator==='download'">
+          <!-- Download file area -->
+          <ol>
+            <li>Download the document from the link</li>
+            <li>Open and sign the document with a PDF reader and add your signature. (Need a pdf reader? <a href="https://get.adobe.com/reader" target="_blank">Download Adobe Acrobat Reader</a>)</li>
+            <li>Use the upload tab to upload the signed PDF.</li>
+          </ol>
+
+          <div *ngFor="let doc of documentCollection; " class="download-file-div">
+            <span class="file-name">{{doc.filename}}</span><button class="btn btn-danger download-button" (click)="downloadDocument(doc)">Download File</button>
+          </div>
+        </div>
+        <div *ngIf="currentStepperElement.discriminator==='upload'">
+          <!-- Upload file area -->
+          <ul *ngIf="documentsToAdd.length" class="list-group mb-2">
+            <!-- Only show the entry if they are in the list -->
+            <li *ngFor="let doc of documentsToAdd; let i=index" class="list-group-item d-flex justify-content-between align-items-center">
+              {{doc.filename}}
+              <!-- {{' ('+fileSizes[i]+')'}} -->
+              <span (click)="removeFile(i)">
+                <i class="fas fa-times-circle text-danger"></i>
+              </span>
+            </li>
+          </ul>
+          <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)" multiple>
+          <button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Add File</button>
+          <button class="btn btn-warning ml-2" [class.is-disabled]="documentsToAdd.length == 0 || saving" (click)="upload()">Upload Files</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-8">
+      <span><button *ngIf="stepperIndex > 0" class="btn btn-primary mt-2 previous-button" (click)="setPreviousStepper()">Previous</button></span>
+      <span><button *ngIf="stepperIndex < stepperElements.length - 1" class="btn btn-primary mt-2 next-button" (click)="setNextStepper()">Next</button></span>
+      <span><button *ngIf="stepperIndex == stepperElements.length -1" class="btn btn-primary mt-2 submit-button" [class.is-disabled]="saving" (click)="submit()">Submit</button></span>
+    </div>
+  </div>
+</div>
