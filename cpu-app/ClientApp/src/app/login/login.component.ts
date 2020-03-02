@@ -3,10 +3,9 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
-  templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.css']
+  templateUrl: './login.component.html'
 })
-export class LandingPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit {
   window = window;
   constructor(private router: Router) { }
 
