@@ -228,6 +228,9 @@ namespace Gov.Cscp.Victims.Public.Authentication
         {
             //         // get siteminder headers
             _logger.LogDebug("Parsing the HTTP headers for SiteMinder authentication credential");
+            _logger.LogInformation("Test information");
+            _logger.LogTrace("Test Trace");
+
 
             SiteMinderAuthOptions options = new SiteMinderAuthOptions();
             bool isDeveloperLogin = false;
@@ -441,7 +444,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     _logger.LogDebug("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
 
                     // TODO: the Dynamics service should be hooked up to fetch the existin user information here.
-                    DynamicsResult massiveGainsDoYouEvenLift = await _dynamicsResultService.GetResultAsync("some endpoint url", "{\"UserBCeID\":\"" + siteMinderGuid + "\",\"BusinessBCeID\":\"" + siteMinderBusinessGuid + "\"}");
+                    // DynamicsResult massiveGainsDoYouEvenLift = await _dynamicsResultService.GetResultAsync("some endpoint url", "{\"UserBCeID\":\"" + siteMinderGuid + "\",\"BusinessBCeID\":\"" + siteMinderBusinessGuid + "\"}");
                     /*
 					From here on out what we have to do is to get the user information from Dynamics for this person
 					We determine if the person is an existing user that is valid and etc.
@@ -450,6 +453,11 @@ namespace Gov.Cscp.Victims.Public.Authentication
 					If there are missing properties in the header that make this hard/impossible to look the user up we need siteminder configuration changes from WAM
 					*/
                     //userSettings.AuthenticatedUser = new User(new Guid(), "Bill", "Octoroc", true, "BO", "octoroc@foo.gov", "smUserId", "accountId", "userType", null);
+
+                    
+                    //userSettings.AuthenticatedUser = await _dynamicsClient.LoadUser(siteMinderGuid, context.Request.Headers, _logger);
+                    ClaimsPrincipal userPrincipal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
+                    return AuthenticateResult.Success(new AuthenticationTicket(userPrincipal, null, Options.Scheme));
                 }
 
                 // OLD CODE INCOMING

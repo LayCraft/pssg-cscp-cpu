@@ -28,6 +28,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
         }
 
         [HttpGet("{businessBceid}/{userBceid}/{scheduleFId}")]
+        [Authorize]
         public async Task<IActionResult> GetProgramApplication(string businessBceid, string userBceid, string scheduleFId)
         {
             try
