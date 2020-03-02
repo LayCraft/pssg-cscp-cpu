@@ -320,7 +320,6 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     _logger.LogInformation("Checking user session");
                     userSettings = UserSettings.ReadUserSettings(context);
                     _logger.LogDebug("UserSettings found: " + userSettings.GetJson());
-                    Console.WriteLine("UserSettings found: " + userSettings.GetJson());
                 }
                 catch
                 {
@@ -334,6 +333,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                          !string.IsNullOrEmpty(userSettings.UserId) && userSettings.UserId == userId))
                 {
                     _logger.LogDebug("User already authenticated with active session: " + userSettings.UserId);
+                    Console.WriteLine("User already authenticated with active session: " + userSettings.GetJson());
                     principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
                     return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
                 }
@@ -379,22 +379,26 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     if (string.IsNullOrEmpty(userId))
                     {
                         _logger.LogDebug(options.MissingSiteMinderUserIdError);
+                        Console.WriteLine(options.MissingSiteMinderUserIdError);
                         return AuthenticateResult.Fail(options.MissingSiteMinderGuidError);
                     }
 
                     if (string.IsNullOrEmpty(siteMinderGuid))
                     {
                         _logger.LogDebug(options.MissingSiteMinderGuidError);
+                        Console.WriteLine(options.MissingSiteMinderGuidError);
                         return AuthenticateResult.Fail(options.MissingSiteMinderGuidError);
                     }
                     if (string.IsNullOrEmpty(siteMinderUserType))
                     {
                         _logger.LogDebug(options.MissingSiteMinderUserTypeError);
+                        Console.WriteLine(options.MissingSiteMinderUserTypeError);
                         return AuthenticateResult.Fail(options.MissingSiteMinderUserTypeError);
                     }
                 }
                 else // DEV user, setup a fake session and SiteMinder headers.
                 {
+                    Console.WriteLine("DEV user, setup a fake session and SiteMinder headers.");
                     if (isDeveloperLogin && _dynamicsResultService != null)
                     {
                         _logger.LogError("Generating a Development user");
@@ -439,6 +443,9 @@ namespace Gov.Cscp.Victims.Public.Authentication
 
                 //             _logger.LogDebug("Loading user external id = " + siteMinderGuid);
 
+                Console.WriteLine("UserSettings found: " + userSettings.GetJson());
+                Console.WriteLine("lookup user info...");
+
                 if (_dynamicsResultService != null)
                 {
                     var businessBceid = siteMinderBusinessGuid;
@@ -461,7 +468,9 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     Console.WriteLine("Test");
                     Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
                     userSettings.UserType = siteMinderUserType;
+                    Console.WriteLine("UserSettings: " + userSettings.GetJson());
                     principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
+
                     return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
                     // Console.WriteLine("Test fail auth");
                     // return AuthenticateResult.Fail("Testing");
