@@ -454,10 +454,14 @@ namespace Gov.Cscp.Victims.Public.Authentication
 					*/
                     //userSettings.AuthenticatedUser = new User(new Guid(), "Bill", "Octoroc", true, "BO", "octoroc@foo.gov", "smUserId", "accountId", "userType", null);
 
-                    
+
                     //userSettings.AuthenticatedUser = await _dynamicsClient.LoadUser(siteMinderGuid, context.Request.Headers, _logger);
-                    ClaimsPrincipal userPrincipal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
-                    return AuthenticateResult.Success(new AuthenticationTicket(userPrincipal, null, Options.Scheme));
+                    Console.WriteLine("Test");
+                    Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
+                    Console.WriteLine(options.Scheme);
+                    Console.WriteLine(userSettings);
+                    principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
+                    return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
                 }
 
                 // OLD CODE INCOMING
