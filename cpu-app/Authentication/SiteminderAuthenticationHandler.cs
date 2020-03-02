@@ -227,7 +227,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             //         // get siteminder headers
-            //         _logger.LogDebug("Parsing the HTTP headers for SiteMinder authentication credential");
+            _logger.LogDebug("Parsing the HTTP headers for SiteMinder authentication credential");
 
             SiteMinderAuthOptions options = new SiteMinderAuthOptions();
             bool isDeveloperLogin = false;
@@ -449,7 +449,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
 					Set up the login and logout controllers to handle the things coming from siteminder.
 					If there are missing properties in the header that make this hard/impossible to look the user up we need siteminder configuration changes from WAM
 					*/
-                    userSettings.AuthenticatedUser = new User(new Guid(), "Bill", "Octoroc", true, "BO", "octoroc@foo.gov", "smUserId", "accountId", "userType", null);
+                    //userSettings.AuthenticatedUser = new User(new Guid(), "Bill", "Octoroc", true, "BO", "octoroc@foo.gov", "smUserId", "accountId", "userType", null);
                 }
 
                 // OLD CODE INCOMING
