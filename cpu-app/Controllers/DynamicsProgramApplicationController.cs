@@ -16,6 +16,7 @@ using System;
 
 namespace Gov.Cscp.Victims.Public.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class DynamicsProgramApplicationController : Controller
     {
@@ -26,7 +27,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
             this._dynamicsResultService = dynamicsResultService;
         }
 
-        [Authorize(Policy = "Business-User")]
+        [Authorize]
         [HttpGet("{businessBceid}/{userBceid}/{scheduleFId}")]
         public async Task<IActionResult> GetProgramApplication(string businessBceid, string userBceid, string scheduleFId)
         {

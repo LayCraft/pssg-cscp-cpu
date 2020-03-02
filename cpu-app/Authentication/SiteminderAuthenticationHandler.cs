@@ -320,6 +320,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     _logger.LogInformation("Checking user session");
                     userSettings = UserSettings.ReadUserSettings(context);
                     _logger.LogDebug("UserSettings found: " + userSettings.GetJson());
+                    Console.WriteLine("UserSettings found: " + userSettings.GetJson());
                 }
                 catch
                 {
@@ -358,6 +359,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
 
                 if (string.IsNullOrEmpty(userId))
                 {
+                    Console.WriteLine("Getting user data from headers");
                     _logger.LogDebug("Getting user data from headers");
 
                     userId = context.Request.Headers[options.SiteMinderUserNameKey];
@@ -458,10 +460,11 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     //userSettings.AuthenticatedUser = await _dynamicsClient.LoadUser(siteMinderGuid, context.Request.Headers, _logger);
                     Console.WriteLine("Test");
                     Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
-                    Console.WriteLine(options.Scheme);
-                    Console.WriteLine(userSettings);
+                    userSettings.UserType = siteMinderUserType;
                     principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
                     return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
+                    // Console.WriteLine("Test fail auth");
+                    // return AuthenticateResult.Fail("Testing");
                 }
 
                 // OLD CODE INCOMING
