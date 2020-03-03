@@ -4,6 +4,7 @@ import { iDynamicsPostScheduleF } from '../models/dynamics-post';
 import { Observable, throwError, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { StateService } from './state.service';
 
 
 @Injectable({
@@ -12,6 +13,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class UserDataService {
   // this should query the test api
   apiUrl = 'api/User';
+  usreId: string = "";
+  orgId: string = "";
+  loggedIn: boolean = false;
 
   constructor(
     private http: HttpClient,

@@ -79,7 +79,59 @@ export class StateService {
       () => this.loading.next(false)
     );
   }
+  loginNew(userId: string, orgId: string) {
+    // const userId = '9e9b5111-51c9-e911-b80f-00505683fbf4';
+    // const orgId = 'fd889a40-14b2-e811-8163-480fcff4f621';
+    this.loading.next(true);
+    // on login collect the information from the organization id
+    this.mainService.getBlob(userId, orgId).subscribe(
+      (m: iDynamicsBlob) => {
+        // check for actual error message
+        if (m.Result.includes('BusinessBCeID doesn\'t match to which the Contact belongs to')) {
+          this.notificationQueueService.addNotification('Your organization\'s BCeID does not match one in our records.', 'danger');
+          this.currentUser.next({
+            userId,
+            orgId,
+            firstName: 'New',
+            lastName: 'User',
+            email: ''
+          });
+          // set the logged in state
+          this.homeRoute.next('authenticated/new_user');
+          this.loggedIn.next(true);
+        } else if (m.Result.includes('No contact found with the supplied BCeID')) {
+          this.notificationQueueService.addNotification('Your user BCeID does not match one in our records.', 'danger');
+          this.currentUser.next({
+            userId,
+            orgId,
+            firstName: 'New',
+            lastName: 'User',
+            email: ''
+          });
+          // set the logged in state
+          this.homeRoute.next('authenticated/new_user');
+          this.loggedIn.next(true);
+        } else {
+          // collect the blob into a useful object
+          console.log("Dynamics blob");
+          console.log(JSON.parse(JSON.stringify(m)));
+          const mainData = new Transmogrifier(m);
+          // save the useful blob of viewmodels
+          this.main.next(mainData);
+          // save the user that matches the current bceid
+          this.currentUser.next(mainData.persons.filter(p => p.userId === userId)[0]);
+          // give a notification
+          this.notificationQueueService.addNotification(`${mainData.organizationName} has been logged in successfully.`, 'success');
 
+          // set the home button link and set log in to true (IN THAT ORDER)
+          this.homeRoute.next('authenticated/dashboard');
+          this.loggedIn.next(true);
+        }
+      },
+      err => { },
+      () => this.loading.next(false)
+    );
+  }
   logout() {
     // clear the state and route to the homepage
     this.main.next(null);
