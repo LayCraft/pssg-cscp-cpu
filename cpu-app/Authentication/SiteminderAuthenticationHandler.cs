@@ -469,16 +469,28 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     string endpointUrl = "vsd_GetCPUOrgContracts";
                     DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
 
-                    Console.WriteLine(result);
+                    if ((int)result.statusCode == 200)
+                    {
+                        Console.WriteLine("Found User Data");
+                        Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
+                        Console.WriteLine("UserSettings: " + userSettings.GetJson());
+                        userSettings.UserType = siteMinderUserType;
+                        userSettings.UserId = siteMinderGuid;
+                        userSettings.AccountId = siteMinderBusinessGuid;
+
+                        principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
+
+                        string temp = userSettings.GetJson();
+                        context.Session.SetString("UserSettings", temp);
+
+                        return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
+                    }
 
                     //userSettings.AuthenticatedUser = await _dynamicsClient.LoadUser(siteMinderGuid, context.Request.Headers, _logger);
-                    Console.WriteLine("Test");
-                    Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
-                    userSettings.UserType = siteMinderUserType;
-                    Console.WriteLine("UserSettings: " + userSettings.GetJson());
-                    principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
-                    Console.WriteLine("Principal: " + principal);
-                    return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
+
+                    Console.WriteLine("User doesn't exist");
+                    return AuthenticateResult.Fail("user doesn't exist");
+
                 }
 
                 // OLD CODE INCOMING
