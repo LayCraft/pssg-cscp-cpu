@@ -39,11 +39,19 @@ namespace Gov.Cscp.Victims.Public.Controllers
 
             // determine if we are a new registrant.
             string temp = _httpContextAccessor.HttpContext.Session.GetString("UserSettings");
-            Authentication.UserSettings userSettings = JsonConvert.DeserializeObject<Authentication.UserSettings>(temp);
+            if (!String.IsNullOrEmpty(temp))
+            {
+                Authentication.UserSettings userSettings = JsonConvert.DeserializeObject<Authentication.UserSettings>(temp);
 
-            string ret = "{\"UserBCeID\":\"" + userSettings.UserId + "\",\"BusinessBCeID\":\"" + userSettings.AccountId + "\"}";
+                string ret = "{\"UserBCeID\":\"" + userSettings.UserId + "\",\"BusinessBCeID\":\"" + userSettings.AccountId + "\"}";
 
-            return new JsonResult(ret);
+                return new JsonResult(ret);
+            }
+            else
+            {
+                return new JsonResult("false");
+            }
+
         }
 
     }
