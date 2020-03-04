@@ -13,16 +13,14 @@ export class LandingPageComponent implements OnInit {
   constructor(private router: Router,
     private userData: UserDataService,
     private stateService: StateService) {
-    console.log("testing");
     this.userData.getCurrentUser().subscribe((res: any) => {
-      console.log("user info...");
+      console.log("returned user info:");
       console.log(res);
-      if (res) res = JSON.parse(JSON.stringify(res));
-      if (res && res.UserBCeID && res.BusinessBCeID) {
-        console.log("setting user data logged in");
+      if (res && res.userBCeID && res.businessBCeID) {
+        console.log("setting user data as logged in");
         this.userData.loggedIn = true;
-        this.userData.userId = res.UserBCeID;
-        this.userData.orgId = res.BusinessBCeID;
+        this.userData.userId = res.userBCeID;
+        this.userData.orgId = res.businessBCeID;
       }
       else {
         this.userData.loggedIn = false;

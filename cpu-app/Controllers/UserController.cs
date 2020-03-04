@@ -10,10 +10,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace Gov.Cscp.Victims.Public.Controllers
 {
+    public class UserSettingsPayload
+    {
+        public string Message { get; set; }
+        public string UserBCeID { get; set; }
+        public string BusinessBCeID { get; set; }
+    }
+
     [Route("api/[controller]")]
     public class UserController : Controller
     {
@@ -31,28 +39,47 @@ namespace Gov.Cscp.Victims.Public.Controllers
 
         [HttpGet("current")]
         //[RequiresPermission(Permission.Login, Permission.NewUserRegistration)]
-
-
         public virtual IActionResult UsersCurrentGet()
         {
-            Authentication.SiteMinderAuthOptions siteMinderAuthOptions = new Authentication.SiteMinderAuthOptions();
-
-            // determine if we are a new registrant.
-            string temp = _httpContextAccessor.HttpContext.Session.GetString("UserSettings");
-            if (!string.IsNullOrEmpty(temp))
+            try
             {
-                Authentication.UserSettings userSettings = JsonConvert.DeserializeObject<Authentication.UserSettings>(temp);
+                Authentication.SiteMinderAuthOptions siteMinderAuthOptions = new Authentication.SiteMinderAuthOptions();
 
-                string ret = "{\"UserBCeID\":\"" + userSettings.UserId + "\",\"BusinessBCeID\":\"" + userSettings.AccountId + "\"}";
+                // determine if we are a new registrant.
+                string temp = _httpContextAccessor.HttpContext.Session.GetString("UserSettings");
+                if (!String.IsNullOrEmpty(temp))
+                {
+                    Authentication.UserSettings userSettings = JsonConvert.DeserializeObject<Authentication.UserSettings>(temp);
 
-                return new JsonResult(ret);
+
+                    UserSettingsPayload ret = new UserSettingsPayload {
+                        Message = "Success",
+                        UserBCeID = userSettings.UserId,
+                        BusinessBCeID = userSettings.AccountId
+                    };
+                    
+                    // return Ok(ret);
+                    return StatusCode(200, ret);
+                }
+                else
+                {
+                    UserSettingsPayload ret = new UserSettingsPayload {
+                        Message = "No user settings found",
+                        UserBCeID = "",
+                        BusinessBCeID = ""
+                    };
+                    return StatusCode(200, ret);
+                }
             }
-            else
+            catch
             {
-                return new JsonResult("false");
+                UserSettingsPayload ret = new UserSettingsPayload {
+                        Message = "Error getting user settings",
+                        UserBCeID = "",
+                        BusinessBCeID = ""
+                    };
+                return StatusCode(500, ret);
             }
-
         }
-
     }
 }
