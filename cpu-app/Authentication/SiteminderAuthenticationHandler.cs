@@ -320,7 +320,6 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     _logger.LogInformation("Checking user session");
                     userSettings = UserSettings.ReadUserSettings(context);
                     _logger.LogDebug("UserSettings found: " + userSettings.GetJson());
-                    Console.WriteLine("UserSettings found: " + userSettings.GetJson());
                 }
                 catch
                 {
@@ -360,7 +359,6 @@ namespace Gov.Cscp.Victims.Public.Authentication
 
                 if (string.IsNullOrEmpty(userId))
                 {
-                    Console.WriteLine("Getting user data from headers");
                     _logger.LogDebug("Getting user data from headers");
 
                     userId = context.Request.Headers[options.SiteMinderUserNameKey];
@@ -380,26 +378,22 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     if (string.IsNullOrEmpty(userId))
                     {
                         _logger.LogDebug(options.MissingSiteMinderUserIdError);
-                        Console.WriteLine(options.MissingSiteMinderUserIdError);
                         return AuthenticateResult.Fail(options.MissingSiteMinderGuidError);
                     }
 
                     if (string.IsNullOrEmpty(siteMinderGuid))
                     {
                         _logger.LogDebug(options.MissingSiteMinderGuidError);
-                        Console.WriteLine(options.MissingSiteMinderGuidError);
                         return AuthenticateResult.Fail(options.MissingSiteMinderGuidError);
                     }
                     if (string.IsNullOrEmpty(siteMinderUserType))
                     {
                         _logger.LogDebug(options.MissingSiteMinderUserTypeError);
-                        Console.WriteLine(options.MissingSiteMinderUserTypeError);
                         return AuthenticateResult.Fail(options.MissingSiteMinderUserTypeError);
                     }
                 }
                 else // DEV user, setup a fake session and SiteMinder headers.
                 {
-                    Console.WriteLine("DEV user, setup a fake session and SiteMinder headers.");
                     if (isDeveloperLogin && _dynamicsResultService != null)
                     {
                         _logger.LogError("Generating a Development user");
@@ -444,9 +438,6 @@ namespace Gov.Cscp.Victims.Public.Authentication
 
                 //             _logger.LogDebug("Loading user external id = " + siteMinderGuid);
 
-                Console.WriteLine("UserSettings found: " + userSettings.GetJson());
-                Console.WriteLine("lookup user info...");
-
                 if (_dynamicsResultService != null)
                 {
                     var businessBceid = siteMinderBusinessGuid;
@@ -472,16 +463,18 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     if ((int)result.statusCode == 200)
                     {
                         Console.WriteLine("Found User Data");
+                        Console.WriteLine(result);
                         Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
-                        Console.WriteLine("UserSettings: " + userSettings.GetJson());
                         userSettings.UserType = siteMinderUserType;
                         userSettings.UserId = siteMinderGuid;
                         userSettings.AccountId = siteMinderBusinessGuid;
+                        Console.WriteLine("UserSettings: " + userSettings.GetJson());
 
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
 
-                        string temp = userSettings.GetJson();
-                        context.Session.SetString("UserSettings", temp);
+                        // string temp = userSettings.GetJson();
+                        // context.Session.SetString("UserSettings", temp);
+                        UserSettings.SaveUserSettings(userSettings, context);
 
                         return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
                     }
