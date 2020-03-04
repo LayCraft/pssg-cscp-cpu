@@ -13,9 +13,9 @@ import { StateService } from './state.service';
 export class UserDataService {
   // this should query the test api
   apiUrl = 'api/User';
-  userId: string = "";
-  orgId: string = "";
-  loggedIn: boolean = false;
+  public userId: string = "";
+  public orgId: string = "";
+  public loggedIn: boolean = false;
 
   constructor(
     private http: HttpClient,
