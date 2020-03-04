@@ -459,9 +459,16 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     // set the endpoint action
                     string endpointUrl = "vsd_GetCPUOrgContracts";
                     DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
-                    Console.WriteLine("Returned user data:");
+                    Console.WriteLine("Dynamics result info:");
                     string resultString = result.ToString();
-                    Console.WriteLine(resultString);
+                    string resultResult = result.result.ToString();
+                    string messageString = result.responseMessage.ToString();
+                    int code = (int)result.statusCode;
+
+                    Console.WriteLine(resultResult);
+                    Console.WriteLine(messageString);
+                    Console.WriteLine(code);
+                    
                     //Error: No contact found with the supplied BCeID
 
                     // if ((int)result.statusCode == 200)
