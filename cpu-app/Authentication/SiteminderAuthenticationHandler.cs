@@ -463,7 +463,8 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     if ((int)result.statusCode == 200)
                     {
                         Console.WriteLine("Found User Data");
-                        Console.WriteLine(result);
+                        string resultString = System.Text.Json.JsonSerializer.Serialize(result);
+                        Console.WriteLine(resultString);
                         Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
                         userSettings.UserType = siteMinderUserType;
                         userSettings.UserId = siteMinderGuid;
