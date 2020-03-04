@@ -459,12 +459,22 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     // set the endpoint action
                     string endpointUrl = "vsd_GetCPUOrgContracts";
                     DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+                    Console.WriteLine("Returned user data:");
+                    string resultString = result.ToString();
+                    Console.WriteLine(resultString);
+                    //Error: No contact found with the supplied BCeID
 
-                    if ((int)result.statusCode == 200)
+                    // if ((int)result.statusCode == 200)
+
+                    if (resultString.Contains("Error: No contact found with the supplied BCeID"))
+                    {
+                        Console.WriteLine("User doesn't exist");
+                        return AuthenticateResult.Fail("user doesn't exist");
+                    }
+                    else
                     {
                         Console.WriteLine("Found User Data");
-                        string resultString = System.Text.Json.JsonSerializer.Serialize(result);
-                        Console.WriteLine(resultString);
+                        // Console.WriteLine(resultString);
                         Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
                         userSettings.UserType = siteMinderUserType;
                         userSettings.UserId = siteMinderGuid;
@@ -479,12 +489,6 @@ namespace Gov.Cscp.Victims.Public.Authentication
 
                         return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
                     }
-
-                    //userSettings.AuthenticatedUser = await _dynamicsClient.LoadUser(siteMinderGuid, context.Request.Headers, _logger);
-
-                    Console.WriteLine("User doesn't exist");
-                    return AuthenticateResult.Fail("user doesn't exist");
-
                 }
 
                 // OLD CODE INCOMING
