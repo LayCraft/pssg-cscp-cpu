@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
   }
   login() {
     if (this.userData.loggedIn) {
-      this.stateService.loginNew(this.userData.usreId, this.userData.orgId);
+      this.stateService.loginNew(this.userData.userId, this.userData.orgId);
     }
     else {
       this.stateService.login();
