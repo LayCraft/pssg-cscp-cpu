@@ -39,7 +39,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
 
             // determine if we are a new registrant.
             string temp = _httpContextAccessor.HttpContext.Session.GetString("UserSettings");
-            if (!String.IsNullOrEmpty(temp))
+            if (!string.IsNullOrEmpty(temp))
             {
                 Authentication.UserSettings userSettings = JsonConvert.DeserializeObject<Authentication.UserSettings>(temp);
 
