@@ -13,7 +13,7 @@ import { StateService } from './state.service';
 export class UserDataService {
   // this should query the test api
   apiUrl = 'api/User';
-  usreId: string = "";
+  userId: string = "";
   orgId: string = "";
   loggedIn: boolean = false;
 

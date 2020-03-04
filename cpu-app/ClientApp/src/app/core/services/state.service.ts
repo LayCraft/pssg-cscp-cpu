@@ -32,9 +32,12 @@ export class StateService {
     let userId = '9e9b5111-51c9-e911-b80f-00505683fbf4';
     let orgId = 'fd889a40-14b2-e811-8163-480fcff4f621';
 
+    console.log("logging in");
+    console.log(this.userData.loggedIn, this.userData.userId, this.userData.orgId);
+
     if (this.userData.loggedIn) {
       //in this case we have id's from siteminder login
-      userId = this.userData.usreId;
+      userId = this.userData.userId;
       orgId = this.userData.orgId;
     }
     this.loading.next(true);

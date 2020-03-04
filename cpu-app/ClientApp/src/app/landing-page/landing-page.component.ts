@@ -18,7 +18,10 @@ export class LandingPageComponent implements OnInit {
       console.log("user info...");
       console.log(res);
       if (res.UserBCeID && res.BusinessBCeID) {
+        console.log("setting user data logged in");
         this.userData.loggedIn = true;
+        this.userData.userId = res.UserBCeID;
+        this.userData.orgId = res.BusinessBCeID;
       }
       else {
         this.userData.loggedIn = false;
