@@ -465,15 +465,18 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     string messageString = result.responseMessage.ToString();
                     int code = (int)result.statusCode;
 
+                    Console.WriteLine("resultResult");
                     Console.WriteLine(resultResult);
+                    Console.WriteLine("messageString");
                     Console.WriteLine(messageString);
-                    Console.WriteLine(code);
-                    
+                    Console.WriteLine("resultResult");
+                    Console.WriteLine(resultResult);
+
                     //Error: No contact found with the supplied BCeID
 
                     // if ((int)result.statusCode == 200)
 
-                    if (resultString.Contains("Error: No contact found with the supplied BCeID"))
+                    if (resultResult.Contains("Error: No contact found with the supplied BCeID"))
                     {
                         Console.WriteLine("User doesn't exist");
                         return AuthenticateResult.Fail("user doesn't exist");
