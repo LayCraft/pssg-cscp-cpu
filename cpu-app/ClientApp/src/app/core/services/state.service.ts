@@ -5,6 +5,7 @@ import { MainService } from './main.service';
 import { NotificationQueueService } from './notification-queue.service';
 import { iDynamicsBlob } from '../models/dynamics-blob';
 import { iPerson } from '../models/person.interface';
+import { UserDataService } from './user-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +25,18 @@ export class StateService {
   constructor(
     private mainService: MainService,
     private notificationQueueService: NotificationQueueService,
+    private userData: UserDataService
   ) { }
 
   login() {
-    const userId = '9e9b5111-51c9-e911-b80f-00505683fbf4';
-    const orgId = 'fd889a40-14b2-e811-8163-480fcff4f621';
+    let userId = '9e9b5111-51c9-e911-b80f-00505683fbf4';
+    let orgId = 'fd889a40-14b2-e811-8163-480fcff4f621';
+
+    if (this.userData.loggedIn) {
+      //in this case we have id's from siteminder login
+      userId = this.userData.usreId;
+      orgId = this.userData.orgId;
+    }
     this.loading.next(true);
     // on login collect the information from the organization id
     this.mainService.getBlob(userId, orgId).subscribe(
