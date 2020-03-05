@@ -61,6 +61,14 @@ export class FormHelper {
     }
     //TODO - check for complete? info? untouched?
     return 'untouched';
-
+  }
+  makeFormClean() {
+    let dirtyControls = document.getElementsByClassName("ng-dirty");
+    [].forEach.call(dirtyControls, function (el: Element) {
+      el.classList.remove("ng-dirty");
+      el.classList.remove("ng-touched");
+      el.classList.add("ng-untouched");
+      el.classList.add("ng-pristine");
+    });
   }
 }

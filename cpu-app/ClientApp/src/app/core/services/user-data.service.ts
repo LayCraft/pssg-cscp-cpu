@@ -1,11 +1,7 @@
 import { retry, catchError } from 'rxjs/operators';
-import { iDynamicsScheduleFResponse } from '../models/dynamics-blob';
-import { iDynamicsPostScheduleF } from '../models/dynamics-post';
 import { Observable, throwError, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { StateService } from './state.service';
-
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +9,13 @@ import { StateService } from './state.service';
 export class UserDataService {
   // this should query the test api
   apiUrl = 'api/User';
-  public userId: string = "";
-  public orgId: string = "";
-  public loggedIn: boolean = false;
-  public isNewAccount: boolean = false;
 
   constructor(
     private http: HttpClient,
   ) { }
 
   getCurrentUser() {
-    return this.http.get<iDynamicsScheduleFResponse>(`${this.apiUrl}/current`, { headers: this.headers }).pipe(
+    return this.http.get(`${this.apiUrl}/current`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

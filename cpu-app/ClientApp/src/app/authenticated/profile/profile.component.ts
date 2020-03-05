@@ -50,9 +50,11 @@ export class ProfileComponent implements OnInit {
       );
   }
   onExit() {
-    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
-      this.stateService.refresh();
-      this.router.navigate(['/authenticated/dashboard']);
+    if (this.formHelper.isFormDirty()) {
+      if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+        this.stateService.refresh();
+        this.router.navigate(['/authenticated/dashboard']);
+      }
     }
     else if (!this.formHelper.isFormDirty()) {
       this.stateService.refresh();
