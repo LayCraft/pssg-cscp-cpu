@@ -9,6 +9,7 @@ import { iPerson } from "../person.interface";
 import { iProgramApplication } from "../program-application.interface";
 import { encodeCcseaMemberType } from "../../constants/encode-ccsea-member-type";
 import { nameAssemble } from "../../constants/name-assemble";
+import { boolOptionSet } from "../../constants/bool-optionset-values";
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsPostScheduleF {
   const post: iDynamicsPostScheduleF = {
@@ -18,8 +19,8 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_ContactLookup1fortunecookiebind: trans.contactInformation.executiveContact.personId,
       // if the user has requested not to have a board contact we simply duplicate the link to the the executive contact
       vsd_ContactLookup2fortunecookiebind: trans.contactInformation.hasBoardContact ? trans.contactInformation.boardContact.personId : trans.contactInformation.executiveContact.personId,
-      vsd_cpu_programstaffsubcontracted: trans.administrativeInformation.staffSubcontracted,
-      vsd_cpu_staffunionized: trans.administrativeInformation.staffUnionized,
+      vsd_cpu_subcontractedprogramstaff: trans.administrativeInformation.staffSubcontracted ? boolOptionSet.isTrue : boolOptionSet.isFalse,
+      vsd_cpu_unionizedstaff: trans.administrativeInformation.staffUnionized ? boolOptionSet.isTrue : boolOptionSet.isFalse,
       vsd_cpu_insuranceoptions: encodeCglInsurance(trans.cglInsurance),
       vsd_cpu_memberofcssea: encodeCcseaMemberType(trans.administrativeInformation.ccseaMemberType),
       vsd_contractid: trans.contractId,

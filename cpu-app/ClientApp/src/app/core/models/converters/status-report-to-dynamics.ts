@@ -3,6 +3,7 @@ import { iDynamicsPostStatusReport, iDynamicsAnswer } from "../dynamics-post";
 import { iQuestionCollection } from "../question-collection.interface";
 import { iQuestion } from "../status-report-question.interface";
 import { months as monthDict } from "../../constants/month-codes";
+import { boolOptionSet } from "../../constants/bool-optionset-values";
 
 export function convertStatusReportToDynamics(trans: TransmogrifierStatusReport): iDynamicsPostStatusReport {
   const types = {
@@ -24,7 +25,7 @@ export function convertStatusReportToDynamics(trans: TransmogrifierStatusReport)
       }
       // depending on types we add another property
       if (q.type === 'number') lineItem['vsd_number'] = q.number;
-      if (q.type === 'boolean') lineItem['vsd_yesnoboolean'] = q.boolean;
+      if (q.type === 'boolean') lineItem['vsd_yesno'] = q.boolean ? boolOptionSet.isTrue : boolOptionSet.isFalse;
       if (q.type === 'string') lineItem['vsd_textanswer'] = q.string;
       // add the line item to the answers list
       answers.push(lineItem);
@@ -36,6 +37,6 @@ export function convertStatusReportToDynamics(trans: TransmogrifierStatusReport)
     UserBCeID: trans.userId,
     ReportingPeriod: monthDict[trans.reportingPeriod] || 0,
     // get rid of any answers are missing a value. Otherwise dynamics 204's.
-    AnswerCollection: answers.filter(v => v.vsd_yesnoboolean || v.vsd_textanswer || v.vsd_number)
+    AnswerCollection: answers.filter(v => v.vsd_yesno || v.vsd_textanswer || v.vsd_number)
   };
 }

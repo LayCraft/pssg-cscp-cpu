@@ -10,6 +10,7 @@ import { iProgramApplication } from "./program-application.interface";
 import { iSignature } from '../../authenticated/subforms/program-authorizer/program-authorizer.component';
 import { makeViewTimeString } from './converters/hours-to-dynamics';
 import { ngDevModeResetPerfCounters } from '@angular/core/src/render3/ng_dev_mode';
+import { boolOptionSet } from '../constants/bool-optionset-values';
 
 export class TransmogrifierProgramApplication {
   accountId: string;// this is the dynamics account
@@ -78,8 +79,8 @@ export class TransmogrifierProgramApplication {
         };
       }) || [],
       staffUnion: b.Contract.vsd_cpu_specificunion,
-      staffSubcontracted: b.Contract.vsd_cpu_programstaffsubcontracted,
-      staffUnionized: b.Contract.vsd_cpu_staffunionized,
+      staffSubcontracted: b.Contract.vsd_cpu_subcontractedprogramstaff ? b.Contract.vsd_cpu_subcontractedprogramstaff === boolOptionSet.isTrue ? true : false : null,
+      staffUnionized: b.Contract.vsd_cpu_unionizedstaff ? b.Contract.vsd_cpu_unionizedstaff === boolOptionSet.isTrue ? true : false : null,
     }
   }
   private buildContactInformation(b: iDynamicsScheduleFResponse): iContactInformation {

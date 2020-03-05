@@ -68,9 +68,9 @@ export interface iDynamicsCrmContract {
   vsd_cpu_humanresourcepolices?: string; // this is actually an array that comes in wrong
   vsd_cpu_insuranceoptions?: number;
   vsd_cpu_memberofcssea?: string;
-  vsd_cpu_programstaffsubcontracted?: boolean;
+  vsd_cpu_subcontractedprogramstaff?: number;
   vsd_cpu_specificunion?: string;
-  vsd_cpu_staffunionized?: boolean;
+  vsd_cpu_unionizedstaff?: number;
   vsd_name?: string;
 }
 export interface iDynamicsMinistryUser {
