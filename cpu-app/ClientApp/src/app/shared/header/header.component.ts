@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { nameAssemble } from '../../core/constants/name-assemble'
@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   nameAssemble;
   loggedIn: boolean = false;
   loading = false;
+  window = window;
   constructor(
     private router: Router,
     private stateService: StateService,
@@ -39,11 +40,11 @@ export class HeaderComponent implements OnInit {
     this.stateService.loading.subscribe(l => this.loading = l);
   }
   login() {
-    if (this.userData.loggedIn) {
-      this.stateService.loginNew(this.userData.userId, this.userData.orgId);
+    if (window.location.href.includes("localhost")) {
+      this.stateService.login();
     }
     else {
-      this.stateService.login();
+      this.window.location.href = 'login';
     }
   }
   logout() {

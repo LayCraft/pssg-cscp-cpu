@@ -29,8 +29,8 @@ export class StateService {
   ) { }
 
   login() {
-    let userId = '9e9b5111-51c9-e911-b80f-00505683fbf4';
-    let orgId = 'fd889a40-14b2-e811-8163-480fcff4f621';
+    let userId = 'FB55AB99F20E471186B8143B3F21F6E7';
+    let orgId = 'E4637B1557A6457891D7549067B20635';
 
     console.log("logging in");
     console.log(this.userData.loggedIn, this.userData.userId, this.userData.orgId);
