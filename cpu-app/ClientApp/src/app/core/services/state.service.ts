@@ -44,11 +44,11 @@ export class StateService {
 
     console.log("logging in");
     let userInfo = this.userSettings.getValue();
-    console.log(this.loggedIn.getValue(), userInfo.contactId, userInfo.accountId);
+    console.log(this.loggedIn.getValue(), userInfo.userId, userInfo.accountId);
 
     if (this.loggedIn.getValue() && !userInfo.isNewUserRegistration) {
       //in this case we have id's from siteminder login
-      userId = userInfo.contactId;
+      userId = userInfo.userId;
       orgId = userInfo.accountId;
     }
     this.loading.next(true);
