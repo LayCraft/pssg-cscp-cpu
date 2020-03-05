@@ -27,7 +27,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.stateService.loggedIn.subscribe((l: boolean) => {
       this.loggedIn = l;
-      this.router.navigate([this.stateService.homeRoute.getValue()]);
+      if (window.location.href.indexOf("login") < 0) {
+        this.router.navigate([this.stateService.homeRoute.getValue()]);
+      }
     });
     this.stateService.currentUser.subscribe(u => {
       if (u) {

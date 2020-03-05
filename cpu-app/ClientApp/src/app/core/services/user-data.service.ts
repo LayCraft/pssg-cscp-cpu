@@ -16,6 +16,7 @@ export class UserDataService {
   public userId: string = "";
   public orgId: string = "";
   public loggedIn: boolean = false;
+  public isNewAccount: boolean = false;
 
   constructor(
     private http: HttpClient,

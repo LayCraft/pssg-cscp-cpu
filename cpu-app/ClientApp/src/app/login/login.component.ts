@@ -7,7 +7,9 @@ import { Router } from '@angular/router';
 })
 export class LoginPageComponent implements OnInit {
   window = window;
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+    console.log("login page...");
+   }
 
   ngOnInit() {
   }

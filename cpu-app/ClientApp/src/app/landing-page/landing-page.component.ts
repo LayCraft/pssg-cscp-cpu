@@ -10,9 +10,16 @@ import { StateService } from '../core/services/state.service';
 })
 export class LandingPageComponent implements OnInit {
   window = window;
+  showLogOut: boolean = false;
   constructor(private router: Router,
     private userData: UserDataService,
     private stateService: StateService) {
+
+    if (document.cookie.indexOf("SMSESSION")) {
+      //we have a SiteMinder cookie, and are in theory, looged in. we should be able to "Log Out" and get rid of it
+      // this.showLogOut = true;
+    }
+
     this.userData.getCurrentUser().subscribe((res: any) => {
       console.log("returned user info:");
       console.log(res);
@@ -21,6 +28,7 @@ export class LandingPageComponent implements OnInit {
         this.userData.loggedIn = true;
         this.userData.userId = res.userBCeID;
         this.userData.orgId = res.businessBCeID;
+        this.userData.isNewAccount = res.isNewUserRegistration;
       }
       else {
         this.userData.loggedIn = false;
@@ -29,5 +37,9 @@ export class LandingPageComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  logOut() {
+    console.log("need to get logout url...");
   }
 }
