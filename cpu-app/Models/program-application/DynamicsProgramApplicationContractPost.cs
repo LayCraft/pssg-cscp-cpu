@@ -39,8 +39,8 @@ namespace Gov.Cscp.Victims.Public.Models
             }
             set { _vsd_ContactLookup2fortunecookiebind = value; }
         }
-        public bool vsd_cpu_programstaffsubcontracted { get; set; }
-        public bool vsd_cpu_staffunionized { get; set; }
+        public int? vsd_cpu_subcontractedprogramstaff { get; set; }
+        public int? vsd_cpu_unionizedstaff { get; set; }
         public int? vsd_cpu_insuranceoptions { get; set; }
         public int? vsd_cpu_memberofcssea { get; set; }
         public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.vsd_contract"; } }

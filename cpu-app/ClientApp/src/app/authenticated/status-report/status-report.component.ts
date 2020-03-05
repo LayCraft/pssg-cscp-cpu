@@ -121,6 +121,7 @@ export class StatusReportComponent implements OnInit {
             this.saving = false;
             console.log(r);
             this.notificationQueueService.addNotification(`You have successfully submitted ${this.trans.reportingPeriod} statistics.`, 'success');
+            this.stateService.refresh();
             this.router.navigate(['/authenticated/dashboard']);
           },
           err => {

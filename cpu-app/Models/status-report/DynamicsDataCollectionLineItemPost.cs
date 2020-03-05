@@ -17,6 +17,6 @@ namespace Gov.Cscp.Victims.Public.Models
         public int vsd_questiontype1 { get; set; }
         public int vsd_questionorder { get; set; }
         public string vsd_textanswer { get; set; }
-        public bool vsd_yesnoboolean { get; set; }
+        public int? vsd_yesno { get; set; }
     }
 }

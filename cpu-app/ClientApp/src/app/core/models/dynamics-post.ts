@@ -57,7 +57,7 @@ export interface iDynamicsAnswer {
   vsd_questiontype1: number;
   // answer
   vsd_number?: number;
-  vsd_yesnoboolean?: boolean;
+  vsd_yesno?: number;
   vsd_textanswer?: string;
 }
 export interface iDynamicsProgramExpense {
@@ -98,9 +98,9 @@ export interface iDynamicsCrmContractPost {
   vsd_cpu_humanresourcepolices?: string; // this is actually an array that comes in as a comma seperated string
   vsd_cpu_insuranceoptions?: number;
   vsd_cpu_memberofcssea?: number;
-  vsd_cpu_programstaffsubcontracted?: boolean;
+  vsd_cpu_subcontractedprogramstaff?: number;
   vsd_cpu_specificunion?: string;
-  vsd_cpu_staffunionized?: boolean;
+  vsd_cpu_unionizedstaff?: number;
   vsd_name?: string;
   vsd_authorizedsigningofficersignature?: string;
   vsd_signingofficertitle?: string;

@@ -6,6 +6,7 @@ import { NotificationQueueService } from './notification-queue.service';
 import { iDynamicsBlob } from '../models/dynamics-blob';
 import { iPerson } from '../models/person.interface';
 import { UserDataService } from './user-data.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class StateService {
   constructor(
     private mainService: MainService,
     private notificationQueueService: NotificationQueueService,
-    private userData: UserDataService
+    private userData: UserDataService,
+    private router: Router,
   ) { }
 
   login() {
@@ -83,6 +85,7 @@ export class StateService {
 
           // set the home button link and set log in to true (IN THAT ORDER)
           this.homeRoute.next('authenticated/dashboard');
+          this.router.navigate(['/authenticated/dashboard']);
           this.loggedIn.next(true);
         }
       },
