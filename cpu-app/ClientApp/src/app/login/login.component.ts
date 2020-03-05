@@ -14,17 +14,15 @@ export class LoginPageComponent implements OnInit {
     private stateService: StateService) {
     console.log("login page...");
 
-    this.userData.getCurrentUser().subscribe((res: any) => {
+    this.userData.getCurrentUser().subscribe((userInfo: any) => {
       console.log("returned user info:");
-      console.log(res);
-      if (res && res.userId && res.accountId) {
+      console.log(userInfo);
+      if (userInfo && userInfo.userId && userInfo.accountId) {
         console.log("setting user data as logged in");
-        this.userData.loggedIn = true;
-        this.userData.userId = res.userId;
-        this.userData.orgId = res.accountId;
-        this.userData.isNewAccount = res.isNewUserRegistration;
+        this.stateService.loggedIn.next(true);
+        this.stateService.userSettings.next(userInfo);
 
-        if (this.userData.isNewAccount) {
+        if (userInfo.isNewUserRegistration) {
           this.router.navigate([this.stateService.homeRoute.getValue()]);
         }
         else {
@@ -32,7 +30,7 @@ export class LoginPageComponent implements OnInit {
         }
       }
       else {
-        this.userData.loggedIn = false;
+        this.stateService.loggedIn.next(false);
         this.router.navigate([this.stateService.homeRoute.getValue()]);
       }
     });

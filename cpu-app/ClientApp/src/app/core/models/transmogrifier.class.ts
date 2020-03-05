@@ -9,6 +9,7 @@ import { iContactInformation } from './contact-information.interface';
 
 import { contractCode } from '../constants/contract-code';
 import { decodeTaskType } from '../constants/decode-task-type';
+import { nameAssemble } from '../constants/name-assemble';
 
 export class Transmogrifier {
   // collections of viewmodels
@@ -87,6 +88,7 @@ export class Transmogrifier {
     const programs: iProgram[] = [];
     for (let program of b.Programs) {
       if (program._vsd_contractid_value === contractId) {
+        let programContact = b.Staff.find(s => s.contactid === program._vsd_contactlookup_value);
         programs.push({
           // build an address
           address: {
@@ -109,6 +111,7 @@ export class Transmogrifier {
           phone: program.vsd_phonenumber,
           programId: program.vsd_programid,
           programName: program.vsd_name,
+          contactName: programContact ? nameAssemble(programContact.firstname, programContact.middlename, programContact.lastname) : ""
         });
       }
     }

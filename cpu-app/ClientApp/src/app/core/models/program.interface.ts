@@ -8,4 +8,5 @@ export interface iProgram {
   phone: string;
   programId: string;
   programName: string;
+  contactName?: string;
 }

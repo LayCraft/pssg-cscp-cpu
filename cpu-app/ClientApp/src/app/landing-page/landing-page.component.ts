@@ -20,18 +20,16 @@ export class LandingPageComponent implements OnInit {
       // this.showLogOut = true;
     }
 
-    this.userData.getCurrentUser().subscribe((res: any) => {
+    this.userData.getCurrentUser().subscribe((userSettings: any) => {
       console.log("returned user info:");
-      console.log(res);
-      if (res && res.userBCeID && res.businessBCeID) {
+      console.log(userSettings);
+      if (userSettings && userSettings.userBCeID && userSettings.businessBCeID) {
         console.log("setting user data as logged in");
-        this.userData.loggedIn = true;
-        this.userData.userId = res.userBCeID;
-        this.userData.orgId = res.businessBCeID;
-        this.userData.isNewAccount = res.isNewUserRegistration;
+        this.stateService.loggedIn.next(true);
+        this.stateService.userSettings.next(userSettings);
       }
       else {
-        this.userData.loggedIn = false;
+        this.stateService.loggedIn.next(false);
       }
     });
   }
@@ -39,7 +37,15 @@ export class LandingPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  logOut() {
-    console.log("need to get logout url...");
+  login() {
+    if (this.stateService.loggedIn.getValue() || window.location.href.includes("localhost")) {
+      this.stateService.login();
+    }
+    else {
+      this.window.location.href = 'login';
+    }
+  }
+  logout() {
+    this.stateService.logout();
   }
 }
