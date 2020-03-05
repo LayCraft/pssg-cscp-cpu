@@ -35,7 +35,7 @@ export class StateService {
     console.log("logging in");
     console.log(this.userData.loggedIn, this.userData.userId, this.userData.orgId);
 
-    if (this.userData.loggedIn) {
+    if (this.userData.loggedIn && !this.userData.isNewAccount) {
       //in this case we have id's from siteminder login
       userId = this.userData.userId;
       orgId = this.userData.orgId;

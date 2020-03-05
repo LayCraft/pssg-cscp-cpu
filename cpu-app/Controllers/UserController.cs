@@ -52,14 +52,14 @@ namespace Gov.Cscp.Victims.Public.Controllers
                     Authentication.UserSettings userSettings = JsonConvert.DeserializeObject<Authentication.UserSettings>(temp);
 
 
-                    UserSettingsPayload ret = new UserSettingsPayload {
-                        Message = "Success",
-                        UserBCeID = userSettings.UserId,
-                        BusinessBCeID = userSettings.AccountId
-                    };
+                    // UserSettingsPayload ret = new UserSettingsPayload {
+                    //     Message = "Success",
+                    //     UserBCeID = userSettings.UserId,
+                    //     BusinessBCeID = userSettings.AccountId
+                    // };
                     
                     // return Ok(ret);
-                    return StatusCode(200, ret);
+                    return StatusCode(200, userSettings);
                 }
                 else
                 {

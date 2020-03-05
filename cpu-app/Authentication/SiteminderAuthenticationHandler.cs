@@ -479,6 +479,8 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     if (resultResult.Contains("Error: No contact found with the supplied BCeID"))
                     {
                         Console.WriteLine("User doesn't exist");
+                        userSettings.IsNewUserRegistration = true;
+                        UserSettings.SaveUserSettings(userSettings, context);
                         return AuthenticateResult.Fail("user doesn't exist");
                     }
                     else
@@ -489,6 +491,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                         userSettings.UserType = siteMinderUserType;
                         userSettings.UserId = siteMinderGuid;
                         userSettings.AccountId = siteMinderBusinessGuid;
+                        userSettings.IsNewUserRegistration = false;
                         Console.WriteLine("UserSettings: " + userSettings.GetJson());
 
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
