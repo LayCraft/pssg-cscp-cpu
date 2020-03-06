@@ -22,6 +22,11 @@ namespace Gov.Cscp.Victims.Public.Controllers
         public string BusinessBCeID { get; set; }
     }
 
+    public class LogoutUrlData
+    {
+        public string LogoutUrl { get; set; }
+    }
+
     [Route("api/[controller]")]
     public class UserController : Controller
     {
@@ -57,13 +62,14 @@ namespace Gov.Cscp.Victims.Public.Controllers
                     //     UserBCeID = userSettings.UserId,
                     //     BusinessBCeID = userSettings.AccountId
                     // };
-                    
+
                     // return Ok(ret);
                     return StatusCode(200, userSettings);
                 }
                 else
                 {
-                    UserSettingsPayload ret = new UserSettingsPayload {
+                    UserSettingsPayload ret = new UserSettingsPayload
+                    {
                         Message = "No user settings found",
                         UserBCeID = "",
                         BusinessBCeID = ""
@@ -73,13 +79,37 @@ namespace Gov.Cscp.Victims.Public.Controllers
             }
             catch
             {
-                UserSettingsPayload ret = new UserSettingsPayload {
-                        Message = "Error getting user settings",
-                        UserBCeID = "",
-                        BusinessBCeID = ""
-                    };
+                UserSettingsPayload ret = new UserSettingsPayload
+                {
+                    Message = "Error getting user settings",
+                    UserBCeID = "",
+                    BusinessBCeID = ""
+                };
                 return StatusCode(500, ret);
             }
+        }
+
+        [HttpGet("GetLogoutUrl")]
+        public virtual IActionResult GetLogoutUrl()
+        {
+            try
+            {
+                string logoutPath = "/";
+                if (!string.IsNullOrEmpty(Configuration["SITEMINDER_LOGOUT_URL"]))
+                {
+                    logoutPath = Configuration["SITEMINDER_LOGOUT_URL"];
+                    if (!string.IsNullOrEmpty(Configuration["BASE_URI"]) && !string.IsNullOrEmpty(Configuration["BASE_PATH"]))
+                    {
+                        logoutPath += "?returl=" + Configuration["BASE_URI"] + Configuration["BASE_PATH"];
+                    }
+                }
+                LogoutUrlData ret = new LogoutUrlData
+                {
+                    LogoutUrl = logoutPath
+                };
+                return StatusCode(200, ret);
+            }
+            finally { }
         }
     }
 }

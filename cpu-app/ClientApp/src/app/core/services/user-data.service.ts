@@ -20,6 +20,12 @@ export class UserDataService {
       catchError(this.handleError)
     );
   }
+  getLogoutUrl() {
+    return this.http.get(`${this.apiUrl}/GetLogoutUrl`, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
   get headers(): HttpHeaders {
     return new HttpHeaders({ 'Content-Type': 'application/json' });
   }
