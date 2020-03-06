@@ -20,6 +20,7 @@ import { MinistryContactBoxComponent } from './authenticated/components/ministry
 import { NgModule } from '@angular/core';
 import { NotUserComponent } from './authenticated/not-user/not-user.component';
 import { OrganizationProfileBoxComponent } from './authenticated/components/organization-profile-box/organization-profile-box.component';
+import { MessageReadComponent } from './authenticated/subforms/message-read/message-read.component';
 import { PersonCardComponent } from './authenticated/subforms/person-card/person-card.component';
 import { PersonEditorComponent } from './authenticated/subforms/person-editor/person-editor.component';
 import { PersonPickerComponent } from './authenticated/subforms/person-picker/person-picker.component';

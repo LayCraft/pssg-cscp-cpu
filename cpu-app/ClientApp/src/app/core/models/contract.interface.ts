@@ -1,5 +1,6 @@
 import { iTask } from "./task.interface";
 import { iProgram } from "./program.interface";
+import { iMessage } from "./message.interface";
 
 export interface iContract {
   // isCompleted: boolean; // basically useless
@@ -10,4 +11,5 @@ export interface iContract {
   programs: iProgram[];
   tasks: iTask[];
   completedTasks: iTask[];
+  //messages: iMessage[]; // TODO: Will need to add this to the model
 }

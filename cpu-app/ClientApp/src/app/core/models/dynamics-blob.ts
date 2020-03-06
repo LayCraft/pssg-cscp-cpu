@@ -128,6 +128,17 @@ export interface iDynamicsCrmTask {
   statuscode?: number;
   subject?: string;
 }
+export interface iDynamicsCrmMessage {
+  TimeStamp: Date;
+  From: Date;
+  To: Date;
+  vsd_direction: string;
+  regardingobjectid: string;
+  vsd_Program: string;
+  vsd_cpu_regiondistrict: string;
+  Subject: string;
+  Description: string;
+}
 export interface iDynamicsBlob {
   BoardContact?: iDynamicsCrmContact,
   Businessbceid?: string; // represents the organization level BCeID.
@@ -139,7 +150,8 @@ export interface iDynamicsBlob {
   Programs?: iDynamicsCrmProgram[];
   Result: string;
   Staff?: iDynamicsCrmContact[];
-  Tasks?: iDynamicsCrmTask[]
+  Tasks?: iDynamicsCrmTask[];
+  Messages?: iDynamicsCrmMessage[];
   Userbceid?: string; // represents the user's BCeID.
   fortunecookiecontext?: string;
 };
