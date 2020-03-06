@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace Gov.Cscp.Victims.Public.Controllers
 {
@@ -92,12 +93,19 @@ namespace Gov.Cscp.Victims.Public.Controllers
         }
 
         [HttpGet("GetUrl")]
-        public virtual IActionResult GetLogoutUrl()
+        public IActionResult GetLogoutUrl()
         {
-            string logoutPath = string.IsNullOrEmpty(_configuration["SITEMINDER_LOGOUT_URL"]) ? "/" : _configuration["SITEMINDER_LOGOUT_URL"];
-            LogoutUrlData ret = new LogoutUrlData();
-            ret.LogoutUrl = string.IsNullOrEmpty(_configuration["SITEMINDER_LOGOUT_URL"]) ? "/" : _configuration["SITEMINDER_LOGOUT_URL"];
-            return StatusCode(200, ret);
+            try
+            {
+                // string logoutPath = string.IsNullOrEmpty(_configuration["SITEMINDER_LOGOUT_URL"]) ? "/" : _configuration["SITEMINDER_LOGOUT_URL"];
+                LogoutUrlData ret = new LogoutUrlData
+                {
+                    LogoutUrl = string.IsNullOrEmpty(_configuration["SITEMINDER_LOGOUT_URL"]) ? "/" : _configuration["SITEMINDER_LOGOUT_URL"] + "?returl=" + _configuration["BASE_URI"] + _configuration["BASE_PATH"]
+                };
+                // ret.LogoutUrl = string.IsNullOrEmpty(_configuration["SITEMINDER_LOGOUT_URL"]) ? "/" : _configuration["SITEMINDER_LOGOUT_URL"];
+                return StatusCode(200, ret);
+            }
+            finally { }
         }
     }
 }
