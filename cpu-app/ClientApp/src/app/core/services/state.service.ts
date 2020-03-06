@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Transmogrifier } from '../models/transmogrifier.class';
 import { MainService } from './main.service';
 import { NotificationQueueService } from './notification-queue.service';
@@ -9,6 +9,8 @@ import { UserDataService } from './user-data.service';
 import { Router } from '@angular/router';
 import { iUserSettings } from '../models/user-settings.interface';
 import { UserSettings } from '../models/user-settings.class';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { retry, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +38,7 @@ export class StateService {
     private notificationQueueService: NotificationQueueService,
     private userData: UserDataService,
     private router: Router,
+    private http: HttpClient,
   ) { }
 
   login() {
@@ -104,14 +107,16 @@ export class StateService {
   }
   logout() {
     // clear the state and route to the homepage
-    this.main.next(null);
-    this.currentUser.next(null);
-    //notification about the login
-    this.notificationQueueService.addNotification('User has logged out.', 'warning');
+    this.logoutUser().subscribe((res) => {
+      this.main.next(null);
+      this.currentUser.next(null);
+      //notification about the login
+      this.notificationQueueService.addNotification('User has logged out.', 'warning');
 
-    // set the home button link and set logout to false (IN THAT ORDER)
-    this.homeRoute.next('');
-    this.loggedIn.next(false);
+      // set the home button link and set logout to false (IN THAT ORDER)
+      this.homeRoute.next('');
+      this.loggedIn.next(false);
+    });
   }
   refresh() {
     // quick refresh of data
@@ -129,5 +134,26 @@ export class StateService {
         }
       );
     }
+  }
+  logoutUser() {
+    return this.http.get(`logout`, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+  get headers(): HttpHeaders {
+    return new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
+  protected handleError(err): Observable<never> {
+    let errorMessage = '';
+    if (err.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      errorMessage = err.error.message;
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      errorMessage = `Backend returned code ${err.status}, body was: ${err.message}`;
+    }
+    return throwError(errorMessage);
   }
 }
