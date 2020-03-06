@@ -107,16 +107,31 @@ export class StateService {
   }
   logout() {
     // clear the state and route to the homepage
-    this.logoutUser().subscribe((res) => {
+    if (window.location.href.includes("localhost")) {
       this.main.next(null);
       this.currentUser.next(null);
+      this.userSettings.next(new UserSettings);
       //notification about the login
       this.notificationQueueService.addNotification('User has logged out.', 'warning');
-
+  
       // set the home button link and set logout to false (IN THAT ORDER)
       this.homeRoute.next('');
       this.loggedIn.next(false);
-    });
+    }
+    else {
+      this.getLogoutUrl().subscribe((data: any) => {
+        this.main.next(null);
+        this.currentUser.next(null);
+        this.userSettings.next(new UserSettings);
+        //notification about the login
+        this.notificationQueueService.addNotification('User has logged out.', 'warning');
+    
+        // set the home button link and set logout to false (IN THAT ORDER)
+        // this.homeRoute.next('');
+        this.loggedIn.next(false);
+        window.location.href = data.logoutUrl;
+      });
+    }
   }
   refresh() {
     // quick refresh of data
@@ -135,8 +150,8 @@ export class StateService {
       );
     }
   }
-  logoutUser() {
-    return this.http.get(`logout`, { headers: this.headers }).pipe(
+  getLogoutUrl() {
+    return this.http.get(`logout/GetUrl`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
