@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
       this.stateService.login();
     }
     else {
-      this.window.location.href = 'login';
+      window.location.href = 'login';
     }
   }
   logout() {
