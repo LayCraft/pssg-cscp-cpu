@@ -12,10 +12,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
     [Route("[controller]")]
     public class LogoutController : Controller
     {
-        public class LogoutUrlData
-        {
-            public string LogoutUrl { get; set; }
-        }
+        
         // **********FROM PILL PRESS *****************
         private readonly IConfiguration _configuration;
         // private readonly IHostingEnvironment _env;
@@ -90,22 +87,6 @@ namespace Gov.Cscp.Victims.Public.Controllers
 
             string logoutPath = string.IsNullOrEmpty(_configuration["SITEMINDER_LOGOUT_URL"]) ? "/" : _configuration["SITEMINDER_LOGOUT_URL"];
             return Redirect(logoutPath + $"?returl={_configuration["BASE_URI"]}{_configuration["BASE_PATH"]}&retnow=1");
-        }
-
-        [HttpGet("GetUrl")]
-        public IActionResult GetLogoutUrl()
-        {
-            try
-            {
-                // string logoutPath = string.IsNullOrEmpty(_configuration["SITEMINDER_LOGOUT_URL"]) ? "/" : _configuration["SITEMINDER_LOGOUT_URL"];
-                LogoutUrlData ret = new LogoutUrlData
-                {
-                    LogoutUrl = string.IsNullOrEmpty(_configuration["SITEMINDER_LOGOUT_URL"]) ? "/" : _configuration["SITEMINDER_LOGOUT_URL"] + "?returl=" + _configuration["BASE_URI"] + _configuration["BASE_PATH"]
-                };
-                // ret.LogoutUrl = string.IsNullOrEmpty(_configuration["SITEMINDER_LOGOUT_URL"]) ? "/" : _configuration["SITEMINDER_LOGOUT_URL"];
-                return StatusCode(200, ret);
-            }
-            finally { }
         }
     }
 }
