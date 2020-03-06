@@ -10,16 +10,18 @@
     <h2 class="blue-header">Main Program Information</h2>
     <div class="form-group">
       <label for="programLocation">Program Location</label>
-      <input class="form-control" type="text" [ngModel]="programApplication.programLocation" id="programLocation" name="programLocation" disabled>
+      <input class="form-control" type="text" [ngModel]="programApplication.programLocation" id="programLocation"
+        name="programLocation" disabled>
     </div>
     <div class="form-group">
       <label for="serviceArea">Service Area</label>
-      <input class="form-control" type="text" [ngModel]="programApplication.serviceArea" id="serviceArea" name="serviceArea" disabled>
+      <input class="form-control" type="text" [ngModel]="programApplication.serviceArea" id="serviceArea"
+        name="serviceArea" disabled>
     </div>
 
     <h2 class="blue-header">Primary Program Contact Information</h2>
     <app-primary-contact-info [(contactInformation)]="programApplication"></app-primary-contact-info>
-    
+
     <app-address2 [(address)]="programApplication.mainAddress"></app-address2>
     <h2 class="blue-header">Mailing Address</h2>
     <app-address2 [(address)]="programApplication.mailingAddress"></app-address2>
@@ -33,11 +35,13 @@
     <!-- *ngIf="differentProgramContact" -->
     <span class="mb-4">
       <h2 class="blue-header">Program Contact</h2>
-      <app-person-picker [title]="'Please select a program contact.'" [(person)]="programApplication.programContact"></app-person-picker>
+      <app-person-picker [title]="'Please select a program contact.'" [(person)]="programApplication.programContact">
+      </app-person-picker>
     </span>
     <h2 class="blue-header mt-2">Program Staff</h2>
     <p>Missing staff can be added by name and set at an organizational level.</p>
-    <app-person-picker-list [label]="'Program Staff'" [(persons)]="programApplication.additionalStaff"></app-person-picker-list>
+    <app-person-picker-list [label]="'Program Staff'" [(persons)]="programApplication.additionalStaff" [(removedPersons)]="programApplication.removedStaff">
+    </app-person-picker-list>
   </div>
   <div *ngIf="currentTab===tabs[1]">
     <h2 class="blue-header">Program Schedule Hours of Operation (not including on-call / stand-by hours)</h2>

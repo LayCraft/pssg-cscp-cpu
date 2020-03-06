@@ -185,10 +185,11 @@ export class TransmogrifierProgramApplication {
           .map(s => this.makePerson(g, s.contactid))[0] || null,
         // revenueSources: [],//iRevenueSource[];
         additionalStaff: g.ProgramContactCollection
-          .filter((c: iDynamicsCrmContact) => c.vsd_programid = p.vsd_programid)
+          .filter((c: iDynamicsCrmContact) => c.vsd_programid === p.vsd_programid)
           .map(s => this.makePerson(g, s.contactid)) || null,// iPerson[];
         operationHours: [],//iHours[];
         standbyHours: [],//iHours[];
+        removedStaff: []
       } as iProgramApplication;
 
       temp.programLocation = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid).map(a => a.vsd_name)[0] || 'Unknown';

@@ -7,11 +7,17 @@
     </span>
   </li>
 </ul>
+<!-- <div (click)="addPerson()" class="form-group">
+  Add Program Staff <i class="fas fa-plus-circle text-success"></i>
+</div> -->
 <div *ngIf="trans.persons" class="form-group">
   <label for="personPicker">{{label}}</label>
-  <select class="form-control" name="personPicker" id="personPicker">
-    <option *ngFor="let person of trans.persons" (click)="addPerson(person.personId)" [value]="person.personId">
-      <!-- The person comes with a title if they have one -->
+  <select class="form-control" name="personPicker" id="personPicker" (change)="addPerson(selectedPerson)"
+    [(ngModel)]="selectedPerson">
+    <option [value]="null">--</option>
+    <option *ngFor="let person of trans.persons" [value]="person.personId">
+      <!-- The person comes with a title if they have one 
+      (click)="addPerson(person.personId)"-->
       {{nameAssemble(person.firstName,person.middleName,person.lastName)}} {{person.title?' - '+person.title:''}}
     </option>
   </select>

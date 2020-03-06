@@ -3,7 +3,7 @@ import { convertHoursToDynamics } from "./hours-to-dynamics";
 import { encodeCglInsurance } from "../../constants/encode-cgl-insurance-type";
 import { encodeHrPolicies } from "../../constants/encode-hr-policies";
 import { iDynamicsSchedule } from "../dynamics-blob";
-import { iDynamicsPostScheduleF, iDynamicsProgramContactPost } from "../dynamics-post";
+import { iDynamicsPostScheduleF, iDynamicsProgramContactPost, iDynamicsRemoveProgramContactPost } from "../dynamics-post";
 import { iHours } from "../hours.interface";
 import { iPerson } from "../person.interface";
 import { iProgramApplication } from "../program-application.interface";
@@ -71,6 +71,21 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
   });
   // if there are elements in the array add the item.
   if (programContactCollection.length) post.ProgramContactCollection = programContactCollection;
+
+  const removeProgramContactCollection: iDynamicsRemoveProgramContactPost[] = [];
+  trans.programApplications.forEach((pa: iProgramApplication) => {
+    // in each program add the list of staff by their id
+    pa.removedStaff.forEach((s: iPerson): void => {
+      if (!pa.programId) console.log('Missing program id!', pa);
+      const contact: iDynamicsRemoveProgramContactPost = {
+        contactid: s.personId,
+        vsd_programid: pa.programId,
+      };
+      // add the contact
+      removeProgramContactCollection.push(contact);
+    });
+  });
+  if (removeProgramContactCollection.length) post.RemoveProgramContactCollection = removeProgramContactCollection;
 
   const programCollection = [];
   trans.programApplications.forEach((p: iProgramApplication) => {

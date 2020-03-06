@@ -33,6 +33,7 @@ export interface iDynamicsPostScheduleF { //maps to ProgramApplicationPost
   BusinessBCeID: string;
   UserBCeID: string;
   ProgramContactCollection?: iDynamicsProgramContactPost[];
+  RemoveProgramContactCollection?: iDynamicsRemoveProgramContactPost[];
   Organization?: iDynamicsOrganizationPost;
   ProgramCollection?: iDynamicsCrmProgramPost[];
   ContractCollection?: iDynamicsCrmContractPost[];
@@ -111,6 +112,10 @@ export interface iDynamicsDocumentPost {
   body: string;
 }
 export interface iDynamicsProgramContactPost {
+  contactid: string;
+  vsd_programid: string; // added when contact is listed in a program
+}
+export interface iDynamicsRemoveProgramContactPost {
   contactid: string;
   vsd_programid: string; // added when contact is listed in a program
 }

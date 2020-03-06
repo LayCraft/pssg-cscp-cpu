@@ -17,6 +17,7 @@ export interface iProgramApplication extends iContactInformation {
 
   // revenueSources: iRevenueSource[];
   additionalStaff: iPerson[];
+  removedStaff: iPerson[];
   mailingAddress: iAddress;
   mainAddress: iAddress;
   operationHours: iHours[];

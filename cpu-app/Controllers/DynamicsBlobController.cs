@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 namespace Gov.Cscp.Victims.Public.Controllers
 {
 	[Route("api/[controller]")]
-	[Authorize]
 	public class DynamicsBlobController : Controller
 	{
 		private readonly IDynamicsResultService _dynamicsResultService;
