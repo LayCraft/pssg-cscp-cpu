@@ -92,8 +92,25 @@ namespace Gov.Cscp.Victims.Public.Controllers
         [HttpGet("GetLogoutUrl")]
         public virtual IActionResult GetLogoutUrl()
         {
+            //This is called to perform logout function. We should wipe the session settings and cookie info too.
             try
             {
+                HttpContext.Session.Clear();
+
+                //     // Removing Cookies
+                CookieOptions option = new CookieOptions();
+                if (Request.Cookies[".AspNetCore.Session"] != null)
+                {
+                    option.Expires = DateTime.Now.AddDays(-1);
+                    Response.Cookies.Append(".AspNetCore.Session", "", option);
+                }
+
+                if (Request.Cookies["AuthenticationToken"] != null)
+                {
+                    option.Expires = DateTime.Now.AddDays(-1);
+                    Response.Cookies.Append("AuthenticationToken", "", option);
+                }
+
                 string logoutPath = "/";
                 if (!string.IsNullOrEmpty(Configuration["SITEMINDER_LOGOUT_URL"]))
                 {
