@@ -1,5 +1,6 @@
 import { taskCode } from '../constants/task-code';
 import { iTask } from './task.interface';
+import { iMessage } from './message.interface';
 import { iProgram } from './program.interface';
 import { iPerson } from './person.interface';
 import { iMinistryUser } from './ministry-user.interface';
@@ -56,6 +57,26 @@ export class Transmogrifier {
       }
     }
     return tasks;
+  }
+
+  private buildMessages(b: iDynamicsBlob, contractId: string): iMessage[] {
+    const messages: iMessage[] = [];
+    for (let message of b.Messages) {
+      if (message.regardingobjectid === contractId) {
+        messages.push({
+          timeStamp: null,
+          from: null,
+          to: null,
+          direction: null,
+          regardingObjectId: null,
+          program: message.vsd_Program,
+          cpuRegionDistrict: message.vsd_cpu_regiondistrict,
+          subject: null,
+          description: message.Description,
+        })
+      }
+    }
+    return messages;
   }
 
   private getCorrectTaskIdByDiscriminator(contractId: string, programId: string, t: iDynamicsCrmTask, discriminator: string): string {

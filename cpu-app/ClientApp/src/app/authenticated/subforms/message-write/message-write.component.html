@@ -1,0 +1,21 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Write Message</h5>
+    <p class="card-text">
+      <label for="yourName" [class.required]="required">Your Name</label>
+      <input type="text" class="form-control required" id="yourName" name="yourName" formControlName="yourName" [required]="formHelper.isRequired(yourName,required)">
+
+      <label for="contactNumber" [class.required]="required">Contact Number</label>
+      <input type="text" class="form-control required" id="contactNumber" name="contactNumber" formControlName="contactNumber" [required]="formHelper.isRequired(contactNumber,required)">
+
+      <label for="program" [class.required]="required">Program</label>
+      <input type="text" class="form-control required" id="program" name="program" formControlName="program" [required]="formHelper.isRequired(program,required)">
+
+      <label for="location" [class.required]="required">Location</label>
+      <input type="text" class="form-control required" id="location" name="location" formControlName="location" [required]="formHelper.isRequired(location,required)">
+
+      <label for="message" [class.required]="required">Message</label>
+      <textarea class="form-control required" id="message" name="message" formControlName="message" [required]="formHelper.isRequired(message,required)" />
+    </p>
+  </div>
+</div>
