@@ -49,6 +49,7 @@ import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.
 import { ProgramContactComponent } from './authenticated/program-contact/program-contact.component';
 import { DownloadDocumentComponent } from './authenticated/download-document/download-document.component';
 import { LoginPageComponent } from './login/login.component';
+import { MessageWriteComponent } from './authenticated/subforms/message-write/message-write.component';
 
 
 @NgModule({
@@ -68,6 +69,8 @@ import { LoginPageComponent } from './login/login.component';
     LandingPageComponent,
     LoginPageComponent,
     MinistryContactBoxComponent,
+    MessageReadComponent,
+    MessageWriteComponent,
     NotUserComponent,
     OrganizationProfileBoxComponent,
     PersonCardComponent,
