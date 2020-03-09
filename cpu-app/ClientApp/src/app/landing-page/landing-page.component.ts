@@ -38,6 +38,8 @@ export class LandingPageComponent implements OnInit {
   }
 
   login() {
+    console.log("is logged in: ");
+    console.log(this.stateService.loggedIn.getValue());
     if (this.stateService.loggedIn.getValue() || window.location.href.includes("localhost")) {
       this.stateService.login();
     }

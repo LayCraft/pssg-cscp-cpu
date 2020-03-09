@@ -42,6 +42,19 @@
     <p>Missing staff can be added by name and set at an organizational level.</p>
     <app-person-picker-list [label]="'Program Staff'" [(persons)]="programApplication.additionalStaff" [(removedPersons)]="programApplication.removedStaff">
     </app-person-picker-list>
+
+    <!-- <h2 class="blue-header mt-2">For Police-based Victim Service program only</h2>
+    <div class="form-check">
+      <input [(ngModel)]="programApplication.hasMailingAddress" class="form-check-input" type="checkbox"
+        id="policeBasedCheckbox">
+      <label class="form-check-label" for="policeBasedCheckbox">
+        Select if this is a Poice-based Victim Service program
+      </label>
+    </div>
+    
+    <div>
+      *Insert Police Detachment / Department Supervisor section
+    </div> -->
   </div>
   <div *ngIf="currentTab===tabs[1]">
     <h2 class="blue-header">Program Schedule Hours of Operation (not including on-call / stand-by hours)</h2>

@@ -42,9 +42,14 @@ export class StateService {
   ) { }
 
   login() {
-    let userId = 'FB55AB99F20E471186B8143B3F21F6E7';
-    let orgId = 'E4637B1557A6457891D7549067B20635';
+    let userId = "";// = 'FB55AB99F20E471186B8143B3F21F6E7';
+    let orgId = "";// = 'E4637B1557A6457891D7549067B20635';
 
+    if (window.location.href.includes("localhost")) {
+      userId = 'FB55AB99F20E471186B8143B3F21F6E7';
+      orgId = 'E4637B1557A6457891D7549067B20635';
+    }
+    
     console.log("logging in");
     let userInfo = this.userSettings.getValue();
     console.log(this.loggedIn.getValue(), userInfo.userId, userInfo.accountId);
@@ -113,7 +118,7 @@ export class StateService {
       this.userSettings.next(new UserSettings);
       //notification about the login
       this.notificationQueueService.addNotification('User has logged out.', 'warning');
-  
+
       // set the home button link and set logout to false (IN THAT ORDER)
       this.homeRoute.next('');
       this.loggedIn.next(false);
@@ -125,7 +130,7 @@ export class StateService {
         this.userSettings.next(new UserSettings);
         //notification about the login
         this.notificationQueueService.addNotification('User has logged out.', 'warning');
-    
+
         // set the home button link and set logout to false (IN THAT ORDER)
         // this.homeRoute.next('');
         this.loggedIn.next(false);

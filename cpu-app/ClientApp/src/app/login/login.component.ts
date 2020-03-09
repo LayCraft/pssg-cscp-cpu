@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDataService } from '../core/services/user-data.service';
 import { StateService } from '../core/services/state.service';
+import { NotificationQueueService } from '../core/services/notification-queue.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -11,6 +12,7 @@ export class LoginPageComponent implements OnInit {
   loading: boolean = true;
   constructor(private router: Router,
     private userData: UserDataService,
+    private notificationQueueService: NotificationQueueService,
     private stateService: StateService) {
     console.log("login page...");
 
@@ -23,6 +25,7 @@ export class LoginPageComponent implements OnInit {
         this.stateService.userSettings.next(userInfo);
 
         if (userInfo.isNewUserRegistration) {
+          this.notificationQueueService.addNotification(`No associated CRM account. Please contact an administrator.`, 'warning');
           this.router.navigate([this.stateService.homeRoute.getValue()]);
         }
         else {
