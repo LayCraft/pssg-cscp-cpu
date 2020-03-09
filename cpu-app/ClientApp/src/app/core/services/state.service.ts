@@ -124,7 +124,7 @@ export class StateService {
       this.currentUser.next(null);
       this.userSettings.next(new UserSettings);
       //notification about the login
-      this.notificationQueueService.addNotification('User has logged out.', 'warning');
+      // this.notificationQueueService.addNotification('User has logged out.', 'warning');
 
       // set the home button link and set logout to false (IN THAT ORDER)
       this.homeRoute.next('');
@@ -136,7 +136,7 @@ export class StateService {
         this.currentUser.next(null);
         this.userSettings.next(new UserSettings);
         //notification about the login
-        this.notificationQueueService.addNotification('User has logged out.', 'warning');
+        // this.notificationQueueService.addNotification('User has logged out.', 'warning');
 
         // set the home button link and set logout to false (IN THAT ORDER)
         // this.homeRoute.next('');
@@ -176,7 +176,7 @@ export class StateService {
     console.log(this.loggedIn.getValue(), userInfo.userId, userInfo.accountId);
 
 
-    if (this.loggedIn.getValue() && !userInfo.isNewUserRegistration) {
+    if (this.loggedIn.getValue()) {
       //in this case we have id's from siteminder login
       userId = userInfo.userId;
       orgId = userInfo.accountId;
