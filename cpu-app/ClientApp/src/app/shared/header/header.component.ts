@@ -36,6 +36,12 @@ export class HeaderComponent implements OnInit {
       if (u) {
         this.currentUser = nameAssemble(u.firstName, u.middleName, u.lastName);
       }
+      else {
+        let userSettings = this.stateService.userSettings.getValue();
+        if (userSettings.userDisplayName) {
+          this.currentUser = userSettings.userDisplayName;
+        }
+      }
     });
     this.stateService.loading.subscribe(l => this.loading = l);
   }
