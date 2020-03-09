@@ -16,6 +16,8 @@ import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.
 import { ProgramContactComponent } from './authenticated/program-contact/program-contact.component';
 import { DownloadDocumentComponent } from './authenticated/download-document/download-document.component';
 import { LoginPageComponent } from './login/login.component';
+import { MessageReadComponent } from './authenticated/subforms/message-read/message-read.component';
+import { MessageWriteComponent } from './authenticated/subforms/message-write/message-write.component';
 
 const routes: Routes = [
   {
@@ -75,6 +77,14 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent
+      },
+      {
+        path: 'message_read',
+        component: MessageReadComponent
+      },
+      {
+        path: 'message_write',
+        component: MessageWriteComponent
       },
       {
         path: 'personnel',
