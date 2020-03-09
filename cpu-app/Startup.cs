@@ -5,6 +5,7 @@ using Gov.Cscp.Victims.Public.Models;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -63,7 +64,7 @@ namespace Gov.Cscp.Victims.Public
 				opts.Filters.Add(typeof(CspReportOnlyAttribute));
 				opts.Filters.Add(new CspScriptSrcReportOnlyAttribute { None = true });
 
-				opts.Filters.Add(new AllowAnonymousFilter()); // Allow anonymous for dev
+				// opts.Filters.Add(new AllowAnonymousFilter()); // Allow anonymous for dev
 			})
 			.SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
 			.AddJsonOptions(
@@ -202,6 +203,13 @@ namespace Gov.Cscp.Victims.Public
 			// IMPORTANT: This session call MUST go before UseMvc()
 			app.UseSession();
 			app.UseAuthentication();
+
+			app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                HttpOnly = HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always,
+                MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None
+            });
 
 			app.UseMvc(routes =>
 			{

@@ -1,5 +1,6 @@
 using Gov.Cscp.Victims.Public.Models;
 using Gov.Cscp.Victims.Public.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +17,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
 {
 
     [Route("api/[controller]")]
+    [Authorize]
     public class DynamicsOrgController : Controller
     {
         private readonly IDynamicsResultService _dynamicsResultService;
