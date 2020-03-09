@@ -124,7 +124,7 @@ export class StateService {
       this.currentUser.next(null);
       this.userSettings.next(new UserSettings);
       //notification about the login
-      this.notificationQueueService.addNotification('User has logged out.', 'warning');
+      // this.notificationQueueService.addNotification('User has logged out.', 'warning');
 
       // set the home button link and set logout to false (IN THAT ORDER)
       this.homeRoute.next('');
@@ -136,7 +136,7 @@ export class StateService {
         this.currentUser.next(null);
         this.userSettings.next(new UserSettings);
         //notification about the login
-        this.notificationQueueService.addNotification('User has logged out.', 'warning');
+        // this.notificationQueueService.addNotification('User has logged out.', 'warning');
 
         // set the home button link and set logout to false (IN THAT ORDER)
         // this.homeRoute.next('');
@@ -176,7 +176,7 @@ export class StateService {
     console.log(this.loggedIn.getValue(), userInfo.userId, userInfo.accountId);
 
 
-    if (this.loggedIn.getValue() && !userInfo.isNewUserRegistration) {
+    if (this.loggedIn.getValue()) {
       //in this case we have id's from siteminder login
       userId = userInfo.userId;
       orgId = userInfo.accountId;
@@ -192,6 +192,7 @@ export class StateService {
       (m: iDynamicsBlob) => {
         // check for actual error message
         if (m.Result.includes('BusinessBCeID doesn\'t match to which the Contact belongs to')) {
+          console.log("BusinessBCeID doesn't match");
           let firstName = "New";
           let lastName = "User";
           let userSettings = this.userSettings.getValue();
@@ -213,6 +214,7 @@ export class StateService {
           });
 
         } else if (m.Result.includes('No contact found with the supplied BCeID')) {
+          console.log("BCeID doesn't match");
           let firstName = "New";
           let lastName = "User";
           let userSettings = this.userSettings.getValue();
@@ -235,6 +237,8 @@ export class StateService {
           
         } else {
           const mainData = new Transmogrifier(m);
+          console.log("we did get some data");
+          console.log(mainData);
           this.currentUser.next(mainData.persons.filter(p => p.userId === userId)[0]);
         }
       },
