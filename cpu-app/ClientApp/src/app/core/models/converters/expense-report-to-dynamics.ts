@@ -37,7 +37,7 @@ export function convertExpenseReportToDynamics(trans: TransmogrifierExpenseRepor
   if (trans.expenseReport.expenseReportId) g.vsd_schedulegid = trans.expenseReport.expenseReportId;
 
   //save if report has been reviewed
-  if (trans.expenseReport.executiveReview) g.vsd_reportreviewed = trans.expenseReport.executiveReview;
+  // if (trans.expenseReport.executiveReview) g.vsd_reportreviewed = trans.expenseReport.executiveReview;
 
   // schedule g line items;
   const glis: iDynamicsScheduleGLineItemPost[] = [];
