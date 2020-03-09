@@ -35,11 +35,15 @@ export class HeaderComponent implements OnInit {
     this.stateService.currentUser.subscribe(u => {
       if (u) {
         this.currentUser = nameAssemble(u.firstName, u.middleName, u.lastName);
-      }
-      else {
-        let userSettings = this.stateService.userSettings.getValue();
-        if (userSettings.userDisplayName) {
-          this.currentUser = userSettings.userDisplayName;
+
+        if (!this.currentUser) {
+          let userSettings = this.stateService.userSettings.getValue();
+          if (userSettings.userDisplayName) {
+            this.currentUser = userSettings.userDisplayName;
+          }
+          else {
+            this.currentUser = "New User";
+          }
         }
       }
     });
