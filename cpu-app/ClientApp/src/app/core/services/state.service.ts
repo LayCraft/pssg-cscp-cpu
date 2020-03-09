@@ -192,6 +192,7 @@ export class StateService {
       (m: iDynamicsBlob) => {
         // check for actual error message
         if (m.Result.includes('BusinessBCeID doesn\'t match to which the Contact belongs to')) {
+          console.log("BusinessBCeID doesn't match");
           let firstName = "New";
           let lastName = "User";
           let userSettings = this.userSettings.getValue();
@@ -213,6 +214,7 @@ export class StateService {
           });
 
         } else if (m.Result.includes('No contact found with the supplied BCeID')) {
+          console.log("BCeID doesn't match");
           let firstName = "New";
           let lastName = "User";
           let userSettings = this.userSettings.getValue();
@@ -235,6 +237,8 @@ export class StateService {
           
         } else {
           const mainData = new Transmogrifier(m);
+          console.log("we did get some data");
+          console.log(mainData);
           this.currentUser.next(mainData.persons.filter(p => p.userId === userId)[0]);
         }
       },
