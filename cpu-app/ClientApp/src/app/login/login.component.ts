@@ -34,9 +34,9 @@ export class LoginPageComponent implements OnInit {
       }
       else {
         this.notificationQueueService.addNotification(`No associated CRM account. Please contact an administrator.`, 'warning');
-        this.stateService.loggedIn.next(false);
-        this.stateService.logout();
-        // this.router.navigate([this.stateService.homeRoute.getValue()]);
+        // this.stateService.loggedIn.next(false);
+        // this.stateService.logout();
+        this.router.navigate([this.stateService.homeRoute.getValue()]);
       }
     });
    }
