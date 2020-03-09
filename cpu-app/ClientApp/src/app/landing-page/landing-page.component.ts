@@ -20,9 +20,12 @@ export class LandingPageComponent implements OnInit {
       console.log(userSettings);
       if (userSettings && userSettings.userAuthenticated) {
         console.log("setting user data as logged in");
+
         this.stateService.loggedIn.next(true);
         this.loggedIn = true;
         this.stateService.userSettings.next(userSettings);
+
+        this.stateService.getUserName();
       }
       else {
         this.loggedIn = false;
