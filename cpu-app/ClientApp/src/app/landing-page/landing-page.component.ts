@@ -10,25 +10,22 @@ import { StateService } from '../core/services/state.service';
 })
 export class LandingPageComponent implements OnInit {
   window = window;
-  showLogOut: boolean = false;
+  loggedIn: boolean = false;
   constructor(private router: Router,
     private userData: UserDataService,
     private stateService: StateService) {
 
-    if (document.cookie.indexOf("SMSESSION")) {
-      //we have a SiteMinder cookie, and are in theory, looged in. we should be able to "Log Out" and get rid of it
-      // this.showLogOut = true;
-    }
-
     this.userData.getCurrentUser().subscribe((userSettings: any) => {
       console.log("returned user info:");
       console.log(userSettings);
-      if (userSettings && userSettings.userBCeID && userSettings.businessBCeID) {
+      if (userSettings && userSettings.userAuthenticated) {
         console.log("setting user data as logged in");
         this.stateService.loggedIn.next(true);
+        this.loggedIn = true;
         this.stateService.userSettings.next(userSettings);
       }
       else {
+        this.loggedIn = false;
         this.stateService.loggedIn.next(false);
       }
     });
@@ -38,9 +35,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   login() {
-    console.log("is logged in: ");
-    console.log(this.stateService.loggedIn.getValue());
-    if (this.stateService.loggedIn.getValue() || window.location.href.includes("localhost")) {
+    if (window.location.href.includes("localhost")) {
       this.stateService.login();
     }
     else {

@@ -54,11 +54,17 @@ export class StateService {
     let userInfo = this.userSettings.getValue();
     console.log(this.loggedIn.getValue(), userInfo.userId, userInfo.accountId);
 
+
     if (this.loggedIn.getValue() && !userInfo.isNewUserRegistration) {
       //in this case we have id's from siteminder login
       userId = userInfo.userId;
       orgId = userInfo.accountId;
     }
+
+    if (!userId || !orgId) {
+      this.notificationQueueService.addNotification('Your user BCeID does not match one in our records.', 'danger');
+    }
+
     this.loading.next(true);
     // on login collect the information from the organization id
     this.mainService.getBlob(userId, orgId).subscribe(

@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
     this.stateService.loading.subscribe(l => this.loading = l);
   }
   login() {
-    if (this.stateService.loggedIn.getValue() || window.location.href.includes("localhost")) {
+    if (window.location.href.includes("localhost")) {
       this.stateService.login();
     }
     else {
