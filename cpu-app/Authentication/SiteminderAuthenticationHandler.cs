@@ -473,6 +473,10 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     Console.WriteLine("resultResult");
                     Console.WriteLine(resultResult);
 
+                    userSettings.UserType = siteMinderUserType;
+                    userSettings.UserId = siteMinderGuid;
+                    userSettings.AccountId = siteMinderBusinessGuid;
+
                     //Error: No contact found with the supplied BCeID
 
                     // if ((int)result.statusCode == 200)
@@ -480,18 +484,20 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     if (resultResult.Contains("Error: No contact found with the supplied BCeID"))
                     {
                         Console.WriteLine("User doesn't exist");
+
                         userSettings.IsNewUserRegistration = true;
+                        principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
                         UserSettings.SaveUserSettings(userSettings, context);
-                        return AuthenticateResult.Fail("user doesn't exist");
+                        return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
                     }
                     else
                     {
                         Console.WriteLine("Found User Data");
                         // Console.WriteLine(resultString);
                         Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
-                        userSettings.UserType = siteMinderUserType;
-                        userSettings.UserId = siteMinderGuid;
-                        userSettings.AccountId = siteMinderBusinessGuid;
+                        // userSettings.UserType = siteMinderUserType;
+                        // userSettings.UserId = siteMinderGuid;
+                        // userSettings.AccountId = siteMinderBusinessGuid;
                         userSettings.IsNewUserRegistration = false;
                         Console.WriteLine("UserSettings: " + userSettings.GetJson());
 
