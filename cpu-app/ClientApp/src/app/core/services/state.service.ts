@@ -49,7 +49,7 @@ export class StateService {
       userId = 'FB55AB99F20E471186B8143B3F21F6E7';
       orgId = 'E4637B1557A6457891D7549067B20635';
     }
-    
+
     console.log("logging in");
     let userInfo = this.userSettings.getValue();
     console.log(this.loggedIn.getValue(), userInfo.userId, userInfo.accountId);
@@ -63,6 +63,7 @@ export class StateService {
 
     if (!userId || !orgId) {
       this.notificationQueueService.addNotification('Your user BCeID does not match one in our records.', 'danger');
+      return;
     }
 
     this.loading.next(true);
@@ -160,5 +161,85 @@ export class StateService {
         }
       );
     }
+  }
+  getUserName() {
+    let userId = "";// = 'FB55AB99F20E471186B8143B3F21F6E7';
+    let orgId = "";// = 'E4637B1557A6457891D7549067B20635';
+
+    if (window.location.href.includes("localhost")) {
+      userId = 'FB55AB99F20E471186B8143B3F21F6E7';
+      orgId = 'E4637B1557A6457891D7549067B20635';
+    }
+
+    console.log("lookup logged in user name");
+    let userInfo = this.userSettings.getValue();
+    console.log(this.loggedIn.getValue(), userInfo.userId, userInfo.accountId);
+
+
+    if (this.loggedIn.getValue() && !userInfo.isNewUserRegistration) {
+      //in this case we have id's from siteminder login
+      userId = userInfo.userId;
+      orgId = userInfo.accountId;
+    }
+
+    if (!userId || !orgId) {
+      return
+    }
+
+    // this.loading.next(true);
+    // on login collect the information from the organization id
+    this.mainService.getBlob(userId, orgId).subscribe(
+      (m: iDynamicsBlob) => {
+        // check for actual error message
+        if (m.Result.includes('BusinessBCeID doesn\'t match to which the Contact belongs to')) {
+          let firstName = "New";
+          let lastName = "User";
+          let userSettings = this.userSettings.getValue();
+          if (userSettings.userDisplayName) {
+            let userDisplayName = this.userSettings.getValue().userDisplayName
+            let nameParts = userDisplayName.split(' ');
+            if (nameParts.length > 0) {
+              firstName = nameParts.splice(0, 1)[0];
+              lastName = nameParts.join(' ');
+            }
+          }
+
+          this.currentUser.next({
+            userId,
+            orgId,
+            firstName: firstName,
+            lastName: lastName,
+            email: ''
+          });
+
+        } else if (m.Result.includes('No contact found with the supplied BCeID')) {
+          let firstName = "New";
+          let lastName = "User";
+          let userSettings = this.userSettings.getValue();
+          if (userSettings.userDisplayName) {
+            let userDisplayName = this.userSettings.getValue().userDisplayName
+            let nameParts = userDisplayName.split(' ');
+            if (nameParts.length > 0) {
+              firstName = nameParts.splice(0, 1)[0];
+              lastName = nameParts.join(' ');
+            }
+          }
+
+          this.currentUser.next({
+            userId,
+            orgId,
+            firstName: firstName,
+            lastName: lastName,
+            email: ''
+          });
+          
+        } else {
+          const mainData = new Transmogrifier(m);
+          this.currentUser.next(mainData.persons.filter(p => p.userId === userId)[0]);
+        }
+      },
+      err => { },
+      () => this.loading.next(false)
+    );
   }
 }
