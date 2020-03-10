@@ -30,6 +30,8 @@ export class ProgramComponent implements OnInit {
   emailRegex: RegExp;
   phoneRegex: RegExp;
 
+  testPersons: any = { persons: this.persons, removedPersons: [] };
+
   constructor(
     private stateService: StateService
   ) {

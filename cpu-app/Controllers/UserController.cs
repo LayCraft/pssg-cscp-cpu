@@ -28,6 +28,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
     }
 
     [Route("api/[controller]")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IConfiguration Configuration;
@@ -43,7 +44,6 @@ namespace Gov.Cscp.Victims.Public.Controllers
         protected ClaimsPrincipal CurrentUser => _httpContextAccessor.HttpContext.User;
 
         [HttpGet("current")]
-        [AllowAnonymous]
         //[RequiresPermission(Permission.Login, Permission.NewUserRegistration)]
         public virtual IActionResult UsersCurrentGet()
         {

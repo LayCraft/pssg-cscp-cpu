@@ -10,7 +10,7 @@ import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 })
 export class PersonPickerListComponent implements OnInit {
   @Input() label = "Select all people who apply."
-  @Input() persons: iPerson[] = []; // the list from the service
+  @Input() persons: iPerson[] = []; // the list from the servicezz
   @Input() removedPersons: iPerson[] = []; // the list from the service
   @Output() personsChange = new EventEmitter<iPerson[]>();
   public nameAssemble = nameAssemble;

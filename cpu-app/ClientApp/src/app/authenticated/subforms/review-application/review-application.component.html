@@ -1,6 +1,10 @@
+<div class="prev-next-div">
+  <button (click)="prevPage()" class="btn btn-primary mr-2" [class.is-disabled]="tabIndex === 0" >&lt; Previous</button>
+  <button (click)="nextPage()" class="btn btn-primary" [class.is-disabled]="tabIndex === tabs.length - 1">Next &gt;</button>
+</div>
 <ul class="nav nav-pills mb-2">
   <li *ngFor="let tab of tabs" class="nav-item">
-    <a class="nav-link" [class.active]="tab===currentTab" (click)="currentTab=tab">{{tab}}</a>
+    <a class="nav-link" [class.active]="tab===currentTab" (click)="setCurrentTab(tab)">{{tab}}</a>
   </li>
 </ul>
 <div *ngIf="currentTab===tabs[0]">
@@ -183,9 +187,9 @@
     <app-program-summary-table [pa]="programApplication"></app-program-summary-table>
   </span>
 </div>
-<div class="go-bottoms">
+<!-- <div class="go-bottoms">
   <button (click)="prevPage()" class="btn btn-primary mr-2">&lt; Previous</button>
   <button (click)="nextPage()" class="btn btn-primary">Next &gt;</button>
-</div>
+</div> -->
 
 <!-- <pre>{{trans|json}}</pre> -->

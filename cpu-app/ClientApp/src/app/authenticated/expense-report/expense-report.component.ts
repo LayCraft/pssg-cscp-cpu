@@ -172,7 +172,7 @@ export class ExpenseReportComponent implements OnInit {
     //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
   }
-  save() { 
+  save(isSubmit: boolean = false) { 
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {
       return;
     }
@@ -184,7 +184,7 @@ export class ExpenseReportComponent implements OnInit {
         console.log(r);
         this.notificationQueueService.addNotification(`You have successfully saved the expense report.`, 'success');
         this.stateService.refresh();
-        this.router.navigate(['/authenticated/dashboard']);
+        if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
         this.saving = false;
       },
       err => {
