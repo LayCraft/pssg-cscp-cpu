@@ -168,8 +168,8 @@ export class ProgramApplicationComponent implements OnInit {
         this.stepperElements.forEach(s => {
           this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
         });
+
         this.formHelper.makeFormClean();
-        // this.router.navigate(['/authenticated/dashboard']);
       },
       err => {
         console.log(err);

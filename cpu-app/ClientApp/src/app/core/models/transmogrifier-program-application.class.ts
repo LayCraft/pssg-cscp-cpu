@@ -11,6 +11,7 @@ import { iSignature } from '../../authenticated/subforms/program-authorizer/prog
 import { makeViewTimeString } from './converters/hours-to-dynamics';
 import { ngDevModeResetPerfCounters } from '@angular/core/src/render3/ng_dev_mode';
 import { boolOptionSet } from '../constants/bool-optionset-values';
+import { perTypeDict } from '../constants/per-type';
 
 export class TransmogrifierProgramApplication {
   accountId: string;// this is the dynamics account
@@ -187,8 +188,12 @@ export class TransmogrifierProgramApplication {
         additionalStaff: g.ProgramContactCollection
           .filter((c: iDynamicsCrmContact) => c.vsd_programid === p.vsd_programid)
           .map(s => this.makePerson(g, s.contactid)) || null,// iPerson[];
-        operationHours: [],//iHours[];
-        standbyHours: [],//iHours[];
+        operationHours: [],
+        standbyHours: [],
+        numberOfHours: p.vsd_cpu_numberofhours || 0,
+        scheduledHours: p.vsd_totalscheduledhours || 0,
+        onCallHours: p.vsd_totaloncallstandbyhours || 0,
+        perType: p.vsd_cpu_per || 100000000,
         removedStaff: []
       } as iProgramApplication;
 
@@ -214,7 +219,8 @@ export class TransmogrifierProgramApplication {
             // save the identifier for the post back to dynamics
             hoursId: sched.vsd_scheduleid,
             // convert the nasty comma seperated string version to useful week day boolean
-            ...decodeToWeekDays(sched.vsd_days)
+            ...decodeToWeekDays(sched.vsd_days),
+            isActive: true
           };
           // check for which collection of hours this is
           if (sched.vsd_cpu_scheduletype === 100000000) {
@@ -234,33 +240,6 @@ export class TransmogrifierProgramApplication {
   private makePerson(g: iDynamicsScheduleFResponse, personId: string): iPerson {
     // return whole person
     return g.StaffCollection
-      .filter((p: iDynamicsCrmContact) => p.contactid === personId)
-      .map((p: iDynamicsCrmContact): iPerson => {
-        return {
-          email: p.emailaddress1 || null,
-          fax: p.fax || null,
-          firstName: p.firstname || null,
-          lastName: p.lastname || null,
-          middleName: p.middlename || null,
-          personId: p.contactid || null,
-          phone: p.mobilephone || null,
-          title: p.jobtitle || null,
-          userId: p.vsd_bceid || null,
-          address: {
-            line1: p.address1_line1 || null,
-            line2: p.address1_line2 || null,
-            city: p.address1_city || null,
-            postalCode: p.address1_postalcode || null,
-            province: p.address1_stateorprovince || null,
-            country: p.address1_country || 'Canada',
-          },
-        }
-      })[0];
-  }
-
-  private makePersonFromProgramContactCollection(g: iDynamicsScheduleFResponse, personId: string): iPerson {
-    // return whole person
-    return g.ProgramContactCollection
       .filter((p: iDynamicsCrmContact) => p.contactid === personId)
       .map((p: iDynamicsCrmContact): iPerson => {
         return {

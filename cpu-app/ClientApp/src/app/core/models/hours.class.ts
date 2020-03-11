@@ -11,6 +11,7 @@ export class Hours implements iHours {
   open: string; // just used for the hour representation
   closed: string; // should look like this 18:54
   hoursId: string;
+  isActive: boolean;
   constructor(hours?: iHours) {
     if (hours) {
       this.monday = hours.monday || null;
@@ -22,6 +23,10 @@ export class Hours implements iHours {
       this.sunday = hours.sunday || null;
       this.open = hours.open || null;
       this.closed = hours.closed || null;
+      this.isActive = hours.isActive || true;
+    }
+    else {
+      this.isActive = true;
     }
   }
 }

@@ -107,7 +107,11 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_postalcodezip: p.mainAddress.postalCode,
       vsd_programid: p.programId,
       vsd_provincestate: p.mainAddress.province,
-      vsd_ContactLookupfortunecookiebind: p.programContact ? p.programContact.personId : null
+      vsd_ContactLookupfortunecookiebind: p.programContact ? p.programContact.personId : null,
+      vsd_cpu_numberofhours: p.numberOfHours,
+      vsd_totalscheduledhours: p.scheduledHours,
+      vsd_totaloncallstandbyhours: p.onCallHours,
+      vsd_cpu_per: p.perType,
     });
     // if there are elements in the array add the item.
     if (programCollection.length) post.ProgramCollection = programCollection;

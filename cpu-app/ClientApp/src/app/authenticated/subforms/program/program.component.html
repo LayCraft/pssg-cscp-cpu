@@ -40,7 +40,8 @@
     </span>
     <h2 class="blue-header mt-2">Program Staff</h2>
     <p>Missing staff can be added by name and set at an organizational level.</p>
-    <app-person-picker-list [label]="'Program Staff'" [(personsObj)]="personsObj" (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
+    <app-person-picker-list [label]="'Program Staff'" [(personsObj)]="personsObj"
+      (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
     <!-- [(persons)]="programApplication.additionalStaff" [(removedPersons)]="programApplication.removedStaff"> -->
     <!-- </app-person-picker-list> -->
 
@@ -60,16 +61,66 @@
   <div *ngIf="currentTab===tabs[1]">
     <h2 class="blue-header">Program Schedule Hours of Operation (not including on-call / stand-by hours)</h2>
     <div *ngFor="let hours of programApplication.operationHours; let i=index">
-      <app-hours [(hours)]="hours"></app-hours>
-      <a (click)="removeOperationHours(i)" class="btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
+      <ng-container *ngIf="hours.isActive">
+        <app-hours [(hours)]="hours"></app-hours>
+        <div class="retain-height">
+          <a (click)="removeOperationHours(i)"
+            class="align-right btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
+        </div>
+      </ng-container>
     </div>
-    <button class="btn btn-secondary mb-4 mt-2" (click)="addOperationHours()">Add Operation Hours</button>
+    <div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <button class="btn btn-primary mb-4 mt-2" (click)="addOperationHours()">Add Operation Hours</button>
+        </div>
+
+        <div class="col-md-8 inline-col">
+          <label class="hours-label" for="scheduledHours">Total Scheduled Hours per {{perType}}</label>
+          <input [(ngModel)]="programApplication.scheduledHours" type="number" id="scheduledHours" name="scheduledHours"
+            class="form-control hours-input"
+            (input)="formHelper.moneyFormatter($event.target, programApplication, 'scheduledHours')">
+        </div>
+      </div>
+
+    </div>
     <h2 class="blue-header">Program On-call / Stand-by Hours of Operation</h2>
     <div *ngFor="let hours of programApplication.standbyHours; let i=index">
-      <app-hours [(hours)]="hours"></app-hours>
-      <a (click)="removeStandbyHours(i)" class="btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
+      <ng-container *ngIf="hours.isActive">
+        <app-hours [(hours)]="hours"></app-hours>
+        <div class="retain-height">
+          <a (click)="removeStandbyHours(i)"
+            class="align-right btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
+        </div>
+      </ng-container>
     </div>
-    <button class="btn btn-secondary mb-4 mt-2" (click)="addStandbyHours()">Add On-call/Stand-by Hours</button>
+    <div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <button class="btn btn-primary mb-4 mt-2" (click)="addStandbyHours()">Add On-call/Stand-by Hours</button>
+        </div>
+        <div class="col-md-8 inline-col">
+          <label class="hours-label" for="onCallHours">Total On-call/Stand-by Hours per {{perType}}</label>
+          <input [(ngModel)]="programApplication.onCallHours" type="number" id="onCallHours" name="onCallHours"
+            class="form-control hours-input"
+            (input)="formHelper.moneyFormatter($event.target, programApplication, 'onCallHours')">
+        </div>
+      </div>
+    </div>
+    <div class="form-row extra-padding">
+      <div class="col-md-6 message-container">
+        <p class="info-message">This is the number of service hours indicated in the attached cover letter for this program:</p>
+      </div>
+      <div class="col-md-6 inline-col">
+        <div class="card">
+          <div class="card-body inline-card">
+            <input [(ngModel)]="programApplication.numberOfHours" type="number" id="numberOfHours" name="numberOfHours"
+              class="form-control hours-input" disabled>
+            <label class="hours-label" for="numberOfHours">Hours per {{perType}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </form>
 <!-- <span *ngIf="programApplication">

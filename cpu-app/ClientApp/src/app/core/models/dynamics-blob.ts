@@ -98,6 +98,7 @@ export interface iDynamicsCrmProgram {
   vsd_city?: string;
   vsd_country?: string;
   vsd_cpu_numberofhours?: number;
+  vsd_cpu_per?: string;
   vsd_emailaddress?: string;
   vsd_fax?: string;
   vsd_mailingaddressline1?: string;
@@ -223,6 +224,7 @@ export interface iDynamicsScheduleGResponse {
   ScheduleGLineItems?: iDynamicsScheduleGLineItem[];
 }
 export interface iDynamicsSchedule {
+  vsd_ProgramIdfortunecookiebind?: string;
   _vsd_programid_value?: string;
   fortunecookieetag?: string;
   fortunecookietype?: string;
@@ -231,6 +233,7 @@ export interface iDynamicsSchedule {
   vsd_scheduledstarttime?: string;
   vsd_scheduleid?: string;
   vsd_cpu_scheduletype?: number;
+  statecode?: number;
 }
 export interface iDynamicsScheduleFResponse {
   Userbceid?: string;

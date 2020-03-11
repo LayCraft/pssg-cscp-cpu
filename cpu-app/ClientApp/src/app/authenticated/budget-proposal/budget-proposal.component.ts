@@ -145,6 +145,7 @@ export class BudgetProposalComponent implements OnInit {
         this.stateService.refresh();
         if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
         this.saving = false;
+        this.formHelper.makeFormClean();
       },
       err => {
         console.log(err);

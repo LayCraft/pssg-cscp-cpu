@@ -64,7 +64,7 @@ namespace Gov.Cscp.Victims.Public
 				opts.Filters.Add(typeof(CspReportOnlyAttribute));
 				opts.Filters.Add(new CspScriptSrcReportOnlyAttribute { None = true });
 
-				// opts.Filters.Add(new AllowAnonymousFilter()); // Allow anonymous for dev
+				opts.Filters.Add(new AllowAnonymousFilter()); // Allow anonymous for dev
 			})
 			.SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
 			.AddJsonOptions(

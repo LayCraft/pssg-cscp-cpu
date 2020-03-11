@@ -62,13 +62,25 @@ export class FormHelper {
     return 'untouched';
   }
   makeFormClean() {
-    let dirtyControls = document.getElementsByClassName("ng-dirty");
-    [].forEach.call(dirtyControls, function (el: Element) {
-      el.classList.remove("ng-dirty");
-      el.classList.remove("ng-touched");
-      el.classList.add("ng-untouched");
-      el.classList.add("ng-pristine");
-    });
+    console.log("cleaning form...");
+    let dirtyControls = document.querySelectorAll(".ng-dirty");
+    console.log(dirtyControls);
+    console.log(dirtyControls.length);
+    if (dirtyControls.length > 0) {
+      console.log("updating classes...");
+      for (let i = 0; i < dirtyControls.length; ++i) {
+        dirtyControls[i].classList.remove("ng-dirty");
+        dirtyControls[i].classList.remove("ng-touched");
+        dirtyControls[i].classList.add("ng-untouched");
+        dirtyControls[i].classList.add("ng-pristine");
+      }
+    }
+
+    // let touchedControls = document.getElementsByClassName("ng-touched");
+    // for (let i = 0; i < touchedControls.length; ++i) {
+    //   touchedControls[i].classList.remove("ng-touched");
+    // }
+
   }
   moneyFormatter(e: any, context: any, varName) {
     if (e.value.toString().length > 1 && e.value.toString()[0] === "0") {

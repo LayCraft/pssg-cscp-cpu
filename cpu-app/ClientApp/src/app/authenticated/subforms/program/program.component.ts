@@ -9,6 +9,7 @@ import { iPerson } from '../../../core/models/person.interface';
 import { iProgramApplication } from '../../../core/models/program-application.interface';
 import { EMAIL, PHONE_NUMBER } from '../../../core/constants/regex.constants';
 import { iHours } from '../../../core/models/hours.interface';
+import { perTypeDict } from '../../../core/constants/per-type';
 
 @Component({
   selector: 'app-program',
@@ -30,6 +31,8 @@ export class ProgramComponent implements OnInit {
   emailRegex: RegExp;
   phoneRegex: RegExp;
 
+  perType: string = "Week";
+  //combined object of persons and removedPersons to send to child component
   personsObj: any = { persons: [], removedPersons: [] };
 
   constructor(
@@ -50,6 +53,7 @@ export class ProgramComponent implements OnInit {
     this.onInput();
     this.personsObj.persons = this.programApplication.additionalStaff;
     this.personsObj.removedPersons = this.programApplication.removedStaff;
+    this.perType =  perTypeDict[this.programApplication.perType];
   }
 
   // form helpers. Validity hints and hide/show toggles
@@ -72,10 +76,20 @@ export class ProgramComponent implements OnInit {
     this.programApplication.standbyHours.push(new Hours());
   }
   removeOperationHours(i: number) {
-    this.programApplication.operationHours = this.programApplication.operationHours.filter((hours: iHours, j: number) => i !== j);
+    if (this.programApplication.operationHours[i].hoursId) {
+      this.programApplication.operationHours[i].isActive = false;
+    }
+    else {
+      this.programApplication.operationHours = this.programApplication.operationHours.filter((hours: iHours, j: number) => i !== j);
+    }
   }
   removeStandbyHours(i: number) {
+    if (this.programApplication.standbyHours[i].hoursId) {
+      this.programApplication.standbyHours[i].isActive = false;
+    }
+    else {
     this.programApplication.standbyHours = this.programApplication.standbyHours.filter((hours: iHours, j: number) => i !== j);
+    }
   }
 
   onProgramContactChange(event: iPerson) {
