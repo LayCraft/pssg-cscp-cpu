@@ -47,6 +47,20 @@ namespace Gov.Cscp.Victims.Public.Helpers
             ret = ret.Replace("\"statuscode\":null", "");
             return ret;
         }
+
+        public static string removeNullsForProgramApplication(string modelString)
+        {
+            string ret = modelString.Replace("\"AddProgramContactCollection\":null,", "");
+            ret = ret.Replace("\"RemoveProgramContactCollection\":null,", "");
+            ret = ret.Replace("\"Organization\":null,", "");
+            ret = ret.Replace("\"ProgramCollection\":null,", "");
+            ret = ret.Replace("\"ContractCollection\":null,", "");
+            ret = ret.Replace("\"ScheduleCollection\":null,", "");
+            ret = ret.Replace("\"ScheduleCollection\":null", "");
+            ret = ret.Replace("\"vsd_scheduleid\":null,", "");
+            return ret;
+        }
+
         public static string removeNullsForStaffUpdate(string modelString)
         {
             string ret = modelString.Replace("\"_parentcustomerid_value\":null,", "");

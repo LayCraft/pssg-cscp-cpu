@@ -15,6 +15,6 @@ namespace Gov.Cscp.Victims.Public.Models
 		public DynamicsProgramApplicationProgramPost[] ProgramCollection { get; set; }
 		public DynamicsProgramApplicationContractPost[] ContractCollection { get; set; }
 		// public DynamicsProgramApplicationContactPost[] StaffCollection { get; set; }// doesn't get sent in the data
-		// public DynamicsProgramApplicationSchedulePost[] ScheduleCollection { get; set; }
+		public DynamicsProgramApplicationSchedulePost[] ScheduleCollection { get; set; }
 	}
 }

@@ -9,4 +9,5 @@ export interface iHours {
   open: string; // just used for the hour representation
   closed: string; // should look like this 11:21
   hoursId: string;
+  isActive: boolean;
 }

@@ -53,7 +53,7 @@
                     <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget|number:'1.0-0')||0}}</td>
                     <td>${{(trans.expenseReport.salariesBenefitsQuarterlyBudget|number:'1.0-0')||0}}</td>
                     <td>
-                      <input [(ngModel)]="trans.expenseReport.salariesBenefitsValue" type="number" min="0" max="9999" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'salariesBenefitsValue')">
+                      <input [(ngModel)]="trans.expenseReport.salariesBenefitsValue" type="number" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'salariesBenefitsValue')">
                     </td>
                     <td>${{((trans.expenseReport.salariesBenefitsAnnualBudget*0.25)-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
                     <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>

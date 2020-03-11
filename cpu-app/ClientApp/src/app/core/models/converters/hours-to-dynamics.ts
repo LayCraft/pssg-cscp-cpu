@@ -9,8 +9,9 @@ export function convertHoursToDynamics(hours: iHours, programId: string, standBy
     vsd_scheduledstarttime: convertToDynamicsTimeString(hours.open),
     vsd_days: encodeToWeekDayCodes(hours),
     vsd_scheduleid: hours.hoursId,
-    _vsd_programid_value: programId,
+    vsd_ProgramIdfortunecookiebind: programId,
     vsd_cpu_scheduletype: standByHours ? 100000001 : 100000000,
+    statecode: hours.isActive ? 0 : 1,
   };
 }
 function convertToDynamicsTimeString(time: string): string {

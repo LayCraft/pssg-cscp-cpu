@@ -20,7 +20,11 @@ export interface iProgramApplication extends iContactInformation {
   removedStaff: iPerson[];
   mailingAddress: iAddress;
   mainAddress: iAddress;
-  operationHours: iHours[];
   programContact: iPerson;
+  numberOfHours: number;
+  scheduledHours: number;
+  onCallHours: number;
+  operationHours: iHours[];
   standbyHours: iHours[];
+  perType: number;
 }

@@ -98,6 +98,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
           // refresh the list of people on save
           this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
           this.stateService.refresh();
+          this.formHelper.makeFormClean();
         },
         err => {
           this.notificationQueueService.addNotification(err, 'danger');
