@@ -13,8 +13,13 @@ export class AdministrativeInformationComponent implements OnInit {
   // output a contact on change
   @Output() transmogrifierProgramApplicationChange = new EventEmitter<TransmogrifierProgramApplication>();
 
+  subcontractedStaffObj: any = {persons: [], removedPersons: []};
+
   constructor() { }
-  ngOnInit() { }
+  ngOnInit() { 
+    this.subcontractedStaffObj.persons = this.transmogrifierProgramApplication.administrativeInformation.staffSubcontractedPersons;
+    this.subcontractedStaffObj.removedPersons = [];
+  }
 
   // form helpers. Validity hints and hide/show toggles
   showValidFeedback(control: AbstractControl): boolean { return !(control.valid && (control.dirty || control.touched)) }

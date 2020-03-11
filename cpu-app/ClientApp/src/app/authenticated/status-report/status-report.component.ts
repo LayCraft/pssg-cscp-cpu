@@ -22,7 +22,7 @@ export class StatusReportComponent implements OnInit {
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
   saving: boolean = false;
-  private formHelper = new FormHelper();
+  public formHelper = new FormHelper();
   constructor(
     private notificationQueueService: NotificationQueueService,
     private route: ActivatedRoute,

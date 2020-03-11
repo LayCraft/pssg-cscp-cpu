@@ -40,8 +40,9 @@
     </span>
     <h2 class="blue-header mt-2">Program Staff</h2>
     <p>Missing staff can be added by name and set at an organizational level.</p>
-    <app-person-picker-list [label]="'Program Staff'" [(persons)]="programApplication.additionalStaff" [(removedPersons)]="programApplication.removedStaff">
-    </app-person-picker-list>
+    <app-person-picker-list [label]="'Program Staff'" [(personsObj)]="personsObj" (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
+    <!-- [(persons)]="programApplication.additionalStaff" [(removedPersons)]="programApplication.removedStaff"> -->
+    <!-- </app-person-picker-list> -->
 
     <!-- <h2 class="blue-header mt-2">For Police-based Victim Service program only</h2>
     <div class="form-check">

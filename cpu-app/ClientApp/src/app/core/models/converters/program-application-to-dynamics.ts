@@ -70,9 +70,9 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     });
   });
   // if there are elements in the array add the item.
-  if (programContactCollection.length) post.ProgramContactCollection = programContactCollection;
+  if (programContactCollection.length) post.AddProgramContactCollection = programContactCollection;
 
-  const removeProgramContactCollection: iDynamicsRemoveProgramContactPost[] = [];
+  let removeProgramContactCollection: iDynamicsRemoveProgramContactPost[] = [];
   trans.programApplications.forEach((pa: iProgramApplication) => {
     // in each program add the list of staff by their id
     pa.removedStaff.forEach((s: iPerson): void => {

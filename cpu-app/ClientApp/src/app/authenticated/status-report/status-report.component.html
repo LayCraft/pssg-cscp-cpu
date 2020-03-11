@@ -13,7 +13,7 @@
         <div class="page-header">
           <h1>{{trans.reportingPeriod?trans.reportingPeriod:'Monthly'}} Status Report</h1>
           <p>
-            {{trans.programName}} - {{trans.programType}}
+            {{trans.programName}}{{trans.programType ? ' - ' + trans.programType: ''}}
           </p>
           <div class="form-group">
             <label for="month">
@@ -68,7 +68,7 @@
               </span>
               <span *ngIf="q.type==='number'">
                 <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
-                <input [(ngModel)]="q.number" type="number" class="form-control" [id]="q.uuid" placeholder="0">
+                <input [(ngModel)]="q.number" type="number" class="form-control" [id]="q.uuid" placeholder="0" (input)="formHelper.numberFormatter($event.target, q, 'number')">
               </span>
             </div>
           </span>

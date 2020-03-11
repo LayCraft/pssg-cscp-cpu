@@ -12,16 +12,22 @@ export class ReviewApplicationComponent implements OnInit {
 
   currentTab: string = 'Application Information';
   tabs: string[] = ['Application Information'];
+  tabIndex: number = 0;
 
   constructor() { }
 
   ngOnInit() {
     this.trans.programApplications.forEach((p: iProgramApplication) => { this.tabs.push(p.name) });
   }
+  setCurrentTab(tab: string) {
+    this.currentTab = tab;
+    this.tabIndex = this.tabs.indexOf(this.currentTab);
+  }
   nextPage() {
     const index = this.tabs.indexOf(this.currentTab);
     if (!(index >= this.tabs.length - 1)) {
       this.currentTab = this.tabs[index + 1];
+      this.tabIndex = index + 1;
       window.scrollTo(0, 0);
     }
   }
@@ -29,6 +35,7 @@ export class ReviewApplicationComponent implements OnInit {
     const index = this.tabs.indexOf(this.currentTab);
     if (index > 0) {
       this.currentTab = this.tabs[index - 1];
+      this.tabIndex = index - 1;
       window.scrollTo(0, 0);
     }
   }

@@ -32,7 +32,7 @@ export interface iDynamicsPostFile { //maps to FilePost
 export interface iDynamicsPostScheduleF { //maps to ProgramApplicationPost
   BusinessBCeID: string;
   UserBCeID: string;
-  ProgramContactCollection?: iDynamicsProgramContactPost[];
+  AddProgramContactCollection?: iDynamicsProgramContactPost[];
   RemoveProgramContactCollection?: iDynamicsRemoveProgramContactPost[];
   Organization?: iDynamicsOrganizationPost;
   ProgramCollection?: iDynamicsCrmProgramPost[];

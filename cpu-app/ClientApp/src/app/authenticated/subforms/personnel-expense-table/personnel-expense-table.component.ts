@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iExpenseTableMeta } from '../expense-table/expense-table.component';
 import { iSalaryAndBenefits } from '../../../core/models/salary-and-benefits.interface';
 import { SalaryAndBenefits } from '../../../core/models/salary-and-benefits.class';
+import { FormHelper } from '../../../core/form-helper';
 
 @Component({
   selector: 'app-personnel-expense-table',
@@ -19,6 +20,7 @@ export class PersonnelExpenseTableComponent implements OnInit {
   totalVscp: number = 0;
   totalGrand: number = 0;
 
+  public formHelper = new FormHelper();
   constructor() { }
 
   ngOnInit() {

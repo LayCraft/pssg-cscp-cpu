@@ -30,6 +30,8 @@ export class ProgramComponent implements OnInit {
   emailRegex: RegExp;
   phoneRegex: RegExp;
 
+  personsObj: any = { persons: [], removedPersons: [] };
+
   constructor(
     private stateService: StateService
   ) {
@@ -46,6 +48,8 @@ export class ProgramComponent implements OnInit {
       this.persons = m.persons;
     });
     this.onInput();
+    this.personsObj.persons = this.programApplication.additionalStaff;
+    this.personsObj.removedPersons = this.programApplication.removedStaff;
   }
 
   // form helpers. Validity hints and hide/show toggles
@@ -83,8 +87,11 @@ export class ProgramComponent implements OnInit {
     this.onInput();
 
   }
-  onProgramStaffChange(event: iPerson[]) {
-    this.programApplication.additionalStaff = event;
+  onProgramStaffChange(personsObj: any) {
+    console.log("program staff change");
+    console.log(personsObj);
+    this.programApplication.additionalStaff = personsObj.persons;
+    this.programApplication.removedStaff = personsObj.removedPersons;
     this.onInput();
 
   }
