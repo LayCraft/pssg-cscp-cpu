@@ -1,7 +1,6 @@
 import { AbstractControl } from '@angular/forms';
 import { NotificationQueueService } from './services/notification-queue.service';
 import { EMAIL, PHONE_NUMBER } from '../core/constants/regex.constants';
-import * as _ from 'lodash';
 
 // form helpers. Validity hints and hide/show toggles
 export class FormHelper {
@@ -70,5 +69,56 @@ export class FormHelper {
       el.classList.add("ng-untouched");
       el.classList.add("ng-pristine");
     });
+  }
+  moneyFormatter(e: any, context: any, varName) {
+    if (e.value.toString().length > 1 && e.value.toString()[0] === "0") {
+      e.value = parseFloat(e.value.toString().substr(1));
+    }
+    if (e.value < 0 || !e.value) {
+      e.value = 0;
+    }
+    if (e.value > 99999999) {
+      e.value = parseFloat(e.value.toString().substring(0, 8));;
+    }
+    if (this.countDecimals(e.value) > 2) {
+      e.value = parseFloat(e.value).toFixed(2);
+    }
+
+    let variable = this.fetchVarInfo(context, varName);
+    variable.obj[variable.prop] = parseFloat(e.value);
+  }
+  numberFormatter(e: any, context: any, varName) {
+    if (e.value.toString().length > 1 && e.value.toString()[0] === "0") {
+      e.value = parseFloat(e.value.toString().substr(1));
+    }
+    if (e.value < 0 || !e.value) {
+      e.value = 0;
+    }
+    if (e.value > 9999) {
+      e.value = parseFloat(e.value.toString().substring(0, 4));;
+    }
+    if (this.countDecimals(e.value) > 2) {
+      e.value = parseFloat(e.value).toFixed(2);
+    }
+
+    let variable = this.fetchVarInfo(context, varName);
+    variable.obj[variable.prop] = parseFloat(e.value);
+  }
+  fetchVarInfo(obj, prop) {
+    if (typeof obj === 'undefined') {
+      return false;
+    }
+
+    var _index = prop.indexOf('.')
+    if (_index > -1) {
+      return this.fetchVarInfo(obj[prop.substring(0, _index)], prop.substr(_index + 1));
+    }
+
+    return { obj: obj, prop: prop };
+  }
+  countDecimals(value) {
+    if (Math.floor(value) === value) return 0;
+    if (value.toString().indexOf(".") < 0) return 0;
+    return value.toString().split(".")[1].length || 0;
   }
 }

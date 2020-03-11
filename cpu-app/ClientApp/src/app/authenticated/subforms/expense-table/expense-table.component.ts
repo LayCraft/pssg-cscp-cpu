@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { iExpenseItem } from '../../../core/models/expense-item.interface';
 import { ExpenseItem } from '../../../core/models/expense-item.class';
+import { FormHelper } from '../../../core/form-helper';
 
 export interface iExpenseTableMeta {
   totalCost: number;
@@ -28,6 +29,8 @@ export class ExpenseTableComponent implements OnInit {
   totalTotalCost: number = 0;
   totalVscp: number = 0;
   totalGrand: number = 0;
+
+  public formHelper = new FormHelper();
 
   constructor() { }
 

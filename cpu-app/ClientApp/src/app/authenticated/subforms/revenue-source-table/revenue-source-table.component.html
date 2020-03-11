@@ -22,11 +22,11 @@
           </span>
         </td>
         <td>
-          <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="source.cash" min="0"
+          <input class="form-control" (input)="formHelper.moneyFormatter($event.target, source, 'cash'); calculateTotals()" type="number" [(ngModel)]="source.cash" min="0"
             id="cash_{{i}}">
         </td>
         <td>
-          <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="source.inKindContribution"
+          <input class="form-control" (input)="formHelper.moneyFormatter($event.target, source, 'inKindContribution'); calculateTotals()" type="number" [(ngModel)]="source.inKindContribution"
             min="0" id="kind_{{i}}">
         </td>
         <td>

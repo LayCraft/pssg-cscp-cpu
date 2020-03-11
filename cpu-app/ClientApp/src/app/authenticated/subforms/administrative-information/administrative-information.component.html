@@ -72,7 +72,8 @@
 </div>
 <div class="form-group" *ngIf="transmogrifierProgramApplication.administrativeInformation.staffSubcontracted">
   <h2 class="blue-header">Subcontracted Staff</h2>
-  <app-person-picker-list [(persons)]="transmogrifierProgramApplication.administrativeInformation.staffSubcontractedPersons"></app-person-picker-list>
+  <app-person-picker-list [(personsObj)]="subcontractedStaffObj"></app-person-picker-list>
+  <!-- [(persons)]="transmogrifierProgramApplication.administrativeInformation.staffSubcontractedPersons" -->
 </div>
 <!-- <div class="form-group">
       <div class="invalid-feedback" [hidden]="aiForm.form.valid || aiForm.form.pristine">

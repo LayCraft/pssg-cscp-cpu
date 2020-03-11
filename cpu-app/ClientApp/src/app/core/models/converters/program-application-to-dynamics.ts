@@ -10,7 +10,6 @@ import { iProgramApplication } from "../program-application.interface";
 import { encodeCcseaMemberType } from "../../constants/encode-ccsea-member-type";
 import { nameAssemble } from "../../constants/name-assemble";
 import { boolOptionSet } from "../../constants/bool-optionset-values";
-import * as _ from 'lodash';
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsPostScheduleF {
   const post: iDynamicsPostScheduleF = {
@@ -86,9 +85,6 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       removeProgramContactCollection.push(contact);
     });
   });
-
-  //removed staff isn't always updating correctly when it's supposed to shrink
-  // removeProgramContactCollection = removeProgramContactCollection.filter(rp => programContactCollection.findIndex(p => p.contactid === rp.contactid && p.vsd_programid === rp.vsd_programid) < 0);
   if (removeProgramContactCollection.length) post.RemoveProgramContactCollection = removeProgramContactCollection;
 
   const programCollection = [];

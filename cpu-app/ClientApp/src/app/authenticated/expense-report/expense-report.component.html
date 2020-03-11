@@ -53,7 +53,7 @@
                     <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget|number:'1.0-0')||0}}</td>
                     <td>${{(trans.expenseReport.salariesBenefitsQuarterlyBudget|number:'1.0-0')||0}}</td>
                     <td>
-                      <input [(ngModel)]="trans.expenseReport.salariesBenefitsValue" type="number" min="0" max="9999" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue">
+                      <input [(ngModel)]="trans.expenseReport.salariesBenefitsValue" type="number" min="0" max="9999" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'salariesBenefitsValue')">
                     </td>
                     <td>${{((trans.expenseReport.salariesBenefitsAnnualBudget*0.25)-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
                     <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
@@ -63,7 +63,7 @@
                     <td>${{(trans.expenseReport.programDeliveryAnnualBudget|number:'1.0-0')||0}}</td>
                     <td>${{(trans.expenseReport.programDeliveryQuarterlyBudget|number:'1.0-0')||0}}</td>
                     <td>
-                      <input [(ngModel)]="trans.expenseReport.programDeliveryValue" type="number" class="form-control" id="programDeliveryValue" name="programDeliveryValue">
+                      <input [(ngModel)]="trans.expenseReport.programDeliveryValue" type="number" class="form-control" id="programDeliveryValue" name="programDeliveryValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'programDeliveryValue')">
                     </td>
                     <td>${{((trans.expenseReport.programDeliveryAnnualBudget*0.25)-trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
                     <td>${{(trans.expenseReport.programDeliveryAnnualBudget-trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
@@ -73,7 +73,7 @@
                     <td>${{(trans.expenseReport.administrationAnnualBudget|number:'1.0-0')||0}}</td>
                     <td>${{(trans.expenseReport.administrationQuarterlyBudget|number:'1.0-0')||0}}</td>
                     <td>
-                      <input [(ngModel)]="trans.expenseReport.administrationValue" type="number" class="form-control" id="administrationValue" name="administrationValue">
+                      <input [(ngModel)]="trans.expenseReport.administrationValue" type="number" class="form-control" id="administrationValue" name="administrationValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'administrationValue')">
                     </td>
                     <td>${{((trans.expenseReport.salariesBenefitsAnnualBudget*0.25)-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
                     <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
@@ -155,7 +155,7 @@
                     <td>${{item.annualBudget||0 | number}}</td>
                     <td>${{item.quarterlyBudget||0 | number}}</td>
                     <td>
-                      <input [(ngModel)]="item.actual" (input)="updateLineItemSums()" type="number" class="form-control" [id]="item.itemId" [name]="item.itemId">
+                      <input [(ngModel)]="item.actual" (input)="formHelper.moneyFormatter($event.target, item, 'actual'); updateLineItemSums()" type="number" class="form-control" [id]="item.itemId" [name]="item.itemId">
                     </td>
                     <td>
                       ${{((item.annualBudget*0.25)-item.actual)|number:'1.0-0'}}
@@ -207,7 +207,7 @@
               </div>
               <div class="form-group">
                 <label for="actualServiceQuarter">Actual Service Hours This Quarter</label>
-                <input type="number" min="0" [(ngModel)]="trans.expenseReport.contractServiceHoursQuarterlyActual" class="form-control" id="actualServiceQuarter">
+                <input type="number" min="0" [(ngModel)]="trans.expenseReport.contractServiceHoursQuarterlyActual" class="form-control" id="actualServiceQuarter" (input)="formHelper.numberFormatter($event.target, trans.expenseReport, 'contractServiceHoursQuarterlyActual')">
               </div>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">

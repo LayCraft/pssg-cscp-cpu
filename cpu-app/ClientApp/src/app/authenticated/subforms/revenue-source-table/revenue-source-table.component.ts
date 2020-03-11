@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RevenueSource } from '../../../core/models/revenue-source.class';
 import { revenueSourceTypes } from '../../../core/constants/revenue-source-type';
 import { iRevenueSource } from '../../../core/models/revenue-source.interface';
-import * as _ from 'lodash';
+import { FormHelper } from '../../../core/form-helper';
 
 @Component({
   selector: 'app-revenue-source-table',
@@ -18,6 +18,7 @@ export class RevenueSourceTableComponent implements OnInit {
   totalGrand: number = 0;
   other = 'Other';
   revenueSourceTypes: string[] = revenueSourceTypes;
+  public formHelper = new FormHelper();
   constructor() { }
   ngOnInit() {
     if (!this.revenueSources.length) {

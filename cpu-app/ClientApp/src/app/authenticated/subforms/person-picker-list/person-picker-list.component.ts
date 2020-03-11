@@ -10,9 +10,12 @@ import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 })
 export class PersonPickerListComponent implements OnInit {
   @Input() label = "Select all people who apply."
-  @Input() persons: iPerson[] = []; // the list from the servicezz
-  @Input() removedPersons: iPerson[] = []; // the list from the service
-  @Output() personsChange = new EventEmitter<iPerson[]>();
+  @Input() personsObj: any = {}; // the list from the servicezz
+  persons: iPerson[] = [];
+  removedPersons: iPerson[] = [];
+  // @Input() persons: iPerson[] = []; // the list from the servicezz
+  // @Input() removedPersons: iPerson[] = []; // the list from the service
+  @Output() personsChange = new EventEmitter<any>();
   public nameAssemble = nameAssemble;
   trans: Transmogrifier;
   selectedPerson: string;
@@ -21,6 +24,8 @@ export class PersonPickerListComponent implements OnInit {
 
   ngOnInit() {
     this.stateService.main.subscribe((m: Transmogrifier) => this.trans = m);
+    this.persons = this.personsObj.persons;
+    this.removedPersons = this.personsObj.removedPersons;
   }
   addPerson(personId: string) {
     console.log("addPerson");
@@ -34,7 +39,10 @@ export class PersonPickerListComponent implements OnInit {
       this.persons.push(person);
       this.removedPersons = this.removedPersons.filter(p => p.personId !== personId);
       console.log(this.removedPersons);
-      this.personsChange.emit(this.persons);
+      console.log(this.persons);
+      this.personsObj.persons = this.persons;
+      this.personsObj.removedPersons = this.removedPersons;
+      this.personsChange.emit(this.personsObj);
       // this.personsChange.emit(this.removedPersons);
     }
   }
@@ -42,9 +50,13 @@ export class PersonPickerListComponent implements OnInit {
     const person: iPerson = this.trans.persons.filter(p => p.personId === personId)[0];
     this.removedPersons.push(person);
     this.persons = this.persons.filter(p => p.personId !== personId);
-    this.personsChange.emit(this.persons);
+
     console.log(this.removedPersons);
+    console.log(this.persons);
+    this.personsObj.persons = this.persons;
+    this.personsObj.removedPersons = this.removedPersons;
+    this.personsChange.emit(this.personsObj);
+
     // this.personsChange.emit(this.removedPersons);
-    //TODO - save this removed person info. Will need to be included in a collection in the CRM API post data, something like ProgramContactsRemoveCollection
   }
 }

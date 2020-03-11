@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ExpenseReportService } from '../../core/services/expense-report.service';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,6 +10,7 @@ import { FormHelper } from '../../core/form-helper';
 import { convertExpenseReportToDynamics } from '../../core/models/converters/expense-report-to-dynamics';
 import { iDynamicsPostScheduleG } from '../../core/models/dynamics-post';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-expense-report',
@@ -43,9 +44,24 @@ export class ExpenseReportComponent implements OnInit {
   out: iDynamicsPostScheduleG;
   currentUser: iPerson;
 
-  private formHelper = new FormHelper();
+  //totals
+  sbQuarterlyVariance: number = 0;
+  sbYearToDatevariance: number = 0;
+  pdQuarterlyVariance: number = 0;
+  pdYearToDatevariance: number = 0;
+  paQuarterlyVariance: number = 0;
+  paYearToDatevariance: number = 0;
+  totalAnnualBudgetedAmount: number = 0;
+  totalQuarterlyBudgetedAmount: number = 0;
+  totalActualExpenditures: number = 0;
+  totalQuarterlyVariance: number = 0;
+  totalYearToDatevariance: number = 0;
+
+
+  public formHelper = new FormHelper();
 
   constructor(
+    private ref: ChangeDetectorRef,
     private expenseReportService: ExpenseReportService,
     private stepperService: IconStepperService,
     private stateService: StateService,
@@ -79,6 +95,7 @@ export class ExpenseReportComponent implements OnInit {
             this.data = g;
             // make the transmogrifier for this form
             this.trans = new TransmogrifierExpenseReport(g);
+            // this.calculateTotals();
 
             console.log("from dynamics");
             console.log(g);
@@ -172,7 +189,7 @@ export class ExpenseReportComponent implements OnInit {
     //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
   }
-  save(isSubmit: boolean = false) { 
+  save(isSubmit: boolean = false) {
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {
       return;
     }
@@ -205,5 +222,29 @@ export class ExpenseReportComponent implements OnInit {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }
+  }
+  calculateTotals() {
+    this.sbQuarterlyVariance = (this.trans.expenseReport.salariesBenefitsAnnualBudget * 0.25) - this.trans.expenseReport.salariesBenefitsValue;
+    this.sbYearToDatevariance = (this.trans.expenseReport.salariesBenefitsAnnualBudget - this.trans.expenseReport.salariesBenefitsValue);
+    this.pdQuarterlyVariance = ((this.trans.expenseReport.programDeliveryAnnualBudget * 0.25) - this.trans.expenseReport.programDeliveryValue);
+    this.pdYearToDatevariance = (this.trans.expenseReport.programDeliveryAnnualBudget - this.trans.expenseReport.programDeliveryValue);
+    this.paQuarterlyVariance = ((this.trans.expenseReport.salariesBenefitsAnnualBudget * 0.25) - this.trans.expenseReport.salariesBenefitsValue);
+    this.paYearToDatevariance = (this.trans.expenseReport.salariesBenefitsAnnualBudget - this.trans.expenseReport.salariesBenefitsValue);
+    this.totalAnnualBudgetedAmount = (this.trans.expenseReport.salariesBenefitsAnnualBudget + this.trans.expenseReport.programDeliveryAnnualBudget + this.trans.expenseReport.administrationAnnualBudget);
+    this.totalQuarterlyBudgetedAmount = (this.trans.expenseReport.salariesBenefitsQuarterlyBudget + this.trans.expenseReport.programDeliveryQuarterlyBudget + this.trans.expenseReport.administrationQuarterlyBudget);
+    this.totalActualExpenditures = (this.trans.expenseReport.salariesBenefitsValue + this.trans.expenseReport.programDeliveryValue + this.trans.expenseReport.administrationValue);
+    this.totalQuarterlyVariance = (
+      ((this.trans.expenseReport.salariesBenefitsAnnualBudget * 0.25) - this.trans.expenseReport.salariesBenefitsValue) +
+      ((this.trans.expenseReport.programDeliveryAnnualBudget * 0.25) - this.trans.expenseReport.programDeliveryValue) +
+      ((this.trans.expenseReport.salariesBenefitsAnnualBudget * 0.25) - this.trans.expenseReport.salariesBenefitsValue)
+    );
+    this.totalYearToDatevariance = (
+      (this.trans.expenseReport.salariesBenefitsAnnualBudget - this.trans.expenseReport.salariesBenefitsValue) +
+      (this.trans.expenseReport.programDeliveryAnnualBudget - this.trans.expenseReport.programDeliveryValue) +
+      (this.trans.expenseReport.salariesBenefitsAnnualBudget - this.trans.expenseReport.salariesBenefitsValue)
+    );
+
+    console.log(this.totalActualExpenditures);
+    console.log(this.trans.expenseReport.salariesBenefitsValue, this.trans.expenseReport.programDeliveryValue, this.trans.expenseReport.administrationValue)
   }
 }

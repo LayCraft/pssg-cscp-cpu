@@ -68,7 +68,7 @@
               </span>
               <span *ngIf="q.type==='number'">
                 <label [for]="q.uuid">{{i+1}}. {{q.label}}</label>
-                <input [(ngModel)]="q.number" type="number" class="form-control" [id]="q.uuid" placeholder="0">
+                <input [(ngModel)]="q.number" type="number" class="form-control" [id]="q.uuid" placeholder="0" (input)="formHelper.numberFormatter($event.target, q, 'number')">
               </span>
             </div>
           </span>
