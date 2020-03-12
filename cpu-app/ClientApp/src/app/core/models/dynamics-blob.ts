@@ -98,7 +98,7 @@ export interface iDynamicsCrmProgram {
   vsd_city?: string;
   vsd_country?: string;
   vsd_cpu_numberofhours?: number;
-  vsd_cpu_per?: string;
+  vsd_cpu_per?: number;
   vsd_emailaddress?: string;
   vsd_fax?: string;
   vsd_mailingaddressline1?: string;
@@ -190,10 +190,6 @@ export interface iDynamicsScheduleG {
   vsd_yeartodatevariancesalariesbenefits?: number;
   vsd_quarterlyvariancesalariesbenefits?: number;
 
-  vsd_cpu_totalsalariesandbenefitsfromvscp?: number;
-  vsd_cpu_totalprogramdeliveryfromvscp?: number;
-  vsd_cpu_totaladministrationcostsfromvscp?: number;
-
   vsd_submitteddate?: string;
 
   vsd_schedulegid?: string;
@@ -225,6 +221,7 @@ export interface iDynamicsScheduleGResponse {
   Userbceid?: string;
   Businessbceid?: string;
   ScheduleG?: iDynamicsScheduleG;
+  Program?: iDynamicsCrmProgram;
   ScheduleGLineItems?: iDynamicsScheduleGLineItem[];
 }
 export interface iDynamicsSchedule {

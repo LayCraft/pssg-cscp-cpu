@@ -15,9 +15,10 @@ export class IconStepperComponent implements OnInit {
     // message , colour class, icon class
     'untouched': ['', 'text-secondary', 'far fa-circle'],
     'incomplete': ['This form is unsaved but valid.', 'text-warning tab-incomplete', 'fas fa-circle'],
-    'invalid': ['This form is saved but invalid.', 'text-danger tab-invalid', 'fas fa-times-circle'],
+    'invalid': ['This form is invalid.', 'text-danger tab-invalid', 'fas fa-times-circle'],
     'complete': ['This form is saved and valid.', 'text-success tab-complete', 'fas fa-check-circle'],
-    'info': ['', 'text-info', 'fas fa-info-circle']
+    'info': ['', 'text-info', 'fas fa-info-circle'],
+    'saving': ['', 'text-secondary', 'spinner-border spinner-border-sm']
   }
 
   constructor(

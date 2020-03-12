@@ -22,9 +22,10 @@ export interface iExpenseReport {
 
   programExpenseLineItems: iExpenseReportLineItem[];
 
-  contractServiceHoursPerWeek?: number;
-  contractServiceHoursPerQuarter?: number;
-  contractServiceHoursQuarterlyActual?: number;
+  serviceHours?: number;
+  perType?: number,
+  onCallStandByHours?: number;
+  serviceHoursQuarterlyActual?: number;
   executiveReview?: boolean;
 }
 
@@ -34,4 +35,5 @@ export interface iExpenseReportLineItem {
   annualBudget: number;
   quarterlyBudget: number;
   actual: number;
+  actualYearToDate: number;
 }

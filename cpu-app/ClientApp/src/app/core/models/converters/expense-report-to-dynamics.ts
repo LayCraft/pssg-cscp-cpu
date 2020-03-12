@@ -28,10 +28,15 @@ export function convertExpenseReportToDynamics(trans: TransmogrifierExpenseRepor
   if (trans.expenseReport.salariesBenefitsValue) g.vsd_salariesbenefitscurrentquarter = trans.expenseReport.salariesBenefitsValue;
 
   // contract service hours
-  if (trans.expenseReport.contractServiceHoursQuarterlyActual) g.vsd_actualhoursthisquarter = trans.expenseReport.contractServiceHoursQuarterlyActual;
-  if (trans.expenseReport.contractServiceHoursPerWeek) g.vsd_contractedservicehrsthisquarter = trans.expenseReport.contractServiceHoursPerWeek;
-  if (trans.expenseReport.contractServiceHoursPerQuarter) g.vsd_contractedservicehrsthisquarter = trans.expenseReport.contractServiceHoursPerQuarter;
-  if (trans.expenseReport.executiveReview) g.vsd_reportreviewed = trans.expenseReport.executiveReview;
+  if (trans.expenseReport.serviceHoursQuarterlyActual) g.vsd_actualhoursthisquarter = trans.expenseReport.serviceHoursQuarterlyActual;
+  // if (trans.expenseReport.serviceHours) g.vsd_contractedservicehrsthisquarter = trans.expenseReport.serviceHours;
+  // if (trans.expenseReport.onCallStandByHours) g.vsd_contractedservicehrsthisquarter = trans.expenseReport.onCallStandByHours;
+  if (trans.expenseReport.executiveReview) {
+    g.vsd_reportreviewed = trans.expenseReport.executiveReview;
+  }
+  else {
+    g.vsd_reportreviewed = false;
+  }
 
   // save the identifier for this form
   if (trans.expenseReport.expenseReportId) g.vsd_schedulegid = trans.expenseReport.expenseReportId;

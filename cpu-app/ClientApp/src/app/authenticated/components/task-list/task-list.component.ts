@@ -17,7 +17,7 @@ export class TaskListComponent implements OnInit {
   formTypes: string[];
 
   constructor() {
-    this.tabs = ['Current Tasks', 'Completed', 'Programs'];
+    this.tabs = ['Tasks Due', 'Completed Tasks', 'Edit Program Information', 'Messages'];
     this.currentTab = this.tabs[0];
     this.statuses = TaskStatus;
     this.formTypes = formTypes;
