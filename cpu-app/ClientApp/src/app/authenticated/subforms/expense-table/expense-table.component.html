@@ -1,8 +1,8 @@
-<table class="table table-striped">
+<table class="table table-striped expense-table">
   <thead>
     <th scope="row"></th>
     <th scope="row">Total Cost</th>
-    <th scope="row">Funded From VSCP</th>
+    <th scope="row" class="long-header-name">Funded From VSCP</th>
     <th scope="row">
       <!-- For spacing only -->
     </th>
@@ -52,7 +52,7 @@
       <th scope="col">Total</th>
       <td>${{totalTotalCost | number}}</td>
       <td>${{totalVscp | number}}</td>
-      <td (click)="addExpenseItem()" class="align-middle">
+      <td (click)="addExpenseItem()" class="align-middle add-row-button">
         <i class="fas fa-plus-circle text-success"></i>
       </td>
     </tr>

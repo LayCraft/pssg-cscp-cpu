@@ -19,21 +19,24 @@ export class TransmogrifierExpenseReport {
       expenseReportId: g.ScheduleG.vsd_schedulegid || null,
 
       // administration costs
-      administrationAnnualBudget: g.ScheduleG.vsd_yeartodateprogramadministration || 0,
+      administrationAnnualBudget: g.ScheduleG.vsd_cpu_totaladministrationcostsfromvscp || 0,
       administrationDescription: g.ScheduleG.vsd_programadministrationexplanation || '',
       administrationQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedprogramadministration || 0,
+      administrationYearToDate: g.ScheduleG.vsd_yeartodateprogramadministration || 0,
       administrationValue: Math.round(g.ScheduleG.vsd_programadministrationcurrentquarter) || 0,
 
       // program delivery costs
-      programDeliveryAnnualBudget: g.ScheduleG.vsd_yeartodateprogramdelivery || 0,
+      programDeliveryAnnualBudget: g.ScheduleG.vsd_cpu_totalprogramdeliveryfromvscp || 0,
       programDeliveryDescription: g.ScheduleG.vsd_programdeliveryexplanations || '',
       programDeliveryQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedprogramdelivery || 0,
+      programDeliveryYearToDate: g.ScheduleG.vsd_yeartodateprogramdelivery || 0,
       programDeliveryValue: Math.round(g.ScheduleG.vsd_programdeliverycurrentquarter) || 0,
 
       // salaries and benefits costs
-      salariesBenefitsAnnualBudget: g.ScheduleG.vsd_yeartodatesalariesandbenefits || 0,
+      salariesBenefitsAnnualBudget: g.ScheduleG.vsd_cpu_totalsalariesandbenefitsfromvscp || 0,
       salariesBenefitsDescription: g.ScheduleG.vsd_salariesandbenefitsexplanation || '',
       salariesBenefitsQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedsalariesbenefits || 0,
+      salariesBenefitsYearToDate: g.ScheduleG.vsd_yeartodatesalariesandbenefits || 0,
       salariesBenefitsValue: Math.round(g.ScheduleG.vsd_salariesbenefitscurrentquarter) || 0, //TODO
 
       // contract service hours

@@ -2,7 +2,7 @@
 
   <ul class="nav nav-pills mb-2">
     <li *ngFor="let tab of tabs" class="nav-item">
-      <a class="nav-link" [class.active]="tab===currentTab" (click)="setCurrentTab(tab)">{{tab}}</a>
+      <a class="nav-link nav-tab" [class.active]="tab===currentTab" (click)="setCurrentTab(tab)">{{tab}}</a>
     </li>
   </ul>
 
@@ -10,13 +10,11 @@
     <h2 class="blue-header">Main Program Information</h2>
     <div class="form-group">
       <label for="programLocation">Program Location</label>
-      <input class="form-control" type="text" [ngModel]="programApplication.programLocation" id="programLocation"
-        name="programLocation" disabled>
+      <input class="form-control" type="text" [ngModel]="programApplication.programLocation" id="programLocation" name="programLocation" disabled>
     </div>
     <div class="form-group">
       <label for="serviceArea">Service Area</label>
-      <input class="form-control" type="text" [ngModel]="programApplication.serviceArea" id="serviceArea"
-        name="serviceArea" disabled>
+      <input class="form-control" type="text" [ngModel]="programApplication.serviceArea" id="serviceArea" name="serviceArea" disabled>
     </div>
 
     <h2 class="blue-header">Primary Program Contact Information</h2>
@@ -40,8 +38,7 @@
     </span>
     <h2 class="blue-header mt-2">Program Staff</h2>
     <p>Missing staff can be added by name and set at an organizational level.</p>
-    <app-person-picker-list [label]="'Program Staff'" [(personsObj)]="personsObj"
-      (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
+    <app-person-picker-list [label]="'Program Staff'" [(personsObj)]="personsObj" (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
     <!-- [(persons)]="programApplication.additionalStaff" [(removedPersons)]="programApplication.removedStaff"> -->
     <!-- </app-person-picker-list> -->
 
@@ -64,8 +61,7 @@
       <ng-container *ngIf="hours.isActive">
         <app-hours [(hours)]="hours"></app-hours>
         <div class="retain-height">
-          <a (click)="removeOperationHours(i)"
-            class="align-right btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
+          <a (click)="removeOperationHours(i)" class="align-right btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
         </div>
       </ng-container>
     </div>
@@ -77,9 +73,7 @@
 
         <div class="col-md-8 inline-col">
           <label class="hours-label" for="scheduledHours">Total Scheduled Hours per {{perType}}</label>
-          <input [(ngModel)]="programApplication.scheduledHours" type="number" id="scheduledHours" name="scheduledHours"
-            class="form-control hours-input"
-            (input)="formHelper.moneyFormatter($event.target, programApplication, 'scheduledHours')">
+          <input [(ngModel)]="programApplication.scheduledHours" type="number" id="scheduledHours" name="scheduledHours" class="form-control hours-input" (input)="formHelper.moneyFormatter($event.target, programApplication, 'scheduledHours')">
         </div>
       </div>
 
@@ -89,8 +83,7 @@
       <ng-container *ngIf="hours.isActive">
         <app-hours [(hours)]="hours"></app-hours>
         <div class="retain-height">
-          <a (click)="removeStandbyHours(i)"
-            class="align-right btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
+          <a (click)="removeStandbyHours(i)" class="align-right btn btn-sm btn-outline-danger text-danger mt-1 mb-2">Remove</a>
         </div>
       </ng-container>
     </div>
@@ -101,9 +94,7 @@
         </div>
         <div class="col-md-8 inline-col">
           <label class="hours-label" for="onCallHours">Total On-call/Stand-by Hours per {{perType}}</label>
-          <input [(ngModel)]="programApplication.onCallHours" type="number" id="onCallHours" name="onCallHours"
-            class="form-control hours-input"
-            (input)="formHelper.moneyFormatter($event.target, programApplication, 'onCallHours')">
+          <input [(ngModel)]="programApplication.onCallHours" type="number" id="onCallHours" name="onCallHours" class="form-control hours-input" (input)="formHelper.moneyFormatter($event.target, programApplication, 'onCallHours')">
         </div>
       </div>
     </div>
@@ -114,8 +105,7 @@
       <div class="col-md-6 inline-col">
         <div class="card">
           <div class="card-body inline-card">
-            <input [(ngModel)]="programApplication.numberOfHours" type="number" id="numberOfHours" name="numberOfHours"
-              class="form-control hours-input" disabled>
+            <input [(ngModel)]="programApplication.numberOfHours" type="number" id="numberOfHours" name="numberOfHours" class="form-control hours-input" disabled>
             <label class="hours-label" for="numberOfHours">Hours per {{perType}}</label>
           </div>
         </div>

@@ -45,6 +45,7 @@
                   <th scope="col">Quarterly Budgeted Amount</th>
                   <th scope="col">Actual Expenditures, Current Quarter</th>
                   <th scope="col">Quarterly Variance</th>
+                  <!-- <th scope="col">Actual Expenditures, Year to Date</th> -->
                   <th scope="col">Year to Date Variance</th>
                 </thead>
                 <tbody>
@@ -56,6 +57,7 @@
                       <input [(ngModel)]="trans.expenseReport.salariesBenefitsValue" type="number" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'salariesBenefitsValue')">
                     </td>
                     <td>${{((trans.expenseReport.salariesBenefitsAnnualBudget*0.25)-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                    <!-- <td>prev qtr Actual + curr qtr Actual expenditure</td> -->
                     <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
@@ -66,6 +68,7 @@
                       <input [(ngModel)]="trans.expenseReport.programDeliveryValue" type="number" class="form-control" id="programDeliveryValue" name="programDeliveryValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'programDeliveryValue')">
                     </td>
                     <td>${{((trans.expenseReport.programDeliveryAnnualBudget*0.25)-trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
+                    <!-- <td>prev qtr Actual + curr qtr Actual expenditure</td> -->
                     <td>${{(trans.expenseReport.programDeliveryAnnualBudget-trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
@@ -76,6 +79,7 @@
                       <input [(ngModel)]="trans.expenseReport.administrationValue" type="number" class="form-control" id="administrationValue" name="administrationValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'administrationValue')">
                     </td>
                     <td>${{((trans.expenseReport.salariesBenefitsAnnualBudget*0.25)-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                    <!-- <td>prev qtr Actual + curr qtr Actual expenditure</td> -->
                     <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
                   </tr>
                 </tbody>
@@ -107,6 +111,7 @@
                         }}
                       </strong>
                     </td>
+                    <!-- <td>Total prev qtr Actual + curr qtr Actual expenditure</td> -->
                     <td>
                       <strong>
                         ${{
