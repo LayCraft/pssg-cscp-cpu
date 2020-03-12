@@ -51,13 +51,19 @@ namespace Gov.Cscp.Victims.Public.Helpers
         public static string removeNullsForProgramApplication(string modelString)
         {
             string ret = modelString.Replace("\"AddProgramContactCollection\":null,", "");
+            ret = ret.Replace("\"AddProgramContactCollection\":null", "");
             ret = ret.Replace("\"RemoveProgramContactCollection\":null,", "");
+            ret = ret.Replace("\"RemoveProgramContactCollection\":null", "");
             ret = ret.Replace("\"Organization\":null,", "");
+            ret = ret.Replace("\"Organization\":null", "");
             ret = ret.Replace("\"ProgramCollection\":null,", "");
+            ret = ret.Replace("\"ProgramCollection\":null", "");
             ret = ret.Replace("\"ContractCollection\":null,", "");
+            ret = ret.Replace("\"ContractCollection\":null", "");
             ret = ret.Replace("\"ScheduleCollection\":null,", "");
             ret = ret.Replace("\"ScheduleCollection\":null", "");
             ret = ret.Replace("\"vsd_scheduleid\":null,", "");
+            ret = ret.Replace("\"vsd_scheduleid\":null", "");
             return ret;
         }
 
@@ -65,6 +71,7 @@ namespace Gov.Cscp.Victims.Public.Helpers
         {
             string ret = modelString.Replace("\"_parentcustomerid_value\":null,", "");
             ret = ret.Replace("\"Organization\":null,", "");
+            ret = ret.Replace("\"Organization\":null", "");
             ret = ret.Replace("\"vsd_bceid\":null,", "");
             ret = ret.Replace("\"contactid\":null,", "");
             return ret;
@@ -73,7 +80,9 @@ namespace Gov.Cscp.Victims.Public.Helpers
         public static string removeNullsForBudgetProposal(string modelString)
         {
             string ret = modelString.Replace("\"ProgramExpenseCollection\":[],", "");
+            ret = ret.Replace("\"ProgramExpenseCollection\":[]", "");
             ret = ret.Replace("\"ProgramRevenueSourceCollection\":[],", "");
+            ret = ret.Replace("\"ProgramRevenueSourceCollection\":[]", "");
             ret = ret.Replace("\"vsd_programrevenuesourceid\":null,", "");
             ret = ret.Replace("\"vsd_programexpenseid\":null,", "");
             return ret;

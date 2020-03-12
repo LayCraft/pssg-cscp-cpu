@@ -6,16 +6,19 @@ export interface iExpenseReport {
   administrationValue?: number;
   administrationAnnualBudget?: number;
   administrationQuarterlyBudget?: number;
+  administrationYearToDate?: number;
 
   programDeliveryDescription?: string;
   programDeliveryValue?: number;
   programDeliveryAnnualBudget?: number;
   programDeliveryQuarterlyBudget?: number;
+  programDeliveryYearToDate?: number;
 
   salariesBenefitsDescription?: string;
   salariesBenefitsValue?: number;
   salariesBenefitsAnnualBudget?: number;
   salariesBenefitsQuarterlyBudget?: number;
+  salariesBenefitsYearToDate?: number;
 
   programExpenseLineItems: iExpenseReportLineItem[];
 

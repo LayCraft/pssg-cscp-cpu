@@ -1,10 +1,10 @@
 <div class="prev-next-div">
-  <button (click)="prevPage()" class="btn btn-primary mr-2" [class.is-disabled]="tabIndex === 0" >&lt; Previous</button>
+  <button (click)="prevPage()" class="btn btn-primary mr-2" [class.is-disabled]="tabIndex === 0">&lt; Previous</button>
   <button (click)="nextPage()" class="btn btn-primary" [class.is-disabled]="tabIndex === tabs.length - 1">Next &gt;</button>
 </div>
 <ul class="nav nav-pills mb-2">
   <li *ngFor="let tab of tabs" class="nav-item">
-    <a class="nav-link" [class.active]="tab===currentTab" (click)="setCurrentTab(tab)">{{tab}}</a>
+    <a class="nav-link nav-tab" [class.active]="tab===currentTab" (click)="setCurrentTab(tab)">{{tab}}</a>
   </li>
 </ul>
 <div *ngIf="currentTab===tabs[0]">

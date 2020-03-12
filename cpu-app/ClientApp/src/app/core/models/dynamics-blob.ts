@@ -190,6 +190,10 @@ export interface iDynamicsScheduleG {
   vsd_yeartodatevariancesalariesbenefits?: number;
   vsd_quarterlyvariancesalariesbenefits?: number;
 
+  vsd_cpu_totalsalariesandbenefitsfromvscp?: number;
+  vsd_cpu_totalprogramdeliveryfromvscp?: number;
+  vsd_cpu_totaladministrationcostsfromvscp?: number;
+
   vsd_submitteddate?: string;
 
   vsd_schedulegid?: string;

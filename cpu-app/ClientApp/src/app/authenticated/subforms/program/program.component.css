@@ -13,23 +13,6 @@
   padding-top: 6px;
 }
 
-.nav-link:hover {
-  color: #fff;
-  -webkit-text-fill-color: white;
-  background-color: #7590b9;
-}
-
-.nav-link {
-  cursor: pointer;
-  margin-right: 5px;
-  margin-bottom: 5px;
-}
-
-.nav-link.active {
-  color: #fff !important;
-  background-color: #38598a !important;
-}
-
 .retain-height {
   height: 43px;
 }
