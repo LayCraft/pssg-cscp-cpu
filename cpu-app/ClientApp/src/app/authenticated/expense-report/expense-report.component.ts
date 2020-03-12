@@ -11,6 +11,7 @@ import { convertExpenseReportToDynamics } from '../../core/models/converters/exp
 import { iDynamicsPostScheduleG } from '../../core/models/dynamics-post';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { AbstractControl } from '@angular/forms';
+import { perTypeDict } from '../../core/constants/per-type';
 
 @Component({
   selector: 'app-expense-report',
@@ -31,6 +32,7 @@ export class ExpenseReportComponent implements OnInit {
     quarterlyBudgetSum: null,
     actualSum: null,
     quarterlyVarianceSum: null,
+    actualYearToDateSum: null,
     annualVarianceSum: null,
   };
 
@@ -43,6 +45,7 @@ export class ExpenseReportComponent implements OnInit {
   data: any;
   out: iDynamicsPostScheduleG;
   currentUser: iPerson;
+  perType: string;
 
   public formHelper = new FormHelper();
 
@@ -81,6 +84,8 @@ export class ExpenseReportComponent implements OnInit {
             this.data = g;
             // make the transmogrifier for this form
             this.trans = new TransmogrifierExpenseReport(g);
+
+            this.perType = perTypeDict[this.trans.expenseReport.perType];
 
             console.log("from dynamics");
             console.log(g);
@@ -161,6 +166,10 @@ export class ExpenseReportComponent implements OnInit {
       .reduce((prev, curr) => prev + curr);
     //quarterly variance
     this.lineItemSums['quarterlyVarianceSum'] = this.lineItemSums['annualBudgetSum'] * 0.25 - this.lineItemSums['actualSum'];
+    //Actual YTD sum
+    this.lineItemSums['actualYearToDateSum'] = this.trans.expenseReport.programExpenseLineItems
+      .map(l => l.actualYearToDate)
+      .reduce((prev, curr) => prev + curr);
     //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
   }
@@ -171,6 +180,10 @@ export class ExpenseReportComponent implements OnInit {
       .reduce((prev, curr) => prev + curr);
     //quarterly variance
     this.lineItemSums['quarterlyVarianceSum'] = this.lineItemSums['annualBudgetSum'] * 0.25 - this.lineItemSums['actualSum'];
+    //Actual YTD sum
+    this.lineItemSums['actualYearToDateSum'] = this.trans.expenseReport.programExpenseLineItems
+      .map(l => l.actualYearToDate)
+      .reduce((prev, curr) => prev + curr);
     //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
   }
@@ -188,6 +201,9 @@ export class ExpenseReportComponent implements OnInit {
         this.stateService.refresh();
         if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
         this.saving = false;
+        this.stepperElements.forEach(s => {
+          this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+        });
         this.formHelper.makeFormClean();
       },
       err => {

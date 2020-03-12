@@ -45,7 +45,7 @@
                   <th scope="col">Quarterly Budgeted Amount</th>
                   <th scope="col">Actual Expenditures, Current Quarter</th>
                   <th scope="col">Quarterly Variance</th>
-                  <!-- <th scope="col">Actual Expenditures, Year to Date</th> -->
+                  <th scope="col">Actual Expenditures, Year to Date</th>
                   <th scope="col">Year to Date Variance</th>
                 </thead>
                 <tbody>
@@ -57,8 +57,8 @@
                       <input [(ngModel)]="trans.expenseReport.salariesBenefitsValue" type="number" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'salariesBenefitsValue')">
                     </td>
                     <td>${{((trans.expenseReport.salariesBenefitsAnnualBudget*0.25)-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
-                    <!-- <td>prev qtr Actual + curr qtr Actual expenditure</td> -->
-                    <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                    <td>{{trans.expenseReport.salariesBenefitsValue + trans.expenseReport.salariesBenefitsYearToDate}}</td>
+                    <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget - (trans.expenseReport.salariesBenefitsValue + trans.expenseReport.salariesBenefitsYearToDate))|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Program Delivery</th>
@@ -68,8 +68,8 @@
                       <input [(ngModel)]="trans.expenseReport.programDeliveryValue" type="number" class="form-control" id="programDeliveryValue" name="programDeliveryValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'programDeliveryValue')">
                     </td>
                     <td>${{((trans.expenseReport.programDeliveryAnnualBudget*0.25)-trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
-                    <!-- <td>prev qtr Actual + curr qtr Actual expenditure</td> -->
-                    <td>${{(trans.expenseReport.programDeliveryAnnualBudget-trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
+                    <td>{{trans.expenseReport.programDeliveryValue + trans.expenseReport.programDeliveryYearToDate}}</td>
+                    <td>${{(trans.expenseReport.programDeliveryAnnualBudget - (trans.expenseReport.programDeliveryValue + trans.expenseReport.programDeliveryYearToDate))|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Program Administration</th>
@@ -78,9 +78,9 @@
                     <td>
                       <input [(ngModel)]="trans.expenseReport.administrationValue" type="number" class="form-control" id="administrationValue" name="administrationValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'administrationValue')">
                     </td>
-                    <td>${{((trans.expenseReport.salariesBenefitsAnnualBudget*0.25)-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
-                    <!-- <td>prev qtr Actual + curr qtr Actual expenditure</td> -->
-                    <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget-trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                    <td>${{((trans.expenseReport.administrationAnnualBudget*0.25)-trans.expenseReport.administrationValue)|number:'1.0-0'}}</td>
+                    <td>{{trans.expenseReport.administrationValue + trans.expenseReport.administrationYearToDate}}</td>
+                    <td>${{(trans.expenseReport.administrationAnnualBudget - (trans.expenseReport.administrationValue + trans.expenseReport.administrationYearToDate))|number:'1.0-0'}}</td>
                   </tr>
                 </tbody>
                 <tfoot>
@@ -111,14 +111,18 @@
                         }}
                       </strong>
                     </td>
-                    <!-- <td>Total prev qtr Actual + curr qtr Actual expenditure</td> -->
+                    <td>
+                      <strong>
+                        ${{(trans.expenseReport.salariesBenefitsValue + trans.expenseReport.programDeliveryValue + trans.expenseReport.administrationValue + trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.administrationYearToDate)|number:'1.0-0'}}
+                      </strong>
+                    </td>
                     <td>
                       <strong>
                         ${{
                           (
-                            (trans.expenseReport.salariesBenefitsAnnualBudget-trans.expenseReport.salariesBenefitsValue)+
-                            (trans.expenseReport.programDeliveryAnnualBudget-trans.expenseReport.programDeliveryValue)+
-                            (trans.expenseReport.salariesBenefitsAnnualBudget-trans.expenseReport.salariesBenefitsValue)
+                            (trans.expenseReport.salariesBenefitsAnnualBudget - (trans.expenseReport.salariesBenefitsValue + trans.expenseReport.salariesBenefitsYearToDate))+
+                            (trans.expenseReport.programDeliveryAnnualBudget - (trans.expenseReport.programDeliveryValue + trans.expenseReport.programDeliveryYearToDate))+
+                            (trans.expenseReport.administrationAnnualBudget - (trans.expenseReport.administrationValue + trans.expenseReport.administrationYearToDate))
                           )|number:'1.0-0'
                         }}
                       </strong>
@@ -152,6 +156,7 @@
                   <th scope="col">Quarterly Budgeted Amount</th>
                   <th scope="col">Actual Expenditures, Current Quarter</th>
                   <th scope="col">Quarterly Variance</th>
+                  <th scope="col">Actual Expenditures, Year to Date</th>
                   <th scope="col">Year to Date Variance</th>
                 </thead>
                 <tbody>
@@ -164,6 +169,9 @@
                     </td>
                     <td>
                       ${{((item.annualBudget*0.25)-item.actual)|number:'1.0-0'}}
+                    </td>
+                    <td>
+                      ${{(item.actual+item.actualYearToDate)|number:'1.0-0'}}
                     </td>
                     <td>
                       ${{(item.annualBudget-item.actual)|number:'1.0-0'}}
@@ -195,6 +203,11 @@
                     </td>
                     <td>
                       <strong>
+                        ${{lineItemSums.actualYearToDateSum||0|number:'1.0-0'}}
+                      </strong>
+                    </td>
+                    <td>
+                      <strong>
                         ${{lineItemSums.annualVarianceSum||0|number:'1.0-0'}}
                       </strong>
                     </td>
@@ -203,16 +216,16 @@
               </table>
               <h2 class="blue-header">Contract Services</h2>
               <div class="form-group">
-                <label for="contractService">Contracted Service Rate</label>
-                <input type="text" [value]="trans.expenseReport.contractServiceHoursPerWeek+' hours per week'" class="form-control" id="contractService" readonly>
+                <label for="contractService">Total On-call/Stand-by Hours</label>
+                <input type="text" [value]="trans.expenseReport.onCallStandByHours" class="form-control" id="contractService" readonly>
               </div>
               <div class="form-group">
                 <label for="contractServiceQuarter">Contracted Service Hours</label>
-                <input type="text" [value]="trans.expenseReport.contractServiceHoursPerQuarter+' hours this quarter'" class="form-control" id="contractServiceQuarter" readonly>
+                <input type="text" [value]="trans.expenseReport.serviceHours + ' hours per ' + perType" class="form-control" id="contractServiceQuarter" readonly>
               </div>
               <div class="form-group">
                 <label for="actualServiceQuarter">Actual Service Hours This Quarter</label>
-                <input type="number" min="0" [(ngModel)]="trans.expenseReport.contractServiceHoursQuarterlyActual" class="form-control" id="actualServiceQuarter" (input)="formHelper.numberFormatter($event.target, trans.expenseReport, 'contractServiceHoursQuarterlyActual')">
+                <input type="number" min="0" [(ngModel)]="trans.expenseReport.serviceHoursQuarterlyActual" class="form-control" id="actualServiceQuarter" (input)="formHelper.numberFormatter($event.target, trans.expenseReport, 'contractServiceHoursQuarterlyActual')">
               </div>
             </div>
             <div *ngIf="item.discriminator === discriminators[2]">

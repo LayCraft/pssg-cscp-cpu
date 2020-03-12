@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { ProgramApplicationService } from '../../core/services/program-application.service';
 import { StateService } from '../../core/services/state.service';
@@ -9,6 +9,7 @@ import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/i
 import { convertProgramApplicationToDynamics } from '../../core/models/converters/program-application-to-dynamics';
 import { FormHelper } from '../../core/form-helper';
 import { iDynamicsPostScheduleF } from '../../core/models/dynamics-post';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-program-application',
@@ -36,6 +37,7 @@ export class ProgramApplicationComponent implements OnInit {
     private router: Router,
     private stateService: StateService,
     private stepperService: IconStepperService,
+    public ref: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -73,9 +75,13 @@ export class ProgramApplicationComponent implements OnInit {
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     this.stepperService.currentStepperElement.subscribe(e => {
       if (this.currentStepperElement) {
+        let originalStepper = _.cloneDeep(this.currentStepperElement);
         let formState = this.formHelper.getFormState();
-        //in this case there has been a previous update on this tab, and we've come back to that tab and left again. So we don't want to wipe away the incomplete status
-        if (this.currentStepperElement.formState !== "incomplete" || formState != "untouched") {
+
+        if (originalStepper.formState === "complete" && formState === "untouched") {
+          //do nothing...
+        }
+        else if (originalStepper.formState !== "incomplete" || formState !== "untouched") {
           this.currentStepperElement.formState = formState;
         }
       }
@@ -151,32 +157,38 @@ export class ProgramApplicationComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save(showNotification: boolean = true) {
-    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-      return;
-    }
-    this.saving = true;
-    console.log("saving...");
-    console.log(this.trans);
-    this.out = convertProgramApplicationToDynamics(this.trans);
-    this.programApplicationService.setProgramApplication(this.out).subscribe(
-      r => {
-        console.log(r);
-        if (showNotification) {
-          this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
-        }
-        this.saving = false;
-        this.stepperElements.forEach(s => {
-          this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
-        });
-
-        this.formHelper.makeFormClean();
-      },
-      err => {
-        console.log(err);
-        this.notificationQueueService.addNotification('The program application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-        this.saving = false;
+    return new Promise((resolve, reject) => {
+      if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+        resolve();
+        return;
       }
-    );
+      this.saving = true;
+      console.log("saving...");
+      console.log(this.trans);
+      this.out = convertProgramApplicationToDynamics(this.trans);
+      this.programApplicationService.setProgramApplication(this.out).subscribe(
+        r => {
+          console.log(r);
+          if (showNotification) {
+            this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
+          }
+          this.saving = false;
+          this.stepperElements.forEach(s => {
+            if (s.formState === 'complete') return;
+            this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+          });
+
+          this.formHelper.makeFormClean();
+          resolve();
+        },
+        err => {
+          console.log(err);
+          this.notificationQueueService.addNotification('The program application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+          this.saving = false;
+          reject();
+        }
+      );
+    });
   }
   exit() {
     if (this.formHelper.isFormDirty()) {
@@ -213,11 +225,21 @@ export class ProgramApplicationComponent implements OnInit {
     );
   }
   setNextStepper() {
+    let originalStepper = _.cloneDeep(this.currentStepperElement);
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-      this.currentStepperElement.formState = this.formHelper.getFormState();
+      // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
       return;
     }
-    this.save(false);
+
+    setTimeout(() => {
+      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'saving');
+    }, 0);
+
+    this.save(false).then(() => {
+      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'complete');
+    }).catch(() => {
+      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');
+    });
     ++this.stepperIndex;
     this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
   }

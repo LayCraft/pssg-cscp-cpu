@@ -145,6 +145,9 @@ export class BudgetProposalComponent implements OnInit {
         this.stateService.refresh();
         if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
         this.saving = false;
+        this.stepperElements.forEach(s => {
+          this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+        });
         this.formHelper.makeFormClean();
       },
       err => {
