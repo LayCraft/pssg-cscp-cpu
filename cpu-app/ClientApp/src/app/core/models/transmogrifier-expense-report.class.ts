@@ -18,26 +18,32 @@ export class TransmogrifierExpenseReport {
     const e: iExpenseReport = {
       expenseReportId: g.ScheduleG.vsd_schedulegid || null,
 
-      // administration costs
-      administrationAnnualBudget: g.ScheduleG.vsd_programadministrationbudgeted || 0,
-      administrationDescription: g.ScheduleG.vsd_programadministrationexplanation || '',
-      administrationQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedprogramadministration || 0,
-      administrationYearToDate: g.ScheduleG.vsd_yeartodateprogramadministration || 0,
-      administrationValue: Math.round(g.ScheduleG.vsd_programadministrationcurrentquarter) || 0,
+      // salaries and benefits costs
+      salariesBenefitsDescription: g.ScheduleG.vsd_salariesandbenefitsexplanation || '',
+      salariesBenefitsAnnualBudget: g.ScheduleG.vsd_salaryandbenefitsbudgeted || 0,
+      salariesBenefitsQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedsalariesbenefits || 0,
+      salariesBenefitsValue: g.ScheduleG.vsd_salariesbenefitscurrentquarter || 0,
+      salariesBenefitsQuarterlyVariance: g.ScheduleG.vsd_quarterlyvariancesalariesbenefits || 0,
+      salariesBenefitsYearToDate: g.ScheduleG.vsd_yeartodatesalariesandbenefits || 0,
+      salariesBenefitsYearToDateVariance: g.ScheduleG.vsd_yeartodatevariancesalariesbenefits || 0,
 
       // program delivery costs
-      programDeliveryAnnualBudget: g.ScheduleG.vsd_programdeliverybudgeted || 0,
       programDeliveryDescription: g.ScheduleG.vsd_programdeliveryexplanations || '',
+      programDeliveryAnnualBudget: g.ScheduleG.vsd_programdeliverybudgeted || 0,
       programDeliveryQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedprogramdelivery || 0,
+      programDeliveryValue: g.ScheduleG.vsd_programdeliverycurrentquarter || 0,
+      programDeliveryQuarterlyVariance: g.ScheduleG.vsd_quarterlyvarianceprogramdelivery || 0,
       programDeliveryYearToDate: g.ScheduleG.vsd_yeartodateprogramdelivery || 0,
-      programDeliveryValue: Math.round(g.ScheduleG.vsd_programdeliverycurrentquarter) || 0,
+      programDeliveryYearToDateVariance: g.ScheduleG.vsd_yeartodatevarianceprogramdelivery || 0,
 
-      // salaries and benefits costs
-      salariesBenefitsAnnualBudget: g.ScheduleG.vsd_salaryandbenefitsbudgeted || 0,
-      salariesBenefitsDescription: g.ScheduleG.vsd_salariesandbenefitsexplanation || '',
-      salariesBenefitsQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedsalariesbenefits || 0,
-      salariesBenefitsYearToDate: g.ScheduleG.vsd_yeartodatesalariesandbenefits || 0,
-      salariesBenefitsValue: Math.round(g.ScheduleG.vsd_salariesbenefitscurrentquarter) || 0, //TODO
+      // administration costs
+      administrationDescription: g.ScheduleG.vsd_programadministrationexplanation || '',
+      administrationAnnualBudget: g.ScheduleG.vsd_programadministrationbudgeted || 0,
+      administrationQuarterlyBudget: g.ScheduleG.vsd_quarterlybudgetedprogramadministration || 0,
+      administrationValue: g.ScheduleG.vsd_programadministrationcurrentquarter || 0,
+      administrationQuarterlyVariance: g.ScheduleG.vsd_quarterlyvarianceprogramadministration || 0,
+      administrationYearToDate: g.ScheduleG.vsd_yeartodateprogramadministration || 0,
+      administrationYearToDateVariance: g.ScheduleG.vsd_yeartodatevarianceprogramadministration || 0,
 
       // contract service hours
       serviceHoursQuarterlyActual: g.ScheduleG.vsd_actualhoursthisquarter || 0,
@@ -54,12 +60,14 @@ export class TransmogrifierExpenseReport {
       if (item._vsd_schedulegid_value === g.ScheduleG.vsd_schedulegid) {
         e.programExpenseLineItems.push({
           // get the correct label for the line from the list of constant values
+          itemId: item.vsd_scheduleglineitemid,
           label: ExpenseItemLabels[item._vsd_expenselineitem_value.toUpperCase()] || "Unknown Line Item Type",
           annualBudget: item.vsd_annualbudgetedamount || 0,
           quarterlyBudget: item.vsd_quarterlybudgetedamount || 0,
           actual: Math.round(item.vsd_actualexpensescurrentquarter) || 0,
-          itemId: item.vsd_scheduleglineitemid,
+          quarterlyVariance: item.vsd_quarterlyvariance || 0,
           actualYearToDate: item.vsd_actualexpendituresyeartodate || 0,
+          yearToDateVariance: item.vsd_yeartodatevariance || 0,
         });
       }
     }
