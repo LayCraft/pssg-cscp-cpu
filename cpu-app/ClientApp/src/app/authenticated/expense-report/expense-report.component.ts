@@ -165,13 +165,17 @@ export class ExpenseReportComponent implements OnInit {
       .map(l => l.actual)
       .reduce((prev, curr) => prev + curr);
     //quarterly variance
-    this.lineItemSums['quarterlyVarianceSum'] = this.lineItemSums['annualBudgetSum'] * 0.25 - this.lineItemSums['actualSum'];
+    this.lineItemSums['quarterlyVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
+      .map(l => l.quarterlyVariance)
+      .reduce((prev, curr) => prev + curr);
     //Actual YTD sum
     this.lineItemSums['actualYearToDateSum'] = this.trans.expenseReport.programExpenseLineItems
       .map(l => l.actualYearToDate)
       .reduce((prev, curr) => prev + curr);
     //YTD variance
-    this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
+    this.lineItemSums['annualVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
+      .map(l => l.yearToDateVariance)
+      .reduce((prev, curr) => prev + curr);
   }
   updateLineItemSums() {
     //actual expendatures this quarter
@@ -179,13 +183,17 @@ export class ExpenseReportComponent implements OnInit {
       .map(l => l.actual)
       .reduce((prev, curr) => prev + curr);
     //quarterly variance
-    this.lineItemSums['quarterlyVarianceSum'] = this.lineItemSums['annualBudgetSum'] * 0.25 - this.lineItemSums['actualSum'];
-    //Actual YTD sum
-    this.lineItemSums['actualYearToDateSum'] = this.trans.expenseReport.programExpenseLineItems
-      .map(l => l.actualYearToDate)
-      .reduce((prev, curr) => prev + curr);
-    //YTD variance
-    this.lineItemSums['annualVarianceSum'] = this.lineItemSums['annualBudgetSum'] - this.lineItemSums['actualSum'];
+    // this.lineItemSums['quarterlyVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
+    //   .map(l => l.quarterlyVariance - l.actual)
+    //   .reduce((prev, curr) => prev + curr);
+    // //Actual YTD sum
+    // this.lineItemSums['actualYearToDateSum'] = this.trans.expenseReport.programExpenseLineItems
+    //   .map(l => l.actualYearToDate + l.actual)
+    //   .reduce((prev, curr) => prev + curr);
+    // //YTD variance
+    // this.lineItemSums['annualVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
+    //   .map(l => l.yearToDateVariance - l.actual)
+    //   .reduce((prev, curr) => prev + curr);
   }
   save(isSubmit: boolean = false) {
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {

@@ -3,22 +3,28 @@ export interface iExpenseReport {
   expenseReportId?: string;
   // salary benefits program delivery and administration expense
   administrationDescription?: string;
-  administrationValue?: number;
   administrationAnnualBudget?: number;
   administrationQuarterlyBudget?: number;
+  administrationValue?: number;
+  administrationQuarterlyVariance?: number;
   administrationYearToDate?: number;
+  administrationYearToDateVariance?: number;
 
   programDeliveryDescription?: string;
-  programDeliveryValue?: number;
   programDeliveryAnnualBudget?: number;
   programDeliveryQuarterlyBudget?: number;
+  programDeliveryValue?: number;
+  programDeliveryQuarterlyVariance?: number;
   programDeliveryYearToDate?: number;
+  programDeliveryYearToDateVariance?: number;
 
   salariesBenefitsDescription?: string;
-  salariesBenefitsValue?: number;
   salariesBenefitsAnnualBudget?: number;
   salariesBenefitsQuarterlyBudget?: number;
+  salariesBenefitsValue?: number;
+  salariesBenefitsQuarterlyVariance?: number;
   salariesBenefitsYearToDate?: number;
+  salariesBenefitsYearToDateVariance?: number;
 
   programExpenseLineItems: iExpenseReportLineItem[];
 
@@ -35,5 +41,7 @@ export interface iExpenseReportLineItem {
   annualBudget: number;
   quarterlyBudget: number;
   actual: number;
+  quarterlyVariance: number;
   actualYearToDate: number;
+  yearToDateVariance: number;
 }
