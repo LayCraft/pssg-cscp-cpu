@@ -54,10 +54,10 @@
                     <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget|number:'1.0-0')||0}}</td>
                     <td>${{(trans.expenseReport.salariesBenefitsQuarterlyBudget|number:'1.0-0')||0}}</td>
                     <td>
-                      <input [(ngModel)]="trans.expenseReport.salariesBenefitsValue" type="number" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'salariesBenefitsValue')">
+                      <input [(ngModel)]="trans.expenseReport.salariesBenefitsMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'salariesBenefitsValue')">
                     </td>
                     <td>${{(trans.expenseReport.salariesBenefitsQuarterlyVariance)|number:'1.0-0'}}</td>
-                    <td>{{(trans.expenseReport.salariesBenefitsYearToDate)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.salariesBenefitsYearToDate)|number:'1.0-0'}}</td>
                     <td>${{(trans.expenseReport.salariesBenefitsYearToDateVariance)|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
@@ -65,10 +65,10 @@
                     <td>${{(trans.expenseReport.programDeliveryAnnualBudget|number:'1.0-0')||0}}</td>
                     <td>${{(trans.expenseReport.programDeliveryQuarterlyBudget|number:'1.0-0')||0}}</td>
                     <td>
-                      <input [(ngModel)]="trans.expenseReport.programDeliveryValue" type="number" class="form-control" id="programDeliveryValue" name="programDeliveryValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'programDeliveryValue')">
+                      <input [(ngModel)]="trans.expenseReport.programDeliveryMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="programDeliveryValue" name="programDeliveryValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'programDeliveryValue')">
                     </td>
                     <td>${{(trans.expenseReport.programDeliveryQuarterlyVariance)|number:'1.0-0'}}</td>
-                    <td>{{(trans.expenseReport.programDeliveryYearToDate)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.programDeliveryYearToDate)|number:'1.0-0'}}</td>
                     <td>${{(trans.expenseReport.programDeliveryYearToDateVariance)|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
@@ -76,10 +76,10 @@
                     <td>${{(trans.expenseReport.administrationAnnualBudget|number:'1.0-0')||0}}</td>
                     <td>${{(trans.expenseReport.administrationQuarterlyBudget|number:'1.0-0')||0}}</td>
                     <td>
-                      <input [(ngModel)]="trans.expenseReport.administrationValue" type="number" class="form-control" id="administrationValue" name="administrationValue" (input)="formHelper.moneyFormatter($event.target, trans.expenseReport, 'administrationValue')">
+                      <input [(ngModel)]="trans.expenseReport.administrationMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="administrationValue" name="administrationValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'administrationValue')">
                     </td>
                     <td>${{(trans.expenseReport.administrationQuarterlyVariance)|number:'1.0-0'}}</td>
-                    <td>{{(trans.expenseReport.administrationYearToDate)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.administrationYearToDate)|number:'1.0-0'}}</td>
                     <td>${{(trans.expenseReport.administrationYearToDateVariance)|number:'1.0-0'}}</td>
                   </tr>
                 </tbody>
@@ -154,7 +154,7 @@
                     <td>${{item.annualBudget||0 | number}}</td>
                     <td>${{item.quarterlyBudget||0 | number}}</td>
                     <td>
-                      <input [(ngModel)]="item.actual" (input)="formHelper.moneyFormatter($event.target, item, 'actual'); updateLineItemSums()" type="number" class="form-control" [id]="item.itemId" [name]="item.itemId">
+                      <input [(ngModel)]="item.mask" (input)="formHelper.moneyMaskToNumber($event.target, item, 'actual'); updateLineItemSums()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" [id]="item.itemId" [name]="item.itemId">
                     </td>
                     <td>
                       ${{(item.quarterlyVariance)|number:'1.0-0'}}

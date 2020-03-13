@@ -64,6 +64,7 @@ export class PersonnelExpenseTableComponent implements OnInit {
       this.totalBenefitsCost = activeSB.map(rs => rs.benefits).reduce(reducer) || 0;
       activeSB.forEach(s => {
         s.totalCost = s.salary + s.benefits;
+        s.totalCostMask = s.totalCost ? s.totalCost.toString() : "0";
       });
     }
 

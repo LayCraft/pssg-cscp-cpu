@@ -58,7 +58,10 @@ export class RevenueSourceTableComponent implements OnInit {
 
     if (activeRev.length > 0) {
 
-
+      activeRev.forEach(rs => {
+        rs.total = rs.cash + rs.inKindContribution;
+        rs.totalMask = rs.total.toString();
+      });
       // totalCash
       this.totalCash = activeRev.map(rs => rs.cash).reduce(reducer) || 0;
       // totalInKind

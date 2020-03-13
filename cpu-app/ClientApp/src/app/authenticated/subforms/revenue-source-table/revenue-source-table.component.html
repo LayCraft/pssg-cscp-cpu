@@ -22,15 +22,15 @@
           </span>
         </td>
         <td>
-          <input class="form-control" (input)="formHelper.moneyFormatter($event.target, source, 'cash'); calculateTotals()" type="number" [(ngModel)]="source.cash" min="0"
+          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, source, 'cash'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="source.cashMask" min="0"
             id="cash_{{i}}">
         </td>
         <td>
-          <input class="form-control" (input)="formHelper.moneyFormatter($event.target, source, 'inKindContribution'); calculateTotals()" type="number" [(ngModel)]="source.inKindContribution"
+          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, source, 'inKindContribution'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="source.inKindContributionMask"
             min="0" id="kind_{{i}}">
         </td>
         <td>
-          <input class="form-control" type="number" [value]="(source.cash||0) + (source.inKindContribution||0)"
+          <input class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="source.totalMask"
             id="kind_{{i}}" disabled>
         </td>
         <td>

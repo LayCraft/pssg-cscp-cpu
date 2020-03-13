@@ -73,7 +73,7 @@
 
         <div class="col-md-8 inline-col">
           <label class="hours-label" for="scheduledHours">Total Scheduled Hours per {{perType}}</label>
-          <input [(ngModel)]="programApplication.scheduledHours" type="number" id="scheduledHours" name="scheduledHours" class="form-control hours-input" (input)="formHelper.moneyFormatter($event.target, programApplication, 'scheduledHours')">
+          <input [(ngModel)]="programApplication.scheduledHours" type="number" id="scheduledHours" name="scheduledHours" class="form-control hours-input" (input)="formHelper.numberFormatter($event.target, programApplication, 'scheduledHours')">
         </div>
       </div>
 
@@ -94,7 +94,7 @@
         </div>
         <div class="col-md-8 inline-col">
           <label class="hours-label" for="onCallHours">Total On-call/Stand-by Hours per {{perType}}</label>
-          <input [(ngModel)]="programApplication.onCallHours" type="number" id="onCallHours" name="onCallHours" class="form-control hours-input" (input)="formHelper.moneyFormatter($event.target, programApplication, 'onCallHours')">
+          <input [(ngModel)]="programApplication.onCallHours" type="number" id="onCallHours" name="onCallHours" class="form-control hours-input" (input)="formHelper.numberFormatter($event.target, programApplication, 'onCallHours')">
         </div>
       </div>
     </div>

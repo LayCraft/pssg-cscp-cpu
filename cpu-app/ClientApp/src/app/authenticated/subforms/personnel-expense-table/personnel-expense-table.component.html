@@ -15,16 +15,16 @@
         <input class="form-control" type="text" [(ngModel)]="line.title" min="0" id="title_{{i}}">
       </td>
       <td>
-        <input class="form-control" (input)="formHelper.moneyFormatter($event.target, line, 'salary'); calculateTotals()" type="number" [(ngModel)]="line.salary" min="0" id="salary_{{i}}">
+        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'salary'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.salaryMask" min="0" id="salary_{{i}}">
       </td>
       <td>
-        <input class="form-control" (input)="formHelper.moneyFormatter($event.target, line, 'benefits'); calculateTotals()" type="number" [(ngModel)]="line.benefits" min="0" id="benefits_{{i}}">
+        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'benefits'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.benefitsMask" min="0" id="benefits_{{i}}">
       </td>
       <td>
-        <input class="form-control" type="number" [(ngModel)]="line.totalCost" min="0" id="total_cost_{{i}}" disabled>
+        <input class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.totalCostMask" min="0" id="total_cost_{{i}}" disabled>
       </td>
       <td>
-        <input class="form-control" (input)="formHelper.moneyFormatter($event.target, line, 'fundedFromVscp'); calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0" id="vscp_{{i}}">
+        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask" min="0" id="vscp_{{i}}">
       </td>
       <td (click)="removeExpenseItem(i)" class="align-middle">
         <i class="fas fa-times-circle text-danger"></i>
