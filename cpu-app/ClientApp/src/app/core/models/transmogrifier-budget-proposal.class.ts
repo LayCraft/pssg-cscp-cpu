@@ -86,9 +86,13 @@ export class TransmogrifierBudgetProposal {
         return {
           revenueSourceName: revenueSourceType(prs.vsd_cpu_revenuesourcetype) || '',
           cash: prs.vsd_cashcontribution || 0,
+          cashMask: prs.vsd_cashcontribution ? prs.vsd_cashcontribution.toString() : "0",
           inKindContribution: prs.vsd_inkindcontribution || 0,
+          inKindContributionMask: prs.vsd_inkindcontribution ? prs.vsd_inkindcontribution.toString() : "0",
           other: prs.vsd_cpu_otherrevenuesource || '',
           revenueSourceId: prs.vsd_programrevenuesourceid || null,
+          total: prs.vsd_cashcontribution || 0 + prs.vsd_inkindcontribution || 0,
+          totalMask: (prs.vsd_cashcontribution || 0 + prs.vsd_inkindcontribution || 0).toString(),
           isActive: true,
         };
       })
@@ -102,9 +106,13 @@ export class TransmogrifierBudgetProposal {
         return {
           title: e.vsd_cpu_titleposition || '',
           salary: e.vsd_cpu_salary || 0,
+          salaryMask: e.vsd_cpu_salary ? e.vsd_cpu_salary.toString() : "0",
           benefits: e.vsd_cpu_benefits || 0,
+          benefitsMask: e.vsd_cpu_benefits ? e.vsd_cpu_benefits.toString() : "0",
           fundedFromVscp: e.vsd_cpu_fundedfromvscp || 0,
+          fundedFromVscpMask: e.vsd_cpu_fundedfromvscp ? e.vsd_cpu_fundedfromvscp.toString() : "0",
           totalCost: e.vsd_totalcost || 0,
+          totalCostMask: e.vsd_totalcost ? e.vsd_totalcost.toString() : "0",
           uuid: e.vsd_programexpenseid || null,
           isActive: true,
         }
@@ -133,7 +141,9 @@ export class TransmogrifierBudgetProposal {
           itemName: this.dict[pe._vsd_eligibleexpenseitemid_value] || 'Name error!',
           otherExpenseDescription: other ? pe.vsd_cpu_otherexpense : null,
           fundedFromVscp: pe.vsd_cpu_fundedfromvscp || 0,
+          fundedFromVscpMask: pe.vsd_cpu_fundedfromvscp ? pe.vsd_cpu_fundedfromvscp.toString() : "0",
           cost: pe.vsd_totalcost,
+          costMask: pe.vsd_totalcost ? pe.vsd_totalcost.toString() : "0",
           isActive: true,
         }
       });

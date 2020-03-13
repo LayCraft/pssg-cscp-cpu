@@ -50,7 +50,7 @@ import { ProgramContactComponent } from './authenticated/program-contact/program
 import { DownloadDocumentComponent } from './authenticated/download-document/download-document.component';
 import { LoginPageComponent } from './login/login.component';
 import { MessageWriteComponent } from './authenticated/subforms/message-write/message-write.component';
-
+import { NgxMaskModule } from 'ngx-mask'
 
 @NgModule({
   declarations: [
@@ -106,9 +106,9 @@ import { MessageWriteComponent } from './authenticated/subforms/message-write/me
     ReactiveFormsModule,
     RouterModule,
     SharedModule,
-    SignaturePadModule
+    SignaturePadModule,
+    NgxMaskModule.forRoot(),
   ],
-
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
   ],

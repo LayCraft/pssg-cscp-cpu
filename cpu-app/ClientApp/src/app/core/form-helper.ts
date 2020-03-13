@@ -35,7 +35,17 @@ export class FormHelper {
     }
   }
   isFormDirty() {
-    if (document.getElementsByClassName("ng-dirty").length > 0) {
+    //any field that applies an ngx-mask on load is marked dirty, even if it wasn't touched.
+    //so we ignore fields that are dirty but untouched...
+    let dirtyControls = document.querySelectorAll(".ng-dirty");
+    let count = 0;
+    if (dirtyControls.length > 0) {
+      for (let i = 0; i < dirtyControls.length; ++i) {
+        if (dirtyControls[i].classList.contains("ng-untouched")) continue;
+        ++count;
+      }
+    }
+    if (count > 0) {
       return true;
     }
     return false;
@@ -55,9 +65,20 @@ export class FormHelper {
     if (document.getElementsByClassName("ng-invalid").length > 0) {
       return 'invalid';
     }
-    if (document.getElementsByClassName("ng-dirty").length > 0) {
-      return 'incomplete';
+    
+    let dirtyControls = document.querySelectorAll(".ng-dirty");
+    let count = 0;
+    if (dirtyControls.length > 0) {
+      for (let i = 0; i < dirtyControls.length; ++i) {
+        if (dirtyControls[i].classList.contains("ng-untouched")) continue;
+        ++count;
+      }
     }
+    if (count > 0) {
+      return 'incomplete';
+
+    }
+    
     //TODO - check for complete? info? untouched?
     return 'untouched';
   }
@@ -72,28 +93,33 @@ export class FormHelper {
       }
     }
   }
-  moneyFormatter(e: any, context: any, varName) {
-    if (e.value.toString().length > 1 && e.value.toString()[0] === "0") {
-      e.value = parseFloat(e.value.toString().substr(1));
-    }
-    if (e.value < 0 || !e.value) {
-      e.value = 0;
-    }
-    if (e.value > 99999999) {
-      e.value = parseFloat(e.value.toString().substring(0, 8));;
-    }
-    if (this.countDecimals(e.value) > 2) {
-      e.value = parseFloat(e.value).toFixed(2);
-    }
-
+  moneyMaskToNumber(e: any, context: any, varName) {
+    let moneyString = e.value.replace(/[$,]/g, '');
     let variable = this.fetchVarInfo(context, varName);
-    variable.obj[variable.prop] = parseFloat(e.value);
+    variable.obj[variable.prop] = parseFloat(moneyString);
   }
+  // moneyFormatter(e: any, context: any, varName) {
+  //   if (e.value.toString().length > 1 && e.value.toString()[0] === "0") {
+  //     e.value = parseFloat(e.value.toString().substr(1));
+  //   }
+  //   if (e.value < 0 || !e.value) {
+  //     e.value = 0;
+  //   }
+  //   if (e.value > 99999999) {
+  //     e.value = parseFloat(e.value.toString().substring(0, 8));;
+  //   }
+  //   if (this.countDecimals(e.value) > 2) {
+  //     e.value = parseFloat(e.value).toFixed(2);
+  //   }
+
+  //   let variable = this.fetchVarInfo(context, varName);
+  //   variable.obj[variable.prop] = parseFloat(e.value);
+  // }
   numberFormatter(e: any, context: any, varName) {
     if (e.value.toString().length > 1 && e.value.toString()[0] === "0") {
       e.value = parseFloat(e.value.toString().substr(1));
     }
-    if (e.value < 0 || !e.value) {
+    if (e.value < 0) {
       e.value = 0;
     }
     if (e.value > 9999) {

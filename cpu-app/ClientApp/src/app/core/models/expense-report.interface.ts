@@ -6,6 +6,7 @@ export interface iExpenseReport {
   administrationAnnualBudget?: number;
   administrationQuarterlyBudget?: number;
   administrationValue?: number;
+  administrationMask?: string;
   administrationQuarterlyVariance?: number;
   administrationYearToDate?: number;
   administrationYearToDateVariance?: number;
@@ -14,6 +15,7 @@ export interface iExpenseReport {
   programDeliveryAnnualBudget?: number;
   programDeliveryQuarterlyBudget?: number;
   programDeliveryValue?: number;
+  programDeliveryMask?: string;
   programDeliveryQuarterlyVariance?: number;
   programDeliveryYearToDate?: number;
   programDeliveryYearToDateVariance?: number;
@@ -22,6 +24,7 @@ export interface iExpenseReport {
   salariesBenefitsAnnualBudget?: number;
   salariesBenefitsQuarterlyBudget?: number;
   salariesBenefitsValue?: number;
+  salariesBenefitsMask?: string;
   salariesBenefitsQuarterlyVariance?: number;
   salariesBenefitsYearToDate?: number;
   salariesBenefitsYearToDateVariance?: number;
@@ -41,6 +44,7 @@ export interface iExpenseReportLineItem {
   annualBudget: number;
   quarterlyBudget: number;
   actual: number;
+  mask: string;
   quarterlyVariance: number;
   actualYearToDate: number;
   yearToDateVariance: number;

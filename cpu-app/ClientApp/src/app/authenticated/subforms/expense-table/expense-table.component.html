@@ -13,11 +13,11 @@
         {{line.itemName}}
       </td>
       <td>
-        <input class="form-control" (input)="calculateTotals()" type="number" [(ngModel)]="line.cost" min="0"
+        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'cost'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.costMask" min="0"
           id="total_cost_{{line.uuid}}">
       </td>
       <td>
-        <input class="form-control" (input)="formHelper.moneyFormatter($event.target, line, 'fundedFromVscp'); calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp" min="0"
+        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask" min="0"
           id="vscp_{{line.uuid}}">
       </td>
       <td>
@@ -36,11 +36,11 @@
             id="expense_name_{{line.uuid}}">
         </td>
         <td>
-          <input class="form-control" (input)="formHelper.moneyFormatter($event.target, line, 'cost'); calculateTotals()" type="number" [(ngModel)]="line.cost" min="0"
+          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'cost'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.costMask" min="0"
             id="total_cost_{{line.uuid}}">
         </td>
         <td>
-          <input class="form-control" (input)="formHelper.moneyFormatter($event.target, line, 'fundedFromVscp'); calculateTotals()" type="number" [(ngModel)]="line.fundedFromVscp"
+          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask"
             min="0" id="vscp_{{line.uuid}}">
         </td>
         <td (click)="removeExpenseItem(i)" class="align-middle">
