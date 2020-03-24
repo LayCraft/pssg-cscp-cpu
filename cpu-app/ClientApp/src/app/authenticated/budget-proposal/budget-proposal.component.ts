@@ -84,14 +84,14 @@ export class BudgetProposalComponent implements OnInit {
             // if (!pb.programDeliveryOtherExpenses.length) { pb.programDeliveryOtherExpenses.push(new ExpenseItem()); }
             // if (!pb.administrationOtherExpenses.length) { pb.administrationOtherExpenses.push(new ExpenseItem()); }
 
-            console.log("dynamics data:");
-            console.log(d);
-            console.log("trans");
-            console.log(this.trans);
-
             this.contractNumber = this.mainTrans.contracts.find(c => c.contractId === d.Contract.vsd_contractid).contractNumber;
             return pb;
-          })
+          });
+
+          console.log("dynamics data:");
+          console.log(d);
+          console.log("trans");
+          console.log(this.trans);
           this.constructDefaultstepperElements();
         }
       });
@@ -148,6 +148,7 @@ export class BudgetProposalComponent implements OnInit {
         this.stepperElements.forEach(s => {
           this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
         });
+        this.reloadBudgetProposal();
         this.formHelper.makeFormClean();
       },
       err => {
@@ -169,6 +170,45 @@ export class BudgetProposalComponent implements OnInit {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
+  reloadBudgetProposal() {
+    this.route.params.subscribe(p => {
+      // collect the current user information from the state.
+      const userId: string = this.stateService.main.getValue().userId;
+      const organizationId: string = this.stateService.main.getValue().organizationId;
+
+      // get the budget proposal from the budget proposal service.
+      this.budgetProposalService.getBudgetProposal(organizationId, userId, p['taskId']).subscribe(d => {
+        if (!d.IsSuccess) {
+          this.data = d;
+          // notify the user of a system error
+          this.notificationQueueService.addNotification('An attempt at getting this budget proposal form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
+          console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the budget proposal API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+
+          // route back to the dashboard
+          this.router.navigate(['/authenticated/dashboard']);
+        } else {
+          this.data = d;
+          let tempTrans = new TransmogrifierBudgetProposal(d);
+          tempTrans.programBudgets = tempTrans.programBudgets.map((pb: iProgramBudget): iProgramBudget => {
+
+            return pb;
+          });
+
+          console.log("updated bp");
+          console.log(tempTrans);
+
+          for (let i = 0; i < this.trans.programBudgets.length; ++i) {
+            Object.assign(this.trans.programBudgets[i], tempTrans.programBudgets[i]);
+          }
+
+          console.log("trans..");
+          console.log(this.trans);
+        }
+      });
+    });
+
+  }
+
   // setNextStepper() {
   //   if (!this.formHelper.isFormValid(this.notificationQueueService)) {
   //     this.currentStepperElement.formState = this.formHelper.getFormState();

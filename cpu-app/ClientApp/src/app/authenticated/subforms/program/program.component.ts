@@ -53,7 +53,8 @@ export class ProgramComponent implements OnInit {
     this.onInput();
     this.personsObj.persons = this.programApplication.additionalStaff;
     this.personsObj.removedPersons = this.programApplication.removedStaff;
-    this.perType =  perTypeDict[this.programApplication.perType];
+    this.perType = perTypeDict[this.programApplication.perType];
+    console.log(this.programApplication.policeContact);
   }
 
   // form helpers. Validity hints and hide/show toggles
@@ -88,7 +89,7 @@ export class ProgramComponent implements OnInit {
       this.programApplication.standbyHours[i].isActive = false;
     }
     else {
-    this.programApplication.standbyHours = this.programApplication.standbyHours.filter((hours: iHours, j: number) => i !== j);
+      this.programApplication.standbyHours = this.programApplication.standbyHours.filter((hours: iHours, j: number) => i !== j);
     }
   }
 

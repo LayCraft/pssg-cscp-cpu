@@ -102,6 +102,23 @@ input[type="number"] {
   border-color: #dee2e6 #dee2e6 #fff !important;
 }
 
+.nav-home {
+  cursor: pointer;
+}
+
+.nav-home:hover {
+  text-decoration: underline !important;
+}
+
+.nav-login:hover {
+  text-decoration: underline !important;
+  color: lightgrey !important;
+}
+
+.nav-login {
+  text-decoration: none !important;
+}
+
 ::placeholder {
   opacity: 0.6 !important;
 }

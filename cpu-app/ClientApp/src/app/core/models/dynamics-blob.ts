@@ -84,6 +84,8 @@ export interface iDynamicsMinistryUser {
 }
 export interface iDynamicsCrmProgram {
   _vsd_contactlookup_value?: string;
+  _vsd_contactlookup2_value?: string;
+  _vsd_contactlookup3_value?: string;
   _vsd_contractid_value?: string;
   _vsd_cpu_regiondistrict_value?: string;
   _vsd_cpu_regiondistrictlookup2_value?: string;
@@ -114,6 +116,11 @@ export interface iDynamicsCrmProgram {
   vsd_provincestate?: string;
   vsd_totaloncallstandbyhours?: number;
   vsd_totalscheduledhours?: number;
+}
+export interface iDynamicsCrmProgramType {
+  vsd_programtypeid?: string;
+  vsd_name?: string;
+  vsd_programcategory?: number;
 }
 export interface iDynamicsCrmTask {
   _regardingobjectid_value?: string;
@@ -244,6 +251,7 @@ export interface iDynamicsScheduleFResponse {
   RegionDistrictCollection?: iDynamicsRegionDistrict[];
   ProgramContactCollection?: iDynamicsCrmContact[];
   ProgramCollection?: iDynamicsCrmProgram[];
+  ProgramTypeCollection?: iDynamicsCrmProgramType[];
   Organization?: iDynamicsOrganization;
   IsSuccess?: boolean;
   ExecutiveContact?: iDynamicsCrmContact;

@@ -20,7 +20,7 @@
       </span>
       <span class="navbar-text" *ngIf="!loggedIn">
         <span *ngIf="!loading">
-          <a href="javascript:void(0)" (click)="login()">Log In</a>
+          <a href="javascript:void(0)" (click)="login()" class="nav-login">Log In</a>
         </span>
         <span *ngIf="loading">
           <a href="javascript:void(0)">

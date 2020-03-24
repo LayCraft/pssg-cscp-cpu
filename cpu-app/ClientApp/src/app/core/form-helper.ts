@@ -5,12 +5,13 @@ import { EMAIL, PHONE_NUMBER } from '../core/constants/regex.constants';
 // form helpers. Validity hints and hide/show toggles
 export class FormHelper {
   showValidFeedback(control: AbstractControl): boolean {
+    if(control.untouched) return true;
     return !(control.value && control.valid && this.isDirtyOrTouched(control));
   }
-  showInvalidFeedback(control: AbstractControl): boolean {
+  showInvalidFeedbackOld(control: AbstractControl): boolean {
     return !(control.value && control.invalid && this.isDirtyOrTouched(control));
   }
-  showInvalidFeedbackTest(value: any, pattern: RegExp, control: AbstractControl) {
+  showInvalidFeedback(value: any, pattern: RegExp, control: AbstractControl) {
     return (!value || pattern.test(value));
   }
   isRequired(control: AbstractControl, required: boolean) {
@@ -65,7 +66,7 @@ export class FormHelper {
     if (document.getElementsByClassName("ng-invalid").length > 0) {
       return 'invalid';
     }
-    
+
     let dirtyControls = document.querySelectorAll(".ng-dirty");
     let count = 0;
     if (dirtyControls.length > 0) {
@@ -78,7 +79,7 @@ export class FormHelper {
       return 'incomplete';
 
     }
-    
+
     //TODO - check for complete? info? untouched?
     return 'untouched';
   }
