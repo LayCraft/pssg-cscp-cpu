@@ -231,15 +231,17 @@ export class ProgramApplicationComponent implements OnInit {
       return;
     }
 
-    setTimeout(() => {
-      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'saving');
-    }, 0);
+    if (!this.trans.signature.signatureDate) {
+      setTimeout(() => {
+        this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'saving');
+      }, 0);
 
-    this.save(false).then(() => {
-      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'complete');
-    }).catch(() => {
-      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');
-    });
+      this.save(false).then(() => {
+        this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'complete');
+      }).catch(() => {
+        this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');
+      });
+    }
     ++this.stepperIndex;
     this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
   }
