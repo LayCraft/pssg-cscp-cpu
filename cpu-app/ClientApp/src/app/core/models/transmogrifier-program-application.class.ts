@@ -13,6 +13,7 @@ import { ngDevModeResetPerfCounters } from '@angular/core/src/render3/ng_dev_mod
 import { boolOptionSet } from '../constants/bool-optionset-values';
 import { perTypeDict } from '../constants/per-type';
 import { Person } from './person.class';
+import { employmentStatusTypeDict } from '../constants/employment-status-types';
 
 export class TransmogrifierProgramApplication {
   accountId: string;// this is the dynamics account
@@ -269,6 +270,7 @@ export class TransmogrifierProgramApplication {
           phone: p.mobilephone || null,
           title: p.jobtitle || null,
           userId: p.vsd_bceid || null,
+          employmentStatus: employmentStatusTypeDict[p.vsd_employmentstatus] || null,
           address: {
             line1: p.address1_line1 || null,
             line2: p.address1_line2 || null,

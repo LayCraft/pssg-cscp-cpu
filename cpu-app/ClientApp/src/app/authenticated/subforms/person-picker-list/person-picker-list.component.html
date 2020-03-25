@@ -1,7 +1,7 @@
 <ul *ngIf="persons" class="list-group mb-2">
   <!-- Only show the entry if they are in the list -->
   <li *ngFor="let person of persons" class="list-group-item d-flex justify-content-between align-items-center">
-    {{nameAssemble(person.firstName,person.middleName,person.lastName)}} {{person.title?' - '+person.title:''}}
+    {{nameAssemble(person.firstName,person.middleName,person.lastName)}} {{person.title?' - '+person.title:''}} {{person.employmentStatus?' - '+person.employmentStatus:''}}
     <span (click)="removePerson(person.personId)">
       <i class="fas fa-times-circle text-danger"></i>
     </span>
@@ -12,13 +12,12 @@
 </div> -->
 <div *ngIf="trans.persons" class="form-group">
   <label for="personPicker">{{label}}</label>
-  <select class="form-control" name="personPicker" id="personPicker" (change)="addPerson(selectedPerson)"
-    [(ngModel)]="selectedPerson">
+  <select class="form-control" name="personPicker" id="personPicker" (change)="addPerson(selectedPerson)" [(ngModel)]="selectedPerson">
     <option [value]="null">--</option>
     <option *ngFor="let person of trans.persons" [value]="person.personId">
       <!-- The person comes with a title if they have one 
       (click)="addPerson(person.personId)"-->
-      {{nameAssemble(person.firstName,person.middleName,person.lastName)}} {{person.title?' - '+person.title:''}}
+      {{nameAssemble(person.firstName,person.middleName,person.lastName)}} {{person.title?' - '+person.title:''}} {{person.employmentStatus?' - '+person.employmentStatus:''}}
     </option>
   </select>
 </div>

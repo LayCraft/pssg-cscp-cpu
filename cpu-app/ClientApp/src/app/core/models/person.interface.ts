@@ -15,4 +15,5 @@ export interface iPerson {
   phone?: string;
   title?: string;
   userId?: string;
+  employmentStatus?: string;
 }

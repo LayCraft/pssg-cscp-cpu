@@ -12,6 +12,7 @@ import { contractCode } from '../constants/contract-code';
 import { decodeTaskType } from '../constants/decode-task-type';
 import { nameAssemble } from '../constants/name-assemble';
 import * as _ from 'lodash';
+import { employmentStatusTypeDict } from '../constants/employment-status-types';
 
 export class Transmogrifier {
   // collections of viewmodels
@@ -279,6 +280,7 @@ export class Transmogrifier {
         userId: p.vsd_bceid || null,
         phone: p.mobilephone || null,
         title: p.jobtitle || null,
+        employmentStatus: employmentStatusTypeDict[p.vsd_employmentstatus] || null,
         // if this person has the right value it is me.
         me: p.vsd_bceid ? true : false,
         // if the state code is zero or null the user is active
