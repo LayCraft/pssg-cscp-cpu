@@ -56,6 +56,7 @@ export interface iDynamicsCrmContact {
   vsd_bceid?: string;
   vsd_contact_vsd_programid?: string; // added when contact is listed in a program. Which program id are they under
   vsd_programid?: string; // added when contact is listed in a program
+  vsd_employmentstatus?: number;
 }
 export interface iDynamicsCrmContract {
   _vsd_contactlookup1_value?: string;
