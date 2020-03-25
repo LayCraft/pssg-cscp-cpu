@@ -36,7 +36,7 @@
           </div>
         </span>
         <span *ngIf="me">
-          <input type="text" class="form-control" id="firstName" name="firstName" [value]="person.firstName" disabled>
+          <input type="text" class="form-control" id="lastName" name="lastName" [value]="person.lastName" disabled>
         </span>
       </div>
     </div>
@@ -89,16 +89,15 @@
       </div>
     </div>
   </div>
-  <app-address2 [(address)]="person.address"></app-address2>
+  <!-- <app-address2 [(address)]="person.address"></app-address2> -->
 
-  <!-- <div class="form-check">
-    <input [(ngModel)]="person.addressSameAsAgency" class="form-check-input" type="checkbox"
-      id="agencyAddressCheckbox">
+  <div class="form-check">
+    <input [(ngModel)]="person.addressSameAsAgency" class="form-check-input" type="checkbox" id="agencyAddressCheckbox" (click)="setAddressSameAsAgency()">
     <label class="form-check-label" for="agencyAddressCheckbox">
       Same as primary address of Agency.
     </label>
   </div>
-  <span *ngIf="person.addressSameAsAgency">
-    <app-address2 [(address)]="person.address"></app-address2>
-  </span> -->
+  <!-- <span *ngIf="person.addressSameAsAgency"> -->
+  <app-address2 [(address)]="person.address"></app-address2>
+  <!-- </span> -->
 </div>

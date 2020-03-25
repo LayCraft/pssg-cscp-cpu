@@ -57,8 +57,24 @@ input[type="number"] {
   pointer-events: none;
 }
 
+.is-required::before {
+  color: red;
+  content: " *";
+}
+
+.add-row-td {
+  width: 34px;
+}
+
 .add-row-button {
-  width: 40px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.remove-row-button {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
 
 .long-header-name {

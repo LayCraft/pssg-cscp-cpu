@@ -2,6 +2,7 @@ import { iAddress } from "./address.interface";
 
 export interface iPerson {
   address?: iAddress;
+  addressSameAsAgency?: boolean;
   deactivated?: boolean; // if true this deactivates
   email: string;
   fax?: string;

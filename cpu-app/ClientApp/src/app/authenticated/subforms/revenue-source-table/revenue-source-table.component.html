@@ -31,10 +31,10 @@
         </td>
         <td>
           <input class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="source.totalMask"
-            id="kind_{{i}}" disabled>
+            id="total_{{i}}" disabled>
         </td>
         <td>
-          <div (click)="removeRevenueSource(i)" class="align-middle"
+          <div (click)="removeRevenueSource(i)" class="align-middle remove-row-button"
             *ngIf="source.revenueSourceName===revenueSourceTypes[4]">
             <i class="fas fa-times-circle text-danger"></i>
           </div>
@@ -46,8 +46,8 @@
       <th>${{totalCash | number}}</th>
       <th>${{totalInKind | number}}</th>
       <th>${{totalGrand | number}}</th>
-      <td (click)="addRevenueSource()" class="align-middle">
-        <div class="form-group">
+      <td class="align-middle add-row-td">
+        <div (click)="addRevenueSource()" class="form-group add-row-button">
           <i class="fas fa-plus-circle text-success"></i>
         </div>
       </td>

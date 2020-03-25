@@ -5,7 +5,7 @@ import { EMAIL, PHONE_NUMBER } from '../core/constants/regex.constants';
 // form helpers. Validity hints and hide/show toggles
 export class FormHelper {
   showValidFeedback(control: AbstractControl): boolean {
-    if(control.untouched) return true;
+    if (control.untouched) return true;
     return !(control.value && control.valid && this.isDirtyOrTouched(control));
   }
   showInvalidFeedbackOld(control: AbstractControl): boolean {
@@ -34,6 +34,29 @@ export class FormHelper {
     } else {
       return null;
     }
+  }
+  showWarningBeforeExit() {
+    let dirtyControls = document.querySelectorAll(".ng-dirty");
+    let count = 0;
+    if (dirtyControls.length > 0) {
+      for (let i = 0; i < dirtyControls.length; ++i) {
+        if (dirtyControls[i].classList.contains("ng-untouched")) continue;
+        ++count;
+      }
+    }
+    if (count > 0) {
+      return true;
+    }
+
+    let incompleteTabs = document.querySelectorAll(".tab-incomplete");
+    if (incompleteTabs.length > 0) {
+      return true;
+    }
+    let invalidTabs = document.querySelectorAll(".tab-invalid");
+    if (invalidTabs.length > 0) {
+      return true;
+    }
+    return false;
   }
   isFormDirty() {
     //any field that applies an ngx-mask on load is marked dirty, even if it wasn't touched.
@@ -99,23 +122,10 @@ export class FormHelper {
     let variable = this.fetchVarInfo(context, varName);
     variable.obj[variable.prop] = parseFloat(moneyString);
   }
-  // moneyFormatter(e: any, context: any, varName) {
-  //   if (e.value.toString().length > 1 && e.value.toString()[0] === "0") {
-  //     e.value = parseFloat(e.value.toString().substr(1));
-  //   }
-  //   if (e.value < 0 || !e.value) {
-  //     e.value = 0;
-  //   }
-  //   if (e.value > 99999999) {
-  //     e.value = parseFloat(e.value.toString().substring(0, 8));;
-  //   }
-  //   if (this.countDecimals(e.value) > 2) {
-  //     e.value = parseFloat(e.value).toFixed(2);
-  //   }
-
-  //   let variable = this.fetchVarInfo(context, varName);
-  //   variable.obj[variable.prop] = parseFloat(e.value);
-  // }
+  maskToNumber(e: any, context: any, varName) {
+    let variable = this.fetchVarInfo(context, varName);
+    variable.obj[variable.prop] = parseFloat(e.value);
+  }
   numberFormatter(e: any, context: any, varName) {
     if (e.value.toString().length > 1 && e.value.toString()[0] === "0") {
       e.value = parseFloat(e.value.toString().substr(1));

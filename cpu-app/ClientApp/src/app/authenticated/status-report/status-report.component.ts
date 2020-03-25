@@ -9,6 +9,7 @@ import { iDynamicsPostStatusReport } from '../../core/models/dynamics-post';
 import { iQuestionCollection } from '../../core/models/question-collection.interface';
 import { StateService } from '../../core/services/state.service';
 import { FormHelper } from '../../core/form-helper';
+import { iQuestion } from '../../core/models/status-report-question.interface';
 
 @Component({
   selector: 'app-status-report',
@@ -97,9 +98,25 @@ export class StatusReportComponent implements OnInit {
       alert('Please select a month before submitting.');
       return;
     }
-    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+    let isValid = true;
+    this.trans.statusReportQuestions.forEach((srq: iQuestionCollection) => {
+      // for each question assemble shared elements
+      srq.questions.forEach((q: iQuestion) => {
+        // depending on types we add another property
+        if (q.type === 'number' && q.number === null) {
+          isValid = false;
+        }
+        if (q.type === 'boolean' && q.boolean === null) {
+          isValid = false;
+        }
+      });
+    });
+
+    if (!isValid) {
+      this.notificationQueueService.addNotification(`Please answer all required questions.`, 'warning');
       return;
     }
+
     if (confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
       // Convert the form to a postable format
       this.saving = true;
@@ -111,8 +128,6 @@ export class StatusReportComponent implements OnInit {
         this.saving = false;
         return;
       }
-
-      console.log(statusReport);
 
       // submit the answers
       this.statusReportService.setStatusReportAnswers(this.trans.programId, statusReport)

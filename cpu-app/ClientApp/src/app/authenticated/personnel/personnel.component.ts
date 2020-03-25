@@ -160,4 +160,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     // loop back to shove the new form into the service
     this.stepperService.setStepperElement(element);
   }
+  setAddressSameAsAgency(person: iPerson) {
+    person.address = this.trans.contactInformation.mainAddress;
+  }
 }

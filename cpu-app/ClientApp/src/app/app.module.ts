@@ -51,7 +51,6 @@ import { DownloadDocumentComponent } from './authenticated/download-document/dow
 import { LoginPageComponent } from './login/login.component';
 import { MessageWriteComponent } from './authenticated/subforms/message-write/message-write.component';
 import { NgxMaskModule } from 'ngx-mask'
-import { PoliceContactComponent } from './authenticated/subforms/police-contact/police-contact.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +80,6 @@ import { PoliceContactComponent } from './authenticated/subforms/police-contact/
     PersonTableComponent,
     PersonnelComponent,
     PersonnelExpenseTableComponent,
-    PoliceContactComponent,
     PrimaryContactInfoComponent,
     ProfileComponent,
     ProgramApplicationComponent,

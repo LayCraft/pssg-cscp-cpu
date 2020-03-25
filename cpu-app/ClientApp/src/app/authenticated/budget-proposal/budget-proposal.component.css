@@ -1,3 +1,12 @@
 .organization-box {
   margin-bottom: 10px;
 }
+
+.previous-button {
+  margin-right: 10px;
+}
+
+.submit-button {
+  right: 0;
+  position: absolute;
+}

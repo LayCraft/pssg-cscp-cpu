@@ -11,25 +11,27 @@
   <tbody>
     <tr *ngFor="let line of salariesAndBenefits; let i=index">
       <ng-container *ngIf="line.isActive">
-      <td>
-        <input class="form-control" type="text" [(ngModel)]="line.title" min="0" id="title_{{i}}">
-      </td>
-      <td>
-        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'salary'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.salaryMask" min="0" id="salary_{{i}}">
-      </td>
-      <td>
-        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'benefits'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.benefitsMask" min="0" id="benefits_{{i}}">
-      </td>
-      <td>
-        <input class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.totalCostMask" min="0" id="total_cost_{{i}}" disabled>
-      </td>
-      <td>
-        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask" min="0" id="vscp_{{i}}">
-      </td>
-      <td (click)="removeExpenseItem(i)" class="align-middle">
-        <i class="fas fa-times-circle text-danger"></i>
-      </td>
-    </ng-container>
+        <td>
+          <input class="form-control" type="text" [(ngModel)]="line.title" min="0" id="title_{{i}}">
+        </td>
+        <td>
+          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'salary'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.salaryMask" min="0" id="salary_{{i}}">
+        </td>
+        <td>
+          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'benefits'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.benefitsMask" min="0" id="benefits_{{i}}">
+        </td>
+        <td>
+          <input class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.totalCostMask" min="0" id="total_cost_{{i}}" disabled>
+        </td>
+        <td>
+          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask" min="0" id="vscp_{{i}}">
+        </td>
+        <td class="align-middle">
+          <div (click)="removeExpenseItem(i)" class="remove-row-button">
+            <i class="fas fa-times-circle text-danger"></i>
+          </div>
+        </td>
+      </ng-container>
     </tr>
     <tr>
       <th scope="col">Total</th>
@@ -37,8 +39,10 @@
       <td>${{totalBenefitsCost | number}}</td>
       <td>${{totalTotalCost | number}}</td>
       <td>${{totalVscp | number}}</td>
-      <td (click)="addExpenseItem()" class="align-middle add-row-button">
-        <i class="fas fa-plus-circle text-success"></i>
+      <td class="align-middle add-row-td">
+        <div (click)="addExpenseItem()" class="add-row-button">
+          <i class="fas fa-plus-circle text-success"></i>
+        </div>
       </td>
     </tr>
   </tbody>

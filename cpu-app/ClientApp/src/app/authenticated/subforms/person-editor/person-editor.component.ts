@@ -11,6 +11,7 @@ import { EMAIL, PHONE_NUMBER, LETTERS_SPACES } from '../../../core/constants/reg
 export class PersonEditorComponent implements OnInit {
   @Input() person: iPerson;
   @Output() personChange = new EventEmitter<iPerson>();
+  @Output() setAddress = new EventEmitter<iPerson>();
 
   // helpers for setting form state
   public formHelper = new FormHelper();
@@ -30,5 +31,12 @@ export class PersonEditorComponent implements OnInit {
   onChanges() {
     // whenever the form changes this element emits
     this.personChange.emit(this.person);
+  }
+
+  setAddressSameAsAgency() {
+    //currently false, is being set to true, but this fires first...
+    if (!this.person.addressSameAsAgency) {
+      this.setAddress.emit(this.person);
+    }
   }
 }

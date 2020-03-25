@@ -11,6 +11,7 @@ import { iContactInformation } from './contact-information.interface';
 import { contractCode } from '../constants/contract-code';
 import { decodeTaskType } from '../constants/decode-task-type';
 import { nameAssemble } from '../constants/name-assemble';
+import * as _ from 'lodash';
 
 export class Transmogrifier {
   // collections of viewmodels
@@ -267,6 +268,7 @@ export class Transmogrifier {
           line2: p.address1_line2 || null,
           postalCode: p.address1_postalcode || null,
           province: p.address1_stateorprovince || null,
+          country: this.contactInformation.mainAddress.country || null,
         },
         email: p.emailaddress1 || null,
         fax: p.fax || null,
@@ -281,6 +283,12 @@ export class Transmogrifier {
         me: p.vsd_bceid ? true : false,
         // if the state code is zero or null the user is active
         deactivated: !p.statecode || p.statecode === 0 ? false : true || null,
+      }
+      console.log(person.address);
+      console.log(this.contactInformation.mainAddress);
+      console.log(_.isEqual(person.address, this.contactInformation.mainAddress))
+      if (_.isEqual(person.address, this.contactInformation.mainAddress)) {
+        person.addressSameAsAgency = true;
       }
       personList.push(person);
     }
