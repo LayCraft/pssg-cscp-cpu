@@ -24,6 +24,7 @@ export class ProgramComponent implements OnInit {
   currentTab: string;
   differentProgramContact: boolean = false;
   persons: iPerson[] = [];
+  trans: Transmogrifier;
   programContactInformation: iContactInformation;
   tabs: string[];
   // helpers for setting form state
@@ -48,12 +49,14 @@ export class ProgramComponent implements OnInit {
 
   ngOnInit() {
     this.stateService.main.subscribe((m: Transmogrifier) => {
+      this.trans = m;
       this.persons = m.persons;
     });
     this.onInput();
     this.personsObj.persons = this.programApplication.additionalStaff;
     this.personsObj.removedPersons = this.programApplication.removedStaff;
-    this.perType =  perTypeDict[this.programApplication.perType];
+    this.perType = perTypeDict[this.programApplication.perType];
+    console.log(this.programApplication.policeContact);
   }
 
   // form helpers. Validity hints and hide/show toggles
@@ -88,7 +91,7 @@ export class ProgramComponent implements OnInit {
       this.programApplication.standbyHours[i].isActive = false;
     }
     else {
-    this.programApplication.standbyHours = this.programApplication.standbyHours.filter((hours: iHours, j: number) => i !== j);
+      this.programApplication.standbyHours = this.programApplication.standbyHours.filter((hours: iHours, j: number) => i !== j);
     }
   }
 
@@ -111,5 +114,8 @@ export class ProgramComponent implements OnInit {
   }
   setCurrentTab(tab) {
     this.currentTab = tab;
+  }
+  setAddressSameAsAgency(person: iPerson) {
+    person.address = this.trans.contactInformation.mainAddress;
   }
 }

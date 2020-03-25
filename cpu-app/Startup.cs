@@ -96,7 +96,6 @@ namespace Gov.Cscp.Victims.Public
             })
             .AddSiteminderAuth(options => { });
 
-            // setup authorization
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Business-User", policy =>

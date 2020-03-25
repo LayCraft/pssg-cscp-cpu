@@ -2,6 +2,7 @@ export interface iQuestion {
   // whatever value we care about
   boolean?: boolean;
   number?: number;
+  numberMask?: string;
   string?: string;
 
   // Human readable name

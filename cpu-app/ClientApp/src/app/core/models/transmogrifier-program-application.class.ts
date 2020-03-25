@@ -12,6 +12,7 @@ import { makeViewTimeString } from './converters/hours-to-dynamics';
 import { ngDevModeResetPerfCounters } from '@angular/core/src/render3/ng_dev_mode';
 import { boolOptionSet } from '../constants/bool-optionset-values';
 import { perTypeDict } from '../constants/per-type';
+import { Person } from './person.class';
 
 export class TransmogrifierProgramApplication {
   accountId: string;// this is the dynamics account
@@ -184,6 +185,15 @@ export class TransmogrifierProgramApplication {
         programContact: g.StaffCollection
           .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
           .map(s => this.makePerson(g, s.contactid))[0] || null,
+
+        policeContact: g.StaffCollection
+        .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup2_value === c.contactid)
+        .map(s => this.makePerson(g, s.contactid))[0] || null,
+
+        sharedCostContact: g.StaffCollection
+        .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup3_value === c.contactid)
+        .map(s => this.makePerson(g, s.contactid))[0] || null,
+
         // revenueSources: [],//iRevenueSource[];
         additionalStaff: g.ProgramContactCollection
           .filter((c: iDynamicsCrmContact) => c.vsd_programid === p.vsd_programid)
@@ -197,7 +207,14 @@ export class TransmogrifierProgramApplication {
         removedStaff: []
       } as iProgramApplication;
 
+      let programType = g.ProgramTypeCollection.find(pt => pt.vsd_programtypeid ===  p._vsd_programtype_value);
+      temp.isPoliceBased = programType ? programType.vsd_programcategory === 100000000 : false;
       temp.programLocation = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid).map(a => a.vsd_name)[0] || 'Unknown';
+      temp.hasPoliceContact = temp.policeContact ? true : false;
+      temp.hasSharedCostContact = temp.sharedCostContact ? true : false;
+
+      if (!temp.policeContact) temp.policeContact = new Person();
+      if (!temp.hasSharedCostContact) temp.sharedCostContact = new Person();
 
       // const programLocations = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid);
       // if (programLocations.length) {

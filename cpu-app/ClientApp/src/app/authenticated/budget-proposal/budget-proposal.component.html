@@ -23,8 +23,7 @@
           <button class="btn btn-primary mt-2 mr-2" disabled>Saving</button>
         </span> -->
         <span>
-          <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2"
-            [class.is-disabled]="saving || trans.signature.signatureDate" (click)="save()">Save</button>
+          <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" [class.is-disabled]="saving || trans.signature.signatureDate" (click)="save()">Save</button>
         </span>
         <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
       </section>
@@ -76,8 +75,9 @@
     <div class="col-md-4">
     </div>
     <div class="col-md-8">
-      <span><button *ngIf="stepperIndex == stepperElements.length -1" class="btn btn-primary mt-2 submit-button"
-          [class.is-disabled]="!trans.signature.signatureDate" (click)="save(true)">Submit</button></span>
+      <span><button *ngIf="stepperIndex > 0" class="btn btn-primary mt-2 previous-button" (click)="setPreviousStepper()">Previous</button></span>
+      <span><button *ngIf="stepperIndex < stepperElements.length - 1" class="btn btn-primary mt-2 next-button" (click)="setNextStepper()">Next</button></span>
+      <span><button *ngIf="stepperIndex == stepperElements.length -1" class="btn btn-primary mt-2 submit-button" [class.is-disabled]="!trans.signature.signatureDate" (click)="save(true)">Submit</button></span>
     </div>
   </div>
 </div>

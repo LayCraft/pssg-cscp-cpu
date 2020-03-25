@@ -191,7 +191,7 @@ export class ProgramApplicationComponent implements OnInit {
     });
   }
   exit() {
-    if (this.formHelper.isFormDirty()) {
+    if (this.formHelper.showWarningBeforeExit()) {
       if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
         this.stateService.refresh();
         this.router.navigate(['/authenticated/dashboard']);

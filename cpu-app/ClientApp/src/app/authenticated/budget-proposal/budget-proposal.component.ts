@@ -12,6 +12,9 @@ import { iProgramBudget } from '../../core/models/program-budget.interface';
 import { iDynamicsPostBudgetProposal } from '../../core/models/dynamics-post';
 import { FormHelper } from '../../core/form-helper';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
+import * as _ from 'lodash';
+import { RevenueSource } from '../../core/models/revenue-source.class';
+import { revenueSourceTypes } from '../../core/constants/revenue-source-type';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -84,14 +87,14 @@ export class BudgetProposalComponent implements OnInit {
             // if (!pb.programDeliveryOtherExpenses.length) { pb.programDeliveryOtherExpenses.push(new ExpenseItem()); }
             // if (!pb.administrationOtherExpenses.length) { pb.administrationOtherExpenses.push(new ExpenseItem()); }
 
-            console.log("dynamics data:");
-            console.log(d);
-            console.log("trans");
-            console.log(this.trans);
-
             this.contractNumber = this.mainTrans.contracts.find(c => c.contractId === d.Contract.vsd_contractid).contractNumber;
             return pb;
-          })
+          });
+
+          console.log("dynamics data:");
+          console.log(d);
+          console.log("trans");
+          console.log(this.trans);
           this.constructDefaultstepperElements();
         }
       });
@@ -99,10 +102,13 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     this.stepperService.currentStepperElement.subscribe(e => {
       if (this.currentStepperElement) {
+        let originalStepper = _.cloneDeep(this.currentStepperElement);
         let formState = this.formHelper.getFormState();
 
-        //in this case there has been a previous update on this tab, and we've come back to that tab and left again. So we don't want to wipe away the incomplete status
-        if (this.currentStepperElement.formState !== "incomplete" || formState != "untouched") {
+        if (originalStepper.formState === "complete" && formState === "untouched") {
+          //do nothing...
+        }
+        else if (originalStepper.formState !== "incomplete" || formState !== "untouched") {
           this.currentStepperElement.formState = formState;
         }
       }
@@ -132,33 +138,73 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.setToFirstStepperElement();
   }
   save(isSubmit: boolean = false) {
-    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-      return;
-    }
-    this.saving = true;
-    console.log(this.trans);
-    this.out = convertBudgetProposalToDynamics(this.trans);
-    this.budgetProposalService.setBudgetProposal(this.out).subscribe(
-      r => {
-        console.log(r);
-        this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
-        this.stateService.refresh();
-        if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
-        this.saving = false;
-        this.stepperElements.forEach(s => {
-          this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
-        });
-        this.formHelper.makeFormClean();
-      },
-      err => {
-        console.log(err);
-        this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-        this.saving = false;
+    return new Promise((resolve, reject) => {
+      if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+        resolve();
+        return;
       }
-    );
+      if (isSubmit) {
+        let isValid = true;
+        this.trans.programBudgets.forEach(pb => {
+          let totalGrand = 0;
+          pb.revenueSources.map(rs => {
+            totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
+          });
+
+          let totalFundedFromVSCP = 0;
+          pb.salariesAndBenefits.map(sb => {
+            totalFundedFromVSCP += sb.fundedFromVscp || 0;
+          });
+          pb.programDeliveryCosts.map(pd => {
+            totalFundedFromVSCP += pd.fundedFromVscp || 0;
+          });
+          pb.administrationCosts.map(ac => {
+            totalFundedFromVSCP += ac.fundedFromVscp || 0;
+          });
+
+          if (totalGrand !== totalFundedFromVSCP) {
+            let stepperWithError = this.stepperElements.find(s => s.itemName === pb.name);
+            if (stepperWithError) {
+              this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
+            }
+            isValid = false;
+          }
+        });
+
+        if (!isValid) {
+          //Should probably flag which program had the error...
+          this.notificationQueueService.addNotification(`Total revenue must be equal to the total funded from VSCP.`, 'warning');
+          return;
+        }
+      }
+      this.saving = true;
+      console.log(this.trans);
+      this.out = convertBudgetProposalToDynamics(this.trans);
+      this.budgetProposalService.setBudgetProposal(this.out).subscribe(
+        r => {
+          console.log(r);
+          this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
+          this.stateService.refresh();
+          if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
+          this.saving = false;
+          this.stepperElements.forEach(s => {
+            this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+          });
+          this.reloadBudgetProposal();
+          this.formHelper.makeFormClean();
+          resolve();
+        },
+        err => {
+          console.log(err);
+          this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+          this.saving = false;
+          reject();
+        }
+      );
+    });
   }
   exit() {
-    if (this.formHelper.isFormDirty()) {
+    if (this.formHelper.showWarningBeforeExit()) {
       if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
         this.stateService.refresh();
         this.router.navigate(['/authenticated/dashboard']);
@@ -169,17 +215,70 @@ export class BudgetProposalComponent implements OnInit {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
-  // setNextStepper() {
-  //   if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-  //     this.currentStepperElement.formState = this.formHelper.getFormState();
-  //     return;
-  //   }
-  //   this.save(false);
-  //   ++this.stepperIndex;
-  //   this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
-  // }
-  // setPreviousStepper() {
-  //   --this.stepperIndex;
-  //   this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
-  // }
+  reloadBudgetProposal() {
+    this.route.params.subscribe(p => {
+      // collect the current user information from the state.
+      const userId: string = this.stateService.main.getValue().userId;
+      const organizationId: string = this.stateService.main.getValue().organizationId;
+
+      // get the budget proposal from the budget proposal service.
+      this.budgetProposalService.getBudgetProposal(organizationId, userId, p['taskId']).subscribe(d => {
+        if (!d.IsSuccess) {
+          this.data = d;
+          // notify the user of a system error
+          this.notificationQueueService.addNotification('An attempt at getting this budget proposal form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
+          console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the budget proposal API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+
+          // route back to the dashboard
+          this.router.navigate(['/authenticated/dashboard']);
+        } else {
+          this.data = d;
+          let tempTrans = new TransmogrifierBudgetProposal(d);
+          tempTrans.programBudgets = tempTrans.programBudgets.map((pb: iProgramBudget): iProgramBudget => {
+
+            return pb;
+          });
+
+          console.log("updated bp");
+          console.log(tempTrans);
+
+          for (let i = 0; i < this.trans.programBudgets.length; ++i) {
+            Object.assign(this.trans.programBudgets[i], tempTrans.programBudgets[i]);
+            if (!this.trans.programBudgets[i].revenueSources.length) {
+              let rev = new RevenueSource();
+              rev.revenueSourceName = revenueSourceTypes[4];
+              this.trans.programBudgets[i].revenueSources.push(rev);
+            }
+          }
+
+          console.log("trans..");
+          console.log(this.trans);
+        }
+      });
+    });
+
+  }
+  setNextStepper() {
+    let originalStepper = _.cloneDeep(this.currentStepperElement);
+    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
+      return;
+    }
+
+    setTimeout(() => {
+      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'saving');
+    }, 0);
+
+    this.save(false).then(() => {
+      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'complete');
+    }).catch(() => {
+      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');
+    });
+    ++this.stepperIndex;
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+  }
+  setPreviousStepper() {
+    --this.stepperIndex;
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+  }
 }

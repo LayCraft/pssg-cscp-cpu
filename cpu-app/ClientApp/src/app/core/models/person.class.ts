@@ -4,6 +4,7 @@ import { iPerson } from "./person.interface";
 
 export class Person implements iPerson {
   address?: iAddress;
+  addressSameAsAgency?: boolean;
   annualSalary?: number;
   baseHourlyWage?: number;
   benefits?: number;
@@ -22,6 +23,7 @@ export class Person implements iPerson {
   constructor(person?: iPerson) {
     if (person) {
       this.address = new Address(person.address) || new Address();
+      this.addressSameAsAgency = person.addressSameAsAgency || false;
       this.deactivated = person.deactivated || false;
       this.email = person.email || null;
       this.fax = person.fax || null;
@@ -35,6 +37,7 @@ export class Person implements iPerson {
       this.me = person.me;
     } else {
       this.address = new Address();
+      this.addressSameAsAgency = false;
     }
   }
 }

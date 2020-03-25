@@ -13,12 +13,10 @@
         {{line.itemName}}
       </td>
       <td>
-        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'cost'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.costMask" min="0"
-          id="total_cost_{{line.uuid}}">
+        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'cost'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.costMask" min="0" id="total_cost_{{line.uuid}}">
       </td>
       <td>
-        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask" min="0"
-          id="vscp_{{line.uuid}}">
+        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask" min="0" id="vscp_{{line.uuid}}">
       </td>
       <td>
         <!-- For spacing only -->
@@ -32,19 +30,18 @@
     <tr *ngFor="let line of expenseItemsForm; let i=index">
       <ng-container *ngIf="line.isActive">
         <td>
-          <input class="form-control" type="text" [(ngModel)]="line.otherExpenseDescription" min="0"
-            id="expense_name_{{line.uuid}}">
+          <input class="form-control" type="text" [(ngModel)]="line.otherExpenseDescription" min="0" id="expense_name_{{line.uuid}}">
         </td>
         <td>
-          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'cost'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.costMask" min="0"
-            id="total_cost_{{line.uuid}}">
+          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'cost'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.costMask" min="0" id="total_cost_{{line.uuid}}">
         </td>
         <td>
-          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask"
-            min="0" id="vscp_{{line.uuid}}">
+          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask" min="0" id="vscp_{{line.uuid}}">
         </td>
-        <td (click)="removeExpenseItem(i)" class="align-middle">
-          <i class="fas fa-times-circle text-danger"></i>
+        <td class="align-middle">
+          <div (click)="removeExpenseItem(i)" class="remove-row-button">
+            <i class="fas fa-times-circle text-danger"></i>
+          </div>
         </td>
       </ng-container>
     </tr>
@@ -52,8 +49,10 @@
       <th scope="col">Total</th>
       <td>${{totalTotalCost | number}}</td>
       <td>${{totalVscp | number}}</td>
-      <td (click)="addExpenseItem()" class="align-middle add-row-button">
-        <i class="fas fa-plus-circle text-success"></i>
+      <td class="align-middle add-row-td">
+        <div (click)="addExpenseItem()" class="add-row-button">
+          <i class="fas fa-plus-circle text-success"></i>
+        </div>
       </td>
     </tr>
   </tbody>

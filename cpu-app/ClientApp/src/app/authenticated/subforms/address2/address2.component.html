@@ -7,7 +7,7 @@
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(line1)">
           Ok
         </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(line1)">
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackOld(line1)">
           Try Again
         </div>
       </div>
@@ -19,7 +19,7 @@
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(line2)">
           Ok
         </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(line2)">
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackOld(line2)">
           Try Again
         </div>
       </div>
@@ -33,7 +33,7 @@
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(city)">
           Ok
         </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(city)">
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackOld(city)">
           Try Again
         </div>
       </div>
@@ -47,7 +47,7 @@
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(province)">
           Ok
         </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(province)">
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackOld(province)">
           Try Again
         </div>
       </div>
@@ -62,7 +62,7 @@
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(postalCode)" style="display: inherit">
           Ok
         </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackTest(address.postalCode, postalRegex, postalCode)" style="display: inherit">
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(address.postalCode, postalRegex, postalCode)" style="display: inherit">
           Try Again
         </div>
       </div>

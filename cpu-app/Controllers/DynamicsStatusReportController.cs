@@ -42,10 +42,11 @@ namespace Gov.Cscp.Victims.Public.Controllers
 			{
 				string endpointUrl = "vsd_programs(" + programId + ")/Microsoft.Dynamics.CRM.vsd_SetCPUMonthlyStatisticsAnswers";
 				// make options for the json serializer
-				JsonSerializerOptions options = new JsonSerializerOptions();
-				options.IgnoreNullValues = true;
+				// JsonSerializerOptions options = new JsonSerializerOptions();
+				// options.IgnoreNullValues = true;
 				// turn the model into a string
-				string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
+				string modelString = System.Text.Json.JsonSerializer.Serialize(model);
+				modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
 				DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
 
 				return StatusCode((int)result.statusCode, result.result.ToString());
