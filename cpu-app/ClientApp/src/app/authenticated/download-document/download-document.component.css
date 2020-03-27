@@ -30,10 +30,14 @@
 }
 
 .previous-button {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .submit-button {
-    right: 0;
-    position: absolute;
+  right: 0;
+  position: absolute;
+}
+
+.min-row-height {
+  min-height: 54px;
 }

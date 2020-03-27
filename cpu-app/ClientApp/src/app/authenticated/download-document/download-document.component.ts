@@ -126,12 +126,12 @@ export class DownloadDocumentComponent implements OnInit {
         object: null,
         discriminator: 'download',
       },
-      {
-        itemName: 'Upload File',
-        formState: 'untouched',
-        object: null,
-        discriminator: 'upload',
-      }
+      // {
+      //   itemName: 'Upload File',
+      //   formState: 'untouched',
+      //   object: null,
+      //   discriminator: 'upload',
+      // }
     ].forEach((f: iStepperElement) => {
       this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
     });

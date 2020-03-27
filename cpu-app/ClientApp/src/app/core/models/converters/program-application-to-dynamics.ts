@@ -3,13 +3,15 @@ import { convertHoursToDynamics } from "./hours-to-dynamics";
 import { encodeCglInsurance } from "../../constants/encode-cgl-insurance-type";
 import { encodeHrPolicies } from "../../constants/encode-hr-policies";
 import { iDynamicsSchedule } from "../dynamics-blob";
-import { iDynamicsPostScheduleF, iDynamicsProgramContactPost, iDynamicsRemoveProgramContactPost } from "../dynamics-post";
+import { iDynamicsPostScheduleF, iDynamicsProgramContactPost, iDynamicsRemoveProgramContactPost, iDynamicsCrmContactPost, iDynamicsCrmProgramPost } from "../dynamics-post";
 import { iHours } from "../hours.interface";
 import { iPerson } from "../person.interface";
 import { iProgramApplication } from "../program-application.interface";
 import { encodeCcseaMemberType } from "../../constants/encode-ccsea-member-type";
 import { nameAssemble } from "../../constants/name-assemble";
 import { boolOptionSet } from "../../constants/bool-optionset-values";
+import { convertPersonToDynamics } from "./person-to-dynamics";
+import * as _ from "lodash";
 
 export function convertProgramApplicationToDynamics(trans: TransmogrifierProgramApplication): iDynamicsPostScheduleF {
   const post: iDynamicsPostScheduleF = {
@@ -72,7 +74,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
   // if there are elements in the array add the item.
   if (programContactCollection.length) post.AddProgramContactCollection = programContactCollection;
 
-  let removeProgramContactCollection: iDynamicsRemoveProgramContactPost[] = [];
+  const removeProgramContactCollection: iDynamicsRemoveProgramContactPost[] = [];
   trans.programApplications.forEach((pa: iProgramApplication) => {
     // in each program add the list of staff by their id
     pa.removedStaff.forEach((s: iPerson): void => {
@@ -87,7 +89,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
   });
   if (removeProgramContactCollection.length) post.RemoveProgramContactCollection = removeProgramContactCollection;
 
-  const programCollection = [];
+  const programCollection: iDynamicsCrmProgramPost[] = [];
   trans.programApplications.forEach((p: iProgramApplication) => {
     // push programs into program collection
     programCollection.push({
@@ -108,6 +110,8 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_programid: p.programId,
       vsd_provincestate: p.mainAddress.province,
       vsd_ContactLookupfortunecookiebind: p.programContact ? p.programContact.personId : null,
+      vsd_ContactLookup2fortunecookiebind: p.policeContact && p.hasPoliceContact ? p.policeContact.personId : null,
+      vsd_ContactLookup3fortunecookiebind: p.sharedCostContact && p.hasPoliceContact && p.hasSharedCostContact ? p.sharedCostContact.personId : null,
       vsd_cpu_numberofhours: p.numberOfHours,
       vsd_totalscheduledhours: p.scheduledHours,
       vsd_totaloncallstandbyhours: p.onCallHours,
@@ -116,6 +120,23 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     // if there are elements in the array add the item.
     if (programCollection.length) post.ProgramCollection = programCollection;
 
+    const contactCollection: iDynamicsCrmContactPost[] = [];
+
+    trans.programApplications.forEach((p: iProgramApplication) => {
+      let policeContact = convertPersonToDynamics(p.policeContact);
+      if (!_.isEmpty(policeContact) && p.hasPoliceContact) {
+        policeContact.vsd_portalfield = "vsd_contactlookup2=" + p.programId;
+        contactCollection.push(policeContact);
+      }
+
+      let sharedCostContact = convertPersonToDynamics(p.sharedCostContact);
+      if (!_.isEmpty(sharedCostContact) && p.hasPoliceContact && p.hasSharedCostContact) {
+        sharedCostContact.vsd_portalfield = "vsd_contactlookup3=" + p.programId;
+        contactCollection.push(sharedCostContact);
+      }
+    });
+
+    if (contactCollection.length) post.ContactCollection = contactCollection;
     // push hours into schedule collection
     const scheduleCollection = [];
     p.operationHours

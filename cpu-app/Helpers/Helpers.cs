@@ -60,10 +60,29 @@ namespace Gov.Cscp.Victims.Public.Helpers
             ret = ret.Replace("\"ProgramCollection\":null", "");
             ret = ret.Replace("\"ContractCollection\":null,", "");
             ret = ret.Replace("\"ContractCollection\":null", "");
+            ret = ret.Replace("\"ContactCollection\":null,", "");
+            ret = ret.Replace("\"ContactCollection\":null", "");
             ret = ret.Replace("\"ScheduleCollection\":null,", "");
             ret = ret.Replace("\"ScheduleCollection\":null", "");
             ret = ret.Replace("\"vsd_scheduleid\":null,", "");
             ret = ret.Replace("\"vsd_scheduleid\":null", "");
+            ret = ret.Replace("\"vsd_bceid\":null,", "");
+            ret = ret.Replace("\"contactid\":null,", "");
+
+            if (ret.Contains("\"_vsd_contactlookup2_value\":null") && ret.Contains("vsd_contactlookup2="))
+            {
+                ret = ret.Replace("\"_vsd_contactlookup2_value\":null,", "");
+                ret = ret.Replace("\"_vsd_contactlookup2_value\":null", "");
+            }
+
+            if (ret.Contains("\"_vsd_contactlookup3_value\":null") && ret.Contains("vsd_contactlookup3="))
+            {
+                ret = ret.Replace("\"_vsd_contactlookup3_value\":null,", "");
+                ret = ret.Replace("\"_vsd_contactlookup3_value\":null", "");
+            }
+
+            ret = ret.Replace(",}", "}");
+
             return ret;
         }
 

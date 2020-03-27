@@ -18,7 +18,8 @@ export function convertPersonToDynamics(person: iPerson): iDynamicsCrmContact {
   if (person.lastName) p.lastname = person.lastName;
   if (person.middleName) p.middlename = person.middleName;
   if (person.phone) p.mobilephone = person.phone;
-  if (person.deactivated) p.statecode = 1; else p.statecode = 0; // sending a 1 statuscode means soft delete the record
+  if (person.deactivated === true) p.statecode = 1;
+  if (person.deactivated === false) p.statecode = 0; // sending a 1 statuscode means soft delete the record
   // return the person
   return p;
 }

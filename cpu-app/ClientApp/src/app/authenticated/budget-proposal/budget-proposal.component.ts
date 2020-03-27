@@ -237,11 +237,6 @@ export class BudgetProposalComponent implements OnInit {
         } else {
           this.data = d;
           let tempTrans = new TransmogrifierBudgetProposal(d);
-          tempTrans.programBudgets = tempTrans.programBudgets.map((pb: iProgramBudget): iProgramBudget => {
-
-            return pb;
-          });
-
           console.log("updated bp");
           console.log(tempTrans);
 

@@ -37,6 +37,7 @@ export interface iDynamicsPostScheduleF { //maps to ProgramApplicationPost
   Organization?: iDynamicsOrganizationPost;
   ProgramCollection?: iDynamicsCrmProgramPost[];
   ContractCollection?: iDynamicsCrmContractPost[];
+  ContactCollection?: iDynamicsCrmContactPost[];
   StaffCollection?: iDynamicsProgramContactPost[];  //commented out on the controller side...
   ScheduleCollection?: iDynamicsSchedulePost[];     //commented out on the controller side...
 }
@@ -217,9 +218,13 @@ export interface iDynamicsCrmContactPost {
   vsd_bceid?: string;
   vsd_contact_vsd_programid?: string; // added when contact is listed in a program. Which program id are they under
   vsd_programid?: string; // added when contact is listed in a program
+  vsd_portalfield?: string;
 }
 export interface iDynamicsCrmProgramPost {
-  _vsd_contactlookup_value?: string;
+  // _vsd_contactlookup_value?: string;
+  vsd_ContactLookupfortunecookiebind?: string;
+  vsd_ContactLookup2fortunecookiebind?: string;
+  vsd_ContactLookup3fortunecookiebind?: string;
   _vsd_contractid_value?: string;
   _vsd_cpu_regiondistrict_value?: string;
   _vsd_cpu_regiondistrictlookup2_value?: string;
@@ -247,6 +252,7 @@ export interface iDynamicsCrmProgramPost {
   vsd_provincestate?: string;
   vsd_totaloncallstandbyhours?: number;
   vsd_totalscheduledhours?: number;
+  vsd_cpu_per?: number;
 }
 export interface iDynamicsSchedulePost {
   _vsd_programid_value?: string;
