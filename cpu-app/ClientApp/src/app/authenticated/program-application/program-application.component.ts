@@ -158,7 +158,10 @@ export class ProgramApplicationComponent implements OnInit {
   }
   save(showNotification: boolean = true) {
     return new Promise((resolve, reject) => {
-      if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      let originalStepper = _.cloneDeep(this.currentStepperElement);
+      let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
+      if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
         resolve();
         return;
       }
@@ -254,7 +257,8 @@ export class ProgramApplicationComponent implements OnInit {
   }
   setNextStepper() {
     let originalStepper = _.cloneDeep(this.currentStepperElement);
-    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+    let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
+    if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
       // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
       return;
     }

@@ -3,16 +3,16 @@
   <li *ngFor="let item of stepperElements" class="stepper-item list-group-item d-flex justify-content-between align-items-center" [class.active]="item.id === currentStepperElement.id" (click)="onNavigate(item.id)">
     <span>
       {{item.itemName}}<br>
-      <small *ngIf="item.id !== currentStepperElement.id" [class]="levels[item.formState][1]">
+      <small *ngIf="item.id !== currentStepperElement.id" [class]="levels[item.formState][1] + ' ' + levels[item.formState][3]">
         {{levels[item.formState][0]}}
       </small>
-      <small *ngIf="item.id === currentStepperElement.id">
+      <small *ngIf="item.id === currentStepperElement.id" [class]="levels[item.formState][1] + ' ' + levels[item.formState][3]">
         {{levels[item.formState][0]}}
       </small>
     </span>
 
-    <span [class.stepper-selected]="item.id === currentStepperElement.id">
-      <i [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
+    <span [class.stepper-selected]=" item.id===currentStepperElement.id">
+        <i [class]="levels[item.formState][1] +' '+levels[item.formState][2]"></i>
     </span>
   </li>
 </ul>

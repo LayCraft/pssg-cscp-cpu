@@ -94,6 +94,10 @@ export class StatusReportComponent implements OnInit {
     return false;
   }
   submit() {
+    this.stepperElements.forEach(s => {
+      this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+    });
+
     if (!this.trans.reportingPeriod) {
       alert('Please select a month before submitting.');
       return;
@@ -104,9 +108,17 @@ export class StatusReportComponent implements OnInit {
       srq.questions.forEach((q: iQuestion) => {
         // depending on types we add another property
         if (q.type === 'number' && q.number === null) {
+          let stepperWithError = this.stepperElements.find(s => s.itemName === srq.name);
+          if (stepperWithError) {
+            this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
+          }
           isValid = false;
         }
         if (q.type === 'boolean' && q.boolean === null) {
+          let stepperWithError = this.stepperElements.find(s => s.itemName === srq.name);
+          if (stepperWithError) {
+            this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
+          }
           isValid = false;
         }
       });

@@ -74,12 +74,14 @@ export class FormHelper {
     }
     return false;
   }
-  isFormValid(notificationQueueService: NotificationQueueService = null) { //notificationQueueService: NotificationQueueService
+  isFormValid(notificationQueueService: NotificationQueueService = null, currentTabHasInvalidClass: number = 0) { //notificationQueueService: NotificationQueueService
     if (document.getElementsByClassName("ng-invalid").length > 0) {
       if (notificationQueueService) notificationQueueService.addNotification('All fields must be in a valid format.', 'warning');
       return false;
     }
-    if (document.getElementsByClassName("tab-invalid").length > 0) {
+    console.log(document.getElementsByClassName("tab-invalid").length);
+    console.log(currentTabHasInvalidClass);
+    if (document.getElementsByClassName("tab-invalid").length > currentTabHasInvalidClass) {
       if (notificationQueueService) notificationQueueService.addNotification('There is a problem on another tab preventing save.', 'warning');
       return false;
     }
@@ -117,10 +119,18 @@ export class FormHelper {
       }
     }
   }
-  moneyMaskToNumber(e: any, context: any, varName) {
+  numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  moneyMaskToNumber(e: any, context: any, varName, max: number = 0) {
     let moneyString = e.value.replace(/[$,]/g, '');
+    let val = parseFloat(moneyString);
+    if (max > 0 && val > max) {
+      val = max;
+      e.value = "$" + this.numberWithCommas(val);
+    }
     let variable = this.fetchVarInfo(context, varName);
-    variable.obj[variable.prop] = parseFloat(moneyString);
+    variable.obj[variable.prop] = val;
   }
   maskToNumber(e: any, context: any, varName) {
     let variable = this.fetchVarInfo(context, varName);

@@ -24,7 +24,7 @@ export class IconStepperService {
   currentStepperElement: BehaviorSubject<iStepperElement> = new BehaviorSubject<iStepperElement>(null);
   stepperElements: BehaviorSubject<iStepperElement[]> = new BehaviorSubject<iStepperElement[]>([]);
 
-  formStates: string[] = ['untouched', 'incomplete', 'invalid', 'complete'];
+  formStates: string[] = ['untouched', 'incomplete', 'invalid', 'complete', 'info', 'saving'];
 
   addStepperElement(object: object, itemName: string, formState: string, discriminator?: string): iStepperElement {
     if (!formState) {

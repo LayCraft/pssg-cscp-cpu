@@ -87,10 +87,10 @@ export class ExpenseTableComponent implements OnInit {
     let totalCostDefaults = 0;
     let totalCostCustom = 0;
     if (this.defaultExpenseItemsForm.length > 0) {
-      totalCostDefaults = this.defaultExpenseItemsForm.map(rs => rs.cost).reduce(reducer) || 0;
+      totalCostDefaults = this.defaultExpenseItemsForm.map(rs => (rs.cost || 0)).reduce(reducer) || 0;
     }
     if (activeExpenseItems.length > 0) {
-      totalCostCustom = activeExpenseItems.map(rs => rs.cost).reduce(reducer) || 0;
+      totalCostCustom = activeExpenseItems.map(rs => (rs.cost || 0)).reduce(reducer) || 0;
     }
     this.totalTotalCost = totalCostDefaults + totalCostCustom;
 
@@ -99,10 +99,22 @@ export class ExpenseTableComponent implements OnInit {
     let totalVscpCustom = 0;
     this.totalVscp = 0;
     if (this.defaultExpenseItemsForm.length > 0) {
-      totalVscpDefaults = this.defaultExpenseItemsForm.map(rs => rs.fundedFromVscp).reduce(reducer) || 0;
+      totalVscpDefaults = this.defaultExpenseItemsForm.map(rs => {
+        if (rs.fundedFromVscp > (rs.cost || 0)) {
+          rs.fundedFromVscp = (rs.cost || 0);
+          rs.fundedFromVscpMask = rs.fundedFromVscp.toString();
+        }
+        return rs.fundedFromVscp;
+      }).reduce(reducer) || 0;
     }
     if (activeExpenseItems.length > 0) {
-      totalVscpCustom = activeExpenseItems.map(rs => rs.fundedFromVscp).reduce(reducer) || 0;
+      totalVscpCustom = activeExpenseItems.map(rs => {
+        if (rs.fundedFromVscp > (rs.cost || 0)) {
+          rs.fundedFromVscp = (rs.cost || 0);
+          rs.fundedFromVscpMask = rs.fundedFromVscp.toString();
+        }
+        return rs.fundedFromVscp;
+      }).reduce(reducer) || 0;
     }
     this.totalVscp = totalVscpDefaults + totalVscpCustom;
 

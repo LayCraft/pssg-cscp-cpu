@@ -59,7 +59,7 @@ export class RevenueSourceTableComponent implements OnInit {
     if (activeRev.length > 0) {
 
       activeRev.forEach(rs => {
-        rs.total = rs.cash + rs.inKindContribution;
+        rs.total = (rs.cash || 0) + (rs.inKindContribution || 0);
         rs.totalMask = rs.total.toString();
       });
       // totalCash
@@ -69,8 +69,8 @@ export class RevenueSourceTableComponent implements OnInit {
       // total cost
       this.totalGrand = activeRev.map(rs => {
         let total = 0;
-        if (typeof rs.cash === 'number') total += rs.cash;
-        if (typeof rs.inKindContribution === 'number') total += rs.inKindContribution;
+        if (typeof rs.cash === 'number') total += (rs.cash || 0);
+        if (typeof rs.inKindContribution === 'number') total += (rs.inKindContribution || 0);
         return total;
       }).reduce(reducer) || 0;
     }
