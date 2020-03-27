@@ -13,12 +13,12 @@ export class IconStepperComponent implements OnInit {
   // this object gives us keys to draw on to get classnames and messages
   levels: {} = {
     // message , colour class, icon class
-    'untouched': ['', 'text-secondary', 'far fa-circle'],
-    'incomplete': ['This form is unsaved but valid.', 'text-warning tab-incomplete', 'fas fa-circle'],
-    'invalid': ['This form is invalid.', 'text-danger tab-invalid', 'fas fa-times-circle'],
-    'complete': ['This form is saved and valid.', 'text-success tab-complete', 'fas fa-check-circle'],
-    'info': ['', 'text-info', 'fas fa-info-circle'],
-    'saving': ['', 'text-secondary', 'spinner-border spinner-border-sm']
+    'untouched': ['', 'text-secondary', 'far fa-circle', ''],
+    'incomplete': ['This form is unsaved but valid.', 'text-warning', 'fas fa-circle', 'tab-incomplete'],
+    'invalid': ['This form is invalid.', 'text-danger', 'fas fa-times-circle', 'tab-invalid'],
+    'complete': ['This form is saved and valid.', 'text-success tab-complete', 'fas fa-check-circle', ''],
+    'info': ['', 'text-info', 'fas fa-info-circle', ''],
+    'saving': ['', 'text-secondary', 'spinner-border spinner-border-sm', '']
   }
 
   constructor(

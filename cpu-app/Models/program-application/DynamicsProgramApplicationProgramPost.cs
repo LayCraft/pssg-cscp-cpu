@@ -44,5 +44,39 @@ namespace Gov.Cscp.Victims.Public.Models
             }
             set { _vsd_ContactLookupfortunecookiebind = value; }
         }
+
+        private string _vsd_ContactLookup2fortunecookiebind;
+        public string vsd_ContactLookup2fortunecookiebind
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(_vsd_ContactLookup2fortunecookiebind))
+                {
+                    return "/contacts(" + _vsd_ContactLookup2fortunecookiebind + ")";
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set { _vsd_ContactLookup2fortunecookiebind = value; }
+        }
+
+        private string _vsd_ContactLookup3fortunecookiebind;
+        public string vsd_ContactLookup3fortunecookiebind
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(_vsd_ContactLookup3fortunecookiebind))
+                {
+                    return "/contacts(" + _vsd_ContactLookup3fortunecookiebind + ")";
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set { _vsd_ContactLookup3fortunecookiebind = value; }
+        }
     }
 }

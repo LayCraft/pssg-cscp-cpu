@@ -158,13 +158,16 @@ export class ProgramApplicationComponent implements OnInit {
   }
   save(showNotification: boolean = true) {
     return new Promise((resolve, reject) => {
-      if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      let originalStepper = _.cloneDeep(this.currentStepperElement);
+      let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
+      if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
         resolve();
         return;
       }
       this.saving = true;
       console.log("saving...");
-      console.log(this.trans);
+      console.log(_.cloneDeep(this.trans));
       this.out = convertProgramApplicationToDynamics(this.trans);
       this.programApplicationService.setProgramApplication(this.out).subscribe(
         r => {
@@ -179,6 +182,7 @@ export class ProgramApplicationComponent implements OnInit {
           });
 
           this.formHelper.makeFormClean();
+          this.reloadProgramApplication();
           resolve();
         },
         err => {
@@ -224,9 +228,37 @@ export class ProgramApplicationComponent implements OnInit {
       }
     );
   }
+  reloadProgramApplication() {
+    this.route.params.subscribe(p => {
+      // collect the current user information from the state.
+      const userId: string = this.stateService.main.getValue().userId;
+      const organizationId: string = this.stateService.main.getValue().organizationId;
+      // get the program application to fill
+      this.programApplicationService.getProgramApplication(organizationId, userId, p['taskId']).subscribe(
+        f => {
+          if (!f.IsSuccess) {
+            // notify the user of a system error
+            this.notificationQueueService.addNotification('An attempt at getting this program application form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
+            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['taskId']} from the program application API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+
+            // route back to the dashboard
+            this.router.navigate(['/authenticated/dashboard']);
+          } else {
+            this.data = f;
+            let tempTrans = new TransmogrifierProgramApplication(f);
+
+            for (let i = 0; i < tempTrans.programApplications.length; ++i) {
+              Object.assign(this.trans.programApplications[i], tempTrans.programApplications[i]);
+            }
+          }
+        }
+      );
+    });
+  }
   setNextStepper() {
     let originalStepper = _.cloneDeep(this.currentStepperElement);
-    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+    let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
+    if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
       // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
       return;
     }

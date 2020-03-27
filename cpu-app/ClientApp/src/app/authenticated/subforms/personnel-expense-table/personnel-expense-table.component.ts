@@ -41,7 +41,7 @@ export class PersonnelExpenseTableComponent implements OnInit {
     else {
       this.salariesAndBenefits.splice(index, 1);
     }
-    
+
     this.calculateTotals();
   }
   calculateTotals() {
@@ -59,26 +59,31 @@ export class PersonnelExpenseTableComponent implements OnInit {
     this.totalBenefitsCost = 0;
     if (activeSB.length > 0) {
       // total of salary
-      this.totalSalaryCost = activeSB.map(rs => rs.salary).reduce(reducer) || 0;
+      this.totalSalaryCost = activeSB.map(rs => (rs.salary || 0)).reduce(reducer) || 0;
       // total of benefits
-      this.totalBenefitsCost = activeSB.map(rs => rs.benefits).reduce(reducer) || 0;
+      this.totalBenefitsCost = activeSB.map(rs => (rs.benefits || 0)).reduce(reducer) || 0;
       activeSB.forEach(s => {
-        s.totalCost = s.salary + s.benefits;
+        s.totalCost = (s.salary || 0) + (s.benefits || 0);
         s.totalCostMask = s.totalCost ? s.totalCost.toString() : "0";
+
+        if (s.fundedFromVscp > (s.totalCost || 0)) {
+          s.fundedFromVscp = (s.totalCost || 0);
+          s.fundedFromVscpMask = s.fundedFromVscp.toString();
+        }
       });
     }
 
     // total of totalCost
     this.totalTotalCost = 0;
     if (activeSB.length > 0) {
-      this.totalTotalCost = activeSB.map(rs => rs.totalCost).reduce(reducer) || 0;
+      this.totalTotalCost = activeSB.map(rs => (rs.totalCost || 0)).reduce(reducer) || 0;
     }
 
     // total of vscp
     let totalVscpDefaults = 0;
     let totalVscpCustom = 0;
     if (activeSB.length > 0) {
-      totalVscpCustom = activeSB.map(rs => rs.fundedFromVscp).reduce(reducer) || 0;
+      totalVscpCustom = activeSB.map(rs => (rs.fundedFromVscp || 0)).reduce(reducer) || 0;
     }
     this.totalVscp = totalVscpDefaults + totalVscpCustom;
 

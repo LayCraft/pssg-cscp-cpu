@@ -104,9 +104,6 @@ export class BudgetProposalComponent implements OnInit {
       if (this.currentStepperElement) {
         let originalStepper = _.cloneDeep(this.currentStepperElement);
         let formState = this.formHelper.getFormState();
-        console.log("changing stepper");
-        console.log(originalStepper.formState);
-        console.log(formState);
 
         if ((originalStepper.formState === "complete" && formState === "untouched") || originalStepper.formState === "invalid") {
           //do nothing...
@@ -142,7 +139,10 @@ export class BudgetProposalComponent implements OnInit {
   }
   save(isSubmit: boolean = false) {
     return new Promise((resolve, reject) => {
-      if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+      let originalStepper = _.cloneDeep(this.currentStepperElement);
+      let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
+      if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
         resolve();
         return;
       }
@@ -176,7 +176,7 @@ export class BudgetProposalComponent implements OnInit {
 
         if (!isValid) {
           //Should probably flag which program had the error...
-          this.notificationQueueService.addNotification(`Total revenue must be equal to the total funded from VSCP.`, 'warning');
+          this.notificationQueueService.addNotification(`The total VSCP funding must match the total component value outlined in Schedule B-Terms and Conditions of Payment.`, 'warning');
           return;
         }
       }
@@ -191,6 +191,7 @@ export class BudgetProposalComponent implements OnInit {
           if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
           this.saving = false;
           this.stepperElements.forEach(s => {
+            if (s.formState === 'complete') return;
             this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
           });
           this.reloadBudgetProposal();
@@ -237,11 +238,6 @@ export class BudgetProposalComponent implements OnInit {
         } else {
           this.data = d;
           let tempTrans = new TransmogrifierBudgetProposal(d);
-          tempTrans.programBudgets = tempTrans.programBudgets.map((pb: iProgramBudget): iProgramBudget => {
-
-            return pb;
-          });
-
           console.log("updated bp");
           console.log(tempTrans);
 
@@ -261,10 +257,44 @@ export class BudgetProposalComponent implements OnInit {
     });
 
   }
+  isCurrentFormValid(currentStepper: iStepperElement) {
+    let isValid = true;
+
+    let pb = this.trans.programBudgets.find(p => p.name === currentStepper.itemName);
+    if (!pb) return true;
+    let totalGrand = 0;
+    pb.revenueSources.map(rs => {
+      totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
+    });
+
+    let totalFundedFromVSCP = 0;
+    pb.salariesAndBenefits.map(sb => {
+      totalFundedFromVSCP += sb.fundedFromVscp || 0;
+    });
+    pb.programDeliveryCosts.map(pd => {
+      totalFundedFromVSCP += pd.fundedFromVscp || 0;
+    });
+    pb.administrationCosts.map(ac => {
+      totalFundedFromVSCP += ac.fundedFromVscp || 0;
+    });
+
+    if (totalGrand !== totalFundedFromVSCP) {
+      isValid = false;
+    }
+
+    return isValid;
+  }
   setNextStepper() {
     let originalStepper = _.cloneDeep(this.currentStepperElement);
-    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+    let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
+    if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
       // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
+      return;
+    }
+
+    if (!this.isCurrentFormValid(originalStepper)) {
+      this.notificationQueueService.addNotification(`The total VSCP funding must match the total component value outlined in Schedule B-Terms and Conditions of Payment.`, 'warning');
+      this.stepperService.setStepperElementProperty(originalStepper.id, "formState", "invalid");
       return;
     }
 

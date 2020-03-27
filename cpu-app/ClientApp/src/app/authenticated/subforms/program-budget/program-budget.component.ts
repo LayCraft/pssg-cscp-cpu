@@ -78,8 +78,10 @@ export class ProgramBudgetComponent implements OnInit {
   setCurrentTab(tab: string) {
     let formState = this.formHelper.getFormState();
 
-    //in this case there has been a previous update on this tab, and we've come back to that tab and left again. So we don't want to wipe away the incomplete status
-    if (this.currentStepperElement.formState !== "incomplete" || formState != "untouched") {
+    if ((this.currentStepperElement.formState === "complete" && formState === "untouched") || this.currentStepperElement.formState === "invalid") {
+      //do nothing...
+    }
+    else if (this.currentStepperElement.formState !== "incomplete" || formState != "untouched") {
       this.currentStepperElement.formState = formState;
     }
 

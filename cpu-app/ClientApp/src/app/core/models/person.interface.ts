@@ -16,4 +16,5 @@ export interface iPerson {
   title?: string;
   userId?: string;
   employmentStatus?: string;
+  vsd_portalfield?: string;
 }
