@@ -79,8 +79,6 @@ export class FormHelper {
       if (notificationQueueService) notificationQueueService.addNotification('All fields must be in a valid format.', 'warning');
       return false;
     }
-    console.log(document.getElementsByClassName("tab-invalid").length);
-    console.log(currentTabHasInvalidClass);
     if (document.getElementsByClassName("tab-invalid").length > currentTabHasInvalidClass) {
       if (notificationQueueService) notificationQueueService.addNotification('There is a problem on another tab preventing save.', 'warning');
       return false;

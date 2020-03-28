@@ -14,13 +14,9 @@ export class LoginPageComponent implements OnInit {
     private userData: UserDataService,
     private notificationQueueService: NotificationQueueService,
     private stateService: StateService) {
-    console.log("login page...");
 
     this.userData.getCurrentUser().subscribe((userInfo: any) => {
-      console.log("returned user info:");
-      console.log(userInfo);
       if (userInfo && userInfo.userId && userInfo.accountId) {
-        console.log("setting user data as logged in");
         this.stateService.loggedIn.next(true);
         this.stateService.userSettings.next(userInfo);
 

@@ -286,9 +286,6 @@ export class Transmogrifier {
         // if the state code is zero or null the user is active
         deactivated: !p.statecode || p.statecode === 0 ? false : true || null,
       }
-      console.log(person.address);
-      console.log(this.contactInformation.mainAddress);
-      console.log(_.isEqual(person.address, this.contactInformation.mainAddress))
       if (_.isEqual(person.address, this.contactInformation.mainAddress)) {
         person.addressSameAsAgency = true;
       }

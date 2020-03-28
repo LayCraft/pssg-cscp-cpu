@@ -28,8 +28,6 @@ export class PersonPickerListComponent implements OnInit {
     this.removedPersons = this.personsObj.removedPersons;
   }
   addPerson(personId: string) {
-    console.log("addPerson");
-    console.log(personId);
     if (personId === "null") return;
     const personInList: boolean = !!this.persons.filter(p => p.personId === personId).length;
     // only add someone if they are not in there already
@@ -38,8 +36,6 @@ export class PersonPickerListComponent implements OnInit {
       // the person is not in the list so we add them
       this.persons.push(person);
       this.removedPersons = this.removedPersons.filter(p => p.personId !== personId);
-      console.log(this.removedPersons);
-      console.log(this.persons);
       this.personsObj.persons = this.persons;
       this.personsObj.removedPersons = this.removedPersons;
       this.personsChange.emit(this.personsObj);
@@ -51,8 +47,6 @@ export class PersonPickerListComponent implements OnInit {
     this.removedPersons.push(person);
     this.persons = this.persons.filter(p => p.personId !== personId);
 
-    console.log(this.removedPersons);
-    console.log(this.persons);
     this.personsObj.persons = this.persons;
     this.personsObj.removedPersons = this.removedPersons;
     this.personsChange.emit(this.personsObj);
