@@ -23,6 +23,7 @@ namespace Gov.Cscp.Victims.Public.Models
         public string lastname { get; set; }
         public string middlename { get; set; }
         public string mobilephone { get; set; }
+        public int? vsd_employmentstatus {get; set;}
         public string fortunecookietype { get { return "Microsoft.Dynamics.CRM.contact"; } }
         public string vsd_bceid { get; set; }
         public string vsd_portalfield { get; set; }

@@ -34,16 +34,24 @@
       </ng-container>
     </tr>
     <tr>
-      <th scope="col">Total</th>
-      <td>${{totalSalaryCost | number}}</td>
-      <td>${{totalBenefitsCost | number}}</td>
-      <td>${{totalTotalCost | number}}</td>
-      <td>${{totalVscp | number}}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
       <td class="align-middle add-row-td">
         <div (click)="addExpenseItem()" class="add-row-button">
           <i class="fas fa-plus-circle text-success"></i>
         </div>
       </td>
+    </tr>
+    <tr>
+      <th scope="col">Total</th>
+      <td>${{totalSalaryCost | number}}</td>
+      <td>${{totalBenefitsCost | number}}</td>
+      <td>${{totalTotalCost | number}}</td>
+      <td>${{totalVscp | number}}</td>
+      <td></td>
     </tr>
   </tbody>
 </table>

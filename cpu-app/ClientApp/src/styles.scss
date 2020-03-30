@@ -64,11 +64,13 @@ input[type="number"] {
 
 .add-row-td {
   width: 34px;
+  height: 55px;
 }
 
 .add-row-button {
   width: 16px;
   height: 16px;
+  margin-bottom: 0;
   cursor: pointer;
 }
 .remove-row-button {

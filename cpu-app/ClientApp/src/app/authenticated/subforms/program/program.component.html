@@ -55,7 +55,7 @@
         </div>
       </div>
 
-      <div *ngIf="programApplication.hasPoliceContact">
+      <div *ngIf="programApplication.hasPoliceContact" class="shared-cost-contact-div">
         <input [(ngModel)]="programApplication.hasSharedCostContact" class="form-check-input" type="checkbox" id="hasSharedCostContactCheckbox" name="hasSharedCostContactCheckbox">
         <label class="form-check-label" for="hasSharedCostContactCheckbox">
           Select if your Police Based Victim Services Program receives a cost-share contribution from your local government. Please provide the name and contact information for your local government funder:
