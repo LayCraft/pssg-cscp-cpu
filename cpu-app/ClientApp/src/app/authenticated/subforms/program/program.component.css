@@ -42,3 +42,7 @@
 .inline-card {
   display: flex;
 }
+
+.shared-cost-contact-div {
+  margin-top: 10px;
+}
