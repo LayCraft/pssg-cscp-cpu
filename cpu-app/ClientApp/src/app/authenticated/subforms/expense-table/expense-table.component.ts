@@ -53,9 +53,7 @@ export class ExpenseTableComponent implements OnInit {
   }
   removeExpenseItem(index: number): void {
     let expenseToRemove = this.expenseItemsForm[index];
-    console.log(expenseToRemove);
     if (expenseToRemove.uuid) {
-      console.log("setting active to false");
       expenseToRemove.isActive = false;
     }
     else {

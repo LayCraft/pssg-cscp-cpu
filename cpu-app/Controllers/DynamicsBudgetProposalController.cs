@@ -8,39 +8,39 @@ using System.Threading.Tasks;
 
 namespace Gov.Cscp.Victims.Public.Controllers
 {
-	[Route("api/[controller]")]
-	[Authorize]
-	public class DynamicsBudgetProposalController : Controller
-	{
-		private readonly IDynamicsResultService _dynamicsResultService;
+    [Route("api/[controller]")]
+    [Authorize]
+    public class DynamicsBudgetProposalController : Controller
+    {
+        private readonly IDynamicsResultService _dynamicsResultService;
 
-		public DynamicsBudgetProposalController(IDynamicsResultService dynamicsResultService)
-		{
-			this._dynamicsResultService = dynamicsResultService;
-		}
+        public DynamicsBudgetProposalController(IDynamicsResultService dynamicsResultService)
+        {
+            this._dynamicsResultService = dynamicsResultService;
+        }
 
-		[HttpGet("{businessBceid}/{userBceid}/{contractId}")]
-		public async Task<IActionResult> GetBudgetProposal(string businessBceid, string userBceid, string contractId)
-		{
-			try
-			{
-				// convert the parameters to a json string
-				string requestJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
-				// set the endpoint action
-				string endpointUrl = "vsd_contracts(" + contractId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUBudgetProposal";
+        [HttpGet("{businessBceid}/{userBceid}/{contractId}")]
+        public async Task<IActionResult> GetBudgetProposal(string businessBceid, string userBceid, string contractId)
+        {
+            try
+            {
+                // convert the parameters to a json string
+                string requestJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
+                // set the endpoint action
+                string endpointUrl = "vsd_contracts(" + contractId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUBudgetProposal";
 
-				// get the response
-				DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+                // get the response
+                DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
 
-				return StatusCode(200, result.result.ToString());
-			}
-			finally { }
-		}
+                return StatusCode(200, result.result.ToString());
+            }
+            finally { }
+        }
 
-		[HttpPost]
-		public async Task<IActionResult> SetBudgetProposal([FromBody] BudgetProposalPost model)
-		{
-			try
+        [HttpPost]
+        public async Task<IActionResult> SetBudgetProposal([FromBody] BudgetProposalPost model)
+        {
+            try
             {
                 if (model == null)
                 {
@@ -58,6 +58,6 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 return StatusCode((int)result.statusCode, result.result.ToString());
             }
             finally { }
-		}
-	}
+        }
+    }
 }

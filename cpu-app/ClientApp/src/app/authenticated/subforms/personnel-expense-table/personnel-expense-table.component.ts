@@ -33,9 +33,7 @@ export class PersonnelExpenseTableComponent implements OnInit {
   }
   removeExpenseItem(index: number): void {
     let expenseToRemove = this.salariesAndBenefits[index];
-    console.log(expenseToRemove);
     if (expenseToRemove.uuid) {
-      console.log("setting active to false");
       expenseToRemove.isActive = false;
     }
     else {

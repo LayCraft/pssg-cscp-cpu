@@ -72,10 +72,6 @@ export class ProgramContactComponent implements OnInit {
             this.programTrans = new TransmogrifierProgramApplication(f);
             this.programApplication = this.programTrans.programApplications.find(pa => pa.programId === p['programId']);
 
-
-            console.log("desired program info...");
-            console.log(this.programApplication);
-
             if (!this.programApplication) {
               this.notificationQueueService.addNotification('An attempt at getting this program information was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
               this.errorState = true;

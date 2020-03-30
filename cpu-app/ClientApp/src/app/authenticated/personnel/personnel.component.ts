@@ -90,7 +90,6 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       const userId = this.stateService.main.getValue().userId;
       const organizationId = this.stateService.main.getValue().organizationId;
       const post = convertPersonnelToDynamics(userId, organizationId, [person]);
-      // console.log(post);
       this.personService.setPersons(post).subscribe(
         () => {
           this.saving = false;

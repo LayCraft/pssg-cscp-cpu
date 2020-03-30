@@ -56,7 +56,6 @@ export class ProgramComponent implements OnInit {
     this.personsObj.persons = this.programApplication.additionalStaff;
     this.personsObj.removedPersons = this.programApplication.removedStaff;
     this.perType = perTypeDict[this.programApplication.perType];
-    console.log(this.programApplication.policeContact);
   }
 
   // form helpers. Validity hints and hide/show toggles
@@ -105,8 +104,6 @@ export class ProgramComponent implements OnInit {
 
   }
   onProgramStaffChange(personsObj: any) {
-    console.log("program staff change");
-    console.log(personsObj);
     this.programApplication.additionalStaff = personsObj.persons;
     this.programApplication.removedStaff = personsObj.removedPersons;
     this.onInput();

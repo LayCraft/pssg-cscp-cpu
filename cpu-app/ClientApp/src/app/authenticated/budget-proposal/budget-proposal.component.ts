@@ -146,40 +146,14 @@ export class BudgetProposalComponent implements OnInit {
         resolve();
         return;
       }
-      if (isSubmit) {
-        let isValid = true;
-        this.trans.programBudgets.forEach(pb => {
-          let totalGrand = 0;
-          pb.revenueSources.map(rs => {
-            totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
-          });
 
-          let totalFundedFromVSCP = 0;
-          pb.salariesAndBenefits.map(sb => {
-            totalFundedFromVSCP += sb.fundedFromVscp || 0;
-          });
-          pb.programDeliveryCosts.map(pd => {
-            totalFundedFromVSCP += pd.fundedFromVscp || 0;
-          });
-          pb.administrationCosts.map(ac => {
-            totalFundedFromVSCP += ac.fundedFromVscp || 0;
-          });
-
-          if (totalGrand !== totalFundedFromVSCP) {
-            let stepperWithError = this.stepperElements.find(s => s.itemName === pb.name);
-            if (stepperWithError) {
-              this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
-            }
-            isValid = false;
-          }
-        });
-
-        if (!isValid) {
-          //Should probably flag which program had the error...
-          this.notificationQueueService.addNotification(`The total VSCP funding must match the total component value outlined in Schedule B-Terms and Conditions of Payment.`, 'warning');
-          return;
-        }
+      //
+      if (!this.validateprogramBudgets()) {
+        resolve();
+        return;
       }
+      //
+
       this.saving = true;
       console.log(this.trans);
       this.out = convertBudgetProposalToDynamics(this.trans);
@@ -238,8 +212,6 @@ export class BudgetProposalComponent implements OnInit {
         } else {
           this.data = d;
           let tempTrans = new TransmogrifierBudgetProposal(d);
-          console.log("updated bp");
-          console.log(tempTrans);
 
           for (let i = 0; i < this.trans.programBudgets.length; ++i) {
             Object.assign(this.trans.programBudgets[i], tempTrans.programBudgets[i]);
@@ -249,37 +221,51 @@ export class BudgetProposalComponent implements OnInit {
               this.trans.programBudgets[i].revenueSources.push(rev);
             }
           }
-
-          console.log("trans..");
-          console.log(this.trans);
         }
       });
     });
 
   }
-  isCurrentFormValid(currentStepper: iStepperElement) {
+  validateprogramBudgets() {
     let isValid = true;
 
-    let pb = this.trans.programBudgets.find(p => p.name === currentStepper.itemName);
-    if (!pb) return true;
-    let totalGrand = 0;
-    pb.revenueSources.map(rs => {
-      totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
+    this.trans.programBudgets.forEach((pb: iProgramBudget) => {
+      let totalGrand = 0;
+      pb.revenueSources.filter(rs => rs.isActive).map(rs => {
+        totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
+      });
+
+      let totalFundedFromVSCP = 0;
+      pb.salariesAndBenefits.filter(sb => sb.isActive).map(sb => {
+        totalFundedFromVSCP += (sb.fundedFromVscp || 0);
+      });
+      pb.programDeliveryCosts.filter(pd => pd.isActive).map(pd => {
+        totalFundedFromVSCP += (pd.fundedFromVscp || 0);
+      });
+      pb.programDeliveryOtherExpenses.filter(pd => pd.isActive).map(pd => {
+        totalFundedFromVSCP += (pd.fundedFromVscp || 0);
+      });
+      pb.administrationCosts.filter(ac => ac.isActive).map(ac => {
+        totalFundedFromVSCP += (ac.fundedFromVscp || 0);
+      });
+      pb.administrationOtherExpenses.filter(ac => ac.isActive).map(ac => {
+        totalFundedFromVSCP += (ac.fundedFromVscp || 0);
+      });
+
+      console.log("validating: ", totalGrand, totalFundedFromVSCP);
+
+      if (totalGrand !== totalFundedFromVSCP) {
+        let stepperWithError = this.stepperElements.find(s => s.itemName === pb.name);
+        if (stepperWithError) {
+          this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
+        }
+        isValid = false;
+      }
     });
 
-    let totalFundedFromVSCP = 0;
-    pb.salariesAndBenefits.map(sb => {
-      totalFundedFromVSCP += sb.fundedFromVscp || 0;
-    });
-    pb.programDeliveryCosts.map(pd => {
-      totalFundedFromVSCP += pd.fundedFromVscp || 0;
-    });
-    pb.administrationCosts.map(ac => {
-      totalFundedFromVSCP += ac.fundedFromVscp || 0;
-    });
-
-    if (totalGrand !== totalFundedFromVSCP) {
-      isValid = false;
+    if (!isValid) {
+      //Should probably flag which program had the error...
+      this.notificationQueueService.addNotification(`The total VSCP funding must match the total component value outlined in Schedule B-Terms and Conditions of Payment.`, 'warning');
     }
 
     return isValid;
@@ -292,9 +278,9 @@ export class BudgetProposalComponent implements OnInit {
       return;
     }
 
-    if (!this.isCurrentFormValid(originalStepper)) {
-      this.notificationQueueService.addNotification(`The total VSCP funding must match the total component value outlined in Schedule B-Terms and Conditions of Payment.`, 'warning');
-      this.stepperService.setStepperElementProperty(originalStepper.id, "formState", "invalid");
+    if (!this.validateprogramBudgets()) {
+      // this.notificationQueueService.addNotification(`The total VSCP funding must match the total component value outlined in Schedule B-Terms and Conditions of Payment.`, 'warning');
+      // this.stepperService.setStepperElementProperty(originalStepper.id, "formState", "invalid");
       return;
     }
 

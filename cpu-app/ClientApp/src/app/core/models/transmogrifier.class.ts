@@ -42,8 +42,9 @@ export class Transmogrifier {
     for (let task of b.Tasks) {
       // if the task matches the supplied contract return it
       if (task._regardingobjectid_value === contractId) {
-        tasks.push({
-          // convert the status from a meaningless dynamics number to a meaningful string
+        // tasks.push({
+        let thisTask =
+        {// convert the status from a meaningless dynamics number to a meaningful string
           status: taskCode(task.statuscode),
           // convert the numeric completion state from meaningless dynamics number to a useful boolean
           isCompleted: this.isCompleted(task.statecode),
@@ -54,8 +55,18 @@ export class Transmogrifier {
           deadline: task.scheduledend ? new Date(task.scheduledend) : null,
           taskId: this.getCorrectTaskIdByDiscriminator(contractId, task._vsd_programid_value, task, decodeTaskType(task._vsd_tasktypeid_value)),
           // what kind of form is this?
-          formType: decodeTaskType(task._vsd_tasktypeid_value),
-        });
+          formType: decodeTaskType(task._vsd_tasktypeid_value)
+        };
+
+        if (task._vsd_programid_value && thisTask.formType === "expense_report") {
+          let programInfo = b.Programs.find(p => p.vsd_programid === task._vsd_programid_value);
+          if (programInfo) {
+            thisTask.taskName += " (" + programInfo.vsd_name + ")";
+          }
+        }
+        tasks.push(thisTask);
+        // });
+
       }
     }
     return tasks;
@@ -286,9 +297,6 @@ export class Transmogrifier {
         // if the state code is zero or null the user is active
         deactivated: !p.statecode || p.statecode === 0 ? false : true || null,
       }
-      console.log(person.address);
-      console.log(this.contactInformation.mainAddress);
-      console.log(_.isEqual(person.address, this.contactInformation.mainAddress))
       if (_.isEqual(person.address, this.contactInformation.mainAddress)) {
         person.addressSameAsAgency = true;
       }
