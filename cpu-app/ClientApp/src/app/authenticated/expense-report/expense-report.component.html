@@ -41,7 +41,7 @@
               <table class="table table-sm table-striped">
                 <thead class="thead">
                   <th scope="col">Expense Category</th>
-                  <th scope="col">Annual Budgeted Amount</th>
+                  <th scope="col">Annual Budgeted Amount (Based on VSCP Funding Only)</th>
                   <th scope="col">Quarterly Budgeted Amount</th>
                   <th scope="col">Actual Expenditures, Current Quarter</th>
                   <th scope="col">Quarterly Variance</th>
@@ -136,12 +136,13 @@
                 <textarea [(ngModel)]="trans.expenseReport.administrationDescription" name="administrationDescription" id="administrationDescription" cols="30" rows="5" class="form-control" placeholder="Comments here..."></textarea>
               </div>
             </div>
+
             <div *ngIf="item.discriminator === discriminators[1]">
               <p>Please complete your budgeted and actual expenditures for the following specific line items.</p>
               <table class="table table-sm table-striped">
                 <thead class="thead">
                   <th scope="col">Expense Category</th>
-                  <th scope="col">Annual Budgeted Amount</th>
+                  <th scope="col">Annual Budgeted Amount (Based on VSCP Funding Only)</th>
                   <th scope="col">Quarterly Budgeted Amount</th>
                   <th scope="col">Actual Expenditures, Current Quarter</th>
                   <th scope="col">Quarterly Variance</th>
@@ -217,6 +218,7 @@
                 <input type="number" min="0" [(ngModel)]="trans.expenseReport.serviceHoursQuarterlyActual" class="form-control" id="actualServiceQuarter" (input)="formHelper.numberFormatter($event.target, trans.expenseReport, 'contractServiceHoursQuarterlyActual')">
               </div>
             </div>
+
             <div *ngIf="item.discriminator === discriminators[2]">
               <div class="form-check">
                 <input [(ngModel)]="trans.expenseReport.executiveReview" type="checkbox" class="form-check-input" id="executiveCheck">
