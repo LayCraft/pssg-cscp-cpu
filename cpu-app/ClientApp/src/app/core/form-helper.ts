@@ -94,13 +94,12 @@ export class FormHelper {
     let count = 0;
     if (dirtyControls.length > 0) {
       for (let i = 0; i < dirtyControls.length; ++i) {
-        if (dirtyControls[i].classList.contains("ng-untouched")) continue;
+        if (dirtyControls[i].classList.contains("ng-untouched") || dirtyControls[i].classList.contains("reporting-month")) continue;
         ++count;
       }
     }
     if (count > 0) {
       return 'incomplete';
-
     }
 
     //TODO - check for complete? info? untouched?
@@ -127,6 +126,7 @@ export class FormHelper {
       val = max;
       e.value = "$" + this.numberWithCommas(val);
     }
+    if (!val) val = 0;
     let variable = this.fetchVarInfo(context, varName);
     variable.obj[variable.prop] = val;
   }

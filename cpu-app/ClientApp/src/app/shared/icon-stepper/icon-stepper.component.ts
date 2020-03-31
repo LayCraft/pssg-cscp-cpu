@@ -18,7 +18,8 @@ export class IconStepperComponent implements OnInit {
     'invalid': ['This form is invalid.', 'text-danger', 'fas fa-times-circle', 'tab-invalid'],
     'complete': ['This form is saved and valid.', 'text-success tab-complete', 'fas fa-check-circle', ''],
     'info': ['', 'text-info', 'fas fa-info-circle', ''],
-    'saving': ['', 'text-secondary', 'spinner-border spinner-border-sm', '']
+    'saving': ['', 'text-secondary', 'spinner-border spinner-border-sm', ''],
+    'valid': ['This form is valid.', 'text-success tab-complete', 'fas fa-check-circle', ''],
   }
 
   constructor(
