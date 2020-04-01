@@ -19,6 +19,7 @@ export class ProgramBudget implements iProgramBudget {
   programDeliveryOtherExpenses: iExpenseItem[] = [];
   administrationCosts: iExpenseItem[] = [];
   administrationOtherExpenses: iExpenseItem[] = [];
+  currentTab: string;
   constructor(pb?: iProgramBudget) {
     if (pb) {
       this.contractId = pb.contractId || null;
@@ -29,6 +30,7 @@ export class ProgramBudget implements iProgramBudget {
       this.email = pb.email || null;
       this.revenueSources = pb.revenueSources || null;
       this.contactLookupId = pb.contactLookupId || null;
+      this.currentTab = 'Program Revenue Information';
       // if it exists loop over item and make a new object otherwise set the property to a blank array
       pb.salariesAndBenefits ? pb.salariesAndBenefits.forEach(x => this.salariesAndBenefits.push(new SalaryAndBenefits(x))) : this.salariesAndBenefits = [];
       pb.programDeliveryCosts ? pb.programDeliveryCosts.forEach(x => this.programDeliveryCosts.push(new ExpenseItem(x))) : this.programDeliveryCosts = [];
