@@ -1,11 +1,11 @@
 <!-- <pre>{{programBudget|json}}</pre> -->
 <ul class="nav nav-pills mb-2">
   <li *ngFor="let tab of tabs" class="nav-item">
-    <a class="nav-link nav-tab" [class.active]="tab===currentTab" (click)="setCurrentTab(tab)">{{tab}}</a>
+    <a class="nav-link nav-tab" [class.active]="tab===programBudget.currentTab" (click)="setCurrentTab(tab)">{{tab}}</a>
   </li>
 </ul>
-<div *ngIf="currentTab===tabs[0]">
-  <h2 class="blue-header">{{currentTab}}</h2>
+<div *ngIf="programBudget.currentTab===tabs[0]">
+  <h2 class="blue-header">{{programBudget.currentTab}}</h2>
   <ol>
     <li>For each program applied for, a separate Budget Proposal must be completed. </li>
     <li>For
@@ -27,7 +27,7 @@
   <h2 class="blue-header">Program Revenue Sources</h2>
   <app-revenue-source-table [(revenueSources)]="programBudget.revenueSources"></app-revenue-source-table>
 </div>
-<div *ngIf="currentTab===tabs[1]">
+<div *ngIf="programBudget.currentTab===tabs[1]">
   <h2 class="blue-header">{{sections[0]}}</h2>
   <app-personnel-expense-table [(salariesAndBenefits)]="programBudget.salariesAndBenefits" (meta)="collectMeta( $event, sections[0])"></app-personnel-expense-table>
   <h2 class="blue-header">{{sections[1]}}</h2>

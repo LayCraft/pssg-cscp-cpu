@@ -34,6 +34,8 @@ export class BudgetProposalComponent implements OnInit {
   out: iDynamicsPostBudgetProposal;
   saving: boolean = false;
 
+  programBudgetTabs = ['Program Revenue Information', 'Program Expense'];
+
   personDict: object = {};
   private formHelper = new FormHelper();
   constructor(
@@ -214,6 +216,7 @@ export class BudgetProposalComponent implements OnInit {
           let tempTrans = new TransmogrifierBudgetProposal(d);
 
           for (let i = 0; i < this.trans.programBudgets.length; ++i) {
+            tempTrans.programBudgets[i].currentTab = this.trans.programBudgets[i].currentTab;
             Object.assign(this.trans.programBudgets[i], tempTrans.programBudgets[i]);
             if (!this.trans.programBudgets[i].revenueSources.length) {
               let rev = new RevenueSource();
@@ -252,8 +255,6 @@ export class BudgetProposalComponent implements OnInit {
         totalFundedFromVSCP += (ac.fundedFromVscp || 0);
       });
 
-      console.log("validating: ", totalGrand, totalFundedFromVSCP);
-
       if (totalGrand !== totalFundedFromVSCP) {
         let stepperWithError = this.stepperElements.find(s => s.itemName === pb.name);
         if (stepperWithError) {
@@ -278,6 +279,16 @@ export class BudgetProposalComponent implements OnInit {
       return;
     }
 
+    let current_program_budget = this.trans.programBudgets.find(pb => pb.name === originalStepper.itemName);
+    if (current_program_budget) {
+      let index = this.programBudgetTabs.findIndex(t => t === current_program_budget.currentTab);
+      if (index < (this.programBudgetTabs.length - 1)) {
+        current_program_budget.currentTab = this.programBudgetTabs[index + 1];
+        window.scrollTo(0, 0);
+        return;
+      }
+    }
+
     if (!this.validateprogramBudgets()) {
       // this.notificationQueueService.addNotification(`The total VSCP funding must match the total component value outlined in Schedule B-Terms and Conditions of Payment.`, 'warning');
       // this.stepperService.setStepperElementProperty(originalStepper.id, "formState", "invalid");
@@ -296,10 +307,34 @@ export class BudgetProposalComponent implements OnInit {
       });
     }
     ++this.stepperIndex;
+
+    let nextStepper = this.stepperElements[this.stepperIndex];
+    let next_program_budget = this.trans.programBudgets.find(pb => pb.name === nextStepper.itemName);
+    if (next_program_budget) {
+      next_program_budget.currentTab = this.programBudgetTabs[0];
+    }
+
     this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
   }
   setPreviousStepper() {
+    let current_program_budget = this.trans.programBudgets.find(pb => pb.name === this.currentStepperElement.itemName);
+    if (current_program_budget) {
+      let index = this.programBudgetTabs.findIndex(t => t === current_program_budget.currentTab);
+      if (index > 0) {
+        current_program_budget.currentTab = this.programBudgetTabs[index - 1];
+        window.scrollTo(0, 0);
+        return;
+      }
+    }
+
     --this.stepperIndex;
+
+    let nextStepper = this.stepperElements[this.stepperIndex];
+    let next_program_budget = this.trans.programBudgets.find(pb => pb.name === nextStepper.itemName);
+    if (next_program_budget) {
+      next_program_budget.currentTab = this.programBudgetTabs[this.programBudgetTabs.length - 1];
+    }
+
     this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
   }
 }

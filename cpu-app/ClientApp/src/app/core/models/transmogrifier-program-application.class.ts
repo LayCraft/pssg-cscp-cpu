@@ -205,7 +205,8 @@ export class TransmogrifierProgramApplication {
         scheduledHours: p.vsd_totalscheduledhours || 0,
         onCallHours: p.vsd_totaloncallstandbyhours || 0,
         perType: p.vsd_cpu_per || 100000000,
-        removedStaff: []
+        removedStaff: [],
+        currentTab: "Contact Information",
       } as iProgramApplication;
 
       let programType = g.ProgramTypeCollection.find(pt => pt.vsd_programtypeid ===  p._vsd_programtype_value);

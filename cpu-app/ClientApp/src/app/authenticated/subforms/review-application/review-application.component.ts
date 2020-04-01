@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TransmogrifierProgramApplication } from '../../../core/models/transmogrifier-program-application.class';
 import { iProgramApplication } from '../../../core/models/program-application.interface';
 
@@ -9,8 +9,10 @@ import { iProgramApplication } from '../../../core/models/program-application.in
 })
 export class ReviewApplicationComponent implements OnInit {
   @Input() trans: TransmogrifierProgramApplication;
+  @Input() currentTab: string;
+  @Output() tabChange = new EventEmitter<string>();
 
-  currentTab: string = 'Application Information';
+  // currentTab: string = 'Application Information';
   tabs: string[] = ['Application Information'];
   tabIndex: number = 0;
 
@@ -22,12 +24,14 @@ export class ReviewApplicationComponent implements OnInit {
   setCurrentTab(tab: string) {
     this.currentTab = tab;
     this.tabIndex = this.tabs.indexOf(this.currentTab);
+    this.tabChange.emit(this.currentTab);
   }
   nextPage() {
     const index = this.tabs.indexOf(this.currentTab);
     if (!(index >= this.tabs.length - 1)) {
       this.currentTab = this.tabs[index + 1];
       this.tabIndex = index + 1;
+      this.tabChange.emit(this.currentTab);
       window.scrollTo(0, 0);
     }
   }
@@ -36,6 +40,7 @@ export class ReviewApplicationComponent implements OnInit {
     if (index > 0) {
       this.currentTab = this.tabs[index - 1];
       this.tabIndex = index - 1;
+      this.tabChange.emit(this.currentTab);
       window.scrollTo(0, 0);
     }
   }

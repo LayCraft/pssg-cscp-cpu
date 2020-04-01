@@ -15,7 +15,7 @@ export class ProgramBudgetComponent implements OnInit {
   @Output() programBudgetChange = new EventEmitter<iProgramBudget>();
 
   tabs: string[];
-  currentTab: string;
+  // currentTab: string;
   sections: string[];
   meta: {} = {
     totals: {
@@ -30,7 +30,7 @@ export class ProgramBudgetComponent implements OnInit {
 
   constructor() {
     this.tabs = ['Program Revenue Information', 'Program Expense'];
-    this.currentTab = this.tabs[0];
+    // this.programBudget.currentTab = this.tabs[0];
     this.sections = [
       'Salaries and Benefits',
       'Program Delivery Costs',
@@ -85,6 +85,6 @@ export class ProgramBudgetComponent implements OnInit {
       this.currentStepperElement.formState = formState;
     }
 
-    this.currentTab = tab;
+    this.programBudget.currentTab = tab;
   }
 }

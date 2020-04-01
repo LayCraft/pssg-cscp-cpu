@@ -16,4 +16,7 @@ export interface iProgramBudget {
   programDeliveryOtherExpenses: iExpenseItem[];
   revenueSources: iRevenueSource[];
   salariesAndBenefits: iSalaryAndBenefits[];
+
+  //for tracking selected sub-tab
+  currentTab: string;
 }

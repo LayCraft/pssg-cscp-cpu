@@ -21,7 +21,7 @@ export class ProgramComponent implements OnInit {
   @Output() programApplicationChange = new EventEmitter<iProgramApplication>();
   required = false;
   // the form model
-  currentTab: string;
+  // currentTab: string;
   differentProgramContact: boolean = false;
   persons: iPerson[] = [];
   trans: Transmogrifier;
@@ -39,10 +39,7 @@ export class ProgramComponent implements OnInit {
   constructor(
     private stateService: StateService
   ) {
-    this.tabs = ['Contact Information', 'Delivery Information',
-      // 'Reporting Requirements'
-    ];
-    this.currentTab = this.tabs[0];
+    this.tabs = ['Contact Information', 'Delivery Information'];
     this.emailRegex = EMAIL;
     this.phoneRegex = PHONE_NUMBER;
   }
@@ -56,6 +53,8 @@ export class ProgramComponent implements OnInit {
     this.personsObj.persons = this.programApplication.additionalStaff;
     this.personsObj.removedPersons = this.programApplication.removedStaff;
     this.perType = perTypeDict[this.programApplication.perType];
+
+    // this.programApplication.currentTab = this.tabs[0];
   }
 
   // form helpers. Validity hints and hide/show toggles
@@ -110,7 +109,7 @@ export class ProgramComponent implements OnInit {
 
   }
   setCurrentTab(tab) {
-    this.currentTab = tab;
+    this.programApplication.currentTab = tab;
   }
   setAddressSameAsAgency(person: iPerson) {
     person.address = this.trans.contactInformation.mainAddress;

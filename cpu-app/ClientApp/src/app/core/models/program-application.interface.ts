@@ -32,4 +32,7 @@ export interface iProgramApplication extends iContactInformation {
   operationHours: iHours[];
   standbyHours: iHours[];
   perType: number;
+
+  //for tracking selected sub-tab
+  currentTab: string;
 }
