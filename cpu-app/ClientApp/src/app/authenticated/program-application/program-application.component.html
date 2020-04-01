@@ -113,7 +113,7 @@
               </span>
             </div>
             <div *ngIf="item.discriminator === discriminators[4]">
-              <app-review-application [trans]="trans"></app-review-application>
+              <app-review-application [trans]="trans" [(currentTab)]="currentReviewApplicationTab" (tabIndexChange)="reviewApplicationTabChange($event)" ></app-review-application>
             </div>
             <div *ngIf="item.discriminator === discriminators[5]">
               <app-program-authorizer [(signature)]="trans.signature"></app-program-authorizer>

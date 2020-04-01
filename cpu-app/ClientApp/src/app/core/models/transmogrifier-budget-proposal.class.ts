@@ -73,7 +73,8 @@ export class TransmogrifierBudgetProposal {
         programDeliveryOtherExpenses: this.expenseItems(g.ProgramDeliveryCostCollection, d.vsd_programid, true),
         revenueSources: this.buildRevenueSources(g, d.vsd_programid),
         salariesAndBenefits: this.buildSalariesAndBenefits(g, d.vsd_programid),
-        contactLookupId: d._vsd_contactlookup_value || null
+        contactLookupId: d._vsd_contactlookup_value || null,
+        currentTab: 'Program Revenue Information'
       };
     })
   }

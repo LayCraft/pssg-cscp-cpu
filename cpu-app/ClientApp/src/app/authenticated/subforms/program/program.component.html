@@ -2,11 +2,11 @@
 
   <ul class="nav nav-pills mb-2">
     <li *ngFor="let tab of tabs" class="nav-item">
-      <a class="nav-link nav-tab" [class.active]="tab===currentTab" (click)="setCurrentTab(tab)">{{tab}}</a>
+      <a class="nav-link nav-tab" [class.active]="tab===programApplication.currentTab" (click)="setCurrentTab(tab)">{{tab}}</a>
     </li>
   </ul>
 
-  <div *ngIf="currentTab===tabs[0]">
+  <div *ngIf="programApplication.currentTab===tabs[0]">
     <h2 class="blue-header">Main Program Information</h2>
     <div class="form-group">
       <label for="programLocation">Program Location</label>
@@ -66,7 +66,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="currentTab===tabs[1]">
+  <div *ngIf="programApplication.currentTab===tabs[1]">
     <h2 class="blue-header">Program Schedule Hours of Operation (not including on-call / stand-by hours)</h2>
     <div *ngFor="let hours of programApplication.operationHours; let i=index">
       <ng-container *ngIf="hours.isActive">

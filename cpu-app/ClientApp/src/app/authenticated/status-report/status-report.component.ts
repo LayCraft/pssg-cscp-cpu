@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IconStepperService, iStepperElement } from '../../shared/icon-stepper/icon-stepper.service';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,19 +10,22 @@ import { iQuestionCollection } from '../../core/models/question-collection.inter
 import { StateService } from '../../core/services/state.service';
 import { FormHelper } from '../../core/form-helper';
 import { iQuestion } from '../../core/models/status-report-question.interface';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-status-report',
   templateUrl: './status-report.component.html',
   styleUrls: ['./status-report.component.css']
 })
-export class StatusReportComponent implements OnInit {
+export class StatusReportComponent implements OnInit, OnDestroy {
   data: any;
   trans: TransmogrifierStatusReport;
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
+  stepperIndex: number = 0;
   saving: boolean = false;
+  didload: boolean = false;
   public formHelper = new FormHelper();
   constructor(
     private notificationQueueService: NotificationQueueService,
@@ -34,6 +37,7 @@ export class StatusReportComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.didload = false;
     this.route.params.subscribe(p => {
       // collect information for collecting the data
       const organizationId: string = this.stateService.main.getValue().organizationId;
@@ -62,17 +66,40 @@ export class StatusReportComponent implements OnInit {
     });
 
     // Subscribe to the stepper elements
-    this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
+    this.stepperService.currentStepperElement.subscribe(e => {
+      if (this.currentStepperElement) {
+        let originalStepper = _.cloneDeep(this.currentStepperElement);
+        let formState = this.formHelper.getFormState();
+        if (originalStepper.formState === "valid" && formState === "untouched") {
+          //do nothing...
+        }
+        else if (this.didload) {
+          let index = this.stepperElements.findIndex(s => s.id === originalStepper.id);
+          if (index >= 0) {
+            if (!this.validateCurrentQuestionsAreFilledIn(index) || !this.validateCertainExplanationFieldsForCurrentTab(index)) {
+              this.currentStepperElement.formState = "invalid";
+            }
+            else {
+              this.currentStepperElement.formState = "valid";
+            }
+          }
+        }
+      }
+
+      this.currentStepperElement = e;
+
+      if (this.currentStepperElement && this.stepperElements) {
+        this.stepperIndex = this.stepperElements.findIndex(e => e.id === this.currentStepperElement.id);
+      }
+    });
+  }
+  ngOnDestroy() {
+    this.didload = false;
   }
   constructDefaultstepperElements() {
     this.stepperService.reset();
     this.trans.statusReportQuestions
-      // .sort((a, b) => {
-      //   if (a.name < b.name) return -1;
-      //   if (a.name > b.name) return 1;
-      //   return 0;
-      // })
       .map((srq: iQuestionCollection): iStepperElement => {
         return {
           itemName: srq.name,
@@ -86,6 +113,7 @@ export class StatusReportComponent implements OnInit {
       });
     // make the first element the selected one.
     this.stepperService.setToFirstStepperElement();
+    this.didload = true;
   }
   isCurrentStepperElement(item: iStepperElement): boolean {
     if (item.id === this.currentStepperElement.id) {
@@ -126,6 +154,11 @@ export class StatusReportComponent implements OnInit {
 
     if (!isValid) {
       this.notificationQueueService.addNotification(`Please answer all required questions.`, 'warning');
+      return;
+    }
+
+    if (!this.validateCertainExplanationFields()) {
+      this.notificationQueueService.addNotification(`Please answer required explanations.`, 'warning');
       return;
     }
 
@@ -171,5 +204,99 @@ export class StatusReportComponent implements OnInit {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
+  //There are 2 boolean questions that if answered yes, the explanation for that question is mandatory.
+  //Since there's only two, and this is required, AND there is a plan in place to improve the detection of mandatory fields in the future,
+  //we are hardcoding this for now and can't wait for the improvement to get implemented.
+  validateCertainExplanationFields() {
+    let isValid = true;
+    let questionCollections: iQuestionCollection[] = this.trans.statusReportQuestions;
 
+    questionCollections.forEach(qc => {
+      let questions: iQuestion[] = qc.questions;
+      for (let i = 0; i < questions.length; ++i) {
+        if ((questions[i].label === "Has the Program been understaffed for more than 30 days?" || questions[i].label === "Have there been any personnel changes to the program?")
+          && questions[i].boolean === true) {
+          if ((i + 1) >= questions.length) continue;
+          if (!questions[i + 1].string) {
+            isValid = false;
+          }
+        }
+      }
+    });
+
+    return isValid;
+  }
+  validateCertainExplanationFieldsForCurrentTab(index) {
+    let isValid = true;
+    let questionCollection: iQuestionCollection = this.trans.statusReportQuestions[index];
+
+    let questions: iQuestion[] = questionCollection.questions;
+    for (let i = 0; i < questions.length; ++i) {
+      if ((questions[i].label === "Has the Program been understaffed for more than 30 days?" || questions[i].label === "Have there been any personnel changes to the program?")
+        && questions[i].boolean === true) {
+        if ((i + 1) >= questions.length) continue;
+        if (!questions[i + 1].string) {
+          isValid = false;
+        }
+      }
+    }
+
+    return isValid;
+  }
+  validateCurrentQuestionsAreFilledIn(index = this.stepperIndex) {
+    let isValid = true;
+    let questionCollection: iQuestionCollection = this.trans.statusReportQuestions[index];
+    let questions: iQuestion[] = [];
+
+    if (questionCollection) questions = questionCollection.questions;
+    questions.forEach((q: iQuestion) => {
+      // depending on types we add another property
+      if (q.type === 'number' && (q.number === null || q.numberMask === "")) {
+        let stepperWithError = this.stepperElements[index];
+        if (stepperWithError) {
+          this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
+        }
+        isValid = false;
+      }
+      if (q.type === 'boolean' && q.boolean === null) {
+        let stepperWithError = this.stepperElements[index];
+        if (stepperWithError) {
+          this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
+        }
+        isValid = false;
+      }
+    });
+
+    return isValid;
+  }
+  setNextStepper() {
+    let originalStepper = _.cloneDeep(this.currentStepperElement);
+    let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
+    // if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
+    //   // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
+    //   return;
+    // }
+
+    if (!this.validateCurrentQuestionsAreFilledIn()) {
+      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');
+      this.notificationQueueService.addNotification(`Please answer all required questions.`, 'warning');
+      return;
+    }
+
+    if (!this.validateCertainExplanationFields()) {
+      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');
+      this.notificationQueueService.addNotification(`Please answer required explanations.`, 'warning');
+      return;
+    }
+    setTimeout(() => {
+      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'valid');
+    }, 0);
+
+    ++this.stepperIndex;
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+  }
+  setPreviousStepper() {
+    --this.stepperIndex;
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+  }
 }

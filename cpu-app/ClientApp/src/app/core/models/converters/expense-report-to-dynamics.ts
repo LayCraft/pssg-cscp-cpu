@@ -8,24 +8,32 @@ export function convertExpenseReportToDynamics(trans: TransmogrifierExpenseRepor
   // schedule g's
   const g: iDynamicsScheduleG = {};
 
-  if (trans.expenseReport.administrationValue) g.vsd_programadministrationcurrentquarter = trans.expenseReport.administrationValue;
   // administration costs
   if (trans.expenseReport.administrationAnnualBudget) g.vsd_yeartodateprogramadministration = trans.expenseReport.administrationAnnualBudget;
   if (trans.expenseReport.administrationDescription) g.vsd_programadministrationexplanation = trans.expenseReport.administrationDescription;
   if (trans.expenseReport.administrationQuarterlyBudget) g.vsd_quarterlybudgetedprogramadministration = trans.expenseReport.administrationQuarterlyBudget;
   if (trans.expenseReport.administrationValue) g.vsd_programadministrationcurrentquarter = trans.expenseReport.administrationValue;
+  g.vsd_quarterlyvarianceprogramadministration = (trans.expenseReport.administrationQuarterlyBudget || 0) - (trans.expenseReport.administrationValue || 0);
+  g.vsd_yeartodateprogramadministration = (trans.expenseReport.administrationValue || 0) + (trans.expenseReport.administrationYearToDate || 0);
+  g.vsd_yeartodatevarianceprogramadministration = ((trans.expenseReport.administrationQuarterlyBudget || 0) - (trans.expenseReport.administrationValue || 0)) + (trans.expenseReport.administrationYearToDateVariance || 0);
 
   // program delivery costs
   if (trans.expenseReport.programDeliveryAnnualBudget) g.vsd_yeartodateprogramdelivery = trans.expenseReport.programDeliveryAnnualBudget;
   if (trans.expenseReport.programDeliveryDescription) g.vsd_programdeliveryexplanations = trans.expenseReport.programDeliveryDescription;
   if (trans.expenseReport.programDeliveryQuarterlyBudget) g.vsd_quarterlybudgetedprogramdelivery = trans.expenseReport.programDeliveryQuarterlyBudget;
   if (trans.expenseReport.programDeliveryValue) g.vsd_programdeliverycurrentquarter = trans.expenseReport.programDeliveryValue;
+  g.vsd_quarterlyvarianceprogramdelivery = (trans.expenseReport.programDeliveryQuarterlyBudget || 0) - (trans.expenseReport.programDeliveryValue || 0);
+  g.vsd_yeartodateprogramdelivery = (trans.expenseReport.programDeliveryValue || 0) + (trans.expenseReport.programDeliveryYearToDate || 0);
+  g.vsd_yeartodatevarianceprogramdelivery = ((trans.expenseReport.programDeliveryQuarterlyBudget || 0) - (trans.expenseReport.programDeliveryValue || 0)) + (trans.expenseReport.programDeliveryYearToDateVariance || 0);
 
   // salaries and benefits costs
   if (trans.expenseReport.salariesBenefitsAnnualBudget) g.vsd_yeartodatesalariesandbenefits = trans.expenseReport.salariesBenefitsAnnualBudget;
   if (trans.expenseReport.salariesBenefitsDescription) g.vsd_salariesandbenefitsexplanation = trans.expenseReport.salariesBenefitsDescription;
   if (trans.expenseReport.salariesBenefitsQuarterlyBudget) g.vsd_quarterlybudgetedsalariesbenefits = trans.expenseReport.salariesBenefitsQuarterlyBudget;
   if (trans.expenseReport.salariesBenefitsValue) g.vsd_salariesbenefitscurrentquarter = trans.expenseReport.salariesBenefitsValue;
+  g.vsd_quarterlyvariancesalariesbenefits = (trans.expenseReport.salariesBenefitsQuarterlyBudget || 0) - (trans.expenseReport.salariesBenefitsValue || 0);
+  g.vsd_yeartodatesalariesandbenefits = (trans.expenseReport.salariesBenefitsValue || 0) + (trans.expenseReport.salariesBenefitsYearToDate || 0);
+  g.vsd_yeartodatevariancesalariesbenefits = ((trans.expenseReport.salariesBenefitsQuarterlyBudget || 0) - (trans.expenseReport.salariesBenefitsValue || 0)) + (trans.expenseReport.salariesBenefitsYearToDateVariance || 0);
 
   // contract service hours
   if (trans.expenseReport.serviceHoursQuarterlyActual) g.vsd_actualhoursthisquarter = trans.expenseReport.serviceHoursQuarterlyActual;
@@ -50,6 +58,9 @@ export function convertExpenseReportToDynamics(trans: TransmogrifierExpenseRepor
     const lineItem: iDynamicsScheduleGLineItemPost = {
       vsd_scheduleglineitemid: y.itemId,
       vsd_actualexpensescurrentquarter: y.actual || 0,
+      vsd_quarterlyvariance: (y.quarterlyBudget || 0) - (y.actual || 0),
+      vsd_actualexpendituresyeartodate: (y.actual || 0) + (y.actualYearToDate || 0),
+      vsd_yeartodatevariance: ((y.quarterlyBudget || 0) - (y.actual || 0)) + (y.yearToDateVariance || 0)
     };
     glis.push(lineItem);
   }

@@ -25,6 +25,10 @@ export class ProgramApplicationComponent implements OnInit {
   currentStepperElement: iStepperElement;
   stepperIndex: number = 0;
 
+  programTabs = ['Contact Information', 'Delivery Information'];
+  reviewApplicationTabs: string[] = ['Application Information'];
+  currentReviewApplicationTab: string = 'Application Information';
+
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
   saving: boolean = false;
 
@@ -65,6 +69,7 @@ export class ProgramApplicationComponent implements OnInit {
             this.trans = new TransmogrifierProgramApplication(f);
             console.log("Program application transmogrifier");
             console.log(this.trans);
+            this.trans.programApplications.forEach((p: iProgramApplication) => { this.reviewApplicationTabs.push(p.name) });
 
             this.constructDefaultstepperElements(this.trans);
           }
@@ -263,6 +268,28 @@ export class ProgramApplicationComponent implements OnInit {
       return;
     }
 
+    //handling for stepper elements that have sub tabs
+    if (originalStepper.discriminator === this.discriminators[3]) {
+      let current_program = this.trans.programApplications.find(pa => pa.name === originalStepper.itemName);
+      if (current_program) {
+        let index = this.programTabs.findIndex(t => t === current_program.currentTab);
+        if (index < (this.programTabs.length - 1)) {
+          current_program.currentTab = this.programTabs[index + 1];
+          window.scrollTo(0, 0);
+          return;
+        }
+      }
+    }
+
+    if (originalStepper.discriminator === this.discriminators[4]) {
+      let index = this.reviewApplicationTabs.findIndex(t => t === this.currentReviewApplicationTab);
+      if (index < (this.reviewApplicationTabs.length - 1)) {
+        this.currentReviewApplicationTab = this.reviewApplicationTabs[index + 1];
+        window.scrollTo(0, 0);
+        return;
+      }
+    }
+
     if (!this.trans.signature.signatureDate) {
       setTimeout(() => {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'saving');
@@ -274,11 +301,67 @@ export class ProgramApplicationComponent implements OnInit {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');
       });
     }
+
+
+
     ++this.stepperIndex;
+
+    //default to first sub tab
+    let nextStepper = this.stepperElements[this.stepperIndex];
+    if (nextStepper.discriminator === this.discriminators[3]) {
+      //set to first sub tab for this program
+      let current_program = this.trans.programApplications.find(pa => pa.name === nextStepper.itemName);
+      if (current_program) {
+        current_program.currentTab = this.programTabs[0];
+      }
+    }
+    if (nextStepper.discriminator === this.discriminators[4]) {
+      //set to first sub tab for review application
+      this.currentReviewApplicationTab = this.reviewApplicationTabs[0];
+    }
+
     this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
   }
   setPreviousStepper() {
+    if (this.currentStepperElement.discriminator === this.discriminators[3]) {
+      let current_program = this.trans.programApplications.find(pa => pa.name === this.currentStepperElement.itemName);
+      if (current_program) {
+        let index = this.programTabs.findIndex(t => t === current_program.currentTab);
+        if (index > 0) {
+          current_program.currentTab = this.programTabs[index - 1];
+          window.scrollTo(0, 0);
+          return;
+        }
+      }
+    }
+
+    if (this.currentStepperElement.discriminator === this.discriminators[4]) {
+      let index = this.reviewApplicationTabs.findIndex(t => t === this.currentReviewApplicationTab);
+      if (index > 0) {
+        this.currentReviewApplicationTab = this.reviewApplicationTabs[index - 1];
+        window.scrollTo(0, 0);
+        return;
+      }
+    }
     --this.stepperIndex;
+
+    //default to last sub tab
+    let nextStepper = this.stepperElements[this.stepperIndex];
+    if (nextStepper.discriminator === this.discriminators[3]) {
+      //set to last sub tab for this program
+      let current_program = this.trans.programApplications.find(pa => pa.name === nextStepper.itemName);
+      if (current_program) {
+        current_program.currentTab = this.programTabs[this.programTabs.length - 1];
+      }
+    }
+    if (nextStepper.discriminator === this.discriminators[4]) {
+      //set to last sub tab for review application
+      this.currentReviewApplicationTab = this.reviewApplicationTabs[this.reviewApplicationTabs.length - 1];
+    }
+
     this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+  }
+  reviewApplicationTabChange(tab: string) {
+    this.currentReviewApplicationTab = tab;
   }
 }

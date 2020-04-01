@@ -56,9 +56,9 @@
                     <td>
                       <input [(ngModel)]="trans.expenseReport.salariesBenefitsMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'salariesBenefitsValue')">
                     </td>
-                    <td>${{(trans.expenseReport.salariesBenefitsQuarterlyVariance)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.salariesBenefitsYearToDate)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.salariesBenefitsYearToDateVariance)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.salariesBenefitsYearToDateVariance + (trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue))|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Program Delivery</th>
@@ -67,9 +67,9 @@
                     <td>
                       <input [(ngModel)]="trans.expenseReport.programDeliveryMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="programDeliveryValue" name="programDeliveryValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'programDeliveryValue')">
                     </td>
-                    <td>${{(trans.expenseReport.programDeliveryQuarterlyVariance)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.programDeliveryYearToDate)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.programDeliveryYearToDateVariance)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.programDeliveryYearToDateVariance + (trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue))|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Program Administration</th>
@@ -78,9 +78,9 @@
                     <td>
                       <input [(ngModel)]="trans.expenseReport.administrationMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="administrationValue" name="administrationValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'administrationValue')">
                     </td>
-                    <td>${{(trans.expenseReport.administrationQuarterlyVariance)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.administrationYearToDate)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.administrationYearToDateVariance)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.administrationYearToDateVariance + (trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue))|number:'1.0-0'}}</td>
                   </tr>
                 </tbody>
                 <tfoot>
@@ -103,17 +103,24 @@
                     </td>
                     <td>
                       <strong>
-                        ${{(trans.expenseReport.salariesBenefitsQuarterlyVariance + trans.expenseReport.programDeliveryQuarterlyVariance + trans.expenseReport.administrationQuarterlyVariance)|number:'1.0-0'}}
+                        ${{(trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue
+                          + trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue
+                          + trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)|number:'1.0-0'}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{(trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.administrationYearToDate)|number:'1.0-0'}}
+                        ${{(trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue 
+                          + trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue 
+                          + trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)|number:'1.0-0'}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{(trans.expenseReport.salariesBenefitsYearToDateVariance + trans.expenseReport.programDeliveryYearToDateVariance + trans.expenseReport.administrationYearToDateVariance)|number:'1.0-0'}}
+                        ${{(trans.expenseReport.salariesBenefitsYearToDateVariance + (trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue)
+                           + trans.expenseReport.programDeliveryYearToDateVariance + (trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue)
+                            + trans.expenseReport.administrationYearToDateVariance + (trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)
+                            )|number:'1.0-0'}}
                       </strong>
                     </td>
                   </tr>
@@ -158,13 +165,13 @@
                       <input [(ngModel)]="item.mask" (input)="formHelper.moneyMaskToNumber($event.target, item, 'actual'); updateLineItemSums()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" [id]="item.itemId" [name]="item.itemId">
                     </td>
                     <td>
-                      ${{(item.quarterlyVariance)|number:'1.0-0'}}
+                      ${{(item.quarterlyBudget - item.actual)|number:'1.0-0'}}
                     </td>
                     <td>
-                      ${{(item.actualYearToDate)|number:'1.0-0'}}
+                      ${{(item.actualYearToDate + item.actual)|number:'1.0-0'}}
                     </td>
                     <td>
-                      ${{(item.yearToDateVariance)|number:'1.0-0'}}
+                      ${{(item.yearToDateVariance + (item.quarterlyBudget - item.actual))|number:'1.0-0'}}
                     </td>
                   </tr>
                 </tbody>

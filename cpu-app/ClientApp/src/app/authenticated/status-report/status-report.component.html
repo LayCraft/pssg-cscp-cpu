@@ -33,7 +33,7 @@
             <label for="month">
               Reporting Month
             </label>
-            <select name="month" [(ngModel)]="trans.reportingPeriod" class="custom-select">
+            <select name="month" [(ngModel)]="trans.reportingPeriod" class="custom-select reporting-month">
               <option value="January">January</option>
               <option value="February">February</option>
               <option value="March">March</option>
@@ -82,7 +82,7 @@
               </span>
               <span *ngIf="q.type==='number'">
                 <label [for]="q.uuid" class="is-required">{{i+1}}. {{q.label}}</label>
-                <input [(ngModel)]="q.numberMask" type="text" mask="0000" class="form-control" [id]="q.uuid" (input)="formHelper.maskToNumber($event.target, q, 'number')">
+                <input [(ngModel)]="q.numberMask" type="text" mask="separator.2" separatorLimit="1000" thousandSeparator="," class="form-control" [id]="q.uuid" (input)="formHelper.maskToNumber($event.target, q, 'number')">
               </span>
             </div>
           </span>
@@ -90,14 +90,15 @@
       </div>
     </div>
   </div>
-  <!--
-    <div class="row">
-      <div class="col-6">
-        <pre>{{data|json}}</pre>
-        </div>
-        <div class="col-6">
-          <pre>{{trans|json}}</pre>
-          </div>
-          </div>
-          -->
+
+
+  <div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-8">
+      <span><button *ngIf="stepperIndex > 0" class="btn btn-primary mt-2 previous-button" (click)="setPreviousStepper()">Previous</button></span>
+      <span><button *ngIf="stepperIndex < stepperElements.length - 1" class="btn btn-primary mt-2 next-button" (click)="setNextStepper()">Next</button></span>
+      <!-- <span><button *ngIf="stepperIndex == stepperElements.length -1" class="btn btn-primary mt-2 submit-button" [class.is-disabled]="!trans.signature.signatureDate" (click)="submit()">Submit</button></span> -->
+    </div>
+  </div>
 </div>

@@ -166,15 +166,15 @@ export class ExpenseReportComponent implements OnInit {
       .reduce((prev, curr) => prev + curr);
     //quarterly variance
     this.lineItemSums['quarterlyVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
-      .map(l => l.quarterlyVariance)
+      .map(l => l.quarterlyBudget - l.actual)
       .reduce((prev, curr) => prev + curr);
-    //Actual YTD sum
+    // //Actual YTD sum
     this.lineItemSums['actualYearToDateSum'] = this.trans.expenseReport.programExpenseLineItems
-      .map(l => l.actualYearToDate)
+      .map(l => l.actualYearToDate + l.actual)
       .reduce((prev, curr) => prev + curr);
-    //YTD variance
+    // //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
-      .map(l => l.yearToDateVariance)
+      .map(l => l.yearToDateVariance + (l.quarterlyBudget - l.actual))
       .reduce((prev, curr) => prev + curr);
   }
   updateLineItemSums() {
@@ -183,17 +183,17 @@ export class ExpenseReportComponent implements OnInit {
       .map(l => l.actual)
       .reduce((prev, curr) => prev + curr);
     //quarterly variance
-    // this.lineItemSums['quarterlyVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
-    //   .map(l => l.quarterlyVariance - l.actual)
-    //   .reduce((prev, curr) => prev + curr);
+    this.lineItemSums['quarterlyVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
+      .map(l => l.quarterlyBudget - l.actual)
+      .reduce((prev, curr) => prev + curr);
     // //Actual YTD sum
-    // this.lineItemSums['actualYearToDateSum'] = this.trans.expenseReport.programExpenseLineItems
-    //   .map(l => l.actualYearToDate + l.actual)
-    //   .reduce((prev, curr) => prev + curr);
+    this.lineItemSums['actualYearToDateSum'] = this.trans.expenseReport.programExpenseLineItems
+      .map(l => l.actualYearToDate + l.actual)
+      .reduce((prev, curr) => prev + curr);
     // //YTD variance
-    // this.lineItemSums['annualVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
-    //   .map(l => l.yearToDateVariance - l.actual)
-    //   .reduce((prev, curr) => prev + curr);
+    this.lineItemSums['annualVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
+      .map(l => l.yearToDateVariance + (l.quarterlyBudget - l.actual))
+      .reduce((prev, curr) => prev + curr);
   }
   save(isSubmit: boolean = false) {
     if (!this.formHelper.isFormValid(this.notificationQueueService)) {
@@ -202,6 +202,7 @@ export class ExpenseReportComponent implements OnInit {
     this.saving = true;
     console.log(this.trans);
     this.out = convertExpenseReportToDynamics(this.trans);
+    console.log(this.out);
     this.expenseReportService.setExpenseReport(this.out).subscribe(
       r => {
         console.log(r);
