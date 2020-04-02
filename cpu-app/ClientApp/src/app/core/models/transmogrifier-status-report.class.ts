@@ -8,6 +8,8 @@ import { months } from "../constants/month-codes";
 export class TransmogrifierStatusReport {
   public organizationId: string;
   public organizationName: string;
+  public taskId: string;
+  public title: string;
   public userId: string;
   public programId: string;
   public programName: string;

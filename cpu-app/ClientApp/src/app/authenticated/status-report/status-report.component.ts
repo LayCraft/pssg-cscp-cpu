@@ -11,6 +11,7 @@ import { StateService } from '../../core/services/state.service';
 import { FormHelper } from '../../core/form-helper';
 import { iQuestion } from '../../core/models/status-report-question.interface';
 import * as _ from 'lodash';
+import { Transmogrifier } from '../../core/models/transmogrifier.class';
 
 @Component({
   selector: 'app-status-report',
@@ -20,6 +21,7 @@ import * as _ from 'lodash';
 export class StatusReportComponent implements OnInit, OnDestroy {
   data: any;
   trans: TransmogrifierStatusReport;
+  mainTrans: Transmogrifier;
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
@@ -38,6 +40,7 @@ export class StatusReportComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.didload = false;
+    this.mainTrans = this.stateService.main.getValue();
     this.route.params.subscribe(p => {
       // collect information for collecting the data
       const organizationId: string = this.stateService.main.getValue().organizationId;
@@ -58,10 +61,21 @@ export class StatusReportComponent implements OnInit, OnDestroy {
             this.data = r;
             // construct the stepper
             this.trans = new TransmogrifierStatusReport(r);
+            this.trans.taskId = p['taskId'];
+            let contract = this.mainTrans.contracts.find(c => c.contractNumber === this.trans.contractNumber);
+            let title = (this.trans.reportingPeriod ? this.trans.reportingPeriod : 'Monthly') + 'Status Report';
+            if (contract) {
+              let thisTask = contract.tasks.find(t => t.taskId === this.trans.taskId);
+              if (thisTask) title = thisTask.taskTitle;
+            }
+
+            this.trans.title = title;
+
             console.log("dynamics data status report:");
             console.log(r);
             console.log("trans");
             console.log(this.trans);
+
             this.constructDefaultstepperElements();
           }
         });
@@ -177,7 +191,7 @@ export class StatusReportComponent implements OnInit, OnDestroy {
       }
 
       // submit the answers
-      this.statusReportService.setStatusReportAnswers(this.trans.programId, statusReport)
+      this.statusReportService.setStatusReportAnswers(this.trans.taskId, statusReport)
         .subscribe(
           r => {
             this.saving = false;
