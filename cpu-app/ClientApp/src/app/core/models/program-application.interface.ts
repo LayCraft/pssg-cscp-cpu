@@ -21,6 +21,7 @@ export interface iProgramApplication extends iContactInformation {
   removedStaff: iPerson[];
   mailingAddress: iAddress;
   mainAddress: iAddress;
+  mainAddressSameAsAgency: boolean;
   programContact: iPerson;
   policeContact: iPerson;
   hasPoliceContact: boolean;

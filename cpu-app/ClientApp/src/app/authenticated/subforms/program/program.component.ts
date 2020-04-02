@@ -10,6 +10,7 @@ import { iProgramApplication } from '../../../core/models/program-application.in
 import { EMAIL, PHONE_NUMBER } from '../../../core/constants/regex.constants';
 import { iHours } from '../../../core/models/hours.interface';
 import { perTypeDict } from '../../../core/constants/per-type';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-program',
@@ -112,6 +113,13 @@ export class ProgramComponent implements OnInit {
     this.programApplication.currentTab = tab;
   }
   setAddressSameAsAgency(person: iPerson) {
-    person.address = this.trans.contactInformation.mainAddress;
+    let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
+    person.address = addressCopy;
+  }
+  setMainAddressSameAsAgency() {
+    if (!this.programApplication.mainAddressSameAsAgency) {
+      let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
+      this.programApplication.mainAddress = addressCopy;
+    }
   }
 }

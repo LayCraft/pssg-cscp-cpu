@@ -14,6 +14,7 @@ import { boolOptionSet } from '../constants/bool-optionset-values';
 import { perTypeDict } from '../constants/per-type';
 import { Person } from './person.class';
 import { employmentStatusTypeDict } from '../constants/employment-status-types';
+import * as _ from 'lodash';
 
 export class TransmogrifierProgramApplication {
   accountId: string;// this is the dynamics account
@@ -188,12 +189,12 @@ export class TransmogrifierProgramApplication {
           .map(s => this.makePerson(g, s.contactid))[0] || null,
 
         policeContact: g.StaffCollection
-        .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup2_value === c.contactid)
-        .map(s => this.makePerson(g, s.contactid))[0] || null,
+          .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup2_value === c.contactid)
+          .map(s => this.makePerson(g, s.contactid))[0] || null,
 
         sharedCostContact: g.StaffCollection
-        .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup3_value === c.contactid)
-        .map(s => this.makePerson(g, s.contactid))[0] || null,
+          .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup3_value === c.contactid)
+          .map(s => this.makePerson(g, s.contactid))[0] || null,
 
         // revenueSources: [],//iRevenueSource[];
         additionalStaff: g.ProgramContactCollection
@@ -209,7 +210,11 @@ export class TransmogrifierProgramApplication {
         currentTab: "Contact Information",
       } as iProgramApplication;
 
-      let programType = g.ProgramTypeCollection.find(pt => pt.vsd_programtypeid ===  p._vsd_programtype_value);
+      if (_.isEqual(temp.mainAddress, this.contactInformation.mainAddress)) {
+        temp.mainAddressSameAsAgency = true;
+      }
+
+      let programType = g.ProgramTypeCollection.find(pt => pt.vsd_programtypeid === p._vsd_programtype_value);
       temp.isPoliceBased = programType ? programType.vsd_programcategory === 100000000 : false;
       temp.programLocation = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid).map(a => a.vsd_name)[0] || 'Unknown';
       temp.hasPoliceContact = temp.policeContact ? true : false;

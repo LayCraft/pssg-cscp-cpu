@@ -13,6 +13,7 @@ import { nameAssemble } from '../../core/constants/name-assemble';
 import { convertPersonnelToDynamics } from '../../core/models/converters/personnel-to-dynamics';
 import { FormHelper } from '../../core/form-helper';
 import { FormGroup } from '@angular/forms';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-personnel',
@@ -160,6 +161,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     this.stepperService.setStepperElement(element);
   }
   setAddressSameAsAgency(person: iPerson) {
-    person.address = this.trans.contactInformation.mainAddress;
+    let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
+    person.address = addressCopy;
   }
 }
