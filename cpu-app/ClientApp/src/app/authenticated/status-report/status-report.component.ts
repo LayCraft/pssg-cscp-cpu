@@ -42,6 +42,8 @@ export class StatusReportComponent implements OnInit, OnDestroy {
       // collect information for collecting the data
       const organizationId: string = this.stateService.main.getValue().organizationId;
       const userId: string = this.stateService.main.getValue().userId;
+      console.log(p);
+      console.log(p['taskId']);
 
       this.statusReportService.getStatusReportQuestions(organizationId, userId, p['taskId'])
         .subscribe(r => {

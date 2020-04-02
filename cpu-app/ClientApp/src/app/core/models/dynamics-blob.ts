@@ -350,6 +350,7 @@ export interface iDynamicsMonthlyStatisticsQuestions {
   Program?: iDynamicsMonthlyStatisticsQuestionsProgram;
   ProgramTypeCollection?: iDynamicsMonthlyStatisticsProgramType[];
   QuestionCollection?: iDynamicsMonthlyStatisticsQuestionsQuestion[];
+  ReportingPeriod?: number;
   Result: string;
   Userbceid?: string;
 }

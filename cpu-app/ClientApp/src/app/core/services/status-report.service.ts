@@ -17,14 +17,17 @@ export class StatusReportService {
     private http: HttpClient,
   ) { }
 
-  getStatusReportQuestions(organizationId: string, userId: string, programId: string): Observable<iDynamicsMonthlyStatisticsQuestions> {
-    return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/${organizationId}/${userId}/${programId}`, { headers: this.headers }).pipe(
+  getStatusReportQuestions(organizationId: string, userId: string, taskId: string): Observable<iDynamicsMonthlyStatisticsQuestions> {
+    console.log(taskId);
+    let full_endpoint = `${this.apiUrl}/${organizationId}/${userId}/${taskId}`;
+    console.log(full_endpoint);
+    return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/${organizationId}/${userId}/${taskId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
-  setStatusReportAnswers(programId: string, answers: iDynamicsPostStatusReport): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/${programId}`, answers, { headers: this.headers }).pipe(
+  setStatusReportAnswers(taskId: string, answers: iDynamicsPostStatusReport): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${taskId}`, answers, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
