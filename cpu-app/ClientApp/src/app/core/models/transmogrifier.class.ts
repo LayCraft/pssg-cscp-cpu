@@ -104,7 +104,7 @@ export class Transmogrifier {
       return t._vsd_schedulegid_value;//works
     }
     if (discriminator === 'status_report') {
-      return programId;
+      return t.activityid;
     }
     if (discriminator === 'program_application') {
       return contractId;//works

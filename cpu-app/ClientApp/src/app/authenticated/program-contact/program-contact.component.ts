@@ -14,6 +14,7 @@ import { ProgramApplicationService } from '../../core/services/program-applicati
 import { TransmogrifierProgramApplication } from '../../core/models/transmogrifier-program-application.class';
 import { convertProgramApplicationToDynamics } from '../../core/models/converters/program-application-to-dynamics';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-program-contact',
@@ -161,6 +162,12 @@ export class ProgramContactComponent implements OnInit {
     else {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
+    }
+  }
+  setMainAddressSameAsAgency() {
+    if (!this.programApplication.mainAddressSameAsAgency) {
+      let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
+      this.programApplication.mainAddress = addressCopy;
     }
   }
 }

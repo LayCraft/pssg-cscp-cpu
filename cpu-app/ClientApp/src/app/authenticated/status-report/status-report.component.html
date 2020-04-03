@@ -12,10 +12,14 @@
                 <strong>Contract No</strong><br>
                 {{trans.contractNumber}}
               </p>
+              <p class="card-text">
+                <strong>Program</strong><br>
+                {{trans.programName}}{{trans.programType ? ' - ' + trans.programType: ''}}
+              </p>
             </div>
           </div>
         </div>
-        
+
         <app-icon-stepper></app-icon-stepper>
         <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" (click)="submit()">Submit</button>
         <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
@@ -25,11 +29,11 @@
     <div class="col-md-8">
       <div *ngIf="stepperElements && currentStepperElement">
         <div class="page-header">
-          <h1>{{trans.reportingPeriod?trans.reportingPeriod:'Monthly'}} Status Report</h1>
-          <p>
+          <h1>{{trans.title}}</h1>
+          <!-- <p>
             {{trans.programName}}{{trans.programType ? ' - ' + trans.programType: ''}}
-          </p>
-          <div class="form-group">
+          </p> -->
+          <!-- <div class="form-group">
             <label for="month">
               Reporting Month
             </label>
@@ -47,7 +51,7 @@
               <option value="November">November</option>
               <option value="December">December</option>
             </select>
-          </div>
+          </div> -->
         </div>
         <span *ngFor="let group of trans.statusReportQuestions">
           <span *ngIf="this.currentStepperElement.itemName===group.name">

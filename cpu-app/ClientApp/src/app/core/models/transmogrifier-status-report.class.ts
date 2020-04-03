@@ -3,10 +3,13 @@ import { iQuestion, iMultipleChoice } from "./status-report-question.interface"
 import { iQuestionCollection } from "./question-collection.interface";
 import { iDynamicsPostStatusReport } from "./dynamics-post";
 import { iContract } from "./contract.interface";
+import { months } from "../constants/month-codes";
 // a collection of the expense item guids as K/V pairs for generating line items
 export class TransmogrifierStatusReport {
   public organizationId: string;
   public organizationName: string;
+  public taskId: string;
+  public title: string;
   public userId: string;
   public programId: string;
   public programName: string;
@@ -20,7 +23,7 @@ export class TransmogrifierStatusReport {
     this.organizationId = g.Businessbceid;// this is the organization's bceid
     this.organizationName = g.Organization.name;
     this.programId = g.Program.vsd_programid;
-    this.reportingPeriod = null; // TODO: where does this come from
+    this.reportingPeriod = Object.keys(months).find(key => months[key] === g.ReportingPeriod);
     this.programType = g.ProgramTypeCollection.filter(f => g.Program._vsd_programtype_value === f.vsd_programtypeid).map(f => f.vsd_name)[0];
     this.programName = g.Program.vsd_name;
     this.contractNumber = g.Contract.vsd_name;
@@ -80,7 +83,7 @@ export class TransmogrifierStatusReport {
       return tempQuestionCollection;
     }
     else {
-      return; 
+      return;
     }
   }
 

@@ -25,8 +25,8 @@ export class TransmogrifierExpenseReport {
       salariesBenefitsValue: g.ScheduleG.vsd_salariesbenefitscurrentquarter || 0,
       salariesBenefitsMask: g.ScheduleG.vsd_salariesbenefitscurrentquarter ? g.ScheduleG.vsd_salariesbenefitscurrentquarter.toString() : "0",
       salariesBenefitsQuarterlyVariance: g.ScheduleG.vsd_quarterlyvariancesalariesbenefits || 0,
-      salariesBenefitsYearToDate: g.ScheduleG.vsd_yeartodatesalariesandbenefits || 0,
-      salariesBenefitsYearToDateVariance: g.ScheduleG.vsd_yeartodatevariancesalariesbenefits || 0,
+      salariesBenefitsYearToDate: (g.ScheduleG.vsd_yeartodatesalariesandbenefits || 0) - (g.ScheduleG.vsd_salariesbenefitscurrentquarter || 0),
+      salariesBenefitsYearToDateVariance: (g.ScheduleG.vsd_yeartodatevariancesalariesbenefits || 0) - (g.ScheduleG.vsd_salariesbenefitscurrentquarter || 0),
 
       // program delivery costs
       programDeliveryDescription: g.ScheduleG.vsd_programdeliveryexplanations || '',
@@ -35,8 +35,8 @@ export class TransmogrifierExpenseReport {
       programDeliveryValue: g.ScheduleG.vsd_programdeliverycurrentquarter || 0,
       programDeliveryMask: g.ScheduleG.vsd_programdeliverycurrentquarter ? g.ScheduleG.vsd_programdeliverycurrentquarter.toString() : "0",
       programDeliveryQuarterlyVariance: g.ScheduleG.vsd_quarterlyvarianceprogramdelivery || 0,
-      programDeliveryYearToDate: g.ScheduleG.vsd_yeartodateprogramdelivery || 0,
-      programDeliveryYearToDateVariance: g.ScheduleG.vsd_yeartodatevarianceprogramdelivery || 0,
+      programDeliveryYearToDate: (g.ScheduleG.vsd_yeartodateprogramdelivery || 0) - (g.ScheduleG.vsd_programdeliverycurrentquarter || 0),
+      programDeliveryYearToDateVariance: (g.ScheduleG.vsd_yeartodatevarianceprogramdelivery || 0) - (g.ScheduleG.vsd_programdeliverycurrentquarter || 0),
 
       // administration costs
       administrationDescription: g.ScheduleG.vsd_programadministrationexplanation || '',
@@ -45,8 +45,8 @@ export class TransmogrifierExpenseReport {
       administrationValue: g.ScheduleG.vsd_programadministrationcurrentquarter || 0,
       administrationMask: g.ScheduleG.vsd_programadministrationcurrentquarter ? g.ScheduleG.vsd_programadministrationcurrentquarter.toString() : "0",
       administrationQuarterlyVariance: g.ScheduleG.vsd_quarterlyvarianceprogramadministration || 0,
-      administrationYearToDate: g.ScheduleG.vsd_yeartodateprogramadministration || 0,
-      administrationYearToDateVariance: g.ScheduleG.vsd_yeartodatevarianceprogramadministration || 0,
+      administrationYearToDate: (g.ScheduleG.vsd_yeartodateprogramadministration || 0) - (g.ScheduleG.vsd_programadministrationcurrentquarter || 0),
+      administrationYearToDateVariance: (g.ScheduleG.vsd_yeartodatevarianceprogramadministration || 0) - (g.ScheduleG.vsd_programadministrationcurrentquarter || 0),
 
       // contract service hours
       serviceHoursQuarterlyActual: g.ScheduleG.vsd_actualhoursthisquarter || 0,
@@ -70,8 +70,8 @@ export class TransmogrifierExpenseReport {
           actual: item.vsd_actualexpensescurrentquarter || 0,
           mask: item.vsd_actualexpensescurrentquarter ? item.vsd_actualexpensescurrentquarter.toString() : "0",
           quarterlyVariance: item.vsd_quarterlyvariance || 0,
-          actualYearToDate: item.vsd_actualexpendituresyeartodate || 0,
-          yearToDateVariance: item.vsd_yeartodatevariance || 0,
+          actualYearToDate: (item.vsd_actualexpendituresyeartodate || 0) - (item.vsd_actualexpensescurrentquarter || 0),
+          yearToDateVariance: (item.vsd_yeartodatevariance || 0) - (item.vsd_actualexpensescurrentquarter || 0),
         });
       }
     }
