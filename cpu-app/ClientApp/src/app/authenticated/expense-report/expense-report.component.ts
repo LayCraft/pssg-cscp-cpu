@@ -174,7 +174,7 @@ export class ExpenseReportComponent implements OnInit {
       .reduce((prev, curr) => prev + curr);
     // //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
-      .map(l => l.yearToDateVariance + (l.quarterlyBudget - l.actual))
+      .map(l => l.annualBudget - (l.actualYearToDate + l.actual))
       .reduce((prev, curr) => prev + curr);
   }
   updateLineItemSums() {
@@ -192,7 +192,7 @@ export class ExpenseReportComponent implements OnInit {
       .reduce((prev, curr) => prev + curr);
     // //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
-      .map(l => l.yearToDateVariance + (l.quarterlyBudget - l.actual))
+      .map(l => l.annualBudget - (l.actualYearToDate + l.actual))
       .reduce((prev, curr) => prev + curr);
   }
   save(isSubmit: boolean = false) {

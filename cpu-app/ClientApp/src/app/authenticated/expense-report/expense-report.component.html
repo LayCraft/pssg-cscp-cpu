@@ -58,7 +58,7 @@
                     </td>
                     <td>${{(trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
                     <td>${{(trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.salariesBenefitsYearToDateVariance + (trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue))|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget - (trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue))|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Program Delivery</th>
@@ -69,7 +69,7 @@
                     </td>
                     <td>${{(trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
                     <td>${{(trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.programDeliveryYearToDateVariance + (trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue))|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.programDeliveryAnnualBudget - (trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue))|number:'1.0-0'}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Program Administration</th>
@@ -80,7 +80,7 @@
                     </td>
                     <td>${{(trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)|number:'1.0-0'}}</td>
                     <td>${{(trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.administrationYearToDateVariance + (trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue))|number:'1.0-0'}}</td>
+                    <td>${{(trans.expenseReport.administrationAnnualBudget - (trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue))|number:'1.0-0'}}</td>
                   </tr>
                 </tbody>
                 <tfoot>
@@ -117,9 +117,9 @@
                     </td>
                     <td>
                       <strong>
-                        ${{(trans.expenseReport.salariesBenefitsYearToDateVariance + (trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue)
-                           + trans.expenseReport.programDeliveryYearToDateVariance + (trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue)
-                            + trans.expenseReport.administrationYearToDateVariance + (trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)
+                        ${{(trans.expenseReport.salariesBenefitsAnnualBudget - (trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue)
+                           + trans.expenseReport.programDeliveryAnnualBudget - (trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue)
+                            + trans.expenseReport.administrationAnnualBudget - (trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)
                             )|number:'1.0-0'}}
                       </strong>
                     </td>
@@ -171,7 +171,7 @@
                       ${{(item.actualYearToDate + item.actual)|number:'1.0-0'}}
                     </td>
                     <td>
-                      ${{(item.yearToDateVariance + (item.quarterlyBudget - item.actual))|number:'1.0-0'}}
+                      ${{(item.annualBudget - (item.actualYearToDate + item.actual))|number:'1.0-0'}}
                     </td>
                   </tr>
                 </tbody>
