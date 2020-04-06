@@ -4,7 +4,7 @@
       <div class="jumbotron">
         <h1 class="display-4">Victims Services: Community Programs Unit</h1>
         <button class="btn btn-primary btn-lg mr-2 mb-2" (click)="login()">{{loggedIn ? 'Go to Dashboard' : 'Login'}}</button>
-        <!-- <button class="btn btn-primary btn-lg mr-2 mb-2" routerLink="/test">Test</button> -->
+        <!-- <button class="btn btn-primary btn-lg mr-2 mb-2" routerLink="/authenticated/new_user">Test New User</button> -->
         <button class="btn btn-primary btn-lg mr-2 mb-2" *ngIf="loggedIn" (click)="logout()">Log Out</button>
       </div>
     </div>

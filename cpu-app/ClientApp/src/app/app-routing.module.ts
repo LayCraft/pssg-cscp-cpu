@@ -11,7 +11,7 @@ import { ProfileComponent } from './authenticated/profile/profile.component';
 import { ProgramApplicationComponent } from './authenticated/program-application/program-application.component';
 import { StatusReportComponent } from './authenticated/status-report/status-report.component';
 import { TestComponent } from './test/test.component';
-import { NotUserComponent } from './authenticated/not-user/not-user.component';
+import { NewUserComponent } from './authenticated/new-user/new-user.component';
 import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.component';
 import { ProgramContactComponent } from './authenticated/program-contact/program-contact.component';
 import { DownloadDocumentComponent } from './authenticated/download-document/download-document.component';
@@ -92,7 +92,7 @@ const routes: Routes = [
       },
       {
         path: 'new_user',
-        component: NotUserComponent
+        component: NewUserComponent
       },
       {
         path: 'program/:contractId/:programId',
