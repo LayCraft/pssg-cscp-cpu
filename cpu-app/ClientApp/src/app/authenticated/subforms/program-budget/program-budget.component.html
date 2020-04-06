@@ -48,28 +48,27 @@
       <tbody>
         <tr *ngIf="meta[sections[0]]">
           <td>{{sections[0]}}</td>
-          <td>${{meta[sections[0]].totalCost||0 | number}}</td>
-          <td>${{meta[sections[0]].totalVscp||0 | number}}</td>
+          <td>{{meta[sections[0]].totalCost||0 | currency}}</td>
+          <td>{{meta[sections[0]].totalVscp||0 | currency}}</td>
           <td>{{meta[sections[0]].totalPercentFundedByVscp||0}}%</td>
         </tr>
         <tr *ngIf="meta[sections[1]]">
           <td>{{sections[1]}}</td>
-          <td>${{meta[sections[1]].totalCost||0 | number}}</td>
-          <td>${{meta[sections[1]].totalVscp||0 | number}}</td>
+          <td>{{meta[sections[1]].totalCost||0 | currency}}</td>
+          <td>{{meta[sections[1]].totalVscp||0 | currency}}</td>
           <td>{{meta[sections[1]].totalPercentFundedByVscp||0}}%</td>
         </tr>
         <tr *ngIf="meta[sections[2]]">
           <td>{{sections[2]}}</td>
-          <td>${{meta[sections[2]].totalCost||0 | number}}</td>
-          <td>${{meta[sections[2]].totalVscp||0 | number}}</td>
+          <td>{{meta[sections[2]].totalCost||0 | currency}}</td>
+          <td>{{meta[sections[2]].totalVscp||0 | currency}}</td>
           <td>{{meta[sections[2]].totalPercentFundedByVscp||0}}%</td>
         </tr>
         <tr>
           <th scope="row">Total Program Expenditures</th>
-          <td>${{meta['totals'].totalCost||0 | number}}</td>
-          <td>${{meta['totals'].totalVscp||0 | number}}</td>
+          <td>{{meta['totals'].totalCost||0 | currency}}</td>
+          <td>{{meta['totals'].totalVscp||0 | currency}}</td>
           <td>{{meta['totals'].totalPercentFundedByVscp||0}}%</td>
-          <!--  or ${{(meta['totals'].totalCost||0)+meta['totals'].totalVscp||0  | number}} -->
         </tr>
       </tbody>
     </table>
