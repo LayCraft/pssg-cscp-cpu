@@ -51,36 +51,36 @@
                 <tbody>
                   <tr>
                     <th scope="row">Salaries and Benefits</th>
-                    <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget|number:'1.0-0')||0}}</td>
-                    <td>${{(trans.expenseReport.salariesBenefitsQuarterlyBudget|number:'1.0-0')||0}}</td>
+                    <td>{{(trans.expenseReport.salariesBenefitsAnnualBudget|currency)||0}}</td>
+                    <td>{{(trans.expenseReport.salariesBenefitsQuarterlyBudget|currency)||0}}</td>
                     <td>
                       <input [(ngModel)]="trans.expenseReport.salariesBenefitsMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'salariesBenefitsValue')">
                     </td>
-                    <td>${{(trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.salariesBenefitsAnnualBudget - (trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue))|number:'1.0-0'}}</td>
+                    <td>{{(trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue)|currency}}</td>
+                    <td>{{(trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue)|currency}}</td>
+                    <td>{{(trans.expenseReport.salariesBenefitsAnnualBudget - (trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue))|currency}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Program Delivery</th>
-                    <td>${{(trans.expenseReport.programDeliveryAnnualBudget|number:'1.0-0')||0}}</td>
-                    <td>${{(trans.expenseReport.programDeliveryQuarterlyBudget|number:'1.0-0')||0}}</td>
+                    <td>{{(trans.expenseReport.programDeliveryAnnualBudget|currency)||0}}</td>
+                    <td>{{(trans.expenseReport.programDeliveryQuarterlyBudget|currency)||0}}</td>
                     <td>
                       <input [(ngModel)]="trans.expenseReport.programDeliveryMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="programDeliveryValue" name="programDeliveryValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'programDeliveryValue')">
                     </td>
-                    <td>${{(trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.programDeliveryAnnualBudget - (trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue))|number:'1.0-0'}}</td>
+                    <td>{{(trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue)|currency}}</td>
+                    <td>{{(trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue)|currency}}</td>
+                    <td>{{(trans.expenseReport.programDeliveryAnnualBudget - (trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue))|currency}}</td>
                   </tr>
                   <tr>
                     <th scope="row">Program Administration</th>
-                    <td>${{(trans.expenseReport.administrationAnnualBudget|number:'1.0-0')||0}}</td>
-                    <td>${{(trans.expenseReport.administrationQuarterlyBudget|number:'1.0-0')||0}}</td>
+                    <td>{{(trans.expenseReport.administrationAnnualBudget|currency)||0}}</td>
+                    <td>{{(trans.expenseReport.administrationQuarterlyBudget|currency)||0}}</td>
                     <td>
                       <input [(ngModel)]="trans.expenseReport.administrationMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="administrationValue" name="administrationValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'administrationValue')">
                     </td>
-                    <td>${{(trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)|number:'1.0-0'}}</td>
-                    <td>${{(trans.expenseReport.administrationAnnualBudget - (trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue))|number:'1.0-0'}}</td>
+                    <td>{{(trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)|currency}}</td>
+                    <td>{{(trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)|currency}}</td>
+                    <td>{{(trans.expenseReport.administrationAnnualBudget - (trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue))|currency}}</td>
                   </tr>
                 </tbody>
                 <tfoot>
@@ -88,39 +88,39 @@
                     <th scope="row">Total</th>
                     <td>
                       <strong>
-                        ${{(trans.expenseReport.salariesBenefitsAnnualBudget + trans.expenseReport.programDeliveryAnnualBudget + trans.expenseReport.administrationAnnualBudget)||0 |number:'1.0-0'}}
+                        {{(trans.expenseReport.salariesBenefitsAnnualBudget + trans.expenseReport.programDeliveryAnnualBudget + trans.expenseReport.administrationAnnualBudget)||0 |currency}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{(trans.expenseReport.salariesBenefitsQuarterlyBudget + trans.expenseReport.programDeliveryQuarterlyBudget + trans.expenseReport.administrationQuarterlyBudget)||0|number:'1.0-0'}}
+                        {{(trans.expenseReport.salariesBenefitsQuarterlyBudget + trans.expenseReport.programDeliveryQuarterlyBudget + trans.expenseReport.administrationQuarterlyBudget)||0|currency}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{(trans.expenseReport.salariesBenefitsValue + trans.expenseReport.programDeliveryValue + trans.expenseReport.administrationValue)|number:'1.0-0'}}
+                        {{(trans.expenseReport.salariesBenefitsValue + trans.expenseReport.programDeliveryValue + trans.expenseReport.administrationValue)|currency}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{(trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue
+                        {{(trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue
                           + trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue
-                          + trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)|number:'1.0-0'}}
+                          + trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)|currency}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{(trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue 
+                        {{(trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue 
                           + trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue 
-                          + trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)|number:'1.0-0'}}
+                          + trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)|currency}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{(trans.expenseReport.salariesBenefitsAnnualBudget - (trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue)
+                        {{(trans.expenseReport.salariesBenefitsAnnualBudget - (trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue)
                            + trans.expenseReport.programDeliveryAnnualBudget - (trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue)
                             + trans.expenseReport.administrationAnnualBudget - (trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)
-                            )|number:'1.0-0'}}
+                            )|currency}}
                       </strong>
                     </td>
                   </tr>
@@ -159,19 +159,19 @@
                 <tbody>
                   <tr *ngFor="let item of trans.expenseReport.programExpenseLineItems">
                     <th scope="row">{{item.label}}</th>
-                    <td>${{item.annualBudget||0 | number}}</td>
-                    <td>${{item.quarterlyBudget||0 | number}}</td>
+                    <td>{{item.annualBudget||0 | currency}}</td>
+                    <td>{{item.quarterlyBudget||0 | currency}}</td>
                     <td>
                       <input [(ngModel)]="item.mask" (input)="formHelper.moneyMaskToNumber($event.target, item, 'actual'); updateLineItemSums()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" [id]="item.itemId" [name]="item.itemId">
                     </td>
                     <td>
-                      ${{(item.quarterlyBudget - item.actual)|number:'1.0-0'}}
+                      {{(item.quarterlyBudget - item.actual)|currency}}
                     </td>
                     <td>
-                      ${{(item.actualYearToDate + item.actual)|number:'1.0-0'}}
+                      {{(item.actualYearToDate + item.actual)|currency}}
                     </td>
                     <td>
-                      ${{(item.annualBudget - (item.actualYearToDate + item.actual))|number:'1.0-0'}}
+                      {{(item.annualBudget - (item.actualYearToDate + item.actual))|currency}}
                     </td>
                   </tr>
                 </tbody>
@@ -180,32 +180,32 @@
                     <th scope="row">Total</th>
                     <td>
                       <strong>
-                        ${{lineItemSums.annualBudgetSum||0|number:'1.0-0'}}
+                        {{lineItemSums.annualBudgetSum||0|currency}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{lineItemSums.quarterlyBudgetSum||0|number:'1.0-0'}}
+                        {{lineItemSums.quarterlyBudgetSum||0|currency}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{lineItemSums.actualSum||0|number:'1.0-0'}}
+                        {{lineItemSums.actualSum||0|currency}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{lineItemSums.quarterlyVarianceSum||0|number:'1.0-0'}}
+                        {{lineItemSums.quarterlyVarianceSum||0|currency}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{lineItemSums.actualYearToDateSum||0|number:'1.0-0'}}
+                        {{lineItemSums.actualYearToDateSum||0|currency}}
                       </strong>
                     </td>
                     <td>
                       <strong>
-                        ${{lineItemSums.annualVarianceSum||0|number:'1.0-0'}}
+                        {{lineItemSums.annualVarianceSum||0|currency}}
                       </strong>
                     </td>
                   </tr>
