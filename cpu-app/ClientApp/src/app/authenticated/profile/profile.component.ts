@@ -32,22 +32,29 @@ export class ProfileComponent implements OnInit {
     });
   }
   save(): void {
-    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-      return;
+    try {
+      if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+        return;
+      }
+      // post to the organization
+      this.saving = true;
+      this.profileService.updateOrg(convertContactInformationToDynamics(this.trans))
+        .subscribe(
+          (res: any) => {
+            this.saving = false;
+            // notify
+            this.notificationQueueService.addNotification('The contact information for your organization has been updated.', 'success');
+            // route to another page
+            this.router.navigate([this.stateService.homeRoute.getValue()]);
+          },
+          err => console.log(err)
+        );
     }
-    // post to the organization
-    this.saving = true;
-    this.profileService.updateOrg(convertContactInformationToDynamics(this.trans))
-      .subscribe(
-        (res: any) => {
-          this.saving = false;
-          // notify
-          this.notificationQueueService.addNotification('The contact information for your organization has been updated.', 'success');
-          // route to another page
-          this.router.navigate([this.stateService.homeRoute.getValue()]);
-        },
-        err => console.log(err)
-      );
+    catch (err) {
+      console.log(err);
+      this.notificationQueueService.addNotification('The contact information for your organization could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+      this.saving = false;
+    }
   }
   onExit() {
     if (this.formHelper.isFormDirty()) {

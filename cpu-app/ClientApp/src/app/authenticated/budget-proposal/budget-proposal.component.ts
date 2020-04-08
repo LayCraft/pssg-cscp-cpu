@@ -141,46 +141,52 @@ export class BudgetProposalComponent implements OnInit {
   }
   save(isSubmit: boolean = false) {
     return new Promise((resolve, reject) => {
-      // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-      let originalStepper = _.cloneDeep(this.currentStepperElement);
-      let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
-      if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
-        resolve();
-        return;
-      }
-
-      //
-      if (!this.validateprogramBudgets()) {
-        resolve();
-        return;
-      }
-      //
-
-      this.saving = true;
-      console.log(this.trans);
-      this.out = convertBudgetProposalToDynamics(this.trans);
-      this.budgetProposalService.setBudgetProposal(this.out).subscribe(
-        r => {
-          console.log(r);
-          this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
-          this.stateService.refresh();
-          if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
-          this.saving = false;
-          this.stepperElements.forEach(s => {
-            if (s.formState === 'complete') return;
-            this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
-          });
-          this.reloadBudgetProposal();
-          this.formHelper.makeFormClean();
+      try {// if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+        let originalStepper = _.cloneDeep(this.currentStepperElement);
+        let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
+        if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
           resolve();
-        },
-        err => {
-          console.log(err);
-          this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-          this.saving = false;
-          reject();
+          return;
         }
-      );
+
+        //
+        if (!this.validateprogramBudgets()) {
+          resolve();
+          return;
+        }
+        //
+
+        this.saving = true;
+        console.log(this.trans);
+        this.out = convertBudgetProposalToDynamics(this.trans);
+        this.budgetProposalService.setBudgetProposal(this.out).subscribe(
+          r => {
+            console.log(r);
+            this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
+            this.stateService.refresh();
+            if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
+            this.saving = false;
+            this.stepperElements.forEach(s => {
+              if (s.formState === 'complete') return;
+              this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+            });
+            this.reloadBudgetProposal();
+            this.formHelper.makeFormClean();
+            resolve();
+          },
+          err => {
+            console.log(err);
+            this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+            this.saving = false;
+            reject();
+          }
+        );
+      }
+      catch (err) {
+        console.log(err);
+        this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+        this.saving = false;
+      }
     });
   }
   exit() {

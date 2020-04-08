@@ -196,31 +196,38 @@ export class ExpenseReportComponent implements OnInit {
       .reduce((prev, curr) => prev + curr);
   }
   save(isSubmit: boolean = false) {
-    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-      return;
-    }
-    this.saving = true;
-    console.log(this.trans);
-    this.out = convertExpenseReportToDynamics(this.trans);
-    console.log(this.out);
-    this.expenseReportService.setExpenseReport(this.out).subscribe(
-      r => {
-        console.log(r);
-        this.notificationQueueService.addNotification(`You have successfully saved the expense report.`, 'success');
-        this.stateService.refresh();
-        if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
-        this.saving = false;
-        this.stepperElements.forEach(s => {
-          this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
-        });
-        this.formHelper.makeFormClean();
-      },
-      err => {
-        console.log(err);
-        this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-        this.saving = false;
+    try {
+      if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+        return;
       }
-    );
+      this.saving = true;
+      console.log(this.trans);
+      this.out = convertExpenseReportToDynamics(this.trans);
+      console.log(this.out);
+      this.expenseReportService.setExpenseReport(this.out).subscribe(
+        r => {
+          console.log(r);
+          this.notificationQueueService.addNotification(`You have successfully saved the expense report.`, 'success');
+          this.stateService.refresh();
+          if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
+          this.saving = false;
+          this.stepperElements.forEach(s => {
+            this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+          });
+          this.formHelper.makeFormClean();
+        },
+        err => {
+          console.log(err);
+          this.notificationQueueService.addNotification('The expense report could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+          this.saving = false;
+        }
+      );
+    }
+    catch (err) {
+      console.log(err);
+      this.notificationQueueService.addNotification('The expense report could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+      this.saving = false;
+    }
   }
   exit() {
     if (this.formHelper.isFormDirty()) {

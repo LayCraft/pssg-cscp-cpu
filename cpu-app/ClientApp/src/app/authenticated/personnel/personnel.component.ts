@@ -80,35 +80,42 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   }
 
   save(person: iPerson) {
-    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-      return;
-    }
+    try {
+      if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+        return;
+      }
 
-    console.log(person);
-    this.saving = true;
-    // a person needs minimum a first and last name to be submitted
-    if (person.firstName && person.lastName) {
-      const userId = this.stateService.main.getValue().userId;
-      const organizationId = this.stateService.main.getValue().organizationId;
-      const post = convertPersonnelToDynamics(userId, organizationId, [person]);
-      this.personService.setPersons(post).subscribe(
-        () => {
-          this.saving = false;
-          this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
-          // refresh the list of people on save
-          this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
-          this.stateService.refresh();
-          this.formHelper.makeFormClean();
-        },
-        err => {
-          this.notificationQueueService.addNotification(err, 'danger');
-          this.saving = false;
-        }
-      );
-    } else {
+      console.log(person);
+      this.saving = true;
+      // a person needs minimum a first and last name to be submitted
+      if (person.firstName && person.lastName) {
+        const userId = this.stateService.main.getValue().userId;
+        const organizationId = this.stateService.main.getValue().organizationId;
+        const post = convertPersonnelToDynamics(userId, organizationId, [person]);
+        this.personService.setPersons(post).subscribe(
+          () => {
+            this.saving = false;
+            this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
+            // refresh the list of people on save
+            this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
+            this.stateService.refresh();
+            this.formHelper.makeFormClean();
+          },
+          err => {
+            this.notificationQueueService.addNotification(err, 'danger');
+            this.saving = false;
+          }
+        );
+      } else {
+        this.saving = false;
+        // notify the user that this user was not saved.
+        this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
+      }
+    }
+    catch (err) {
+      console.log(err);
+      this.notificationQueueService.addNotification('The agency staff could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
       this.saving = false;
-      // notify the user that this user was not saved.
-      this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
     }
   }
 
@@ -131,28 +138,34 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     this.trans.persons.push(element);
   }
   remove(person: iPerson) {
-    // if the person didn't exist we simple remove them. We do not post back to the server
-    if (!person.personId) {
-      this.stateService.refresh();
-    } else if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
-      // set deactivated state
-      this.saving = true;
-      person.deactivated = true;
-      const userId = this.stateService.main.getValue().userId;
-      const organizationId = this.stateService.main.getValue().organizationId;
-      const post: iDynamicsPostUsers = {
-        UserBCeID: userId,
-        BusinessBCeID: organizationId,
-        StaffCollection: [convertPersonToDynamics(person)]
-      };
-      // post the person
-      this.personService.setPersons(post).subscribe(p => {
-        this.saving = false;
-
-        if (this.stepperIndex > 0) --this.stepperIndex;
-        // refresh the results
+    try {// if the person didn't exist we simple remove them. We do not post back to the server
+      if (!person.personId) {
         this.stateService.refresh();
-      });
+      } else if (!person.me && confirm(`Are you sure that you want to deactivate ${person.firstName} ${person.lastName}? This user will no longer be available in the system.`)) {
+        // set deactivated state
+        this.saving = true;
+        person.deactivated = true;
+        const userId = this.stateService.main.getValue().userId;
+        const organizationId = this.stateService.main.getValue().organizationId;
+        const post: iDynamicsPostUsers = {
+          UserBCeID: userId,
+          BusinessBCeID: organizationId,
+          StaffCollection: [convertPersonToDynamics(person)]
+        };
+        // post the person
+        this.personService.setPersons(post).subscribe(p => {
+          this.saving = false;
+
+          if (this.stepperIndex > 0) --this.stepperIndex;
+          // refresh the results
+          this.stateService.refresh();
+        });
+      }
+    }
+    catch (err) {
+      console.log(err);
+      this.notificationQueueService.addNotification('The agency staff could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+      this.saving = false;
     }
   }
   onChange(element: iStepperElement) {

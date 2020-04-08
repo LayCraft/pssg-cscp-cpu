@@ -12,7 +12,12 @@
     </div>
     <div class="col-md">
       <app-ministry-contact-box></app-ministry-contact-box>
+
+      <!-- for testing -->
       <button class="btn btn-primary btn-lg mr-2 mb-2" routerLink="/authenticated/new_user">Test New User</button>
+      <!-- end of testing -->
+
+
     </div>
   </div>
   <div *ngIf="!upcomingContracts.length&&!currentContracts.length&&!pastContracts.length" class="row">
@@ -98,10 +103,4 @@
       </div>
     </div>
   </div>
-  <!-- TODO: delete me -->
-  <!-- <div class="row">
-    <div class="col">
-      <pre>{{trans|json}}</pre>
-    </div>
-  </div> -->
 </div>

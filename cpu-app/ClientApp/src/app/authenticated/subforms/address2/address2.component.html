@@ -2,8 +2,8 @@
   <div class="form-row">
     <div class="col-md">
       <div class="form-group">
-        <label for="line1">Address Line 1</label>
-        <input type="text" class="form-control required" id="line1" name="line1" [(ngModel)]="address.line1" #line1="ngModel">
+        <label>Address Line 1</label>
+        <input type="text" class="form-control required" [(ngModel)]="address.line1" #line1="ngModel">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(line1)">
           Ok
         </div>
@@ -14,8 +14,8 @@
     </div>
     <div class="col-md">
       <div class="form-group">
-        <label for="line2">Address Line 2</label>
-        <input type="text" class="form-control required" id="line2" name="line2" [(ngModel)]="address.line2" #line2="ngModel">
+        <label>Address Line 2</label>
+        <input type="text" class="form-control required" [(ngModel)]="address.line2" #line2="ngModel">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(line2)">
           Ok
         </div>
@@ -28,8 +28,8 @@
   <div class="form-row">
     <div class="col-md">
       <div class="form-group">
-        <label for="city">City</label>
-        <input type="text" class="form-control" id="city" name="city" [(ngModel)]="address.city" #city="ngModel">
+        <label>City</label>
+        <input type="text" class="form-control" [(ngModel)]="address.city" #city="ngModel">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(city)">
           Ok
         </div>
@@ -40,8 +40,8 @@
     </div>
     <div class="col-md">
       <div class="form-group">
-        <label for="province">Province</label>
-        <select class="form-control" name="province" id="province" [(ngModel)]="address.province" #province="ngModel">
+        <label>Province</label>
+        <select class="form-control" [(ngModel)]="address.province" #province="ngModel">
           <option *ngFor="let area of country.areas" [value]="area">{{area}}</option>
         </select>
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(province)">
@@ -57,8 +57,8 @@
   <div class="form-row">
     <div class="col-md">
       <div class="form-group">
-        <label for="postalCode">Postal Code</label>
-        <input type="text" class="form-control" id="postalCode" name="postalCode" [(ngModel)]="address.postalCode" #postalCode="ngModel" [pattern]="postalRegex">
+        <label>Postal Code</label>
+        <input type="text" class="form-control" [(ngModel)]="address.postalCode" #postalCode="ngModel" [pattern]="postalRegex">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(postalCode)" style="display: inherit">
           Ok
         </div>
