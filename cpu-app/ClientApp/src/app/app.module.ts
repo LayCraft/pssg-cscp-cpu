@@ -18,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { MinistryContactBoxComponent } from './authenticated/components/ministry-contact-box/ministry-contact-box.component';
 import { NgModule } from '@angular/core';
-import { NotUserComponent } from './authenticated/not-user/not-user.component';
+import { NewUserComponent } from './authenticated/new-user/new-user.component';
 import { OrganizationProfileBoxComponent } from './authenticated/components/organization-profile-box/organization-profile-box.component';
 import { MessageReadComponent } from './authenticated/subforms/message-read/message-read.component';
 import { PersonCardComponent } from './authenticated/subforms/person-card/person-card.component';
@@ -71,7 +71,7 @@ import { NgxMaskModule } from 'ngx-mask'
     MinistryContactBoxComponent,
     MessageReadComponent,
     MessageWriteComponent,
-    NotUserComponent,
+    NewUserComponent,
     OrganizationProfileBoxComponent,
     PersonCardComponent,
     PersonEditorComponent,

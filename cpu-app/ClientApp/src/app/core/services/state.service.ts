@@ -48,6 +48,10 @@ export class StateService {
     if (window.location.href.includes("localhost")) {
       userId = 'FB55AB99F20E471186B8143B3F21F6E7';
       orgId = 'E4637B1557A6457891D7549067B20635';
+      let settings = new UserSettings();
+      settings.userId = userId;
+      settings.accountId = orgId;
+      this.userSettings.next(settings);
     }
 
     console.log("logging in");

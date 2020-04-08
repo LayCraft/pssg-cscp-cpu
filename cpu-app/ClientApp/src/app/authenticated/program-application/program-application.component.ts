@@ -163,40 +163,48 @@ export class ProgramApplicationComponent implements OnInit {
   }
   save(showNotification: boolean = true) {
     return new Promise((resolve, reject) => {
-      // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-      let originalStepper = _.cloneDeep(this.currentStepperElement);
-      let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
-      if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
-        resolve();
-        return;
-      }
-      this.saving = true;
-      console.log("saving...");
-      console.log(_.cloneDeep(this.trans));
-      this.out = convertProgramApplicationToDynamics(this.trans);
-      this.programApplicationService.setProgramApplication(this.out).subscribe(
-        r => {
-          console.log(r);
-          if (showNotification) {
-            this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
-          }
-          this.saving = false;
-          this.stepperElements.forEach(s => {
-            if (s.formState === 'complete') return;
-            this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
-          });
-
-          this.formHelper.makeFormClean();
-          this.reloadProgramApplication();
+      try {
+        let originalStepper = _.cloneDeep(this.currentStepperElement);
+        let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
+        if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
           resolve();
-        },
-        err => {
-          console.log(err);
-          this.notificationQueueService.addNotification('The program application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-          this.saving = false;
-          reject();
+          return;
         }
-      );
+        this.saving = true;
+        console.log("saving...");
+        console.log(_.cloneDeep(this.trans));
+        this.out = convertProgramApplicationToDynamics(this.trans);
+        this.programApplicationService.setProgramApplication(this.out).subscribe(
+          r => {
+            console.log(r);
+            if (showNotification) {
+              this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
+            }
+            this.saving = false;
+            this.stepperElements.forEach(s => {
+              if (s.formState === 'complete') return;
+              this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+            });
+
+            this.formHelper.makeFormClean();
+            this.reloadProgramApplication();
+            resolve();
+          },
+          err => {
+            console.log(err);
+            this.notificationQueueService.addNotification('The program application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+            this.saving = false;
+            reject();
+          }
+        );
+      }
+      catch (err) {
+        console.log(err);
+        this.notificationQueueService.addNotification('The program application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+        this.saving = false;
+      }
+      // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+
     });
   }
   exit() {
@@ -212,26 +220,33 @@ export class ProgramApplicationComponent implements OnInit {
     }
   }
   submit() {
-    if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-      return;
-    }
-    this.saving = true;
-    this.out = convertProgramApplicationToDynamics(this.trans);
-    this.programApplicationService.setProgramApplication(this.out).subscribe(
-      r => {
-        console.log(r);
-
-        this.notificationQueueService.addNotification(`You have successfully submitted the program application.`, 'success');
-        this.saving = false;
-        this.stateService.refresh();
-        this.router.navigate(['/authenticated/dashboard']);
-      },
-      err => {
-        console.log(err);
-        this.notificationQueueService.addNotification('The program application could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
-        this.saving = false;
+    try {
+      if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+        return;
       }
-    );
+      this.saving = true;
+      this.out = convertProgramApplicationToDynamics(this.trans);
+      this.programApplicationService.setProgramApplication(this.out).subscribe(
+        r => {
+          console.log(r);
+
+          this.notificationQueueService.addNotification(`You have successfully submitted the program application.`, 'success');
+          this.saving = false;
+          this.stateService.refresh();
+          this.router.navigate(['/authenticated/dashboard']);
+        },
+        err => {
+          console.log(err);
+          this.notificationQueueService.addNotification('The program application could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
+          this.saving = false;
+        }
+      );
+    }
+    catch (err) {
+      console.log(err);
+      this.notificationQueueService.addNotification('The program application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+      this.saving = false;
+    }
   }
   reloadProgramApplication() {
     this.route.params.subscribe(p => {

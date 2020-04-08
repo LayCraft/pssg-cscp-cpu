@@ -138,74 +138,81 @@ export class StatusReportComponent implements OnInit, OnDestroy {
     return false;
   }
   submit() {
-    this.stepperElements.forEach(s => {
-      this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
-    });
-
-    if (!this.trans.reportingPeriod) {
-      alert('Please select a month before submitting.');
-      return;
-    }
-    let isValid = true;
-    this.trans.statusReportQuestions.forEach((srq: iQuestionCollection) => {
-      // for each question assemble shared elements
-      srq.questions.forEach((q: iQuestion) => {
-        // depending on types we add another property
-        if (q.type === 'number' && q.number === null) {
-          let stepperWithError = this.stepperElements.find(s => s.itemName === srq.name);
-          if (stepperWithError) {
-            this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
-          }
-          isValid = false;
-        }
-        if (q.type === 'boolean' && q.boolean === null) {
-          let stepperWithError = this.stepperElements.find(s => s.itemName === srq.name);
-          if (stepperWithError) {
-            this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
-          }
-          isValid = false;
-        }
+    try {
+      this.stepperElements.forEach(s => {
+        this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
       });
-    });
 
-    if (!isValid) {
-      this.notificationQueueService.addNotification(`Please answer all required questions.`, 'warning');
-      return;
-    }
+      // if (!this.trans.reportingPeriod) {
+      //   alert('Please select a month before submitting.');
+      //   return;
+      // }
+      let isValid = true;
+      this.trans.statusReportQuestions.forEach((srq: iQuestionCollection) => {
+        // for each question assemble shared elements
+        srq.questions.forEach((q: iQuestion) => {
+          // depending on types we add another property
+          if (q.type === 'number' && q.number === null) {
+            let stepperWithError = this.stepperElements.find(s => s.itemName === srq.name);
+            if (stepperWithError) {
+              this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
+            }
+            isValid = false;
+          }
+          if (q.type === 'boolean' && q.boolean === null) {
+            let stepperWithError = this.stepperElements.find(s => s.itemName === srq.name);
+            if (stepperWithError) {
+              this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
+            }
+            isValid = false;
+          }
+        });
+      });
 
-    if (!this.validateCertainExplanationFields()) {
-      this.notificationQueueService.addNotification(`Please answer required explanations.`, 'warning');
-      return;
-    }
-
-    if (confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
-      // Convert the form to a postable format
-      this.saving = true;
-      const statusReport: iDynamicsPostStatusReport = convertStatusReportToDynamics(this.trans);
-      // if they have not filled out the form don't submit it.
-      if (!statusReport.AnswerCollection.length) {
-        alert('Please ensure that you have filled out the statistics to the best of your ability before attempting to submit.');
-        // break out of the function right here
-        this.saving = false;
+      if (!isValid) {
+        this.notificationQueueService.addNotification(`Please answer all required questions.`, 'warning');
         return;
       }
 
-      // submit the answers
-      this.statusReportService.setStatusReportAnswers(this.trans.taskId, statusReport)
-        .subscribe(
-          r => {
-            this.saving = false;
-            console.log(r);
-            this.notificationQueueService.addNotification(`You have successfully submitted ${this.trans.reportingPeriod} statistics.`, 'success');
-            this.stateService.refresh();
-            this.router.navigate(['/authenticated/dashboard']);
-          },
-          err => {
-            this.saving = false;
-            console.log(err);
-            this.notificationQueueService.addNotification('Monthly statistics could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
-          }
-        );
+      if (!this.validateCertainExplanationFields()) {
+        this.notificationQueueService.addNotification(`Please answer required explanations.`, 'warning');
+        return;
+      }
+
+      if (confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
+        // Convert the form to a postable format
+        this.saving = true;
+        const statusReport: iDynamicsPostStatusReport = convertStatusReportToDynamics(this.trans);
+        // if they have not filled out the form don't submit it.
+        if (!statusReport.AnswerCollection.length) {
+          alert('Please ensure that you have filled out the statistics to the best of your ability before attempting to submit.');
+          // break out of the function right here
+          this.saving = false;
+          return;
+        }
+
+        // submit the answers
+        this.statusReportService.setStatusReportAnswers(this.trans.taskId, statusReport)
+          .subscribe(
+            r => {
+              this.saving = false;
+              console.log(r);
+              this.notificationQueueService.addNotification(`You have successfully submitted ${this.trans.reportingPeriod} statistics.`, 'success');
+              this.stateService.refresh();
+              this.router.navigate(['/authenticated/dashboard']);
+            },
+            err => {
+              this.saving = false;
+              console.log(err);
+              this.notificationQueueService.addNotification('Monthly statistics could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
+            }
+          );
+      }
+    }
+    catch (err) {
+      console.log(err);
+      this.notificationQueueService.addNotification('The monthly statistics could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+      this.saving = false;
     }
   }
   exit() {
