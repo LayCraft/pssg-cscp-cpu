@@ -143,10 +143,10 @@ export class StatusReportComponent implements OnInit, OnDestroy {
         this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
       });
 
-      if (!this.trans.reportingPeriod) {
-        alert('Please select a month before submitting.');
-        return;
-      }
+      // if (!this.trans.reportingPeriod) {
+      //   alert('Please select a month before submitting.');
+      //   return;
+      // }
       let isValid = true;
       this.trans.statusReportQuestions.forEach((srq: iQuestionCollection) => {
         // for each question assemble shared elements

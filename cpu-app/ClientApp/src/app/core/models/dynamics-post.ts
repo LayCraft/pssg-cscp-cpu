@@ -21,7 +21,7 @@ export interface iDynamicsPostUsers { //maps to OrganizationPost
 export interface iDynamicsPostStatusReport { //maps to MonthlyStatisticsAnswers
   BusinessBCeID: string;
   UserBCeID: string;
-  ReportingPeriod: number;
+  // ReportingPeriod: number;
   AnswerCollection: iDynamicsAnswer[];
 }
 export interface iDynamicsPostFile { //maps to FilePost
@@ -180,7 +180,7 @@ export interface iDynamicsScheduleGPost {
 
   vsd_schedulegid?: string;
   vsd_reportreviewed?: boolean;
-  vsd_cpu_reportingperiod?: number;
+  // vsd_cpu_reportingperiod?: number;
 
   // number of hours contracted area
   vsd_contractedservicehrsthisquarter?: number;
