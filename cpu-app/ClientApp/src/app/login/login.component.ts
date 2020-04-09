@@ -21,8 +21,8 @@ export class LoginPageComponent implements OnInit {
         this.stateService.userSettings.next(userInfo);
 
         if (userInfo.isNewUserRegistration) {
-          this.notificationQueueService.addNotification(`No associated CRM account. Please contact an administrator.`, 'warning');
-          this.router.navigate([this.stateService.homeRoute.getValue()]);
+          // this.notificationQueueService.addNotification(`No associated CRM account. Please contact an administrator.`, 'warning');
+          this.router.navigate(['/authenticated/new_user']);
         }
         else {
           this.stateService.login();

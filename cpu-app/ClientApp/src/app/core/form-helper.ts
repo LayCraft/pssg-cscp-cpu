@@ -168,4 +168,14 @@ export class FormHelper {
     if (value.toString().indexOf(".") < 0) return 0;
     return value.toString().split(".")[1].length || 0;
   }
+  trimInput(e: any) {
+    e.value = e.value.trimRight();
+  }
+  trimPostalCode(e: any) {
+    //allow them to type one space in the middle of the postal code
+    var countSpaces = (e.value.match(/ /g) || []).length;
+    if (countSpaces > 1) {
+      e.value = e.value.trimRight();
+    }
+  }
 }

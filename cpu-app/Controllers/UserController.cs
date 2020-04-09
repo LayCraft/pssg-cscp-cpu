@@ -49,13 +49,11 @@ namespace Gov.Cscp.Victims.Public.Controllers
         {
             try
             {
-                Authentication.SiteMinderAuthOptions siteMinderAuthOptions = new Authentication.SiteMinderAuthOptions();
-
                 // determine if we are a new registrant.
-                string temp = _httpContextAccessor.HttpContext.Session.GetString("UserSettings");
-                if (!String.IsNullOrEmpty(temp))
+                string storedSettingsString = _httpContextAccessor.HttpContext.Session.GetString("UserSettings");
+                if (!String.IsNullOrEmpty(storedSettingsString))
                 {
-                    Authentication.UserSettings userSettings = JsonConvert.DeserializeObject<Authentication.UserSettings>(temp);
+                    Authentication.UserSettings userSettings = JsonConvert.DeserializeObject<Authentication.UserSettings>(storedSettingsString);
 
 
                     // UserSettingsPayload ret = new UserSettingsPayload {
