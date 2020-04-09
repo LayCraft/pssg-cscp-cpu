@@ -18,13 +18,12 @@ import { NotificationQueueService } from '../../core/services/notification-queue
 })
 export class NewUserComponent implements OnInit {
 
-  person: iPerson;
   emailRegex: RegExp = EMAIL;
   phoneRegex: RegExp = PHONE_NUMBER;
   wordRegex: RegExp = LETTERS_SPACES;
   organizationName: string;
   saving: boolean = false;
-  trans: TransmogrifierNewUser;
+  trans: TransmogrifierNewUser = new TransmogrifierNewUser();
   public formHelper = new FormHelper();
   constructor(private stateService: StateService,
     private newUserService: NewUserService,
@@ -33,7 +32,6 @@ export class NewUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.person = new Person();
     const organizationId: string = this.stateService.main.getValue().organizationId;
     const userId: string = this.stateService.main.getValue().userId;
 
