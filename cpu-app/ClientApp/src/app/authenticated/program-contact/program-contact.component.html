@@ -33,7 +33,7 @@
             <div class="form-group">
               <label for="emailAddress">Email</label>
               <input type="text" class="form-control" id="emailAddress" name="emailAddress"
-                [(ngModel)]="programApplication.emailAddress" #emailAddress="ngModel" [pattern]="emailRegex">
+                [(ngModel)]="programApplication.emailAddress" #emailAddress="ngModel" (input)="formHelper.trimInput($event.target)" [pattern]="emailRegex">
               <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)">
                 Ok
               </div>

@@ -29,6 +29,12 @@ export interface iDynamicsPostFile { //maps to FilePost
   Userbceid: string;
   DocumentCollection?: iDynamicsDocumentPost[];
 }
+export interface iDynamicsPostRegisterNewUser {
+  BusinessBCeID: string;
+  UserBCeID: string;
+  NewContact?: iDynamicsCrmContactPost;
+  NewServiceProvider?: iDynamicsCrmServiceProviderPost;
+}
 export interface iDynamicsPostScheduleF { //maps to ProgramApplicationPost
   BusinessBCeID: string;
   UserBCeID: string;
@@ -219,6 +225,9 @@ export interface iDynamicsCrmContactPost {
   vsd_contact_vsd_programid?: string; // added when contact is listed in a program. Which program id are they under
   vsd_programid?: string; // added when contact is listed in a program
   vsd_portalfield?: string;
+}
+export interface iDynamicsCrmServiceProviderPost {
+  name?: string;
 }
 export interface iDynamicsCrmProgramPost {
   // _vsd_contactlookup_value?: string;

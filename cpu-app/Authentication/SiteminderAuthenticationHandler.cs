@@ -470,8 +470,6 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     Console.WriteLine(resultResult);
                     Console.WriteLine("messageString");
                     Console.WriteLine(messageString);
-                    Console.WriteLine("resultResult");
-                    Console.WriteLine(resultResult);
 
                     userSettings.UserType = siteMinderUserType;
                     userSettings.UserId = siteMinderGuid;
@@ -481,9 +479,9 @@ namespace Gov.Cscp.Victims.Public.Authentication
 
                     // if ((int)result.statusCode == 200)
 
-                    if (resultResult.Contains("Error: No contact found with the supplied BCeID"))
+                    if (resultResult.Contains("Error: Contact is not approved for portal access"))
                     {
-                        Console.WriteLine("User doesn't exist");
+                        Console.WriteLine("New User Registration");
 
                         userSettings.IsNewUserRegistration = true;
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
