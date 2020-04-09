@@ -44,8 +44,8 @@ export class NewUserComponent implements OnInit {
 
   save() {
     try {
-      this.trans.organizationId = this.stateService.main.getValue().organizationId;
-      this.trans.userId = this.stateService.main.getValue().userId;
+      this.trans.organizationId = this.stateService.userSettings.getValue().accountId;
+      this.trans.userId = this.stateService.userSettings.getValue().userId
 
       console.log(this.trans);
       let data = convertNewUserToDynamics(this.trans);
@@ -63,7 +63,8 @@ export class NewUserComponent implements OnInit {
         });
     }
     catch (err) {
-
+      console.log(err);
+      console.log("some error happened...");
     }
   }
   exit() {
