@@ -393,6 +393,10 @@ export interface iDynamicsMonthlyStatisticsProgramType {
   vsd_name?: string;
   vsd_programtypeid?: string;
 }
+export interface iDynamicsContactNotApproved {
+  Userbceid?: string;
+  Businessbceid?: string;
+}
 export interface iDynamicsScheduleGPost {
   fortunecookieetag?: string;
   fortunecookietype?: string;
