@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDataService } from '../core/services/user-data.service';
 import { StateService } from '../core/services/state.service';
+import { UserSettings } from '../core/models/user-settings.class';
 
 @Component({
   selector: 'app-landing-page',
@@ -11,11 +12,12 @@ import { StateService } from '../core/services/state.service';
 export class LandingPageComponent implements OnInit {
   window = window;
   loggedIn: boolean = false;
+  isNewUserRegistration: boolean = false;
   constructor(private router: Router,
     private userData: UserDataService,
     private stateService: StateService) {
 
-    this.userData.getCurrentUser().subscribe((userSettings: any) => {
+    this.userData.getCurrentUser().subscribe((userSettings: UserSettings) => {
       console.log("returned user info:");
       console.log(userSettings);
       if (userSettings && userSettings.userAuthenticated) {
@@ -23,6 +25,7 @@ export class LandingPageComponent implements OnInit {
 
         this.stateService.loggedIn.next(true);
         this.stateService.userSettings.next(userSettings);
+        this.isNewUserRegistration = userSettings.isNewUserRegistration;
 
         this.stateService.getUserName();
       }

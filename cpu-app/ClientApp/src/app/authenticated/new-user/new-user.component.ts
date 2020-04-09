@@ -32,18 +32,21 @@ export class NewUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const organizationId: string = this.stateService.main.getValue().organizationId;
-    const userId: string = this.stateService.main.getValue().userId;
+    // const organizationId: string = this.stateService.main.getValue().organizationId;
+    // const userId: string = this.stateService.main.getValue().userId;
 
-    let userNotApprovedObj: iDynamicsContactNotApproved = {
-      Businessbceid: organizationId,
-      Userbceid: userId
-    };
-    this.trans = new TransmogrifierNewUser(userNotApprovedObj);
+    // let userNotApprovedObj: iDynamicsContactNotApproved = {
+    //   Businessbceid: organizationId,
+    //   Userbceid: userId
+    // };
+    // this.trans = new TransmogrifierNewUser(userNotApprovedObj);
   }
 
   save() {
     try {
+      this.trans.organizationId = this.stateService.main.getValue().organizationId;
+      this.trans.userId = this.stateService.main.getValue().userId;
+
       console.log(this.trans);
       let data = convertNewUserToDynamics(this.trans);
       this.newUserService.saveNewUser(data).subscribe((res) => {
@@ -64,13 +67,13 @@ export class NewUserComponent implements OnInit {
     }
   }
   exit() {
-    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
-      this.stateService.refresh();
-      this.router.navigate(['/authenticated/dashboard']);
+    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to exit?")) {
+      // this.stateService.refresh();
+      this.router.navigate(['']);
     }
     else {
-      this.stateService.refresh();
-      this.router.navigate(['/authenticated/dashboard']);
+      // this.stateService.refresh();
+      this.router.navigate(['']);
     }
   }
 }
