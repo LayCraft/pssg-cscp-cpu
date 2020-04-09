@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
   loading = false;
   window = window;
+  isNewUserRegistration: boolean = false;
   constructor(
     private router: Router,
     private stateService: StateService,
