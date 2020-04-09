@@ -158,13 +158,12 @@
         <th scope="row">Staff are subcontracted</th>
         <td>{{trans?.administrativeInformation?.staffSubcontracted ?'Yes':'No'}}</td>
       </tr>
-      <!-- this will hide the list of subcontractors if staffSubcontracted is false, not sure if that is desired yet or not, so commented out -->
-      <!-- <ng-container *ngIf="trans?.administrativeInformation?.staffSubcontracted"> -->
+      <ng-container *ngIf="trans?.administrativeInformation?.staffSubcontracted">
         <tr *ngFor="let person of trans?.administrativeInformation?.staffSubcontractedPersons; let i=index">
           <th scope="row">Subcontractor {{i+1}}</th>
           <td>{{person.firstName}} {{person.middleName}} {{person.lastName}}{{person.title?' - '+person.title:''}}</td>
         </tr>
-      <!-- </ng-container> -->
+      </ng-container>
     </tbody>
   </table>
 
