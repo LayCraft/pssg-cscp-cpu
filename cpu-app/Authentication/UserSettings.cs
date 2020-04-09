@@ -36,6 +36,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
 		public User AuthenticatedUser { get; set; }
 
 		public bool IsNewUserRegistration { get; set; }
+		public bool ContactExistsButNotApproved { get; set; }
 
 		public string ContactId { get; set; }
 		public string AccountId { get; set; }

@@ -13,6 +13,7 @@ export class LandingPageComponent implements OnInit {
   window = window;
   loggedIn: boolean = false;
   isNewUserRegistration: boolean = false;
+  contactExistsButNotApproved: boolean = false;
   constructor(private router: Router,
     private userData: UserDataService,
     private stateService: StateService) {
@@ -26,6 +27,7 @@ export class LandingPageComponent implements OnInit {
         this.stateService.loggedIn.next(true);
         this.stateService.userSettings.next(userSettings);
         this.isNewUserRegistration = userSettings.isNewUserRegistration;
+        this.contactExistsButNotApproved = userSettings.contactExistsButNotApproved;
 
         this.stateService.getUserName();
       }

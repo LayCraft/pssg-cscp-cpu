@@ -24,6 +24,10 @@ export class LoginPageComponent implements OnInit {
           this.notificationQueueService.addNotification(`New User Detected.`, 'success');
           this.router.navigate(['/authenticated/new_user']);
         }
+        else if (userInfo.contactExistsButNotApproved) {
+          this.notificationQueueService.addNotification(`User is not approved for portal access. Please contact an administrator.`, 'danger');
+          this.router.navigate([this.stateService.homeRoute.getValue()]);
+        }
         else {
           this.stateService.login();
         }
@@ -35,7 +39,7 @@ export class LoginPageComponent implements OnInit {
         this.router.navigate([this.stateService.homeRoute.getValue()]);
       }
     });
-   }
+  }
 
   ngOnInit() {
   }

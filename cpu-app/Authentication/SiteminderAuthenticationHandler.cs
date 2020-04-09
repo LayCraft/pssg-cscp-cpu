@@ -478,12 +478,23 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     //Error: No contact found with the supplied BCeID
 
                     // if ((int)result.statusCode == 200)
+                    string newUserString = "No contact found with the supplied BCeID";
+                    string contactNotApproved = "Contact is not approved for portal access";
 
-                    if (resultResult.Contains("Error: Contact is not approved for portal access"))
+                    if (resultResult.Contains(newUserString))
                     {
                         Console.WriteLine("New User Registration");
 
                         userSettings.IsNewUserRegistration = true;
+                        principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
+                        UserSettings.SaveUserSettings(userSettings, context);
+                        return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
+                    }
+                    else if (resultResult.Contains(contactNotApproved)) {
+                        //error state - should hopefully never happen
+                        Console.WriteLine("Error, contact already exists but is not approved");
+
+                        userSettings.ContactExistsButNotApproved = true;
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
                         UserSettings.SaveUserSettings(userSettings, context);
                         return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
