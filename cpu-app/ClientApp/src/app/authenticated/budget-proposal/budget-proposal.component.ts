@@ -279,6 +279,7 @@ export class BudgetProposalComponent implements OnInit {
   }
   setNextStepper() {
     let originalStepper = _.cloneDeep(this.currentStepperElement);
+    
     let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
     if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
       // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
