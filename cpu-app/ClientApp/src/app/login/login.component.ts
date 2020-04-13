@@ -21,7 +21,7 @@ export class LoginPageComponent implements OnInit {
         this.stateService.userSettings.next(userInfo);
         console.log(userInfo);
         if (userInfo.isNewUserRegistration) {
-          this.notificationQueueService.addNotification(`New User Detected.`, 'success');
+          // this.notificationQueueService.addNotification(`New User Detected.`, 'success');
           this.router.navigate(['/authenticated/new_user']);
         }
         else if (userInfo.contactExistsButNotApproved) {
