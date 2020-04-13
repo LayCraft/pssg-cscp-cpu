@@ -44,16 +44,20 @@ export class NewUserComponent implements OnInit {
 
   save() {
     try {
-      this.trans.organizationId = this.stateService.userSettings.getValue().accountId;
-      this.trans.userId = this.stateService.userSettings.getValue().userId
+      let userSettings = this.stateService.userSettings.getValue();
+      this.trans.organizationId = userSettings.accountId;
+      this.trans.userId = userSettings.userId
 
       console.log(this.trans);
       let data = convertNewUserToDynamics(this.trans);
       this.newUserService.saveNewUser(data).subscribe((res) => {
         console.log(res);
         this.notificationQueueService.addNotification(`You have successfully registered a new user.`, 'success');
-        this.stateService.refresh();
-        this.router.navigate(['/authenticated/dashboard']);
+        this.notificationQueueService.addNotification(`Please return after new user has been approved for portal access.`, 'success');
+        userSettings.isNewUserRegistration = false;
+        userSettings.contactExistsButNotApproved = true;
+        this.stateService.userSettings.next(userSettings);
+        this.router.navigate([this.stateService.homeRoute.getValue()]);
         this.saving = false;
       },
         (err) => {
