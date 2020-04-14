@@ -173,6 +173,11 @@ export class FormHelper {
   }
   trimPostalCode(e: any) {
     //allow them to type one space in the middle of the postal code
+    let spaceIndex = e.value.indexOf(' ');
+
+    if (spaceIndex >= 0 && spaceIndex !== 3) {
+      e.value = e.value.replace(/ /g, '');
+    }
     var countSpaces = (e.value.match(/ /g) || []).length;
     if (countSpaces > 1) {
       e.value = e.value.trimRight();

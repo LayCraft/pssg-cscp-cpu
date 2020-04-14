@@ -26,7 +26,7 @@ export class LoginPageComponent implements OnInit {
         }
         else if (userInfo.contactExistsButNotApproved) {
           this.notificationQueueService.addNotification(`User is not approved for portal access. Please contact an administrator.`, 'danger');
-          this.router.navigate([this.stateService.homeRoute.getValue()]);
+          this.stateService.logout();
         }
         else {
           this.stateService.login();
