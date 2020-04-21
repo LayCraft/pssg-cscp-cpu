@@ -43,8 +43,15 @@ export class PersonPickerListComponent implements OnInit {
     }
   }
   removePerson(personId: string) {
-    const person: iPerson = this.trans.persons.filter(p => p.personId === personId)[0];
-    this.removedPersons.push(person);
+    let person: iPerson = this.trans.persons.filter(p => p.personId === personId)[0];
+    if (!person) {
+      person = this.persons.filter(p => p.personId === personId)[0];
+    }
+
+    if (person) {
+      this.removedPersons.push(person);
+    }
+
     this.persons = this.persons.filter(p => p.personId !== personId);
 
     this.personsObj.persons = this.persons;
