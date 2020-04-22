@@ -1,0 +1,7 @@
+.appendix-link {
+    cursor: pointer;
+}
+
+.appendix-link:hover {
+    text-decoration: underline !important;
+}

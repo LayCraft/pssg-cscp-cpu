@@ -497,7 +497,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     {
                         Console.WriteLine("New User and New Organization Registration");
 
-                        userSettings.IsNewUserRegistration = true;
+                        userSettings.IsNewUserRegistration = false;
                         userSettings.IsNewUserAndNewOrganizationRegistration = true;
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
                         UserSettings.SaveUserSettings(userSettings, context);

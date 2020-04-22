@@ -228,6 +228,15 @@ export interface iDynamicsCrmContactPost {
 }
 export interface iDynamicsCrmServiceProviderPost {
   name?: string;
+  vsd_addressline1?: string;
+  vsd_addressline2?: string;
+  vsd_city?: string;
+  vsd_country?: string;
+  vsd_provincestate?: string;
+  vsd_emailaddress?: string;
+  vsd_fax?: string;
+  vsd_phonenumber?: string;
+  vsd_postalcodezip?: string;
 }
 export interface iDynamicsCrmProgramPost {
   // _vsd_contactlookup_value?: string;

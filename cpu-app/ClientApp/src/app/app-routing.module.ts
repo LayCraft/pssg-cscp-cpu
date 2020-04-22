@@ -18,6 +18,7 @@ import { DownloadDocumentComponent } from './authenticated/download-document/dow
 import { LoginPageComponent } from './login/login.component';
 import { MessageReadComponent } from './authenticated/subforms/message-read/message-read.component';
 import { MessageWriteComponent } from './authenticated/subforms/message-write/message-write.component';
+import { NewUserNewOrganizationComponent } from './authenticated/new-user-new-organization/new-user-new-organization.component';
 
 const routes: Routes = [
   {
@@ -93,6 +94,10 @@ const routes: Routes = [
       {
         path: 'new_user',
         component: NewUserComponent
+      },
+      {
+        path: 'new_user_new_organization',
+        component: NewUserNewOrganizationComponent
       },
       {
         path: 'program/:contractId/:programId',

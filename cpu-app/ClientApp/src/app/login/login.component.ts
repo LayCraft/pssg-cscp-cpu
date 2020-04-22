@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserDataService } from '../core/services/user-data.service';
 import { StateService } from '../core/services/state.service';
 import { NotificationQueueService } from '../core/services/notification-queue.service';
+import { UserSettings } from '../core/models/user-settings.class';
 
 @Component({
   selector: 'app-landing-page',
@@ -15,7 +16,7 @@ export class LoginPageComponent implements OnInit {
     private notificationQueueService: NotificationQueueService,
     private stateService: StateService) {
 
-    this.userData.getCurrentUser().subscribe((userInfo: any) => {
+    this.userData.getCurrentUser().subscribe((userInfo: UserSettings) => {
       if (userInfo && userInfo.userId && userInfo.accountId) {
         this.stateService.loggedIn.next(true);
         this.stateService.userSettings.next(userInfo);
@@ -23,6 +24,10 @@ export class LoginPageComponent implements OnInit {
         if (userInfo.isNewUserRegistration) {
           // this.notificationQueueService.addNotification(`New User Detected.`, 'success');
           this.router.navigate(['/authenticated/new_user']);
+        }
+        else if (userInfo.isNewUserAndNewOrganizationRegistration) {
+          // this.notificationQueueService.addNotification(`New User Detected.`, 'success');
+          this.router.navigate(['/authenticated/new_user_new_organization']);
         }
         else if (userInfo.contactExistsButNotApproved) {
           this.notificationQueueService.addNotification(`User is not approved for portal access. Please contact an administrator.`, 'danger');

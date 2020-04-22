@@ -1,17 +1,83 @@
 <div class="container">
     <div class="row">
-        <!-- <div class="col-md-4">
-            <section class="application-nav sticky-top">
-                <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" (click)="save()">Save</button>
-                <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" (click)="exit()">Exit</button>
-            </section>
-        </div> -->
 
         <div class="col">
-            <!-- <h2 class="blue-header">Register New User</h2> -->
             <div class="page-header">
-                <h1>Register New User</h1>
+                <h1>Register New Organization</h1>
             </div>
+            <div class="form-row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <label for="organizationName">Organization Name</label>
+                        <input type="text" class="form-control" id="organizationName" name="organizationName" [(ngModel)]="trans.serviceProvider.name" #organizationName="ngModel" (input)="formHelper.trimInput($event.target)">
+                        <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(organizationName)">
+                            Ok
+                        </div>
+                        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackOld(organizationName)">
+                            Try Again
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <label for="orgEmailAddress">Email</label>
+                        <input type="text" class="form-control" id="orgEmailAddress" name="orgEmailAddress" [(ngModel)]="trans.serviceProvider.email" #orgEmailAddress="ngModel" (input)="formHelper.trimInput($event.target)" [pattern]="emailRegex">
+                        <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(orgEmailAddress)">
+                            Ok
+                        </div>
+                        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackOld(orgEmailAddress)">
+                            Try Again
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <label for="orgPhoneNumber">Phone Number</label>
+                        <input type="text" mask='(000) 000 0000' class="form-control" id="orgPhoneNumber" name="orgPhoneNumber" [(ngModel)]="trans.serviceProvider.phone" #orgPhoneNumber="ngModel" [pattern]="phoneRegex">
+                        <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(orgPhoneNumber)">
+                            Ok
+                        </div>
+                        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackOld(orgPhoneNumber)">
+                            Try Again
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-group">
+                        <label for="orgFaxNumber">Fax Number</label>
+                        <input type="text" mask='(000) 000 0000' class="form-control" id="orgFaxNumber" name="orgFaxNumber" [(ngModel)]="trans.serviceProvider.fax" #orgFaxNumber="ngModel" [pattern]="phoneRegex">
+                        <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(orgFaxNumber)">
+                            Ok
+                        </div>
+                        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackOld(orgFaxNumber)">
+                            Try Again
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <app-address2 [(address)]="trans.serviceProvider.address"></app-address2>
+
+            <div class="page-header">
+                <h1>Register Contractor Contact</h1>
+            </div>
+            <div class="form-row">
+                <div class="col-md">
+                    <div class="form-check">
+                        <input [(ngModel)]="isContractorContact" class="form-check-input" type="checkbox" id="mainAddressSameAsAgency" name="mainAddressSameAsAgency">
+                        <label class="form-check-label" for="mainAddressSameAsAgency">
+                            Select if you are the contractor contact for the above organization (This person will be contacted for all contract related matter)
+                        </label>
+                    </div>
+
+
+                </div>
+            </div>
+
             <div class="form-row">
                 <div class="col-md">
 
@@ -49,14 +115,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="form-row">
-                <div class="col-md">
-                    <div class="form-group">
-                        <label for="organizationNameInput">Organization Name</label>
-                        <input type="text" class="form-control" id="organizationNameInput" name="organizationNameInput" [(ngModel)]="trans.serviceProvider.name">
-                    </div>
-                </div>
-            </div> -->
             <div class="form-row">
                 <div class="col-md">
                     <div class="form-group">
@@ -97,20 +155,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <app-address2 [(address)]="trans.person.address"></app-address2>
         </div>
     </div>
 
     <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" (click)="registerNewUser()">Register</button>
     <p>You will receive access to the Community Program Unit Portal 5-7 business days upon submission</p>
-
-    <!-- Built in pdf viewer, works in Chrome and Firefox. Apparently doesn't work in IE11. But really... IE11?!?! -->
-    <!-- <div class="pdf-container">
-        <object data="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" type="application/pdf" >
-            <embed src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" type="application/pdf" />
-        </object>
-    </div> -->
-
-
 </div>

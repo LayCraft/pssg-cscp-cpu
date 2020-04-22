@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormHelper } from '../../core/form-helper';
 import { EMAIL, PHONE_NUMBER, LETTERS_SPACES } from '../../core/constants/regex.constants';
 import { StateService } from '../../core/services/state.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { TransmogrifierNewUser } from '../../core/models/converters/transmogrifier-new-user.class';
 import { convertNewUserToDynamics } from '../../core/models/converters/new-user-to-dynamics';
 import { NewUserService } from '../../core/services/new-user.service';
@@ -10,10 +10,10 @@ import { NotificationQueueService } from '../../core/services/notification-queue
 
 @Component({
   selector: 'app-new-user',
-  templateUrl: './new-user.component.html',
-  styleUrls: ['./new-user.component.css']
+  templateUrl: './new-user-new-organization.component.html',
+  styleUrls: ['./new-user-new-organization.component.css']
 })
-export class NewUserComponent implements OnInit {
+export class NewUserNewOrganizationComponent implements OnInit {
 
   emailRegex: RegExp = EMAIL;
   phoneRegex: RegExp = PHONE_NUMBER;
@@ -21,6 +21,7 @@ export class NewUserComponent implements OnInit {
   organizationName: string;
   saving: boolean = false;
   trans: TransmogrifierNewUser = new TransmogrifierNewUser();
+  isContractorContact: boolean = false;
   public formHelper = new FormHelper();
   constructor(private stateService: StateService,
     private newUserService: NewUserService,

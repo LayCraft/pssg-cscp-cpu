@@ -16,4 +16,8 @@ export class CgLiabilityComponent implements OnInit {
   onChanges() {
     this.cgLiabilityChange.emit(this.cgLiability);
   }
+
+  showAppendixA() {
+    console.log("show thing");
+  }
 }
