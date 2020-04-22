@@ -51,6 +51,7 @@ import { DownloadDocumentComponent } from './authenticated/download-document/dow
 import { LoginPageComponent } from './login/login.component';
 import { MessageWriteComponent } from './authenticated/subforms/message-write/message-write.component';
 import { NgxMaskModule } from 'ngx-mask'
+import { NewUserNewOrganizationComponent } from './authenticated/new-user-new-organization/new-user-new-organization.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { NgxMaskModule } from 'ngx-mask'
     MessageReadComponent,
     MessageWriteComponent,
     NewUserComponent,
+    NewUserNewOrganizationComponent,
     OrganizationProfileBoxComponent,
     PersonCardComponent,
     PersonEditorComponent,

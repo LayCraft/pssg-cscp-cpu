@@ -10,7 +10,7 @@ export class UserSettings implements iUserSettings {
     userType: string;
     user: any;
     isNewUserRegistration: boolean;
-    IsNewUserAndNewOrganizationRegistration: boolean;
+    isNewUserAndNewOrganizationRegistration: boolean;
     contactExistsButNotApproved: boolean;
     contactId: string;
     accountId: string;
@@ -25,7 +25,7 @@ export class UserSettings implements iUserSettings {
       this.userType = user.userType || null;
       this.user = user.user || null;
       this.isNewUserRegistration = user.isNewUserRegistration || false;
-      this.IsNewUserAndNewOrganizationRegistration = user.IsNewUserAndNewOrganizationRegistration || false;
+      this.isNewUserAndNewOrganizationRegistration = user.isNewUserAndNewOrganizationRegistration || false;
       this.contactExistsButNotApproved = user.contactExistsButNotApproved || false;
       this.contactId = user.contactId || null;
       this.accountId = user.accountId || null;
