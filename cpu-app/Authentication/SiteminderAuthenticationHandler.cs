@@ -481,7 +481,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     string NEW_USER = "No contact found with the supplied BCeID";
                     string NEW_USER_AND_NEW_ORGANIZATION = "No organization and contact found with the supplied BCeID";
                     string CONTACT_NOT_APPROVED = "Contact is not approved for portal access";
-                    string CONTACT_NOT_CPU = "Contadt doesn't belong to CPU";
+                    string CONTACT_NOT_CPU = "Contact doesn't belong to CPU";
 
                     if (resultResult.Contains(NEW_USER))
                     {
