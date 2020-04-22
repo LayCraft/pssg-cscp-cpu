@@ -27,6 +27,7 @@ function convertServiceProviderToDynamics(sp: iServiceProvider) {
   if (sp.email) post.emailaddress1 = sp.email;
   if (sp.fax) post.address1_fax = sp.fax;
   if (sp.phone) post.address1_telephone1 = sp.phone;
+  if (sp.name) post.name = sp.name;
   // return the person
   return post;
 }
