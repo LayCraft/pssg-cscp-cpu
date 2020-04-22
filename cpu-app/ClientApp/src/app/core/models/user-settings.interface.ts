@@ -8,6 +8,7 @@ export interface iUserSettings {
     userType: string;
     user: any;
     isNewUserRegistration: boolean;
+    IsNewUserAndNewOrganizationRegistration: boolean;
     contactExistsButNotApproved: boolean;
     contactId: string;
     accountId: string;

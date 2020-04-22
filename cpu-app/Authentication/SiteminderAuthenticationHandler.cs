@@ -479,6 +479,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
 
                     // if ((int)result.statusCode == 200)
                     string NEW_USER = "No contact found with the supplied BCeID";
+                    string NEW_USER_AND_NEW_ORGANIZATION = "No organization and contact found with the supplied BCeID";
                     string CONTACT_NOT_APPROVED = "Contact is not approved for portal access";
 
                     if (resultResult.Contains(NEW_USER))
@@ -486,6 +487,17 @@ namespace Gov.Cscp.Victims.Public.Authentication
                         Console.WriteLine("New User Registration");
 
                         userSettings.IsNewUserRegistration = true;
+                        userSettings.IsNewUserAndNewOrganizationRegistration = false;
+                        principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
+                        UserSettings.SaveUserSettings(userSettings, context);
+                        return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
+                    }
+                    else if (resultResult.Contains(NEW_USER_AND_NEW_ORGANIZATION))
+                    {
+                        Console.WriteLine("New User and New Organization Registration");
+
+                        userSettings.IsNewUserRegistration = true;
+                        userSettings.IsNewUserAndNewOrganizationRegistration = true;
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
                         UserSettings.SaveUserSettings(userSettings, context);
                         return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
@@ -508,6 +520,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                         // userSettings.UserId = siteMinderGuid;
                         // userSettings.AccountId = siteMinderBusinessGuid;
                         userSettings.IsNewUserRegistration = false;
+                        userSettings.IsNewUserAndNewOrganizationRegistration = false;
                         Console.WriteLine("UserSettings: " + userSettings.GetJson());
 
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
