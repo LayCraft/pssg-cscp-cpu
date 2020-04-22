@@ -481,6 +481,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     string NEW_USER = "No contact found with the supplied BCeID";
                     string NEW_USER_AND_NEW_ORGANIZATION = "No organization and contact found with the supplied BCeID";
                     string CONTACT_NOT_APPROVED = "Contact is not approved for portal access";
+                    string CONTACT_NOT_CPU = "Contadt doesn't belong to CPU";
 
                     if (resultResult.Contains(NEW_USER))
                     {
@@ -505,6 +506,15 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     else if (resultResult.Contains(CONTACT_NOT_APPROVED)) {
                         //error state - should hopefully never happen
                         Console.WriteLine("Error, contact already exists but is not approved");
+
+                        userSettings.ContactExistsButNotApproved = true;
+                        principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
+                        UserSettings.SaveUserSettings(userSettings, context);
+                        return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
+                    }
+                    else if (resultResult.Contains(CONTACT_NOT_CPU)) {
+                        //error state - should hopefully never happen
+                        Console.WriteLine("Error, contact does not belong to CPU...");
 
                         userSettings.ContactExistsButNotApproved = true;
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
