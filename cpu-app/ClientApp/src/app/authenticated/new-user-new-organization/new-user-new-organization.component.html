@@ -9,7 +9,7 @@
                 <div class="col-md">
                     <div class="form-group">
                         <label for="organizationName">Organization Name</label>
-                        <input type="text" class="form-control" id="organizationName" name="organizationName" [(ngModel)]="trans.serviceProvider.name" #organizationName="ngModel" (input)="formHelper.trimInput($event.target)">
+                        <input type="text" class="form-control" id="organizationName" name="organizationName" [(ngModel)]="trans.serviceProvider.name" #organizationName="ngModel">
                         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(organizationName)">
                             Ok
                         </div>

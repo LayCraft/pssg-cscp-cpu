@@ -49,7 +49,7 @@ export class NewUserComponent implements OnInit {
         // this.stateService.userSettings.next(userSettings);
         // this.router.navigate([this.stateService.homeRoute.getValue()]);
         this.saving = false;
-        this.stateService.logout();
+        // this.stateService.logout();
       },
         (err) => {
           console.log(err);
