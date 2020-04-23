@@ -90,7 +90,7 @@ export interface iDynamicsCrmProgram {
   _vsd_contactlookup3_value?: string;
   _vsd_contractid_value?: string;
   _vsd_cpu_regiondistrict_value?: string;
-  _vsd_cpu_regiondistrictlookup2_value?: string;
+  // _vsd_cpu_regiondistrictlookup2_value?: string;
   _vsd_programtype_value?: string;
   _vsd_serviceproviderid_value?: string;
   fortunecookieetag?: string;

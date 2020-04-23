@@ -12,7 +12,7 @@ export interface iProgramApplication extends iContactInformation {
   phoneNumber: string;
   programId: string;
   programLocation: string;
-  serviceArea: string;
+  // serviceArea: string;
   hasMailingAddress?: boolean;
   isPoliceBased: boolean;
 
