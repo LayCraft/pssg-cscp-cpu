@@ -12,5 +12,6 @@ export interface iUserSettings {
     contactExistsButNotApproved: boolean;
     contactId: string;
     accountId: string;
+    authenticatedUser: any;
   }
   

@@ -18,6 +18,7 @@ namespace Gov.Cscp.Victims.Public.Models
         public string fax { get; set; }
         public string firstname { get; set; }
         public string fullname { get; set; }
+        public int vsd_contactrole { get; set; }
         //public string jobtitle { get; set; }
         public string lastname { get; set; }
         public string middlename { get; set; }

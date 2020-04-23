@@ -14,6 +14,7 @@ export class UserSettings implements iUserSettings {
     contactExistsButNotApproved: boolean;
     contactId: string;
     accountId: string;
+    authenticatedUser: any;
   constructor(user?: iUserSettings) {
     if (user) {
       this.userAuthenticated = user.userAuthenticated || false;
@@ -29,6 +30,7 @@ export class UserSettings implements iUserSettings {
       this.contactExistsButNotApproved = user.contactExistsButNotApproved || false;
       this.contactId = user.contactId || null;
       this.accountId = user.accountId || null;
+      this.authenticatedUser = user.authenticatedUser || null;
     } 
   }
 }

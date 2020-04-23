@@ -10,6 +10,7 @@ export class TransmogrifierNewUser {
     public userId: string;
     public person: iPerson;
     public serviceProvider: iServiceProvider;
+    public isContractorContact: boolean;
 
     constructor(g: iDynamicsContactNotApproved = {}) {
         if (g) {
@@ -18,6 +19,7 @@ export class TransmogrifierNewUser {
         }
         this.person = new Person();
         this.serviceProvider = new ServiceProvider();
+        this.isContractorContact = false;
     }
 
 }
