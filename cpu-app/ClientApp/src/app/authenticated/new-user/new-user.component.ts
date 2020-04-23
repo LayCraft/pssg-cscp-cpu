@@ -29,7 +29,7 @@ export class NewUserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
   }
 
   registerNewUser() {
@@ -49,7 +49,9 @@ export class NewUserComponent implements OnInit {
         // this.stateService.userSettings.next(userSettings);
         // this.router.navigate([this.stateService.homeRoute.getValue()]);
         this.saving = false;
-        // this.stateService.logout();
+        setTimeout(() => {
+          this.stateService.logout();
+        }, 1200);
       },
         (err) => {
           console.log(err);
