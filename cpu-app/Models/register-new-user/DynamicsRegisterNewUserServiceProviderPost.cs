@@ -17,6 +17,7 @@ namespace Gov.Cscp.Victims.Public.Models
         public string address1_stateorprovince { get; set; }
         public string emailaddress1 { get; set; }
         public string address1_fax { get; set; }
-        public string address1_telephone1 { get; set; }
+        public string telephone1 { get; set; }
+        // public string vsd_executivecontactid { get; set;}
     }
 }

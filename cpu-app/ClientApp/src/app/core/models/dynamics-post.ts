@@ -225,6 +225,7 @@ export interface iDynamicsCrmContactPost {
   vsd_contact_vsd_programid?: string; // added when contact is listed in a program. Which program id are they under
   vsd_programid?: string; // added when contact is listed in a program
   vsd_portalfield?: string;
+  vsd_contactrole?: number;
 }
 export interface iDynamicsCrmServiceProviderPost {
   name?: string;
@@ -235,7 +236,7 @@ export interface iDynamicsCrmServiceProviderPost {
   address1_stateorprovince?: string;
   emailaddress1?: string;
   address1_fax?: string;
-  address1_telephone1?: string;
+  telephone1?: string;
   address1_postalcode?: string;
 }
 export interface iDynamicsCrmProgramPost {

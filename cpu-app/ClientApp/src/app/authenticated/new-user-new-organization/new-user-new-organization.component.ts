@@ -21,7 +21,6 @@ export class NewUserNewOrganizationComponent implements OnInit {
   organizationName: string;
   saving: boolean = false;
   trans: TransmogrifierNewUser = new TransmogrifierNewUser();
-  isContractorContact: boolean = false;
   public formHelper = new FormHelper();
   constructor(private stateService: StateService,
     private newUserService: NewUserService,
