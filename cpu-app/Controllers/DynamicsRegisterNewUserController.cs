@@ -38,6 +38,9 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
 
                 return StatusCode((int)result.statusCode, result.result.ToString());
+
+
+                // return StatusCode(200, "test");
             }
             finally { }
         }

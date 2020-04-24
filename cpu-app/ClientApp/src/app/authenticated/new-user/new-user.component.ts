@@ -36,7 +36,12 @@ export class NewUserComponent implements OnInit {
     try {
       let userSettings = this.stateService.userSettings.getValue();
       this.trans.organizationId = userSettings.accountId;
-      this.trans.userId = userSettings.userId
+      this.trans.userId = userSettings.userId;
+
+      if (!this.trans.person.firstName || !this.trans.person.lastName) {
+        this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
+        return;
+      }
 
       console.log(this.trans);
       let data = convertNewUserToDynamics(this.trans);

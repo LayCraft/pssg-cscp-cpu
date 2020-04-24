@@ -101,14 +101,16 @@
   <app-address2 [(address)]="person.address"></app-address2>
   <!-- </span> -->
 
-  <label class="form-check-label" for="employmentStatus">
-    Employment Status
-  </label>
-  <select name="employmentStatus" [(ngModel)]="person.employmentStatus" class="custom-select">
-    <option value="null">--</option>
-    <option value="Full-Time">Full-Time</option>
-    <option value="Sub-Contracted">Sub-Contracted</option>
-    <option value="Part-Time">Part-Time</option>
-    <option value="Leave of Absence">Leave of Absence</option>
-  </select>
+  <ng-container *ngIf="!isPoliceContact">
+    <label class="form-check-label" for="employmentStatus">
+      Employment Status
+    </label>
+    <select name="employmentStatus" [(ngModel)]="person.employmentStatus" class="custom-select">
+      <option value="null">--</option>
+      <option value="Full-Time">Full-Time</option>
+      <option value="Sub-Contracted">Sub-Contracted</option>
+      <option value="Part-Time">Part-Time</option>
+      <option value="Leave of Absence">Leave of Absence</option>
+    </select>
+  </ng-container>
 </div>
