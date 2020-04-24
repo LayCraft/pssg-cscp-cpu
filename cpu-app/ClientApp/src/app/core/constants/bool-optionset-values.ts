@@ -1,4 +1,4 @@
 export const boolOptionSet = {
-    isTrue: 100000000,
-    isFalse: 100000001
+    isFalse: 100000000,
+    isTrue: 100000001
   };

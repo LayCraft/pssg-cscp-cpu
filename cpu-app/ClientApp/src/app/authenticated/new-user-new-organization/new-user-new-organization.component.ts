@@ -38,6 +38,16 @@ export class NewUserNewOrganizationComponent implements OnInit {
       this.trans.organizationId = userSettings.accountId;
       this.trans.userId = userSettings.userId
 
+      if (!this.trans.serviceProvider.name) {
+        this.notificationQueueService.addNotification('An Organization must have a name.', 'warning');
+        return;
+      }
+
+      if (!this.trans.person.firstName || !this.trans.person.lastName) {
+        this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
+        return;
+      }
+
       console.log(this.trans);
       let data = convertNewUserToDynamics(this.trans);
       this.newUserService.saveNewUser(data).subscribe((res) => {

@@ -49,14 +49,14 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="form-row">
+            <div class="form-row">
                 <div class="col-md">
                     <div class="form-group">
-                        <label for="organizationNameInput">Organization Name</label>
-                        <input type="text" class="form-control" id="organizationNameInput" name="organizationNameInput" [(ngModel)]="trans.serviceProvider.name">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" [(ngModel)]="trans.person.title" #title="ngModel">
                     </div>
                 </div>
-            </div> -->
+            </div>
             <div class="form-row">
                 <div class="col-md">
                     <div class="form-group">
@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <app-address2 [(address)]="trans.person.address"></app-address2>
         </div>
     </div>

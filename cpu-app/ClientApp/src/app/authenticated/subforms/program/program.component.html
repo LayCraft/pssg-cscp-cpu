@@ -54,21 +54,21 @@
         <h2 class="blue-header mt-2">For Police-based Victim Service program only</h2>
         <input [(ngModel)]="programApplication.hasPoliceContact" class="form-check-input" type="checkbox" id="hasPoliceContact" name="hasPoliceContact">
         <label class="form-check-label" for="hasPoliceContact">
-          Select if your Police Based Victim Services Program has a police contact.
+          Select if your Police Based Victim Services Program has a police contact
         </label>
         <div *ngIf="programApplication.hasPoliceContact">
           <h5>Police Detachment / Department Supervisor</h5>
-          <app-person-editor [(person)]="programApplication.policeContact" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
+          <app-person-editor [(person)]="programApplication.policeContact" [isPoliceContact]="true" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
         </div>
       </div>
 
       <div *ngIf="programApplication.hasPoliceContact" class="shared-cost-contact-div">
         <input [(ngModel)]="programApplication.hasSharedCostContact" class="form-check-input" type="checkbox" id="hasSharedCostContactCheckbox" name="hasSharedCostContactCheckbox">
         <label class="form-check-label" for="hasSharedCostContactCheckbox">
-          Select if your Police Based Victim Services Program receives a cost-share contribution from your local government. Please provide the name and contact information for your local government funder:
+          Please select the checkbox to complete your police contact and cost share information
         </label>
         <div *ngIf="programApplication.hasSharedCostContact">
-          <app-person-editor [(person)]="programApplication.sharedCostContact" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
+          <app-person-editor [(person)]="programApplication.sharedCostContact" [isPoliceContact]="true" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
         </div>
       </div>
     </div>

@@ -118,6 +118,14 @@
             <div class="form-row">
                 <div class="col-md">
                     <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" [(ngModel)]="trans.person.title" #title="ngModel">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md">
+                    <div class="form-group">
                         <label for="emailAddress">Email</label>
                         <input type="text" class="form-control" id="emailAddress" name="emailAddress" [(ngModel)]="trans.person.email" #emailAddress="ngModel" (input)="formHelper.trimInput($event.target)" [pattern]="emailRegex">
                         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)">

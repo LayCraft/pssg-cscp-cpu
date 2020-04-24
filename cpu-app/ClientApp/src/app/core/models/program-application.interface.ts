@@ -9,6 +9,7 @@ export interface iProgramApplication extends iContactInformation {
   faxNumber: string;
   formState: string;
   name: string;
+  programTypeName: string;
   phoneNumber: string;
   programId: string;
   programLocation: string;

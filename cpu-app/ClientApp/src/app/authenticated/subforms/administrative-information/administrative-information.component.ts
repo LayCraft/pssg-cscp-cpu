@@ -13,10 +13,10 @@ export class AdministrativeInformationComponent implements OnInit {
   // output a contact on change
   @Output() transmogrifierProgramApplicationChange = new EventEmitter<TransmogrifierProgramApplication>();
 
-  subcontractedStaffObj: any = {persons: [], removedPersons: []};
+  subcontractedStaffObj: any = { persons: [], removedPersons: [] };
 
   constructor() { }
-  ngOnInit() { 
+  ngOnInit() {
     this.subcontractedStaffObj.persons = this.transmogrifierProgramApplication.administrativeInformation.staffSubcontractedPersons;
     this.subcontractedStaffObj.removedPersons = [];
   }
@@ -28,5 +28,12 @@ export class AdministrativeInformationComponent implements OnInit {
   onInput() {
     // emit the form
     this.transmogrifierProgramApplicationChange.emit(this.transmogrifierProgramApplication);
+  }
+
+  onSubcontractedStaffChange(personsObj: any) {
+    this.transmogrifierProgramApplication.administrativeInformation.staffSubcontractedPersons = personsObj.persons;
+    // this.programApplication.removedStaff = personsObj.removedPersons;
+    this.onInput();
+
   }
 }

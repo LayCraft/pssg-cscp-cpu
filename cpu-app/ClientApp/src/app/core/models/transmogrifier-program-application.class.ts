@@ -219,6 +219,7 @@ export class TransmogrifierProgramApplication {
       temp.programLocation = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid).map(a => a.vsd_name)[0] || 'Unknown';
       temp.hasPoliceContact = temp.policeContact ? true : false;
       temp.hasSharedCostContact = temp.sharedCostContact ? true : false;
+      temp.programTypeName = programType.vsd_name || "";
 
       if (!temp.policeContact) temp.policeContact = new Person();
       if (!temp.hasSharedCostContact) temp.sharedCostContact = new Person();
