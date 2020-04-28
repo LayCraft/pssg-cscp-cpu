@@ -235,7 +235,7 @@ export interface iDynamicsCrmServiceProviderPost {
   address1_country?: string;
   address1_stateorprovince?: string;
   emailaddress1?: string;
-  address1_fax?: string;
+  fax?: string;
   telephone1?: string;
   address1_postalcode?: string;
 }

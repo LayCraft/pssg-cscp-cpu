@@ -32,7 +32,7 @@ function convertServiceProviderToDynamics(sp: iServiceProvider) {
     if (sp.address && sp.address.postalCode) post.address1_postalcode = sp.address.postalCode;
     if (sp.address && sp.address.province) post.address1_stateorprovince = sp.address.province;
     if (sp.email) post.emailaddress1 = sp.email;
-    if (sp.fax) post.address1_fax = sp.fax;
+    if (sp.fax) post.fax = sp.fax;
     if (sp.phone) post.telephone1 = sp.phone;
     if (sp.name) post.name = sp.name;
     // return the person
