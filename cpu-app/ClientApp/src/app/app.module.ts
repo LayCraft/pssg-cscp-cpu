@@ -52,6 +52,8 @@ import { LoginPageComponent } from './login/login.component';
 import { MessageWriteComponent } from './authenticated/subforms/message-write/message-write.component';
 import { NgxMaskModule } from 'ngx-mask'
 import { NewUserNewOrganizationComponent } from './authenticated/new-user-new-organization/new-user-new-organization.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AppendixADialog } from './authenticated/dialogs/appendix-a/appendix-a.dialog';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,7 @@ import { NewUserNewOrganizationComponent } from './authenticated/new-user-new-or
     AppComponent,
     BudgetProposalComponent,
     CgLiabilityComponent,
+    AppendixADialog,
     ContactInformation2Component,
     ContractTombstoneComponent,
     DashboardComponent,
@@ -99,7 +102,11 @@ import { NewUserNewOrganizationComponent } from './authenticated/new-user-new-or
     DownloadDocumentComponent,
     CoverLetterComponent,
   ],
+  entryComponents: [
+    AppendixADialog
+  ],
   imports: [
+    MatDialogModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
