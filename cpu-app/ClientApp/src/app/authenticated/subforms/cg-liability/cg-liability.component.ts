@@ -1,4 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AppendixADialog } from '../../dialogs/appendix-a/appendix-a.dialog';
 
 @Component({
   selector: 'app-cg-liability',
@@ -8,7 +10,9 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 export class CgLiabilityComponent implements OnInit {
   @Input() cgLiability: string;
   @Output() cgLiabilityChange = new EventEmitter<string>();
-  constructor() { }
+  constructor(
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
   }
@@ -17,7 +21,10 @@ export class CgLiabilityComponent implements OnInit {
     this.cgLiabilityChange.emit(this.cgLiability);
   }
 
-  showAppendixA() {
-    console.log("show thing");
+  showAppendixADialog() {
+    this.dialog.open(AppendixADialog, {
+      autoFocus: false,
+      data: {}
+    });
   }
 }

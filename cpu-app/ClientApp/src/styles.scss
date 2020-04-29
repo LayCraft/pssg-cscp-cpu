@@ -144,3 +144,10 @@ input[type="number"] {
 .organization-box {
   margin-bottom: 10px;
 }
+
+.sticky-top {
+  z-index: 1000 !important;
+}
+
+html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
