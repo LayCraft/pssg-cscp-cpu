@@ -28,6 +28,7 @@ namespace Gov.Cscp.Victims.Public.Models
         public int? vsd_totalscheduledhours { get; set; }
         public int? vsd_totaloncallstandbyhours { get; set; }
         public int? vsd_cpu_per { get; set; }
+        public bool vsd_costshare { get; set; }
         private string _vsd_ContactLookupfortunecookiebind;
         public string vsd_ContactLookupfortunecookiebind
         {

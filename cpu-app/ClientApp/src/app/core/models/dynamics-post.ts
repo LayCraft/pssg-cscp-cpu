@@ -272,6 +272,7 @@ export interface iDynamicsCrmProgramPost {
   vsd_totaloncallstandbyhours?: number;
   vsd_totalscheduledhours?: number;
   vsd_cpu_per?: number;
+  vsd_costshare?: boolean;
 }
 export interface iDynamicsSchedulePost {
   _vsd_programid_value?: string;

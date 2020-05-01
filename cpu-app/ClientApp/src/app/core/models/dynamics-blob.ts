@@ -67,7 +67,7 @@ export interface iDynamicsCrmContract {
   fortunecookietype?: string;
   statuscode?: number;
   vsd_contractid?: string;
-  vsd_cpu_humanresourcepolices?: string; // this is actually an array that comes in wrong
+  vsd_cpu_humanresourcepolices?: string;
   vsd_cpu_insuranceoptions?: number;
   vsd_cpu_memberofcssea?: string;
   vsd_cpu_subcontractedprogramstaff?: number;
@@ -118,6 +118,7 @@ export interface iDynamicsCrmProgram {
   vsd_provincestate?: string;
   vsd_totaloncallstandbyhours?: number;
   vsd_totalscheduledhours?: number;
+  vsd_costshare?: boolean;
 }
 export interface iDynamicsCrmProgramType {
   vsd_programtypeid?: string;

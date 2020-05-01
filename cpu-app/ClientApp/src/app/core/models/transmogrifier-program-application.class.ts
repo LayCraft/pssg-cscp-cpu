@@ -190,12 +190,13 @@ export class TransmogrifierProgramApplication {
 
         policeContact: g.StaffCollection
           .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup2_value === c.contactid)
-          .map(s => this.makePerson(g, s.contactid))[0] || null,
+          .map(s => this.makePerson(g, s.contactid))[0] || new Person(),
 
         sharedCostContact: g.StaffCollection
           .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup3_value === c.contactid)
-          .map(s => this.makePerson(g, s.contactid))[0] || null,
+          .map(s => this.makePerson(g, s.contactid))[0] || new Person(),
 
+        hasSharedCostContact: p.vsd_costshare || false,
         // revenueSources: [],//iRevenueSource[];
         additionalStaff: g.ProgramContactCollection
           .filter((c: iDynamicsCrmContact) => c.vsd_programid === p.vsd_programid)
@@ -214,15 +215,23 @@ export class TransmogrifierProgramApplication {
         temp.mainAddressSameAsAgency = true;
       }
 
+      if (_.isEqual(temp.policeContact.address, this.contactInformation.mainAddress)) {
+        temp.policeContact.addressSameAsAgency = true;
+      }
+
+      if (_.isEqual(temp.sharedCostContact.address, this.contactInformation.mainAddress)) {
+        temp.sharedCostContact.addressSameAsAgency = true;
+      }
+
       let programType = g.ProgramTypeCollection.find(pt => pt.vsd_programtypeid === p._vsd_programtype_value);
       temp.isPoliceBased = programType ? programType.vsd_programcategory === 100000000 : false;
       temp.programLocation = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid).map(a => a.vsd_name)[0] || 'Unknown';
       temp.hasPoliceContact = temp.policeContact ? true : false;
-      temp.hasSharedCostContact = temp.sharedCostContact ? true : false;
+      // temp.hasSharedCostContact = temp.sharedCostContact ? true : false;
       temp.programTypeName = programType.vsd_name || "";
 
       if (!temp.policeContact) temp.policeContact = new Person();
-      if (!temp.hasSharedCostContact) temp.sharedCostContact = new Person();
+      // if (!temp.hasSharedCostContact) temp.sharedCostContact = new Person();
 
       // const programLocations = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid);
       // if (programLocations.length) {
