@@ -3,13 +3,16 @@
     <h4 class="h4">Contract: {{contract.contractNumber}}</h4>
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
-        <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs[0])" [class.active]="currentTab===tabs[0]">Tasks Due{{contract.tasks.length ? ' ('+contract.tasks.length+')':''}}</a>
+        <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.tasksDue)" [class.active]="currentTab===tabs.tasksDue">{{tabs.tasksDue}}{{contract.tasks.length ? ' ('+contract.tasks.length+')':''}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs[1])" [class.active]="currentTab===tabs[1]">Completed Tasks{{contract.completedTasks.length ? ' ('+contract.completedTasks.length+')':''}}</a>
+        <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.tasksCompleted)" [class.active]="currentTab===tabs.tasksCompleted">{{tabs.tasksCompleted}}{{contract.completedTasks.length ? ' ('+contract.completedTasks.length+')':''}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs[2])" [class.active]="currentTab===tabs[2]">Edit Program Information</a>
+        <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.editProgramInformation)" [class.active]="currentTab===tabs.editProgramInformation">{{tabs.editProgramInformation}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.yourDocuments)" [class.active]="currentTab===tabs.yourDocuments">{{tabs.yourDocuments}}</a>
       </li>
       <!-- Messages won't be included until after initial release. So Hide unused tab for now. -->
       <!-- <li class="nav-item">
@@ -18,7 +21,7 @@
     </ul>
   </div>
   <div class="card-body">
-    <span *ngIf="currentTab===tabs[0]">
+    <span *ngIf="currentTab===tabs.tasksDue">
       <div class="alert alert-light" *ngIf="!contract.tasks.length">
         There are no current tasks due.
       </div>
@@ -45,7 +48,7 @@
         </table>
       </div>
     </span>
-    <span *ngIf="currentTab===tabs[1]">
+    <span *ngIf="currentTab===tabs.tasksCompleted">
       <div class="alert alert-light" *ngIf="!contract.completedTasks.length">
         There are no completed tasks to show.
       </div>
@@ -70,7 +73,7 @@
         </table>
       </div>
     </span>
-    <span *ngIf="currentTab===tabs[2]">
+    <span *ngIf="currentTab===tabs.editProgramInformation">
       <table class="table table-sm table-striped">
         <thead class="thead">
           <tr>
@@ -97,7 +100,30 @@
         </tbody>
       </table>
     </span>
-    <span *ngIf="currentTab===tabs[3]">
+    <span *ngIf="currentTab===tabs.yourDocuments">
+      <table class="table table-sm table-striped">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Your Document</th>
+            <th scope="col">Available Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a >Full Contract Package</a></td>
+            <td>{{documents[0].availableDate | date:'yyyy-MM-dd'}}</td>
+          </tr>
+          <tr *ngFor="let doc of documents; let i=index;">
+            <td><span class="download-link" (click)="downloadDocument(doc)">{{doc.name}}</span></td>
+            <td>
+              {{doc.availableDate | date:'yyyy-MM-dd'}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </span>
+
+    <span *ngIf="currentTab===tabs.messages">
       <table class="table table-sm table-striped">
         <thead class="thead">
           <tr>

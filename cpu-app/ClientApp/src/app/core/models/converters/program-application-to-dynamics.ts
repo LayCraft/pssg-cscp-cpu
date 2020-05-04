@@ -116,6 +116,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_totalscheduledhours: p.scheduledHours,
       vsd_totaloncallstandbyhours: p.onCallHours,
       vsd_cpu_per: p.perType,
+      vsd_costshare: p.hasSharedCostContact,
     });
     // if there are elements in the array add the item.
     if (programCollection.length) post.ProgramCollection = programCollection;

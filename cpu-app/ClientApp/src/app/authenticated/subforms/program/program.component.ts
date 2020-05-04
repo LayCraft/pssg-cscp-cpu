@@ -96,6 +96,10 @@ export class ProgramComponent implements OnInit {
 
   onProgramContactChange(event: iPerson) {
     this.programApplication.programContact = event;
+    if (this.programApplication.mailingAddressSameAsProgramContact) {
+      let addressCopy = _.cloneDeep(this.programApplication.programContact.address)
+      this.programApplication.mainAddress = addressCopy;
+    }
     this.onInput();
   }
   onPaidStaffChange(event: iPerson[]) {
@@ -116,10 +120,10 @@ export class ProgramComponent implements OnInit {
     let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
     person.address = addressCopy;
   }
-  setMainAddressSameAsAgency() {
-    if (!this.programApplication.mainAddressSameAsAgency) {
-      let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
-      this.programApplication.mainAddress = addressCopy;
+  setMailingAddressSameAsProgramContact() {
+    if (!this.programApplication.mailingAddressSameAsProgramContact) {
+      let addressCopy = _.cloneDeep(this.programApplication.programContact.address)
+      this.programApplication.mailingAddress = addressCopy;
     }
   }
 }
