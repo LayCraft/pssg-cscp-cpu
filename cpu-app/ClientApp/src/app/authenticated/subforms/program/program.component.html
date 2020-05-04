@@ -19,16 +19,17 @@
 
     <h2 class="blue-header">Primary Program Contact Information</h2>
     <app-primary-contact-info [(contactInformation)]="programApplication"></app-primary-contact-info>
+    <app-address2 [(address)]="programApplication.mainAddress"></app-address2>
 
+    
+
+    <h2 class="blue-header">Mailing Address</h2>
     <div class="form-check">
-      <input [(ngModel)]="programApplication.mainAddressSameAsAgency" class="form-check-input" type="checkbox" id="mainAddressSameAsAgency" name="mainAddressSameAsAgency" (click)="setMainAddressSameAsAgency()">
-      <label class="form-check-label" for="mainAddressSameAsAgency">
-        Same as primary address of Agency.
+      <input [(ngModel)]="programApplication.mailingAddressSameAsProgramContact" class="form-check-input" type="checkbox" id="mailingAddressSameAsProgramContact" name="mailingAddressSameAsProgramContact" (click)="setMailingAddressSameAsProgramContact()">
+      <label class="form-check-label" for="mailingAddressSameAsProgramContact">
+        Please select this check box if mailing address is the same as Primary Program Contact Address
       </label>
     </div>
-
-    <app-address2 [(address)]="programApplication.mainAddress"></app-address2>
-    <h2 class="blue-header">Mailing Address</h2>
     <app-address2 [(address)]="programApplication.mailingAddress"></app-address2>
 
     <!-- <div class="form-group">
@@ -40,7 +41,7 @@
     <!-- *ngIf="differentProgramContact" -->
     <span class="mb-4">
       <h2 class="blue-header">Program Contact</h2>
-      <app-person-picker [title]="'Please select a program contact.'" [(person)]="programApplication.programContact">
+      <app-person-picker [title]="'Please select a program contact.'" [(person)]="programApplication.programContact" (personChange)="onProgramContactChange($event)">
       </app-person-picker>
     </span>
     <h2 class="blue-header mt-2">Program Staff</h2>

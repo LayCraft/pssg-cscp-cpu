@@ -168,10 +168,10 @@ export class ProgramContactComponent implements OnInit {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
-  setMainAddressSameAsAgency() {
-    if (!this.programApplication.mainAddressSameAsAgency) {
-      let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
-      this.programApplication.mainAddress = addressCopy;
+  setMailingAddressSameAsProgramContact() {
+    if (!this.programApplication.mailingAddressSameAsProgramContact) {
+      let addressCopy = _.cloneDeep(this.programApplication.programContact.address)
+      this.programApplication.mailingAddress = addressCopy;
     }
   }
 }

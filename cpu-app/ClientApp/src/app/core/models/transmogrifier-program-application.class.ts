@@ -211,8 +211,8 @@ export class TransmogrifierProgramApplication {
         currentTab: "Contact Information",
       } as iProgramApplication;
 
-      if (_.isEqual(temp.mainAddress, this.contactInformation.mainAddress)) {
-        temp.mainAddressSameAsAgency = true;
+      if (_.isEqual(temp.mailingAddress, temp.programContact.address)) {
+        temp.mailingAddressSameAsProgramContact = true;
       }
 
       if (_.isEqual(temp.policeContact.address, this.contactInformation.mainAddress)) {
