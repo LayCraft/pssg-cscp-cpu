@@ -22,7 +22,7 @@ export interface iProgramApplication extends iContactInformation {
   removedStaff: iPerson[];
   mailingAddress: iAddress;
   mainAddress: iAddress;
-  mailingAddressSameAsProgramContact: boolean;
+  mailingAddressSameAsMainAddress: boolean;
   programContact: iPerson;
   policeContact: iPerson;
   hasPoliceContact: boolean;

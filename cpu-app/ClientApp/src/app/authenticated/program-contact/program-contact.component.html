@@ -59,7 +59,7 @@
           </div>
           <div class="col-md">
             <div class="form-group">
-              <label for="faxNumber">Fax Number</label>
+              <label for="faxNumber">Fax Number (Optional)</label>
               <input type="text" mask='(000) 000 0000' class="form-control" id="faxNumber" name="faxNumber"
                 [(ngModel)]="programApplication.faxNumber" #faxNumber="ngModel" [pattern]="phoneRegex">
               <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(faxNumber)">
@@ -77,8 +77,8 @@
 
         <h2 class="blue-header mt-4">Mailing Address</h2>
         <div class="form-check">
-          <input [(ngModel)]="programApplication.mailingAddressSameAsProgramContact" class="form-check-input" type="checkbox" id="mailingAddressSameAsProgramContact" name="mailingAddressSameAsProgramContact" (click)="setMailingAddressSameAsProgramContact()">
-          <label class="form-check-label" for="mailingAddressSameAsProgramContact">
+          <input [(ngModel)]="programApplication.mailingAddressSameAsMainAddress" class="form-check-input" type="checkbox" id="mailingAddressSameAsMainAddress" name="mailingAddressSameAsMainAddress" (click)="setMailingAddressSameAsMainAddress()">
+          <label class="form-check-label" for="mailingAddressSameAsMainAddress">
             Please select this check box if mailing address is the same as Primary Program Contact Address
           </label>
         </div>

@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-md">
                     <div class="form-group">
-                        <label for="orgFaxNumber">Fax Number</label>
+                        <label for="orgFaxNumber">Fax Number (Optional)</label>
                         <input type="text" mask='(000) 000 0000' class="form-control" id="orgFaxNumber" name="orgFaxNumber" [(ngModel)]="trans.serviceProvider.fax" #orgFaxNumber="ngModel" [pattern]="phoneRegex">
                         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(orgFaxNumber)">
                             Ok
@@ -152,7 +152,7 @@
                 </div>
                 <div class="col-md">
                     <div class="form-group">
-                        <label for="faxNumber">Fax Number</label>
+                        <label for="faxNumber">Fax Number (Optional)</label>
                         <input type="text" mask='(000) 000 0000' class="form-control" id="faxNumber" name="faxNumber" [(ngModel)]="trans.person.fax" #faxNumber="ngModel" [pattern]="phoneRegex">
                         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(faxNumber)">
                             Ok
