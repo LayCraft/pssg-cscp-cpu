@@ -96,7 +96,7 @@ export class ProgramComponent implements OnInit {
 
   onProgramContactChange(event: iPerson) {
     this.programApplication.programContact = event;
-    if (this.programApplication.mailingAddressSameAsProgramContact) {
+    if (this.programApplication.mailingAddressSameAsMainAddress) {
       let addressCopy = _.cloneDeep(this.programApplication.programContact.address)
       this.programApplication.mainAddress = addressCopy;
     }
@@ -120,9 +120,14 @@ export class ProgramComponent implements OnInit {
     let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
     person.address = addressCopy;
   }
-  setMailingAddressSameAsProgramContact() {
-    if (!this.programApplication.mailingAddressSameAsProgramContact) {
-      let addressCopy = _.cloneDeep(this.programApplication.programContact.address)
+  setMailingAddressSameAsMainAddress() {
+    if (!this.programApplication.mailingAddressSameAsMainAddress) {
+      // let addressCopy = _.cloneDeep(this.programApplication.mainAddress)
+      // this.programApplication.mailingAddress = addressCopy;
+      this.programApplication.mailingAddress = this.programApplication.mainAddress;
+    }
+    else {
+      let addressCopy = _.cloneDeep(this.programApplication.mailingAddress);
       this.programApplication.mailingAddress = addressCopy;
     }
   }
