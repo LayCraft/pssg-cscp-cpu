@@ -22,7 +22,7 @@ export class TaskListComponent implements OnInit {
     this.tabs = {
       "tasksDue": 'Tasks Due',
       "tasksCompleted": 'Completed Tasks',
-      "editProgramInformation": 'Edit Program Information',
+      "editProgramInformation": 'Update Program/Contact Information',
       "yourDocuments": 'Your Documents',
       "messages": 'Messages'
     };
