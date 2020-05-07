@@ -213,7 +213,7 @@ export class Transmogrifier {
         province: b.Organization.address2_stateorprovince || null,
         country: 'Canada'
       };
-      ci.hasMailingAddress = true;
+      // ci.mailingAddressSameAsMainAddress = true;
     } else {
       ci.mailingAddress = {
         city: null,
@@ -223,8 +223,11 @@ export class Transmogrifier {
         province: null,
         country: 'Canada'
       };
-      ci.hasMailingAddress = false;
+      // ci.hasMailingAddress = false;
     }
+    ci.mailingAddressSameAsMainAddress = _.isEqual(ci.mainAddress, ci.mailingAddress);
+    if (ci.mailingAddressSameAsMainAddress) ci.mailingAddress = ci.mainAddress;
+
     if (b.Organization._vsd_executivecontactid_value)
       if (b.ExecutiveContact) ci.executiveContact = {
         email: b.ExecutiveContact.emailaddress1 || null,

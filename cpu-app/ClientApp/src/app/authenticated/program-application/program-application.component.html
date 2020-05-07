@@ -40,8 +40,7 @@
                 <div class="col-md">
                   <div class="form-group">
                     <label for="orgName">Legal Name of Organization</label>
-                    <input [value]="trans.organizationName" type="text" class="form-control" id="orgName" name="orgName"
-                      disabled>
+                    <input [value]="trans.organizationName" type="text" class="form-control" id="orgName" name="orgName" disabled>
                   </div>
                 </div>
               </div>
@@ -49,8 +48,7 @@
                 <div class="col-md">
                   <div class="form-group">
                     <label for="city">Contract Number</label>
-                    <input [value]="trans.contractNumber" type="text" class="form-control" id="contractNumber"
-                      name="contractNumber" disabled>
+                    <input [value]="trans.contractNumber" type="text" class="form-control" id="contractNumber" name="contractNumber" disabled>
                   </div>
                 </div>
               </div>
@@ -62,18 +60,16 @@
               <app-address2 [(address)]="trans.contactInformation.mainAddress"></app-address2>
 
               <!-- Mailing address checkbox -->
+
+              <!-- Mailing address form -->
+              <h2 class="blue-header mt-4">Mailing Address</h2>
               <div class="form-check">
-                <input [(ngModel)]="trans.contactInformation.hasMailingAddress" class="form-check-input" type="checkbox"
-                  id="mailingAddressCheckbox">
-                <label class="form-check-label" for="mailingAddressCheckbox">
-                  Different mailing address from main address.
+                <input [(ngModel)]="trans.contactInformation.mailingAddressSameAsMainAddress" class="form-check-input" type="checkbox" id="mailingAddressSameAsMainAddress" name="mailingAddressSameAsMainAddress" (click)="setMailingAddressSameAsMainAddress()">
+                <label class="form-check-label" for="mailingAddressSameAsMainAddress">
+                  Please select this check box if mailing address is the same as Primary Program Contact Address
                 </label>
               </div>
-              <!-- Mailing address form -->
-              <span *ngIf="trans.contactInformation.hasMailingAddress">
-                <h2 class="blue-header mt-4">Mailing Address</h2>
-                <app-address2 [(address)]="trans.contactInformation.mailingAddress"></app-address2>
-              </span>
+              <app-address2 [(address)]="trans.contactInformation.mailingAddress"></app-address2>
 
               <!-- Primary contact the ministry calls when they want to contact the org -->
               <h2 class="blue-header mt-4">Organization Contact(s)</h2>
@@ -83,16 +79,14 @@
 
               <!-- Does the org have a board of directors? -->
               <div class="form-check mt-4">
-                <input [(ngModel)]="trans.contactInformation.hasBoardContact" type="checkbox" id="hasBoardOfDirectors"
-                  name="hasBoardOfDirectors" class="form-check-input">
+                <input [(ngModel)]="trans.contactInformation.hasBoardContact" type="checkbox" id="hasBoardOfDirectors" name="hasBoardOfDirectors" class="form-check-input">
                 <label for="hasBoardOfDirectors">
                   Does your organization have a board of directors?
                 </label>
               </div>
               <!-- If there is a board of directors who is it? -->
               <span *ngIf="trans.contactInformation.hasBoardContact">
-                <app-person-picker [title]="'Board Contact (For societies only)'"
-                  [(person)]="trans.contactInformation.boardContact"></app-person-picker>
+                <app-person-picker [title]="'Board Contact (For societies only)'" [(person)]="trans.contactInformation.boardContact"></app-person-picker>
               </span>
 
             </div>
@@ -112,7 +106,7 @@
               </span>
             </div>
             <div *ngIf="item.discriminator === discriminators[4]">
-              <app-review-application [trans]="trans" [(currentTab)]="currentReviewApplicationTab" (tabIndexChange)="reviewApplicationTabChange($event)" ></app-review-application>
+              <app-review-application [trans]="trans" [(currentTab)]="currentReviewApplicationTab" (tabIndexChange)="reviewApplicationTabChange($event)"></app-review-application>
             </div>
             <div *ngIf="item.discriminator === discriminators[5]">
               <app-program-authorizer [(signature)]="trans.signature"></app-program-authorizer>

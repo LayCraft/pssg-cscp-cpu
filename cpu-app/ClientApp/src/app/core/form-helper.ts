@@ -74,12 +74,12 @@ export class FormHelper {
     }
     return false;
   }
-  isFormValid(notificationQueueService: NotificationQueueService = null, currentTabHasInvalidClass: number = 0) { //notificationQueueService: NotificationQueueService
+  isFormValid(notificationQueueService: NotificationQueueService = null, currentTabHasInvalidClass: number = 0, ignoreTabErrors = false) { //notificationQueueService: NotificationQueueService
     if (document.getElementsByClassName("ng-invalid").length > 0) {
       if (notificationQueueService) notificationQueueService.addNotification('All fields must be in a valid format.', 'warning');
       return false;
     }
-    if (document.getElementsByClassName("tab-invalid").length > currentTabHasInvalidClass) {
+    if (!ignoreTabErrors && document.getElementsByClassName("tab-invalid").length > currentTabHasInvalidClass) {
       if (notificationQueueService) notificationQueueService.addNotification('There is a problem on another tab preventing save.', 'warning');
       return false;
     }

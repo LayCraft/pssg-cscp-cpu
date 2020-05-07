@@ -1,5 +1,5 @@
 import { AbstractControl } from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormHelper } from '../../../core/form-helper';
 import { Hours } from '../../../core/models/hours.class';
 import { StateService } from '../../../core/services/state.service';
@@ -11,13 +11,14 @@ import { EMAIL, PHONE_NUMBER } from '../../../core/constants/regex.constants';
 import { iHours } from '../../../core/models/hours.interface';
 import { perTypeDict } from '../../../core/constants/per-type';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-program',
   templateUrl: './program.component.html',
   styleUrls: ['./program.component.css']
 })
-export class ProgramComponent implements OnInit {
+export class ProgramComponent implements OnInit, OnDestroy {
   @Input() programApplication: iProgramApplication;
   @Output() programApplicationChange = new EventEmitter<iProgramApplication>();
   required = false;
@@ -36,6 +37,7 @@ export class ProgramComponent implements OnInit {
   perType: string = "Week";
   //combined object of persons and removedPersons to send to child component
   personsObj: any = { persons: [], removedPersons: [] };
+  private stateSubscription: Subscription;
 
   constructor(
     private stateService: StateService
@@ -45,8 +47,11 @@ export class ProgramComponent implements OnInit {
     this.phoneRegex = PHONE_NUMBER;
   }
 
+  ngOnDestroy() {
+    this.stateSubscription.unsubscribe();
+  }
   ngOnInit() {
-    this.stateService.main.subscribe((m: Transmogrifier) => {
+    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
       this.persons = m.persons;
     });

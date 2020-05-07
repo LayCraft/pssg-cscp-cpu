@@ -109,9 +109,12 @@ export class TransmogrifierProgramApplication {
         province: b.Organization.address2_stateorprovince || null
       },
       // if any of the properties besides the country is not null then they have a mailing address (API limitation)
-      hasMailingAddress: !!(b.Organization.address2_city || b.Organization.address2_line1 || b.Organization.address2_line2 || b.Organization.address2_stateorprovince || b.Organization.address2_postalcode)
+      hasMailingAddress: !!(b.Organization.address2_city || b.Organization.address2_line1 || b.Organization.address2_line2 || b.Organization.address2_stateorprovince || b.Organization.address2_postalcode)      
 
     }
+
+    c.mailingAddressSameAsMainAddress = _.isEqual(c.mainAddress, c.mailingAddress);
+    if (c.mailingAddressSameAsMainAddress) c.mailingAddress = c.mainAddress;
     // when the board contact and the executive contact are the same person then we simply don't fill in executive contact information and set the flag to false
     if (b.BoardContact && (b.Contract._vsd_contactlookup1_value !== b.Contract._vsd_contactlookup2_value)) {
       c.boardContact = {

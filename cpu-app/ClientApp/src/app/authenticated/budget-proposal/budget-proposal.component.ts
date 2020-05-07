@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { BudgetProposalService } from '../../core/services/budget-proposal.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { StateService } from '../../core/services/state.service';
 import { TransmogrifierBudgetProposal } from '../../core/models/transmogrifier-budget-proposal.class';
@@ -15,13 +15,14 @@ import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import * as _ from 'lodash';
 import { RevenueSource } from '../../core/models/revenue-source.class';
 import { revenueSourceTypes } from '../../core/constants/revenue-source-type';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-budget-proposal',
   templateUrl: './budget-proposal.component.html',
   styleUrls: ['./budget-proposal.component.css']
 })
-export class BudgetProposalComponent implements OnInit {
+export class BudgetProposalComponent implements OnInit, OnDestroy {
   // used for the stepper component
   currentStepperElement: iStepperElement;
   stepperElements: iStepperElement[];
@@ -33,6 +34,8 @@ export class BudgetProposalComponent implements OnInit {
   data: iDynamicsBudgetProposal;
   out: iDynamicsPostBudgetProposal;
   saving: boolean = false;
+
+  private stateSubscription: Subscription;
 
   programBudgetTabs = ['Program Revenue Information', 'Program Expense'];
 
@@ -47,8 +50,12 @@ export class BudgetProposalComponent implements OnInit {
     private stepperService: IconStepperService,
   ) { }
 
+  ngOnDestroy() {
+    this.stateSubscription.unsubscribe();
+  }
+
   ngOnInit() {
-    this.stateService.main.subscribe((m: Transmogrifier) => {
+    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       // save the transmogrifier
       this.mainTrans = m;
     });
@@ -83,12 +90,6 @@ export class BudgetProposalComponent implements OnInit {
           // make the transmogrifier for this form
           this.trans = new TransmogrifierBudgetProposal(d);
           this.trans.programBudgets = this.trans.programBudgets.map((pb: iProgramBudget): iProgramBudget => {
-            // if there is nothing existing add some collectors so that the user sees more than a blank list
-            // this is a problem because if these are unchanged by the user it prevents form submission.
-            // if (!pb.salariesAndBenefits.length) { pb.salariesAndBenefits.push(new SalaryAndBenefits()); }
-            // if (!pb.programDeliveryOtherExpenses.length) { pb.programDeliveryOtherExpenses.push(new ExpenseItem()); }
-            // if (!pb.administrationOtherExpenses.length) { pb.administrationOtherExpenses.push(new ExpenseItem()); }
-
             this.contractNumber = this.mainTrans.contracts.find(c => c.contractId === d.Contract.vsd_contractid).contractNumber;
             return pb;
           });
@@ -150,7 +151,7 @@ export class BudgetProposalComponent implements OnInit {
         }
 
         //
-        if (!this.validateprogramBudgets()) {
+        if (!this.validateAllProgramBudgets()) {
           resolve();
           return;
         }
@@ -159,6 +160,8 @@ export class BudgetProposalComponent implements OnInit {
         this.saving = true;
         console.log(this.trans);
         this.out = convertBudgetProposalToDynamics(this.trans);
+        console.log("all pbs");
+        console.log(this.out);
         this.budgetProposalService.setBudgetProposal(this.out).subscribe(
           r => {
             console.log(r);
@@ -235,34 +238,34 @@ export class BudgetProposalComponent implements OnInit {
     });
 
   }
-  validateprogramBudgets() {
+  validateAllProgramBudgets() {
     let isValid = true;
 
     this.trans.programBudgets.forEach((pb: iProgramBudget) => {
       let totalGrand = 0;
-      pb.revenueSources.filter(rs => rs.isActive).map(rs => {
+      pb.revenueSources.filter(rs => rs.isActive).forEach(rs => {
         totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
       });
 
       let totalFundedFromVSCP = 0;
-      pb.salariesAndBenefits.filter(sb => sb.isActive).map(sb => {
+      pb.salariesAndBenefits.filter(sb => sb.isActive).forEach(sb => {
         totalFundedFromVSCP += (sb.fundedFromVscp || 0);
       });
-      pb.programDeliveryCosts.filter(pd => pd.isActive).map(pd => {
+      pb.programDeliveryCosts.filter(pd => pd.isActive).forEach(pd => {
         totalFundedFromVSCP += (pd.fundedFromVscp || 0);
       });
-      pb.programDeliveryOtherExpenses.filter(pd => pd.isActive).map(pd => {
+      pb.programDeliveryOtherExpenses.filter(pd => pd.isActive).forEach(pd => {
         totalFundedFromVSCP += (pd.fundedFromVscp || 0);
       });
-      pb.administrationCosts.filter(ac => ac.isActive).map(ac => {
+      pb.administrationCosts.filter(ac => ac.isActive).forEach(ac => {
         totalFundedFromVSCP += (ac.fundedFromVscp || 0);
       });
-      pb.administrationOtherExpenses.filter(ac => ac.isActive).map(ac => {
+      pb.administrationOtherExpenses.filter(ac => ac.isActive).forEach(ac => {
         totalFundedFromVSCP += (ac.fundedFromVscp || 0);
       });
 
       if (totalGrand !== totalFundedFromVSCP) {
-        let stepperWithError = this.stepperElements.find(s => s.itemName === pb.name);
+        let stepperWithError = this.stepperElements.find(s => s.discriminator === pb.programId);
         if (stepperWithError) {
           this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
         }
@@ -271,22 +274,61 @@ export class BudgetProposalComponent implements OnInit {
     });
 
     if (!isValid) {
-      //Should probably flag which program had the error...
+      this.notificationQueueService.addNotification(`The total VSCP funding must match the total component value outlined in Schedule B-Terms and Conditions of Payment.`, 'warning');
+    }
+
+    return isValid;
+  }
+  validateSingleProgramBudget(programBudget: iProgramBudget) {
+    let isValid = true;
+
+    let totalGrand = 0;
+    programBudget.revenueSources.filter(rs => rs.isActive).map(rs => {
+      totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
+    });
+
+    let totalFundedFromVSCP = 0;
+    programBudget.salariesAndBenefits.filter(sb => sb.isActive).map(sb => {
+      totalFundedFromVSCP += (sb.fundedFromVscp || 0);
+    });
+    programBudget.programDeliveryCosts.filter(pd => pd.isActive).map(pd => {
+      totalFundedFromVSCP += (pd.fundedFromVscp || 0);
+    });
+    programBudget.programDeliveryOtherExpenses.filter(pd => pd.isActive).map(pd => {
+      totalFundedFromVSCP += (pd.fundedFromVscp || 0);
+    });
+    programBudget.administrationCosts.filter(ac => ac.isActive).map(ac => {
+      totalFundedFromVSCP += (ac.fundedFromVscp || 0);
+    });
+    programBudget.administrationOtherExpenses.filter(ac => ac.isActive).map(ac => {
+      totalFundedFromVSCP += (ac.fundedFromVscp || 0);
+    });
+
+    if (totalGrand !== totalFundedFromVSCP) {
+      let stepperWithError = this.stepperElements.find(s => s.discriminator === programBudget.programId);
+      if (stepperWithError) {
+        this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
+      }
+      isValid = false;
+    }
+
+    if (!isValid) {
       this.notificationQueueService.addNotification(`The total VSCP funding must match the total component value outlined in Schedule B-Terms and Conditions of Payment.`, 'warning');
     }
 
     return isValid;
   }
   setNextStepper() {
+    let ignoreTabErrors = true;
     let originalStepper = _.cloneDeep(this.currentStepperElement);
-    
+
     let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
-    if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
+    if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass, ignoreTabErrors)) {
       // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
       return;
     }
 
-    let current_program_budget = this.trans.programBudgets.find(pb => pb.name === originalStepper.itemName);
+    let current_program_budget = this.trans.programBudgets.find(pb => pb.programId === originalStepper.discriminator);
     if (current_program_budget) {
       let index = this.programBudgetTabs.findIndex(t => t === current_program_budget.currentTab);
       if (index < (this.programBudgetTabs.length - 1)) {
@@ -296,18 +338,21 @@ export class BudgetProposalComponent implements OnInit {
       }
     }
 
-    if (!this.validateprogramBudgets()) {
-      // this.notificationQueueService.addNotification(`The total VSCP funding must match the total component value outlined in Schedule B-Terms and Conditions of Payment.`, 'warning');
-      // this.stepperService.setStepperElementProperty(originalStepper.id, "formState", "invalid");
+    if (current_program_budget && !this.validateSingleProgramBudget(current_program_budget)) {
       return;
     }
 
-    if (!this.trans.signature.signatureDate) {
+    if (originalStepper.discriminator === "program_overview") {
+      setTimeout(() => {
+        this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'complete');
+      }, 0);
+    }
+    else if (!this.trans.signature.signatureDate) {
       setTimeout(() => {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'saving');
       }, 0);
 
-      this.save(false).then(() => {
+      this.saveSingleProgramBudget(current_program_budget).then(() => {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'complete');
       }).catch(() => {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');
@@ -316,7 +361,7 @@ export class BudgetProposalComponent implements OnInit {
     ++this.stepperIndex;
 
     let nextStepper = this.stepperElements[this.stepperIndex];
-    let next_program_budget = this.trans.programBudgets.find(pb => pb.name === nextStepper.itemName);
+    let next_program_budget = this.trans.programBudgets.find(pb => pb.programId === nextStepper.discriminator);
     if (next_program_budget) {
       next_program_budget.currentTab = this.programBudgetTabs[0];
     }
@@ -324,7 +369,7 @@ export class BudgetProposalComponent implements OnInit {
     this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
   }
   setPreviousStepper() {
-    let current_program_budget = this.trans.programBudgets.find(pb => pb.name === this.currentStepperElement.itemName);
+    let current_program_budget = this.trans.programBudgets.find(pb => pb.programId === this.currentStepperElement.discriminator);
     if (current_program_budget) {
       let index = this.programBudgetTabs.findIndex(t => t === current_program_budget.currentTab);
       if (index > 0) {
@@ -337,11 +382,48 @@ export class BudgetProposalComponent implements OnInit {
     --this.stepperIndex;
 
     let nextStepper = this.stepperElements[this.stepperIndex];
-    let next_program_budget = this.trans.programBudgets.find(pb => pb.name === nextStepper.itemName);
+    let next_program_budget = this.trans.programBudgets.find(pb => pb.programId === nextStepper.discriminator);
     if (next_program_budget) {
       next_program_budget.currentTab = this.programBudgetTabs[this.programBudgetTabs.length - 1];
     }
 
     this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+  }
+
+
+  saveSingleProgramBudget(programBudget: iProgramBudget) {
+    return new Promise((resolve, reject) => {
+      try {
+
+        this.saving = true;
+        console.log(this.trans);
+        let singleTrans = _.cloneDeep(this.trans);
+        singleTrans.programBudgets = singleTrans.programBudgets.filter(pb => pb.programId === programBudget.programId);
+        this.out = convertBudgetProposalToDynamics(singleTrans);
+
+        console.log("single program save");
+        console.log(this.out);
+        this.budgetProposalService.setBudgetProposal(this.out).subscribe(
+          r => {
+            console.log(r);
+            this.stateService.refresh();
+            this.saving = false;
+            this.reloadBudgetProposal();
+            resolve();
+          },
+          err => {
+            console.log(err);
+            this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+            this.saving = false;
+            reject();
+          }
+        );
+      }
+      catch (err) {
+        console.log(err);
+        this.notificationQueueService.addNotification('The budget proposal could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+        this.saving = false;
+      }
+    });
   }
 }

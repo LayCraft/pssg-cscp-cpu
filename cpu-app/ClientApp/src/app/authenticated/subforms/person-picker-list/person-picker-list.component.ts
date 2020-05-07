@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { iPerson } from '../../../core/models/person.interface';
 import { nameAssemble } from '../../../core/constants/name-assemble';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-person-picker-list',
   templateUrl: './person-picker-list.component.html',
   styleUrls: ['./person-picker-list.component.scss']
 })
-export class PersonPickerListComponent implements OnInit {
+export class PersonPickerListComponent implements OnInit, OnDestroy {
   @Input() label = "Select all people who apply."
   @Input() personsObj: any = {}; // the list from the servicezz
   persons: iPerson[] = [];
@@ -19,11 +20,15 @@ export class PersonPickerListComponent implements OnInit {
   public nameAssemble = nameAssemble;
   trans: Transmogrifier;
   selectedPerson: string;
+  private stateSubscription: Subscription;
 
   constructor(private stateService: StateService) { }
 
+  ngOnDestroy() {
+    this.stateSubscription.unsubscribe();
+  }
   ngOnInit() {
-    this.stateService.main.subscribe((m: Transmogrifier) => this.trans = m);
+    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => this.trans = m);
     this.persons = this.personsObj.persons;
     this.removedPersons = this.personsObj.removedPersons;
   }
