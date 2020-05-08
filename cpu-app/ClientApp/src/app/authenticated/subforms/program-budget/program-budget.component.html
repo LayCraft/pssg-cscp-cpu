@@ -25,9 +25,10 @@
     </li>
   </ol>
   <h2 class="blue-header">Program Revenue Sources</h2>
-  <app-revenue-source-table [(revenueSources)]="programBudget.revenueSources"></app-revenue-source-table>
+  <app-revenue-source-table [(revenueSources)]="programBudget.revenueSources" (revenueSourcesChange)="getTotalGrand($event)"></app-revenue-source-table>
 </div>
 <div *ngIf="programBudget.currentTab===tabs[1]">
+  <div><p><strong>VSCP Approved Amount:</strong> {{totalGrand | currency}}</p></div>
   <h2 class="blue-header">{{sections[0]}}</h2>
   <app-personnel-expense-table [(salariesAndBenefits)]="programBudget.salariesAndBenefits" (meta)="collectMeta( $event, sections[0])"></app-personnel-expense-table>
   <h2 class="blue-header">{{sections[1]}}</h2>

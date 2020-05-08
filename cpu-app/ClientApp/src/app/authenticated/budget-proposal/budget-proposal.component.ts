@@ -151,7 +151,7 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
         }
 
         //
-        if (!this.validateAllProgramBudgets()) {
+        if (!this.validateProgramBudgets(this.trans.programBudgets)) {
           resolve();
           return;
         }
@@ -238,10 +238,10 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
     });
 
   }
-  validateAllProgramBudgets() {
+  validateProgramBudgets(programBudgets: iProgramBudget[]) {
     let isValid = true;
 
-    this.trans.programBudgets.forEach((pb: iProgramBudget) => {
+    programBudgets.forEach((pb: iProgramBudget) => {
       let totalGrand = 0;
       pb.revenueSources.filter(rs => rs.isActive).forEach(rs => {
         totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
@@ -279,45 +279,6 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
 
     return isValid;
   }
-  validateSingleProgramBudget(programBudget: iProgramBudget) {
-    let isValid = true;
-
-    let totalGrand = 0;
-    programBudget.revenueSources.filter(rs => rs.isActive).map(rs => {
-      totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
-    });
-
-    let totalFundedFromVSCP = 0;
-    programBudget.salariesAndBenefits.filter(sb => sb.isActive).map(sb => {
-      totalFundedFromVSCP += (sb.fundedFromVscp || 0);
-    });
-    programBudget.programDeliveryCosts.filter(pd => pd.isActive).map(pd => {
-      totalFundedFromVSCP += (pd.fundedFromVscp || 0);
-    });
-    programBudget.programDeliveryOtherExpenses.filter(pd => pd.isActive).map(pd => {
-      totalFundedFromVSCP += (pd.fundedFromVscp || 0);
-    });
-    programBudget.administrationCosts.filter(ac => ac.isActive).map(ac => {
-      totalFundedFromVSCP += (ac.fundedFromVscp || 0);
-    });
-    programBudget.administrationOtherExpenses.filter(ac => ac.isActive).map(ac => {
-      totalFundedFromVSCP += (ac.fundedFromVscp || 0);
-    });
-
-    if (totalGrand !== totalFundedFromVSCP) {
-      let stepperWithError = this.stepperElements.find(s => s.discriminator === programBudget.programId);
-      if (stepperWithError) {
-        this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
-      }
-      isValid = false;
-    }
-
-    if (!isValid) {
-      this.notificationQueueService.addNotification(`The total VSCP funding must match the total component value outlined in Schedule B-Terms and Conditions of Payment.`, 'warning');
-    }
-
-    return isValid;
-  }
   setNextStepper() {
     let ignoreTabErrors = true;
     let originalStepper = _.cloneDeep(this.currentStepperElement);
@@ -338,11 +299,13 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (current_program_budget && !this.validateSingleProgramBudget(current_program_budget)) {
+    if (current_program_budget && !this.validateProgramBudgets([current_program_budget])) {
       return;
     }
 
     if (originalStepper.discriminator === "program_overview") {
+      //we're doing this set timeout stuff because "this" context isn't global and doesn't have access to the stepper element to update it's formState
+      //in the set timeout function "this" becomes the global context that will get the stepper element
       setTimeout(() => {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'complete');
       }, 0);
