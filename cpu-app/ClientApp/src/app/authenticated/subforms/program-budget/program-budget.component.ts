@@ -3,7 +3,7 @@ import { iProgramBudget } from '../../../core/models/program-budget.interface';
 import { iExpenseTableMeta } from '../../subforms/expense-table/expense-table.component';
 import { iStepperElement } from '../../../shared/icon-stepper/icon-stepper.service';
 import { FormHelper } from '../../../core/form-helper';
-import { RevenueSource } from 'src/app/core/models/revenue-source.class';
+import { RevenueSource } from '../../../core/models/revenue-source.class';
 
 @Component({
   selector: 'app-program-budget',
