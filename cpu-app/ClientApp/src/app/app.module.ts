@@ -54,6 +54,7 @@ import { NgxMaskModule } from 'ngx-mask'
 import { NewUserNewOrganizationComponent } from './authenticated/new-user-new-organization/new-user-new-organization.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AppendixADialog } from './authenticated/dialogs/appendix-a/appendix-a.dialog';
+import { PhonePipe } from './core/pipes/phone.pipe';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { AppendixADialog } from './authenticated/dialogs/appendix-a/appendix-a.d
     TestComponent,
     DownloadDocumentComponent,
     CoverLetterComponent,
+    PhonePipe,
   ],
   entryComponents: [
     AppendixADialog

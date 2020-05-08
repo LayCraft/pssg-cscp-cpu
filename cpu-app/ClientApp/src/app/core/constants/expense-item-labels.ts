@@ -14,6 +14,6 @@ export const ExpenseItemLabels: {} = {
   "32AD5D8A-2CBA-E911-B80F-00505683FBF4": "Program Related - Utilities",
   "121ED353-2DBA-E911-B80F-00505683FBF4": "Property Maintenance",
   "4DD7B12C-2DBA-E911-B80F-00505683FBF4": "Resource Materials/Printing Costs",
-  "B4CD7AA0-2CBA-E911-B80F-00505683FBF4": "Staff Training and Associated Travel",
+  "B4CD7AA0-2CBA-E911-B80F-00505683FBF4": "Staff Training assoc. Travel",
   "84415B3D-2DBA-E911-B80F-00505683FBF4": "Volunteer Appreciation/Honorariums",
 }

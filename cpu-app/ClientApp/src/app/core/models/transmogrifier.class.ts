@@ -58,15 +58,13 @@ export class Transmogrifier {
           formType: decodeTaskType(task._vsd_tasktypeid_value)
         };
 
-        if (task._vsd_programid_value && thisTask.formType === "expense_report") {
+        if (task._vsd_programid_value && (thisTask.formType === "expense_report" || "status_report")) {
           let programInfo = b.Programs.find(p => p.vsd_programid === task._vsd_programid_value);
           if (programInfo) {
             thisTask.taskName += " (" + programInfo.vsd_name + ")";
           }
         }
         tasks.push(thisTask);
-        // });
-
       }
     }
     return tasks;

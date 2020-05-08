@@ -7,7 +7,7 @@
   <div class="card-body" *ngIf="type === 'dashboard'">
     <p class="card-text">
       <strong>Phone</strong><br>
-      <a href="tel:{{trans.contactInformation.phoneNumber}}">{{trans.contactInformation.phoneNumber}}</a>
+      <a href="tel:{{trans.contactInformation.phoneNumber}}">{{trans.contactInformation.phoneNumber | phone}}</a>
     </p>
     <p class="card-text">
       <strong>Email</strong><br>
@@ -19,7 +19,7 @@
   <div class="card-body" *ngIf="type === 'profile'">
     <p class="card-text">
       <strong>Phone</strong><br>
-      <a href="tel:{{trans.contactInformation.phoneNumber}}">{{trans.contactInformation.phoneNumber}}</a>
+      <a href="tel:{{trans.contactInformation.phoneNumber}}">{{trans.contactInformation.phoneNumber | phone}}</a>
     </p>
     <p class="card-text">
       <strong>Email</strong><br>
@@ -43,7 +43,7 @@
     </p>
     <p class="card-text">
       <strong>Phone</strong><br>
-      <a href="tel:{{trans.contactInformation.phoneNumber}}">{{trans.contactInformation.phoneNumber}}</a>
+      <a href="tel:{{trans.contactInformation.phoneNumber}}">{{trans.contactInformation.phoneNumber | phone}}</a>
     </p>
     <p class="card-text">
       <strong>Email</strong><br>

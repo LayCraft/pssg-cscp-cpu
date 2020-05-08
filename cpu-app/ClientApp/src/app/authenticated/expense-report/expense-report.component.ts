@@ -13,6 +13,7 @@ import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { AbstractControl } from '@angular/forms';
 import { perTypeDict } from '../../core/constants/per-type';
 import { Subscription } from 'rxjs';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-expense-report',
@@ -60,7 +61,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private notificationQueueService: NotificationQueueService
   ) { }
-  
+
   ngOnDestroy() {
     this.stateSubscription.unsubscribe();
   }
@@ -111,9 +112,13 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     this.stepperService.currentStepperElement.subscribe(e => {
       if (this.currentStepperElement) {
+        let originalStepper = _.cloneDeep(this.currentStepperElement);
         let formState = this.formHelper.getFormState();
-        //in this case there has been a previous update on this tab, and we've come back to that tab and left again. So we don't want to wipe away the incomplete status
-        if (this.currentStepperElement.formState !== "incomplete" || formState != "untouched") {
+
+        if (originalStepper.formState === "complete" && formState === "untouched") {
+          //do nothing...
+        }
+        else if (originalStepper.formState !== "incomplete" || formState !== "untouched") {
           this.currentStepperElement.formState = formState;
         }
       }
@@ -201,38 +206,45 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
       .reduce((prev, curr) => prev + curr);
   }
   save(isSubmit: boolean = false) {
-    try {
-      if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-        return;
-      }
-      this.saving = true;
-      console.log(this.trans);
-      this.out = convertExpenseReportToDynamics(this.trans);
-      console.log(this.out);
-      this.expenseReportService.setExpenseReport(this.out).subscribe(
-        r => {
-          console.log(r);
-          this.notificationQueueService.addNotification(`You have successfully saved the expense report.`, 'success');
-          this.stateService.refresh();
-          if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
-          this.saving = false;
-          this.stepperElements.forEach(s => {
-            this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
-          });
-          this.formHelper.makeFormClean();
-        },
-        err => {
-          console.log(err);
-          this.notificationQueueService.addNotification('The expense report could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-          this.saving = false;
+    return new Promise((resolve, reject) => {
+      try {
+        if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+          resolve();
+          return;
         }
-      );
-    }
-    catch (err) {
-      console.log(err);
-      this.notificationQueueService.addNotification('The expense report could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-      this.saving = false;
-    }
+        this.saving = true;
+        console.log(this.trans);
+        this.out = convertExpenseReportToDynamics(this.trans);
+        console.log(this.out);
+        this.expenseReportService.setExpenseReport(this.out).subscribe(
+          r => {
+            console.log(r);
+            this.notificationQueueService.addNotification(`You have successfully saved the expense report.`, 'success');
+            this.stateService.refresh();
+            if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
+            this.saving = false;
+            this.stepperElements.forEach(s => {
+              if (s.formState === 'complete') return;
+              this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+            });
+            this.formHelper.makeFormClean();
+            resolve();
+          },
+          err => {
+            console.log(err);
+            this.notificationQueueService.addNotification('The expense report could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+            this.saving = false;
+            reject();
+          }
+        );
+      }
+      catch (err) {
+        console.log(err);
+        this.notificationQueueService.addNotification('The expense report could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+        this.saving = false;
+        reject();
+      }
+    });
   }
   exit() {
     if (this.formHelper.isFormDirty()) {
@@ -245,5 +257,34 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
     }
+  }
+
+  setNextStepper() {
+    let originalStepper = _.cloneDeep(this.currentStepperElement);
+    
+    if (!this.trans.expenseReport.executiveReview) {
+      setTimeout(() => {
+        this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'saving');
+      }, 0);
+
+      this.save(false).then(() => {
+        this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'complete');
+      }).catch(() => {
+        this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');
+      });
+    }
+
+    ++this.stepperIndex;
+
+    //default to first sub tab
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
+
+  }
+
+  setPreviousStepper() {
+    --this.stepperIndex;
+
+    //default to first sub tab
+    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
   }
 }

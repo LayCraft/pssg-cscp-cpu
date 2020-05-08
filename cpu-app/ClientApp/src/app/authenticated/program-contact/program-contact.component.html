@@ -16,15 +16,16 @@
         </div>
         <h2 class="blue-header">Main Program Information</h2>
         <div class="form-group">
+          <label for="serviceArea">Assignment Area</label>
+          <input class="form-control" type="text" [ngModel]="programApplication.assignmentArea" id="serviceArea"
+            name="serviceArea" disabled>
+        </div>
+        <div class="form-group">
           <label for="programLocation">Program Location</label>
           <input class="form-control" type="text" [ngModel]="programApplication.programLocation" id="programLocation"
             name="programLocation" disabled>
         </div>
-        <!-- <div class="form-group">
-          <label for="serviceArea">Service Area</label>
-          <input class="form-control" type="text" [ngModel]="programApplication.serviceArea" id="serviceArea"
-            name="serviceArea" disabled>
-        </div> -->
+        
 
         <!-- <h2 class="blue-header">Primary Program Contact Information</h2> -->
         <!-- <app-primary-contact-info [(contactInformation)]="programApplication"></app-primary-contact-info> -->
