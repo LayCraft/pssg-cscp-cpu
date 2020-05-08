@@ -14,6 +14,7 @@ import { convertPersonnelToDynamics } from '../../core/models/converters/personn
 import { FormHelper } from '../../core/form-helper';
 import { FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-personnel',
@@ -33,6 +34,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   public formHelper = new FormHelper();
   personForm: FormGroup;
   didLoad: boolean = false;
+  private stateSubscription: Subscription;
   constructor(
     private router: Router,
     private personService: PersonService,
@@ -47,7 +49,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     this.stepperService.currentStepperElement.subscribe(e => this.currentStepperElement = e);
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     // when main changes refresh the data
-    this.stateService.main.subscribe((m: Transmogrifier) => {
+    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
       // set the default top and bottom list
       this.constructStepperElements(m);
@@ -56,6 +58,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.stepperService.reset();
+    this.stateSubscription.unsubscribe();
   }
   constructStepperElements(m: Transmogrifier): void {
     // clear the stepper of existing elements

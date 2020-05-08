@@ -3,6 +3,7 @@ import { iProgramBudget } from '../../../core/models/program-budget.interface';
 import { iExpenseTableMeta } from '../../subforms/expense-table/expense-table.component';
 import { iStepperElement } from '../../../shared/icon-stepper/icon-stepper.service';
 import { FormHelper } from '../../../core/form-helper';
+import { RevenueSource } from 'src/app/core/models/revenue-source.class';
 
 @Component({
   selector: 'app-program-budget',
@@ -26,6 +27,8 @@ export class ProgramBudgetComponent implements OnInit {
     }
   };
 
+  totalGrand: number = 0;
+
   private formHelper = new FormHelper();
 
   constructor() {
@@ -39,6 +42,17 @@ export class ProgramBudgetComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.totalGrand = 0;
+    console.log(this.programBudget);
+    this.programBudget.revenueSources.forEach(rs => {
+      this.totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
+    });
+  }
+  getTotalGrand(event: RevenueSource[]) {
+    this.totalGrand = 0;
+    event.forEach(rs => {
+      this.totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
+    });
   }
   collectMeta(event: iExpenseTableMeta, name: string) {
     function percentify(event: iExpenseTableMeta): number {

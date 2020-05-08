@@ -43,12 +43,12 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       address1_stateorprovince: trans.contactInformation.mainAddress.province,
       // if the mailing address is false we set all mailing address info to blank to copy over the existing non-null values in Dynamics.
       // there is no procedure to request "remove mailing address from organization"
-      address2_city: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.city : '',
-      address2_country: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.country : '',
-      address2_line1: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.line1 : '',
-      address2_line2: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.line2 : '',
-      address2_postalcode: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.postalCode : '',
-      address2_stateorprovince: trans.contactInformation.hasMailingAddress ? trans.contactInformation.mailingAddress.province : '',
+      address2_city: trans.contactInformation.mailingAddress.city || '',
+      address2_country: trans.contactInformation.mailingAddress.country || '',
+      address2_line1: trans.contactInformation.mailingAddress.line1 || '',
+      address2_line2: trans.contactInformation.mailingAddress.line2 || '',
+      address2_postalcode: trans.contactInformation.mailingAddress.postalCode || '',
+      address2_stateorprovince: trans.contactInformation.mailingAddress.province || '',
 
       emailaddress1: trans.contactInformation.emailAddress,
       fax: trans.contactInformation.faxNumber,

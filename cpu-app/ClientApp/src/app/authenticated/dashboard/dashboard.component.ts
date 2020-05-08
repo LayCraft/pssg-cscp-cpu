@@ -1,27 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StateService } from '../../core/services/state.service';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { iContract } from '../../core/models/contract.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   data: any;
   trans: Transmogrifier;
   categories = ['upcoming', 'current', 'past'];
   upcomingContracts: iContract[] = [];
   currentContracts: iContract[] = [];
   pastContracts: iContract[] = [];
+  private stateSubscription: Subscription;
   constructor(
     private stateService: StateService,
   ) { }
 
   ngOnInit() {
     // always display the current main collection
-    this.stateService.main.subscribe((m: Transmogrifier) => {
+    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
 
       console.log("dashboard subscribed data");
@@ -33,5 +35,8 @@ export class DashboardComponent implements OnInit {
         this.pastContracts = m.contracts.filter((c: iContract) => c.category === this.categories[2]);
       }
     });
+  }
+  ngOnDestroy() {
+    this.stateSubscription.unsubscribe();
   }
 }

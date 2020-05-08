@@ -1,17 +1,18 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ContactInformation } from '../../../core/models/contact-information.class';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { iContactInformation } from '../../../core/models/contact-information.interface';
 import { iPerson } from '../../../core/models/person.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-program-contact-information',
   templateUrl: './program-contact-information.component.html',
   styleUrls: ['./program-contact-information.component.css']
 })
-export class ProgramContactInformationComponent implements OnInit {
+export class ProgramContactInformationComponent implements OnInit, OnDestroy {
 
   // this collects all of the information for all programs so we are actually collecting parent data
   // we should patch it into the data on change
@@ -24,18 +25,22 @@ export class ProgramContactInformationComponent implements OnInit {
   contactInformationForm: FormGroup;
   persons: iPerson[] = [];
   hasBoardOfDirectors: boolean = false;
+  private stateSubscription: Subscription;
 
   constructor(
     private stateService: StateService,
   ) { }
 
+  ngOnDestroy() {
+    this.stateSubscription.unsubscribe();
+  }
   ngOnInit() {
     this.hasBoardOfDirectors = this.contactInformation.boardContact ? true : false;
     // create a new contact information form
     this.contactInformationForm = new FormGroup({
       'contactInformation': new FormControl('', Validators.required)
     });
-    this.stateService.main.subscribe((m: Transmogrifier) => {
+    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       // fill the contact information into the form
       this.contactInformationForm.controls['contactInformation'].setValue(m.contactInformation);
       // collect persons into this component for use

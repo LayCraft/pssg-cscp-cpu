@@ -8,6 +8,7 @@ export interface iContactInformation {
   faxNumber: string;
   hasBoardContact?: boolean;
   hasMailingAddress?: boolean;
+  mailingAddressSameAsMainAddress?: boolean;
   mailingAddress: iAddress;
   mainAddress: iAddress;
   phoneNumber: string;

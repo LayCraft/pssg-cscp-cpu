@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FileService } from '../../core/services/file.service';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,6 +8,7 @@ import { iDynamicsPostFile, iDynamicsDocumentPost } from '../../core/models/dyna
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { FormHelper } from '../../core/form-helper';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
+import { Subscription } from 'rxjs';
 
 interface FileBundle {
   // list of file names (same order as file array)
@@ -20,7 +21,7 @@ interface FileBundle {
   templateUrl: './download-document.component.html',
   styleUrls: ['./download-document.component.css']
 })
-export class DownloadDocumentComponent implements OnInit {
+export class DownloadDocumentComponent implements OnInit, OnDestroy {
 
   // collect the element reference from the child so that we can access native parts of the files element
   @ViewChild('files')
@@ -46,6 +47,7 @@ export class DownloadDocumentComponent implements OnInit {
   organizationId: string;
   userId: string;
   contractId: string;
+  private stateSubscription: Subscription;
 
   private formHelper = new FormHelper();
   constructor(
@@ -57,8 +59,12 @@ export class DownloadDocumentComponent implements OnInit {
     private route: ActivatedRoute,
   ) { }
 
+  ngOnDestroy() {
+    this.stateSubscription.unsubscribe();
+  }
+
   ngOnInit() {
-    this.stateService.main.subscribe((m: Transmogrifier) => {
+    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       // save the transmogrifier
       this.trans = m;
     });

@@ -1,5 +1,5 @@
 import { AbstractControl } from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormHelper } from '../../core/form-helper';
 import { Hours } from '../../core/models/hours.class';
 import { StateService } from '../../core/services/state.service';
@@ -15,13 +15,14 @@ import { TransmogrifierProgramApplication } from '../../core/models/transmogrifi
 import { convertProgramApplicationToDynamics } from '../../core/models/converters/program-application-to-dynamics';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-program-contact',
   templateUrl: './program-contact.component.html',
   styleUrls: ['./program-contact.component.css']
 })
-export class ProgramContactComponent implements OnInit {
+export class ProgramContactComponent implements OnInit, OnDestroy {
   programApplication: iProgramApplication;
   @Output() programApplicationChange = new EventEmitter<iProgramApplication>();
   required = false;
@@ -38,6 +39,7 @@ export class ProgramContactComponent implements OnInit {
   out: any;
   errorState: boolean = false;
   saving: boolean = false;
+  private stateSubscription: Subscription;
 
   constructor(
     private notificationQueueService: NotificationQueueService,
@@ -50,7 +52,10 @@ export class ProgramContactComponent implements OnInit {
     this.emailRegex = EMAIL;
     this.phoneRegex = PHONE_NUMBER;
   }
-
+  
+  ngOnDestroy() {
+    this.stateSubscription.unsubscribe();
+  }
   ngOnInit() {
     this.route.params.subscribe(p => {
       const userId: string = this.stateService.main.getValue().userId;
@@ -78,7 +83,7 @@ export class ProgramContactComponent implements OnInit {
               this.errorState = true;
             }
 
-            this.stateService.main.subscribe((m: Transmogrifier) => {
+            this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
               this.trans = m;
               //program contact seems to only bring over the personId, and not any name info or stuff like that. But main transmogrifier does have that info in persons array - so get that
               if (this.programApplication.programContact && this.programApplication.programContact.personId) {

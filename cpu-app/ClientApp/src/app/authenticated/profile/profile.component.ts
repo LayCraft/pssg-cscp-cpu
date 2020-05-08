@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProfileService } from '../../core/services/profile.service';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
@@ -6,15 +6,18 @@ import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { convertContactInformationToDynamics } from '../../core/models/converters/contact-information-to-dynamics';
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import { FormHelper } from '../../core/form-helper';
+import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   trans: Transmogrifier;
   saving: boolean = false;
+  private stateSubscription: Subscription;
 
   private formHelper = new FormHelper();
   constructor(
@@ -26,10 +29,13 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     // subscribe to main
-    this.stateService.main.subscribe((m: Transmogrifier) => {
+    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       // save the transmogrifier
       this.trans = m;
     });
+  }
+  ngOnDestroy() {
+    this.stateSubscription.unsubscribe();
   }
   save(): void {
     try {
@@ -66,6 +72,17 @@ export class ProfileComponent implements OnInit {
     else if (!this.formHelper.isFormDirty()) {
       this.stateService.refresh();
       this.router.navigate(['/authenticated/dashboard']);
+    }
+  }
+  setMailingAddressSameAsMainAddress() {
+    if (!this.trans.contactInformation.mailingAddressSameAsMainAddress) {
+      // let addressCopy = _.cloneDeep(this.programApplication.mainAddress)
+      // this.programApplication.mailingAddress = addressCopy;
+      this.trans.contactInformation.mailingAddress = this.trans.contactInformation.mainAddress;
+    }
+    else {
+      let addressCopy = _.cloneDeep(this.trans.contactInformation.mailingAddress);
+      this.trans.contactInformation.mailingAddress = addressCopy;
     }
   }
 }

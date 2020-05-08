@@ -379,4 +379,15 @@ export class ProgramApplicationComponent implements OnInit {
   reviewApplicationTabChange(tab: string) {
     this.currentReviewApplicationTab = tab;
   }
+  setMailingAddressSameAsMainAddress() {
+    if (!this.trans.contactInformation.mailingAddressSameAsMainAddress) {
+      // let addressCopy = _.cloneDeep(this.programApplication.mainAddress)
+      // this.programApplication.mailingAddress = addressCopy;
+      this.trans.contactInformation.mailingAddress = this.trans.contactInformation.mainAddress;
+    }
+    else {
+      let addressCopy = _.cloneDeep(this.trans.contactInformation.mailingAddress);
+      this.trans.contactInformation.mailingAddress = addressCopy;
+    }
+  }
 }

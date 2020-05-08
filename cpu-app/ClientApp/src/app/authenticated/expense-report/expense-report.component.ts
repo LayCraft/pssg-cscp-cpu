@@ -12,13 +12,14 @@ import { iDynamicsPostScheduleG } from '../../core/models/dynamics-post';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { AbstractControl } from '@angular/forms';
 import { perTypeDict } from '../../core/constants/per-type';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-expense-report',
   templateUrl: './expense-report.component.html',
   styleUrls: ['./expense-report.component.css']
 })
-export class ExpenseReportComponent implements OnInit {
+export class ExpenseReportComponent implements OnInit, OnDestroy {
   // used for the stepper component
   stepperElements: iStepperElement[];
   currentStepperElement: iStepperElement;
@@ -48,6 +49,7 @@ export class ExpenseReportComponent implements OnInit {
   perType: string;
 
   public formHelper = new FormHelper();
+  private stateSubscription: Subscription;
 
   constructor(
     private ref: ChangeDetectorRef,
@@ -58,9 +60,12 @@ export class ExpenseReportComponent implements OnInit {
     private route: ActivatedRoute,
     private notificationQueueService: NotificationQueueService
   ) { }
-
+  
+  ngOnDestroy() {
+    this.stateSubscription.unsubscribe();
+  }
   ngOnInit() {
-    this.stateService.main.subscribe((m: Transmogrifier) => {
+    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       // save the transmogrifier
       this.mainTrans = m;
     });

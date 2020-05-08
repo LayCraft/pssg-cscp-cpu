@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { StateService } from '../../../core/services/state.service';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { iPerson } from '../../../core/models/person.interface';
 import { nameAssemble } from '../../../core/constants/name-assemble';
 import { Person } from '../../../core/models/person.class';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-person-picker',
   templateUrl: './person-picker.component.html',
   styleUrls: ['./person-picker.component.scss']
 })
-export class PersonPickerComponent implements OnInit {
+export class PersonPickerComponent implements OnInit, OnDestroy {
   // this is a person form control that uses template binding.
 
   @Input() title = 'Select Person';
@@ -19,13 +20,18 @@ export class PersonPickerComponent implements OnInit {
   @Input() showCard = true;
   public nameAssemble = nameAssemble;
   trans: Transmogrifier;
+  private stateSubscription: Subscription;
 
   constructor(
     private stateService: StateService,
   ) { }
+
+  ngOnDestroy() {
+    this.stateSubscription.unsubscribe();
+  }
   ngOnInit() {
     // make a new person object from what was handed to this picker.
-    this.stateService.main.subscribe((m: Transmogrifier) => {
+    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
 
       //if no person provided, initialize as empty person
