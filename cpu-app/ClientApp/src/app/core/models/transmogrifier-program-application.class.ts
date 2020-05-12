@@ -3,7 +3,7 @@ import { decodeCglInsurance } from '../constants/decode-cgl-insurance-type';
 import { decodeToWeekDays } from '../constants/decode-to-week-days';
 import { iAdministrativeInformation } from "./administrative-information.interface";
 import { iContactInformation } from "./contact-information.interface";
-import { iDynamicsScheduleFResponse, iDynamicsCrmContact, iDynamicsCrmContract } from "./dynamics-blob";
+import { iDynamicsScheduleFResponse, iDynamicsCrmContact, iDynamicsCrmContract, iDynamicsServiceArea } from "./dynamics-blob";
 import { iHours } from "./hours.interface";
 import { iPerson } from "./person.interface";
 import { iProgramApplication } from "./program-application.interface";
@@ -109,7 +109,7 @@ export class TransmogrifierProgramApplication {
         province: b.Organization.address2_stateorprovince || null
       },
       // if any of the properties besides the country is not null then they have a mailing address (API limitation)
-      hasMailingAddress: !!(b.Organization.address2_city || b.Organization.address2_line1 || b.Organization.address2_line2 || b.Organization.address2_stateorprovince || b.Organization.address2_postalcode)      
+      hasMailingAddress: !!(b.Organization.address2_city || b.Organization.address2_line1 || b.Organization.address2_line2 || b.Organization.address2_stateorprovince || b.Organization.address2_postalcode)
 
     }
 
@@ -187,6 +187,9 @@ export class TransmogrifierProgramApplication {
           province: p.vsd_mailingprovincestate || null,
           country: p.vsd_mailingcountry || 'Canada',
         },
+        serviceAreas: g.ServiceAreaCollection
+          .filter((sa: iDynamicsServiceArea): boolean => p.vsd_programid === sa.vsd_programid)
+          .map(sa => g.RegionDistrictCollection.find(r => r.vsd_regiondistrictid === sa.vsd_regiondistrictid).vsd_name),
         programContact: g.StaffCollection
           .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
           .map(s => this.makePerson(g, s.contactid))[0] || null,

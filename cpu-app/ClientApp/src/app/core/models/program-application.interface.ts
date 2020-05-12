@@ -14,7 +14,7 @@ export interface iProgramApplication extends iContactInformation {
   programId: string;
   assignmentArea: string;
   programLocation: string;
-  // serviceArea: string;
+  serviceAreas: string[];
   hasMailingAddress?: boolean;
   isPoliceBased: boolean;
 
