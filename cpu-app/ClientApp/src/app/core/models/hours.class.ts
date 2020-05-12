@@ -8,8 +8,12 @@ export class Hours implements iHours {
   friday: boolean;
   saturday: boolean;
   sunday: boolean;
-  open: string; // just used for the hour representation
-  closed: string; // should look like this 18:54
+  open: string;
+  isAMOpen: boolean;
+  openMask: string;
+  closed: string;
+  isAMClosed: boolean;
+  closedMask: string;
   hoursId: string;
   isActive: boolean;
   constructor(hours?: iHours) {
@@ -22,11 +26,17 @@ export class Hours implements iHours {
       this.saturday = hours.saturday || null;
       this.sunday = hours.sunday || null;
       this.open = hours.open || null;
+      this.isAMOpen = hours.isAMOpen || true;
       this.closed = hours.closed || null;
+      this.isAMClosed = hours.isAMClosed || true;
       this.isActive = hours.isActive || true;
+      this.openMask = this.open;
+      this.closedMask = this.closed;
     }
     else {
       this.isActive = true;
+      this.isAMOpen = true;
+      this.isAMClosed = false;
     }
   }
 }

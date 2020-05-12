@@ -257,7 +257,11 @@ export class TransmogrifierProgramApplication {
           const hours: iHours = {
             //save the hours into moment format.
             open: makeViewTimeString(sched.vsd_scheduledstarttime),
+            isAMOpen: sched.vsd_scheduledstarttime.includes('am'),
+            openMask: makeViewTimeString(sched.vsd_scheduledstarttime),
             closed: makeViewTimeString(sched.vsd_scheduledendtime),
+            isAMClosed: sched.vsd_scheduledendtime.includes('am'),
+            closedMask: makeViewTimeString(sched.vsd_scheduledendtime),
             // save the identifier for the post back to dynamics
             hoursId: sched.vsd_scheduleid,
             // convert the nasty comma seperated string version to useful week day boolean

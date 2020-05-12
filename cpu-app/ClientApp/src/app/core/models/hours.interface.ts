@@ -6,8 +6,12 @@ export interface iHours {
   friday?: boolean;
   saturday?: boolean;
   sunday?: boolean;
-  open: string; // just used for the hour representation
-  closed: string; // should look like this 11:21
+  open: string;
+  isAMOpen: boolean;
+  openMask: string;
+  closed: string;
+  isAMClosed: boolean;
+  closedMask: string;
   hoursId: string;
   isActive: boolean;
 }

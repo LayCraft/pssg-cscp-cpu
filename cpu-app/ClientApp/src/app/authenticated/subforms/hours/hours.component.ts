@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { uuidv4 } from '../../../core/constants/uuidv4';
 import { iHours } from '../../../core/models/hours.interface';
+import { TIME } from '../../../core/constants/regex.constants';
+import { FormHelper } from '../../../core/form-helper';
 
 @Component({
   selector: 'app-hours',
@@ -11,7 +13,9 @@ export class HoursComponent implements OnInit {
   @Input() hours: iHours;
   @Output() hoursChange = new EventEmitter<iHours>();
   @Input() title: string = 'Hours';
+  timeRegex: RegExp = TIME;
   uuid: string;
+  public formHelper = new FormHelper();
   constructor() { }
 
   ngOnInit() {
