@@ -246,21 +246,27 @@ export interface iDynamicsSchedule {
   vsd_cpu_scheduletype?: number;
   statecode?: number;
 }
+export interface iDynamicsServiceArea {
+  vsd_programid?: string;
+  vsd_regiondistrictid?: string;
+  vsd_vsd_regiondistrict_vsd_programid?: string;
+}
 export interface iDynamicsScheduleFResponse {
-  Userbceid?: string;
-  StaffCollection?: iDynamicsCrmContact[];
-  ScheduleCollection?: iDynamicsSchedule[];
-  Result: string;
-  RegionDistrictCollection?: iDynamicsRegionDistrict[];
-  ProgramContactCollection?: iDynamicsCrmContact[];
-  ProgramCollection?: iDynamicsCrmProgram[];
-  ProgramTypeCollection?: iDynamicsCrmProgramType[];
-  Organization?: iDynamicsOrganization;
-  IsSuccess?: boolean;
-  ExecutiveContact?: iDynamicsCrmContact;
-  Contract?: iDynamicsCrmContract;
-  Businessbceid: string;
   BoardContact?: iDynamicsCrmContact;
+  Businessbceid: string;
+  Contract?: iDynamicsCrmContract;
+  ExecutiveContact?: iDynamicsCrmContact;
+  IsSuccess?: boolean;
+  Organization?: iDynamicsOrganization;
+  ProgramCollection?: iDynamicsCrmProgram[];
+  ProgramContactCollection?: iDynamicsCrmContact[];
+  ProgramTypeCollection?: iDynamicsCrmProgramType[];
+  RegionDistrictCollection?: iDynamicsRegionDistrict[];
+  Result: string;
+  ScheduleCollection?: iDynamicsSchedule[];
+  ServiceAreaCollection?: iDynamicsServiceArea[];
+  StaffCollection?: iDynamicsCrmContact[];
+  Userbceid?: string;
 }
 
 export interface iDynamicsRegionDistrict {

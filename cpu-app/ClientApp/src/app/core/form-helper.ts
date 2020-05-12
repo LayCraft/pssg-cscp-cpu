@@ -134,6 +134,20 @@ export class FormHelper {
     let variable = this.fetchVarInfo(context, varName);
     variable.obj[variable.prop] = parseFloat(e.value);
   }
+  maskToTime(e: any, context: any, varName) {
+    let variable = this.fetchVarInfo(context, varName);
+    let timeParts = e.value.split(' : ').map(a => parseInt(a));
+    if (e.value.length == 1 && parseInt(e.value) > 1) {
+      e.value = "0" + e.value;
+    }
+    if (timeParts[0] && timeParts[0] > 12) {
+      e.value = "12" + e.value.substr(2);
+    }
+    if (timeParts[1] && timeParts[1] > 59) {
+      e.value = e.value.substring(0, 5) + "59";
+    }
+    variable.obj[variable.prop] = e.value.replace(/ /g, '');
+  }
   numberFormatter(e: any, context: any, varName) {
     if (e.value.toString().length > 1 && e.value.toString()[0] === "0") {
       e.value = parseFloat(e.value.toString().substr(1));

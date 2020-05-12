@@ -94,7 +94,7 @@
             <td>
               <strong>Name: </strong>{{program.contactName}}<br>
               <strong>Email: </strong>{{program.email}}<br>
-              <strong>Phone: </strong>{{program.phone}}<br>
+              <strong>Phone: </strong>{{program.phone | phone}}<br>
             </td>
             <td><a routerLink="/authenticated/program/{{contract.contractId}}/{{program.programId}}">Update Program/Contact Information</a></td>
           </tr>

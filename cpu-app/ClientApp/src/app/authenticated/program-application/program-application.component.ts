@@ -202,6 +202,7 @@ export class ProgramApplicationComponent implements OnInit {
         console.log(err);
         this.notificationQueueService.addNotification('The program application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
         this.saving = false;
+        reject();
       }
       // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
 

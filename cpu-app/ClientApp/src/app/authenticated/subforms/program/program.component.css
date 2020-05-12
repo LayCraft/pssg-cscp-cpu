@@ -46,3 +46,14 @@
 .shared-cost-contact-div {
   margin-top: 10px;
 }
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-container > div {
+  /* width: 260px; */
+  /* margin-right: 10px; */
+  padding-left: 0 !important;
+}

@@ -153,5 +153,13 @@ input[type="number"] {
   background: #e2edf8;
 }
 
+.previous-button {
+  margin-right: 10px;
+}
+
+.submit-button {
+  right: 0;
+  position: absolute;
+}
+
 html, body { height: 100%; }
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
