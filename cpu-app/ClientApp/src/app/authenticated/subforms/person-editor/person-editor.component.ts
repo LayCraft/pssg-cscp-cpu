@@ -10,6 +10,7 @@ import { EMAIL, PHONE_NUMBER, LETTERS_SPACES } from '../../../core/constants/reg
 })
 export class PersonEditorComponent implements OnInit {
   @Input() person: iPerson;
+  @Input() idNum: number = 0;
   @Input() isPoliceContact: boolean = false;
   @Output() personChange = new EventEmitter<iPerson>();
   @Output() setAddress = new EventEmitter<iPerson>();

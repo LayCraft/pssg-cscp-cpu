@@ -48,12 +48,13 @@
     <!-- *ngIf="differentProgramContact" -->
     <span class="mb-4">
       <h2 class="blue-header">Program Contact</h2>
-      <app-person-picker [title]="'Please select a program contact.'" [(person)]="programApplication.programContact" (personChange)="onProgramContactChange($event)">
+      <app-person-picker [title]="'Please select a program contact.'" [(person)]="programApplication.programContact" [idNum]="0">
       </app-person-picker>
     </span>
     <h2 class="blue-header mt-2">Program Staff</h2>
-    <p>Missing staff can be added by name and set at an organizational level.</p>
+    <!-- <p>Missing staff can be added by name and set at an organizational level.</p> -->
     <app-person-picker-list [label]="'Program Staff'" [(personsObj)]="personsObj" (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
+    <button class="btn btn-primary mt-2 btn-add-program-staff" (click)="showAddProgramStaffDialog()">Add Missing Program Staff</button>
     <!-- [(persons)]="programApplication.additionalStaff" [(removedPersons)]="programApplication.removedStaff"> -->
     <!-- </app-person-picker-list> -->
 
@@ -66,7 +67,7 @@
         </label>
         <div *ngIf="programApplication.hasPoliceContact">
           <h5>Police Detachment / Department Supervisor</h5>
-          <app-person-editor [(person)]="programApplication.policeContact" [isPoliceContact]="true" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
+          <app-person-editor [(person)]="programApplication.policeContact" [isPoliceContact]="true" [idNum]="1" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
         </div>
       </div>
 
@@ -78,7 +79,7 @@
           <!-- Please select the checkbox to complete your police contact and <b>Cost Share</b> information -->
         </label>
         <div *ngIf="programApplication.hasSharedCostContact">
-          <app-person-editor [(person)]="programApplication.sharedCostContact" [isPoliceContact]="true" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
+          <app-person-editor [(person)]="programApplication.sharedCostContact" [isPoliceContact]="true" [idNum]="2" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
         </div>
       </div>
     </div>

@@ -16,6 +16,7 @@ export class PersonPickerComponent implements OnInit, OnDestroy {
 
   @Input() title = 'Select Person';
   @Input() person: iPerson;
+  @Input() idNum: number = 0;
   @Output() personChange = new EventEmitter<iPerson>();
   @Input() showCard = true;
   public nameAssemble = nameAssemble;

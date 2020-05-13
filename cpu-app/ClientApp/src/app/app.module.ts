@@ -55,6 +55,7 @@ import { NewUserNewOrganizationComponent } from './authenticated/new-user-new-or
 import { MatDialogModule } from '@angular/material/dialog';
 import { AppendixADialog } from './authenticated/dialogs/appendix-a/appendix-a.dialog';
 import { PhonePipe } from './core/pipes/phone.pipe';
+import { AddPersonDialog } from './authenticated/dialogs/add-person/add-person.dialog';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { PhonePipe } from './core/pipes/phone.pipe';
     BudgetProposalComponent,
     CgLiabilityComponent,
     AppendixADialog,
+    AddPersonDialog,
     ContactInformation2Component,
     ContractTombstoneComponent,
     DashboardComponent,
@@ -105,7 +107,8 @@ import { PhonePipe } from './core/pipes/phone.pipe';
     PhonePipe,
   ],
   entryComponents: [
-    AppendixADialog
+    AppendixADialog,
+    AddPersonDialog
   ],
   imports: [
     MatDialogModule,

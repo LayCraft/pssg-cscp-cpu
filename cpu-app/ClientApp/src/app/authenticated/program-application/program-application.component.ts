@@ -10,6 +10,7 @@ import { convertProgramApplicationToDynamics } from '../../core/models/converter
 import { FormHelper } from '../../core/form-helper';
 import { iDynamicsPostScheduleF } from '../../core/models/dynamics-post';
 import * as _ from 'lodash';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-program-application',
