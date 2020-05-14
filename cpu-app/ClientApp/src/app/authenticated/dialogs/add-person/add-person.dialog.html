@@ -8,6 +8,6 @@
     <app-person-editor  [(person)]="person" [idNum]="9" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
 </div>
 <div mat-dialog-actions>
-    <button class="btn btn-primary mt-2 btn-save" (click)="save()">Save</button>
+    <button class="btn btn-primary mt-2 btn-save" [class.is-disabled]="saving" (click)="save()">Save</button>
     <button class="btn btn-primary mt-2 btn-close" (click)="close()">Close</button>
 </div>
