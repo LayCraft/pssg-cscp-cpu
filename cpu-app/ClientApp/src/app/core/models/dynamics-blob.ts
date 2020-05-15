@@ -103,6 +103,7 @@ export interface iDynamicsCrmProgram {
   vsd_country?: string;
   vsd_cpu_numberofhours?: number;
   vsd_cpu_per?: number;
+  vsd_cpu_program_location?: string;
   vsd_emailaddress?: string;
   vsd_fax?: string;
   vsd_mailingaddressline1?: string;

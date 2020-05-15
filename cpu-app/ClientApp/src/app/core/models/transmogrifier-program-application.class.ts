@@ -233,7 +233,7 @@ export class TransmogrifierProgramApplication {
       let programType = g.ProgramTypeCollection.find(pt => pt.vsd_programtypeid === p._vsd_programtype_value);
       temp.isPoliceBased = programType ? programType.vsd_programcategory === 100000000 : false;
       temp.assignmentArea = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid).map(a => a.vsd_name)[0] || 'Unknown';
-      temp.programLocation = p.vsd_city;
+      temp.programLocation = p.vsd_cpu_program_location;
       temp.hasPoliceContact = temp.policeContact ? true : false;
       // temp.hasSharedCostContact = temp.sharedCostContact ? true : false;
       temp.programTypeName = programType.vsd_name || "";
