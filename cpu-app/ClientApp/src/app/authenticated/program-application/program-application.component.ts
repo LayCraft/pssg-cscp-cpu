@@ -32,6 +32,7 @@ export class ProgramApplicationComponent implements OnInit {
 
   discriminators: string[] = ['contact_information', 'administrative_information', 'commercial_general_liability_insurance', 'program', 'review_application', 'authorization'];
   saving: boolean = false;
+  isCompleted: boolean = false;
 
   private formHelper = new FormHelper();
 
@@ -47,7 +48,14 @@ export class ProgramApplicationComponent implements OnInit {
 
   ngOnInit() {
     // get the right contract by route
+    this.route.queryParams.subscribe(q => {
+      console.log(q);
+      if (q && q.completed) {
+        this.isCompleted = q.completed == "true";
+      }
+    });
     this.route.params.subscribe(p => {
+      console.log(p);
       // collect the current user information from the state.
       const userId: string = this.stateService.main.getValue().userId;
       const organizationId: string = this.stateService.main.getValue().organizationId;
@@ -307,7 +315,7 @@ export class ProgramApplicationComponent implements OnInit {
       }
     }
 
-    if (!this.trans.signature.signatureDate) {
+    if (!this.trans.signature.signatureDate && !this.isCompleted) {
       setTimeout(() => {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'saving');
       }, 0);

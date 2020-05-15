@@ -14,6 +14,7 @@ export class Address2Component implements OnInit {
 
   public formHelper = new FormHelper();
   @Input() address: iAddress;
+  @Input() isDisabled: boolean = false;
   @Output() addressChange = new EventEmitter<iAddress>();
 
   countries: any;

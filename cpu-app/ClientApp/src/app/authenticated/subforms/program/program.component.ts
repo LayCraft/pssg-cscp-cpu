@@ -23,6 +23,7 @@ import { ProgramApplicationComponent } from '../../program-application/program-a
 })
 export class ProgramComponent implements OnInit, OnDestroy {
   @Input() programApplication: iProgramApplication;
+  @Input() isDisabled: boolean = false;
   @Output() programApplicationChange = new EventEmitter<iProgramApplication>();
   required = false;
   // the form model
@@ -102,7 +103,7 @@ export class ProgramComponent implements OnInit, OnDestroy {
       this.programApplication.standbyHours = this.programApplication.standbyHours.filter((hours: iHours, j: number) => i !== j);
     }
   }
-  
+
   onPaidStaffChange(event: iPerson[]) {
     this.programApplication.additionalStaff = event;
     this.onInput();

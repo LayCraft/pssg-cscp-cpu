@@ -10,6 +10,7 @@ import { TransmogrifierProgramApplication } from '../../../core/models/transmogr
 export class AdministrativeInformationComponent implements OnInit {
   // input a contact information properties to create this form
   @Input() transmogrifierProgramApplication: TransmogrifierProgramApplication;
+  @Input() isDisabled: boolean = false;
   // output a contact on change
   @Output() transmogrifierProgramApplicationChange = new EventEmitter<TransmogrifierProgramApplication>();
 

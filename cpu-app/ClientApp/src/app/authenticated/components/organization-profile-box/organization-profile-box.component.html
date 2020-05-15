@@ -53,8 +53,7 @@
       <strong>Program</strong><br>
       {{programInfo.name}}
     </p>
-    <p class="card-text"
-      *ngIf="programInfo.programContact && (programInfo.programContact.firstName || programInfo.programContact.middleName || programInfo.programContact.lastName)">
+    <p class="card-text" *ngIf="programInfo.programContact && (programInfo.programContact.firstName || programInfo.programContact.middleName || programInfo.programContact.lastName)">
       <strong>Program Contact</strong><br>
       {{nameAssemble(programInfo.programContact.firstName,programInfo.programContact.middleName,programInfo.programContact.lastName)}}
     </p>

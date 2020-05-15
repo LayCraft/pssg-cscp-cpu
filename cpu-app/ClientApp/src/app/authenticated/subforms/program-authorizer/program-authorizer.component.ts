@@ -19,6 +19,7 @@ export interface iSignature {
 })
 export class ProgramAuthorizerComponent implements OnInit {
   @Input() signature: iSignature;
+  @Input() isDisabled: boolean = false;
   @Output() signatureChange = new EventEmitter<iSignature>();
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
 

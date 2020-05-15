@@ -4,7 +4,7 @@
       <div class="form-group">
         <label for="firstName">First Name</label>
         <span *ngIf="!me">
-          <input type="text" class="form-control" id="firstName{{idNum}}" name="firstName" [(ngModel)]="person.firstName" #firstName="ngModel" [pattern]="wordRegex">
+          <input [disabled]="isDisabled" type="text" class="form-control" id="firstName{{idNum}}" name="firstName" [(ngModel)]="person.firstName" #firstName="ngModel" [pattern]="wordRegex">
           <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(firstName)">
             Ok
           </div>
@@ -13,21 +13,21 @@
           </div>
         </span>
         <span *ngIf="me">
-          <input type="text" class="form-control" id="firstName{{idNum}}" name="firstName" [value]="person.firstName" disabled>
+          <input [disabled]="isDisabled" type="text" class="form-control" id="firstName{{idNum}}" name="firstName" [value]="person.firstName" disabled>
         </span>
       </div>
     </div>
     <div class="col-md">
       <div class="form-group">
         <label for="middleName">Middle Name (optional)</label>
-        <input type="text" class="form-control" id="middleName{{idNum}}" name="middleName" [(ngModel)]="person.middleName" #middleName="ngModel">
+        <input [disabled]="isDisabled" type="text" class="form-control" id="middleName{{idNum}}" name="middleName" [(ngModel)]="person.middleName" #middleName="ngModel">
       </div>
     </div>
     <div class="col-md">
       <div class="form-group">
         <label for="lastName">Last Name</label>
         <span *ngIf="!me">
-          <input type="text" class="form-control" id="lastName{{idNum}}" name="lastName" [(ngModel)]="person.lastName" #lastName="ngModel" [pattern]="wordRegex">
+          <input [disabled]="isDisabled" type="text" class="form-control" id="lastName{{idNum}}" name="lastName" [(ngModel)]="person.lastName" #lastName="ngModel" [pattern]="wordRegex">
           <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(lastName)">
             Ok
           </div>
@@ -36,7 +36,7 @@
           </div>
         </span>
         <span *ngIf="me">
-          <input type="text" class="form-control" id="lastName{{idNum}}" name="lastName" [value]="person.lastName" disabled>
+          <input [disabled]="isDisabled" type="text" class="form-control" id="lastName{{idNum}}" name="lastName" [value]="person.lastName" disabled>
         </span>
       </div>
     </div>
@@ -45,7 +45,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title{{idNum}}" name="title" [(ngModel)]="person.title" #title="ngModel">
+        <input [disabled]="isDisabled" type="text" class="form-control" id="title{{idNum}}" name="title" [(ngModel)]="person.title" #title="ngModel">
       </div>
     </div>
   </div>
@@ -53,7 +53,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="emailAddress">Email</label>
-        <input type="text" class="form-control" id="emailAddress{{idNum}}" name="emailAddress" [(ngModel)]="person.email" #emailAddress="ngModel" (input)="formHelper.trimInput($event.target)" [pattern]="emailRegex">
+        <input [disabled]="isDisabled" type="text" class="form-control" id="emailAddress{{idNum}}" name="emailAddress" [(ngModel)]="person.email" #emailAddress="ngModel" (input)="formHelper.trimInput($event.target)" [pattern]="emailRegex">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)">
           Ok
         </div>
@@ -67,7 +67,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="phoneNumber">Phone Number</label>
-        <input type="text" mask='(000) 000 0000' class="form-control" id="phoneNumber{{idNum}}" name="phoneNumber" [(ngModel)]="person.phone" #phoneNumber="ngModel" [pattern]="phoneRegex">
+        <input [disabled]="isDisabled" type="text" mask='(000) 000 0000' class="form-control" id="phoneNumber{{idNum}}" name="phoneNumber" [(ngModel)]="person.phone" #phoneNumber="ngModel" [pattern]="phoneRegex">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber)">
           Ok
         </div>
@@ -79,7 +79,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="faxNumber">Fax Number (Optional)</label>
-        <input type="text" mask='(000) 000 0000' class="form-control" id="faxNumber{{idNum}}" name="faxNumber" [(ngModel)]="person.fax" #faxNumber="ngModel" [pattern]="phoneRegex">
+        <input [disabled]="isDisabled" type="text" mask='(000) 000 0000' class="form-control" id="faxNumber{{idNum}}" name="faxNumber" [(ngModel)]="person.fax" #faxNumber="ngModel" [pattern]="phoneRegex">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(faxNumber)">
           Ok
         </div>
@@ -92,20 +92,20 @@
   <!-- <app-address2 [(address)]="person.address"></app-address2> -->
 
   <div class="form-check">
-    <input [(ngModel)]="person.addressSameAsAgency" class="form-check-input" type="checkbox" (click)="setAddressSameAsAgency()">
-    <label class="form-check-label" >
+    <input [disabled]="isDisabled" [(ngModel)]="person.addressSameAsAgency" class="form-check-input" type="checkbox" (click)="setAddressSameAsAgency()">
+    <label class="form-check-label">
       Same as primary address of Agency.
     </label>
   </div>
   <!-- <span *ngIf="person.addressSameAsAgency"> -->
-  <app-address2 [(address)]="person.address"></app-address2>
+  <app-address2 [isDisabled]="isDisabled" [(address)]="person.address"></app-address2>
   <!-- </span> -->
 
   <ng-container *ngIf="!isPoliceContact">
     <label class="form-check-label" for="employmentStatus">
       Employment Status
     </label>
-    <select name="employmentStatus" [(ngModel)]="person.employmentStatus" class="custom-select">
+    <select [disabled]="isDisabled" name="employmentStatus" [(ngModel)]="person.employmentStatus" class="custom-select">
       <option value="null">--</option>
       <option value="Full-Time">Full-Time</option>
       <option value="Sub-Contracted">Sub-Contracted</option>

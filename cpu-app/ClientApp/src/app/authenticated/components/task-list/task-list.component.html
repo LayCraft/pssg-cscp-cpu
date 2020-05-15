@@ -63,9 +63,15 @@
           </thead>
           <tbody>
             <tr *ngFor="let task of contract.completedTasks">
-              <td>
-                {{task.taskName}}
+              <td *ngIf="task.formType == 'program_application'">
+                <a routerLink="/authenticated/{{task.formType}}/{{task.taskId}}" [queryParams]="{completed: 'true'}">
+                  {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
+                </a>
+                <ng-template #elseBlock>{{task.taskName}}</ng-template>
               </td>
+              <!-- <td>
+                
+              </td> -->
               <td>{{task.taskTitle}}</td>
               <td>{{task.taskDescription}}</td>
               <td>{{task.deadline|date:'yyyy-MM-dd'}}</td>
@@ -111,7 +117,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><a >Full Contract Package</a></td>
+            <td><a>Full Contract Package</a></td>
             <td>{{documents[0].availableDate | date:'yyyy-MM-dd'}}</td>
           </tr>
           <tr *ngFor="let doc of documents; let i=index;">
