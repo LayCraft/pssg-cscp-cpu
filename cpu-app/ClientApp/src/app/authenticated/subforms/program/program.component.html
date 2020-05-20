@@ -99,9 +99,25 @@
           <button *ngIf="!isDisabled" class="btn btn-primary mb-4 mt-2" (click)="addOperationHours()">Add Operation Hours</button>
         </div>
 
-        <div class="col-md-8 inline-col bottom-spacing">
-          <label class="hours-label" for="scheduledHours">Total Scheduled Hours per {{perType}}</label>
-          <input [disabled]="isDisabled" [(ngModel)]="programApplication.scheduledHours" type="number" id="scheduledHours" name="scheduledHours" class="form-control hours-input" (input)="formHelper.numberFormatter($event.target, programApplication, 'scheduledHours')">
+        <div class="col-md-8">
+          <div class="flex-display">
+            <label class="hours-label" for="scheduledHours">Total Scheduled Hours per {{perType}}</label>
+            <div>
+              <form [formGroup]="programFormGroup">
+                <!-- [(ngModel)]="programApplication.scheduledHours" -->
+                <input formControlName="scheduledHours" type="number" id="scheduledHours" name="scheduledHours" class="form-control hours-input" (input)="formHelper.numberFormatter($event.target, programApplication, 'scheduledHours')">
+              </form>
+              <!-- <div class="valid-feedback" [hidden]="formHelper.validateHours(programApplication.scheduledHours, programApplication.numberOfHours)">
+                Ok
+              </div> -->
+              <div class="invalid-feedback" [hidden]="!formHelper.validateHours(programApplication.scheduledHours, programApplication.numberOfHours)">
+                Try Again
+              </div>
+            </div>
+          </div>
+          <div>
+            <P class="italics">Please ensure that your operation hours are equal or greater than the contracted service hours below</P>
+          </div>
         </div>
       </div>
 

@@ -19,6 +19,7 @@ import { LoginPageComponent } from './login/login.component';
 import { MessageReadComponent } from './authenticated/subforms/message-read/message-read.component';
 import { MessageWriteComponent } from './authenticated/subforms/message-write/message-write.component';
 import { NewUserNewOrganizationComponent } from './authenticated/new-user-new-organization/new-user-new-organization.component';
+import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,10 @@ const routes: Routes = [
       {
         path: 'download_document/:taskId',
         component: DownloadDocumentComponent
+      },
+      {
+        path: 'sign_contract/:taskId',
+        component: SignContractComponent
       },
       {
         path: 'cover_letter/:taskId',

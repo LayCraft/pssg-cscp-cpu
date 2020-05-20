@@ -58,7 +58,7 @@ export class Transmogrifier {
           formType: decodeTaskType(task._vsd_tasktypeid_value)
         };
 
-        if (task._vsd_programid_value && (thisTask.formType === "expense_report" || "status_report")) {
+        if (task._vsd_programid_value && (thisTask.formType === "expense_report" || thisTask.formType === "status_report")) {
           let programInfo = b.Programs.find(p => p.vsd_programid === task._vsd_programid_value);
           if (programInfo) {
             thisTask.taskName += " (" + programInfo.vsd_name + ")";
@@ -101,7 +101,7 @@ export class Transmogrifier {
     if (discriminator === 'expense_report') {
       return t._vsd_schedulegid_value;//works
     }
-    if (discriminator === 'status_report') {
+    if (discriminator === 'status_report' || discriminator === 'sign_contract') {
       return t.activityid;
     }
     if (discriminator === 'program_application') {
@@ -111,7 +111,6 @@ export class Transmogrifier {
       return contractId;
     }
     if (discriminator === 'cover_letter') {
-      // TODO: UNKNOWN AND UNTESTED
       return contractId;
     }
     return contractId;

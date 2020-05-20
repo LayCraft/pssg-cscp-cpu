@@ -65,3 +65,11 @@
 .bottom-spacing {
   padding-bottom: 10px;
 }
+
+.flex-display {
+  display: flex;
+}
+
+.italics {
+  font-style: italic;
+}

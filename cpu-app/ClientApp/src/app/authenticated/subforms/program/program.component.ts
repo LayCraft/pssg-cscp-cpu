@@ -1,4 +1,4 @@
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormHelper } from '../../../core/form-helper';
 import { Hours } from '../../../core/models/hours.class';
@@ -43,9 +43,12 @@ export class ProgramComponent implements OnInit, OnDestroy {
   personsObj: any = { persons: [], removedPersons: [] };
   private stateSubscription: Subscription;
 
+  public programFormGroup: FormGroup;
+
   constructor(
     private stateService: StateService,
     public dialog: MatDialog,
+    private fb: FormBuilder
   ) {
     this.tabs = ['Contact Information', 'Delivery Information'];
     this.emailRegex = EMAIL;
@@ -56,6 +59,7 @@ export class ProgramComponent implements OnInit, OnDestroy {
     this.stateSubscription.unsubscribe();
   }
   ngOnInit() {
+    // this.programFormGroup = new FormGroup({});
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
       this.persons = m.persons;
@@ -65,7 +69,9 @@ export class ProgramComponent implements OnInit, OnDestroy {
     this.personsObj.removedPersons = this.programApplication.removedStaff;
     this.perType = perTypeDict[this.programApplication.perType];
 
-    // this.programApplication.currentTab = this.tabs[0];
+    this.programFormGroup = this.fb.group({
+      'scheduledHours': new FormControl({disabled: this.isDisabled, value: this.programApplication.scheduledHours}, Validators.min(this.programApplication.numberOfHours))
+    });
   }
 
   // form helpers. Validity hints and hide/show toggles
