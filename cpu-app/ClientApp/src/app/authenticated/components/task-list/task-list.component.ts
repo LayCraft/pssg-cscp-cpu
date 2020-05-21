@@ -55,13 +55,30 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   downloadDocument(doc: iDynamicsDocument) {
-    let file = "data:application/pdf;base64," + doc.body;
-    window.open(file);
+    // let file = "data:application/octet-stream;charset=utf-16le;base64," + doc.body;
+    // window.open(file);
+
+    let downloadLink = document.createElement("a");
+    downloadLink.href = "data:application/octet-stream;base64," + doc.body;
+    downloadLink.download = doc.filename;
+
+    // append the anchor to document body
+    document.body.appendChild(downloadLink);
+
+    // fire a click event on the anchor
+    downloadLink.click();
+
+    // cleanup: remove element and revoke object URL
+    document.body.removeChild(downloadLink);
   }
 
   getContractDocuments(contractId: string) {
+    if (this.documentCollection.length > 0) {
+      //already got documents, don't need to load again
+      return;
+    }
     console.log("contract id: ", contractId);
-    this.documentCollection = [];
+    // this.documentCollection = [];
     this.loadingDocuments = true;
     this.fileService.download(this.trans.organizationId, this.trans.userId, contractId).subscribe(
       (d: iDynamicsFile) => {
