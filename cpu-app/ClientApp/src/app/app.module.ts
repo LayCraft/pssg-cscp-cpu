@@ -55,6 +55,11 @@ import { NewUserNewOrganizationComponent } from './authenticated/new-user-new-or
 import { MatDialogModule } from '@angular/material/dialog';
 import { AppendixADialog } from './authenticated/dialogs/appendix-a/appendix-a.dialog';
 import { PhonePipe } from './core/pipes/phone.pipe';
+import { AddPersonDialog } from './authenticated/dialogs/add-person/add-person.dialog';
+import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ContractPackageAuthorizerComponent } from './authenticated/subforms/contract-package-authorizer/contract-package-authorizer';
 
 @NgModule({
   declarations: [
@@ -65,6 +70,7 @@ import { PhonePipe } from './core/pipes/phone.pipe';
     BudgetProposalComponent,
     CgLiabilityComponent,
     AppendixADialog,
+    AddPersonDialog,
     ContactInformation2Component,
     ContractTombstoneComponent,
     DashboardComponent,
@@ -90,6 +96,7 @@ import { PhonePipe } from './core/pipes/phone.pipe';
     ProfileComponent,
     ProgramApplicationComponent,
     ProgramAuthorizerComponent,
+    ContractPackageAuthorizerComponent,
     ProgramBudgetComponent,
     ProgramComponent,
     ProgramContactComponent,
@@ -101,14 +108,18 @@ import { PhonePipe } from './core/pipes/phone.pipe';
     TaskListComponent,
     TestComponent,
     DownloadDocumentComponent,
+    SignContractComponent,
     CoverLetterComponent,
     PhonePipe,
   ],
   entryComponents: [
-    AppendixADialog
+    AppendixADialog,
+    AddPersonDialog
   ],
   imports: [
     MatDialogModule,
+    NgxExtendedPdfViewerModule,
+    PdfViewerModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,

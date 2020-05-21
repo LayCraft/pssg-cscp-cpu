@@ -16,6 +16,13 @@ export class FileService {
     private http: HttpClient,
   ) { }
 
+
+  getContractPackage(organizationId: string, userId: string, taskId: string): Observable<iDynamicsFile> {
+    return this.http.get<iDynamicsFile>(`${this.apiUrl}/contract_package/${organizationId}/${userId}/${taskId}`, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
   download(organizationId: string, userId: string, contractId: string): Observable<iDynamicsFile> {
     return this.http.get<iDynamicsFile>(`${this.apiUrl}/${organizationId}/${userId}/${contractId}`, { headers: this.headers }).pipe(
       retry(3),

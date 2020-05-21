@@ -9,6 +9,7 @@ import { AppendixADialog } from '../../dialogs/appendix-a/appendix-a.dialog';
 })
 export class CgLiabilityComponent implements OnInit {
   @Input() cgLiability: string;
+  @Input() isDisabled: boolean = false;
   @Output() cgLiabilityChange = new EventEmitter<string>();
   constructor(
     public dialog: MatDialog,

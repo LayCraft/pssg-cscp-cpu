@@ -1,4 +1,4 @@
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormHelper } from '../../../core/form-helper';
 import { Hours } from '../../../core/models/hours.class';
@@ -12,6 +12,9 @@ import { iHours } from '../../../core/models/hours.interface';
 import { perTypeDict } from '../../../core/constants/per-type';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { AddPersonDialog } from '../../dialogs/add-person/add-person.dialog';
+import { ProgramApplicationComponent } from '../../program-application/program-application.component';
 
 @Component({
   selector: 'app-program',
@@ -20,6 +23,7 @@ import { Subscription } from 'rxjs';
 })
 export class ProgramComponent implements OnInit, OnDestroy {
   @Input() programApplication: iProgramApplication;
+  @Input() isDisabled: boolean = false;
   @Output() programApplicationChange = new EventEmitter<iProgramApplication>();
   required = false;
   // the form model
@@ -39,8 +43,12 @@ export class ProgramComponent implements OnInit, OnDestroy {
   personsObj: any = { persons: [], removedPersons: [] };
   private stateSubscription: Subscription;
 
+  public programFormGroup: FormGroup;
+
   constructor(
-    private stateService: StateService
+    private stateService: StateService,
+    public dialog: MatDialog,
+    private fb: FormBuilder
   ) {
     this.tabs = ['Contact Information', 'Delivery Information'];
     this.emailRegex = EMAIL;
@@ -51,6 +59,7 @@ export class ProgramComponent implements OnInit, OnDestroy {
     this.stateSubscription.unsubscribe();
   }
   ngOnInit() {
+    // this.programFormGroup = new FormGroup({});
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
       this.persons = m.persons;
@@ -60,7 +69,9 @@ export class ProgramComponent implements OnInit, OnDestroy {
     this.personsObj.removedPersons = this.programApplication.removedStaff;
     this.perType = perTypeDict[this.programApplication.perType];
 
-    // this.programApplication.currentTab = this.tabs[0];
+    this.programFormGroup = this.fb.group({
+      'scheduledHours': new FormControl({disabled: this.isDisabled, value: this.programApplication.scheduledHours}, Validators.min(this.programApplication.numberOfHours))
+    });
   }
 
   // form helpers. Validity hints and hide/show toggles
@@ -99,14 +110,6 @@ export class ProgramComponent implements OnInit, OnDestroy {
     }
   }
 
-  onProgramContactChange(event: iPerson) {
-    this.programApplication.programContact = event;
-    if (this.programApplication.mailingAddressSameAsMainAddress) {
-      let addressCopy = _.cloneDeep(this.programApplication.programContact.address)
-      this.programApplication.mainAddress = addressCopy;
-    }
-    this.onInput();
-  }
   onPaidStaffChange(event: iPerson[]) {
     this.programApplication.additionalStaff = event;
     this.onInput();
@@ -120,6 +123,19 @@ export class ProgramComponent implements OnInit, OnDestroy {
   }
   setCurrentTab(tab) {
     this.programApplication.currentTab = tab;
+  }
+  showAddProgramStaffDialog() {
+    let dialogRef = this.dialog.open(AddPersonDialog, {
+      autoFocus: false,
+      width: '80vw',
+      data: { programApplication: this.programApplication }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.stateService.refresh();
+      }
+    });
   }
   setAddressSameAsAgency(person: iPerson) {
     let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)

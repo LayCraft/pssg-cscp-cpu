@@ -42,6 +42,24 @@ namespace Gov.Cscp.Victims.Public.Controllers
 			finally { }
 		}
 
+		[HttpGet("contract_package/{businessBceid}/{userBceid}/{taskId}")]
+		public async Task<IActionResult> GetContractPackage(string userBceid, string businessBceid, string taskId)
+		{
+			try
+			{
+				// convert the parameters to a json string
+				string requestJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
+				// set the endpoint action
+				string endpointUrl = "tasks(" + taskId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUContractPackage";
+
+				// get the response
+				DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+
+				return StatusCode(200, result.result.ToString());
+			}
+			finally { }
+		}
+
 		[HttpPost]
 		public async Task<IActionResult> SetFiles([FromBody] FilePost model)
 		{

@@ -13,11 +13,11 @@ export interface iSignature {
   termsConfirmation: boolean;
 }
 @Component({
-  selector: 'app-program-authorizer',
-  templateUrl: './program-authorizer.component.html',
-  styleUrls: ['./program-authorizer.component.css']
+  selector: 'app-contract-package-authorizer',
+  templateUrl: './contract-package-authorizer.html',
+  styleUrls: ['./contract-package-authorizer.scss']
 })
-export class ProgramAuthorizerComponent implements OnInit {
+export class ContractPackageAuthorizerComponent implements OnInit {
   @Input() signature: iSignature;
   @Input() isDisabled: boolean = false;
   @Output() signatureChange = new EventEmitter<iSignature>();

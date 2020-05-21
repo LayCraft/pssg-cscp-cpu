@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class PersonPickerListComponent implements OnInit, OnDestroy {
   @Input() label = "Select all people who apply."
+  @Input() isDisabled: boolean = false;
   @Input() personsObj: any = {}; // the list from the servicezz
   persons: iPerson[] = [];
   removedPersons: iPerson[] = [];

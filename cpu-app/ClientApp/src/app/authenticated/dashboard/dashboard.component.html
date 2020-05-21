@@ -23,7 +23,7 @@
   <div *ngIf="!upcomingContracts.length&&!currentContracts.length&&!pastContracts.length" class="row">
     <div class="col">
       <div class="card mb-4">
-        <div class="card-header">No active contracts</div>
+        <div class="card-header contracts-header">No active contracts</div>
         <div class="card-body">
           <div class="row mb-1">
             <div class="col">
@@ -37,7 +37,7 @@
   <div class="row">
     <div class="col">
       <div class="card mb-4">
-        <div class="card-header">Current Contracts</div>
+        <div class="card-header contracts-header">Current Contracts</div>
         <div *ngIf="currentContracts.length" class="card-body">
           <span *ngFor="let contract of currentContracts">
             <div class="row mb-1">
@@ -60,7 +60,7 @@
   <div class="row">
     <div class="col">
       <div class="card mb-4">
-        <div class="card-header">Upcoming Fiscal Year Contracts</div>
+        <div class="card-header contracts-header">Upcoming Fiscal Year Contracts</div>
         <div *ngIf="upcomingContracts.length" class="card-body">
           <span *ngFor="let contract of upcomingContracts">
             <div class="row mb-1">
@@ -83,7 +83,7 @@
   <div class="row">
     <div class="col">
       <div class="card mb-4">
-        <div class="card-header">Previous Fiscal Year Contracts</div>
+        <div class="card-header contracts-header">Previous Fiscal Year Contracts</div>
         <div *ngIf="pastContracts.length" class="card-body">
           <span *ngFor="let contract of pastContracts">
             <div class="row mb-1">

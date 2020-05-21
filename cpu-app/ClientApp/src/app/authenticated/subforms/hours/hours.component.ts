@@ -11,6 +11,7 @@ import { FormHelper } from '../../../core/form-helper';
 })
 export class HoursComponent implements OnInit {
   @Input() hours: iHours;
+  @Input() isDisabled: boolean = false;
   @Output() hoursChange = new EventEmitter<iHours>();
   @Input() title: string = 'Hours';
   timeRegex: RegExp = TIME;

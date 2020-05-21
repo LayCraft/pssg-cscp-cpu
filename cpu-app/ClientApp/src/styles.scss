@@ -1,6 +1,10 @@
 @import "@bcgov/bc-sans/css/BCSans.css";
 @import "assets/BCGov-material-theme.css";
 
+@media screen {
+  // @import "../node_modules/bootstrap/dist/css/bootstrap.min";
+}
+
 // BC Sans is so ugly I'm commenting it out regardless of how correct it is to use it.
 // If you want to uncomment this line that is on you. It supports indigenous languages.
 // *{  font-family: 'BCSans', 'Myriad-Pro', 'Calibri', 'Helvetica' ,'Arial', sans-serif; }
@@ -162,4 +166,7 @@ input[type="number"] {
   position: absolute;
 }
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}

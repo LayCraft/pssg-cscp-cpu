@@ -14,6 +14,10 @@ export class FormHelper {
   showInvalidFeedback(value: any, pattern: RegExp, control: AbstractControl) {
     return (!value || pattern.test(value));
   }
+  validateHours(scheduledHours: number, serviceHours: number) {
+    if (!scheduledHours) return true;
+    return scheduledHours < serviceHours;
+  }
   isRequired(control: AbstractControl, required: boolean) {
     if (required && control.value && this.isDirtyOrTouched(control)) {
       return true;

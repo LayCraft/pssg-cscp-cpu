@@ -10,6 +10,7 @@ import { FormHelper } from '../../../core/form-helper';
 })
 export class PrimaryContactInfoComponent implements OnInit {
   @Input() contactInformation: iContactInformation;
+  @Input() isDisabled: boolean = false;
   @Output() contactInformationChange = new EventEmitter<iContactInformation>();
 
 

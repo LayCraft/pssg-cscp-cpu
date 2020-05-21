@@ -6,7 +6,7 @@ export interface iStepperElement {
   itemName: string; // This is the show name
   formState: string; // untouched incomplete invalid complete
   id?: string; // optional because it may not be set yet
-  object?: object; // a generic place to save an object into the stepper
+  object?: any; // a generic place to save an object into the stepper
   discriminator?: string; // an optional way to state what kind of object we are supplying
 
   organizationId?: string;
@@ -26,7 +26,7 @@ export class IconStepperService {
 
   formStates: string[] = ['untouched', 'incomplete', 'invalid', 'complete', 'info', 'saving'];
 
-  addStepperElement(object: object, itemName: string, formState: string, discriminator?: string): iStepperElement {
+  addStepperElement(object: any, itemName: string, formState: string, discriminator?: string): iStepperElement {
     if (!formState) {
       // be sure that if the formstate parameter is null we set it
       formState = this.formStates[0];

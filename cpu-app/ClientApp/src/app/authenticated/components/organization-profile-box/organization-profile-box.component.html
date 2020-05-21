@@ -53,15 +53,14 @@
       <strong>Program</strong><br>
       {{programInfo.name}}
     </p>
-    <p class="card-text"
-      *ngIf="programInfo.programContact && (programInfo.programContact.firstName || programInfo.programContact.middleName || programInfo.programContact.lastName)">
+    <p class="card-text" *ngIf="programInfo.programContact && (programInfo.programContact.firstName || programInfo.programContact.middleName || programInfo.programContact.lastName)">
       <strong>Program Contact</strong><br>
       {{nameAssemble(programInfo.programContact.firstName,programInfo.programContact.middleName,programInfo.programContact.lastName)}}
     </p>
   </div>
 
   <div class="card-footer" *ngIf="type === 'dashboard'">
-    <a [routerLink]="'/authenticated/profile/'" class="btn btn-primary">Update Organization Profile</a>
-    <a [routerLink]="'/authenticated/personnel/'" class="btn btn-primary ml-2">Update Agency Staff</a>
+    <a [routerLink]="'/authenticated/profile/'" class="btn btn-primary btn-match-width">Update Organization Profile</a>
+    <a [routerLink]="'/authenticated/personnel/'" class="btn btn-primary ml-2 btn-match-width">Update Agency Staff</a>
   </div>
 </div>

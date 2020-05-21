@@ -15,7 +15,9 @@ export class PersonPickerComponent implements OnInit, OnDestroy {
   // this is a person form control that uses template binding.
 
   @Input() title = 'Select Person';
+  @Input() isDisabled: boolean = false;
   @Input() person: iPerson;
+  @Input() idNum: number = 0;
   @Output() personChange = new EventEmitter<iPerson>();
   @Input() showCard = true;
   public nameAssemble = nameAssemble;
