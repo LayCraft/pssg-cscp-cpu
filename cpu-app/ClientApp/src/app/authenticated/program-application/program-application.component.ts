@@ -151,7 +151,8 @@ export class ProgramApplicationComponent implements OnInit {
       this.stepperService.addStepperElement({ programId: p.programId }, p.name, 'untouched', 'program');
     });
     // Write the default end part
-    [
+
+    let finalStepperElements = [
       {
         itemName: 'Review Program Application',
         formState: 'untouched',
@@ -164,7 +165,14 @@ export class ProgramApplicationComponent implements OnInit {
         object: null,
         discriminator: 'authorization',
       },
-    ].forEach((f: iStepperElement) => {
+    ];
+
+    if (this.isCompleted) {
+      finalStepperElements.pop();
+    }
+
+
+    finalStepperElements.forEach((f: iStepperElement) => {
       this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
     });
     // put the page naviagation to the first page
