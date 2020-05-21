@@ -77,7 +77,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
       //already got documents, don't need to load again
       return;
     }
-    console.log("contract id: ", contractId);
     // this.documentCollection = [];
     this.loadingDocuments = true;
     this.fileService.download(this.trans.organizationId, this.trans.userId, contractId).subscribe(

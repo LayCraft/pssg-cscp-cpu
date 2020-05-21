@@ -120,7 +120,7 @@
           <tr *ngFor="let doc of documentCollection; let i=index;">
             <td><span class="download-link" (click)="downloadDocument(doc)">{{doc.filename}}</span></td>
             <td>
-              <!-- {{doc.availableDate | date:'yyyy-MM-dd'}} -->
+              {{doc.overwritetime | date:'yyyy-MM-dd'}}
             </td>
           </tr>
         </tbody>

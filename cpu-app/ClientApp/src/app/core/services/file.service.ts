@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { iDynamicsPostFile } from '../models/dynamics-post';
+import { iDynamicsPostFile, iDynamicsPostSignedContract } from '../models/dynamics-post';
 import { iDynamicsFile } from '../models/dynamics-blob';
 
 @Injectable({
@@ -19,6 +19,13 @@ export class FileService {
 
   getContractPackage(organizationId: string, userId: string, taskId: string): Observable<iDynamicsFile> {
     return this.http.get<iDynamicsFile>(`${this.apiUrl}/contract_package/${organizationId}/${userId}/${taskId}`, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+  uploadSignedContract(signedContract: iDynamicsPostSignedContract): Observable<any> {
+    // may need to add the contract id into this postback
+    return this.http.post<any>(`${this.apiUrl}/signed_contract`, signedContract, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

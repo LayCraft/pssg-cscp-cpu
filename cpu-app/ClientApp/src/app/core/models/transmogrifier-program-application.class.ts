@@ -47,7 +47,7 @@ export class TransmogrifierProgramApplication {
   private buildSignature(b: iDynamicsScheduleFResponse): iSignature {
     return {
       signer: undefined,
-      signature: "", // TODO: not sure how the signature collection part works yet
+      signature: "",
       signatureDate: undefined,
       termsConfirmation: false
     };

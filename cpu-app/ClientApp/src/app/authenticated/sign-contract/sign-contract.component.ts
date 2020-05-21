@@ -4,7 +4,7 @@ import { NotificationQueueService } from '../../core/services/notification-queue
 import { Router, ActivatedRoute } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { iDynamicsFile, iDynamicsDocument } from '../../core/models/dynamics-blob';
-import { iDynamicsPostFile, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
+import { iDynamicsPostFile, iDynamicsDocumentPost, iDynamicsPostSignedContract } from '../../core/models/dynamics-post';
 import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { FormHelper } from '../../core/form-helper';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
@@ -36,20 +36,19 @@ export class SignContractComponent implements OnInit, OnDestroy {
   stepperIndex: number = 0;
 
   documentCollection: iDynamicsDocument[] = [];
-  documentsToAdd: iDynamicsDocument[] = [];
-  // what are the names of the files in the filedata array
-  fileNames: string[] = [];
-  // how large each file is in bytes
-  fileSizes: string[] = [];
-  // base64 encoded file turned into a string
-  fileData: string[] = [];
+  out: iDynamicsPostSignedContract;
 
   trans: Transmogrifier;
   contractNumber: string;
   organizationId: string;
   userId: string;
   taskId: string;
-  signature: iSignature;
+  signature: iSignature = {
+    signer: undefined,
+    signature: "",
+    signatureDate: undefined,
+    termsConfirmation: false
+  };;
 
   private stateSubscription: Subscription;
 
@@ -93,9 +92,13 @@ export class SignContractComponent implements OnInit, OnDestroy {
             // something has gone wrong. Show the developer the error
             this.notificationQueueService.addNotification('An attempt at getting this contract package was unsuccessful. If this problem persists please notify your ministry contact.', 'danger');
           } else {
-            this.documentCollection = d.DocumentCollection;
-            this.constructDefaultStepperElements();
+            // let test = d.DocumentCollection[0].body;
+            // test += d.DocumentCollection[1].body;
 
+
+            this.documentCollection = d.DocumentCollection;
+            // this.documentCollection[0].body = test;
+            this.constructDefaultStepperElements();
           }
         }
       );
@@ -112,12 +115,24 @@ export class SignContractComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.notificationQueueService.addNotification(`TODO`, 'success');
+    try {
+      // this.saving = true;
+      // this.out = convertContractPackageToDynamics();
+      this.notificationQueueService.addNotification(`TODO`, 'success');
+    }
+    catch (err) {
+      console.log(err)
+      this.notificationQueueService.addNotification('The was a problem saving the signed contract. If this problem is persisting please contact your ministry representative.', 'danger');
+      this.saving = false;
+    }
+
   }
   exit() {
-    if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
-      this.stateService.refresh();
-      this.router.navigate(['/authenticated/dashboard']);
+    if (this.formHelper.showWarningBeforeExit()) {
+      if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+        this.stateService.refresh();
+        this.router.navigate(['/authenticated/dashboard']);
+      }
     }
     else {
       this.stateService.refresh();
@@ -129,7 +144,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
 
     this.documentCollection.forEach(doc => {
       let file = "data:application/pdf;base64," + doc.body;
-      let obj = { fileData: file, fileName: doc.filename};
+      let obj = { fileData: file, fileName: doc.filename };
       this.stepperService.addStepperElement(obj, doc.filename, 'untouched', 'document');
     });
 
@@ -137,7 +152,6 @@ export class SignContractComponent implements OnInit, OnDestroy {
 
     this.stepperService.setToFirstStepperElement();
     this.isLoading = false;
-
   }
 
   setNextStepper() {
