@@ -183,8 +183,7 @@ namespace Gov.Cscp.Victims.Public
                         //new
                         .StyleSources(s => s.Self().UnsafeInline().CustomSources("https://use.fontawesome.com",
                         "https://stackpath.bootstrapcdn.com",
-                        "https://fonts.googleapis.com/icon?family=Material+Icons",
-                        "https://fonts.googleapis.com/css?family=Roboto:300,400,500"))
+                        "https://fonts.googleapis.com"))
 
                         .FontSources(s => s.Self().CustomSources("https://use.fontawesome.com"))
                         .FormActions(s => s.Self())
@@ -196,11 +195,11 @@ namespace Gov.Cscp.Victims.Public
                         //new
                         // .ImageSources(s => s.Self().CustomSources("http://www.w3.org/2000/svg"))
 
-                        //original
-                        // .DefaultSources(s => s.Self())
-
+                        .DefaultSources(s => s.Self())
+                        
+                        
                         //new
-                        .DefaultSources(s => s.Self().CustomSources("data:application/pdf;base64"))
+                        .ObjectSources(s => s.Self().CustomSources("data:"))
 
                         .ScriptSources(s => s.Self().CustomSources("https://apis.google.com",
                         "https://maxcdn.bootstrapcdn.com",
