@@ -54,11 +54,14 @@ export class TaskListComponent implements OnInit, OnDestroy {
     this.currentTab = tab;
   }
 
-  downloadDocument(doc: any) {
-    window.open(doc.source);
+  downloadDocument(doc: iDynamicsDocument) {
+    let file = "data:application/pdf;base64," + doc.body;
+    window.open(file);
   }
 
   getContractDocuments(contractId: string) {
+    console.log("contract id: ", contractId);
+    this.documentCollection = [];
     this.loadingDocuments = true;
     this.fileService.download(this.trans.organizationId, this.trans.userId, contractId).subscribe(
       (d: iDynamicsFile) => {
