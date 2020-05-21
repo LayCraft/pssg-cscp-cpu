@@ -29,6 +29,11 @@ export interface iDynamicsPostFile { //maps to FilePost
   Userbceid: string;
   DocumentCollection?: iDynamicsDocumentPost[];
 }
+export interface iDynamicsPostSignedContract { //maps to FilePost
+  Businessbceid: string;
+  Userbceid: string;
+  SignedContract?: iDynamicsSignedContract;
+}
 export interface iDynamicsPostRegisterNewUser {
   BusinessBCeID: string;
   UserBCeID: string;
@@ -115,6 +120,11 @@ export interface iDynamicsCrmContractPost {
   vsd_signingofficersname?: string;
 }
 export interface iDynamicsDocumentPost {
+  filename: string;
+  body: string;
+}
+export interface iDynamicsSignedContract {
+  activitymimeattachmentid: string;
   filename: string;
   body: string;
 }

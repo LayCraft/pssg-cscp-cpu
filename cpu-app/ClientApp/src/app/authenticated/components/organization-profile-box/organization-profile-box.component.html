@@ -26,7 +26,7 @@
       <a href="mailto:{{trans.contactInformation.emailAddress}}">{{trans.contactInformation.emailAddress}}</a>
     </p>
     <p class="card-text" *ngIf="trans.contactInformation.executiveContact">
-      <strong>Executive Contact</strong><br>
+      <strong>Contractor Contact</strong><br>
       {{nameAssemble(trans.contactInformation.executiveContact.firstName,trans.contactInformation.executiveContact.middleName,trans.contactInformation.executiveContact.lastName)}}
     </p>
     <p class="card-text" *ngIf="trans.contactInformation.hasBoardContact && trans.contactInformation.boardContact">
