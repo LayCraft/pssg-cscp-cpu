@@ -185,7 +185,7 @@ namespace Gov.Cscp.Victims.Public
                         "https://stackpath.bootstrapcdn.com",
                         "https://fonts.googleapis.com"))
 
-                        .FontSources(s => s.Self().CustomSources("https://use.fontawesome.com"))
+                        .FontSources(s => s.Self().CustomSources("https://use.fontawesome.com", "data:"))
                         .FormActions(s => s.Self())
                         .FrameAncestors(s => s.Self())
 
@@ -200,6 +200,7 @@ namespace Gov.Cscp.Victims.Public
                         
                         //new
                         .ObjectSources(s => s.Self().CustomSources("data:"))
+                        .FrameSources(s => s.Self().CustomSources("data:"))
 
                         .ScriptSources(s => s.Self().CustomSources("https://apis.google.com",
                         "https://maxcdn.bootstrapcdn.com",
