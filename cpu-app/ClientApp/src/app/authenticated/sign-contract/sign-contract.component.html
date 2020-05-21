@@ -43,11 +43,8 @@
         </div>
 
         <div class="pdf-container" *ngIf="currentStepperElement.discriminator == 'document'">
-          <ngx-extended-pdf-viewer useBrowserLocale="true" height="70vh"
-          [base64Src]="currentStepperElement.object.fileData"
-          [showOpenFileButton]="false"
-          [showBookmarkButton]="false"
-          ></ngx-extended-pdf-viewer>
+          <object [data]="currentStepperElement.object.fileData | safe" [name]="currentStepperElement.object.fileName" type="application/pdf" class="pdf-object">
+          </object>
         </div>
 
         <div *ngIf="currentStepperElement.discriminator == 'auth'">

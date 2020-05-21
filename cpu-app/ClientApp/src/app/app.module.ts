@@ -57,8 +57,8 @@ import { AppendixADialog } from './authenticated/dialogs/appendix-a/appendix-a.d
 import { PhonePipe } from './core/pipes/phone.pipe';
 import { AddPersonDialog } from './authenticated/dialogs/add-person/add-person.dialog';
 import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { ContractPackageAuthorizerComponent } from './authenticated/subforms/contract-package-authorizer/contract-package-authorizer';
+import { SafePipe } from './core/pipes/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -110,6 +110,7 @@ import { ContractPackageAuthorizerComponent } from './authenticated/subforms/con
     SignContractComponent,
     CoverLetterComponent,
     PhonePipe,
+    SafePipe
   ],
   entryComponents: [
     AppendixADialog,
@@ -117,7 +118,6 @@ import { ContractPackageAuthorizerComponent } from './authenticated/subforms/con
   ],
   imports: [
     MatDialogModule,
-    NgxExtendedPdfViewerModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,

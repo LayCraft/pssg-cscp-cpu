@@ -128,7 +128,8 @@ export class SignContractComponent implements OnInit, OnDestroy {
     this.stepperService.reset();
 
     this.documentCollection.forEach(doc => {
-      let obj = { fileData: doc.body };
+      let file = "data:application/pdf;base64," + doc.body;
+      let obj = { fileData: file, fileName: doc.filename};
       this.stepperService.addStepperElement(obj, doc.filename, 'untouched', 'document');
     });
 
