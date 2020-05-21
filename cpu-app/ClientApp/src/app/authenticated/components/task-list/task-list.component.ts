@@ -24,6 +24,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   documentCollection: iDynamicsDocument[] = [];
   private stateSubscription: Subscription;
+  loadingDocuments: boolean = false;
 
   constructor(private stateService: StateService,
     public fileService: FileService) {
@@ -58,8 +59,10 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   getContractDocuments(contractId: string) {
-    this.fileService.download(this.trans.accountId, this.trans.userId, contractId).subscribe(
+    this.loadingDocuments = true;
+    this.fileService.download(this.trans.organizationId, this.trans.userId, contractId).subscribe(
       (d: iDynamicsFile) => {
+        this.loadingDocuments = false;
         console.log(d);
         if (d['error'] && d['error']['code']) {
           // something has gone wrong. Show the developer the error
