@@ -58,7 +58,6 @@ import { PhonePipe } from './core/pipes/phone.pipe';
 import { AddPersonDialog } from './authenticated/dialogs/add-person/add-person.dialog';
 import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ContractPackageAuthorizerComponent } from './authenticated/subforms/contract-package-authorizer/contract-package-authorizer';
 
 @NgModule({
@@ -119,7 +118,6 @@ import { ContractPackageAuthorizerComponent } from './authenticated/subforms/con
   imports: [
     MatDialogModule,
     NgxExtendedPdfViewerModule,
-    PdfViewerModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
