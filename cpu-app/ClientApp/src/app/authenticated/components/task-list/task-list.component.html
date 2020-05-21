@@ -13,7 +13,7 @@
       </li>
       <!-- Your documents tab - to maybe be included in the future -->
       <!-- <li class="nav-item">
-        <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.yourDocuments)" [class.active]="currentTab===tabs.yourDocuments">{{tabs.yourDocuments}}</a>
+        <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.yourDocuments); getContractDocuments(contract.contractId)" [class.active]="currentTab===tabs.yourDocuments">{{tabs.yourDocuments}}</a>
       </li> -->
       <!-- Messages won't be included until after initial release. So Hide unused tab for now. -->
       <!-- <li class="nav-item">
@@ -113,14 +113,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <!-- <tr>
             <td><a>Full Contract Package</a></td>
             <td>{{documents[0].availableDate | date:'yyyy-MM-dd'}}</td>
-          </tr>
-          <tr *ngFor="let doc of documents; let i=index;">
-            <td><span class="download-link" (click)="downloadDocument(doc)">{{doc.name}}</span></td>
+          </tr> -->
+          <tr *ngFor="let doc of documentCollection; let i=index;">
+            <td><span class="download-link" (click)="downloadDocument(doc)">{{doc.filename}}</span></td>
             <td>
-              {{doc.availableDate | date:'yyyy-MM-dd'}}
+              <!-- {{doc.availableDate | date:'yyyy-MM-dd'}} -->
             </td>
           </tr>
         </tbody>

@@ -133,7 +133,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
       this.stepperService.addStepperElement(obj, doc.filename, 'untouched', 'document');
     });
 
-    // this.stepperService.addStepperElement(null, "Sign Contract", 'untouched', 'auth');
+    this.stepperService.addStepperElement(null, "Sign Contract", 'untouched', 'auth');
 
     this.stepperService.setToFirstStepperElement();
     this.isLoading = false;
