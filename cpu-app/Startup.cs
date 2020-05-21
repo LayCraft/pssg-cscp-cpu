@@ -175,12 +175,27 @@ namespace Gov.Cscp.Victims.Public
                 {
                     opts
                         .BlockAllMixedContent()
+                        //original
                         .StyleSources(s => s.Self().UnsafeInline().CustomSources("https://use.fontawesome.com",
                                 "https://stackpath.bootstrapcdn.com"))
+
+
+                        //new
+                        // .StyleSources(s => s.Self().UnsafeInline().CustomSources("https://use.fontawesome.com",
+                        // "https://stackpath.bootstrapcdn.com",
+                        // "https://fonts.googleapis.com/icon?family=Material+Icons",
+                        // "https://fonts.googleapis.com/css?family=Roboto:300,400,500"))
+
                         .FontSources(s => s.Self().CustomSources("https://use.fontawesome.com"))
                         .FormActions(s => s.Self())
                         .FrameAncestors(s => s.Self())
+                        
+                        //original
                         .ImageSources(s => s.Self())
+                        
+                        //new
+                        // .ImageSources(s => s.Self().CustomSources("http://www.w3.org/2000/svg"))
+                        
                         .DefaultSources(s => s.Self())
                         .ScriptSources(s => s.Self().CustomSources("https://apis.google.com",
                         "https://maxcdn.bootstrapcdn.com",
