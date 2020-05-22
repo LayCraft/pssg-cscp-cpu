@@ -93,12 +93,19 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
   trans.programApplications.forEach((p: iProgramApplication) => {
     // push programs into program collection
     programCollection.push({
+      vsd_ContactLookup2fortunecookiebind: p.policeContact && p.hasPoliceContact ? p.policeContact.personId : null,
+      vsd_ContactLookup3fortunecookiebind: p.sharedCostContact && p.hasPoliceContact && p.hasSharedCostContact ? p.sharedCostContact.personId : null,
+      vsd_ContactLookupfortunecookiebind: p.programContact ? p.programContact.personId : null,
       vsd_addressline1: p.mainAddress.line1,
       vsd_addressline2: p.mainAddress.line2,
       vsd_city: p.mainAddress.city,
+      vsd_costshare: p.hasSharedCostContact,
       vsd_country: p.mainAddress.country,
+      vsd_cpu_numberofhours: p.numberOfHours,
+      vsd_cpu_per: p.perType,
       vsd_emailaddress: p.emailAddress,
       vsd_fax: p.faxNumber,
+      vsd_governmentfunderagency: p.governmentFunder,
       vsd_mailingaddressline1: p.mailingAddress.line1,
       vsd_mailingaddressline2: p.mailingAddress.line2,
       vsd_mailingcity: p.mailingAddress.city,
@@ -109,14 +116,8 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_postalcodezip: p.mainAddress.postalCode,
       vsd_programid: p.programId,
       vsd_provincestate: p.mainAddress.province,
-      vsd_ContactLookupfortunecookiebind: p.programContact ? p.programContact.personId : null,
-      vsd_ContactLookup2fortunecookiebind: p.policeContact && p.hasPoliceContact ? p.policeContact.personId : null,
-      vsd_ContactLookup3fortunecookiebind: p.sharedCostContact && p.hasPoliceContact && p.hasSharedCostContact ? p.sharedCostContact.personId : null,
-      vsd_cpu_numberofhours: p.numberOfHours,
-      vsd_totalscheduledhours: p.scheduledHours,
       vsd_totaloncallstandbyhours: p.onCallHours,
-      vsd_cpu_per: p.perType,
-      vsd_costshare: p.hasSharedCostContact,
+      vsd_totalscheduledhours: p.scheduledHours,
     });
     // if there are elements in the array add the item.
     if (programCollection.length) post.ProgramCollection = programCollection;
