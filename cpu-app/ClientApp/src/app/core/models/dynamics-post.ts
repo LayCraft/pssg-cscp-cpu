@@ -32,7 +32,13 @@ export interface iDynamicsPostFile { //maps to FilePost
 export interface iDynamicsPostSignedContract { //maps to FilePost
   Businessbceid: string;
   Userbceid: string;
-  SignedContract?: iDynamicsSignedContract;
+  DocumentCollection?: iDynamicsDocumentPost[];
+  Signature?: iDynamicsSignaturePost;
+}
+export interface iDynamicsSignaturePost {
+  vsd_authorizedsigningofficersignature?: string;
+  vsd_signingofficertitle?: string;
+  vsd_signingofficersname?: string;
 }
 export interface iDynamicsPostRegisterNewUser {
   BusinessBCeID: string;

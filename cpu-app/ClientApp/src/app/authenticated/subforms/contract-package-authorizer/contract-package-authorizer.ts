@@ -4,14 +4,9 @@ import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { StateService } from '../../../core/services/state.service';
 import { iPerson } from '../../../core/models/person.interface';
 import * as _ from 'lodash';
+import { iSignature } from '../program-authorizer/program-authorizer.component';
 
 
-export interface iSignature {
-  signer: iPerson;
-  signature?: any;
-  signatureDate?: Date;
-  termsConfirmation: boolean;
-}
 @Component({
   selector: 'app-contract-package-authorizer',
   templateUrl: './contract-package-authorizer.html',

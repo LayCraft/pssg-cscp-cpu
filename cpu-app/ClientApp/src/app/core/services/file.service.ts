@@ -23,9 +23,9 @@ export class FileService {
       catchError(this.handleError)
     );
   }
-  uploadSignedContract(signedContract: iDynamicsPostSignedContract): Observable<any> {
+  uploadSignedContract(signedContract: iDynamicsPostSignedContract, taskId: string): Observable<any> {
     // may need to add the contract id into this postback
-    return this.http.post<any>(`${this.apiUrl}/signed_contract`, signedContract, { headers: this.headers }).pipe(
+    return this.http.post<any>(`${this.apiUrl}/signed_contract/${taskId}`, signedContract, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
