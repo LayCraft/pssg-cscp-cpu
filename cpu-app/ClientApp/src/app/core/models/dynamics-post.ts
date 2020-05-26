@@ -32,7 +32,13 @@ export interface iDynamicsPostFile { //maps to FilePost
 export interface iDynamicsPostSignedContract { //maps to FilePost
   Businessbceid: string;
   Userbceid: string;
-  SignedContract?: iDynamicsSignedContract;
+  DocumentCollection?: iDynamicsDocumentPost[];
+  Signature?: iDynamicsSignaturePost;
+}
+export interface iDynamicsSignaturePost {
+  vsd_authorizedsigningofficersignature?: string;
+  vsd_signingofficertitle?: string;
+  vsd_signingofficersname?: string;
 }
 export interface iDynamicsPostRegisterNewUser {
   BusinessBCeID: string;
@@ -250,24 +256,25 @@ export interface iDynamicsCrmServiceProviderPost {
   address1_postalcode?: string;
 }
 export interface iDynamicsCrmProgramPost {
-  // _vsd_contactlookup_value?: string;
-  vsd_ContactLookupfortunecookiebind?: string;
-  vsd_ContactLookup2fortunecookiebind?: string;
-  vsd_ContactLookup3fortunecookiebind?: string;
   _vsd_contractid_value?: string;
   _vsd_cpu_regiondistrict_value?: string;
-  // _vsd_cpu_regiondistrictlookup2_value?: string;
   _vsd_programtype_value?: string;
   _vsd_serviceproviderid_value?: string;
   statecode?: number;
   statuscode?: number;
+  vsd_ContactLookup2fortunecookiebind?: string;
+  vsd_ContactLookup3fortunecookiebind?: string;
+  vsd_ContactLookupfortunecookiebind?: string;
   vsd_addressline1?: string;
   vsd_addressline2?: string;
   vsd_city?: string;
+  vsd_costshare?: boolean;
   vsd_country?: string;
   vsd_cpu_numberofhours?: number;
+  vsd_cpu_per?: number;
   vsd_emailaddress?: string;
   vsd_fax?: string;
+  vsd_governmentfunderagency?: string;
   vsd_mailingaddressline1?: string;
   vsd_mailingaddressline2?: string;
   vsd_mailingcity?: string;
@@ -281,8 +288,6 @@ export interface iDynamicsCrmProgramPost {
   vsd_provincestate?: string;
   vsd_totaloncallstandbyhours?: number;
   vsd_totalscheduledhours?: number;
-  vsd_cpu_per?: number;
-  vsd_costshare?: boolean;
 }
 export interface iDynamicsSchedulePost {
   _vsd_programid_value?: string;

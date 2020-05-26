@@ -73,11 +73,11 @@
       <div *ngIf="programApplication.hasPoliceContact" class="shared-cost-contact-div">
         <input [disabled]="isDisabled" [(ngModel)]="programApplication.hasSharedCostContact" class="form-check-input" type="checkbox" id="hasSharedCostContactCheckbox" name="hasSharedCostContactCheckbox">
         <label class="form-check-label" for="hasSharedCostContactCheckbox">
-          Does your Police based Victim Services Program receive a <b>Cost-Share</b> contribution from your local government?<br>
-          If yes, please provide the name and contact information for your local government funder:
-          <!-- Please select the checkbox to complete your police contact and <b>Cost Share</b> information -->
+          Please select the check box to complete your cost share contact information with local Government:
         </label>
         <div *ngIf="programApplication.hasSharedCostContact">
+          <label for="governmentFunder">Name of Government Funder / Agency</label>
+          <input [disabled]="isDisabled" type="text" class="form-control" id="governmentFunder" name="governmentFunder" [(ngModel)]="programApplication.governmentFunder" #governmentFunder="ngModel">
           <app-person-editor [isDisabled]="isDisabled" [(person)]="programApplication.sharedCostContact" [isPoliceContact]="true" [idNum]="2" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
         </div>
       </div>

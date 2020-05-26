@@ -85,12 +85,11 @@ export interface iDynamicsMinistryUser {
   systemuserid?: string;
 }
 export interface iDynamicsCrmProgram {
-  _vsd_contactlookup_value?: string;
   _vsd_contactlookup2_value?: string;
   _vsd_contactlookup3_value?: string;
+  _vsd_contactlookup_value?: string;
   _vsd_contractid_value?: string;
   _vsd_cpu_regiondistrict_value?: string;
-  // _vsd_cpu_regiondistrictlookup2_value?: string;
   _vsd_programtype_value?: string;
   _vsd_serviceproviderid_value?: string;
   fortunecookieetag?: string;
@@ -100,12 +99,14 @@ export interface iDynamicsCrmProgram {
   vsd_addressline1?: string;
   vsd_addressline2?: string;
   vsd_city?: string;
+  vsd_costshare?: boolean;
   vsd_country?: string;
   vsd_cpu_numberofhours?: number;
   vsd_cpu_per?: number;
   vsd_cpu_program_location?: string;
   vsd_emailaddress?: string;
   vsd_fax?: string;
+  vsd_governmentfunderagency?: string;
   vsd_mailingaddressline1?: string;
   vsd_mailingaddressline2?: string;
   vsd_mailingcity?: string;
@@ -119,7 +120,6 @@ export interface iDynamicsCrmProgram {
   vsd_provincestate?: string;
   vsd_totaloncallstandbyhours?: number;
   vsd_totalscheduledhours?: number;
-  vsd_costshare?: boolean;
 }
 export interface iDynamicsCrmProgramType {
   vsd_programtypeid?: string;
