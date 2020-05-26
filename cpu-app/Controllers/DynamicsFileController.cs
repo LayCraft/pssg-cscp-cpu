@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-// using System.IO;
-// using iTextSharp.text;
-// using iTextSharp.text.pdf;
+using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace Gov.Cscp.Victims.Public.Controllers
 {
@@ -78,26 +79,33 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 string endpointUrl = "tasks(" + taskId + ")/Microsoft.Dynamics.CRM.vsd_UploadCPUContractPackage";
 
 
-				SignedContractPostToDynamics data = new SignedContractPostToDynamics();
-				data.BusinessBCeID = portalModel.BusinessBCeID;
-				data.UserBCeID = portalModel.UserBCeID;
+                SignedContractPostToDynamics data = new SignedContractPostToDynamics();
+                data.BusinessBCeID = portalModel.BusinessBCeID;
+                data.UserBCeID = portalModel.UserBCeID;
 
                 List<byte[]> byteArray = new List<byte[]>();
 
-                for (int i=0; i< portalModel.DocumentCollection.Length; ++i)
+                for (int i = 0; i < portalModel.DocumentCollection.Length; ++i)
                 {
                     byteArray.Add(System.Convert.FromBase64String(portalModel.DocumentCollection[i].body));
                 }
 
-                // string signatureString = portalModel.Signature.vsd_authorizedsigningofficersignature;
+
+
+                string signatureString = portalModel.Signature.vsd_authorizedsigningofficersignature;
+                signatureString = signatureString.Replace("data:image/png;base64,", "");
+                var offset = signatureString.IndexOf(',') + 1;
+                var imageInBytes = System.Convert.FromBase64String(signatureString.Substring(offset));
 
                 // byteArray.Add(System.Convert.FromBase64String(portalModel.Signature.vsd_authorizedsigningofficersignature));
+                // byteArray.Add(imageInBytes);
 
-                // byte[] combinedArray = concatAndAddContent(byteArray);
+                byte[] combinedArray = concatAndAddContent(byteArray);
 
-                // string combinedDoc = System.Convert.ToBase64String(combinedArray);
+                string combinedDoc = System.Convert.ToBase64String(combinedArray);
 
-                // data.SignedContract.body = combinedDoc;
+                data.SignedContract = new DynamicsDocumentPost();
+                data.SignedContract.body = combinedDoc;
                 data.SignedContract.filename = "Merged Contract.pdf";
 
                 // make options for the json serializer
@@ -105,12 +113,17 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 options.IgnoreNullValues = true;
                 // turn the model into a string
                 string modelString = System.Text.Json.JsonSerializer.Serialize(data, options);
-                if (!string.IsNullOrEmpty(modelString))
-                    return StatusCode(200, "test complete");
+                // if (!string.IsNullOrEmpty(modelString))
+                //     return StatusCode(200, "test complete");
 
                 DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
 
                 return StatusCode(200, result.result.ToString());
+            }
+            catch (System.Exception exception)
+            {
+                // Console.WriteLine(exception);
+                throw;
             }
             finally { }
         }
@@ -135,38 +148,38 @@ namespace Gov.Cscp.Victims.Public.Controllers
             finally { }
         }
 
-        // public static byte[] concatAndAddContent(List<byte[]> pdfByteContent)
-        // {
+        public static byte[] concatAndAddContent(List<byte[]> pdfByteContent)
+        {
 
-        //     using (var ms = new MemoryStream())
-        //     {
-        //         using (var doc = new Document())
-        //         {
-        //             using (var copy = new PdfSmartCopy(doc, ms))
-        //             {
-        //                 doc.Open();
+            using (var ms = new MemoryStream())
+            {
+                using (var doc = new Document())
+                {
+                    using (var copy = new PdfSmartCopy(doc, ms))
+                    {
+                        doc.Open();
 
-        //                 //Loop through each byte array
-        //                 foreach (var p in pdfByteContent)
-        //                 {
+                        //Loop through each byte array
+                        foreach (var p in pdfByteContent)
+                        {
 
-        //                     //Create a PdfReader bound to that byte array
-        //                     using (var reader = new PdfReader(p))
-        //                     {
+                            //Create a PdfReader bound to that byte array
+                            using (var reader = new PdfReader(p))
+                            {
 
-        //                         //Add the entire document instead of page-by-page
-        //                         copy.AddDocument(reader);
-        //                     }
-        //                 }
+                                //Add the entire document instead of page-by-page
+                                copy.AddDocument(reader);
+                            }
+                        }
 
-        //                 doc.Close();
-        //             }
-        //         }
+                        doc.Close();
+                    }
+                }
 
-        //         //Return just before disposing
-        //         return ms.ToArray();
-        //     }
-        // }
+                //Return just before disposing
+                return ms.ToArray();
+            }
+        }
 
     }
 }
