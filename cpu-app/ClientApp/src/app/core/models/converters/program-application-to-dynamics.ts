@@ -103,6 +103,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_country: p.mainAddress.country,
       vsd_cpu_numberofhours: p.numberOfHours,
       vsd_cpu_per: p.perType,
+      vsd_cpu_programstaffsubcontracted: p.hasSubContractedStaff,
       vsd_emailaddress: p.emailAddress,
       vsd_fax: p.faxNumber,
       vsd_governmentfunderagency: p.governmentFunder,

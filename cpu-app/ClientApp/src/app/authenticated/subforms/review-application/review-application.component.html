@@ -22,11 +22,11 @@
       </tr>
       <tr>
         <th scope="row">Phone Number</th>
-        <td>{{trans?.contactInformation?.phoneNumber}}</td>
+        <td>{{trans?.contactInformation?.phoneNumber | phone}}</td>
       </tr>
       <tr>
         <th scope="row">Fax Number</th>
-        <td>{{trans?.contactInformation?.faxNumber}}</td>
+        <td>{{trans?.contactInformation?.faxNumber | phone}}</td>
       </tr>
     </tbody>
   </table>
@@ -38,11 +38,11 @@
     </thead>
     <tbody>
       <tr>
-        <th scope="row">Line 1</th>
+        <th scope="row">Address Line 1</th>
         <td>{{trans?.contactInformation?.mainAddress?.line1}}</td>
       </tr>
       <tr>
-        <th scope="row">Line 2</th>
+        <th scope="row">Address Line 2</th>
         <td>{{trans?.contactInformation?.mainAddress?.line2}}</td>
       </tr>
       <tr>
@@ -67,11 +67,11 @@
     </thead>
     <tbody>
       <tr>
-        <th scope="row">Line 1</th>
+        <th scope="row">Address Line 1</th>
         <td>{{trans?.contactInformation?.mailingAddress?.line1}}</td>
       </tr>
       <tr>
-        <th scope="row">Line 2</th>
+        <th scope="row">Address Line 2</th>
         <td>{{trans?.contactInformation?.mailingAddress?.line2}}</td>
       </tr>
       <tr>
@@ -89,7 +89,8 @@
     </tbody>
   </table>
 
-  <app-person-table [title]="'Executive Contact'" [person]="trans.contactInformation.executiveContact"></app-person-table>
+  <app-person-table [title]="'Executive Contact'" [person]="trans.contactInformation.executiveContact">
+  </app-person-table>
   <app-person-table [title]="'Board Contact'" [person]="trans.contactInformation.boardContact"></app-person-table>
 
   <h2 class="blue-header">Applicant Administrative Information</h2>

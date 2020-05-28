@@ -19,8 +19,8 @@
         <div style="max-height: 90%;">
           <app-icon-stepper></app-icon-stepper>
         </div>
-        <button class="btn btn-primary mt-2 mr-2" *ngIf="!isCompleted" [class.is-disabled]="saving || trans.signature.signatureDate" (click)="save()">Save</button>
-        <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
+        <button class="btn btn-primary mt-2 mr-2" *ngIf="!isCompleted" [class.is-disabled]="saving || trans.signature.signatureDate" (click)="save(true, true)">Save and Exit</button>
+        <button class="btn btn-primary mt-2" (click)="save()">Save</button>
       </section>
     </div>
 
@@ -69,7 +69,7 @@
                   Please select this check box if mailing address is the same as Primary Program Contact Address
                 </label>
               </div>
-              <app-address2 [(address)]="trans.contactInformation.mailingAddress" [isDisabled]="isCompleted"></app-address2>
+              <app-address2 [isDisabled]="trans.contactInformation.mailingAddressSameAsMainAddress" [(address)]="trans.contactInformation.mailingAddress" [isDisabled]="isCompleted"></app-address2>
 
               <!-- Primary contact the ministry calls when they want to contact the org -->
               <h2 class="blue-header mt-4">Organization Contact(s)</h2>

@@ -53,27 +53,7 @@
   <span class="cssea-info-message">*If your CSSEA membership status has changed, please contact your Program Manager to have your status updated.</span>
 </div>
 
-<label>
-  Are any of your program staff sub-contracted to provide services?
-</label>
-<div class="form-group">
-  <div class="form-check form-check-inline">
-    <input [disabled]="isDisabled" #staffSubcontracted="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.staffSubcontracted" class="form-check-input" type="radio" name="staffSubcontracted1" id="staffSubcontracted1" [value]="true">
-    <label class="form-check-label" for="staffSubcontracted1">
-      Yes
-    </label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input [disabled]="isDisabled" #staffSubcontracted="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.staffSubcontracted" class="form-check-input" type="radio" name="staffSubcontracted2" id="staffSubcontracted2" [value]="false">
-    <label class="form-check-label" for="staffSubcontracted2">
-      No
-    </label>
-  </div>
-</div>
-<!-- <div class="form-group" *ngIf="transmogrifierProgramApplication.administrativeInformation.staffSubcontracted">
-  <h2 class="blue-header">Subcontracted Staff</h2>
-  <app-person-picker-list [(personsObj)]="subcontractedStaffObj" (personsChange)="onSubcontractedStaffChange($event)"></app-person-picker-list>
-</div> -->
+
 <!-- <div class="form-group">
       <div class="invalid-feedback" [hidden]="aiForm.form.valid || aiForm.form.pristine">
         One or more fields is missing from the submission.

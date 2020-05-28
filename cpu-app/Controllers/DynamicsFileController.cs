@@ -108,17 +108,20 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 data.SignedContract.body = combinedDoc;
                 data.SignedContract.filename = "Merged Contract.pdf";
 
+                //for testing the document combining
+                return StatusCode(200, data);
+
                 // make options for the json serializer
-                JsonSerializerOptions options = new JsonSerializerOptions();
-                options.IgnoreNullValues = true;
-                // turn the model into a string
-                string modelString = System.Text.Json.JsonSerializer.Serialize(data, options);
-                // if (!string.IsNullOrEmpty(modelString))
-                //     return StatusCode(200, "test complete");
+                // JsonSerializerOptions options = new JsonSerializerOptions();
+                // options.IgnoreNullValues = true;
+                // // turn the model into a string
+                // string modelString = System.Text.Json.JsonSerializer.Serialize(data, options);
+                // // if (!string.IsNullOrEmpty(modelString))
+                // //     return StatusCode(200, "test complete");
 
-                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+                // DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
 
-                return StatusCode(200, result.result.ToString());
+                // return StatusCode(200, result.result.ToString());
             }
             catch (System.Exception exception)
             {

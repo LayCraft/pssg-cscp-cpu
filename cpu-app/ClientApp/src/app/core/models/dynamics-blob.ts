@@ -104,6 +104,7 @@ export interface iDynamicsCrmProgram {
   vsd_cpu_numberofhours?: number;
   vsd_cpu_per?: number;
   vsd_cpu_program_location?: string;
+  vsd_cpu_programstaffsubcontracted?: boolean;
   vsd_emailaddress?: string;
   vsd_fax?: string;
   vsd_governmentfunderagency?: string;
