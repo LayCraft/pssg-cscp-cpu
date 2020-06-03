@@ -140,7 +140,7 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
     // set the stepper to the first item
     this.stepperService.setToFirstStepperElement();
   }
-  save(isSubmit: boolean = false) {
+  save(shouldExit: boolean = false) {
     return new Promise((resolve, reject) => {
       try {// if (!this.formHelper.isFormValid(this.notificationQueueService)) {
         let originalStepper = _.cloneDeep(this.currentStepperElement);
@@ -167,7 +167,7 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
             console.log(r);
             this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
             this.stateService.refresh();
-            if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
+            if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
             this.saving = false;
             this.stepperElements.forEach(s => {
               if (s.formState === 'complete') return;

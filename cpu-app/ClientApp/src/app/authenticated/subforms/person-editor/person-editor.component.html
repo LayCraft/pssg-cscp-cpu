@@ -98,7 +98,7 @@
     </label>
   </div>
   <!-- <span *ngIf="person.addressSameAsAgency"> -->
-  <app-address2 [isDisabled]="isDisabled" [(address)]="person.address"></app-address2>
+  <app-address2 [isDisabled]="isDisabled || person.addressSameAsAgency" [(address)]="person.address"></app-address2>
   <!-- </span> -->
 
   <ng-container *ngIf="!isPoliceContact">
@@ -111,6 +111,7 @@
       <option value="Sub-Contracted">Sub-Contracted</option>
       <option value="Part-Time">Part-Time</option>
       <option value="Leave of Absence">Leave of Absence</option>
+      <option value="Volunteer">Volunteer</option>
     </select>
   </ng-container>
 </div>

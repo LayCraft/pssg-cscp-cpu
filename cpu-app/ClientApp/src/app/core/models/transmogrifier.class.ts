@@ -58,10 +58,10 @@ export class Transmogrifier {
           formType: decodeTaskType(task._vsd_tasktypeid_value)
         };
 
-        if (thisTask.formType === "sign_contract") {
-          console.log("Skipping sign contract task!");
-          continue;
-        }
+        // if (thisTask.formType === "sign_contract") {
+        //   console.log("Skipping sign contract task!");
+        //   continue;
+        // }
 
         if (task._vsd_programid_value && (thisTask.formType === "expense_report" || thisTask.formType === "status_report")) {
           let programInfo = b.Programs.find(p => p.vsd_programid === task._vsd_programid_value);

@@ -87,6 +87,10 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       if (!this.formHelper.isFormValid(this.notificationQueueService)) {
         return;
       }
+      if (!person.employmentStatus || person.employmentStatus === "null") {
+        this.notificationQueueService.addNotification('Employment status is required.', 'warning');
+        return;
+      }
 
       console.log(person);
       this.saving = true;

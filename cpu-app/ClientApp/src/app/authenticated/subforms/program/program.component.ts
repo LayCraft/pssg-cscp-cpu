@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { AddPersonDialog } from '../../dialogs/add-person/add-person.dialog';
 import { ProgramApplicationComponent } from '../../program-application/program-application.component';
+import { Address } from '../../../core/models/address.class';
 
 @Component({
   selector: 'app-program',
@@ -41,6 +42,7 @@ export class ProgramComponent implements OnInit, OnDestroy {
   perType: string = "Week";
   //combined object of persons and removedPersons to send to child component
   personsObj: any = { persons: [], removedPersons: [] };
+  subContractedPersonsObj: any = { persons: [], removedPersons: [] };
   private stateSubscription: Subscription;
 
   public programFormGroup: FormGroup;
@@ -67,10 +69,12 @@ export class ProgramComponent implements OnInit, OnDestroy {
     this.onInput();
     this.personsObj.persons = this.programApplication.additionalStaff;
     this.personsObj.removedPersons = this.programApplication.removedStaff;
+    this.subContractedPersonsObj.persons = this.programApplication.subContractedStaff;
+    this.subContractedPersonsObj.removedPersons = this.programApplication.removedSubContractedStaff;
     this.perType = perTypeDict[this.programApplication.perType];
 
     this.programFormGroup = this.fb.group({
-      'scheduledHours': new FormControl({disabled: this.isDisabled, value: this.programApplication.scheduledHours}, Validators.min(this.programApplication.numberOfHours))
+      'scheduledHours': new FormControl({ disabled: this.isDisabled, value: this.programApplication.scheduledHours }, Validators.min(this.programApplication.numberOfHours))
     });
   }
 
@@ -121,6 +125,14 @@ export class ProgramComponent implements OnInit, OnDestroy {
     this.onInput();
 
   }
+  onSubContractedStaffChange(personsObj: any) {
+    console.log("onSubContractedStaffChange");
+    console.log(this.programApplication);
+    this.programApplication.subContractedStaff = personsObj.persons;
+    this.programApplication.removedSubContractedStaff = personsObj.removedPersons;
+    this.onInput();
+
+  }
   setCurrentTab(tab) {
     this.programApplication.currentTab = tab;
   }
@@ -149,7 +161,7 @@ export class ProgramComponent implements OnInit, OnDestroy {
     }
     else {
       let addressCopy = _.cloneDeep(this.programApplication.mailingAddress);
-      this.programApplication.mailingAddress = addressCopy;
+      this.programApplication.mailingAddress = new Address(); //addressCopy;
     }
   }
 }

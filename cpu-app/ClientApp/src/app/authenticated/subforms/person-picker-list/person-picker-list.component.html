@@ -10,11 +10,11 @@
 <!-- <div (click)="addPerson()" class="form-group">
   Add Program Staff <i class="fas fa-plus-circle text-success"></i>
 </div> -->
-<div *ngIf="trans.persons" class="form-group">
+<div *ngIf="personsList" class="form-group">
   <label for="personPickerList">{{label}}</label>
   <select [disabled]="isDisabled" class="form-control" name="personPickerList" id="personPickerList" (change)="addPerson(selectedPerson)" [(ngModel)]="selectedPerson">
     <option [value]="null">--</option>
-    <option *ngFor="let person of trans.persons" [value]="person.personId">
+    <option *ngFor="let person of personsList" [value]="person.personId">
       <!-- The person comes with a title if they have one 
       (click)="addPerson(person.personId)"-->
       {{nameAssemble(person.firstName,person.middleName,person.lastName)}}

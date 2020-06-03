@@ -43,9 +43,13 @@ export class AddPersonDialog {
             if (!this.formHelper.isFormValid(this.notificationQueueService)) {
                 return;
             }
-
+            if (!this.person.employmentStatus || this.person.employmentStatus === "null") {
+                this.notificationQueueService.addNotification('Employment status is required.', 'warning');
+                return;
+            }
             console.log(this.person);
             this.saving = true;
+
             // a person needs minimum a first and last name to be submitted
             if (this.person.firstName && this.person.lastName) {
                 const userId = this.stateService.main.getValue().userId;

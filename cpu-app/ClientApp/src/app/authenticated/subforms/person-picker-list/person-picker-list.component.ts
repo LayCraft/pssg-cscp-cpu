@@ -12,7 +12,9 @@ import { Subscription } from 'rxjs';
 export class PersonPickerListComponent implements OnInit, OnDestroy {
   @Input() label = "Select all people who apply."
   @Input() isDisabled: boolean = false;
+  @Input() isSubContractedList: boolean = false;
   @Input() personsObj: any = {}; // the list from the servicezz
+  personsList: iPerson[] = [];
   persons: iPerson[] = [];
   removedPersons: iPerson[] = [];
   // @Input() persons: iPerson[] = []; // the list from the servicezz
@@ -29,8 +31,23 @@ export class PersonPickerListComponent implements OnInit, OnDestroy {
     this.stateSubscription.unsubscribe();
   }
   ngOnInit() {
-    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => this.trans = m);
+    this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
+      this.trans = m;
+      this.personsList = this.trans.persons;
+      console.log("person picker list");
+      console.log(this.personsList);
+      console.log(this.isSubContractedList);
+
+      if (this.isSubContractedList) {
+        this.personsList = this.trans.persons.filter(p => p.employmentStatus === "Sub-Contracted");
+      }
+      else {
+        this.personsList = this.trans.persons.filter(p => p.employmentStatus !== "Sub-Contracted");
+      }
+
+    });
     this.persons = this.personsObj.persons;
+
     this.removedPersons = this.personsObj.removedPersons;
   }
   addPerson(personId: string) {
