@@ -50,13 +50,15 @@ export interface iDynamicsPostScheduleF { //maps to ProgramApplicationPost
   BusinessBCeID: string;
   UserBCeID: string;
   AddProgramContactCollection?: iDynamicsProgramContactPost[];
-  RemoveProgramContactCollection?: iDynamicsRemoveProgramContactPost[];
+  AddProgramSubContractorCollection?: iDynamicsProgramContactPost[];
+  ContactCollection?: iDynamicsCrmContactPost[];
+  ContractCollection?: iDynamicsCrmContractPost[];
   Organization?: iDynamicsOrganizationPost;
   ProgramCollection?: iDynamicsCrmProgramPost[];
-  ContractCollection?: iDynamicsCrmContractPost[];
-  ContactCollection?: iDynamicsCrmContactPost[];
-  StaffCollection?: iDynamicsProgramContactPost[];  //commented out on the controller side...
+  RemoveProgramContactCollection?: iDynamicsRemoveProgramContactPost[];
+  RemoveProgramSubContractorCollection?: iDynamicsRemoveProgramContactPost[];
   ScheduleCollection?: iDynamicsSchedulePost[];     //commented out on the controller side...
+  StaffCollection?: iDynamicsProgramContactPost[];  //commented out on the controller side...
 }
 export interface iDynamicsPostBudgetProposal { //maps to BudgetProposalPost
   BusinessBCeID: string;

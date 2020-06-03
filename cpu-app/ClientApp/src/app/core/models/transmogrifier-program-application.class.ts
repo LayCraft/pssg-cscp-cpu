@@ -207,10 +207,10 @@ export class TransmogrifierProgramApplication {
         hasSubContractedStaff: p.vsd_cpu_programstaffsubcontracted || false,
         // revenueSources: [],//iRevenueSource[];
         additionalStaff: g.ProgramContactCollection
-          .filter((c: iDynamicsCrmContact) => c.vsd_programid === p.vsd_programid && c.vsd_employmentstatus !== employmentStatus["Sub-Contracted"])
+          .filter((c: iDynamicsCrmContact) => c.vsd_programid === p.vsd_programid)
           .map(s => this.makePerson(g, s.contactid)) || null,// iPerson[];
-        subContractedStaff: g.ProgramContactCollection
-          .filter((c: iDynamicsCrmContact) => c.vsd_programid === p.vsd_programid && c.vsd_employmentstatus === employmentStatus["Sub-Contracted"])
+        subContractedStaff: g.ProgramSubContractorCollection
+          .filter((c: iDynamicsCrmContact) => c.vsd_programid === p.vsd_programid)
           .map(s => this.makePerson(g, s.contactid)) || null,// iPerson[];
         operationHours: [],
         standbyHours: [],

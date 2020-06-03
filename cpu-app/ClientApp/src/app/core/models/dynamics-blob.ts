@@ -262,6 +262,7 @@ export interface iDynamicsScheduleFResponse {
   Organization?: iDynamicsOrganization;
   ProgramCollection?: iDynamicsCrmProgram[];
   ProgramContactCollection?: iDynamicsCrmContact[];
+  ProgramSubContractorCollection?: iDynamicsCrmContact[];
   ProgramTypeCollection?: iDynamicsCrmProgramType[];
   RegionDistrictCollection?: iDynamicsRegionDistrict[];
   Result: string;

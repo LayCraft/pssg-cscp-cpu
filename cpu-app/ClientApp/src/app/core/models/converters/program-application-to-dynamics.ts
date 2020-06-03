@@ -89,6 +89,37 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
   });
   if (removeProgramContactCollection.length) post.RemoveProgramContactCollection = removeProgramContactCollection;
 
+  const programSubContractorCollection: iDynamicsProgramContactPost[] = [];
+  trans.programApplications.forEach((pa: iProgramApplication) => {
+    // in each program add the list of staff by their id
+    pa.subContractedStaff.forEach((s: iPerson): void => {
+      if (!pa.programId) console.log('Missing program id!', pa);
+      const contact: iDynamicsProgramContactPost = {
+        contactid: s.personId,
+        vsd_programid: pa.programId,
+      };
+      // add the contact
+      programSubContractorCollection.push(contact);
+    });
+  });
+  // if there are elements in the array add the item.
+  if (programSubContractorCollection.length) post.AddProgramSubContractorCollection = programSubContractorCollection;
+
+  const removeSubContractorCollection: iDynamicsRemoveProgramContactPost[] = [];
+  trans.programApplications.forEach((pa: iProgramApplication) => {
+    // in each program add the list of staff by their id
+    pa.removedSubContractedStaff.forEach((s: iPerson): void => {
+      if (!pa.programId) console.log('Missing program id!', pa);
+      const contact: iDynamicsRemoveProgramContactPost = {
+        contactid: s.personId,
+        vsd_programid: pa.programId,
+      };
+      // add the contact
+      removeSubContractorCollection.push(contact);
+    });
+  });
+  if (removeSubContractorCollection.length) post.RemoveProgramSubContractorCollection = removeSubContractorCollection;
+
   const programCollection: iDynamicsCrmProgramPost[] = [];
   trans.programApplications.forEach((p: iProgramApplication) => {
     // push programs into program collection

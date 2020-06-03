@@ -126,6 +126,8 @@ export class ProgramComponent implements OnInit, OnDestroy {
 
   }
   onSubContractedStaffChange(personsObj: any) {
+    console.log("onSubContractedStaffChange");
+    console.log(this.programApplication);
     this.programApplication.subContractedStaff = personsObj.persons;
     this.programApplication.removedSubContractedStaff = personsObj.removedPersons;
     this.onInput();
