@@ -31,13 +31,13 @@
     </tr>
     <tr>
       <th scope="row">Phone Number</th>
-      <td>{{pa?.phoneNumber}}</td>
+      <td>{{pa?.phoneNumber | phone}}</td>
     </tr>
     <tr>
       <th scope="row">Fax Number</th>
-      <td>{{pa?.faxNumber}}</td>
+      <td>{{pa?.faxNumber | phone}}</td>
     </tr>
-    <tr>
+    <!-- <tr>
       <th scope="row">Line 1</th>
       <td>{{pa?.mainAddress?.line1}}</td>
     </tr>
@@ -56,7 +56,7 @@
     <tr>
       <th scope="row">Postal Code</th>
       <td>{{pa?.mainAddress?.postalCode}}</td>
-    </tr>
+    </tr> -->
   </tbody>
 </table>
 <table class="table table-striped">
@@ -67,11 +67,11 @@
   </thead>
   <tbody>
     <tr>
-      <th scope="row">Line 1</th>
+      <th scope="row">Address Line 1</th>
       <td>{{pa?.mainAddress?.line1}}</td>
     </tr>
     <tr>
-      <th scope="row">Line 2</th>
+      <th scope="row">Address Line 2</th>
       <td>{{pa?.mainAddress?.line2}}</td>
     </tr>
     <tr>
@@ -96,11 +96,11 @@
   </thead>
   <tbody>
     <tr>
-      <th scope="row">Line 1</th>
+      <th scope="row">Address Line 1</th>
       <td>{{pa?.mailingAddress?.line1}}</td>
     </tr>
     <tr>
-      <th scope="row">Line 2</th>
+      <th scope="row">Address Line 2</th>
       <td>{{pa?.mailingAddress?.line2}}</td>
     </tr>
     <tr>

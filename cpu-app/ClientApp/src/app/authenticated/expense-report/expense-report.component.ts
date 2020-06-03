@@ -205,7 +205,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
       .map(l => l.annualBudget - (l.actualYearToDate + l.actual))
       .reduce((prev, curr) => prev + curr);
   }
-  save(isSubmit: boolean = false) {
+  save(shouldExit: boolean = false) {
     return new Promise((resolve, reject) => {
       try {
         if (!this.formHelper.isFormValid(this.notificationQueueService)) {
@@ -221,7 +221,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
             console.log(r);
             this.notificationQueueService.addNotification(`You have successfully saved the expense report.`, 'success');
             this.stateService.refresh();
-            if (isSubmit) this.router.navigate(['/authenticated/dashboard']);
+            if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
             this.saving = false;
             this.stepperElements.forEach(s => {
               if (s.formState === 'complete') return;

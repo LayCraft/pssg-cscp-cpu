@@ -116,30 +116,31 @@ export class SignContractComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    try {
-      this.saving = true;
-      this.out = convertContractPackageToDynamics(this.userId, this.organizationId, this.documentCollection, this.signature);
-      this.fileService.uploadSignedContract(this.out, this.taskId).subscribe(
-        r => {
-          console.log(r);
-          this.saving = false;
-          this.notificationQueueService.addNotification(`You have successfully signed the contract.`, 'success');
-          // this.stateService.refresh();
-          // this.router.navigate(['/authenticated/dashboard']);
-        },
-        err => {
-          console.log(err);
-          this.notificationQueueService.addNotification('The was a problem saving the signed contract. If this problem is persisting please contact your ministry representative.', 'danger');
-          this.saving = false;
-        }
-      );
-      this.notificationQueueService.addNotification(`TODO`, 'success');
-    }
-    catch (err) {
-      console.log(err)
-      this.notificationQueueService.addNotification('The was a problem saving the signed contract. If this problem is persisting please contact your ministry representative.', 'danger');
-      this.saving = false;
-    }
+    this.notificationQueueService.addNotification(`Feature in progress`, 'warning');
+    // try {
+    //   this.saving = true;
+    //   this.out = convertContractPackageToDynamics(this.userId, this.organizationId, this.documentCollection, this.signature);
+    //   this.fileService.uploadSignedContract(this.out, this.taskId).subscribe(
+    //     r => {
+    //       console.log(r);
+    //       this.saving = false;
+    //       this.notificationQueueService.addNotification(`You have successfully signed the contract.`, 'success');
+    //       // this.stateService.refresh();
+    //       // this.router.navigate(['/authenticated/dashboard']);
+    //     },
+    //     err => {
+    //       console.log(err);
+    //       this.notificationQueueService.addNotification('The was a problem saving the signed contract. If this problem is persisting please contact your ministry representative.', 'danger');
+    //       this.saving = false;
+    //     }
+    //   );
+    //   this.notificationQueueService.addNotification(`TODO`, 'success');
+    // }
+    // catch (err) {
+    //   console.log(err)
+    //   this.notificationQueueService.addNotification('The was a problem saving the signed contract. If this problem is persisting please contact your ministry representative.', 'danger');
+    //   this.saving = false;
+    // }
 
   }
   exit() {

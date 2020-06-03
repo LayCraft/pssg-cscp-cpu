@@ -21,7 +21,9 @@ export interface iProgramApplication extends iContactInformation {
 
   // revenueSources: iRevenueSource[];
   additionalStaff: iPerson[];
+  subContractedStaff: iPerson[];
   removedStaff: iPerson[];
+  removedSubContractedStaff: iPerson[];
   mailingAddress: iAddress;
   mainAddress: iAddress;
   mailingAddressSameAsMainAddress: boolean;
@@ -29,6 +31,7 @@ export interface iProgramApplication extends iContactInformation {
   policeContact: iPerson;
   hasPoliceContact: boolean;
   sharedCostContact: iPerson;
+  hasSubContractedStaff: boolean;
   hasSharedCostContact: boolean;
   numberOfHours: number;
   scheduledHours: number;

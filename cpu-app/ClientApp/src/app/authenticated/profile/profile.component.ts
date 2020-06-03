@@ -8,6 +8,7 @@ import { NotificationQueueService } from '../../core/services/notification-queue
 import { FormHelper } from '../../core/form-helper';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { Address } from '../../core/models/address.class';
 
 @Component({
   selector: 'app-profile',
@@ -37,7 +38,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.stateSubscription.unsubscribe();
   }
-  save(): void {
+  save(shouldExit: boolean = false): void {
     try {
       if (!this.formHelper.isFormValid(this.notificationQueueService)) {
         return;
@@ -51,7 +52,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             // notify
             this.notificationQueueService.addNotification('The contact information for your organization has been updated.', 'success');
             // route to another page
-            this.router.navigate([this.stateService.homeRoute.getValue()]);
+            if (shouldExit) this.router.navigate([this.stateService.homeRoute.getValue()]);
           },
           err => console.log(err)
         );
@@ -81,8 +82,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.trans.contactInformation.mailingAddress = this.trans.contactInformation.mainAddress;
     }
     else {
-      let addressCopy = _.cloneDeep(this.trans.contactInformation.mailingAddress);
-      this.trans.contactInformation.mailingAddress = addressCopy;
+      // let addressCopy = _.cloneDeep(this.trans.contactInformation.mailingAddress);
+      this.trans.contactInformation.mailingAddress = new Address();//addressCopy;
     }
   }
 }

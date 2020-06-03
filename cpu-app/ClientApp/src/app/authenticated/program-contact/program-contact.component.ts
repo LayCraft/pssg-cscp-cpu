@@ -16,6 +16,7 @@ import { convertProgramApplicationToDynamics } from '../../core/models/converter
 import { NotificationQueueService } from '../../core/services/notification-queue.service';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { Address } from '../../core/models/address.class';
 
 @Component({
   selector: 'app-program-contact',
@@ -52,7 +53,7 @@ export class ProgramContactComponent implements OnInit, OnDestroy {
     this.emailRegex = EMAIL;
     this.phoneRegex = PHONE_NUMBER;
   }
-  
+
   ngOnDestroy() {
     this.stateSubscription.unsubscribe();
   }
@@ -140,15 +141,15 @@ export class ProgramContactComponent implements OnInit, OnDestroy {
     this.onInput();
 
   }
-  save(): void {
+  save(shouldExit: boolean = false): void {
     try {
-    this.saving = true;
+      this.saving = true;
       this.out = convertProgramApplicationToDynamics(this.programTrans);
       this.programApplicationService.setProgramApplication(this.out).subscribe(
         r => {
           console.log(r);
           this.notificationQueueService.addNotification(`You have successfully saved the program contact.`, 'success');
-          this.router.navigate(['/authenticated/dashboard']);
+          if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
         },
         err => {
           console.log(err);
@@ -181,7 +182,7 @@ export class ProgramContactComponent implements OnInit, OnDestroy {
     }
     else {
       let addressCopy = _.cloneDeep(this.programApplication.mailingAddress);
-      this.programApplication.mailingAddress = addressCopy;
+      this.programApplication.mailingAddress = new Address();//addressCopy;
     }
   }
 }

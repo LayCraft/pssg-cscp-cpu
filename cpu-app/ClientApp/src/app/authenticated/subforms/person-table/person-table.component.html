@@ -1,7 +1,7 @@
 <table *ngIf="person" class="table table-striped">
   <thead>
     <tr>
-      <th colspan="2" scope="col">{{title}}</th>
+      <th colspan="2" scope="col" class="review-section-header">{{title}}</th>
     </tr>
   </thead>
   <tbody>
@@ -19,11 +19,11 @@
     </tr>
     <tr>
       <th scope="row">Phone</th>
-      <td>{{person.phone}}</td>
+      <td>{{person.phone | phone}}</td>
     </tr>
     <tr>
       <th scope="row">Fax</th>
-      <td>{{person.fax}}</td>
+      <td>{{person.fax | phone}}</td>
     </tr>
     <tr>
       <th scope="row">City</th>

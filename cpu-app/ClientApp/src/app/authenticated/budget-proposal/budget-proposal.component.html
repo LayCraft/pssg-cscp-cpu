@@ -23,9 +23,9 @@
           <button class="btn btn-primary mt-2 mr-2" disabled>Saving</button>
         </span> -->
         <span>
-          <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" [class.is-disabled]="saving || trans.signature.signatureDate" (click)="save()">Save</button>
+          <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" [class.is-disabled]="saving || trans.signature.signatureDate" (click)="save(true)">Save and Exit</button>
         </span>
-        <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
+        <button class="btn btn-primary mt-2" (click)="save()">Save</button>
       </section>
     </div>
     <div class="col-md-8">

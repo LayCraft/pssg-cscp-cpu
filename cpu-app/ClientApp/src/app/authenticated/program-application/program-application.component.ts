@@ -11,6 +11,7 @@ import { FormHelper } from '../../core/form-helper';
 import { iDynamicsPostScheduleF } from '../../core/models/dynamics-post';
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
+import { Address } from '../../core/models/address.class';
 
 @Component({
   selector: 'app-program-application',
@@ -178,7 +179,7 @@ export class ProgramApplicationComponent implements OnInit {
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
   }
-  save(showNotification: boolean = true) {
+  save(showNotification: boolean = true, shouldExit: boolean = false) {
     return new Promise((resolve, reject) => {
       try {
         let originalStepper = _.cloneDeep(this.currentStepperElement);
@@ -202,6 +203,8 @@ export class ProgramApplicationComponent implements OnInit {
               if (s.formState === 'complete') return;
               this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
             });
+
+            if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
 
             this.formHelper.makeFormClean();
             this.reloadProgramApplication();
@@ -405,7 +408,7 @@ export class ProgramApplicationComponent implements OnInit {
     }
     else {
       let addressCopy = _.cloneDeep(this.trans.contactInformation.mailingAddress);
-      this.trans.contactInformation.mailingAddress = addressCopy;
+      this.trans.contactInformation.mailingAddress = new Address();//addressCopy;
     }
   }
 }

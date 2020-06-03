@@ -36,26 +36,25 @@
         Please select this check box if mailing address is the same as Primary Program Contact Address
       </label>
     </div>
-    <app-address2 [(address)]="programApplication.mailingAddress" [isDisabled]="isDisabled"></app-address2>
-
-    <!-- <div class="form-group">
-      <div class="form-check">
-        <input class="form-check-input" id="differentProgramContact" name="differentProgramContact" type="checkbox" [(ngModel)]='differentProgramContact' (click)="showProgramContact()">
-        <label class="form-check-label" for="differentProgramContact"> The main program contact is different from the executive contact for our organization.</label>
-      </div>
-    </div> -->
-    <!-- *ngIf="differentProgramContact" -->
+    <app-address2 [isDisabled]="programApplication.mailingAddressSameAsMainAddress" [(address)]="programApplication.mailingAddress" [isDisabled]="isDisabled"></app-address2>
+    
     <span class="mb-4">
       <h2 class="blue-header">Program Contact</h2>
       <app-person-picker [isDisabled]="isDisabled" [title]="'Please select a program contact.'" [(person)]="programApplication.programContact" [idNum]="0">
       </app-person-picker>
     </span>
     <h2 class="blue-header mt-2">Program Staff</h2>
-    <!-- <p>Missing staff can be added by name and set at an organizational level.</p> -->
     <app-person-picker-list [isDisabled]="isDisabled" [label]="'Program Staff'" [(personsObj)]="personsObj" (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
     <button *ngIf="!isDisabled" class="btn btn-primary mt-2 btn-add-program-staff" (click)="showAddProgramStaffDialog()">Add Missing Program Staff</button>
-    <!-- [(persons)]="programApplication.additionalStaff" [(removedPersons)]="programApplication.removedStaff"> -->
-    <!-- </app-person-picker-list> -->
+
+    <h2 class="blue-header mt-2">Sub-contracted Staff</h2>
+    <input [disabled]="isDisabled" [(ngModel)]="programApplication.hasSubContractedStaff" class="form-check-input" type="checkbox" id="hasPoliceContact" name="hasPoliceContact">
+    <label class="form-check-label" for="hasPoliceContact">
+      Select if this program employs sub-contractors
+    </label>
+    <div *ngIf="programApplication.hasSubContractedStaff">
+      <app-person-picker-list [isDisabled]="isDisabled" [isSubContractedList]="true" [label]="'Sub-contracted Staff'" [(personsObj)]="subContractedPersonsObj" (personsChange)="onSubContractedStaffChange($event)"></app-person-picker-list>
+    </div>
 
     <div *ngIf="programApplication.isPoliceBased">
       <div>
@@ -104,12 +103,8 @@
             <label class="hours-label" for="scheduledHours">Total Scheduled Hours per {{perType}}</label>
             <div>
               <form [formGroup]="programFormGroup">
-                <!-- [(ngModel)]="programApplication.scheduledHours" -->
                 <input formControlName="scheduledHours" type="number" id="scheduledHours" name="scheduledHours" class="form-control hours-input" (input)="formHelper.numberFormatter($event.target, programApplication, 'scheduledHours')">
               </form>
-              <!-- <div class="valid-feedback" [hidden]="formHelper.validateHours(programApplication.scheduledHours, programApplication.numberOfHours)">
-                Ok
-              </div> -->
               <div class="invalid-feedback" [hidden]="!formHelper.validateHours(programApplication.scheduledHours, programApplication.numberOfHours)">
                 Try Again
               </div>

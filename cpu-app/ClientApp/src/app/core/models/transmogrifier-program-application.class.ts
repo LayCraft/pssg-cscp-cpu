@@ -13,7 +13,7 @@ import { ngDevModeResetPerfCounters } from '@angular/core/src/render3/ng_dev_mod
 import { boolOptionSet } from '../constants/bool-optionset-values';
 import { perTypeDict } from '../constants/per-type';
 import { Person } from './person.class';
-import { employmentStatusTypeDict } from '../constants/employment-status-types';
+import { employmentStatusTypeDict, employmentStatus } from '../constants/employment-status-types';
 import * as _ from 'lodash';
 
 export class TransmogrifierProgramApplication {
@@ -204,8 +204,12 @@ export class TransmogrifierProgramApplication {
           .map(s => this.makePerson(g, s.contactid))[0] || new Person(),
 
         hasSharedCostContact: p.vsd_costshare || false,
+        hasSubContractedStaff: p.vsd_cpu_programstaffsubcontracted || false,
         // revenueSources: [],//iRevenueSource[];
         additionalStaff: g.ProgramContactCollection
+          .filter((c: iDynamicsCrmContact) => c.vsd_programid === p.vsd_programid)
+          .map(s => this.makePerson(g, s.contactid)) || null,// iPerson[];
+        subContractedStaff: g.ProgramSubContractorCollection
           .filter((c: iDynamicsCrmContact) => c.vsd_programid === p.vsd_programid)
           .map(s => this.makePerson(g, s.contactid)) || null,// iPerson[];
         operationHours: [],
@@ -215,6 +219,7 @@ export class TransmogrifierProgramApplication {
         onCallHours: p.vsd_totaloncallstandbyhours || 0,
         perType: p.vsd_cpu_per || 100000000,
         removedStaff: [],
+        removedSubContractedStaff: [],
         currentTab: "Contact Information",
       } as iProgramApplication;
 
