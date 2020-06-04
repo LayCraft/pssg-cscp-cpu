@@ -100,7 +100,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 // byteArray.Add(System.Convert.FromBase64String(portalModel.Signature.vsd_authorizedsigningofficersignature));
                 // byteArray.Add(imageInBytes);
 
-                byte[] combinedArray = concatAndAddContent(byteArray);
+                byte[] combinedArray = concatAndAddContent(byteArray, imageInBytes);
 
                 string combinedDoc = System.Convert.ToBase64String(combinedArray);
 
@@ -109,19 +109,19 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 data.SignedContract.filename = "Merged Contract.pdf";
 
                 //for testing the document combining
-                return StatusCode(200, data);
+                // return StatusCode(200, data);
 
                 // make options for the json serializer
-                // JsonSerializerOptions options = new JsonSerializerOptions();
-                // options.IgnoreNullValues = true;
-                // // turn the model into a string
-                // string modelString = System.Text.Json.JsonSerializer.Serialize(data, options);
-                // // if (!string.IsNullOrEmpty(modelString))
-                // //     return StatusCode(200, "test complete");
+                JsonSerializerOptions options = new JsonSerializerOptions();
+                options.IgnoreNullValues = true;
+                // turn the model into a string
+                string modelString = System.Text.Json.JsonSerializer.Serialize(data, options);
+                // if (!string.IsNullOrEmpty(modelString))
+                //     return StatusCode(200, "test complete");
 
-                // DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
 
-                // return StatusCode(200, result.result.ToString());
+                return StatusCode(200, result.result.ToString());
             }
             catch (System.Exception exception)
             {
@@ -151,7 +151,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
             finally { }
         }
 
-        public static byte[] concatAndAddContent(List<byte[]> pdfByteContent)
+        public static byte[] concatAndAddContent(List<byte[]> pdfByteContent, byte[] signature)
         {
 
             using (var ms = new MemoryStream())
@@ -170,6 +170,22 @@ namespace Gov.Cscp.Victims.Public.Controllers
                             using (var reader = new PdfReader(p))
                             {
 
+                                //Add the entire document instead of page-by-page
+                                copy.AddDocument(reader);
+                            }
+                        }
+
+                        using (var second_ms = new MemoryStream())
+                        {
+                            var document = new iTextSharp.text.Document(PageSize.A4, 10f, 10f, 140f, 30f);
+                            iTextSharp.text.pdf.PdfWriter.GetInstance(document, second_ms).SetFullCompression();
+                            document.Open();
+                            var image = iTextSharp.text.Image.GetInstance(signature);
+                            document.Add(image);
+                            document.Close();
+
+                            using (var reader = new PdfReader(second_ms.ToArray()))
+                            {
                                 //Add the entire document instead of page-by-page
                                 copy.AddDocument(reader);
                             }
