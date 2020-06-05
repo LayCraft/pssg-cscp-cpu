@@ -123,11 +123,6 @@ namespace Gov.Cscp.Victims.Public.Controllers
 
                 return StatusCode(200, result.result.ToString());
             }
-            catch (System.Exception exception)
-            {
-                // Console.WriteLine(exception);
-                throw;
-            }
             finally { }
         }
 

@@ -58,6 +58,7 @@
           <thead class="thead">
             <th style="width:20%" scope="col">Task</th>
             <th style="width:20%" scope="col">Title</th>
+            <th style="width:20%" scope="col">Status</th>
             <th style="width:30%" scope="col">Description</th>
             <th style="width:15%" scope="col">Deadline</th>
           </thead>
@@ -67,9 +68,10 @@
                 <a routerLink="/authenticated/{{task.formType}}/{{task.taskId}}" [queryParams]="{completed: 'true'}">
                   {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
                 </a>
-                <ng-template #elseBlock>{{task.taskName}}</ng-template>
               </td>
+              <td *ngIf="task.formType != 'program_application'">{{task.taskName}}</td>
               <td>{{task.taskTitle}}</td>
+              <td>{{task.status}}</td>
               <td>{{task.taskDescription}}</td>
               <td>{{task.deadline|date:'yyyy-MM-dd'}}</td>
             </tr>
