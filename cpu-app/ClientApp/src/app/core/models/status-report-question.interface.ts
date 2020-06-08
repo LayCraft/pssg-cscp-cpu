@@ -14,6 +14,8 @@ export interface iQuestion {
 
   categoryID?: string; // _vsd_categoryid_value field - for determining if this is a drop down box
   multiChoiceAnswers?: iMultipleChoice[];
+  parent_id?: string;
+  isChildQuestionExplanationRequired?: boolean;
 }
 
 export interface iMultipleChoice {

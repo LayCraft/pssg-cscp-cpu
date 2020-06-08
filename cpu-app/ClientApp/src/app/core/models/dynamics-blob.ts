@@ -353,6 +353,8 @@ export interface iDynamicsCrmProgramRevenueSource {
 export interface iDynamicsMonthlyStatisticsQuestions {
   Businessbceid?: string;
   CategoryCollection?: iDynamicsMonthlyStatisticsCategory[];
+  ChildMultipleChoiceCollection?: iDynamicsMonthlyStatisticsChildMcQuestion[];
+  ChildQuestionCollection?: iDynamicsMonthlyStatisticsChildQuestion[];
   Contract?: iDynamicsMonthlyStatisticsQuestionsContract;
   IsSuccess: boolean;
   MultipleChoiceCollection?: iDynamicsMonthlyStatisticsQuestionsMcQuestion[];
@@ -389,10 +391,24 @@ export interface iDynamicsMonthlyStatisticsQuestionsQuestion {
   vsd_questiontype?: number;
   vsd_tooltip?: string;
 }
+export interface iDynamicsMonthlyStatisticsChildQuestion {
+  _vsd_categoryid_value?: string;
+  _vsd_parentid_value?: string;
+  vsd_cpustatisticsmasterdataid?: string;
+  vsd_name?: string;
+  vsd_questionorder?: number;
+  vsd_questiontype?: number;
+}
 export interface iDynamicsMonthlyStatisticsQuestionsMcQuestion {
   vsd_cpustatisticsmasterdataanswerid?: string;
   vsd_name?: string;
   _vsd_questionid_value?: string;
+}
+export interface iDynamicsMonthlyStatisticsChildMcQuestion {
+  vsd_cpustatisticsmasterdataanswerid?: string;
+  vsd_name?: string;
+  _vsd_questionid_value?: string;
+  _vsd_parentid_value?: string;
 }
 export interface iDynamicsMonthlyStatisticsCategory {
   vsd_categoryorder?: number;
