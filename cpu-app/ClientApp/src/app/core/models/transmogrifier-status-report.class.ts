@@ -1,4 +1,4 @@
-import { iDynamicsMonthlyStatisticsQuestions, iDynamicsMonthlyStatisticsQuestionsQuestion, iDynamicsMonthlyStatisticsQuestionsMcQuestion } from "./dynamics-blob";
+import { iDynamicsMonthlyStatisticsQuestions, iDynamicsMonthlyStatisticsQuestionsQuestion, iDynamicsMonthlyStatisticsQuestionsMcQuestion, iDynamicsMonthlyStatisticsChildQuestion } from "./dynamics-blob";
 import { iQuestion, iMultipleChoice } from "./status-report-question.interface"
 import { iQuestionCollection } from "./question-collection.interface";
 import { iDynamicsPostStatusReport } from "./dynamics-post";
@@ -37,13 +37,13 @@ export class TransmogrifierStatusReport {
         name: category.vsd_name,
         questions: g.QuestionCollection
           .filter((q: iDynamicsMonthlyStatisticsQuestionsQuestion) => category.vsd_monthlystatisticscategoryid === q._vsd_categoryid_value)
-          .sort((a: iDynamicsMonthlyStatisticsQuestionsQuestion, b: iDynamicsMonthlyStatisticsQuestionsQuestion) => {
-            // arrange from smallest to largest
-            if (a.vsd_questionorder > b.vsd_questionorder) return 1;
-            if (a.vsd_questionorder < b.vsd_questionorder) return -1;
-            console.log('These items have the same question number.', a, b);
-            return 0;
-          })
+          // .sort((a: iDynamicsMonthlyStatisticsQuestionsQuestion, b: iDynamicsMonthlyStatisticsQuestionsQuestion) => {
+          //   // arrange from smallest to largest
+          //   if (a.vsd_questionorder > b.vsd_questionorder) return 1;
+          //   if (a.vsd_questionorder < b.vsd_questionorder) return -1;
+          //   console.log('These items have the same question number.', a, b);
+          //   return 0;
+          // })
           .map((d: iDynamicsMonthlyStatisticsQuestionsQuestion): iQuestion => {
             // look up the value once
             const type = this.fieldType(d.vsd_questiontype);
@@ -54,6 +54,7 @@ export class TransmogrifierStatusReport {
               questionNumber: d.vsd_questionorder,
               categoryID: d._vsd_categoryid_value,
               multiChoiceAnswers: this.getMultipleChoice(d.vsd_cpustatisticsmasterdataid, g.MultipleChoiceCollection),
+              isChildQuestionExplanationRequired: false,
             }
             // instantiate the correct property with the freshest null value
             q[type] = null;
@@ -61,9 +62,43 @@ export class TransmogrifierStatusReport {
             return q;
           })
       };
+
+      let childQuestions: iQuestion[] = g.ChildQuestionCollection.filter((q: iDynamicsMonthlyStatisticsChildQuestion) => category.vsd_monthlystatisticscategoryid === q._vsd_categoryid_value)
+        .map((d: iDynamicsMonthlyStatisticsChildQuestion): iQuestion => {
+          // look up the value once
+          const type = this.fieldType(d.vsd_questiontype);
+          const q: iQuestion = {
+            label: d.vsd_name,
+            type,
+            uuid: d.vsd_cpustatisticsmasterdataid, // I was generating it but may as well use the one from master data.
+            questionNumber: d.vsd_questionorder,
+            categoryID: d._vsd_categoryid_value,
+            multiChoiceAnswers: this.getMultipleChoice(d.vsd_cpustatisticsmasterdataid, g.MultipleChoiceCollection),
+            parent_id: d._vsd_parentid_value,
+            isChildQuestionExplanationRequired: false,
+          }
+          // instantiate the correct property with the freshest null value
+          q[type] = null;
+          // return the object
+          return q;
+        });
+
+      q.questions = q.questions.concat(childQuestions).sort(function (a, b) {
+        return a.questionNumber > b.questionNumber ? 1 : -1;
+      });
+
       // push the status report questions
       this.statusReportQuestions.push(q);
     }
+  }
+
+  private findParentId(question_id: string, childQuestions: iDynamicsMonthlyStatisticsChildQuestion[]) {
+    let parent_id = "";
+    let thisQuestion = childQuestions.find(q => q.vsd_cpustatisticsmasterdataid === question_id);
+    if (thisQuestion) {
+      parent_id = thisQuestion._vsd_parentid_value;
+    }
+    return parent_id;
   }
 
   private getMultipleChoice(id: string, questionCollection: iDynamicsMonthlyStatisticsQuestionsMcQuestion[]): iMultipleChoice[] {

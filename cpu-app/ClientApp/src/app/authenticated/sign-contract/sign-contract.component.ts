@@ -116,31 +116,36 @@ export class SignContractComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    this.notificationQueueService.addNotification(`Feature in progress`, 'warning');
-    // try {
-    //   this.saving = true;
-    //   this.out = convertContractPackageToDynamics(this.userId, this.organizationId, this.documentCollection, this.signature);
-    //   this.fileService.uploadSignedContract(this.out, this.taskId).subscribe(
-    //     r => {
-    //       console.log(r);
-    //       this.saving = false;
-    //       this.notificationQueueService.addNotification(`You have successfully signed the contract.`, 'success');
-    //       // this.stateService.refresh();
-    //       // this.router.navigate(['/authenticated/dashboard']);
-    //     },
-    //     err => {
-    //       console.log(err);
-    //       this.notificationQueueService.addNotification('The was a problem saving the signed contract. If this problem is persisting please contact your ministry representative.', 'danger');
-    //       this.saving = false;
-    //     }
-    //   );
-    //   this.notificationQueueService.addNotification(`TODO`, 'success');
-    // }
-    // catch (err) {
-    //   console.log(err)
-    //   this.notificationQueueService.addNotification('The was a problem saving the signed contract. If this problem is persisting please contact your ministry representative.', 'danger');
-    //   this.saving = false;
-    // }
+    // this.notificationQueueService.addNotification(`Feature in progress`, 'warning');
+    //TODO - add loading spinner while uploading documents - it can take a sec
+    try {
+      this.saving = true;
+      this.out = convertContractPackageToDynamics(this.userId, this.organizationId, this.documentCollection, this.signature);
+      this.fileService.uploadSignedContract(this.out, this.taskId).subscribe(
+        r => {
+          console.log(r);
+          //for testing document combining, see if it works - can setup backend to return the combined document instead of sending it forward to CRM
+          // let file = "data:application/pdf;base64," + r.signedContract.body;
+          // let obj = { fileData: file, fileName: r.signedContract.filename };
+          // this.stepperService.addStepperElement(obj, r.signedContract.filename, 'untouched', 'document');
+          this.saving = false;
+          this.notificationQueueService.addNotification(`You have successfully signed the contract.`, 'success');
+          this.stateService.refresh();
+          this.router.navigate(['/authenticated/dashboard']);
+        },
+        err => {
+          console.log(err);
+          this.notificationQueueService.addNotification('The was a problem saving the signed contract. If this problem is persisting please contact your ministry representative.', 'danger');
+          this.saving = false;
+        }
+      );
+      // this.notificationQueueService.addNotification(`TODO`, 'success');
+    }
+    catch (err) {
+      console.log(err)
+      this.notificationQueueService.addNotification('The was a problem saving the signed contract. If this problem is persisting please contact your ministry representative.', 'danger');
+      this.saving = false;
+    }
 
   }
   exit() {
@@ -164,7 +169,10 @@ export class SignContractComponent implements OnInit, OnDestroy {
       this.stepperService.addStepperElement(obj, doc.filename, 'untouched', 'document');
     });
 
-    this.stepperService.addStepperElement(null, "Sign Contract", 'untouched', 'auth');
+
+    if (this.stepperElements.length > 0) {
+      this.stepperService.addStepperElement(null, "Sign Contract", 'untouched', 'auth');
+    }
 
     this.stepperService.setToFirstStepperElement();
     this.isLoading = false;

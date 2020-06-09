@@ -1,7 +1,7 @@
 export const TaskStatus: string[] = [
   'Not Started',
   'In Progress',
-  'Waiting',
+  'Waiting on someone else',
   'Deferred',
   'Completed',
   'Cancelled',

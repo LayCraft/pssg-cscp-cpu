@@ -93,7 +93,7 @@ export class StatusReportComponent implements OnInit, OnDestroy {
         else if (this.didload) {
           let index = this.stepperElements.findIndex(s => s.id === originalStepper.id);
           if (index >= 0) {
-            if (!this.validateCurrentQuestionsAreFilledIn(index) || !this.validateCertainExplanationFieldsForCurrentTab(index)) {
+            if (!this.validateCurrentQuestionsAreFilledIn(index)) {
               this.currentStepperElement.formState = "invalid";
             }
             else {
@@ -166,6 +166,13 @@ export class StatusReportComponent implements OnInit, OnDestroy {
             }
             isValid = false;
           }
+          if (q.type === 'string' && q.isChildQuestionExplanationRequired && !q.string) {
+            let stepperWithError = this.stepperElements.find(s => s.itemName === srq.name);
+            if (stepperWithError) {
+              this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
+            }
+            isValid = false;
+          }
         });
       });
 
@@ -174,10 +181,10 @@ export class StatusReportComponent implements OnInit, OnDestroy {
         return;
       }
 
-      if (!this.validateCertainExplanationFields()) {
-        this.notificationQueueService.addNotification(`Please answer required explanations.`, 'warning');
-        return;
-      }
+      // if (!this.validateCertainExplanationFields()) {
+      //   this.notificationQueueService.addNotification(`Please answer required explanations.`, 'warning');
+      //   return;
+      // }
 
       if (confirm('I have confirmed that all of the figures are accurate to the best of my knowledge. I wish to submit these monthly figures for ' + this.trans.reportingPeriod + '.')) {
         // Convert the form to a postable format
@@ -227,45 +234,59 @@ export class StatusReportComponent implements OnInit, OnDestroy {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
+
+
+  checkForRequiredChildQuestion(q: iQuestion, questions: iQuestion[]) {
+    let childQuestion = questions.find(ques => ques.parent_id === q.uuid);
+    if (childQuestion) {
+      if (q.boolean) {
+        childQuestion.isChildQuestionExplanationRequired = true;
+      }
+      else {
+        childQuestion.isChildQuestionExplanationRequired = false;
+      }
+    }
+  }
+
   //There are 2 boolean questions that if answered yes, the explanation for that question is mandatory.
   //Since there's only two, and this is required, AND there is a plan in place to improve the detection of mandatory fields in the future,
   //we are hardcoding this for now and can't wait for the improvement to get implemented.
-  validateCertainExplanationFields() {
-    let isValid = true;
-    let questionCollections: iQuestionCollection[] = this.trans.statusReportQuestions;
+  // validateCertainExplanationFields() {
+  //   let isValid = true;
+  //   let questionCollections: iQuestionCollection[] = this.trans.statusReportQuestions;
 
-    questionCollections.forEach(qc => {
-      let questions: iQuestion[] = qc.questions;
-      for (let i = 0; i < questions.length; ++i) {
-        if ((questions[i].label === "Has the Program been understaffed for more than 30 days?" || questions[i].label === "Have there been any personnel changes to the program?")
-          && questions[i].boolean === true) {
-          if ((i + 1) >= questions.length) continue;
-          if (!questions[i + 1].string) {
-            isValid = false;
-          }
-        }
-      }
-    });
+  //   questionCollections.forEach(qc => {
+  //     let questions: iQuestion[] = qc.questions;
+  //     for (let i = 0; i < questions.length; ++i) {
+  //       if ((questions[i].label === "Has the Program been understaffed for more than 30 days?" || questions[i].label === "Have there been any personnel changes to the program?")
+  //         && questions[i].boolean === true) {
+  //         if ((i + 1) >= questions.length) continue;
+  //         if (!questions[i + 1].string) {
+  //           isValid = false;
+  //         }
+  //       }
+  //     }
+  //   });
 
-    return isValid;
-  }
-  validateCertainExplanationFieldsForCurrentTab(index) {
-    let isValid = true;
-    let questionCollection: iQuestionCollection = this.trans.statusReportQuestions[index];
+  //   return isValid;
+  // }
+  // validateCertainExplanationFieldsForCurrentTab(index) {
+  //   let isValid = true;
+  //   let questionCollection: iQuestionCollection = this.trans.statusReportQuestions[index];
 
-    let questions: iQuestion[] = questionCollection.questions;
-    for (let i = 0; i < questions.length; ++i) {
-      if ((questions[i].label === "Has the Program been understaffed for more than 30 days?" || questions[i].label === "Have there been any personnel changes to the program?")
-        && questions[i].boolean === true) {
-        if ((i + 1) >= questions.length) continue;
-        if (!questions[i + 1].string) {
-          isValid = false;
-        }
-      }
-    }
+  //   let questions: iQuestion[] = questionCollection.questions;
+  //   for (let i = 0; i < questions.length; ++i) {
+  //     if ((questions[i].label === "Has the Program been understaffed for more than 30 days?" || questions[i].label === "Have there been any personnel changes to the program?")
+  //       && questions[i].boolean === true) {
+  //       if ((i + 1) >= questions.length) continue;
+  //       if (!questions[i + 1].string) {
+  //         isValid = false;
+  //       }
+  //     }
+  //   }
 
-    return isValid;
-  }
+  //   return isValid;
+  // }
   validateCurrentQuestionsAreFilledIn(index = this.stepperIndex) {
     let isValid = true;
     let questionCollection: iQuestionCollection = this.trans.statusReportQuestions[index];
@@ -282,6 +303,13 @@ export class StatusReportComponent implements OnInit, OnDestroy {
         isValid = false;
       }
       if (q.type === 'boolean' && q.boolean === null) {
+        let stepperWithError = this.stepperElements[index];
+        if (stepperWithError) {
+          this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
+        }
+        isValid = false;
+      }
+      if (q.type === 'string' && q.isChildQuestionExplanationRequired && !q.string) {
         let stepperWithError = this.stepperElements[index];
         if (stepperWithError) {
           this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
@@ -306,11 +334,11 @@ export class StatusReportComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (!this.validateCertainExplanationFields()) {
-      this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');
-      this.notificationQueueService.addNotification(`Please answer required explanations.`, 'warning');
-      return;
-    }
+    // if (!this.validateCertainExplanationFields()) {
+    //   this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');
+    //   this.notificationQueueService.addNotification(`Please answer required explanations.`, 'warning');
+    //   return;
+    // }
     setTimeout(() => {
       this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'valid');
     }, 0);

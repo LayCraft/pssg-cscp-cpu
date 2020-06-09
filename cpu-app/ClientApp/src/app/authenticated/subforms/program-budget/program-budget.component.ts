@@ -4,6 +4,7 @@ import { iExpenseTableMeta } from '../../subforms/expense-table/expense-table.co
 import { iStepperElement } from '../../../shared/icon-stepper/icon-stepper.service';
 import { FormHelper } from '../../../core/form-helper';
 import { RevenueSource } from '../../../core/models/revenue-source.class';
+import { VSCP_APPROVED_SOURCE_NAME } from '../../../core/models/revenue-source.interface';
 
 @Component({
   selector: 'app-program-budget',
@@ -28,6 +29,7 @@ export class ProgramBudgetComponent implements OnInit {
   };
 
   totalGrand: number = 0;
+  vscpApprovedAmount: number = 0;
 
   private formHelper = new FormHelper();
 
@@ -47,11 +49,25 @@ export class ProgramBudgetComponent implements OnInit {
     this.programBudget.revenueSources.forEach(rs => {
       this.totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
     });
+
+    this.vscpApprovedAmount = 0;
+    this.programBudget.revenueSources.forEach(rs => {
+      if (rs.revenueSourceName === VSCP_APPROVED_SOURCE_NAME) {
+        this.vscpApprovedAmount += ((rs.cash || 0) + (rs.inKindContribution || 0));
+      }
+    });
   }
   getTotalGrand(event: RevenueSource[]) {
     this.totalGrand = 0;
     event.forEach(rs => {
       this.totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
+    });
+
+    this.vscpApprovedAmount = 0;
+    event.forEach(rs => {
+      if (rs.revenueSourceName === VSCP_APPROVED_SOURCE_NAME) {
+        this.vscpApprovedAmount += ((rs.cash || 0) + (rs.inKindContribution || 0));
+      }
     });
   }
   collectMeta(event: iExpenseTableMeta, name: string) {

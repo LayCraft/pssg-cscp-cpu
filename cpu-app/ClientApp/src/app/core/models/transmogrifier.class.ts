@@ -182,12 +182,14 @@ export class Transmogrifier {
     return contracts;
   }
   private buildMinistryContact(b: iDynamicsBlob): iMinistryUser {
-    return {
+    let mc = {
       firstName: b.MinistryUser.firstname,
       lastName: b.MinistryUser.lastname,
       email: b.MinistryUser.internalemailaddress,
       phone: b.MinistryUser.address1_telephone1,
     };
+    mc.phone = mc.phone.replace(/[\s()-]/g, '');
+    return mc;
   }
   private buildContactInformation(b: iDynamicsBlob): iContactInformation {
     // collect the organization meta and structure it into a new shape

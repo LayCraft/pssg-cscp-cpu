@@ -10,3 +10,5 @@ export interface iRevenueSource {
   revenueSourceId: string;
   isActive: boolean;
 }
+
+export const VSCP_APPROVED_SOURCE_NAME = "Ministry of PSSG - VSCP";

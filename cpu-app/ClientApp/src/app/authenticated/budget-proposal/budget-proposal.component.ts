@@ -16,6 +16,7 @@ import * as _ from 'lodash';
 import { RevenueSource } from '../../core/models/revenue-source.class';
 import { revenueSourceTypes } from '../../core/constants/revenue-source-type';
 import { Subscription } from 'rxjs';
+import { VSCP_APPROVED_SOURCE_NAME } from '../../core/models/revenue-source.interface';
 
 @Component({
   selector: 'app-budget-proposal',
@@ -242,9 +243,11 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
     let isValid = true;
 
     programBudgets.forEach((pb: iProgramBudget) => {
-      let totalGrand = 0;
+      let vscpApprovedAmount = 0;
       pb.revenueSources.filter(rs => rs.isActive).forEach(rs => {
-        totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
+        if (rs.revenueSourceName === VSCP_APPROVED_SOURCE_NAME) {
+          vscpApprovedAmount += ((rs.cash || 0) + (rs.inKindContribution || 0));
+        }
       });
 
       let totalFundedFromVSCP = 0;
@@ -264,7 +267,7 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
         totalFundedFromVSCP += (ac.fundedFromVscp || 0);
       });
 
-      if (totalGrand !== totalFundedFromVSCP) {
+      if (vscpApprovedAmount !== totalFundedFromVSCP) {
         let stepperWithError = this.stepperElements.find(s => s.discriminator === pb.programId);
         if (stepperWithError) {
           this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
