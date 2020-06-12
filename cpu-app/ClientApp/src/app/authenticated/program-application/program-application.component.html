@@ -109,7 +109,7 @@
               <app-review-application [trans]="trans" [(currentTab)]="currentReviewApplicationTab" (tabIndexChange)="reviewApplicationTabChange($event)"></app-review-application>
             </div>
             <div *ngIf="item.discriminator === discriminators[5]">
-              <app-program-authorizer [(signature)]="trans.signature" [isDisabled]="isCompleted"></app-program-authorizer>
+              <app-program-authorizer [(signature)]="trans.signature" [isDisabled]="isCompleted" formType="Program Application"></app-program-authorizer>
             </div>
             <!-- <pre>{{trans|json}}</pre> -->
           </div>

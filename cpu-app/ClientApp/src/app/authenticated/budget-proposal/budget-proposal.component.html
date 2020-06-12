@@ -66,7 +66,7 @@
       </div>
       <div *ngIf="currentStepperElement.discriminator==='authorization'">
         <h2>{{currentStepperElement.itemName}}</h2>
-        <app-program-authorizer [(signature)]="trans.signature"></app-program-authorizer>
+        <app-program-authorizer [(signature)]="trans.signature" formType="Budget Proposal"></app-program-authorizer>
       </div>
     </div>
   </div>
