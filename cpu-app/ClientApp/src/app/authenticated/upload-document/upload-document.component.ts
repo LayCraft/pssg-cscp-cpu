@@ -17,11 +17,11 @@ interface FileBundle {
   fileData: string[];
 }
 @Component({
-  selector: 'app-download-document',
-  templateUrl: './download-document.component.html',
-  styleUrls: ['./download-document.component.css']
+  selector: 'app-upload-document',
+  templateUrl: './upload-document.component.html',
+  styleUrls: ['./upload-document.component.css']
 })
-export class DownloadDocumentComponent implements OnInit, OnDestroy {
+export class UploadDocumentComponent implements OnInit, OnDestroy {
 
   // collect the element reference from the child so that we can access native parts of the files element
   @ViewChild('files')
@@ -29,9 +29,6 @@ export class DownloadDocumentComponent implements OnInit, OnDestroy {
 
   // is this uploading/saving
   saving: boolean = false;
-  stepperElements: iStepperElement[];
-  currentStepperElement: iStepperElement;
-  stepperIndex: number = 0;
 
   documentCollection: iDynamicsDocument[] = [];
   documentsToAdd: iDynamicsDocument[] = [];
@@ -48,6 +45,7 @@ export class DownloadDocumentComponent implements OnInit, OnDestroy {
   userId: string;
   contractId: string;
   private stateSubscription: Subscription;
+  isContractUpload: boolean = false;
 
   private formHelper = new FormHelper();
   constructor(
@@ -69,41 +67,33 @@ export class DownloadDocumentComponent implements OnInit, OnDestroy {
       this.trans = m;
     });
 
-    this.stepperService.currentStepperElement.subscribe(s => this.currentStepperElement = s);
     this.route.params.subscribe(p => {
       // collect the current user information from the state.
       this.userId = this.stateService.main.getValue().userId;
       this.organizationId = this.stateService.main.getValue().organizationId;
       // collect the "contract id" which is the id included with the task.
-      this.contractId = p['taskId'];
-
-      this.contractNumber = this.trans.contracts.find(c => c.contractId == this.contractId).contractNumber;
-
-
-
-      this.fileService.download(this.organizationId, this.userId, this.contractId).subscribe(
-        (d: iDynamicsFile) => {
-          console.log(d);
-          if (d['error'] && d['error']['code']) {
-            // something has gone wrong. Show the developer the error
-            alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
-            console.log('Dynamics has returned: ', d);
-          } else {
-            this.documentCollection = d.DocumentCollection;
-          }
-        }
-      );
-      //
-      this.constructDefaultstepperElements();
-    });
-
-    this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
-    this.stepperService.currentStepperElement.subscribe(e => {
-      this.currentStepperElement = e;
-
-      if (this.currentStepperElement && this.stepperElements) {
-        this.stepperIndex = this.stepperElements.findIndex(e => e.id === this.currentStepperElement.id);
+      this.contractId = p['contractId'];
+      if (this.contractId) {
+        this.isContractUpload = true;
+        this.contractNumber = this.trans.contracts.find(c => c.contractId == this.contractId).contractNumber;
       }
+
+      console.log("is contract upload? ", this.isContractUpload);
+
+
+      // this.fileService.download(this.organizationId, this.userId, this.contractId).subscribe(
+      //   (d: iDynamicsFile) => {
+      //     console.log(d);
+      //     if (d['error'] && d['error']['code']) {
+      //       // something has gone wrong. Show the developer the error
+      //       alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
+      //       console.log('Dynamics has returned: ', d);
+      //     } else {
+      //       this.documentCollection = d.DocumentCollection;
+      //     }
+      //   }
+      // );
+      //
     });
 
   }
@@ -121,30 +111,7 @@ export class DownloadDocumentComponent implements OnInit, OnDestroy {
       this.router.navigate(['/authenticated/dashboard']);
     }
   }
-  constructDefaultstepperElements() {
-    // clean out the old things that might be living in the stepper.
-    this.stepperService.reset();
-    // write the default beginning
-    [
-      {
-        itemName: 'Download File',
-        formState: 'untouched',
-        object: null,
-        discriminator: 'download',
-      },
-      // {
-      //   itemName: 'Upload File',
-      //   formState: 'untouched',
-      //   object: null,
-      //   discriminator: 'upload',
-      // }
-    ].forEach((f: iStepperElement) => {
-      this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
-    });
 
-    // put the page naviagation to the first page
-    this.stepperService.setToFirstStepperElement();
-  }
   removeFile(i: number) {
     //remove the file from the collection at this index
     this.fileData.splice(i, 1);
@@ -160,12 +127,23 @@ export class DownloadDocumentComponent implements OnInit, OnDestroy {
       Userbceid: this.userId,
       DocumentCollection: this.documentsToAdd
     }
-    this.fileService.upload(file).subscribe((d) => {
-      this.saving = false;
-      this.documentsToAdd = [];
-      this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
-      console.log('Uploaded', d);
-    });
+    let record_id = this.isContractUpload ? this.contractId : this.trans.accountId
+    if (this.isContractUpload) {
+      this.fileService.uploadContractDocuments(file, record_id).subscribe((d) => {
+        this.saving = false;
+        this.documentsToAdd = [];
+        this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
+        console.log('Uploaded', d);
+      });
+    }
+    else {
+      this.fileService.uploadAccountDocuments(file, record_id).subscribe((d) => {
+        this.saving = false;
+        this.documentsToAdd = [];
+        this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
+        console.log('Uploaded', d);
+      });
+    }
   }
 
   fakeBrowseClick(): void {
@@ -173,7 +151,6 @@ export class DownloadDocumentComponent implements OnInit, OnDestroy {
     this.myInputVariable.nativeElement.click();
   }
   onFilesAdded(files: FileList): void {
-    // this is built intially to support multiple files but I'm returning it to single files
     const fileNames = this.fileNames;
     const fileSizes = this.fileSizes;
     const fileData = this.fileData;
@@ -188,20 +165,27 @@ export class DownloadDocumentComponent implements OnInit, OnDestroy {
         reader.readAsDataURL(files.item(i));
         reader.onload = () => {
           const fileNumber = fileNames.indexOf(files.item(i).name);
+          let fileDataString = reader.result.toString();
+          fileDataString = fileDataString.split(',').slice(-1)[0];
           if (fileNumber >= 0) {
             // save the result over the old result
-            fileData[fileNumber] = reader.result.toString();
+            fileData[fileNumber] = fileDataString;
             fileSizes[fileNumber] = this.toFileSize(files.item(i).size)
 
           } else {
             // push a fresh file name and file contents
+            if (files.item(i).name.split('.').slice(-1)[0].indexOf("docx") >= 0) {
+              this.notificationQueueService.addNotification(`Unsupported file type.`, 'danger');
+              return;
+            }
+
             fileNames.push(files.item(i).name);
-            fileData.push(reader.result.toString());
+            fileData.push(fileDataString);
             fileSizes.push(this.toFileSize(files.item(i).size));
 
             this.documentsToAdd.push({
               filename: files.item(i).name,
-              body: reader.result.toString()
+              body: fileDataString
             });
           }
         };
@@ -254,13 +238,5 @@ export class DownloadDocumentComponent implements OnInit, OnDestroy {
     else if (bytes > 1) { fileSize = bytes + " bytes"; }
     else if (bytes == 1) { fileSize = bytes + " byte"; }
     return fileSize;
-  }
-  setNextStepper() {
-    ++this.stepperIndex;
-    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
-  }
-  setPreviousStepper() {
-    --this.stepperIndex;
-    this.stepperService.setCurrentStepperElement(this.stepperElements[this.stepperIndex].id);
   }
 }

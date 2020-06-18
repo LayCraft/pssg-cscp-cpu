@@ -107,6 +107,9 @@
       </table>
     </span>
     <span *ngIf="currentTab===tabs.yourDocuments">
+      <div class="upload-documents-container">
+        <a routerLink="/authenticated/upload_document/{{contract.contractId}}" class="btn btn-primary">Upload Contract Documents</a>
+      </div>
       <table class="table table-sm table-striped">
         <thead class="thead">
           <tr>

@@ -47,7 +47,7 @@ import { ContactInformation2Component } from './authenticated/subforms/contact-i
 import { PrimaryContactInfoComponent } from './authenticated/subforms/primary-contact-info/primary-contact-info.component';
 import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.component';
 import { ProgramContactComponent } from './authenticated/program-contact/program-contact.component';
-import { DownloadDocumentComponent } from './authenticated/download-document/download-document.component';
+import { UploadDocumentComponent } from './authenticated/upload-document/upload-document.component';
 import { LoginPageComponent } from './login/login.component';
 import { MessageWriteComponent } from './authenticated/subforms/message-write/message-write.component';
 import { NgxMaskModule } from 'ngx-mask'
@@ -106,7 +106,7 @@ import { SafePipe } from './core/pipes/safe.pipe';
     StatusReportComponent,
     TaskListComponent,
     TestComponent,
-    DownloadDocumentComponent,
+    UploadDocumentComponent,
     SignContractComponent,
     CoverLetterComponent,
     PhonePipe,

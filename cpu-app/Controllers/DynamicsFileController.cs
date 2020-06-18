@@ -126,13 +126,33 @@ namespace Gov.Cscp.Victims.Public.Controllers
             finally { }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> SetFiles([FromBody] FilePost model)
+        [HttpPost("account/{accountId}")]
+        public async Task<IActionResult> UploadAccountDocument([FromBody] FilePost model, string accountId)
         {
             // return null because this needs to be handled as files.
             try
             {
-                string endpointUrl = "vsd_SetCPUOrgContracts";
+                string endpointUrl = endpointUrl = "accounts(" + accountId + ")/Microsoft.Dynamics.CRM.vsd_UploadCPUAccountDocuments";
+
+                // make options for the json serializer
+                JsonSerializerOptions options = new JsonSerializerOptions();
+                options.IgnoreNullValues = true;
+                // turn the model into a string
+                string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
+                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+
+                return StatusCode(200, result.result.ToString());
+            }
+            finally { }
+        }
+
+        [HttpPost("contract/{contractId}")]
+        public async Task<IActionResult> UploadContractDocument([FromBody] FilePost model, string contractId)
+        {
+            // return null because this needs to be handled as files.
+            try
+            {
+                string endpointUrl = endpointUrl = "vsd_contracts(" + contractId + ")/Microsoft.Dynamics.CRM.vsd_UploadCPUContractDocuments";
 
                 // make options for the json serializer
                 JsonSerializerOptions options = new JsonSerializerOptions();

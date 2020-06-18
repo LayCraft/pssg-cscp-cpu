@@ -76,6 +76,7 @@
     </div>
     <div class="col-md-8">
       <span><button *ngIf="stepperIndex > 0" class="btn btn-primary mt-2 previous-button" (click)="setPreviousStepper()">Previous</button></span>
+      <!-- update to Continue for next tab -> Save and Continue for when save -> check Jira  -->
       <span><button *ngIf="stepperIndex < stepperElements.length - 1" class="btn btn-primary mt-2 next-button" (click)="setNextStepper()">Next</button></span>
       <span><button *ngIf="stepperIndex == stepperElements.length -1" class="btn btn-primary mt-2 submit-button" [class.is-disabled]="!trans.signature.signatureDate || saving" (click)="save(true)">Submit</button></span>
     </div>

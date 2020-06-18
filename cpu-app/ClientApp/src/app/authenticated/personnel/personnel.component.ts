@@ -35,6 +35,9 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   personForm: FormGroup;
   didLoad: boolean = false;
   private stateSubscription: Subscription;
+  missingFields: string[] = [];
+
+  originalPersons: iPerson[] = [];
   constructor(
     private router: Router,
     private personService: PersonService,
@@ -50,7 +53,9 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     // when main changes refresh the data
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
+      console.log("sub");
       this.trans = m;
+      this.originalPersons = _.cloneDeep(this.trans.persons);
       // set the default top and bottom list
       this.constructStepperElements(m);
       this.didLoad = true;
@@ -94,8 +99,10 @@ export class PersonnelComponent implements OnInit, OnDestroy {
 
       console.log(person);
       this.saving = true;
+      let thisPerson = new Person(person);
       // a person needs minimum a first and last name to be submitted
-      if (person.firstName && person.lastName) {
+      if (thisPerson.hasRequiredFields()) {
+        this.missingFields = [];
         const userId = this.stateService.main.getValue().userId;
         const organizationId = this.stateService.main.getValue().organizationId;
         const post = convertPersonnelToDynamics(userId, organizationId, [person]);
@@ -116,7 +123,9 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       } else {
         this.saving = false;
         // notify the user that this user was not saved.
-        this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
+        this.missingFields = thisPerson.getMissingFields();
+        console.log(this.missingFields);
+        this.notificationQueueService.addNotification('Please fill in required fields.', 'warning');
       }
     }
     catch (err) {
@@ -124,6 +133,11 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       this.notificationQueueService.addNotification('The agency staff could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
       this.saving = false;
     }
+  }
+
+  cancel(person) {
+    this.trans.persons = this.originalPersons;
+    this.originalPersons = _.cloneDeep(this.trans.persons);
   }
 
   exit() {
@@ -176,6 +190,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     }
   }
   onChange(element: iStepperElement) {
+    this.missingFields = [];
     element.itemName = nameAssemble(element.object['firstName'], element.object['middleName'], element.object['lastName']);
     // loop back to shove the new form into the service
     this.stepperService.setStepperElement(element);
@@ -183,5 +198,6 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   setAddressSameAsAgency(person: iPerson) {
     let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
     person.address = addressCopy;
+    console.log(this.originalPersons);
   }
 }

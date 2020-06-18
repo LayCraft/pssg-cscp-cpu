@@ -36,9 +36,16 @@ export class FileService {
       catchError(this.handleError)
     );
   }
-  upload(file: iDynamicsPostFile): Observable<any> {
+  uploadAccountDocuments(file: iDynamicsPostFile, accountId: string): Observable<any> {
     // may need to add the contract id into this postback
-    return this.http.post<any>(`${this.apiUrl}`, file, { headers: this.headers }).pipe(
+    return this.http.post<any>(`${this.apiUrl}/account/${accountId}`, file, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+  uploadContractDocuments(file: iDynamicsPostFile, contractId: string): Observable<any> {
+    // may need to add the contract id into this postback
+    return this.http.post<any>(`${this.apiUrl}/contract/${contractId}`, file, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

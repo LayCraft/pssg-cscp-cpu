@@ -14,7 +14,7 @@ import { TestComponent } from './test/test.component';
 import { NewUserComponent } from './authenticated/new-user/new-user.component';
 import { CoverLetterComponent } from './authenticated/cover-letter/cover-letter.component';
 import { ProgramContactComponent } from './authenticated/program-contact/program-contact.component';
-import { DownloadDocumentComponent } from './authenticated/download-document/download-document.component';
+import { UploadDocumentComponent } from './authenticated/upload-document/upload-document.component';
 import { LoginPageComponent } from './login/login.component';
 import { MessageReadComponent } from './authenticated/subforms/message-read/message-read.component';
 import { MessageWriteComponent } from './authenticated/subforms/message-write/message-write.component';
@@ -64,8 +64,12 @@ const routes: Routes = [
         component: StatusReportComponent
       },
       {
-        path: 'download_document/:taskId',
-        component: DownloadDocumentComponent
+        path: 'upload_document/:contractId',
+        component: UploadDocumentComponent
+      },
+      {
+        path: 'upload_document',
+        component: UploadDocumentComponent
       },
       {
         path: 'sign_contract/:taskId',

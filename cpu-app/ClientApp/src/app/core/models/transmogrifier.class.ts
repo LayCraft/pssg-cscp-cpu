@@ -297,6 +297,9 @@ export class Transmogrifier {
         personId: p.contactid || null,
         userId: p.vsd_bceid || null,
         phone: p.mobilephone || null,
+        phoneExtension: p.vsd_mainphoneextension || null,
+        phone2: p.telephone2 || null,
+        phone2Extension: p.vsd_homephoneextension || null,
         title: p.jobtitle || null,
         employmentStatus: employmentStatusTypeDict[p.vsd_employmentstatus] || null,
         // if this person has the right value it is me.

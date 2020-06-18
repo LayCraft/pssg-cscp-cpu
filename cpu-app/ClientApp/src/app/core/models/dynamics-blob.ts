@@ -52,6 +52,9 @@ export interface iDynamicsCrmContact {
   lastname?: string;
   middlename?: string;
   mobilephone?: string;
+  vsd_mainphoneextension?: string;
+  telephone2?: string;
+  vsd_homephoneextension?: string;
   statecode?: number;
   vsd_bceid?: string;
   vsd_contact_vsd_programid?: string; // added when contact is listed in a program. Which program id are they under

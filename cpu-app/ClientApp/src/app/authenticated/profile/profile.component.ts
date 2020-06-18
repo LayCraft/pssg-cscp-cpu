@@ -9,6 +9,8 @@ import { FormHelper } from '../../core/form-helper';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { Address } from '../../core/models/address.class';
+import { ContactInformation } from '../../core/models/contact-information.class';
+import { iContactInformation } from '../../core/models/contact-information.interface';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +23,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private stateSubscription: Subscription;
 
   private formHelper = new FormHelper();
+  originalContactInfo: iContactInformation;
   constructor(
     private router: Router,
     private stateService: StateService,
@@ -33,29 +36,47 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       // save the transmogrifier
       this.trans = m;
+      this.originalContactInfo = _.cloneDeep(this.trans.contactInformation);
     });
   }
   ngOnDestroy() {
     this.stateSubscription.unsubscribe();
+  }
+  cancel() {
+    this.trans.contactInformation = this.originalContactInfo;
+    this.originalContactInfo = _.cloneDeep(this.trans.contactInformation);
   }
   save(shouldExit: boolean = false): void {
     try {
       if (!this.formHelper.isFormValid(this.notificationQueueService)) {
         return;
       }
-      // post to the organization
-      this.saving = true;
-      this.profileService.updateOrg(convertContactInformationToDynamics(this.trans))
-        .subscribe(
-          (res: any) => {
-            this.saving = false;
-            // notify
-            this.notificationQueueService.addNotification('The contact information for your organization has been updated.', 'success');
-            // route to another page
-            if (shouldExit) this.router.navigate([this.stateService.homeRoute.getValue()]);
-          },
-          err => console.log(err)
-        );
+
+      //check for required fields
+      //trans.contactInformation
+      let contactInfo = new ContactInformation(this.trans.contactInformation);
+      if (contactInfo.hasRequiredFields()) {
+        // post to the organization
+        this.saving = true;
+        this.profileService.updateOrg(convertContactInformationToDynamics(this.trans))
+          .subscribe(
+            (res: any) => {
+              this.saving = false;
+              // notify
+              this.notificationQueueService.addNotification('The contact information for your organization has been updated.', 'success');
+              this.stateService.refresh();
+              this.formHelper.makeFormClean();
+              // route to another page
+              if (shouldExit) this.router.navigate([this.stateService.homeRoute.getValue()]);
+            },
+            err => console.log(err)
+          );
+      }
+      else {
+        this.saving = false;
+        this.notificationQueueService.addNotification('Please fill in required fields.', 'warning');
+      }
+
     }
     catch (err) {
       console.log(err);
