@@ -30,6 +30,7 @@ export class ProgramBudgetComponent implements OnInit {
 
   totalGrand: number = 0;
   vscpApprovedAmount: number = 0;
+  remainingAmount: number = 0;
 
   private formHelper = new FormHelper();
 
@@ -37,7 +38,7 @@ export class ProgramBudgetComponent implements OnInit {
     this.tabs = ['Program Revenue Information', 'Program Expense'];
     // this.programBudget.currentTab = this.tabs[0];
     this.sections = [
-      'Salaries and Benefits',
+      'Salaries and Benefits (for Program Related Staffing only)',
       'Program Delivery Costs',
       'Administration Costs',
     ];
@@ -75,7 +76,7 @@ export class ProgramBudgetComponent implements OnInit {
       // can't divide by zero
       if (event.totalCost > 0) {
         // too many decimal points onscreen
-        return Math.round((event.totalVscp / event.totalCost) * 100);
+        return Math.round((event.totalVscp / event.vscpApprovedAmount) * 100);
       } else {
         return 0;
       }
@@ -103,6 +104,38 @@ export class ProgramBudgetComponent implements OnInit {
       }
     }
     this.meta['totals'].totalPercentFundedByVscp = percentify(this.meta['totals']);
+
+
+    //also get updated remaining amount to spend
+    this.getRemainingAmount();
+  }
+
+  getRemainingAmount() {
+    let vscpApprovedAmount = 0;
+    this.programBudget.revenueSources.filter(rs => rs.isActive).forEach(rs => {
+      if (rs.revenueSourceName === VSCP_APPROVED_SOURCE_NAME) {
+        vscpApprovedAmount += ((rs.cash || 0) + (rs.inKindContribution || 0));
+      }
+    });
+
+    let totalFundedFromVSCP = 0;
+    this.programBudget.salariesAndBenefits.filter(sb => sb.isActive).forEach(sb => {
+      totalFundedFromVSCP += (sb.fundedFromVscp || 0);
+    });
+    this.programBudget.programDeliveryCosts.filter(pd => pd.isActive).forEach(pd => {
+      totalFundedFromVSCP += (pd.fundedFromVscp || 0);
+    });
+    this.programBudget.programDeliveryOtherExpenses.filter(pd => pd.isActive).forEach(pd => {
+      totalFundedFromVSCP += (pd.fundedFromVscp || 0);
+    });
+    this.programBudget.administrationCosts.filter(ac => ac.isActive).forEach(ac => {
+      totalFundedFromVSCP += (ac.fundedFromVscp || 0);
+    });
+    this.programBudget.administrationOtherExpenses.filter(ac => ac.isActive).forEach(ac => {
+      totalFundedFromVSCP += (ac.fundedFromVscp || 0);
+    });
+
+    this.remainingAmount = vscpApprovedAmount - totalFundedFromVSCP;
   }
 
   setCurrentTab(tab: string) {
@@ -116,5 +149,6 @@ export class ProgramBudgetComponent implements OnInit {
     }
 
     this.programBudget.currentTab = tab;
+    this.getRemainingAmount();
   }
 }

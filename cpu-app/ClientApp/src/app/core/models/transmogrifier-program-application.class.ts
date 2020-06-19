@@ -220,7 +220,7 @@ export class TransmogrifierProgramApplication {
         perType: p.vsd_cpu_per || 100000000,
         removedStaff: [],
         removedSubContractedStaff: [],
-        currentTab: "Contact Information",
+        currentTab: "Program Information", //make this more general - set to tabs[0] instead of hardcoded
       } as iProgramApplication;
 
       if (_.isEqual(temp.mailingAddress, temp.mainAddress)) {

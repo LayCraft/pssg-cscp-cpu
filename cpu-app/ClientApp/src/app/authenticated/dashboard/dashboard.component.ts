@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
 import { StateService } from '../../core/services/state.service';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { iContract } from '../../core/models/contract.interface';
 import { Subscription } from 'rxjs';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,12 +17,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   upcomingContracts: iContract[] = [];
   currentContracts: iContract[] = [];
   pastContracts: iContract[] = [];
+  currentYear: number;
   private stateSubscription: Subscription;
   constructor(
     private stateService: StateService,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    this.currentYear = new Date().getFullYear();
     // always display the current main collection
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;

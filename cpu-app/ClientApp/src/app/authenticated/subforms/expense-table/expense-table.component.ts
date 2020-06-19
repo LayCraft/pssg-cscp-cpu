@@ -6,6 +6,7 @@ import { FormHelper } from '../../../core/form-helper';
 export interface iExpenseTableMeta {
   totalCost: number;
   totalVscp: number;
+  vscpApprovedAmount: number;
 }
 @Component({
   selector: 'app-expense-table',
@@ -15,6 +16,7 @@ export interface iExpenseTableMeta {
 export class ExpenseTableComponent implements OnInit {
   // default expense items are the ones sent from dynamics which make up the top of the table
   @Input() defaultExpenseItems: iExpenseItem[] = [];
+  @Input() vscpApprovedAmount: number = 0;
   @Output() defaultExpenseItemsChange = new EventEmitter<iExpenseItem[]>();
   // expense items are the ones that the user has entered on their own
   @Input() expenseItems: iExpenseItem[] = [];
@@ -122,6 +124,7 @@ export class ExpenseTableComponent implements OnInit {
     this.meta.emit({
       totalCost: this.totalTotalCost,
       totalVscp: this.totalVscp,
+      vscpApprovedAmount: this.vscpApprovedAmount
     });
   }
 }

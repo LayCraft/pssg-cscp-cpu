@@ -49,10 +49,10 @@ export class Person implements iPerson {
     }
   }
 
-  private requiredFields = ["firstName", "lastName", "title", "email", "phone", "address", "address.line1", "address.city", "address.postalCode", "employmentStatus"];
+  private REQUIRED_FIELDS = ["firstName", "lastName", "title", "email", "phone", "address", "address.line1", "address.city", "address.postalCode", "employmentStatus"];
   hasRequiredFields() {
-    for (let i = 0; i < this.requiredFields.length; ++i) {
-      if (!this.fetchFromObject(this, this.requiredFields[i])) {
+    for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
+      if (!this.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
         return false;
       }
     }
@@ -61,9 +61,9 @@ export class Person implements iPerson {
 
   getMissingFields() {
     let ret = [];
-    for (let i = 0; i < this.requiredFields.length; ++i) {
-      if (!this.fetchFromObject(this, this.requiredFields[i])) {
-        ret.push(this.requiredFields[i]);
+    for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
+      if (!this.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
+        ret.push(this.REQUIRED_FIELDS[i]);
       }
     }
     return ret;

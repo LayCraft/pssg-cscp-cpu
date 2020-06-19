@@ -21,10 +21,10 @@
           </span>
         </td>
         <td>
-          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, source, 'cash'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="source.cashMask" min="0" id="cash_{{i}}">
+          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, source, 'cash'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="source.cashMask" min="0" id="cash_{{i}}" [disabled]="source.revenueSourceName == 'Ministry of PSSG - VSCP'">
         </td>
         <td>
-          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, source, 'inKindContribution'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="source.inKindContributionMask" min="0" id="kind_{{i}}">
+          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, source, 'inKindContribution'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="source.inKindContributionMask" min="0" id="kind_{{i}}" [disabled]="source.revenueSourceName == 'Ministry of PSSG - VSCP'">
         </td>
         <td>
           <input class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="source.totalMask" id="total_{{i}}" disabled>
@@ -37,13 +37,8 @@
       </ng-container>
     </tr>
     <tr>
-      <td></td>
-      <td></td>
-      <td colspan="2" class="add-row-td-text">Add Other Revenue Source</td>
-      <td class="align-middle add-row-td">
-        <div (click)="addRevenueSource()" class="form-group add-row-button">
-          <i class="fas fa-plus-circle text-success"></i>
-        </div>
+      <td colspan="5" class="add-row-td-text">
+        <button class="btn btn-info align-right" (click)="addRevenueSource()">Add Other Revenue Source</button>
       </td>
     </tr>
     <tr>

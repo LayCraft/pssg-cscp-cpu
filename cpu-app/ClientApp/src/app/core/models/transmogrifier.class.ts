@@ -43,7 +43,7 @@ export class Transmogrifier {
       // if the task matches the supplied contract return it
       if (task._regardingobjectid_value === contractId) {
         // tasks.push({
-        let thisTask =
+        let thisTask: iTask =
         {// convert the status from a meaningless dynamics number to a meaningful string
           status: taskCode(task.statuscode),
           // convert the numeric completion state from meaningless dynamics number to a useful boolean
@@ -53,6 +53,8 @@ export class Transmogrifier {
           taskDescription: task.description,
           // make a date from the supplied date. TODO MomentJS
           deadline: task.scheduledend ? new Date(task.scheduledend) : null,
+          submittedDate: task.modifiedon ? new Date(task.modifiedon) : null,
+
           taskId: this.getCorrectTaskIdByDiscriminator(contractId, task._vsd_programid_value, task, decodeTaskType(task._vsd_tasktypeid_value)),
           // what kind of form is this?
           formType: decodeTaskType(task._vsd_tasktypeid_value)

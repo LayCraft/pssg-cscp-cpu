@@ -53,7 +53,6 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     this.stepperService.stepperElements.subscribe(e => this.stepperElements = e);
     // when main changes refresh the data
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
-      console.log("sub");
       this.trans = m;
       this.originalPersons = _.cloneDeep(this.trans.persons);
       // set the default top and bottom list
@@ -135,9 +134,13 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     }
   }
 
-  cancel(person) {
-    this.trans.persons = this.originalPersons;
-    this.originalPersons = _.cloneDeep(this.trans.persons);
+  cancel(person: iPerson) {
+    let reset = _.cloneDeep(this.originalPersons);
+    if (this.currentStepperElement.itemName === 'New Person') {
+      let temp = new Person();
+      reset.push(temp);
+    }
+    this.trans.persons = reset;
   }
 
   exit() {

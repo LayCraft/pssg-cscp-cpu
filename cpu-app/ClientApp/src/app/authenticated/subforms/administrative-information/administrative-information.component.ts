@@ -1,6 +1,7 @@
 import { AbstractControl } from '@angular/forms';
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { TransmogrifierProgramApplication } from '../../../core/models/transmogrifier-program-application.class';
+import { FormHelper } from '../../../core/form-helper';
 
 @Component({
   selector: 'app-administrative-information',
@@ -15,6 +16,7 @@ export class AdministrativeInformationComponent implements OnInit {
   @Output() transmogrifierProgramApplicationChange = new EventEmitter<TransmogrifierProgramApplication>();
 
   subcontractedStaffObj: any = { persons: [], removedPersons: [] };
+  public formHelper = new FormHelper();
 
   constructor() { }
   ngOnInit() {

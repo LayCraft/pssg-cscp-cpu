@@ -11,6 +11,7 @@ import { FormHelper } from '../../../core/form-helper';
 })
 export class PersonnelExpenseTableComponent implements OnInit {
   @Input() salariesAndBenefits: iSalaryAndBenefits[] = [];
+  @Input() vscpApprovedAmount: number = 0;
   @Output() salariesAndBenefitsChange = new EventEmitter<iSalaryAndBenefits[]>();
   @Output() meta = new EventEmitter<iExpenseTableMeta>();
 
@@ -90,6 +91,7 @@ export class PersonnelExpenseTableComponent implements OnInit {
     this.meta.emit({
       totalCost: this.totalTotalCost,
       totalVscp: this.totalVscp,
+      vscpApprovedAmount: this.vscpApprovedAmount
     });
   }
 }

@@ -12,6 +12,7 @@ import { iDynamicsPostScheduleF } from '../../core/models/dynamics-post';
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { Address } from '../../core/models/address.class';
+import { Hours } from '../../core/models/hours.class';
 
 @Component({
   selector: 'app-program-application',
@@ -27,7 +28,7 @@ export class ProgramApplicationComponent implements OnInit {
   currentStepperElement: iStepperElement;
   stepperIndex: number = 0;
 
-  programTabs = ['Contact Information', 'Delivery Information'];
+  programTabs = ['Program Information', 'Program Hours of Operations'];
   reviewApplicationTabs: string[] = ['Application Information'];
   currentReviewApplicationTab: string = 'Application Information';
 
@@ -36,6 +37,8 @@ export class ProgramApplicationComponent implements OnInit {
   isCompleted: boolean = false;
 
   private formHelper = new FormHelper();
+
+  PROGRAM_REQUIRED_FIELDS: string[] = ["emailAddress", "phoneNumber"];
 
   constructor(
     private notificationQueueService: NotificationQueueService,
@@ -290,31 +293,58 @@ export class ProgramApplicationComponent implements OnInit {
 
             for (let i = 0; i < tempTrans.programApplications.length; ++i) {
               Object.assign(this.trans.programApplications[i], tempTrans.programApplications[i]);
+              if (this.trans.programApplications[i].standbyHours.length == 0) {
+                this.trans.programApplications[i].standbyHours.push(new Hours());
+              }
+              if (this.trans.programApplications[i].operationHours.length == 0) {
+                this.trans.programApplications[i].operationHours.push(new Hours());
+              }
             }
           }
         }
       );
     });
   }
+  programHasRequiredFields(program: iProgramApplication) {
+    for (let i = 0; i < this.PROGRAM_REQUIRED_FIELDS.length; ++i) {
+      if (!this.formHelper.fetchFromObject(program, this.PROGRAM_REQUIRED_FIELDS[i])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
   setNextStepper() {
     let originalStepper = _.cloneDeep(this.currentStepperElement);
     let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
-    if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
-      // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
-      return;
-    }
 
     //handling for stepper elements that have sub tabs
     if (originalStepper.discriminator === this.discriminators[3]) {
-      let current_program = this.trans.programApplications.find(pa => pa.name === originalStepper.itemName);
+      let current_program: iProgramApplication = this.trans.programApplications.find(pa => pa.name === originalStepper.itemName);
       if (current_program) {
         let index = this.programTabs.findIndex(t => t === current_program.currentTab);
         if (index < (this.programTabs.length - 1)) {
-          current_program.currentTab = this.programTabs[index + 1];
-          window.scrollTo(0, 0);
-          return;
+          //validate current program has required fields before moving to Program Hours of Operations
+          if (this.programHasRequiredFields(current_program)) {
+            if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
+              // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
+              return;
+            }
+            current_program.currentTab = this.programTabs[index + 1];
+            window.scrollTo(0, 0);
+            return;
+          }
+          else {
+            this.notificationQueueService.addNotification('Email and Phone Number are rquired.', 'warning');
+            return;
+          }
         }
       }
+    }
+
+    if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
+      // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
+      return;
     }
 
     if (originalStepper.discriminator === this.discriminators[4]) {

@@ -39,6 +39,7 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
   private stateSubscription: Subscription;
 
   programBudgetTabs = ['Program Revenue Information', 'Program Expense'];
+  current_program_budget: iProgramBudget = null;
 
   personDict: object = {};
   private formHelper = new FormHelper();
@@ -120,6 +121,10 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
 
       if (this.currentStepperElement && this.stepperElements) {
         this.stepperIndex = this.stepperElements.findIndex(e => e.id === this.currentStepperElement.id);
+      }
+
+      if (this.trans && this.trans.programBudgets && this.trans.programBudgets.length > 0 && this.currentStepperElement && this.currentStepperElement.discriminator) {
+        this.current_program_budget = this.trans.programBudgets.find(pb => pb.programId === this.currentStepperElement.discriminator);
       }
     });
   }
@@ -292,17 +297,17 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let current_program_budget = this.trans.programBudgets.find(pb => pb.programId === originalStepper.discriminator);
-    if (current_program_budget) {
-      let index = this.programBudgetTabs.findIndex(t => t === current_program_budget.currentTab);
+    this.current_program_budget = this.trans.programBudgets.find(pb => pb.programId === originalStepper.discriminator);
+    if (this.current_program_budget) {
+      let index = this.programBudgetTabs.findIndex(t => t === this.current_program_budget.currentTab);
       if (index < (this.programBudgetTabs.length - 1)) {
-        current_program_budget.currentTab = this.programBudgetTabs[index + 1];
+        this.current_program_budget.currentTab = this.programBudgetTabs[index + 1];
         window.scrollTo(0, 0);
         return;
       }
     }
 
-    if (current_program_budget && !this.validateProgramBudgets([current_program_budget])) {
+    if (this.current_program_budget && !this.validateProgramBudgets([this.current_program_budget])) {
       return;
     }
 
@@ -318,7 +323,7 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'saving');
       }, 0);
 
-      this.saveSingleProgramBudget(current_program_budget).then(() => {
+      this.saveSingleProgramBudget(this.current_program_budget).then(() => {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'complete');
       }).catch(() => {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'invalid');

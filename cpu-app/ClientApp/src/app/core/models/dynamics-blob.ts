@@ -140,6 +140,7 @@ export interface iDynamicsCrmTask {
   fortunecookieetag: string;
   fortunecookietype: string;
   scheduledend?: string;
+  modifiedon?: string;
   statecode?: number;
   statuscode?: number;
   subject?: string;

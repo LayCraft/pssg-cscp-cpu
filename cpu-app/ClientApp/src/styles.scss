@@ -151,6 +151,7 @@ input[type="number"] {
 
 .sticky-top {
   z-index: 1000 !important;
+  background-color: white;
 }
 
 .review-section-header {
@@ -175,4 +176,13 @@ body {
   max-width: 730px;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.address-info-message {
+  margin-bottom: 0;
+  font-style: italic;
+}
+
+.align-right {
+  float: right;
 }
