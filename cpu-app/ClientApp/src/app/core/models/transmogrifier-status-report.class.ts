@@ -14,6 +14,7 @@ export class TransmogrifierStatusReport {
   public programId: string;
   public programName: string;
   public programType: string;
+  public contractedHours: number;
   public contractNumber: string;
   public reportingPeriod: string;
   public statusReportQuestions: iQuestionCollection[] = []; // this is a collection of objects
@@ -27,6 +28,7 @@ export class TransmogrifierStatusReport {
     this.programType = g.ProgramTypeCollection.filter(f => g.Program._vsd_programtype_value === f.vsd_programtypeid).map(f => f.vsd_name)[0];
     this.programName = g.Program.vsd_name;
     this.contractNumber = g.Contract.vsd_name;
+    this.contractedHours = g.Program.vsd_cpu_numberofhours;
 
     this.buildStatusReport(g);
   }

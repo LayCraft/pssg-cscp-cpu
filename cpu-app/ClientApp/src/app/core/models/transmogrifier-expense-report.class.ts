@@ -1,6 +1,7 @@
 import { iDynamicsScheduleGResponse } from "./dynamics-blob";
 import { ExpenseItemLabels } from "../constants/expense-item-labels";
 import { iExpenseReport } from "./expense-report.interface";
+import { REPORTING_PERIODS } from "../constants/reporting-period";
 
 // a collection of the expense item guids as K/V pairs for generating line items
 export class TransmogrifierExpenseReport {
@@ -17,7 +18,7 @@ export class TransmogrifierExpenseReport {
     // for every item in the schedule g's
     const e: iExpenseReport = {
       expenseReportId: g.ScheduleG.vsd_schedulegid || null,
-
+      reportingPeriod: REPORTING_PERIODS[g.ScheduleG.vsd_cpu_reportingperiod],
       // salaries and benefits costs
       salariesBenefitsDescription: g.ScheduleG.vsd_salariesandbenefitsexplanation || '',
       salariesBenefitsAnnualBudget: g.ScheduleG.vsd_salaryandbenefitsbudgeted || 0,

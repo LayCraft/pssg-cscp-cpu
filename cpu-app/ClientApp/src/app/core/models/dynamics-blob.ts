@@ -104,6 +104,7 @@ export interface iDynamicsCrmProgram {
   vsd_city?: string;
   vsd_costshare?: boolean;
   vsd_country?: string;
+  vsd_cpu_estimatedsubtotalcomponentvalue?: number;
   vsd_cpu_numberofhours?: number;
   vsd_cpu_per?: number;
   vsd_cpu_program_location?: string;
@@ -385,6 +386,7 @@ export interface iDynamicsMonthlyStatisticsQuestionsProgram {
   _vsd_serviceproviderid_value?: string;
   vsd_name?: string;
   vsd_programid?: string;
+  vsd_cpu_numberofhours?: number;
 }
 export interface iDynamicsMonthlyStatisticsQuestionsQuestion {
   _vsd_categoryid_value?: string;

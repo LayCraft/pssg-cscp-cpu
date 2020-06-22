@@ -31,7 +31,7 @@
   <app-revenue-source-table [(revenueSources)]="programBudget.revenueSources" (revenueSourcesChange)="getTotalGrand($event)"></app-revenue-source-table>
 </div>
 <div *ngIf="programBudget.currentTab===tabs[1]">
-  <div class="sticky-top">
+  <div class="sticky-top sticky-bottom-border">
     <div>
       <p><strong>VSCP Approved Amount:</strong> {{vscpApprovedAmount | currency}}</p>
     </div>
@@ -42,7 +42,7 @@
       <p><strong>Amount Left to Spend:</strong> {{remainingAmount | currency}}</p>
     </div>
     <span *ngIf="meta[sections[0]] &&	meta[sections[1]] &&	meta[sections[2]]">
-      <h2 class="blue-header">Total Program Expenditures</h2>
+      <h2 class="blue-header no-bottom-margin">Total Program Expenditures</h2>
       <table class="table table-striped expense-table">
         <thead>
           <tr>

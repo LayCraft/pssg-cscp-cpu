@@ -141,6 +141,11 @@ export class FormHelper {
     let variable = this.fetchVarInfo(context, varName);
     variable.obj[variable.prop] = parseFloat(e.value);
   }
+  maskToPositiveNumber(e: any, context: any, varName) {
+    let variable = this.fetchVarInfo(context, varName);
+    e.value = e.value.replace(/-/g, '');
+    variable.obj[variable.prop] = parseFloat(e.value);
+  }
   maskToTime(e: any, context: any, varName) {
     let variable = this.fetchVarInfo(context, varName);
     let timeParts = e.value.split(' : ').map(a => parseInt(a));

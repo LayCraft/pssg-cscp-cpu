@@ -16,6 +16,10 @@
                 <strong>Program</strong><br>
                 {{data.Program.vsd_name}}
               </p>
+              <p class="card-text">
+                <strong>Reporting Period</strong><br>
+                {{trans.expenseReport.reportingPeriod.display}}
+              </p>
             </div>
           </div>
 
@@ -40,82 +44,111 @@
             <div *ngIf="item.discriminator === discriminators[0]">
               <table class="table table-sm table-striped">
                 <thead class="thead">
-                  <th scope="col">Expense Category</th>
+
+                  <!-- old headers -->
+                  <!-- <th scope="col">Expense Category</th>
                   <th scope="col">Annual Budgeted Amount (Based on VSCP Funding Only)</th>
                   <th scope="col">Quarterly Budgeted Amount</th>
                   <th scope="col">Actual Expenditures, Current Quarter</th>
                   <th scope="col">Quarterly Variance</th>
                   <th scope="col">Actual Expenditures, Year to Date</th>
-                  <th scope="col">Year to Date Variance</th>
+                  <th scope="col">Year to Date Variance</th> -->
+
+
+                  <tr>
+                    <th scope="col" class="expense-category centered-header"></th>
+                    <th scope="col" class="amount-category centered centered-header">Amount</th>
+                    <th scope="col" colspan="3" class="quarterly-category centered-header">Quarterly</th>
+                    <th scope="col" colspan="4" class="ytd-category centered-header">Year-to-Date</th>
+                  </tr>
+                  <tr>
+                    <th scope="col" class="expense-category">Expense Category</th>
+                    <th scope="col" class="amount-category centered-header">Budgeted Amount</th>
+                    <th scope="col" class="quarterly-category centered-header">Budgeted Amount</th>
+                    <th scope="col" class="quarterly-category centered-header">Actual Expenditures</th>
+                    <th scope="col" class="quarterly-category centered-header">Variance</th>
+                    <th scope="col" class="ytd-category centered-header">Paid Amount</th>
+                    <th scope="col" class="ytd-category centered-header">Actual Expenditures</th>
+                    <th scope="col" class="ytd-category centered-header">Variance</th>
+                    <th scope="col" class="ytd-category centered-header">Remaining</th>
+                  </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row">Salaries and Benefits</th>
-                    <td>{{(trans.expenseReport.salariesBenefitsAnnualBudget|currency)||0}}</td>
-                    <td>{{(trans.expenseReport.salariesBenefitsQuarterlyBudget|currency)||0}}</td>
-                    <td>
+                    <th scope="row" class="expense-category">Salaries and Benefits</th>
+                    <td class="amount-category">{{(trans.expenseReport.salariesBenefitsAnnualBudget|currency)||0}}</td>
+                    <td class="quarterly-category">{{(trans.expenseReport.salariesBenefitsQuarterlyBudget|currency)||0}}</td>
+                    <td class="quarterly-category">
                       <input [(ngModel)]="trans.expenseReport.salariesBenefitsMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="salariesBenefitsValue" name="salariesBenefitsValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'salariesBenefitsValue')">
                     </td>
-                    <td>{{(trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue)|currency}}</td>
-                    <td>{{(trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue)|currency}}</td>
-                    <td>{{(trans.expenseReport.salariesBenefitsAnnualBudget - (trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue))|currency}}</td>
+                    <td class="quarterly-category">{{(trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue)|currency}}</td>
+                    <td class="ytd-category"></td>
+                    <td class="ytd-category">{{(trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue)|currency}}</td>
+                    <td class="ytd-category"></td>
+                    <td class="ytd-category">{{(trans.expenseReport.salariesBenefitsAnnualBudget - (trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue))|currency}}</td>
                   </tr>
                   <tr>
-                    <th scope="row">Program Delivery</th>
-                    <td>{{(trans.expenseReport.programDeliveryAnnualBudget|currency)||0}}</td>
-                    <td>{{(trans.expenseReport.programDeliveryQuarterlyBudget|currency)||0}}</td>
-                    <td>
+                    <th scope="row" class="expense-category">Program Delivery</th>
+                    <td class="amount-category">{{(trans.expenseReport.programDeliveryAnnualBudget|currency)||0}}</td>
+                    <td class="quarterly-category">{{(trans.expenseReport.programDeliveryQuarterlyBudget|currency)||0}}</td>
+                    <td class="quarterly-category">
                       <input [(ngModel)]="trans.expenseReport.programDeliveryMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="programDeliveryValue" name="programDeliveryValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'programDeliveryValue')">
                     </td>
-                    <td>{{(trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue)|currency}}</td>
-                    <td>{{(trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue)|currency}}</td>
-                    <td>{{(trans.expenseReport.programDeliveryAnnualBudget - (trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue))|currency}}</td>
+                    <td class="quarterly-category">{{(trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue)|currency}}</td>
+                    <td class="ytd-category"></td>
+                    <td class="ytd-category">{{(trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue)|currency}}</td>
+                    <td class="ytd-category"></td>
+                    <td class="ytd-category">{{(trans.expenseReport.programDeliveryAnnualBudget - (trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue))|currency}}</td>
                   </tr>
                   <tr>
-                    <th scope="row">Program Administration</th>
-                    <td>{{(trans.expenseReport.administrationAnnualBudget|currency)||0}}</td>
-                    <td>{{(trans.expenseReport.administrationQuarterlyBudget|currency)||0}}</td>
-                    <td>
+                    <th scope="row" class="expense-category">Program Administration</th>
+                    <td class="amount-category">{{(trans.expenseReport.administrationAnnualBudget|currency)||0}}</td>
+                    <td class="quarterly-category">{{(trans.expenseReport.administrationQuarterlyBudget|currency)||0}}</td>
+                    <td class="quarterly-category">
                       <input [(ngModel)]="trans.expenseReport.administrationMask" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" class="form-control" id="administrationValue" name="administrationValue" (input)="formHelper.moneyMaskToNumber($event.target, trans.expenseReport, 'administrationValue')">
                     </td>
-                    <td>{{(trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)|currency}}</td>
-                    <td>{{(trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)|currency}}</td>
-                    <td>{{(trans.expenseReport.administrationAnnualBudget - (trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue))|currency}}</td>
+                    <td class="quarterly-category">{{(trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)|currency}}</td>
+                    <td class="ytd-category"></td>
+                    <td class="ytd-category">{{(trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)|currency}}</td>
+                    <td class="ytd-category"></td>
+                    <td class="ytd-category">{{(trans.expenseReport.administrationAnnualBudget - (trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue))|currency}}</td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr>
-                    <th scope="row">Total</th>
-                    <td>
+                    <th scope="row" class="expense-category">Total</th>
+                    <td class="amount-category">
                       <strong>
                         {{(trans.expenseReport.salariesBenefitsAnnualBudget + trans.expenseReport.programDeliveryAnnualBudget + trans.expenseReport.administrationAnnualBudget)||0 |currency}}
                       </strong>
                     </td>
-                    <td>
+                    <td class="quarterly-category">
                       <strong>
                         {{(trans.expenseReport.salariesBenefitsQuarterlyBudget + trans.expenseReport.programDeliveryQuarterlyBudget + trans.expenseReport.administrationQuarterlyBudget)||0|currency}}
                       </strong>
                     </td>
-                    <td>
+                    <td class="quarterly-category">
                       <strong>
                         {{(trans.expenseReport.salariesBenefitsValue + trans.expenseReport.programDeliveryValue + trans.expenseReport.administrationValue)|currency}}
                       </strong>
                     </td>
-                    <td>
+                    <td class="quarterly-category">
                       <strong>
                         {{(trans.expenseReport.salariesBenefitsQuarterlyBudget - trans.expenseReport.salariesBenefitsValue
                           + trans.expenseReport.programDeliveryQuarterlyBudget - trans.expenseReport.programDeliveryValue
                           + trans.expenseReport.administrationQuarterlyBudget - trans.expenseReport.administrationValue)|currency}}
                       </strong>
                     </td>
-                    <td>
+                    <td class="ytd-category"></td>
+                    <td class="ytd-category">
                       <strong>
                         {{(trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue 
                           + trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue 
                           + trans.expenseReport.administrationYearToDate + trans.expenseReport.administrationValue)|currency}}
                       </strong>
                     </td>
-                    <td>
+                    <td class="ytd-category"></td>
+                    <td class="ytd-category">
                       <strong>
                         {{(trans.expenseReport.salariesBenefitsAnnualBudget - (trans.expenseReport.salariesBenefitsYearToDate + trans.expenseReport.salariesBenefitsValue)
                            + trans.expenseReport.programDeliveryAnnualBudget - (trans.expenseReport.programDeliveryYearToDate + trans.expenseReport.programDeliveryValue)
@@ -129,7 +162,7 @@
               <h2 class="blue-header">
                 Explanation for Variances
               </h2>
-              <p>Please explain the variances in this section. Why were expenditures above or below the quarterly budgeted amount? Program managers must be contacted if a program is unstaffed for 30 days or more.</p>
+              <p>(Please explain any variance in the comment section below.) Program Managers must be contacted if program is unstaffed for 30 days or more.</p>
               <div class="form-group">
                 <label for="salariesBenefitsDescription">Salaries and Benefits</label>
                 <textarea [(ngModel)]="trans.expenseReport.salariesBenefitsDescription" name="salariesBenefitsDescription" id="salariesBenefitsDescription" cols="30" rows="5" class="form-control" placeholder="Comments here..."></textarea>

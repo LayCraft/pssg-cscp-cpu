@@ -1,6 +1,7 @@
 
 export interface iExpenseReport {
   expenseReportId?: string;
+  reportingPeriod?: any;
   // salary benefits program delivery and administration expense
   administrationDescription?: string;
   administrationAnnualBudget?: number;
