@@ -2,24 +2,33 @@
 
 <div class="form-group">
   <label for="hrPolicies">
-    Do your organization's human resource policies and procedures comply with the
+    Please click to confirm your organization's compliance with the <i>Standards Act of BC</i>, the <i>BC Human Rights Code</i> and the <i>Workers Compensation Act (WorkSafe BC)</i>
   </label>
   <div class="form-check">
-    <input [disabled]="isDisabled" #compliantEmploymentStandardsAct="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.compliantEmploymentStandardsAct" class="form-check-input" type="checkbox" value="" id="compliantEmploymentStandardsAct" name="compliantEmploymentStandardsAct">
+    <input [disabled]="isDisabled" #compliantEmploymentStandardsAct="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.compliantEmploymentStandardsAct" class="form-check-input" type="checkbox" value="" id="compliantEmploymentStandardsAct" name="compliantEmploymentStandardsAct" required>
     <label class="form-check-label" for="compliantEmploymentStandardsAct">
       Employment Standards Act of BC?
     </label>
+    <!-- <div class="invalid-feedback" [hidden]="formHelper.checkBoxRequired(transmogrifierProgramApplication.administrativeInformation.compliantEmploymentStandardsAct)">
+      Try Again
+    </div> -->
   </div>
   <div class="form-check">
-    <input [disabled]="isDisabled" #compliantHumanRights="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.compliantHumanRights" class="form-check-input" type="checkbox" value="" id="compliantHumanRights" name="compliantHumanRights">
+    <input [disabled]="isDisabled" #compliantHumanRights="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.compliantHumanRights" class="form-check-input" type="checkbox" value="" id="compliantHumanRights" name="compliantHumanRights" required>
     <label class="form-check-label" for="compliantHumanRights">
       BC's Human Rights Code?
     </label>
+    <!-- <div class="invalid-feedback" [hidden]="formHelper.checkBoxRequired(transmogrifierProgramApplication.administrativeInformation.compliantHumanRights)" style="display: inherit">
+      Try again
+    </div> -->
   </div>
   <div class="form-check">
-    <input [disabled]="isDisabled" #compliantWorkersCompensation="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.compliantWorkersCompensation" class="form-check-input" type="checkbox" value="" id="compliantWorkersCompensation" name="compliantWorkersCompensation"> <label class="form-check-label" for="compliantWorkersCompensation">
+    <input [disabled]="isDisabled" #compliantWorkersCompensation="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.compliantWorkersCompensation" class="form-check-input" type="checkbox" value="" id="compliantWorkersCompensation" name="compliantWorkersCompensation"> <label class="form-check-label" for="compliantWorkersCompensation" required>
       Worker's Compensation Act (WorkSafe BC)?
     </label>
+    <!-- <div class="invalid-feedback" [hidden]="formHelper.checkBoxRequired(transmogrifierProgramApplication.administrativeInformation.compliantWorkersCompensation)" style="display: inherit">
+      Try again
+    </div> -->
   </div>
 </div>
 

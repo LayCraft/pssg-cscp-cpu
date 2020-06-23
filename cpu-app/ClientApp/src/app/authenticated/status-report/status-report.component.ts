@@ -28,6 +28,8 @@ export class StatusReportComponent implements OnInit, OnDestroy {
   stepperIndex: number = 0;
   saving: boolean = false;
   didload: boolean = false;
+  isCompleted: boolean = false;
+
   public formHelper = new FormHelper();
   constructor(
     private notificationQueueService: NotificationQueueService,
@@ -39,6 +41,13 @@ export class StatusReportComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(q => {
+      console.log(q);
+      if (q && q.completed) {
+        this.isCompleted = q.completed == "true";
+      }
+    });
+
     this.didload = false;
     this.mainTrans = this.stateService.main.getValue();
     this.route.params.subscribe(p => {
@@ -152,7 +161,7 @@ export class StatusReportComponent implements OnInit, OnDestroy {
         // for each question assemble shared elements
         srq.questions.forEach((q: iQuestion) => {
           // depending on types we add another property
-          if (q.type === 'number' && q.number === null) {
+          if (q.type === 'number' && (q.number === null || q.numberMask === "")) {
             let stepperWithError = this.stepperElements.find(s => s.itemName === srq.name);
             if (stepperWithError) {
               this.stepperService.setStepperElementProperty(stepperWithError.id, "formState", "invalid");
@@ -235,7 +244,6 @@ export class StatusReportComponent implements OnInit, OnDestroy {
     }
   }
 
-
   checkForRequiredChildQuestion(q: iQuestion, questions: iQuestion[]) {
     let childQuestion = questions.find(ques => ques.parent_id === q.uuid);
     if (childQuestion) {
@@ -247,46 +255,6 @@ export class StatusReportComponent implements OnInit, OnDestroy {
       }
     }
   }
-
-  //There are 2 boolean questions that if answered yes, the explanation for that question is mandatory.
-  //Since there's only two, and this is required, AND there is a plan in place to improve the detection of mandatory fields in the future,
-  //we are hardcoding this for now and can't wait for the improvement to get implemented.
-  // validateCertainExplanationFields() {
-  //   let isValid = true;
-  //   let questionCollections: iQuestionCollection[] = this.trans.statusReportQuestions;
-
-  //   questionCollections.forEach(qc => {
-  //     let questions: iQuestion[] = qc.questions;
-  //     for (let i = 0; i < questions.length; ++i) {
-  //       if ((questions[i].label === "Has the Program been understaffed for more than 30 days?" || questions[i].label === "Have there been any personnel changes to the program?")
-  //         && questions[i].boolean === true) {
-  //         if ((i + 1) >= questions.length) continue;
-  //         if (!questions[i + 1].string) {
-  //           isValid = false;
-  //         }
-  //       }
-  //     }
-  //   });
-
-  //   return isValid;
-  // }
-  // validateCertainExplanationFieldsForCurrentTab(index) {
-  //   let isValid = true;
-  //   let questionCollection: iQuestionCollection = this.trans.statusReportQuestions[index];
-
-  //   let questions: iQuestion[] = questionCollection.questions;
-  //   for (let i = 0; i < questions.length; ++i) {
-  //     if ((questions[i].label === "Has the Program been understaffed for more than 30 days?" || questions[i].label === "Have there been any personnel changes to the program?")
-  //       && questions[i].boolean === true) {
-  //       if ((i + 1) >= questions.length) continue;
-  //       if (!questions[i + 1].string) {
-  //         isValid = false;
-  //       }
-  //     }
-  //   }
-
-  //   return isValid;
-  // }
   validateCurrentQuestionsAreFilledIn(index = this.stepperIndex) {
     let isValid = true;
     let questionCollection: iQuestionCollection = this.trans.statusReportQuestions[index];

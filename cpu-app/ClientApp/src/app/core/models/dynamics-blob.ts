@@ -52,6 +52,9 @@ export interface iDynamicsCrmContact {
   lastname?: string;
   middlename?: string;
   mobilephone?: string;
+  vsd_mainphoneextension?: string;
+  telephone2?: string;
+  vsd_homephoneextension?: string;
   statecode?: number;
   vsd_bceid?: string;
   vsd_contact_vsd_programid?: string; // added when contact is listed in a program. Which program id are they under
@@ -101,6 +104,7 @@ export interface iDynamicsCrmProgram {
   vsd_city?: string;
   vsd_costshare?: boolean;
   vsd_country?: string;
+  vsd_cpu_estimatedsubtotalcomponentvalue?: number;
   vsd_cpu_numberofhours?: number;
   vsd_cpu_per?: number;
   vsd_cpu_program_location?: string;
@@ -137,6 +141,7 @@ export interface iDynamicsCrmTask {
   fortunecookieetag: string;
   fortunecookietype: string;
   scheduledend?: string;
+  modifiedon?: string;
   statecode?: number;
   statuscode?: number;
   subject?: string;
@@ -381,6 +386,7 @@ export interface iDynamicsMonthlyStatisticsQuestionsProgram {
   _vsd_serviceproviderid_value?: string;
   vsd_name?: string;
   vsd_programid?: string;
+  vsd_cpu_numberofhours?: number;
 }
 export interface iDynamicsMonthlyStatisticsQuestionsQuestion {
   _vsd_categoryid_value?: string;

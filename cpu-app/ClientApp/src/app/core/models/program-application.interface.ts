@@ -18,6 +18,7 @@ export interface iProgramApplication extends iContactInformation {
   hasMailingAddress?: boolean;
   isPoliceBased: boolean;
   governmentFunder: string;
+  estimatedContractValue: number;
 
   // revenueSources: iRevenueSource[];
   additionalStaff: iPerson[];

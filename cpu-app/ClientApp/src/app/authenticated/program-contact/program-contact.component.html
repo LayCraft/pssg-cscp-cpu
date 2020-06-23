@@ -17,15 +17,13 @@
         <h2 class="blue-header">Main Program Information</h2>
         <div class="form-group">
           <label for="serviceArea">Assignment Area</label>
-          <input class="form-control" type="text" [ngModel]="programApplication.assignmentArea" id="serviceArea"
-            name="serviceArea" disabled>
+          <input class="form-control" type="text" [ngModel]="programApplication.assignmentArea" id="serviceArea" name="serviceArea" disabled>
         </div>
         <div class="form-group">
           <label for="programLocation">Program Location</label>
-          <input class="form-control" type="text" [ngModel]="programApplication.programLocation" id="programLocation"
-            name="programLocation" disabled>
+          <input class="form-control" type="text" [ngModel]="programApplication.programLocation" id="programLocation" name="programLocation" disabled>
         </div>
-        
+
 
         <!-- <h2 class="blue-header">Primary Program Contact Information</h2> -->
         <!-- <app-primary-contact-info [(contactInformation)]="programApplication"></app-primary-contact-info> -->
@@ -33,8 +31,7 @@
           <div class="col-md">
             <div class="form-group">
               <label for="emailAddress">Email</label>
-              <input type="text" class="form-control" id="emailAddress" name="emailAddress"
-                [(ngModel)]="programApplication.emailAddress" #emailAddress="ngModel" (input)="formHelper.trimInput($event.target)" [pattern]="emailRegex">
+              <input type="text" class="form-control" id="emailAddress" name="emailAddress" [(ngModel)]="programApplication.emailAddress" #emailAddress="ngModel" (input)="formHelper.trimInput($event.target)" [pattern]="emailRegex">
               <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(emailAddress)">
                 Ok
               </div>
@@ -48,8 +45,7 @@
           <div class="col-md">
             <div class="form-group">
               <label for="phoneNumber">Phone Number</label>
-              <input type="text" mask='(000) 000 0000' class="form-control" id="phoneNumber" name="phoneNumber"
-                [(ngModel)]="programApplication.phoneNumber" #phoneNumber="ngModel" [pattern]="phoneRegex">
+              <input type="text" mask='(000) 000 0000' class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="programApplication.phoneNumber" #phoneNumber="ngModel" [pattern]="phoneRegex">
               <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber)">
                 Ok
               </div>
@@ -61,8 +57,7 @@
           <div class="col-md">
             <div class="form-group">
               <label for="faxNumber">Fax Number (Optional)</label>
-              <input type="text" mask='(000) 000 0000' class="form-control" id="faxNumber" name="faxNumber"
-                [(ngModel)]="programApplication.faxNumber" #faxNumber="ngModel" [pattern]="phoneRegex">
+              <input type="text" mask='(000) 000 0000' class="form-control" id="faxNumber" name="faxNumber" [(ngModel)]="programApplication.faxNumber" #faxNumber="ngModel" [pattern]="phoneRegex">
               <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(faxNumber)">
                 Ok
               </div>
@@ -73,7 +68,9 @@
           </div>
         </div>
 
-        
+        <div>
+          <p class="address-info-message">*Street address not required if program is located in a transition house or safe home</p>
+        </div>
         <app-address2 [(address)]="programApplication.mainAddress"></app-address2>
 
         <h2 class="blue-header mt-4">Mailing Address</h2>
@@ -92,8 +89,7 @@
         </div>
         <span class="mb-4">
           <h2 class="blue-header">Program Contact</h2>
-          <app-person-picker [title]="'Please select a program contact.'"
-            [(person)]="programApplication.programContact">
+          <app-person-picker [title]="'Please select a program contact.'" [(person)]="programApplication.programContact">
           </app-person-picker>
         </span>
       </div>
@@ -103,7 +99,7 @@
       <div class="col-md-4"></div>
       <div class="col">
         <button (click)="save(true)" [class.is-disabled]="saving" class="btn btn-primary">Save and Exit</button>
-        <button class="btn btn-primary ml-2" (click)="save()">Save</button>
+        <button class="btn btn-primary ml-2" [class.is-disabled]="saving" (click)="save()">Save</button>
       </div>
     </div>
   </div>

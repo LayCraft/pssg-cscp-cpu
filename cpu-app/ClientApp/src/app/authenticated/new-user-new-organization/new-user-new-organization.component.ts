@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormHelper } from '../../core/form-helper';
-import { EMAIL, PHONE_NUMBER, LETTERS_SPACES } from '../../core/constants/regex.constants';
+import { EMAIL, PHONE_NUMBER, LETTERS_SPACES, NAME_REGEX } from '../../core/constants/regex.constants';
 import { StateService } from '../../core/services/state.service';
 import { Router } from '@angular/router';
 import { TransmogrifierNewUser } from '../../core/models/converters/transmogrifier-new-user.class';
@@ -18,6 +18,7 @@ export class NewUserNewOrganizationComponent implements OnInit {
   emailRegex: RegExp = EMAIL;
   phoneRegex: RegExp = PHONE_NUMBER;
   wordRegex: RegExp = LETTERS_SPACES;
+  nameRegex: RegExp = NAME_REGEX;
   organizationName: string;
   saving: boolean = false;
   trans: TransmogrifierNewUser = new TransmogrifierNewUser();
@@ -38,13 +39,13 @@ export class NewUserNewOrganizationComponent implements OnInit {
       this.trans.organizationId = userSettings.accountId;
       this.trans.userId = userSettings.userId
 
-      if (!this.trans.serviceProvider.name) {
-        this.notificationQueueService.addNotification('An Organization must have a name.', 'warning');
+      if (!this.trans.hasRequiredOrganizationFields()) {
+        this.notificationQueueService.addNotification('Please fill in required Organization information.', 'warning');
         return;
       }
 
-      if (!this.trans.person.firstName || !this.trans.person.lastName) {
-        this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
+      if (!this.trans.hasRequiredFields()) {
+        this.notificationQueueService.addNotification('Please fill in required fields.', 'warning');
         return;
       }
 

@@ -13,6 +13,9 @@ export interface iPerson {
   orgId?: string;
   personId?: string;
   phone?: string;
+  phoneExtension?: string;
+  phone2?: string;
+  phone2Extension?: string;
   title?: string;
   userId?: string;
   employmentStatus?: string;

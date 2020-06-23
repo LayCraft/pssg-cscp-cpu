@@ -2,7 +2,7 @@
   <div class="form-row">
     <div class="col-md">
       <div class="form-group">
-        <label>Address Line 1</label>
+        <label [class.required]="addRequiredClass">Address Line 1</label>
         <input [disabled]="isDisabled" type="text" class="form-control required" [(ngModel)]="address.line1" #line1="ngModel">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(line1)">
           Ok
@@ -28,7 +28,7 @@
   <div class="form-row">
     <div class="col-md">
       <div class="form-group">
-        <label>City</label>
+        <label [class.required]="addRequiredClass">City</label>
         <input [disabled]="isDisabled" type="text" class="form-control" [(ngModel)]="address.city" #city="ngModel">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(city)">
           Ok
@@ -57,7 +57,7 @@
   <div class="form-row">
     <div class="col-md">
       <div class="form-group">
-        <label>Postal Code</label>
+        <label [class.required]="addRequiredClass">Postal Code</label>
         <input [disabled]="isDisabled" type="text" class="form-control" [(ngModel)]="address.postalCode" #postalCode="ngModel" (input)="formHelper.trimPostalCode($event.target)" [pattern]="postalRegex" placeholder="X1X 2Y2 or X1X2Y2">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(postalCode)" style="display: inherit">
           Ok

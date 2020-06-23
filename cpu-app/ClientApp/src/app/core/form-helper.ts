@@ -14,6 +14,9 @@ export class FormHelper {
   showInvalidFeedback(value: any, pattern: RegExp, control: AbstractControl) {
     return (!value || pattern.test(value));
   }
+  checkBoxRequired(value: any): boolean {
+    return value;
+  }
   validateHours(scheduledHours: number, serviceHours: number) {
     if (!scheduledHours) return true;
     return scheduledHours < serviceHours;
@@ -138,6 +141,11 @@ export class FormHelper {
     let variable = this.fetchVarInfo(context, varName);
     variable.obj[variable.prop] = parseFloat(e.value);
   }
+  maskToPositiveNumber(e: any, context: any, varName) {
+    let variable = this.fetchVarInfo(context, varName);
+    e.value = e.value.replace(/-/g, '');
+    variable.obj[variable.prop] = parseFloat(e.value);
+  }
   maskToTime(e: any, context: any, varName) {
     let variable = this.fetchVarInfo(context, varName);
     let timeParts = e.value.split(' : ').map(a => parseInt(a));
@@ -200,5 +208,17 @@ export class FormHelper {
     if (countSpaces > 1) {
       e.value = e.value.trimRight();
     }
+  }
+  fetchFromObject(obj, prop) {
+    if (typeof obj === 'undefined') {
+      return false;
+    }
+
+    var _index = prop.indexOf('.')
+    if (_index > -1) {
+      return this.fetchFromObject(obj[prop.substring(0, _index)], prop.substr(_index + 1));
+    }
+
+    return obj[prop];
   }
 }

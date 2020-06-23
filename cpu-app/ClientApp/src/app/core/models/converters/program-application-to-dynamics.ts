@@ -59,6 +59,9 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
   // if there is no board contact we should remove the board contact before submitting.
 
   const programContactCollection: iDynamicsProgramContactPost[] = [];
+  const removeProgramContactCollection: iDynamicsRemoveProgramContactPost[] = [];
+  const programSubContractorCollection: iDynamicsProgramContactPost[] = [];
+  const removeSubContractorCollection: iDynamicsRemoveProgramContactPost[] = [];
   trans.programApplications.forEach((pa: iProgramApplication) => {
     // in each program add the list of staff by their id
     pa.additionalStaff.forEach((s: iPerson): void => {
@@ -70,13 +73,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       // add the contact
       programContactCollection.push(contact);
     });
-  });
-  // if there are elements in the array add the item.
-  if (programContactCollection.length) post.AddProgramContactCollection = programContactCollection;
 
-  const removeProgramContactCollection: iDynamicsRemoveProgramContactPost[] = [];
-  trans.programApplications.forEach((pa: iProgramApplication) => {
-    // in each program add the list of staff by their id
     pa.removedStaff.forEach((s: iPerson): void => {
       if (!pa.programId) console.log('Missing program id!', pa);
       const contact: iDynamicsRemoveProgramContactPost = {
@@ -86,12 +83,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       // add the contact
       removeProgramContactCollection.push(contact);
     });
-  });
-  if (removeProgramContactCollection.length) post.RemoveProgramContactCollection = removeProgramContactCollection;
 
-  const programSubContractorCollection: iDynamicsProgramContactPost[] = [];
-  trans.programApplications.forEach((pa: iProgramApplication) => {
-    // in each program add the list of staff by their id
     pa.subContractedStaff.forEach((s: iPerson): void => {
       if (!pa.programId) console.log('Missing program id!', pa);
       const contact: iDynamicsProgramContactPost = {
@@ -101,13 +93,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       // add the contact
       programSubContractorCollection.push(contact);
     });
-  });
-  // if there are elements in the array add the item.
-  if (programSubContractorCollection.length) post.AddProgramSubContractorCollection = programSubContractorCollection;
 
-  const removeSubContractorCollection: iDynamicsRemoveProgramContactPost[] = [];
-  trans.programApplications.forEach((pa: iProgramApplication) => {
-    // in each program add the list of staff by their id
     pa.removedSubContractedStaff.forEach((s: iPerson): void => {
       if (!pa.programId) console.log('Missing program id!', pa);
       const contact: iDynamicsRemoveProgramContactPost = {
@@ -118,6 +104,10 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       removeSubContractorCollection.push(contact);
     });
   });
+  // if there are elements in the array add the item.
+  if (programContactCollection.length) post.AddProgramContactCollection = programContactCollection;
+  if (removeProgramContactCollection.length) post.RemoveProgramContactCollection = removeProgramContactCollection;
+  if (programSubContractorCollection.length) post.AddProgramSubContractorCollection = programSubContractorCollection;
   if (removeSubContractorCollection.length) post.RemoveProgramSubContractorCollection = removeSubContractorCollection;
 
   const programCollection: iDynamicsCrmProgramPost[] = [];
@@ -173,10 +163,13 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     if (contactCollection.length) post.ContactCollection = contactCollection;
     // push hours into schedule collection
     const scheduleCollection = [];
-    p.operationHours
+
+    let opHours = p.operationHours.filter(h => !isEmptyHours(h));
+    let stdHours = p.standbyHours.filter(h => !isEmptyHours(h));
+    opHours
       .map((h: iHours): iDynamicsSchedule => convertHoursToDynamics(h, p.programId))
       .forEach((d: iDynamicsSchedule) => scheduleCollection.push(d));
-    p.standbyHours
+    stdHours
       .map((h: iHours): iDynamicsSchedule => convertHoursToDynamics(h, p.programId, true))
       .forEach((d: iDynamicsSchedule) => scheduleCollection.push(d));
     // if there are elements in the schedule collection then add them to the post
@@ -186,3 +179,12 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
 
 }
 
+
+function isEmptyHours(obj) {
+  for (var key in obj) {
+    if (key == "isAMClosed" || key == "isAMOpen" || key == "isActive") continue;
+    if (obj[key] != null && obj[key] != "")
+      return false;
+  }
+  return true;
+}

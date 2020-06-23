@@ -5,3 +5,15 @@
 .contracts-header {
     background-color: #e2edf8;
 }
+
+.current-contracts-header {
+    background-color: #d9e7d8;
+}
+
+.upcoming-contracts-header {
+    background-color: #fef4dd;
+}
+
+.previous-contracts-header {
+    background-color: #eaf2fa;
+}

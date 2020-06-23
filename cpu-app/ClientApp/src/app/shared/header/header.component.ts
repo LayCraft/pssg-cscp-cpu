@@ -10,7 +10,7 @@ import { UserDataService } from '../../core/services/user-data.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  title: string = 'Victims Services Community Programs Unit';
+  title: string = 'Victim Services Community Programs Unit';
   currentUser: string;
   nameAssemble;
   loggedIn: boolean = false;

@@ -52,7 +52,7 @@ export class ProgramComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private fb: FormBuilder
   ) {
-    this.tabs = ['Contact Information', 'Delivery Information'];
+    this.tabs = ['Program Information', 'Program Hours of Operations'];
     this.emailRegex = EMAIL;
     this.phoneRegex = PHONE_NUMBER;
   }
@@ -63,8 +63,15 @@ export class ProgramComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // this.programFormGroup = new FormGroup({});
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
+      console.log("program sub");
       this.trans = m;
       this.persons = m.persons;
+      if (this.programApplication.standbyHours.length == 0) {
+        this.addStandbyHours();
+      }
+      if (this.programApplication.operationHours.length == 0) {
+        this.addOperationHours();
+      }
     });
     this.onInput();
     this.personsObj.persons = this.programApplication.additionalStaff;
@@ -72,6 +79,12 @@ export class ProgramComponent implements OnInit, OnDestroy {
     this.subContractedPersonsObj.persons = this.programApplication.subContractedStaff;
     this.subContractedPersonsObj.removedPersons = this.programApplication.removedSubContractedStaff;
     this.perType = perTypeDict[this.programApplication.perType];
+    if (this.programApplication.standbyHours.length == 0) {
+      this.addStandbyHours();
+    }
+    if (this.programApplication.operationHours.length == 0) {
+      this.addOperationHours();
+    }
 
     this.programFormGroup = this.fb.group({
       'scheduledHours': new FormControl({ disabled: this.isDisabled, value: this.programApplication.scheduledHours }, Validators.min(this.programApplication.numberOfHours))

@@ -171,6 +171,7 @@ export class TransmogrifierProgramApplication {
         phoneNumber: p.vsd_phonenumber,
         programId: p.vsd_programid,
         governmentFunder: p.vsd_governmentfunderagency,
+        estimatedContractValue: p.vsd_cpu_estimatedsubtotalcomponentvalue,
         // serviceArea: g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrictlookup2_value === x.vsd_regiondistrictid).map(a => a.vsd_name)[0] || 'Unknown', //p._vsd_cpu_regiondistrictlookup2_value,
         mainAddress: {
           line1: p.vsd_addressline1 || null,
@@ -220,7 +221,7 @@ export class TransmogrifierProgramApplication {
         perType: p.vsd_cpu_per || 100000000,
         removedStaff: [],
         removedSubContractedStaff: [],
-        currentTab: "Contact Information",
+        currentTab: "Program Information", //make this more general - set to tabs[0] instead of hardcoded
       } as iProgramApplication;
 
       if (_.isEqual(temp.mailingAddress, temp.mainAddress)) {

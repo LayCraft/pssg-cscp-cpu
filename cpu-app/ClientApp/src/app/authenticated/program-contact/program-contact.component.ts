@@ -42,6 +42,8 @@ export class ProgramContactComponent implements OnInit, OnDestroy {
   saving: boolean = false;
   private stateSubscription: Subscription;
 
+  REQUIRED_FIELDS: string[] = ["programApplication.emailAddress", "programApplication.phoneNumber"];
+
   constructor(
     private notificationQueueService: NotificationQueueService,
     private stateService: StateService,
@@ -77,6 +79,9 @@ export class ProgramContactComponent implements OnInit, OnDestroy {
 
             // make the transmogrifier for this form
             this.programTrans = new TransmogrifierProgramApplication(f);
+
+            console.log("program trans");
+            console.log(this.programTrans);
             this.programApplication = this.programTrans.programApplications.find(pa => pa.programId === p['programId']);
 
             if (!this.programApplication) {
@@ -141,22 +146,39 @@ export class ProgramContactComponent implements OnInit, OnDestroy {
     this.onInput();
 
   }
+  hasRequiredFields() {
+    for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
+      if (!this.formHelper.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
   save(shouldExit: boolean = false): void {
     try {
-      this.saving = true;
-      this.out = convertProgramApplicationToDynamics(this.programTrans);
-      this.programApplicationService.setProgramApplication(this.out).subscribe(
-        r => {
-          console.log(r);
-          this.notificationQueueService.addNotification(`You have successfully saved the program contact.`, 'success');
-          if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
-        },
-        err => {
-          console.log(err);
-          this.notificationQueueService.addNotification('The program contact could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-          this.saving = false;
-        }
-      );
+
+      if (this.hasRequiredFields()) {
+        this.saving = true;
+        this.out = convertProgramApplicationToDynamics(this.programTrans);
+        this.programApplicationService.setProgramApplication(this.out).subscribe(
+          r => {
+            console.log(r);
+            this.notificationQueueService.addNotification(`You have successfully saved the program contact.`, 'success');
+            this.saving = false;
+            if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
+          },
+          err => {
+            console.log(err);
+            this.notificationQueueService.addNotification('The program contact could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+            this.saving = false;
+          }
+        );
+      }
+      else {
+        this.saving = false;
+        // notify the user that this user was not saved.
+        this.notificationQueueService.addNotification('Email and Phone Number are rquired.', 'warning');
+      }
     }
     catch (err) {
       console.log(err);
