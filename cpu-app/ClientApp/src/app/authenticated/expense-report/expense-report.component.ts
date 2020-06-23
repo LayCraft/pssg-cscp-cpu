@@ -34,8 +34,10 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
     quarterlyBudgetSum: null,
     actualSum: null,
     quarterlyVarianceSum: null,
+    paidYearToDateSum: null,
     actualYearToDateSum: null,
     annualVarianceSum: null,
+    annualRemainingSum: null,
   };
 
   //org/program info
@@ -48,6 +50,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
   out: iDynamicsPostScheduleG;
   currentUser: iPerson;
   perType: string;
+  isCompleted: boolean = false;
 
   public formHelper = new FormHelper();
   private stateSubscription: Subscription;
@@ -66,6 +69,13 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
     this.stateSubscription.unsubscribe();
   }
   ngOnInit() {
+    this.route.queryParams.subscribe(q => {
+      console.log(q);
+      if (q && q.completed) {
+        this.isCompleted = q.completed == "true";
+      }
+    });
+
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       // save the transmogrifier
       this.mainTrans = m;
@@ -157,11 +167,16 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
       this.stepperService.addStepperElement(f.object, f.itemName, f.formState, f.discriminator);
     });
 
+    if (this.isCompleted) {
+      this.stepperElements.pop();
+    }
+
     // put the page naviagation to the first page
     this.stepperService.setToFirstStepperElement();
   }
 
   calculateLineItemSums() {
+    let self = this;
     //annual budgeted amount
     this.lineItemSums['annualBudgetSum'] = this.trans.expenseReport.programExpenseLineItems
       .map(l => l.annualBudget)
@@ -178,16 +193,25 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
     this.lineItemSums['quarterlyVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
       .map(l => l.quarterlyBudget - l.actual)
       .reduce((prev, curr) => prev + curr);
+    // //Paid YTD sum
+    this.lineItemSums['paidYearToDateSum'] = this.trans.expenseReport.programExpenseLineItems
+      .map(l => l.annualBudget / 4 * self.trans.expenseReport.reportingPeriod.multiplier)
+      .reduce((prev, curr) => prev + curr);
     // //Actual YTD sum
     this.lineItemSums['actualYearToDateSum'] = this.trans.expenseReport.programExpenseLineItems
       .map(l => l.actualYearToDate + l.actual)
       .reduce((prev, curr) => prev + curr);
     // //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
+      .map(l => (l.annualBudget / 4 * self.trans.expenseReport.reportingPeriod.multiplier) - (l.actualYearToDate + l.actual))
+      .reduce((prev, curr) => prev + curr);
+    // //YTD remaining
+    this.lineItemSums['annualRemainingSum'] = this.trans.expenseReport.programExpenseLineItems
       .map(l => l.annualBudget - (l.actualYearToDate + l.actual))
       .reduce((prev, curr) => prev + curr);
   }
   updateLineItemSums() {
+    let self = this;
     //actual expendatures this quarter
     this.lineItemSums['actualSum'] = this.trans.expenseReport.programExpenseLineItems
       .map(l => l.actual)
@@ -202,6 +226,10 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
       .reduce((prev, curr) => prev + curr);
     // //YTD variance
     this.lineItemSums['annualVarianceSum'] = this.trans.expenseReport.programExpenseLineItems
+      .map(l => (l.annualBudget / 4 * self.trans.expenseReport.reportingPeriod.multiplier) - (l.actualYearToDate + l.actual))
+      .reduce((prev, curr) => prev + curr);
+    // //YTD remaining
+    this.lineItemSums['annualRemainingSum'] = this.trans.expenseReport.programExpenseLineItems
       .map(l => l.annualBudget - (l.actualYearToDate + l.actual))
       .reduce((prev, curr) => prev + curr);
   }
@@ -261,8 +289,8 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
 
   setNextStepper() {
     let originalStepper = _.cloneDeep(this.currentStepperElement);
-    
-    if (!this.trans.expenseReport.executiveReview) {
+
+    if (!this.trans.expenseReport.executiveReview && !this.isCompleted) {
       setTimeout(() => {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'saving');
       }, 0);

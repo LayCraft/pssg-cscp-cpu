@@ -14,6 +14,7 @@ import { VSCP_APPROVED_SOURCE_NAME } from '../../../core/models/revenue-source.i
 export class ProgramBudgetComponent implements OnInit {
   @Input() programBudget: iProgramBudget;
   @Input() currentStepperElement: iStepperElement;
+  @Input() isDisabled: boolean = false;
   @Output() programBudgetChange = new EventEmitter<iProgramBudget>();
 
   tabs: string[];

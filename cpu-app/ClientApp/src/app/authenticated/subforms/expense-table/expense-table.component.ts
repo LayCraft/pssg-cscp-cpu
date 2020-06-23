@@ -17,6 +17,7 @@ export class ExpenseTableComponent implements OnInit {
   // default expense items are the ones sent from dynamics which make up the top of the table
   @Input() defaultExpenseItems: iExpenseItem[] = [];
   @Input() vscpApprovedAmount: number = 0;
+  @Input() isDisabled: boolean = false;
   @Output() defaultExpenseItemsChange = new EventEmitter<iExpenseItem[]>();
   // expense items are the ones that the user has entered on their own
   @Input() expenseItems: iExpenseItem[] = [];
@@ -24,6 +25,7 @@ export class ExpenseTableComponent implements OnInit {
   @Input() otherDescription: string;
   @Output() meta = new EventEmitter<iExpenseTableMeta>();
   @Input() peopleExpense: boolean = false;
+  @Input() type: string = "";
 
   defaultExpenseItemsForm: iExpenseItem[] = [];
   expenseItemsForm: iExpenseItem[] = [];

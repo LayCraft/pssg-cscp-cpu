@@ -11,6 +11,7 @@ import { FormHelper } from '../../../core/form-helper';
 })
 export class RevenueSourceTableComponent implements OnInit {
   @Input() revenueSources: iRevenueSource[] = [];
+  @Input() isDisabled: boolean = false;
   @Output() revenueSourcesChange = new EventEmitter<RevenueSource[]>();
 
   totalCash: number = 0;

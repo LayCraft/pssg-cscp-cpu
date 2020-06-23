@@ -325,8 +325,8 @@ export class ProgramApplicationComponent implements OnInit {
         let index = this.programTabs.findIndex(t => t === current_program.currentTab);
         if (index < (this.programTabs.length - 1)) {
           //validate current program has required fields before moving to Program Hours of Operations
-          if (this.programHasRequiredFields(current_program)) {
-            if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass)) {
+          if (this.programHasRequiredFields(current_program) || this.isCompleted) {
+            if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass) && !this.isCompleted) {
               // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
               return;
             }

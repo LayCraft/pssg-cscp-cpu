@@ -13,10 +13,10 @@
         {{line.itemName}}
       </td>
       <td>
-        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'cost'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.costMask" min="0" id="total_cost_{{line.uuid}}">
+        <input [disabled]="isDisabled" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'cost'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.costMask" min="0" id="{{type}}_total_cost_{{line.uuid}}">
       </td>
       <td>
-        <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp', line.cost); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask" min="0" id="vscp_{{line.uuid}}">
+        <input [disabled]="isDisabled" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp', line.cost); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask" min="0" id="{{type}}_vscp_{{line.uuid}}">
       </td>
       <td>
         <!-- For spacing only -->
@@ -30,30 +30,33 @@
     <tr *ngFor="let line of expenseItemsForm; let i=index">
       <ng-container *ngIf="line.isActive">
         <td>
-          <input class="form-control" type="text" [(ngModel)]="line.otherExpenseDescription" min="0" id="expense_name_{{line.uuid}}">
+          <input [disabled]="isDisabled" class="form-control" type="text" [(ngModel)]="line.otherExpenseDescription" min="0" id="{{type}}_expense_name_{{line.uuid}}">
         </td>
         <td>
-          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'cost'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.costMask" min="0" id="total_cost_{{line.uuid}}">
+          <input [disabled]="isDisabled" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'cost'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.costMask" min="0" id="{{type}}_total_cost_{{line.uuid}}">
         </td>
         <td>
-          <input class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp', line.cost); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask" min="0" id="vscp_{{line.uuid}}">
+          <input [disabled]="isDisabled" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'fundedFromVscp', line.cost); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.fundedFromVscpMask" min="0" id="{{type}}_vscp_{{line.uuid}}">
         </td>
         <td class="align-middle">
-          <div (click)="removeExpenseItem(i)" class="remove-row-button">
+          <div (click)="removeExpenseItem(i)" class="remove-row-button" *ngIf="!isDisabled">
             <i class="fas fa-times-circle text-danger"></i>
           </div>
         </td>
       </ng-container>
     </tr>
-    <tr>
-      <td></td>
+    <tr *ngIf="!isDisabled">
+      <td colspan="4" class="add-row-td-text">
+        <button class="btn btn-info align-right" (click)="addExpenseItem()">Add</button>
+      </td>
+      <!-- <td></td>
       <td></td>
       <td></td>
       <td class="align-middle add-row-td">
-        <div (click)="addExpenseItem()" class="add-row-button">
+        <div (click)="addExpenseItem()" class="add-row-button" *ngIf="!isDisabled">
           <i class="fas fa-plus-circle text-success"></i>
         </div>
-      </td>
+      </td> -->
     </tr>
     <tr>
       <th scope="col">Total</th>

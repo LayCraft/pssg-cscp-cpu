@@ -65,12 +65,14 @@
           </thead>
           <tbody>
             <tr *ngFor="let task of contract.completedTasks">
-              <td *ngIf="task.formType == 'program_application'">
+              <!-- || task.formType == 'status_report' -->
+              <td *ngIf="task.formType == 'program_application' || task.formType == 'expense_report'  || task.formType == 'budget_proposal'">
                 <a routerLink="/authenticated/{{task.formType}}/{{task.taskId}}" [queryParams]="{completed: 'true'}">
                   {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
                 </a>
               </td>
-              <td *ngIf="task.formType != 'program_application'">{{task.taskName}}</td>
+              <!-- && task.formType != 'status_report' -->
+              <td *ngIf="task.formType != 'program_application' && task.formType != 'expense_report'  && task.formType != 'budget_proposal'">{{task.taskName}}</td>
               <td>{{task.taskTitle}}</td>
               <td>{{task.status}}</td>
               <td>{{task.taskDescription}}</td>

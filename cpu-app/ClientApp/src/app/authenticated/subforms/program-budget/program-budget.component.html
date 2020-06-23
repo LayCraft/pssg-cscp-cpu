@@ -1,7 +1,7 @@
 <!-- hacky workaround to trigger collectMeta before rendering the total program expenditures, fixes ExpressionChangedAfterItHasBeenCheckedError -->
-<app-personnel-expense-table style="display: none;" [(salariesAndBenefits)]="programBudget.salariesAndBenefits" (meta)="collectMeta( $event, sections[0])"></app-personnel-expense-table>
-<app-expense-table style="display: none;" [(defaultExpenseItems)]="programBudget.programDeliveryCosts" [(expenseItems)]="programBudget.programDeliveryOtherExpenses" [otherDescription]="'Other program-related expenses. Please include expenses one per line.'" (meta)="collectMeta( $event, sections[1])"></app-expense-table>
-<app-expense-table style="display: none;" [(defaultExpenseItems)]="programBudget.administrationCosts" [(expenseItems)]="programBudget.administrationOtherExpenses" [otherDescription]="'Other administration expenses.'" (meta)="collectMeta( $event, sections[2])"></app-expense-table>
+<app-personnel-expense-table style="display: none;" [(salariesAndBenefits)]="programBudget.salariesAndBenefits" (meta)="collectMeta( $event, sections[0])" [type]="'hidden_sb'"></app-personnel-expense-table>
+<app-expense-table style="display: none;" [(defaultExpenseItems)]="programBudget.programDeliveryCosts" [(expenseItems)]="programBudget.programDeliveryOtherExpenses" [otherDescription]="'Other program-related expenses. Please include expenses one per line.'" (meta)="collectMeta( $event, sections[1])" [type]="'hidden_pdc'"></app-expense-table>
+<app-expense-table style="display: none;" [(defaultExpenseItems)]="programBudget.administrationCosts" [(expenseItems)]="programBudget.administrationOtherExpenses" [otherDescription]="'Other administration expenses.'" (meta)="collectMeta( $event, sections[2])" [type]="'hidden_ac'"></app-expense-table>
 <ul class="nav nav-pills mb-2">
   <li *ngFor="let tab of tabs" class="nav-item">
     <a class="nav-link nav-tab" [class.active]="tab===programBudget.currentTab" (click)="setCurrentTab(tab)">{{tab}}</a>
@@ -28,7 +28,7 @@
     </li>
   </ol>
   <h2 class="blue-header">Program Revenue Sources</h2>
-  <app-revenue-source-table [(revenueSources)]="programBudget.revenueSources" (revenueSourcesChange)="getTotalGrand($event)"></app-revenue-source-table>
+  <app-revenue-source-table [(revenueSources)]="programBudget.revenueSources" (revenueSourcesChange)="getTotalGrand($event)" [isDisabled]="isDisabled"></app-revenue-source-table>
 </div>
 <div *ngIf="programBudget.currentTab===tabs[1]">
   <div class="sticky-top sticky-bottom-border">
@@ -82,9 +82,9 @@
     </span>
   </div>
   <h2 class="blue-header">{{sections[0]}}</h2>
-  <app-personnel-expense-table [(salariesAndBenefits)]="programBudget.salariesAndBenefits" [(vscpApprovedAmount)]="vscpApprovedAmount" (meta)="collectMeta( $event, sections[0])"></app-personnel-expense-table>
+  <app-personnel-expense-table [(salariesAndBenefits)]="programBudget.salariesAndBenefits" [(vscpApprovedAmount)]="vscpApprovedAmount" [isDisabled]="isDisabled" (meta)="collectMeta( $event, sections[0])" [type]="'sb'"></app-personnel-expense-table>
   <h2 class="blue-header">{{sections[1]}}</h2>
-  <app-expense-table [(defaultExpenseItems)]="programBudget.programDeliveryCosts" [(expenseItems)]="programBudget.programDeliveryOtherExpenses" [(vscpApprovedAmount)]="vscpApprovedAmount" [otherDescription]="'Other program-related expenses. Please include expenses one per line.'" (meta)="collectMeta( $event, sections[1])"></app-expense-table>
+  <app-expense-table [(defaultExpenseItems)]="programBudget.programDeliveryCosts" [(expenseItems)]="programBudget.programDeliveryOtherExpenses" [(vscpApprovedAmount)]="vscpApprovedAmount" [isDisabled]="isDisabled" [otherDescription]="'Other program-related expenses. Please include expenses one per line.'" (meta)="collectMeta( $event, sections[1])" [type]="'pdc'"></app-expense-table>
   <h2 class="blue-header">{{sections[2]}}</h2>
-  <app-expense-table [(defaultExpenseItems)]="programBudget.administrationCosts" [(expenseItems)]="programBudget.administrationOtherExpenses" [(vscpApprovedAmount)]="vscpApprovedAmount" [otherDescription]="'Other administration expenses.'" (meta)="collectMeta( $event, sections[2])"></app-expense-table>
+  <app-expense-table [(defaultExpenseItems)]="programBudget.administrationCosts" [(expenseItems)]="programBudget.administrationOtherExpenses" [(vscpApprovedAmount)]="vscpApprovedAmount" [isDisabled]="isDisabled" [otherDescription]="'Other administration expenses.'" (meta)="collectMeta( $event, sections[2])" [type]="'ac'"></app-expense-table>
 </div>

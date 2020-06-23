@@ -28,6 +28,8 @@ export class StatusReportComponent implements OnInit, OnDestroy {
   stepperIndex: number = 0;
   saving: boolean = false;
   didload: boolean = false;
+  isCompleted: boolean = false;
+
   public formHelper = new FormHelper();
   constructor(
     private notificationQueueService: NotificationQueueService,
@@ -39,6 +41,13 @@ export class StatusReportComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(q => {
+      console.log(q);
+      if (q && q.completed) {
+        this.isCompleted = q.completed == "true";
+      }
+    });
+
     this.didload = false;
     this.mainTrans = this.stateService.main.getValue();
     this.route.params.subscribe(p => {

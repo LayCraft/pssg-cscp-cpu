@@ -35,6 +35,7 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
   data: iDynamicsBudgetProposal;
   out: iDynamicsPostBudgetProposal;
   saving: boolean = false;
+  isCompleted: boolean = false;
 
   private stateSubscription: Subscription;
 
@@ -57,6 +58,13 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(q => {
+      console.log(q);
+      if (q && q.completed) {
+        this.isCompleted = q.completed == "true";
+      }
+    });
+
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       // save the transmogrifier
       this.mainTrans = m;
@@ -141,8 +149,11 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
     this.stepperService.addStepperElement(null, 'Overview', 'info', 'program_overview');
     // add the budget navigation for each item
     this.trans.programBudgets.forEach(pb => this.stepperService.addStepperElement(null, pb.name, 'untouched', pb.programId));
-    // add the authorization page
-    this.stepperService.addStepperElement(null, 'Authorization', 'untouched', 'authorization');
+
+    if (!this.isCompleted) {
+      // add the authorization page
+      this.stepperService.addStepperElement(null, 'Authorization', 'untouched', 'authorization');
+    }
     // set the stepper to the first item
     this.stepperService.setToFirstStepperElement();
   }
@@ -199,16 +210,16 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
     });
   }
   exit() {
-    if (this.formHelper.showWarningBeforeExit()) {
-      if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
-        this.stateService.refresh();
-        this.router.navigate(['/authenticated/dashboard']);
-      }
-    }
-    else {
-      this.stateService.refresh();
-      this.router.navigate(['/authenticated/dashboard']);
-    }
+    // if (this.formHelper.showWarningBeforeExit()) {
+    //   if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+    //     this.stateService.refresh();
+    //     this.router.navigate(['/authenticated/dashboard']);
+    //   }
+    // }
+    // else {
+    this.stateService.refresh();
+    this.router.navigate(['/authenticated/dashboard']);
+    // }
   }
   reloadBudgetProposal() {
     this.route.params.subscribe(p => {
@@ -311,14 +322,14 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (originalStepper.discriminator === "program_overview") {
+    if (originalStepper.discriminator === "program_overview" && !this.isCompleted) {
       //we're doing this set timeout stuff because "this" context isn't global and doesn't have access to the stepper element to update it's formState
       //in the set timeout function "this" becomes the global context that will get the stepper element
       setTimeout(() => {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'complete');
       }, 0);
     }
-    else if (!this.trans.signature.signatureDate) {
+    else if (!this.trans.signature.signatureDate && !this.isCompleted) {
       setTimeout(() => {
         this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', 'saving');
       }, 0);
