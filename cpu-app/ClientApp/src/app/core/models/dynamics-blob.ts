@@ -481,6 +481,7 @@ export interface iDynamicsFile {
 }
 export interface iDynamicsDocument {
   filename: string;
+  fileType: string;
   body: string;
   overwritetime?: string;
 }

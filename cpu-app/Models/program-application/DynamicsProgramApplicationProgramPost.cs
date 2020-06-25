@@ -31,6 +31,7 @@ namespace Gov.Cscp.Victims.Public.Models
         public string vsd_postalcodezip { get; set; }
         public string vsd_programid { get; set; }
         public string vsd_provincestate { get; set; }
+        //program contact
         private string _vsd_ContactLookupfortunecookiebind;
         public string vsd_ContactLookupfortunecookiebind
         {
@@ -42,12 +43,13 @@ namespace Gov.Cscp.Victims.Public.Models
                 }
                 else
                 {
-                    return null;
+                    return _vsd_ContactLookupfortunecookiebind;
                 }
             }
             set { _vsd_ContactLookupfortunecookiebind = value; }
         }
 
+        //police contact
         private string _vsd_ContactLookup2fortunecookiebind;
         public string vsd_ContactLookup2fortunecookiebind
         {
@@ -59,12 +61,13 @@ namespace Gov.Cscp.Victims.Public.Models
                 }
                 else
                 {
-                    return null;
+                    return _vsd_ContactLookup2fortunecookiebind;
                 }
             }
             set { _vsd_ContactLookup2fortunecookiebind = value; }
         }
 
+        //shared cost contact
         private string _vsd_ContactLookup3fortunecookiebind;
         public string vsd_ContactLookup3fortunecookiebind
         {
@@ -76,7 +79,7 @@ namespace Gov.Cscp.Victims.Public.Models
                 }
                 else
                 {
-                    return null;
+                    return _vsd_ContactLookup3fortunecookiebind;
                 }
             }
             set { _vsd_ContactLookup3fortunecookiebind = value; }

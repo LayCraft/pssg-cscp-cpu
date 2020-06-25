@@ -59,10 +59,13 @@
     <button *ngIf="!isDisabled" class="btn btn-primary mt-2 btn-add-program-staff" (click)="showAddProgramStaffDialog()">Add Missing Program Staff</button>
 
     <h2 class="blue-header mt-2">Sub-contracted Staff</h2>
-    <input [disabled]="isDisabled" [(ngModel)]="programApplication.hasSubContractedStaff" class="form-check-input" type="checkbox" id="hasSubContractedStaff" name="hasSubContractedStaff">
-    <label class="form-check-label" for="hasSubContractedStaff">
-      Select if this program employs sub-contractors
-    </label>
+    <div class="form-check">
+      <input [disabled]="isDisabled" [(ngModel)]="programApplication.hasSubContractedStaff" class="form-check-input" type="checkbox" id="hasSubContractedStaff" name="hasSubContractedStaff">
+      <label class="form-check-label" for="hasSubContractedStaff">
+        Select if this program employs sub-contractors
+      </label>
+    </div>
+
     <div *ngIf="programApplication.hasSubContractedStaff">
       <app-person-picker-list [isDisabled]="isDisabled" [isSubContractedList]="true" [label]="'Sub-contracted Staff'" [(personsObj)]="subContractedPersonsObj" (personsChange)="onSubContractedStaffChange($event)"></app-person-picker-list>
     </div>
@@ -70,10 +73,12 @@
     <div *ngIf="programApplication.isPoliceBased">
       <div>
         <h2 class="blue-header mt-2">For Police-Based Victim Service program only</h2>
-        <input [disabled]="isDisabled" [(ngModel)]="programApplication.hasPoliceContact" class="form-check-input" type="checkbox" id="hasPoliceContact" name="hasPoliceContact">
-        <label class="form-check-label" for="hasPoliceContact">
-          Select if your Police Based Victim Services Program has a police contact
-        </label>
+        <div class="form-check">
+          <input [disabled]="isDisabled" [(ngModel)]="programApplication.hasPoliceContact" class="form-check-input" type="checkbox" id="hasPoliceContact" name="hasPoliceContact">
+          <label class="form-check-label" for="hasPoliceContact">
+            Select if your Police Based Victim Services Program has a police contact
+          </label>
+        </div>
         <div *ngIf="programApplication.hasPoliceContact">
           <h5>Police Detachment / Department Supervisor</h5>
           <app-person-editor [isDisabled]="isDisabled" [(person)]="programApplication.policeContact" [isPoliceContact]="true" [idNum]="1" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
@@ -81,10 +86,12 @@
       </div>
 
       <div *ngIf="programApplication.hasPoliceContact" class="shared-cost-contact-div">
-        <input [disabled]="isDisabled" [(ngModel)]="programApplication.hasSharedCostContact" class="form-check-input" type="checkbox" id="hasSharedCostContactCheckbox" name="hasSharedCostContactCheckbox">
-        <label class="form-check-label" for="hasSharedCostContactCheckbox">
-          Please select the check box to complete your cost share contact information with local Government:
-        </label>
+        <div class="form-check">
+          <input [disabled]="isDisabled" [(ngModel)]="programApplication.hasSharedCostContact" class="form-check-input" type="checkbox" id="hasSharedCostContactCheckbox" name="hasSharedCostContactCheckbox">
+          <label class="form-check-label" for="hasSharedCostContactCheckbox">
+            Please select the check box to complete your cost share contact information with local Government:
+          </label>
+        </div>
         <div *ngIf="programApplication.hasSharedCostContact">
           <label for="governmentFunder">Name of Government Funder / Agency</label>
           <input [disabled]="isDisabled" type="text" class="form-control" id="governmentFunder" name="governmentFunder" [(ngModel)]="programApplication.governmentFunder" #governmentFunder="ngModel">

@@ -47,6 +47,13 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   private stateSubscription: Subscription;
   isContractUpload: boolean = false;
 
+  private ORGANIZATION_DOCUMENT_TYPES: string[] = ["Insurance", "General Service Agreement", "Annual Reports", "AGM Minutes", "Audited Financial Statements"];
+  private CONTRACT_DOCUMENT_TYPES: string[] = ["Referral Protocol", "Criminal Records Checks", "Custom Financial Report", "Expense Report (Invoices?)",
+    "Activity Report", "Counsellor Support Plan", "Agency-run Statistics", "Surplus Plans"];
+
+  document_types: string[] = [];
+  selectedDocumentType: string = "";
+
   private formHelper = new FormHelper();
   constructor(
     private fileService: FileService,
@@ -72,8 +79,10 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
       this.userId = this.stateService.main.getValue().userId;
       this.organizationId = this.stateService.main.getValue().organizationId;
       // collect the "contract id" which is the id included with the task.
+      this.document_types = this.ORGANIZATION_DOCUMENT_TYPES;
       this.contractId = p['contractId'];
       if (this.contractId) {
+        this.document_types = this.CONTRACT_DOCUMENT_TYPES;
         this.isContractUpload = true;
         this.contractNumber = this.trans.contracts.find(c => c.contractId == this.contractId).contractNumber;
       }
@@ -174,7 +183,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
 
           } else {
             // push a fresh file name and file contents
-            if (files.item(i).name.split('.').slice(-1)[0].indexOf("docx") >= 0) {
+            if (files.item(i).name.split('.').slice(-1)[0].indexOf("pdf") < 0) {
               this.notificationQueueService.addNotification(`Unsupported file type.`, 'danger');
               return;
             }
@@ -185,6 +194,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
 
             this.documentsToAdd.push({
               filename: files.item(i).name,
+              fileType: this.selectedDocumentType,
               body: fileDataString
             });
           }

@@ -18,9 +18,9 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     BusinessBCeID: trans.organizationId,
     UserBCeID: trans.userId,
     ContractCollection: [{
-      vsd_ContactLookup1fortunecookiebind: trans.contactInformation.executiveContact.personId,
+      vsd_ContactLookup1fortunecookiebind: trans.contactInformation.executiveContact ? trans.contactInformation.executiveContact.personId : null,
       // if the user has requested not to have a board contact we simply duplicate the link to the the executive contact
-      vsd_ContactLookup2fortunecookiebind: trans.contactInformation.hasBoardContact && trans.contactInformation.boardContact ? trans.contactInformation.boardContact.personId : trans.contactInformation.executiveContact.personId,
+      vsd_ContactLookup2fortunecookiebind: trans.contactInformation.hasBoardContact && trans.contactInformation.boardContact ? trans.contactInformation.boardContact.personId : trans.contactInformation.executiveContact ? trans.contactInformation.executiveContact.personId : null,
       vsd_cpu_subcontractedprogramstaff: trans.administrativeInformation.staffSubcontracted ? boolOptionSet.isTrue : boolOptionSet.isFalse,
       vsd_cpu_unionizedstaff: trans.administrativeInformation.staffUnionized ? boolOptionSet.isTrue : boolOptionSet.isFalse,
       vsd_cpu_insuranceoptions: encodeCglInsurance(trans.cglInsurance),
@@ -114,7 +114,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
   trans.programApplications.forEach((p: iProgramApplication) => {
     // push programs into program collection
     programCollection.push({
-      vsd_ContactLookup2fortunecookiebind: p.policeContact && p.hasPoliceContact ? p.policeContact.personId : null,
+      vsd_ContactLookup2fortunecookiebind: p.policeContact && p.hasPoliceContact ? p.policeContact.personId || "" : null,
       vsd_ContactLookup3fortunecookiebind: p.sharedCostContact && p.hasPoliceContact && p.hasSharedCostContact ? p.sharedCostContact.personId : null,
       vsd_ContactLookupfortunecookiebind: p.programContact ? p.programContact.personId : null,
       vsd_addressline1: p.mainAddress.line1,

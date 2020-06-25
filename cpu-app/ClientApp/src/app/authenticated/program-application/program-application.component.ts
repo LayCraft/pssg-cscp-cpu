@@ -13,6 +13,9 @@ import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { Address } from '../../core/models/address.class';
 import { Hours } from '../../core/models/hours.class';
+import { ContactInformation } from '../../core/models/contact-information.class';
+import { AdministrativeInformation } from '../../core/models/administrative-information.class';
+import { ProgramApplication } from '../../core/models/program-application.class';
 
 @Component({
   selector: 'app-program-application',
@@ -38,7 +41,14 @@ export class ProgramApplicationComponent implements OnInit {
 
   private formHelper = new FormHelper();
 
-  PROGRAM_REQUIRED_FIELDS: string[] = ["emailAddress", "phoneNumber"];
+  REQUIRED_FIELDS: any = {
+    contact_information: [],
+    administrative_information: [],
+    commercial_general_liability_insurance: [],
+    program: ["emailAddress", "phoneNumber"],
+    review_application: [],
+    authorization: [],
+  }
 
   constructor(
     private notificationQueueService: NotificationQueueService,
@@ -125,13 +135,14 @@ export class ProgramApplicationComponent implements OnInit {
       {
         itemName: 'Applicant Contact Information',
         formState: 'untouched',
-        object: null,
+        object: { type: ContactInformation, data: m.contactInformation },
         discriminator: 'contact_information',
+
       },
       {
         itemName: 'Applicant Administrative Information',
         formState: 'untouched',
-        object: null,
+        object: { type: AdministrativeInformation, data: m.administrativeInformation },
         discriminator: 'administrative_information',
       },
       {
@@ -152,7 +163,7 @@ export class ProgramApplicationComponent implements OnInit {
 
     // add the programs to the list
     this.trans.programApplications.forEach((p: iProgramApplication) => {
-      this.stepperService.addStepperElement({ programId: p.programId }, p.name, 'untouched', 'program');
+      this.stepperService.addStepperElement({ type: ProgramApplication, data: p }, p.name, 'untouched', 'program');
     });
     // Write the default end part
 
@@ -191,6 +202,17 @@ export class ProgramApplicationComponent implements OnInit {
           resolve();
           return;
         }
+
+        if (originalStepper.object) {
+          let obj_to_validate = new originalStepper.object.type(originalStepper.object.data);
+          // console.log(obj_to_validate);
+          // console.log(obj_to_validate.hasRequiredFields());
+          if (!obj_to_validate.hasRequiredFields()) {
+            this.notificationQueueService.addNotification('Please fill in all required fields', 'warning');
+            return;
+          }
+        }
+
         this.saving = true;
         console.log("saving...");
         console.log(_.cloneDeep(this.trans));
@@ -305,18 +327,30 @@ export class ProgramApplicationComponent implements OnInit {
       );
     });
   }
-  programHasRequiredFields(program: iProgramApplication) {
-    for (let i = 0; i < this.PROGRAM_REQUIRED_FIELDS.length; ++i) {
-      if (!this.formHelper.fetchFromObject(program, this.PROGRAM_REQUIRED_FIELDS[i])) {
-        return false;
-      }
-    }
+  // programHasRequiredFields(program: iProgramApplication) {
+  //   for (let i = 0; i < this.PROGRAM_REQUIRED_FIELDS.length; ++i) {
+  //     if (!this.formHelper.fetchFromObject(program, this.PROGRAM_REQUIRED_FIELDS[i])) {
+  //       return false;
+  //     }
+  //   }
 
-    return true;
-  }
+  //   return true;
+  // }
+
   setNextStepper() {
     let originalStepper = _.cloneDeep(this.currentStepperElement);
     let currentTabHasInvalidClass = originalStepper.formState === "invalid" ? 1 : 0;
+
+    // console.log(originalStepper.object);
+    if (originalStepper.object) {
+      let obj_to_validate = new originalStepper.object.type(originalStepper.object.data);
+      // console.log(obj_to_validate);
+      // console.log(obj_to_validate.hasRequiredFields());
+      if (!obj_to_validate.hasRequiredFields()) {
+        this.notificationQueueService.addNotification('Please fill in all required fields', 'warning');
+        return;
+      }
+    }
 
     //handling for stepper elements that have sub tabs
     if (originalStepper.discriminator === this.discriminators[3]) {
@@ -325,19 +359,19 @@ export class ProgramApplicationComponent implements OnInit {
         let index = this.programTabs.findIndex(t => t === current_program.currentTab);
         if (index < (this.programTabs.length - 1)) {
           //validate current program has required fields before moving to Program Hours of Operations
-          if (this.programHasRequiredFields(current_program) || this.isCompleted) {
-            if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass) && !this.isCompleted) {
-              // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
-              return;
-            }
-            current_program.currentTab = this.programTabs[index + 1];
-            window.scrollTo(0, 0);
+          // if (this.programHasRequiredFields(current_program) || this.isCompleted) {
+          if (!this.formHelper.isFormValid(this.notificationQueueService, currentTabHasInvalidClass) && !this.isCompleted) {
+            // this.stepperService.setStepperElementProperty(originalStepper.id, 'formState', this.formHelper.getFormState());
             return;
           }
-          else {
-            this.notificationQueueService.addNotification('Email and Phone Number are rquired.', 'warning');
-            return;
-          }
+          current_program.currentTab = this.programTabs[index + 1];
+          window.scrollTo(0, 0);
+          return;
+          // }
+          // else {
+          //   this.notificationQueueService.addNotification('Email and Phone Number are rquired.', 'warning');
+          //   return;
+          // }
         }
       }
     }

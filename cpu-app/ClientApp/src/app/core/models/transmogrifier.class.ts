@@ -149,7 +149,8 @@ export class Transmogrifier {
           phone: program.vsd_phonenumber,
           programId: program.vsd_programid,
           programName: program.vsd_name,
-          contactName: programContact ? nameAssemble(programContact.firstname, programContact.middlename, programContact.lastname) : ""
+          contactName: programContact ? nameAssemble(programContact.firstname, programContact.middlename, programContact.lastname) : "",
+          contactTitle: programContact ? programContact.jobtitle : "",
         });
       }
     }

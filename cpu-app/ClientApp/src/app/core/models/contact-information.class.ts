@@ -3,6 +3,7 @@ import { Address } from "./address.class";
 import { iContactInformation } from "./contact-information.interface";
 import { iAddress } from "./address.interface";
 import { iPerson } from "./person.interface";
+import { FormHelper } from "../form-helper";
 
 export class ContactInformation implements iContactInformation {
   emailAddress: string;
@@ -13,6 +14,7 @@ export class ContactInformation implements iContactInformation {
 
   executiveContact: iPerson;
   boardContact: iPerson;
+  private formHelper = new FormHelper();
 
   constructor(info?: iContactInformation) {
     if (info) {
@@ -32,36 +34,13 @@ export class ContactInformation implements iContactInformation {
   }
 
   private REQUIRED_FIELDS = ["emailAddress", "phoneNumber", "mainAddress", "mainAddress.line1", "mainAddress.city", "mainAddress.postalCode",
-  "mailingAddress", "mailingAddress.line1", "mailingAddress.city", "mailingAddress.postalCode"];
+    "mailingAddress", "mailingAddress.line1", "mailingAddress.city", "mailingAddress.postalCode"];
   hasRequiredFields() {
     for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
-      if (!this.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
+      if (!this.formHelper.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
         return false;
       }
     }
     return true;
-  }
-
-  getMissingFields() {
-    let ret = [];
-    for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
-      if (!this.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
-        ret.push(this.REQUIRED_FIELDS[i]);
-      }
-    }
-    return ret;
-  }
-
-  private fetchFromObject(obj, prop) {
-    if (typeof obj === 'undefined') {
-      return false;
-    }
-
-    var _index = prop.indexOf('.')
-    if (_index > -1) {
-      return this.fetchFromObject(obj[prop.substring(0, _index)], prop.substr(_index + 1));
-    }
-
-    return obj[prop];
   }
 }

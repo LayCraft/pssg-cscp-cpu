@@ -23,6 +23,9 @@ namespace Gov.Cscp.Victims.Public.Models
         public string lastname { get; set; }
         public string middlename { get; set; }
         public string mobilephone { get; set; }
+        public string vsd_mainphoneextension { get; set; }
+        public string telephone2 { get; set; }
+        public string vsd_homephoneextension { get; set; }
         //public int? vsd_employmentstatus { get; set; }
     }
 }
