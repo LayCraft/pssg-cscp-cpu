@@ -49,4 +49,5 @@ export interface iExpenseReportLineItem {
   quarterlyVariance: number;
   actualYearToDate: number;
   yearToDateVariance: number;
+  description: string;
 }

@@ -89,6 +89,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
           console.log('Dynamics has returned: ', d);
         } else {
           this.documentCollection = d.DocumentCollection;
+          this.documentCollection = this.documentCollection.filter(d => d.filename.indexOf(".pdf") > 0);
         }
       });
   }

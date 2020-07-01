@@ -9,4 +9,5 @@ export interface iProgram {
   programId: string;
   programName: string;
   contactName?: string;
+  contactTitle?: string;
 }

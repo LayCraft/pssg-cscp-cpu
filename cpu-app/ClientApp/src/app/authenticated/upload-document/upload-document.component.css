@@ -37,3 +37,7 @@
 .min-row-height {
   min-height: 54px;
 }
+
+.display-inline {
+  display: inline-block;
+}

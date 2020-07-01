@@ -19,7 +19,7 @@
     </div>
     <div class="col-md">
       <div class="form-group">
-        <label for="middleName">Middle Name (optional)</label>
+        <label for="middleName">Middle Name (Optional)</label>
         <input [disabled]="isDisabled" type="text" class="form-control" id="middleName{{idNum}}" name="middleName" [(ngModel)]="person.middleName" #middleName="ngModel" [pattern]="nameRegex">
       </div>
     </div>
@@ -78,21 +78,15 @@
     </div>
     <div class="col-md">
       <div class="form-group">
-        <label for="ext">Ext.</label>
+        <label for="ext">Ext. (Optional)</label>
         <input [disabled]="isDisabled" type="text" mask='0000' [validation]="false" class="form-control" id="ext{{idNum}}" name="ext" [(ngModel)]="person.phoneExtension" #ext="ngModel">
-        <!-- <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(ext)">
-          Ok
-        </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackOld(ext)">
-          Try Again
-        </div> -->
       </div>
     </div>
   </div>
   <div class="form-row">
     <div class="col-md">
       <div class="form-group">
-        <label for="phoneNumber2">Home Phone</label>
+        <label for="phoneNumber2">Home Phone (Optional)</label>
         <input [disabled]="isDisabled" type="text" mask='(000) 000 0000' class="form-control" id="phoneNumber2{{idNum}}" name="phoneNumber2" [(ngModel)]="person.phone2" #phoneNumber2="ngModel" [pattern]="phoneRegex">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber2)">
           Ok
@@ -104,14 +98,8 @@
     </div>
     <div class="col-md">
       <div class="form-group">
-        <label for="ext2">Ext.</label>
+        <label for="ext2">Ext. (Optional)</label>
         <input [disabled]="isDisabled" type="text" mask='0000' [validation]="false" class="form-control" id="ext2{{idNum}}" name="ext2" [(ngModel)]="person.phone2Extension" #ext2="ngModel">
-        <!-- <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(ext2)">
-          Ok
-        </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedbackOld(ext2)">
-          Try Again
-        </div> -->
       </div>
     </div>
   </div>

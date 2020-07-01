@@ -219,6 +219,10 @@ export class FormHelper {
       return this.fetchFromObject(obj[prop.substring(0, _index)], prop.substr(_index + 1));
     }
 
+    if (obj[prop] === false) {
+      return 'false'
+    }
+
     return obj[prop];
   }
 }

@@ -11,6 +11,7 @@ import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { Subscription } from 'rxjs';
 import { iSignature } from '../subforms/program-authorizer/program-authorizer.component';
 import { convertContractPackageToDynamics } from '../../core/models/converters/sign-contract-to-dynamics';
+import * as _ from 'lodash';
 
 interface FileBundle {
   // list of file names (same order as file array)
@@ -96,8 +97,11 @@ export class SignContractComponent implements OnInit, OnDestroy {
             // let test = d.DocumentCollection[0].body;
             // test += d.DocumentCollection[1].body;
 
-
+            let test = _.cloneDeep(d.DocumentCollection);
+            console.log(test);
+            console.log(test.length);
             this.documentCollection = d.DocumentCollection;
+            this.documentCollection = this.documentCollection.filter(d => d.filename.indexOf(".pdf") > 0);
             // this.documentCollection[0].body = test;
             this.constructDefaultStepperElements();
           }

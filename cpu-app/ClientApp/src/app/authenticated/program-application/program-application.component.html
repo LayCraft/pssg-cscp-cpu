@@ -101,7 +101,7 @@
             <div *ngIf="item.discriminator === discriminators[3]">
               <span *ngFor="let program of trans.programApplications">
                 <!-- Check if the program is the one in the stepper. -->
-                <span *ngIf="program.programId===item.object['programId']">
+                <span *ngIf="program.programId===item.object.data['programId']">
                   <app-program [(programApplication)]="program" [isDisabled]="isCompleted"></app-program>
                 </span>
               </span>

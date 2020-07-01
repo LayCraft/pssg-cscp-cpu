@@ -39,7 +39,7 @@ export class ProgramBudgetComponent implements OnInit {
     this.tabs = ['Program Revenue Information', 'Program Expense'];
     // this.programBudget.currentTab = this.tabs[0];
     this.sections = [
-      'Salaries and Benefits (for Program Related Staffing only)',
+      'Salaries and Benefits',
       'Program Delivery Costs',
       'Administration Costs',
     ];
@@ -75,7 +75,7 @@ export class ProgramBudgetComponent implements OnInit {
   collectMeta(event: iExpenseTableMeta, name: string) {
     function percentify(event: iExpenseTableMeta): number {
       // can't divide by zero
-      if (event.totalCost > 0) {
+      if (event.vscpApprovedAmount > 0) {
         // too many decimal points onscreen
         return Math.round((event.totalVscp / event.vscpApprovedAmount) * 100);
       } else {
@@ -92,16 +92,17 @@ export class ProgramBudgetComponent implements OnInit {
     this.meta['totals'] = {
       totalCost: 0,
       totalVscp: 0,
+      vscpApprovedAmount: this.vscpApprovedAmount,
       totalPercentFundedByVscp: 0,
     }
     for (let i = 0; i < this.sections.length; i++) {
       // if a value is calculated for the section add it to the grand total
       if (this.meta[this.sections[i]]) {
         // check that this is not infinity
-        this.meta['totals'].totalCost = this.meta['totals'].totalCost + this.meta[this.sections[i]].totalCost;
+        this.meta['totals'].totalCost += this.meta[this.sections[i]].totalCost;
       }
       if (this.meta[this.sections[i]]) {
-        this.meta['totals'].totalVscp = this.meta['totals'].totalVscp + this.meta[this.sections[i]].totalVscp;
+        this.meta['totals'].totalVscp += this.meta[this.sections[i]].totalVscp;
       }
     }
     this.meta['totals'].totalPercentFundedByVscp = percentify(this.meta['totals']);

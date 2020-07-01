@@ -163,13 +163,13 @@ export interface iDynamicsBlob {
   Contracts?: iDynamicsCrmContract[];
   ExecutiveContact?: iDynamicsCrmContact,
   IsSuccess: boolean;
+  Messages?: iDynamicsCrmMessage[];
   MinistryUser?: iDynamicsMinistryUser;
   Organization?: iDynamicsOrganization;
   Programs?: iDynamicsCrmProgram[];
   Result: string;
   Staff?: iDynamicsCrmContact[];
   Tasks?: iDynamicsCrmTask[];
-  Messages?: iDynamicsCrmMessage[];
   Userbceid?: string; // represents the user's BCeID.
   fortunecookiecontext?: string;
 };
@@ -481,6 +481,7 @@ export interface iDynamicsFile {
 }
 export interface iDynamicsDocument {
   filename: string;
+  fileType: string;
   body: string;
   overwritetime?: string;
 }

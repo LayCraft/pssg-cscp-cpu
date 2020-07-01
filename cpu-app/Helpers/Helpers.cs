@@ -9,8 +9,6 @@ namespace Gov.Cscp.Victims.Public.Helpers
     {
         public static string updateFortunecookieBindNull(string modelString)
         {
-
-            //TODO - statecode or  can't be null
             string ret = "";
             string toCheck = modelString;
             var regex = new System.Text.RegularExpressions.Regex("\"[a-zA-Z0-9_]*fortunecookiebind\"");
@@ -69,17 +67,23 @@ namespace Gov.Cscp.Victims.Public.Helpers
             ret = ret.Replace("\"vsd_bceid\":null,", "");
             ret = ret.Replace("\"contactid\":null,", "");
 
-            if (ret.Contains("\"_vsd_contactlookup2_value\":null") && ret.Contains("vsd_contactlookup2="))
-            {
-                ret = ret.Replace("\"_vsd_contactlookup2_value\":null,", "");
-                ret = ret.Replace("\"_vsd_contactlookup2_value\":null", "");
-            }
+            ret = ret.Replace("\"vsd_ContactLookup2fortunecookiebind\":\"\",", "");
+            ret = ret.Replace("\"vsd_ContactLookup2fortunecookiebind\":\"\"", "");
 
-            if (ret.Contains("\"_vsd_contactlookup3_value\":null") && ret.Contains("vsd_contactlookup3="))
-            {
-                ret = ret.Replace("\"_vsd_contactlookup3_value\":null,", "");
-                ret = ret.Replace("\"_vsd_contactlookup3_value\":null", "");
-            }
+            ret = ret.Replace("\"vsd_ContactLookup3fortunecookiebind\":\"\",", "");
+            ret = ret.Replace("\"vsd_ContactLookup3fortunecookiebind\":\"\"", "");
+
+            // if (ret.Contains("\"_vsd_contactlookup2_value\":null") && ret.Contains("vsd_contactlookup2="))
+            // {
+            //     ret = ret.Replace("\"_vsd_contactlookup2_value\":null,", "");
+            //     ret = ret.Replace("\"_vsd_contactlookup2_value\":null", "");
+            // }
+
+            // if (ret.Contains("\"_vsd_contactlookup3_value\":null") && ret.Contains("vsd_contactlookup3="))
+            // {
+            //     ret = ret.Replace("\"_vsd_contactlookup3_value\":null,", "");
+            //     ret = ret.Replace("\"_vsd_contactlookup3_value\":null", "");
+            // }
 
             ret = ret.Replace(",}", "}");
 

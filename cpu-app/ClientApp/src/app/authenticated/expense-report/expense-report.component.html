@@ -288,7 +288,25 @@
                   </tr>
                 </tfoot>
               </table>
-              <h2 class="blue-header">Contract Services</h2>
+
+
+              <h2 class="blue-header">
+                Explanation for Variances
+              </h2>
+              <p>(Please explain any variance in the comment section below.) Program Managers must be contacted if program is unstaffed for 30 days or more.</p>
+              <div class="form-group" *ngFor="let item of trans.expenseReport.programExpenseLineItems">
+                <label>{{item.label}}</label>
+                <textarea [disabled]="isCompleted" [(ngModel)]="item.description" id="{{item.label}}_description" cols="30" rows="5" class="form-control" placeholder="Comments here..."></textarea>
+              </div>
+              <!-- <div class="form-group">
+                <label for="programDeliveryDescription">Program Delivery Costs</label>
+                <textarea [disabled]="isCompleted" [(ngModel)]="trans.expenseReport.programDeliveryDescription" name="programDeliveryDescription" id="programDeliveryDescription" cols="30" rows="5" class="form-control" placeholder="Comments here..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="administrationDescription">Administration Costs</label>
+                <textarea [disabled]="isCompleted" [(ngModel)]="trans.expenseReport.administrationDescription" name="administrationDescription" id="administrationDescription" cols="30" rows="5" class="form-control" placeholder="Comments here..."></textarea>
+              </div> -->
+              <!-- <h2 class="blue-header">Contract Services</h2>
               <div class="form-group">
                 <label for="contractService">Total On-call/Stand-by Hours</label>
                 <input [disabled]="isCompleted" type="text" [value]="trans.expenseReport.onCallStandByHours" class="form-control" id="contractService" readonly>
@@ -300,7 +318,7 @@
               <div class="form-group">
                 <label for="actualServiceQuarter">Actual Service Hours This Quarter</label>
                 <input [disabled]="isCompleted" type="number" min="0" [(ngModel)]="trans.expenseReport.serviceHoursQuarterlyActual" class="form-control" id="actualServiceQuarter" (input)="formHelper.numberFormatter($event.target, trans.expenseReport, 'contractServiceHoursQuarterlyActual')">
-              </div>
+              </div> -->
             </div>
 
             <div *ngIf="item.discriminator === discriminators[2]">
