@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { iSignature } from '../subforms/program-authorizer/program-authorizer.component';
 import { convertContractPackageToDynamics } from '../../core/models/converters/sign-contract-to-dynamics';
 import * as _ from 'lodash';
+import { HttpClient } from '@angular/common/http';
 
 interface FileBundle {
   // list of file names (same order as file array)
@@ -62,6 +63,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
     private stateService: StateService,
     private notificationQueueService: NotificationQueueService,
     private route: ActivatedRoute,
+    private http: HttpClient
   ) { }
 
   ngOnDestroy() {
@@ -69,6 +71,11 @@ export class SignContractComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log("TEST");
+    // window.open('/assets/documents/TUA Section 25 Draft.pdf', '_blank');
+
+
+
     this.isLoading = true;
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       // save the transmogrifier
@@ -132,7 +139,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
           // let file = "data:application/pdf;base64," + r.signedContract.body;
           // let obj = { fileData: file, fileName: r.signedContract.filename };
           // this.stepperService.addStepperElement(obj, r.signedContract.filename, 'untouched', 'document');
-          this.saving = false;
+          // this.saving = false;
           this.notificationQueueService.addNotification(`You have successfully signed the contract.`, 'success');
           this.stateService.refresh();
           this.router.navigate(['/authenticated/dashboard']);
@@ -174,12 +181,49 @@ export class SignContractComponent implements OnInit, OnDestroy {
     });
 
 
-    if (this.stepperElements.length > 0) {
-      this.stepperService.addStepperElement(null, "Sign Contract", 'untouched', 'auth');
-    }
+    // if (this.stepperElements.length > 0) {
+    this.getSignaturePage().then((file: string) => {
+      let body = file.split(',').slice(-1)[0];
 
-    this.stepperService.setToFirstStepperElement();
-    this.isLoading = false;
+      this.documentCollection.push({
+        fileType: "signing page",
+        body: body,
+        filename: "Signature Page",
+        overwritetime: ''
+      });
+      let obj = { fileData: file, fileName: "Sign Contract" };
+      this.stepperService.addStepperElement(obj, "Sign Contract", 'untouched', 'auth');
+
+      this.stepperService.setToFirstStepperElement();
+      this.isLoading = false;
+    });
+    // }
+    // else {
+    //   this.stepperService.setToFirstStepperElement();
+    //   this.isLoading = false;
+    // }
+
+
+  }
+
+  getSignaturePage() {
+    return new Promise((resolve, reject) => {
+      this.http.get('/assets/documents/TUA Section 25 Draft.pdf', { responseType: 'blob' })
+        .subscribe(res => {
+          console.log("got something");
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            var base64data = reader.result;
+            // console.log("base64");
+            // console.log(base64data);
+            resolve(base64data);
+          }
+
+          // console.log("res?");
+          reader.readAsDataURL(res);
+          // console.log(res);
+        });
+    });
   }
 
   setNextStepper() {
