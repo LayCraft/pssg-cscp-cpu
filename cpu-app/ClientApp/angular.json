@@ -20,7 +20,6 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/assets/TUA Section 25 Draft.pdf",
               {
                 "glob": "**/*",
                 "input": "node_modules/ngx-extended-pdf-viewer/assets/",

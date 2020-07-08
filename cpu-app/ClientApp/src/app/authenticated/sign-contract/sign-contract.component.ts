@@ -169,21 +169,21 @@ export class SignContractComponent implements OnInit, OnDestroy {
 
 
     if (this.stepperElements.length > 0) {
-    this.getSignaturePage().then((file: string) => {
-      let body = file.split(',').slice(-1)[0];
+      this.getSignaturePage().then((file: string) => {
+        let body = file.split(',').slice(-1)[0];
 
-      this.documentCollection.push({
-        fileType: "signing page",
-        body: body,
-        filename: "Signature Page",
-        overwritetime: ''
+        this.documentCollection.push({
+          fileType: "signing page",
+          body: body,
+          filename: "Signature Page",
+          overwritetime: ''
+        });
+        let obj = { fileData: file, fileName: "Sign Contract" };
+        this.stepperService.addStepperElement(obj, "Sign Contract", 'untouched', 'auth');
+
+        this.stepperService.setToFirstStepperElement();
+        this.isLoading = false;
       });
-      let obj = { fileData: file, fileName: "Sign Contract" };
-      this.stepperService.addStepperElement(obj, "Sign Contract", 'untouched', 'auth');
-
-      this.stepperService.setToFirstStepperElement();
-      this.isLoading = false;
-    });
     }
     else {
       this.stepperService.setToFirstStepperElement();
@@ -193,7 +193,11 @@ export class SignContractComponent implements OnInit, OnDestroy {
 
   getSignaturePage() {
     return new Promise((resolve, reject) => {
-      this.http.get('/assets/TUA Section 25 Draft.pdf', { responseType: 'blob' })
+      let documentPath = '/coastcontracts/assets/documents/TUA Section 25 Draft.pdf';
+      if (window.location.href.includes("localhost")) {
+        documentPath = '/assets/documents/TUA Section 25 Draft.pdf';
+      }
+      this.http.get(documentPath, { responseType: 'blob' })
         .subscribe(res => {
           console.log("got something");
           const reader = new FileReader();
