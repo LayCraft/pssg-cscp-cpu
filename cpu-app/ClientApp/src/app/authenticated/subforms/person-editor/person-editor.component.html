@@ -86,7 +86,7 @@
   <div class="form-row">
     <div class="col-md">
       <div class="form-group">
-        <label for="phoneNumber2">Home Phone (Optional)</label>
+        <label for="phoneNumber2">Work Phone (Optional)</label>
         <input [disabled]="isDisabled" type="text" mask='(000) 000 0000' class="form-control" id="phoneNumber2{{idNum}}" name="phoneNumber2" [(ngModel)]="person.phone2" #phoneNumber2="ngModel" [pattern]="phoneRegex">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber2)">
           Ok

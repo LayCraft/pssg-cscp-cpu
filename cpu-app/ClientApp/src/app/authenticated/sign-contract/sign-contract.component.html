@@ -48,6 +48,10 @@
         </div>
 
         <div *ngIf="currentStepperElement.discriminator == 'auth'">
+          <div class="pdf-container">
+            <object [data]="currentStepperElement.object.fileData | safe" [name]="currentStepperElement.object.fileName" type="application/pdf" class="pdf-object">
+            </object>
+          </div>
           <app-contract-package-authorizer [(signature)]="signature"></app-contract-package-authorizer>
         </div>
 
