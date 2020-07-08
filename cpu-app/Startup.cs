@@ -190,10 +190,10 @@ namespace Gov.Cscp.Victims.Public
                         .FrameAncestors(s => s.Self())
 
                         //original
-                        .ImageSources(s => s.Self())
+                        // .ImageSources(s => s.Self())
 
                         //new
-                        // .ImageSources(s => s.Self().CustomSources("http://www.w3.org/2000/svg"))
+                        .ImageSources(s => s.Self().CustomSources("http://www.w3.org"))
 
                         .DefaultSources(s => s.Self())
                         

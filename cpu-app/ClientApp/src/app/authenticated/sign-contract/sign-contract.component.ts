@@ -71,11 +71,6 @@ export class SignContractComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log("TEST");
-    // window.open('/assets/documents/TUA Section 25 Draft.pdf', '_blank');
-
-
-
     this.isLoading = true;
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       // save the transmogrifier
@@ -101,15 +96,8 @@ export class SignContractComponent implements OnInit, OnDestroy {
             // something has gone wrong. Show the developer the error
             this.notificationQueueService.addNotification('An attempt at getting this contract package was unsuccessful. If this problem persists please notify your ministry contact.', 'danger');
           } else {
-            // let test = d.DocumentCollection[0].body;
-            // test += d.DocumentCollection[1].body;
-
-            let test = _.cloneDeep(d.DocumentCollection);
-            console.log(test);
-            console.log(test.length);
             this.documentCollection = d.DocumentCollection;
             this.documentCollection = this.documentCollection.filter(d => d.filename.indexOf(".pdf") > 0);
-            // this.documentCollection[0].body = test;
             this.constructDefaultStepperElements();
           }
         }
@@ -139,7 +127,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
           // let file = "data:application/pdf;base64," + r.signedContract.body;
           // let obj = { fileData: file, fileName: r.signedContract.filename };
           // this.stepperService.addStepperElement(obj, r.signedContract.filename, 'untouched', 'document');
-          // this.saving = false;
+          this.saving = false;
           this.notificationQueueService.addNotification(`You have successfully signed the contract.`, 'success');
           this.stateService.refresh();
           this.router.navigate(['/authenticated/dashboard']);
@@ -150,7 +138,6 @@ export class SignContractComponent implements OnInit, OnDestroy {
           this.saving = false;
         }
       );
-      // this.notificationQueueService.addNotification(`TODO`, 'success');
     }
     catch (err) {
       console.log(err)
@@ -202,8 +189,6 @@ export class SignContractComponent implements OnInit, OnDestroy {
     //   this.stepperService.setToFirstStepperElement();
     //   this.isLoading = false;
     // }
-
-
   }
 
   getSignaturePage() {

@@ -111,10 +111,10 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 //for testing the document combining
                 // return StatusCode(200, data);
 
-                // make options for the json serializer
+                //make options for the json serializer
                 JsonSerializerOptions options = new JsonSerializerOptions();
                 options.IgnoreNullValues = true;
-                // turn the model into a string
+                //turn the model into a string
                 string modelString = System.Text.Json.JsonSerializer.Serialize(data, options);
 
                 DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
@@ -203,7 +203,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
                             rect = pdfr.GetPageSize(1);
                             content = pdfs.GetOverContent(1);
 
-                            image.SetAbsolutePosition(84.0F, 476.0F);
+                            image.SetAbsolutePosition(84.0F, 475.0F);
                             image.ScalePercent(29.0F, 25.0F);
 
                             content.AddImage(image);
@@ -216,6 +216,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
 
                             DateTime today = DateTime.Now;
                             String monthString = months[today.Month - 1];
+                            String yearString = today.Year.ToString().Substring(2);
                             var now = DateTime.Now;
                             String daySuffix = (now.Day % 10 == 1 && now.Day != 11) ? "st"
                             : (now.Day % 10 == 2 && now.Day != 12) ? "nd"
@@ -223,13 +224,15 @@ namespace Gov.Cscp.Victims.Public.Controllers
                             : "th";
                             String dayString = today.Day.ToString() + daySuffix;
 
+
                             content.SetColorFill(BaseColor.BLACK);
                             content.BeginText();
                             content.SetFontAndSize(BaseFont.CreateFont(), 9);
                             content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, signingOfficerName, 84.0F, 420.0F, 0.0F);
                             content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, signingOfficerTitle, 84.0F, 370.0F, 0.0F);
-                            content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, dayString, 148.0F, 625.0F, 0.0F);
-                            content.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, monthString, 285.0F, 625.0F, 0.0F);
+                            content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, dayString, 152.0F, 624.0F, 0.0F);
+                            content.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, monthString, 285.0F, 624.0F, 0.0F);
+                            content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, yearString, 304.0F, 624.5F, 0.0F);
                             content.EndText();
 
                             content.EndLayer();
