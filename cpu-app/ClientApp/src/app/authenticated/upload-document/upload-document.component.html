@@ -31,7 +31,17 @@
           <ul *ngIf="documentsToAdd.length" class="list-group mb-2">
             <!-- Only show the entry if they are in the list -->
             <li *ngFor="let doc of documentsToAdd; let i=index" class="list-group-item d-flex justify-content-between align-items-center">
-              {{doc.filename}}{{doc.fileType?" - "+doc.fileType:""}}
+              <span class="file-name-container">
+                {{doc.filename}}
+              </span>
+              <!-- {{doc.subject?" - "+doc.subject:""}} -->
+
+              <span class="file-type-container">
+                <label class="file-type-label">File Type</label>
+                <select class="form-control file-type-select" [(ngModel)]="doc.subject" #doctype="ngModel">
+                  <option *ngFor="let type of document_types" [value]="type">{{type}}</option>
+                </select>
+              </span>
               <!-- {{' ('+fileSizes[i]+')'}} -->
               <span (click)="removeFile(i)">
                 <i class="fas fa-times-circle text-danger"></i>
@@ -41,12 +51,12 @@
           <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)" multiple>
           <button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Add File</button>
           <button class="btn btn-warning ml-2" [class.is-disabled]="documentsToAdd.length == 0 || saving" (click)="upload()">Upload Files</button>
-          <div class="form-group ml-2 display-inline">
+          <!-- <div class="form-group ml-2 display-inline">
             <label>File Type</label>
             <select class="form-control" [(ngModel)]="selectedDocumentType" #doctype="ngModel">
               <option *ngFor="let type of document_types" [value]="type">{{type}}</option>
             </select>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
