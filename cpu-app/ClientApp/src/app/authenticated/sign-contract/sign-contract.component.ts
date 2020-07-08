@@ -168,7 +168,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
     });
 
 
-    // if (this.stepperElements.length > 0) {
+    if (this.stepperElements.length > 0) {
     this.getSignaturePage().then((file: string) => {
       let body = file.split(',').slice(-1)[0];
 
@@ -184,11 +184,11 @@ export class SignContractComponent implements OnInit, OnDestroy {
       this.stepperService.setToFirstStepperElement();
       this.isLoading = false;
     });
-    // }
-    // else {
-    //   this.stepperService.setToFirstStepperElement();
-    //   this.isLoading = false;
-    // }
+    }
+    else {
+      this.stepperService.setToFirstStepperElement();
+      this.isLoading = false;
+    }
   }
 
   getSignaturePage() {
