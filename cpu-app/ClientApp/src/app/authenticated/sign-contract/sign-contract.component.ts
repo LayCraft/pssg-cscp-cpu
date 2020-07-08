@@ -193,7 +193,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
 
   getSignaturePage() {
     return new Promise((resolve, reject) => {
-      this.http.get('/assets/documents/TUA Section 25 Draft.pdf', { responseType: 'blob' })
+      this.http.get('/assets/TUA Section 25 Draft.pdf', { responseType: 'blob' })
         .subscribe(res => {
           console.log("got something");
           const reader = new FileReader();
