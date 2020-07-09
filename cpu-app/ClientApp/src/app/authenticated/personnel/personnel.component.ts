@@ -96,7 +96,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         return;
       }
 
-      console.log(person);
+      // console.log(person);
       this.saving = true;
       let thisPerson = new Person(person);
       // a person needs minimum a first and last name to be submitted
@@ -123,7 +123,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         this.saving = false;
         // notify the user that this user was not saved.
         this.missingFields = thisPerson.getMissingFields();
-        console.log(this.missingFields);
+        // console.log(this.missingFields);
         this.notificationQueueService.addNotification('Please fill in required fields.', 'warning');
       }
     }
@@ -201,6 +201,6 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   setAddressSameAsAgency(person: iPerson) {
     let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
     person.address = addressCopy;
-    console.log(this.originalPersons);
+    // console.log(this.originalPersons);
   }
 }

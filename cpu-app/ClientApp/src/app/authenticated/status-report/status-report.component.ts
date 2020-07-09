@@ -42,7 +42,7 @@ export class StatusReportComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.queryParams.subscribe(q => {
-      console.log(q);
+      // console.log(q);
       if (q && q.completed) {
         this.isCompleted = q.completed == "true";
       }
@@ -54,15 +54,15 @@ export class StatusReportComponent implements OnInit, OnDestroy {
       // collect information for collecting the data
       const organizationId: string = this.stateService.main.getValue().organizationId;
       const userId: string = this.stateService.main.getValue().userId;
-      console.log(p);
-      console.log(p['taskId']);
+      // console.log(p);
+      // console.log(p['taskId']);
 
       this.statusReportService.getStatusReportQuestions(organizationId, userId, p['taskId'])
         .subscribe(r => {
           if (!r.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this status report was unsuccessful. If this problem persists please notify your ministry contact.', 'danger');
-            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the status report API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+            // console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the status report API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {
@@ -80,10 +80,10 @@ export class StatusReportComponent implements OnInit, OnDestroy {
 
             this.trans.title = title;
 
-            console.log("dynamics data status report:");
-            console.log(r);
-            console.log("trans");
-            console.log(this.trans);
+            // console.log("dynamics data status report:");
+            // console.log(r);
+            // console.log("trans");
+            // console.log(this.trans);
 
             this.constructDefaultstepperElements();
           }
@@ -212,7 +212,7 @@ export class StatusReportComponent implements OnInit, OnDestroy {
           .subscribe(
             r => {
               this.saving = false;
-              console.log(r);
+              // console.log(r);
               this.notificationQueueService.addNotification(`You have successfully submitted ${this.trans.reportingPeriod} statistics.`, 'success');
               this.stateService.refresh();
               this.router.navigate(['/authenticated/dashboard']);

@@ -47,7 +47,7 @@ export class AddPersonDialog {
                 this.notificationQueueService.addNotification('Employment status is required.', 'warning');
                 return;
             }
-            console.log(this.person);
+            // console.log(this.person);
             this.saving = true;
 
             // a person needs minimum a first and last name to be submitted

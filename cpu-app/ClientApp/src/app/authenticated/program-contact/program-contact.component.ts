@@ -74,14 +74,14 @@ export class ProgramContactComponent implements OnInit, OnDestroy {
             this.router.navigate(['/authenticated/dashboard']);
           } else {
 
-            console.log("program contact dynamics info");
-            console.log(f);
+            // console.log("program contact dynamics info");
+            // console.log(f);
 
             // make the transmogrifier for this form
             this.programTrans = new TransmogrifierProgramApplication(f);
 
-            console.log("program trans");
-            console.log(this.programTrans);
+            // console.log("program trans");
+            // console.log(this.programTrans);
             this.programApplication = this.programTrans.programApplications.find(pa => pa.programId === p['programId']);
 
             if (!this.programApplication) {
@@ -132,7 +132,7 @@ export class ProgramContactComponent implements OnInit, OnDestroy {
   }
 
   onProgramContactChange(event: iPerson) {
-    console.log("change");
+    // console.log("change");
     this.programApplication.programContact = event;
     this.onInput();
   }
@@ -162,7 +162,7 @@ export class ProgramContactComponent implements OnInit, OnDestroy {
         this.out = convertProgramApplicationToDynamics(this.programTrans);
         this.programApplicationService.setProgramApplication(this.out).subscribe(
           r => {
-            console.log(r);
+            // console.log(r);
             this.notificationQueueService.addNotification(`You have successfully saved the program contact.`, 'success');
             this.saving = false;
             if (shouldExit) this.router.navigate(['/authenticated/dashboard']);

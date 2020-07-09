@@ -59,7 +59,6 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.queryParams.subscribe(q => {
-      console.log(q);
       if (q && q.completed) {
         this.isCompleted = q.completed == "true";
       }
@@ -91,7 +90,7 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
           this.data = d;
           // notify the user of a system error
           this.notificationQueueService.addNotification('An attempt at getting this budget proposal form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
-          console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the budget proposal API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+          // console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the budget proposal API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
 
           // route back to the dashboard
           this.router.navigate(['/authenticated/dashboard']);
@@ -104,10 +103,10 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
             return pb;
           });
 
-          console.log("dynamics data:");
-          console.log(d);
-          console.log("trans");
-          console.log(this.trans);
+          // console.log("dynamics data:");
+          // console.log(d);
+          // console.log("trans");
+          // console.log(this.trans);
           this.constructDefaultstepperElements();
         }
       });
@@ -175,13 +174,13 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
         //
 
         this.saving = true;
-        console.log(this.trans);
+        // console.log(this.trans);
         this.out = convertBudgetProposalToDynamics(this.trans);
-        console.log("all pbs");
-        console.log(this.out);
+        // console.log("all pbs");
+        // console.log(this.out);
         this.budgetProposalService.setBudgetProposal(this.out).subscribe(
           r => {
-            console.log(r);
+            // console.log(r);
             this.notificationQueueService.addNotification(`You have successfully saved the budget proposal.`, 'success');
             this.stateService.refresh();
             if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
@@ -233,7 +232,7 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
           this.data = d;
           // notify the user of a system error
           this.notificationQueueService.addNotification('An attempt at getting this budget proposal form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
-          console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the budget proposal API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+          // console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the budget proposal API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
 
           // route back to the dashboard
           this.router.navigate(['/authenticated/dashboard']);
@@ -378,16 +377,16 @@ export class BudgetProposalComponent implements OnInit, OnDestroy {
       try {
 
         this.saving = true;
-        console.log(this.trans);
+        // console.log(this.trans);
         let singleTrans = _.cloneDeep(this.trans);
         singleTrans.programBudgets = singleTrans.programBudgets.filter(pb => pb.programId === programBudget.programId);
         this.out = convertBudgetProposalToDynamics(singleTrans);
 
-        console.log("single program save");
-        console.log(this.out);
+        // console.log("single program save");
+        // console.log(this.out);
         this.budgetProposalService.setBudgetProposal(this.out).subscribe(
           r => {
-            console.log(r);
+            // console.log(r);
             this.stateService.refresh();
             this.saving = false;
             this.reloadBudgetProposal();

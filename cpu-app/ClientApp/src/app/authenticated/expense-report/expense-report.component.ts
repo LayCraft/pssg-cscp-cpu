@@ -70,7 +70,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.route.queryParams.subscribe(q => {
-      console.log(q);
+      // console.log(q);
       if (q && q.completed) {
         this.isCompleted = q.completed == "true";
       }
@@ -93,7 +93,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
           if (!g.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this expense report was unsuccessful. If this problem persists please notify your ministry contact.', 'danger');
-            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the expense report API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+            // console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Task:${p['taskId']} from the expense report API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {
@@ -103,10 +103,10 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
 
             this.perType = perTypeDict[this.trans.expenseReport.perType];
 
-            console.log("from dynamics");
-            console.log(g);
-            console.log("trans");
-            console.log(this.trans);
+            // console.log("from dynamics");
+            // console.log(g);
+            // console.log("trans");
+            // console.log(this.trans);
 
             this.contractNumber = this.mainTrans.contracts.find(c => c.contractId === g.Contract.vsd_contractid).contractNumber;
             // construct the stepper
@@ -241,12 +241,12 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
           return;
         }
         this.saving = true;
-        console.log(this.trans);
+        // console.log(this.trans);
         this.out = convertExpenseReportToDynamics(this.trans);
-        console.log(this.out);
+        // console.log(this.out);
         this.expenseReportService.setExpenseReport(this.out).subscribe(
           r => {
-            console.log(r);
+            // console.log(r);
             this.notificationQueueService.addNotification(`You have successfully saved the expense report.`, 'success');
             this.stateService.refresh();
             if (shouldExit) this.router.navigate(['/authenticated/dashboard']);

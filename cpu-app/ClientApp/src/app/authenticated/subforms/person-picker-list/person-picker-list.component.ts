@@ -34,9 +34,9 @@ export class PersonPickerListComponent implements OnInit, OnDestroy {
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
       this.personsList = this.trans.persons;
-      console.log("person picker list");
-      console.log(this.personsList);
-      console.log(this.isSubContractedList);
+      // console.log("person picker list");
+      // console.log(this.personsList);
+      // console.log(this.isSubContractedList);
 
       if (this.isSubContractedList) {
         this.personsList = this.trans.persons.filter(p => p.employmentStatus === "Sub-Contracted");

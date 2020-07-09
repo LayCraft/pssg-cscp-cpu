@@ -49,10 +49,10 @@ export class NewUserNewOrganizationComponent implements OnInit {
         return;
       }
 
-      console.log(this.trans);
+      // console.log(this.trans);
       let data = convertNewUserToDynamics(this.trans);
       this.newUserService.saveNewUser(data).subscribe((res) => {
-        console.log(res);
+        // console.log(res);
         this.notificationQueueService.addNotification(`You have successfully registered a new user and organization.`, 'success');
         // this.notificationQueueService.addNotification(`Please return after new user has been approved for portal access.`, 'success');
         // userSettings.isNewUserRegistration = false;

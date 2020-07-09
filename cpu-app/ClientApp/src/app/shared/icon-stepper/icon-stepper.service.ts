@@ -119,7 +119,7 @@ export class IconStepperService {
     // check that formstate exists
     if (this.formStates.indexOf(formState) !== -1) {
       // set the formstate
-      console.log("setting form state");
+      // console.log("setting form state");
       this.setStepperElementProperty(id, 'formState', formState);
     }
   }

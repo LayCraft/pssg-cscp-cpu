@@ -63,13 +63,13 @@ export class ProgramApplicationComponent implements OnInit {
   ngOnInit() {
     // get the right contract by route
     this.route.queryParams.subscribe(q => {
-      console.log(q);
+      // console.log(q);
       if (q && q.completed) {
         this.isCompleted = q.completed == "true";
       }
     });
     this.route.params.subscribe(p => {
-      console.log(p);
+      // console.log(p);
       // collect the current user information from the state.
       const userId: string = this.stateService.main.getValue().userId;
       const organizationId: string = this.stateService.main.getValue().organizationId;
@@ -79,19 +79,19 @@ export class ProgramApplicationComponent implements OnInit {
           if (!f.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this program application form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
-            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['taskId']} from the program application API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+            // console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['taskId']} from the program application API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
 
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {
             this.data = f;
-            console.log("program application dynamics info");
-            console.log(f);
+            // console.log("program application dynamics info");
+            // console.log(f);
 
             // make the transmogrifier for this form
             this.trans = new TransmogrifierProgramApplication(f);
-            console.log("Program application transmogrifier");
-            console.log(this.trans);
+            // console.log("Program application transmogrifier");
+            // console.log(this.trans);
             this.trans.programApplications.forEach((p: iProgramApplication) => { this.reviewApplicationTabs.push(p.name) });
 
             this.constructDefaultstepperElements(this.trans);
@@ -214,12 +214,12 @@ export class ProgramApplicationComponent implements OnInit {
         }
 
         this.saving = true;
-        console.log("saving...");
-        console.log(_.cloneDeep(this.trans));
+        // console.log("saving...");
+        // console.log(_.cloneDeep(this.trans));
         this.out = convertProgramApplicationToDynamics(this.trans);
         this.programApplicationService.setProgramApplication(this.out).subscribe(
           r => {
-            console.log(r);
+            // console.log(r);
             if (showNotification) {
               this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
             }
@@ -274,7 +274,7 @@ export class ProgramApplicationComponent implements OnInit {
       this.out = convertProgramApplicationToDynamics(this.trans);
       this.programApplicationService.setProgramApplication(this.out).subscribe(
         r => {
-          console.log(r);
+          // console.log(r);
 
           this.notificationQueueService.addNotification(`You have successfully submitted the program application.`, 'success');
           this.saving = false;
@@ -305,7 +305,7 @@ export class ProgramApplicationComponent implements OnInit {
           if (!f.IsSuccess) {
             // notify the user of a system error
             this.notificationQueueService.addNotification('An attempt at getting this program application form was unsuccessful. If the problem persists please notify your ministry contact.', 'danger');
-            console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['taskId']} from the program application API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
+            // console.log(`IsSuccess was returned false when attempting to get Organization:${organizationId} User:${userId} Contract:${p['taskId']} from the program application API on OpenShift. The most likely cause is that the Dynamics data has changed, the Dynamics API has a bug, or the mapping of data requires modification to accomodate a change.`);
 
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);

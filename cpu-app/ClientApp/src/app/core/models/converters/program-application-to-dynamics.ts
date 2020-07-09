@@ -65,7 +65,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
   trans.programApplications.forEach((pa: iProgramApplication) => {
     // in each program add the list of staff by their id
     pa.additionalStaff.forEach((s: iPerson): void => {
-      if (!pa.programId) console.log('Missing program id!', pa);
+      // if (!pa.programId) console.log('Missing program id!', pa);
       const contact: iDynamicsProgramContactPost = {
         contactid: s.personId,
         vsd_programid: pa.programId,
@@ -75,7 +75,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     });
 
     pa.removedStaff.forEach((s: iPerson): void => {
-      if (!pa.programId) console.log('Missing program id!', pa);
+      // if (!pa.programId) console.log('Missing program id!', pa);
       const contact: iDynamicsRemoveProgramContactPost = {
         contactid: s.personId,
         vsd_programid: pa.programId,
@@ -85,7 +85,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     });
 
     pa.subContractedStaff.forEach((s: iPerson): void => {
-      if (!pa.programId) console.log('Missing program id!', pa);
+      // if (!pa.programId) console.log('Missing program id!', pa);
       const contact: iDynamicsProgramContactPost = {
         contactid: s.personId,
         vsd_programid: pa.programId,
@@ -95,7 +95,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
     });
 
     pa.removedSubContractedStaff.forEach((s: iPerson): void => {
-      if (!pa.programId) console.log('Missing program id!', pa);
+      // if (!pa.programId) console.log('Missing program id!', pa);
       const contact: iDynamicsRemoveProgramContactPost = {
         contactid: s.personId,
         vsd_programid: pa.programId,

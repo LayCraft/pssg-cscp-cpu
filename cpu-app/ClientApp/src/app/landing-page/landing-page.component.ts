@@ -19,10 +19,10 @@ export class LandingPageComponent implements OnInit {
     private stateService: StateService) {
 
     this.userData.getCurrentUser().subscribe((userSettings: UserSettings) => {
-      console.log("returned user info:");
-      console.log(userSettings);
+      // console.log("returned user info:");
+      // console.log(userSettings);
       if (userSettings && userSettings.userAuthenticated) {
-        console.log("setting user data as logged in");
+        // console.log("setting user data as logged in");
 
         this.stateService.loggedIn.next(true);
         this.stateService.userSettings.next(userSettings);

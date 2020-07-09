@@ -18,9 +18,9 @@ export class StatusReportService {
   ) { }
 
   getStatusReportQuestions(organizationId: string, userId: string, taskId: string): Observable<iDynamicsMonthlyStatisticsQuestions> {
-    console.log(taskId);
+    // console.log(taskId);
     let full_endpoint = `${this.apiUrl}/${organizationId}/${userId}/${taskId}`;
-    console.log(full_endpoint);
+    // console.log(full_endpoint);
     return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/${organizationId}/${userId}/${taskId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)

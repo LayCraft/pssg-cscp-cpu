@@ -142,7 +142,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
         this.saving = false;
         this.documentsToAdd = [];
         this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
-        console.log('Uploaded', d);
+        // console.log('Uploaded', d);
       });
     }
     else {
@@ -150,7 +150,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
         this.saving = false;
         this.documentsToAdd = [];
         this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
-        console.log('Uploaded', d);
+        // console.log('Uploaded', d);
       });
     }
   }
@@ -211,14 +211,14 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     this.fileService.download(this.organizationId, this.userId, this.contractId)
       .subscribe(
         (d: iDynamicsFile) => {
-          console.log(d);
+          // console.log(d);
           if (d['error'] && d['error']['code']) {
             // something has gone wrong. Show the developer the error
             alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
-            console.log('Dynamics has returned: ', d);
+            // console.log('Dynamics has returned: ', d);
           } else if (d.DocumentCollection.length === 0) {
             this.notificationQueueService.addNotification('There are no files available to download. Please let your ministry contract know that you cannot download the contract.');
-            console.log('No files to download');
+            // console.log('No files to download');
           } else {
             let element = document.createElement('a');
             element.setAttribute('href', 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + d.DocumentCollection[0].body);
