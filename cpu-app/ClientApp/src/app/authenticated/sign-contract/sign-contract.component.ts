@@ -173,7 +173,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
         let body = file.split(',').slice(-1)[0];
 
         this.documentCollection.push({
-          fileType: "signing page",
+          subject: "signing page",
           body: body,
           filename: "Signature Page",
           overwritetime: ''

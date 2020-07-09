@@ -17,9 +17,11 @@ export function convertStatusReportToDynamics(trans: TransmogrifierStatusReport)
   trans.statusReportQuestions.forEach((srq: iQuestionCollection) => {
     // for each question assemble shared elements
     srq.questions.forEach((q: iQuestion) => {
-      const lineItem = {
+      const lineItem: iDynamicsAnswer = {
         vsd_name: q.label,
         vsd_questioncategory: srq.name,
+        vsd_QuestionIdfortunecookiebind: q.uuid,
+        vsd_CategoryIdfortunecookiebind: q.categoryID,
         vsd_questionorder: q.questionNumber,
         vsd_questiontype1: types[q.type]
       }

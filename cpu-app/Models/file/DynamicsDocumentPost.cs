@@ -10,5 +10,6 @@ namespace Gov.Cscp.Victims.Public.Models
         public string fortunecookietype { get { return "#Microsoft.Dynamics.CRM.activitymimeattachment"; } }
         public string body { get; set; }
         public string filename { get; set; }
+        public string subject { get; set; }
     }
 }

@@ -69,6 +69,8 @@ export interface iDynamicsPostBudgetProposal { //maps to BudgetProposalPost
 }
 //------------------------------------------------------------------------------
 export interface iDynamicsAnswer {
+  vsd_QuestionIdfortunecookiebind?: string;
+  vsd_CategoryIdfortunecookiebind?: string;
   // the text of the question
   vsd_name: string;
   // text description of the question category

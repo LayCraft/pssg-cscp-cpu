@@ -19,7 +19,7 @@ interface FileBundle {
 @Component({
   selector: 'app-upload-document',
   templateUrl: './upload-document.component.html',
-  styleUrls: ['./upload-document.component.css']
+  styleUrls: ['./upload-document.component.scss']
 })
 export class UploadDocumentComponent implements OnInit, OnDestroy {
 
@@ -194,7 +194,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
 
             this.documentsToAdd.push({
               filename: files.item(i).name,
-              fileType: this.selectedDocumentType,
+              subject: this.selectedDocumentType,
               body: fileDataString
             });
           }
