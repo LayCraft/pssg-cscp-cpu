@@ -89,7 +89,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
 
       this.fileService.getContractPackage(this.organizationId, this.userId, this.taskId).subscribe(
         (d: iDynamicsFile) => {
-          console.log(d);
+          // console.log(d);
           if (d['error'] && d['error']['code']) {
             this.isLoading = false;
 
@@ -122,7 +122,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
       this.out = convertContractPackageToDynamics(this.userId, this.organizationId, this.documentCollection, this.signature);
       this.fileService.uploadSignedContract(this.out, this.taskId).subscribe(
         r => {
-          console.log(r);
+          // console.log(r);
           //for testing document combining, see if it works - can setup backend to return the combined document instead of sending it forward to CRM
           // let file = "data:application/pdf;base64," + r.signedContract.body;
           // let obj = { fileData: file, fileName: r.signedContract.filename };
@@ -199,7 +199,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
       }
       this.http.get(documentPath, { responseType: 'blob' })
         .subscribe(res => {
-          console.log("got something");
+          // console.log("got something");
           const reader = new FileReader();
           reader.onloadend = () => {
             var base64data = reader.result;

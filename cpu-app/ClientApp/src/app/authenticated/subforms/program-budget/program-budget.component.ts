@@ -47,7 +47,7 @@ export class ProgramBudgetComponent implements OnInit {
 
   ngOnInit() {
     this.totalGrand = 0;
-    console.log(this.programBudget);
+    // console.log(this.programBudget);
     this.programBudget.revenueSources.forEach(rs => {
       this.totalGrand += ((rs.cash || 0) + (rs.inKindContribution || 0));
     });

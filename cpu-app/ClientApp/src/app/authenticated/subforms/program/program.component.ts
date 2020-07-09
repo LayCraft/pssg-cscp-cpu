@@ -63,7 +63,7 @@ export class ProgramComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // this.programFormGroup = new FormGroup({});
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
-      console.log("program sub");
+      // console.log("program sub");
       this.trans = m;
       this.persons = m.persons;
       if (this.programApplication.standbyHours.length == 0) {
@@ -139,8 +139,8 @@ export class ProgramComponent implements OnInit, OnDestroy {
 
   }
   onSubContractedStaffChange(personsObj: any) {
-    console.log("onSubContractedStaffChange");
-    console.log(this.programApplication);
+    // console.log("onSubContractedStaffChange");
+    // console.log(this.programApplication);
     this.programApplication.subContractedStaff = personsObj.persons;
     this.programApplication.removedSubContractedStaff = personsObj.removedPersons;
     this.onInput();

@@ -59,9 +59,9 @@ export class StateService {
       this.userSettings.next(settings);
     }
 
-    console.log("logging in");
+    // console.log("logging in");
     let userInfo = this.userSettings.getValue();
-    console.log(this.loggedIn.getValue(), userInfo.userId, userInfo.accountId);
+    // console.log(this.loggedIn.getValue(), userInfo.userId, userInfo.accountId);
 
 
     if (this.loggedIn.getValue() && !userInfo.isNewUserRegistration) {
@@ -106,8 +106,8 @@ export class StateService {
           this.loggedIn.next(true);
         } else {
           // collect the blob into a useful object
-          console.log("Dynamics blob");
-          console.log(JSON.parse(JSON.stringify(m)));
+          // console.log("Dynamics blob");
+          // console.log(JSON.parse(JSON.stringify(m)));
           const mainData = new Transmogrifier(m);
           // save the useful blob of viewmodels
           this.main.next(mainData);
@@ -180,9 +180,9 @@ export class StateService {
       orgId = 'E4637B1557A6457891D7549067B20635';
     }
 
-    console.log("lookup logged in user name");
+    // console.log("lookup logged in user name");
     let userInfo = this.userSettings.getValue();
-    console.log(this.loggedIn.getValue(), userInfo.userId, userInfo.accountId);
+    // console.log(this.loggedIn.getValue(), userInfo.userId, userInfo.accountId);
 
 
     if (this.loggedIn.getValue()) {
@@ -201,7 +201,7 @@ export class StateService {
       (m: iDynamicsBlob) => {
         // check for actual error message
         if (m.Result.includes('BusinessBCeID doesn\'t match to which the Contact belongs to')) {
-          console.log("BusinessBCeID doesn't match");
+          // console.log("BusinessBCeID doesn't match");
           let firstName = "New";
           let lastName = "User";
           let userSettings = this.userSettings.getValue();
@@ -223,7 +223,7 @@ export class StateService {
           });
 
         } else if (m.Result.includes('No contact found with the supplied BCeID')) {
-          console.log("BCeID doesn't match");
+          // console.log("BCeID doesn't match");
           let firstName = "New";
           let lastName = "User";
           let userSettings = this.userSettings.getValue();
@@ -246,8 +246,8 @@ export class StateService {
           
         } else {
           const mainData = new Transmogrifier(m);
-          console.log("we did get some data");
-          console.log(mainData);
+          // console.log("we did get some data");
+          // console.log(mainData);
           this.currentUser.next(mainData.persons.filter(p => p.userId === userId)[0]);
         }
       },
