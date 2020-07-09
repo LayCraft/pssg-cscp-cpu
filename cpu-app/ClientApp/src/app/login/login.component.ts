@@ -20,7 +20,7 @@ export class LoginPageComponent implements OnInit {
       if (userInfo && userInfo.userId && userInfo.accountId) {
         this.stateService.loggedIn.next(true);
         this.stateService.userSettings.next(userInfo);
-        console.log(userInfo);
+        // console.log(userInfo);
         if (userInfo.isNewUserRegistration) {
           // this.notificationQueueService.addNotification(`New User Detected.`, 'success');
           this.router.navigate(['/authenticated/new_user']);
