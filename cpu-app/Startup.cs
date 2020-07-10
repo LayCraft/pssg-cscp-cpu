@@ -193,7 +193,7 @@ namespace Gov.Cscp.Victims.Public
                         // .ImageSources(s => s.Self())
 
                         //new
-                        .ImageSources(s => s.Self().CustomSources("http://www.w3.org", "data:"))
+                        .ImageSources(s => s.Self().CustomSources("data:"))
 
                         .DefaultSources(s => s.Self())
 
