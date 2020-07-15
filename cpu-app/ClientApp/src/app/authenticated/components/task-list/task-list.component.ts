@@ -9,6 +9,14 @@ import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { iDynamicsFile, iDynamicsDocument, iDynamicsMonthlyStatistics, iDynamicsDataCollection } from '../../../core/models/dynamics-blob';
 import { StatusReportService } from '../../../core/services/status-report.service';
 import { months } from '../../../core/constants/month-codes';
+
+enum StatusReasons {
+  Received = 1,
+  Processing = 100000000,
+  Approved = 100000001,
+  Information_Denied = 100000002,
+}
+
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -37,6 +45,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   organizationId: string;
   userId: string;
+
+  StatusReasons = StatusReasons;
 
   constructor(private stateService: StateService,
     private statusReportService: StatusReportService,
@@ -79,6 +89,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
     console.log("getting monthly stats");
     this.loadingStats = true;
 
+
+
     this.statusReportService.getMonthlyStats(this.organizationId, this.userId, contractId).subscribe((res: iDynamicsMonthlyStatistics) => {
       console.log("Monthly Stats:");
       console.log(res);
@@ -92,6 +104,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
       console.log(this.dataCollection);
     });
   }
+
+
 
   downloadDocument(doc: iDynamicsDocument) {
     // let file = "data:application/octet-stream;charset=utf-16le;base64," + doc.body;

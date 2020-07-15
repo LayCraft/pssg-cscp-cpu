@@ -9,9 +9,9 @@
         <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.tasksCompleted)" [class.active]="currentTab===tabs.tasksCompleted">{{tabs.tasksCompleted}}{{contract.completedTasks.length ? ' ('+contract.completedTasks.length+')':''}}</a>
       </li>
 
-      <!-- <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.completedStats); getCompletedMonthlyStats(contract.contractId)" [class.active]="currentTab===tabs.completedStats">{{tabs.completedStats}}</a>
-      </li> -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.editProgramInformation)" [class.active]="currentTab===tabs.editProgramInformation">{{tabs.editProgramInformation}}</a>
@@ -109,16 +109,17 @@
             <td>{{completedStats.ProgramCollection[0].vsd_name}}</td>
             <td>{{data.reportingPeriod}}</td>
             <td>
-              <ng-container>
-                <!-- todo -->
-                <!-- *ngIf="data.status == 'allowed to view'" -->
-                <a routerLink="/authenticated/status_report/{{data.vsd_datacollectionid}}" [queryParams]="{completed: 'true'}">
+              <ng-container *ngIf="data.statuscode == StatusReasons.Approved">
+                <a routerLink="/authenticated/completed_status_report/{{data.vsd_datacollectionid}}">
                   Statistics report ({{completedStats.ProgramCollection[0].vsd_name}})
                 </a>
               </ng-container>
+              <ng-container *ngIf="data.statuscode != StatusReasons.Approved">
+                Statistics report ({{completedStats.ProgramCollection[0].vsd_name}})
+              </ng-container>
             </td>
             <td>{{data.vsd_submissiondate | date}}</td>
-            <td>get mano to add status</td>
+            <td>{{StatusReasons[data.statuscode]}}</td>
             <td>{{completedStats.UserCollection[0].fullname}}</td>
           </tr>
         </tbody>
@@ -129,7 +130,6 @@
       <table class="table table-sm table-striped">
         <thead class="thead">
           <tr>
-            <!-- <th scope="col"></th> -->
             <th scope="col">Programs</th>
             <th scope="col">Program Contact</th>
             <th scope="col">Update Program/Contact Information</th>
@@ -137,9 +137,6 @@
         </thead>
         <tbody>
           <tr *ngFor="let program of contract.programs; let i=index;">
-            <!-- <th scope="row">
-              {{(i|number)+1}}
-            </th> -->
             <td>{{program.programName}}
             </td>
             <td>

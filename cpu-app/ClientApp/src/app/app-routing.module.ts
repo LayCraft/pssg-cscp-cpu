@@ -20,6 +20,7 @@ import { MessageReadComponent } from './authenticated/subforms/message-read/mess
 import { MessageWriteComponent } from './authenticated/subforms/message-write/message-write.component';
 import { NewUserNewOrganizationComponent } from './authenticated/new-user-new-organization/new-user-new-organization.component';
 import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
+import { CompletedStatusReportComponent } from './authenticated/status-report/completed-status-report.component';
 
 const routes: Routes = [
   {
@@ -62,6 +63,10 @@ const routes: Routes = [
       {
         path: 'status_report/:taskId',
         component: StatusReportComponent
+      },
+      {
+        path: 'completed_status_report/:dataCollectionId',
+        component: CompletedStatusReportComponent
       },
       {
         path: 'upload_document/:contractId',

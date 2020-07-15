@@ -355,6 +355,20 @@ export interface iDynamicsCrmProgramRevenueSource {
   statecode?: number;
 }
 
+export interface iDynamicsMonthlyStatisticsAnswers {
+  AnswerCollection?: iDynamicsMonthlyStatisticsAnswersAnswer[];
+  Businessbceid?: string;
+  CategoryCollection?: iDynamicsMonthlyStatisticsCategory[];
+  Contact?: iDynamicsMonthlyStatisticsQuestionsContact;
+  Contract?: iDynamicsMonthlyStatisticsQuestionsContract;
+  IsSuccess: boolean;
+  Organization?: iDynamicsMonthlyStatisticsQuestionsOrganization;
+  Program?: iDynamicsMonthlyStatisticsQuestionsProgram;
+  ReportingPeriod?: number;
+  Result: string;
+  Userbceid?: string;
+}
+
 export interface iDynamicsMonthlyStatisticsQuestions {
   Businessbceid?: string;
   CategoryCollection?: iDynamicsMonthlyStatisticsCategory[];
@@ -375,6 +389,11 @@ export interface iDynamicsMonthlyStatisticsQuestionsOrganization {
   accountid?: string;
   name?: string;
 }
+export interface iDynamicsMonthlyStatisticsQuestionsContact {
+  contactid?: string;
+  firstname?: string;
+  lastname?: string;
+}
 export interface iDynamicsMonthlyStatisticsQuestionsContract {
   _vsd_customer_value?: string;
   vsd_contractid?: string;
@@ -388,6 +407,19 @@ export interface iDynamicsMonthlyStatisticsQuestionsProgram {
   vsd_programid?: string;
   vsd_cpu_numberofhours?: number;
 }
+export interface iDynamicsMonthlyStatisticsAnswersAnswer {
+  vsd_questioncategory?: string;
+  _vsd_datacollectionid_value?: string;
+  createdon?: Date;
+  vsd_name?: string;
+  vsd_questionorder?: number;
+  vsd_questiontype1?: number;
+  vsd_tooltip?: string;
+  vsd_yesno?: number;
+  vsd_textanswer?: string;
+  vsd_number?: number;
+}
+
 export interface iDynamicsMonthlyStatisticsQuestionsQuestion {
   _vsd_categoryid_value?: string;
   _vsd_cpuprogramtype_value?: string;
@@ -508,6 +540,7 @@ export interface iDynamicsDataCollection {
   vsd_datacollectionid?: string;
   vsd_reportingperiod?: number;
   reportingPeriod?: string;
+  statuscode?: number;
   vsd_submissiondate?: string;
   _vsd_contact_value?: string;
   createdon?: Date;

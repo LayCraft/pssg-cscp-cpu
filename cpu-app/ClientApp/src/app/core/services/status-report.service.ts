@@ -29,15 +29,12 @@ export class StatusReportService {
       catchError(this.handleError)
     );
   }
-  // getStatusReportAnswers(organizationId: string, userId: string, taskId: string): Observable<iDynamicsMonthlyStatisticsQuestions> {
-  //   // console.log(taskId);
-  //   let full_endpoint = `${this.apiUrl}/${organizationId}/${userId}/${taskId}`;
-  //   // console.log(full_endpoint);
-  //   return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/${organizationId}/${userId}/${taskId}`, { headers: this.headers }).pipe(
-  //     retry(3),
-  //     catchError(this.handleError)
-  //   );
-  // }
+  getStatusReportAnswers(organizationId: string, userId: string, dataCollectionId: string): Observable<iDynamicsMonthlyStatisticsQuestions> {
+    return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/data_collection/${organizationId}/${userId}/${dataCollectionId}`, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
   getMonthlyStats(organizationId: string, userId: string, contractId: string) {
     return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/monthly_stats/${organizationId}/${userId}/${contractId}`, { headers: this.headers }).pipe(
       retry(3),

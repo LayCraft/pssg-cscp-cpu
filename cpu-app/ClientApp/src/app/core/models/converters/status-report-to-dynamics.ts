@@ -22,7 +22,7 @@ export function convertStatusReportToDynamics(trans: TransmogrifierStatusReport)
         vsd_questioncategory: srq.name,
         vsd_QuestionIdfortunecookiebind: q.uuid,
         vsd_CategoryIdfortunecookiebind: q.categoryID,
-        vsd_questionorder: q.questionNumber,
+        vsd_questionorder: Math.floor(q.questionNumber),
         vsd_questiontype1: types[q.type]
       }
       // depending on types we add another property

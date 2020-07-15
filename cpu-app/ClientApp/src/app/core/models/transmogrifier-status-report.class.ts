@@ -26,7 +26,7 @@ export class TransmogrifierStatusReport {
     this.organizationName = g.Organization.name;
     this.programId = g.Program.vsd_programid;
     this.reportingPeriod = Object.keys(months).find(key => months[key] === g.ReportingPeriod);
-    this.programType = g.ProgramTypeCollection.filter(f => g.Program._vsd_programtype_value === f.vsd_programtypeid).map(f => f.vsd_name)[0];
+    this.programType = g.ProgramTypeCollection ? g.ProgramTypeCollection.filter(f => g.Program._vsd_programtype_value === f.vsd_programtypeid).map(f => f.vsd_name)[0] : null;
     this.programName = g.Program.vsd_name;
     this.contractNumber = g.Contract.vsd_name;
     this.contractedHours = g.Program.vsd_cpu_numberofhours;
@@ -34,19 +34,15 @@ export class TransmogrifierStatusReport {
     this.buildStatusReport(g);
   }
   private buildStatusReport(g: iDynamicsMonthlyStatisticsQuestions): void {
+    g.CategoryCollection.sort(function (a, b) {
+      return a.vsd_categoryorder - b.vsd_categoryorder;
+    });
     // for every category of questions collect the matching items
     for (let category of g.CategoryCollection) {
       const q: iQuestionCollection = {
         name: category.vsd_name,
         questions: g.QuestionCollection
           .filter((q: iDynamicsMonthlyStatisticsQuestionsQuestion) => category.vsd_monthlystatisticscategoryid === q._vsd_categoryid_value)
-          // .sort((a: iDynamicsMonthlyStatisticsQuestionsQuestion, b: iDynamicsMonthlyStatisticsQuestionsQuestion) => {
-          //   // arrange from smallest to largest
-          //   if (a.vsd_questionorder > b.vsd_questionorder) return 1;
-          //   if (a.vsd_questionorder < b.vsd_questionorder) return -1;
-          //   console.log('These items have the same question number.', a, b);
-          //   return 0;
-          // })
           .map((d: iDynamicsMonthlyStatisticsQuestionsQuestion): iQuestion => {
             // look up the value once
             const type = this.fieldType(d.vsd_questiontype);
@@ -78,7 +74,7 @@ export class TransmogrifierStatusReport {
             label: d.vsd_name,
             type,
             uuid: d.vsd_cpustatisticsmasterdataid, // I was generating it but may as well use the one from master data.
-            questionNumber: d.vsd_questionorder,
+            questionNumber: d.vsd_questionorder + 0.5, //child questions are being given the same number for order as the parent question, so add 0.5 to push this after the parent question and remain before the next question
             categoryID: d._vsd_categoryid_value,
             multiChoiceAnswers: this.getMultipleChoice(d.vsd_cpustatisticsmasterdataid, g.MultipleChoiceCollection),
             parent_id: d._vsd_parentid_value,

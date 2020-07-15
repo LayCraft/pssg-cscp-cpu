@@ -28,7 +28,6 @@ export class StatusReportComponent implements OnInit, OnDestroy {
   stepperIndex: number = 0;
   saving: boolean = false;
   didload: boolean = false;
-  isCompleted: boolean = false;
 
   public formHelper = new FormHelper();
   constructor(
@@ -41,13 +40,6 @@ export class StatusReportComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(q => {
-      // console.log(q);
-      if (q && q.completed) {
-        this.isCompleted = q.completed == "true";
-      }
-    });
-
     this.didload = false;
     this.mainTrans = this.stateService.main.getValue();
     this.route.params.subscribe(p => {
@@ -55,8 +47,8 @@ export class StatusReportComponent implements OnInit, OnDestroy {
       const organizationId: string = this.stateService.main.getValue().organizationId;
       const userId: string = this.stateService.main.getValue().userId;
       // console.log(p);
-      // console.log(p['taskId']);
-
+      console.log(p['taskId']);
+      
       this.statusReportService.getStatusReportQuestions(organizationId, userId, p['taskId'])
         .subscribe(r => {
           if (!r.IsSuccess) {
@@ -66,8 +58,10 @@ export class StatusReportComponent implements OnInit, OnDestroy {
             // route back to the dashboard
             this.router.navigate(['/authenticated/dashboard']);
           } else {
+
             // make the transmogrifier for this form
             this.data = r;
+            
             // construct the stepper
             this.trans = new TransmogrifierStatusReport(r);
             this.trans.taskId = p['taskId'];
@@ -80,10 +74,10 @@ export class StatusReportComponent implements OnInit, OnDestroy {
 
             this.trans.title = title;
 
-            // console.log("dynamics data status report:");
-            // console.log(r);
-            // console.log("trans");
-            // console.log(this.trans);
+            console.log("dynamics data status report:");
+            console.log(r);
+            console.log("trans");
+            console.log(this.trans);
 
             this.constructDefaultstepperElements();
           }
