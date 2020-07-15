@@ -8,10 +8,14 @@
       <li class="nav-item">
         <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.tasksCompleted)" [class.active]="currentTab===tabs.tasksCompleted">{{tabs.tasksCompleted}}{{contract.completedTasks.length ? ' ('+contract.completedTasks.length+')':''}}</a>
       </li>
+
+      <!-- <li class="nav-item">
+        <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.completedStats); getCompletedMonthlyStats(contract.contractId)" [class.active]="currentTab===tabs.completedStats">{{tabs.completedStats}}</a>
+      </li> -->
+
       <li class="nav-item">
         <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.editProgramInformation)" [class.active]="currentTab===tabs.editProgramInformation">{{tabs.editProgramInformation}}</a>
       </li>
-      <!-- Your documents tab - to maybe be included in the future -->
       <li class="nav-item">
         <a class="nav-link nav-tab-table" (click)="setCurrentTab(tabs.yourDocuments); getContractDocuments(contract.contractId)" [class.active]="currentTab===tabs.yourDocuments">{{tabs.yourDocuments}}</a>
       </li>
@@ -83,6 +87,44 @@
         </table>
       </div>
     </span>
+
+    <span *ngIf="currentTab===tabs.completedStats">
+      <table class="table table-sm table-striped">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Program Name</th>
+            <th scope="col">Reporting Period</th>
+            <th scope="col">View Your Report</th>
+            <th scope="col">Submission Date</th>
+            <th scope="col">Report Status</th>
+            <th scope="col">Submitted By</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="loadingStats">
+            <td colspan="5">Loading...</td>
+            <td><i class="text-secondary spinner-border spinner-border-sm"></i></td>
+          </tr>
+          <tr *ngFor="let data of dataCollection; let i=index;">
+            <td>{{completedStats.ProgramCollection[0].vsd_name}}</td>
+            <td>{{data.reportingPeriod}}</td>
+            <td>
+              <ng-container>
+                <!-- todo -->
+                <!-- *ngIf="data.status == 'allowed to view'" -->
+                <a routerLink="/authenticated/status_report/{{data.vsd_datacollectionid}}" [queryParams]="{completed: 'true'}">
+                  Statistics report ({{completedStats.ProgramCollection[0].vsd_name}})
+                </a>
+              </ng-container>
+            </td>
+            <td>{{data.vsd_submissiondate | date}}</td>
+            <td>get mano to add status</td>
+            <td>{{completedStats.UserCollection[0].fullname}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </span>
+
     <span *ngIf="currentTab===tabs.editProgramInformation">
       <table class="table table-sm table-striped">
         <thead class="thead">

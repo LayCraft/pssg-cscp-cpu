@@ -6,7 +6,9 @@ import { FileService } from '../../../core/services/file.service';
 import { StateService } from '../../../core/services/state.service';
 import { Subscription } from 'rxjs';
 import { Transmogrifier } from '../../../core/models/transmogrifier.class';
-import { iDynamicsFile, iDynamicsDocument } from '../../../core/models/dynamics-blob';
+import { iDynamicsFile, iDynamicsDocument, iDynamicsMonthlyStatistics, iDynamicsDataCollection } from '../../../core/models/dynamics-blob';
+import { StatusReportService } from '../../../core/services/status-report.service';
+import { months } from '../../../core/constants/month-codes';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -22,18 +24,30 @@ export class TaskListComponent implements OnInit, OnDestroy {
   statuses: string[];
   formTypes: string[];
 
+  didLoadStats: boolean = false;
+  loadingStats: boolean = false;
+  completedStats: iDynamicsMonthlyStatistics;
+  dataCollection: iDynamicsDataCollection[] = [];
+
+
+  didLoadDocuments: boolean = false;
   documentCollection: iDynamicsDocument[] = [];
   private stateSubscription: Subscription;
   loadingDocuments: boolean = false;
 
+  organizationId: string;
+  userId: string;
+
   constructor(private stateService: StateService,
+    private statusReportService: StatusReportService,
     public fileService: FileService) {
     this.tabs = {
-      "tasksDue": 'Tasks Due',
-      "tasksCompleted": 'Completed Tasks',
-      "editProgramInformation": 'Update Program/Contact Information',
-      "yourDocuments": 'Your Documents',
-      "messages": 'Messages'
+      'tasksDue': 'Tasks Due',
+      'tasksCompleted': 'Completed Tasks',
+      'completedStats': 'Completed Monthly Reports',
+      'editProgramInformation': 'Update Program/Contact Information',
+      'yourDocuments': 'Your Documents',
+      'messages': 'Messages'
     };
     this.currentTab = this.tabs.tasksDue;
     this.statuses = TaskStatus;
@@ -44,6 +58,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
+
+      this.organizationId = this.stateService.main.getValue().organizationId;
+      this.userId = this.stateService.main.getValue().userId;
     });
   }
   ngOnDestroy() {
@@ -52,6 +69,28 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   setCurrentTab(tab: any) {
     this.currentTab = tab;
+  }
+
+  getCompletedMonthlyStats(contractId: string) {
+    if (this.didLoadStats) {
+      return;
+    }
+
+    console.log("getting monthly stats");
+    this.loadingStats = true;
+
+    this.statusReportService.getMonthlyStats(this.organizationId, this.userId, contractId).subscribe((res: iDynamicsMonthlyStatistics) => {
+      console.log("Monthly Stats:");
+      console.log(res);
+      this.didLoadStats = true;
+      this.loadingStats = false;
+      this.completedStats = res;
+      this.dataCollection = this.completedStats.DataCollection;
+      for (let data of this.dataCollection) {
+        data.reportingPeriod = Object.keys(months).find(key => months[key] === data.vsd_reportingperiod);
+      }
+      console.log(this.dataCollection);
+    });
   }
 
   downloadDocument(doc: iDynamicsDocument) {
@@ -73,7 +112,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   getContractDocuments(contractId: string) {
-    if (this.documentCollection.length > 0) {
+    if (this.didLoadDocuments) {
       //already got documents, don't need to load again
       return;
     }
@@ -81,6 +120,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     this.loadingDocuments = true;
     this.fileService.download(this.trans.organizationId, this.trans.userId, contractId).subscribe(
       (d: iDynamicsFile) => {
+        this.didLoadDocuments = true;
         this.loadingDocuments = false;
         // console.log(d);
         if (d['error'] && d['error']['code']) {

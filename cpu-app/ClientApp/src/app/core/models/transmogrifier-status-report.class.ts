@@ -4,6 +4,7 @@ import { iQuestionCollection } from "./question-collection.interface";
 import { iDynamicsPostStatusReport } from "./dynamics-post";
 import { iContract } from "./contract.interface";
 import { months } from "../constants/month-codes";
+import { boolOptionSet } from "../constants/bool-optionset-values";
 // a collection of the expense item guids as K/V pairs for generating line items
 export class TransmogrifierStatusReport {
   public organizationId: string;
@@ -57,6 +58,10 @@ export class TransmogrifierStatusReport {
               categoryID: d._vsd_categoryid_value,
               multiChoiceAnswers: this.getMultipleChoice(d.vsd_cpustatisticsmasterdataid, g.MultipleChoiceCollection),
               isChildQuestionExplanationRequired: false,
+              number: d.vsd_number || null,
+              numberMask: d.vsd_number ? d.vsd_number.toString() : null,
+              boolean: d.vsd_yesno === boolOptionSet.isTrue ? true : d.vsd_yesno === boolOptionSet.isFalse ? false : null,
+              string: d.vsd_textanswer || null,
             }
             // instantiate the correct property with the freshest null value
             q[type] = null;

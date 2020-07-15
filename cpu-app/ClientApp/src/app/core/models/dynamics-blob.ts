@@ -396,6 +396,9 @@ export interface iDynamicsMonthlyStatisticsQuestionsQuestion {
   vsd_questionorder?: number;
   vsd_questiontype?: number;
   vsd_tooltip?: string;
+  vsd_yesno?: number;
+  vsd_textanswer?: string;
+  vsd_number?: number;
 }
 export interface iDynamicsMonthlyStatisticsChildQuestion {
   _vsd_categoryid_value?: string;
@@ -484,4 +487,49 @@ export interface iDynamicsDocument {
   subject: string;
   body: string;
   overwritetime?: string;
+}
+
+export interface iDynamicsMonthlyStatistics {
+  fortunecookiecontext?: string;
+  Businessbceid?: string;
+  ContactCollection?: iDynamicsContact[];
+  DataCollection?: iDynamicsDataCollection[];
+  IsSuccess: boolean;
+  ProgramCollection?: iDynamicsProgram[];
+  Result: string;
+  Userbceid?: string;
+  UserCollection?: iDynamicsUser[];
+}
+
+export interface iDynamicsDataCollection {
+  fortunecookietype?: string;
+  fortunecookieetag?: string;
+  _ownerid_value?: string;
+  vsd_datacollectionid?: string;
+  vsd_reportingperiod?: number;
+  reportingPeriod?: string;
+  vsd_submissiondate?: string;
+  _vsd_contact_value?: string;
+  createdon?: Date;
+  _vsd_program_value?: string;
+  vsd_name?: string;
+}
+
+export interface iDynamicsContact {
+  fortunecookietype?: string;
+  contactid?: string;
+  fullname?: string;
+}
+
+export interface iDynamicsProgram {
+  fortunecookietype?: string;
+  vsd_programid?: string;
+  vsd_name?: string;
+}
+
+export interface iDynamicsUser {
+  fortunecookietype?: string;
+  systemuserid?: string;
+  fullname?: string;
+  ownerid?: string;
 }

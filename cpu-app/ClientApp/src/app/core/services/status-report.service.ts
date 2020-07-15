@@ -18,9 +18,6 @@ export class StatusReportService {
   ) { }
 
   getStatusReportQuestions(organizationId: string, userId: string, taskId: string): Observable<iDynamicsMonthlyStatisticsQuestions> {
-    // console.log(taskId);
-    let full_endpoint = `${this.apiUrl}/${organizationId}/${userId}/${taskId}`;
-    // console.log(full_endpoint);
     return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/${organizationId}/${userId}/${taskId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
@@ -28,6 +25,21 @@ export class StatusReportService {
   }
   setStatusReportAnswers(taskId: string, answers: iDynamicsPostStatusReport): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/${taskId}`, answers, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+  // getStatusReportAnswers(organizationId: string, userId: string, taskId: string): Observable<iDynamicsMonthlyStatisticsQuestions> {
+  //   // console.log(taskId);
+  //   let full_endpoint = `${this.apiUrl}/${organizationId}/${userId}/${taskId}`;
+  //   // console.log(full_endpoint);
+  //   return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/${organizationId}/${userId}/${taskId}`, { headers: this.headers }).pipe(
+  //     retry(3),
+  //     catchError(this.handleError)
+  //   );
+  // }
+  getMonthlyStats(organizationId: string, userId: string, contractId: string) {
+    return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/monthly_stats/${organizationId}/${userId}/${contractId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
