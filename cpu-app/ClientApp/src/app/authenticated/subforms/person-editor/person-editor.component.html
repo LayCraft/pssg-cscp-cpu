@@ -66,27 +66,7 @@
   <div class="form-row">
     <div class="col-md">
       <div class="form-group">
-        <label for="phoneNumber">Mobile Number</label>
-        <input [disabled]="isDisabled" type="text" mask='(000) 000 0000' class="form-control" id="phoneNumber{{idNum}}" name="phoneNumber" [(ngModel)]="person.phone" #phoneNumber="ngModel" [pattern]="phoneRegex">
-        <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber)">
-          Ok
-        </div>
-        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(person.phone, phoneRegex, phoneNumber)">
-          Try Again
-        </div>
-      </div>
-    </div>
-    <div class="col-md">
-      <div class="form-group">
-        <label for="ext">Ext. (Optional)</label>
-        <input [disabled]="isDisabled" type="text" mask='0000' [validation]="false" class="form-control" id="ext{{idNum}}" name="ext" [(ngModel)]="person.phoneExtension" #ext="ngModel">
-      </div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md">
-      <div class="form-group">
-        <label for="phoneNumber2">Work Phone (Optional)</label>
+        <label for="phoneNumber2">Work Phone</label>
         <input [disabled]="isDisabled" type="text" mask='(000) 000 0000' class="form-control" id="phoneNumber2{{idNum}}" name="phoneNumber2" [(ngModel)]="person.phone2" #phoneNumber2="ngModel" [pattern]="phoneRegex">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber2)">
           Ok
@@ -100,6 +80,26 @@
       <div class="form-group">
         <label for="ext2">Ext. (Optional)</label>
         <input [disabled]="isDisabled" type="text" mask='0000' [validation]="false" class="form-control" id="ext2{{idNum}}" name="ext2" [(ngModel)]="person.phone2Extension" #ext2="ngModel">
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md">
+      <div class="form-group">
+        <label for="phoneNumber">Mobile Number (Optional)</label>
+        <input [disabled]="isDisabled" type="text" mask='(000) 000 0000' class="form-control" id="phoneNumber{{idNum}}" name="phoneNumber" [(ngModel)]="person.phone" #phoneNumber="ngModel" [pattern]="phoneRegex">
+        <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(phoneNumber)">
+          Ok
+        </div>
+        <div class="invalid-feedback" [hidden]="formHelper.showInvalidFeedback(person.phone, phoneRegex, phoneNumber)">
+          Try Again
+        </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-group">
+        <label for="ext">Ext. (Optional)</label>
+        <input [disabled]="isDisabled" type="text" mask='0000' [validation]="false" class="form-control" id="ext{{idNum}}" name="ext" [(ngModel)]="person.phoneExtension" #ext="ngModel">
       </div>
     </div>
   </div>

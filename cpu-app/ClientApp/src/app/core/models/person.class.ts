@@ -49,7 +49,7 @@ export class Person implements iPerson {
     }
   }
 
-  private REQUIRED_FIELDS = ["firstName", "lastName", "title", "email", "phone", "address", "address.line1", "address.city", "address.postalCode", "employmentStatus"];
+  private REQUIRED_FIELDS = ["firstName", "lastName", "title", "email", "phone2", "address", "address.line1", "address.city", "address.postalCode", "employmentStatus"];
   hasRequiredFields(skipEmploymentStatus: boolean = false) {
     for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
       if (skipEmploymentStatus && this.REQUIRED_FIELDS[i] === "employmentStatus") continue;
