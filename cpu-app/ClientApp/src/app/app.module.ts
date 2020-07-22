@@ -59,6 +59,7 @@ import { AddPersonDialog } from './authenticated/dialogs/add-person/add-person.d
 import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
 import { ContractPackageAuthorizerComponent } from './authenticated/subforms/contract-package-authorizer/contract-package-authorizer';
 import { SafePipe } from './core/pipes/safe.pipe';
+import { CompletedStatusReportComponent } from './authenticated/status-report/completed-status-report.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { SafePipe } from './core/pipes/safe.pipe';
     RevenueSourceTableComponent,
     ReviewApplicationComponent,
     StatusReportComponent,
+    CompletedStatusReportComponent,
     TaskListComponent,
     TestComponent,
     UploadDocumentComponent,

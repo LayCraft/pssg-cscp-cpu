@@ -1,6 +1,9 @@
 <h2 class="blue-header">Standard Authorization &amp; Signature</h2>
 <div>
-    <app-person-picker [isDisabled]="isDisabled" (input)="onInput()" [title]="'Authorized Signing Officer'" [(person)]="signature.signer" ></app-person-picker>
+    <app-person-picker [isDisabled]="isDisabled" (input)="onInput()" [title]="'Authorized Signing Officer'" [(person)]="signature.signer"></app-person-picker>
+    <div *ngIf="signature.signer" class="mt-3 mb-3">
+        <h5>By signing and submitting, the parties have executed this agreement as follows.</h5>
+    </div>
     <div class="card mt-2" *ngIf="signature.signer">
         <div class="card-body">
             <h5 class="card-title">Please add your signature here with you finger or other pointing device.</h5>

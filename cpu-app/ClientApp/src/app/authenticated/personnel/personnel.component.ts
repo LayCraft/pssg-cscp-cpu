@@ -15,6 +15,7 @@ import { FormHelper } from '../../core/form-helper';
 import { FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
+import { ConsoleLoggerService } from '../../core/services/logger.service';
 
 @Component({
   selector: 'app-personnel',
@@ -44,6 +45,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     private notificationQueueService: NotificationQueueService,
     private stepperService: IconStepperService,
     private stateService: StateService,
+    private logger: ConsoleLoggerService,
     // private formHelper: FormHelper
   ) { }
 
@@ -55,6 +57,8 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
       this.originalPersons = _.cloneDeep(this.trans.persons);
+
+      this.logger.log(this.originalPersons);
       // set the default top and bottom list
       this.constructStepperElements(m);
       this.didLoad = true;
@@ -96,7 +100,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         return;
       }
 
-      // console.log(person);
+      this.logger.log(person);
       this.saving = true;
       let thisPerson = new Person(person);
       // a person needs minimum a first and last name to be submitted

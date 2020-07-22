@@ -93,8 +93,6 @@ namespace Gov.Cscp.Victims.Public.Controllers
 
                 byte[] signaturePage = System.Convert.FromBase64String(portalModel.DocumentCollection[portalModel.DocumentCollection.Length - 1].body);
 
-
-
                 string signatureString = portalModel.Signature.vsd_authorizedsigningofficersignature;
                 signatureString = signatureString.Replace("data:image/png;base64,", "");
                 var offset = signatureString.IndexOf(',') + 1;
@@ -106,7 +104,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
 
                 data.SignedContract = new DynamicsDocumentPost();
                 data.SignedContract.body = combinedDoc;
-                data.SignedContract.filename = "Merged Contract.pdf";
+                data.SignedContract.filename = "Contract Package Signed by Service Provider.pdf";
 
                 //for testing the document combining
                 // return StatusCode(200, data);
