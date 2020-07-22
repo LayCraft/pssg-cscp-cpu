@@ -60,6 +60,7 @@ import { SignContractComponent } from './authenticated/sign-contract/sign-contra
 import { ContractPackageAuthorizerComponent } from './authenticated/subforms/contract-package-authorizer/contract-package-authorizer';
 import { SafePipe } from './core/pipes/safe.pipe';
 import { CompletedStatusReportComponent } from './authenticated/status-report/completed-status-report.component';
+import { UppercaseDirective } from './core/directives/uppercase.directive';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { CompletedStatusReportComponent } from './authenticated/status-report/co
     UploadDocumentComponent,
     SignContractComponent,
     CoverLetterComponent,
+    UppercaseDirective,
     PhonePipe,
     SafePipe
   ],

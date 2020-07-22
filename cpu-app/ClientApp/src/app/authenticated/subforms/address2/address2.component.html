@@ -58,7 +58,7 @@
     <div class="col-md">
       <div class="form-group">
         <label [class.required]="addRequiredClass">Postal Code</label>
-        <input [disabled]="isDisabled" type="text" class="form-control" [(ngModel)]="address.postalCode" #postalCode="ngModel" (input)="formHelper.trimPostalCode($event.target)" [pattern]="postalRegex" placeholder="X1X 2Y2 or X1X2Y2">
+        <input [disabled]="isDisabled" uppercase type="text" class="form-control" [(ngModel)]="address.postalCode" #postalCode="ngModel" (input)="formHelper.trimPostalCode($event.target)" [pattern]="postalRegex" placeholder="X1X 2Y2 or X1X2Y2">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(postalCode)" style="display: inherit">
           Ok
         </div>

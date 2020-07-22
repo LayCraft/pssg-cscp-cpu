@@ -58,7 +58,7 @@
     <div class="col-md">
       <div class="form-group">
         <label for="postalCode" [class.required]="required">Postal Code</label>
-        <input type="text" class="form-control" id="postalCode" name="postalCode" formControlName="postalCode" [required]="formHelper.isRequired(postalCode, required)">
+        <input type="text" uppercase class="form-control" id="postalCode" name="postalCode" formControlName="postalCode" [required]="formHelper.isRequired(postalCode, required)">
         <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(postalCode)" style="display: inherit">
           Ok
         </div>
