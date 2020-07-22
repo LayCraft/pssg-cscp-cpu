@@ -58,7 +58,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
       this.trans = m;
       this.originalPersons = _.cloneDeep(this.trans.persons);
 
-      this.logger.log(this.originalPersons);
+      console.log(this.originalPersons);
       // set the default top and bottom list
       this.constructStepperElements(m);
       this.didLoad = true;
@@ -100,7 +100,7 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.logger.log(person);
+      console.log(person);
       this.saving = true;
       let thisPerson = new Person(person);
       // a person needs minimum a first and last name to be submitted

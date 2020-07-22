@@ -85,10 +85,15 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 data.UserBCeID = portalModel.UserBCeID;
 
                 List<byte[]> byteArray = new List<byte[]>();
+                int signaturePosition = -1;
 
                 for (int i = 0; i < portalModel.DocumentCollection.Length - 1; ++i)
                 {
                     byteArray.Add(System.Convert.FromBase64String(portalModel.DocumentCollection[i].body));
+                    if (portalModel.DocumentCollection[i].filename.Contains("TUA"))
+                    {
+                        signaturePosition = i;
+                    }
                 }
 
                 byte[] signaturePage = System.Convert.FromBase64String(portalModel.DocumentCollection[portalModel.DocumentCollection.Length - 1].body);
@@ -98,7 +103,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 var offset = signatureString.IndexOf(',') + 1;
                 var signatureImage = System.Convert.FromBase64String(signatureString.Substring(offset));
 
-                byte[] combinedArray = concatAndAddContent(byteArray, signaturePage, signatureImage, portalModel.Signature.vsd_signingofficersname, portalModel.Signature.vsd_signingofficertitle);
+                byte[] combinedArray = concatAndAddContent(byteArray, signaturePage, signaturePosition, signatureImage, portalModel.Signature.vsd_signingofficersname, portalModel.Signature.vsd_signingofficertitle);
 
                 string combinedDoc = System.Convert.ToBase64String(combinedArray);
 
@@ -167,7 +172,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
             finally { }
         }
 
-        public static byte[] concatAndAddContent(List<byte[]> pdfByteContent, byte[] signaturePage, byte[] signature, String signingOfficerName, String signingOfficerTitle)
+        public static byte[] concatAndAddContent(List<byte[]> pdfByteContent, byte[] signaturePage, int signaturePosition, byte[] signature, String signingOfficerName, String signingOfficerTitle)
         {
             using (var ms = new MemoryStream())
             {
@@ -176,6 +181,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
                     using (var copy = new PdfSmartCopy(doc, ms))
                     {
                         doc.Open();
+                        int index = 0;
 
                         //Loop through each byte array
                         foreach (var p in pdfByteContent)
@@ -188,60 +194,66 @@ namespace Gov.Cscp.Victims.Public.Controllers
                                 //Add the entire document instead of page-by-page
                                 copy.AddDocument(reader);
                             }
-                        }
 
-                        using (var second_ms = new MemoryStream())
-                        {
-                            PdfReader pdfr = new PdfReader(signaturePage);
-                            PdfStamper pdfs = new PdfStamper(pdfr, second_ms);
-                            Image image = iTextSharp.text.Image.GetInstance(signature);
-                            Rectangle rect;
-                            PdfContentByte content;
-
-                            rect = pdfr.GetPageSize(1);
-                            content = pdfs.GetOverContent(1);
-
-                            image.SetAbsolutePosition(84.0F, 475.0F);
-                            image.ScalePercent(29.0F, 25.0F);
-
-                            content.AddImage(image);
-
-                            PdfLayer layer = new PdfLayer("info-layer", pdfs.Writer);
-                            content.BeginLayer(layer);
-                            content.SetFontAndSize(BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED), 20);
-
-                            String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-
-                            DateTime today = DateTime.Now;
-                            String monthString = months[today.Month - 1];
-                            String yearString = today.Year.ToString().Substring(2);
-                            var now = DateTime.Now;
-                            String daySuffix = (now.Day % 10 == 1 && now.Day != 11) ? "st"
-                            : (now.Day % 10 == 2 && now.Day != 12) ? "nd"
-                            : (now.Day % 10 == 3 && now.Day != 13) ? "rd"
-                            : "th";
-                            String dayString = today.Day.ToString() + daySuffix;
-
-
-                            content.SetColorFill(BaseColor.BLACK);
-                            content.BeginText();
-                            content.SetFontAndSize(BaseFont.CreateFont(), 9);
-                            content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, signingOfficerName, 84.0F, 420.0F, 0.0F);
-                            content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, signingOfficerTitle, 84.0F, 370.0F, 0.0F);
-                            content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, dayString, 152.0F, 624.0F, 0.0F);
-                            content.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, monthString, 285.0F, 624.0F, 0.0F);
-                            content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, yearString, 304.0F, 624.5F, 0.0F);
-                            content.EndText();
-
-                            content.EndLayer();
-
-                            pdfs.Close();
-
-                            using (var reader = new PdfReader(second_ms.ToArray()))
+                            if (index == signaturePosition)
                             {
-                                //Add the entire document instead of page-by-page
-                                copy.AddDocument(reader);
+                                //insert signature page at desired position
+                                using (var second_ms = new MemoryStream())
+                                {
+                                    PdfReader pdfr = new PdfReader(signaturePage);
+                                    PdfStamper pdfs = new PdfStamper(pdfr, second_ms);
+                                    Image image = iTextSharp.text.Image.GetInstance(signature);
+                                    Rectangle rect;
+                                    PdfContentByte content;
+
+                                    rect = pdfr.GetPageSize(1);
+                                    content = pdfs.GetOverContent(1);
+
+                                    image.SetAbsolutePosition(84.0F, 475.0F);
+                                    image.ScalePercent(29.0F, 25.0F);
+
+                                    content.AddImage(image);
+
+                                    PdfLayer layer = new PdfLayer("info-layer", pdfs.Writer);
+                                    content.BeginLayer(layer);
+                                    content.SetFontAndSize(BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED), 20);
+
+                                    String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+
+                                    DateTime today = DateTime.Now;
+                                    String monthString = months[today.Month - 1];
+                                    String yearString = today.Year.ToString().Substring(2);
+                                    var now = DateTime.Now;
+                                    String daySuffix = (now.Day % 10 == 1 && now.Day != 11) ? "st"
+                                    : (now.Day % 10 == 2 && now.Day != 12) ? "nd"
+                                    : (now.Day % 10 == 3 && now.Day != 13) ? "rd"
+                                    : "th";
+                                    String dayString = today.Day.ToString() + daySuffix;
+
+
+                                    content.SetColorFill(BaseColor.BLACK);
+                                    content.BeginText();
+                                    content.SetFontAndSize(BaseFont.CreateFont(), 9);
+                                    content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, signingOfficerName, 84.0F, 420.0F, 0.0F);
+                                    content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, signingOfficerTitle, 84.0F, 370.0F, 0.0F);
+                                    content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, dayString, 152.0F, 624.0F, 0.0F);
+                                    content.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, monthString, 285.0F, 624.0F, 0.0F);
+                                    content.ShowTextAligned(PdfContentByte.ALIGN_LEFT, yearString, 304.0F, 624.5F, 0.0F);
+                                    content.EndText();
+
+                                    content.EndLayer();
+
+                                    pdfs.Close();
+
+                                    using (var reader = new PdfReader(second_ms.ToArray()))
+                                    {
+                                        //Add the entire document instead of page-by-page
+                                        copy.AddDocument(reader);
+                                    }
+                                }
                             }
+
+                            ++index;
                         }
 
                         doc.Close();
