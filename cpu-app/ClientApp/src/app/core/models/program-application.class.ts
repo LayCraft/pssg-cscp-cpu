@@ -74,6 +74,42 @@ export class ProgramApplication implements iProgramApplication {
                 return false;
             }
         }
+        if (this.hasSubContractedStaff) {
+            if (this.subContractedStaff.length <= 0) {
+                return false;
+            }
+        }
         return true;
     }
+    getMissingFields() {
+        let ret = [];
+        for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
+            if (!this.formHelper.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
+                ret.push(this.REQUIRED_FIELDS[i]);
+            }
+        }
+        let skip_employment_status_validation = true;
+
+        if (this.hasPoliceContact) {
+            let policeContact = new Person(this.policeContact);
+
+            if (!policeContact.hasRequiredFields(skip_employment_status_validation)) {
+                ret = ret.concat(policeContact.getMissingFields(skip_employment_status_validation));
+            }
+        }
+
+        if (this.hasSharedCostContact) {
+            let sharedCostContact = new Person(this.sharedCostContact);
+            if (!sharedCostContact.hasRequiredFields(skip_employment_status_validation)) {
+                ret = ret.concat(sharedCostContact.getMissingFields(skip_employment_status_validation));
+            }
+        }
+        if (this.hasSubContractedStaff) {
+            if (this.subContractedStaff.length <= 0) {
+                ret.push("subContractedStaff.length");
+            }
+        }
+        return ret;
+    }
+
 }

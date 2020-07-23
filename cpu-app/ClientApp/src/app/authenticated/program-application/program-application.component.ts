@@ -85,16 +85,18 @@ export class ProgramApplicationComponent implements OnInit {
             this.router.navigate(['/authenticated/dashboard']);
           } else {
             this.data = f;
-            // console.log("program application dynamics info");
-            // console.log(f);
+            console.log("program application dynamics info");
+            console.log(f);
 
             // make the transmogrifier for this form
             this.trans = new TransmogrifierProgramApplication(f);
-            // console.log("Program application transmogrifier");
-            // console.log(this.trans);
+            console.log("Program application transmogrifier");
+            console.log(this.trans);
             this.trans.programApplications.forEach((p: iProgramApplication) => { this.reviewApplicationTabs.push(p.name) });
 
             this.constructDefaultstepperElements(this.trans);
+
+            if (this.isCompleted) this.trans.administrativeInformation.awareOfCriminalRecordCheckRequirement = true;
           }
         }
       );
@@ -208,6 +210,7 @@ export class ProgramApplicationComponent implements OnInit {
           // console.log(obj_to_validate);
           // console.log(obj_to_validate.hasRequiredFields());
           if (!obj_to_validate.hasRequiredFields()) {
+            console.log(obj_to_validate.getMissingFields());
             this.notificationQueueService.addNotification('Please fill in all required fields', 'warning');
             return;
           }
@@ -347,6 +350,7 @@ export class ProgramApplicationComponent implements OnInit {
       // console.log(obj_to_validate);
       // console.log(obj_to_validate.hasRequiredFields());
       if (!obj_to_validate.hasRequiredFields()) {
+        console.log(obj_to_validate.getMissingFields());
         this.notificationQueueService.addNotification('Please fill in all required fields', 'warning');
         return;
       }

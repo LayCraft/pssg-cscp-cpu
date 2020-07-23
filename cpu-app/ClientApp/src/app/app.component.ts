@@ -9,13 +9,13 @@ import { environment } from '../environments/environment';
 export class AppComponent {
   title = 'cpu-public-app';
 
-  constructor() {
-    console.log("doing inital setup");
-    if (environment.production) {
-      enableProdMode();
-      if (window) {
-        window.console.log = function () { };
-      }
-    }
-  }
+  // constructor() {
+  //   // console.log("doing inital setup");
+  //   // if (environment.production) {
+  //   //   // enableProdMode();
+  //   //   if (window) {
+  //   //     window.console.log = function () { };
+  //   //   }
+  //   // }
+  // }
 }

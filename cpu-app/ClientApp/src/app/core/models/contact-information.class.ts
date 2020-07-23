@@ -34,7 +34,7 @@ export class ContactInformation implements iContactInformation {
   }
 
   private REQUIRED_FIELDS = ["emailAddress", "phoneNumber", "mainAddress", "mainAddress.line1", "mainAddress.city", "mainAddress.postalCode",
-    "mailingAddress", "mailingAddress.line1", "mailingAddress.city", "mailingAddress.postalCode"];
+    "mailingAddress", "mailingAddress.line1", "mailingAddress.city", "mailingAddress.postalCode", "executiveContact.userId"];
   hasRequiredFields() {
     for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
       if (!this.formHelper.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
@@ -42,5 +42,14 @@ export class ContactInformation implements iContactInformation {
       }
     }
     return true;
+  }
+  getMissingFields() {
+    let ret = [];
+    for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
+      if (!this.formHelper.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
+        ret.push(this.REQUIRED_FIELDS[i]);
+      }
+    }
+    return ret;
   }
 }

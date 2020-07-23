@@ -52,6 +52,8 @@ namespace Gov.Cscp.Victims.Public.Helpers
             ret = ret.Replace("\"AddProgramContactCollection\":null", "");
             ret = ret.Replace("\"RemoveProgramContactCollection\":null,", "");
             ret = ret.Replace("\"RemoveProgramContactCollection\":null", "");
+            ret = ret.Replace("\"RemoveProgramSubContractorCollection\":null,", "");
+            ret = ret.Replace("\"RemoveProgramSubContractorCollection\":null", "");
             ret = ret.Replace("\"Organization\":null,", "");
             ret = ret.Replace("\"Organization\":null", "");
             ret = ret.Replace("\"ProgramCollection\":null,", "");

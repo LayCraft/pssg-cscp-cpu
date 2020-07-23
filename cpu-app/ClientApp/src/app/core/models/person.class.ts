@@ -60,9 +60,10 @@ export class Person implements iPerson {
     return true;
   }
 
-  getMissingFields() {
+  getMissingFields(skipEmploymentStatus: boolean = false) {
     let ret = [];
     for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
+      if (skipEmploymentStatus && this.REQUIRED_FIELDS[i] === "employmentStatus") continue;
       if (!this.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
         ret.push(this.REQUIRED_FIELDS[i]);
       }

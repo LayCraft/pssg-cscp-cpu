@@ -56,7 +56,7 @@
     </span>
     <h2 class="blue-header mt-2">Program Staff</h2>
     <app-person-picker-list [isDisabled]="isDisabled" [label]="'Program Staff'" [(personsObj)]="personsObj" (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
-    <button *ngIf="!isDisabled" class="btn btn-primary mt-2 btn-add-program-staff" (click)="showAddProgramStaffDialog()">Add Missing Program Staff</button>
+    <button *ngIf="!isDisabled" class="btn btn-primary mt-2 btn-add-program-staff" (click)="showAddProgramStaffDialog()">Add Missing Program Staff or Sub-contractor</button>
 
     <h2 class="blue-header mt-2">Sub-contracted Staff</h2>
     <div class="form-check">
