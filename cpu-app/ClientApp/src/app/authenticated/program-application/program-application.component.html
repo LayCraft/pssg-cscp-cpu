@@ -35,7 +35,7 @@
             <div *ngIf="item.discriminator === discriminators[0]">
               <!-- Metadata for organization -->
               <h2 class="blue-header">
-                Applicant Organization Legal Name
+                Organization Legal Name
               </h2>
               <div class="form-row">
                 <div class="col-md">
@@ -54,7 +54,7 @@
                 </div>
               </div>
               <!-- Primary contact information -->
-              <h2 class="blue-header">Primary Program Contact Information</h2>
+              <h2 class="blue-header">Primary Organization Contact Information</h2>
               <!-- Primary organization contact information header -->
               <app-primary-contact-info [(contactInformation)]="trans.contactInformation" [isDisabled]="isCompleted"></app-primary-contact-info>
               <!-- Primary address form -->
@@ -67,7 +67,7 @@
               <div class="form-check">
                 <input [disabled]="isCompleted" [(ngModel)]="trans.contactInformation.mailingAddressSameAsMainAddress" class="form-check-input" type="checkbox" id="mailingAddressSameAsMainAddress" name="mailingAddressSameAsMainAddress" (click)="setMailingAddressSameAsMainAddress()">
                 <label class="form-check-label" for="mailingAddressSameAsMainAddress">
-                  Please select this check box if mailing address is the same as Primary Program Contact Address
+                  Please select this check box if mailing address is the same as Primary Organization Contact Address
                 </label>
               </div>
               <app-address2 [isDisabled]="trans.contactInformation.mailingAddressSameAsMainAddress" [(address)]="trans.contactInformation.mailingAddress" [isDisabled]="isCompleted"></app-address2>

@@ -1,4 +1,5 @@
 import { iAddress } from "./address.interface";
+import { iPaymentStatus } from "./payment-status.interface";
 
 export interface iProgram {
   address: iAddress;
@@ -10,4 +11,5 @@ export interface iProgram {
   programName: string;
   contactName?: string;
   contactTitle?: string;
+  paymentsStatus?: iPaymentStatus;
 }

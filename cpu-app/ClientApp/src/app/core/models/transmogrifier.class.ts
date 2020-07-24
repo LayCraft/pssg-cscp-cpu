@@ -13,6 +13,9 @@ import { decodeTaskType } from '../constants/decode-task-type';
 import { nameAssemble } from '../constants/name-assemble';
 import * as _ from 'lodash';
 import { employmentStatusTypeDict } from '../constants/employment-status-types';
+import { iPaymentStatus, PaymentStatusCode } from './payment-status.interface';
+import * as moment from 'moment';
+import { PAYMENT_QUARTERS } from '../constants/reporting-period';
 
 export class Transmogrifier {
   // collections of viewmodels
@@ -151,10 +154,37 @@ export class Transmogrifier {
           programName: program.vsd_name,
           contactName: programContact ? nameAssemble(programContact.firstname, programContact.middlename, programContact.lastname) : "",
           contactTitle: programContact ? programContact.jobtitle : "",
+          paymentsStatus: this.buildPaymentsStatus(b, program.vsd_programid),
         });
       }
     }
     return programs;
+  }
+  private buildPaymentsStatus(b: iDynamicsBlob, programId: string): iPaymentStatus {
+    let paymentStatus: iPaymentStatus = {
+      Q1: PaymentStatusCode.Not_Applicable,
+      Q2: PaymentStatusCode.Not_Applicable,
+      Q3: PaymentStatusCode.Not_Applicable,
+      Q4: PaymentStatusCode.Not_Applicable,
+      oneTime: PaymentStatusCode.Not_Applicable
+    };
+
+    b.Invoices.filter(inv => inv._vsd_programid_value === programId).forEach(inv => {
+      let thisQuarter = this.findQuarter(inv.vsd_cpu_scheduledpaymentdate);
+      paymentStatus[thisQuarter] = inv.statuscode;
+    });
+
+    return paymentStatus;
+  }
+  private findQuarter(date): string {
+    console.log(date);
+    let thisDate = moment(date);
+    console.log("findQuarter");
+    console.log(thisDate);
+    console.log(thisDate.month(), thisDate.date());
+    let quarter = PAYMENT_QUARTERS.find(q => q.month == thisDate.month() && q.day == thisDate.date());
+    if (quarter) return quarter.quarter;
+    return "oneTime";
   }
   private isCompleted(code: number): boolean {
     if (code === 1) {

@@ -9,6 +9,9 @@ import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { iDynamicsFile, iDynamicsDocument, iDynamicsMonthlyStatistics, iDynamicsDataCollection } from '../../../core/models/dynamics-blob';
 import { StatusReportService } from '../../../core/services/status-report.service';
 import { months } from '../../../core/constants/month-codes';
+import { iTask } from '../../../core/models/task.interface';
+import * as moment from 'moment';
+import { PaymentStatusCode } from '../../../core/models/payment-status.interface';
 
 enum StatusReasons {
   Received = 1,
@@ -45,8 +48,10 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   organizationId: string;
   userId: string;
+  today = moment().endOf('day');
 
   StatusReasons = StatusReasons;
+  PaymentStatusCode = PaymentStatusCode;
 
   constructor(private stateService: StateService,
     private statusReportService: StatusReportService,
@@ -71,6 +76,10 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
       this.organizationId = this.stateService.main.getValue().organizationId;
       this.userId = this.stateService.main.getValue().userId;
+    });
+
+    this.contract.tasks.forEach((task: iTask) => {
+      task.isOverDue = this.today.isAfter(moment(task.deadline));
     });
   }
   ngOnDestroy() {
