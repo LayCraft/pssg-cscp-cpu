@@ -155,11 +155,11 @@
               <strong>Phone: </strong>{{program.phone | phone}}<br>
             </td>
             <td class="border-right"><a routerLink="/authenticated/program/{{contract.contractId}}/{{program.programId}}">Update Program/Contact Information</a></td>
-            <td>{{program.paymentsStatus.Q1 == 0 ? "N/A" : PaymentStatusCode[program.paymentsStatus.Q1].replace('_', ' ')}}</td>
-            <td>{{program.paymentsStatus.Q2 == 0 ? "N/A" : PaymentStatusCode[program.paymentsStatus.Q2].replace('_', ' ')}}</td>
-            <td>{{program.paymentsStatus.Q3 == 0 ? "N/A" : PaymentStatusCode[program.paymentsStatus.Q3].replace('_', ' ')}}</td>
-            <td>{{program.paymentsStatus.Q4 == 0 ? "N/A" : PaymentStatusCode[program.paymentsStatus.Q4].replace('_', ' ')}}</td>
-            <td>{{program.paymentsStatus.oneTime == 0 ? "N/A" : PaymentStatusCode[program.paymentsStatus.oneTime].replace('_', ' ')}}</td>
+            <td>{{program.paymentsStatus.Q1}}</td>
+            <td>{{program.paymentsStatus.Q2}}</td>
+            <td>{{program.paymentsStatus.Q3}}</td>
+            <td>{{program.paymentsStatus.Q4}}</td>
+            <td>{{program.paymentsStatus.oneTime}}</td>
           </tr>
         </tbody>
       </table>

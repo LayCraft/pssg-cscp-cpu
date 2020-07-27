@@ -13,7 +13,7 @@ import { decodeTaskType } from '../constants/decode-task-type';
 import { nameAssemble } from '../constants/name-assemble';
 import * as _ from 'lodash';
 import { employmentStatusTypeDict } from '../constants/employment-status-types';
-import { iPaymentStatus, PaymentStatusCode } from './payment-status.interface';
+import { iPaymentStatus, CRMPaymentStatusCode, PaymentStatusDisplay } from './payment-status.interface';
 import * as moment from 'moment';
 import { PAYMENT_QUARTERS } from '../constants/reporting-period';
 
@@ -162,16 +162,16 @@ export class Transmogrifier {
   }
   private buildPaymentsStatus(b: iDynamicsBlob, programId: string): iPaymentStatus {
     let paymentStatus: iPaymentStatus = {
-      Q1: PaymentStatusCode.Not_Applicable,
-      Q2: PaymentStatusCode.Not_Applicable,
-      Q3: PaymentStatusCode.Not_Applicable,
-      Q4: PaymentStatusCode.Not_Applicable,
-      oneTime: PaymentStatusCode.Not_Applicable
+      Q1: "Pending",
+      Q2: "Pending",
+      Q3: "Pending",
+      Q4: "Pending",
+      oneTime: "Pending"
     };
 
     b.Invoices.filter(inv => inv._vsd_programid_value === programId).forEach(inv => {
       let thisQuarter = this.findQuarter(inv.vsd_cpu_scheduledpaymentdate);
-      paymentStatus[thisQuarter] = inv.statuscode;
+      paymentStatus[thisQuarter] = PaymentStatusDisplay[inv.statuscode];
     });
 
     return paymentStatus;

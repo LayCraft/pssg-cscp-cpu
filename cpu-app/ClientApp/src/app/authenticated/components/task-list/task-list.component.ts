@@ -11,7 +11,7 @@ import { StatusReportService } from '../../../core/services/status-report.servic
 import { months } from '../../../core/constants/month-codes';
 import { iTask } from '../../../core/models/task.interface';
 import * as moment from 'moment';
-import { PaymentStatusCode } from '../../../core/models/payment-status.interface';
+import { CRMPaymentStatusCode } from '../../../core/models/payment-status.interface';
 
 enum StatusReasons {
   Received = 1,
@@ -51,7 +51,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   today = moment().endOf('day');
 
   StatusReasons = StatusReasons;
-  PaymentStatusCode = PaymentStatusCode;
+  PaymentStatusCode = CRMPaymentStatusCode;
 
   constructor(private stateService: StateService,
     private statusReportService: StatusReportService,
