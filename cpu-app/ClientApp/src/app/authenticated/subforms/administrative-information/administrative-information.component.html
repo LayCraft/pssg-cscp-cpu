@@ -24,7 +24,7 @@
   </div>
   <div class="form-check">
     <input [disabled]="isDisabled" #compliantWorkersCompensation="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.compliantWorkersCompensation" class="form-check-input" type="checkbox" value="" id="compliantWorkersCompensation" name="compliantWorkersCompensation"> <label class="form-check-label" for="compliantWorkersCompensation" required>
-      Worker's Compensation Act (WorkSafe BC)?
+      Workers Compensation Act (WorkSafe BC)?
     </label>
     <!-- <div class="invalid-feedback" [hidden]="formHelper.checkBoxRequired(transmogrifierProgramApplication.administrativeInformation.compliantWorkersCompensation)" style="display: inherit">
       Try again
@@ -62,6 +62,12 @@
   <span class="cssea-info-message">*If your CSSEA membership status has changed, please contact your Program Manager to have your status updated.</span>
 </div>
 
+<div class="form-check">
+  <input [disabled]="isDisabled" #awareOfCriminalRecordCheckRequirement="ngModel" [(ngModel)]="transmogrifierProgramApplication.administrativeInformation.awareOfCriminalRecordCheckRequirement" class="form-check-input" type="checkbox" value="" id="awareOfCriminalRecordCheckRequirement" name="awareOfCriminalRecordCheckRequirement" required>
+  <label class="form-check-label" for="awareOfCriminalRecordCheckRequirement">
+    Our agency is aware, that all Ministry-funded program staff require a criminal record check.
+  </label>
+</div>
 
 <!-- <div class="form-group">
       <div class="invalid-feedback" [hidden]="aiForm.form.valid || aiForm.form.pristine">

@@ -5,6 +5,7 @@ export interface iTask {
   taskTitle: string;
   taskDescription: string;
   deadline: Date;
+  isOverDue?: boolean;
   submittedDate: Date;
   taskId: string;
   formType: string;

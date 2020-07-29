@@ -11,6 +11,8 @@ export interface ILoggerService {
 @Injectable({
     providedIn: 'root'
 })
+//logger service that won't print console logs in production
+//don't love this solution because we lose the source of the log, it's always from logger.service.ts
 export class ConsoleLoggerService implements ILoggerService {
 
     info(value: any, ...rest: any[]): void {

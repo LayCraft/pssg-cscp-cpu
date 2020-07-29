@@ -98,6 +98,9 @@ namespace Gov.Cscp.Victims.Public.Services
             result.responseMessage = _httpResponse2;
             var clean = _responseContent2.Replace("@odata.", "fortunecookie");
             result.result = Newtonsoft.Json.Linq.JObject.Parse(clean);
+
+            //easily view CRM response
+            Console.WriteLine(result.result);
             // send the result back
             return result;
         }

@@ -12,3 +12,16 @@
     padding-left: 1.25rem;
     padding-bottom: 1.25rem;
 }
+
+.no-bottom-border {
+    border-bottom: none !important;
+}
+.no-top-border {
+    border-top: none !important;
+}
+.centered-header {
+    text-align: center;
+}
+.border-right {
+    border-right: 3px solid #ced4da;
+}

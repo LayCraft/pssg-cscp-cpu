@@ -9,4 +9,5 @@ export interface iAdministrativeInformation {
   ccseaMemberType: string;
   staffSubcontracted: boolean;
   staffSubcontractedPersons: iPerson[];
+  awareOfCriminalRecordCheckRequirement: boolean;
 }

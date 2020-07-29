@@ -47,7 +47,7 @@
               </td>
               <td>{{task.taskTitle}}</td>
               <td>{{task.taskDescription}}</td>
-              <td>{{task.deadline|date:'yyyy-MM-dd'}}</td>
+              <td [class.text-danger]="task.isOverDue">{{task.deadline|date:'yyyy-MM-dd'}}</td>
             </tr>
           </tbody>
         </table>
@@ -130,9 +130,18 @@
       <table class="table table-sm table-striped">
         <thead class="thead">
           <tr>
-            <th scope="col">Programs</th>
-            <th scope="col">Program Contact</th>
-            <th scope="col">Update Program/Contact Information</th>
+            <th scope="col" colspan="3" class="no-bottom-border border-right"></th>
+            <th scope="col" colspan="5" class="no-bottom-border centered-header">Payments Statuses</th>
+          </tr>
+          <tr>
+            <th scope="col" class="no-top-border">Programs</th>
+            <th scope="col" class="no-top-border">Program Contact</th>
+            <th scope="col" class="no-top-border border-right">Update Program/Contact Information</th>
+            <th scope="col" class="no-top-border">Q1</th>
+            <th scope="col" class="no-top-border">Q2</th>
+            <th scope="col" class="no-top-border">Q3</th>
+            <th scope="col" class="no-top-border">Q4</th>
+            <th scope="col" class="no-top-border">One-Time</th>
           </tr>
         </thead>
         <tbody>
@@ -145,7 +154,12 @@
               <strong>Email: </strong>{{program.email}}<br>
               <strong>Phone: </strong>{{program.phone | phone}}<br>
             </td>
-            <td><a routerLink="/authenticated/program/{{contract.contractId}}/{{program.programId}}">Update Program/Contact Information</a></td>
+            <td class="border-right"><a routerLink="/authenticated/program/{{contract.contractId}}/{{program.programId}}">Update Program/Contact Information</a></td>
+            <td>{{program.paymentsStatus.Q1}}</td>
+            <td>{{program.paymentsStatus.Q2}}</td>
+            <td>{{program.paymentsStatus.Q3}}</td>
+            <td>{{program.paymentsStatus.Q4}}</td>
+            <td>{{program.paymentsStatus.oneTime}}</td>
           </tr>
         </tbody>
       </table>

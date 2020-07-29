@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, enableProdMode } from '@angular/core';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'cpu-public-app';
+
+  // constructor() {
+  //   // console.log("doing inital setup");
+  //   // if (environment.production) {
+  //   //   // enableProdMode();
+  //   //   if (window) {
+  //   //     window.console.log = function () { };
+  //   //   }
+  //   // }
+  // }
 }

@@ -12,6 +12,7 @@ export class AdministrativeInformation implements iAdministrativeInformation {
   ccseaMemberType: string;
   staffSubcontracted: boolean;
   staffSubcontractedPersons: iPerson[] = [];
+  awareOfCriminalRecordCheckRequirement: boolean;
   private formHelper = new FormHelper();
 
   constructor(ai?: iAdministrativeInformation) {
@@ -30,7 +31,7 @@ export class AdministrativeInformation implements iAdministrativeInformation {
     }
   }
 
-  private REQUIRED_FIELDS = ["compliantEmploymentStandardsAct", "compliantHumanRights", "compliantWorkersCompensation", "staffUnionized"];
+  private REQUIRED_FIELDS = ["compliantEmploymentStandardsAct", "compliantHumanRights", "compliantWorkersCompensation", "staffUnionized", "awareOfCriminalRecordCheckRequirement"];
   hasRequiredFields() {
     for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
       let val = this.formHelper.fetchFromObject(this, this.REQUIRED_FIELDS[i]);
@@ -40,5 +41,16 @@ export class AdministrativeInformation implements iAdministrativeInformation {
       }
     }
     return true;
+  }
+  getMissingFields() {
+    let ret = [];
+    for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
+      let val = this.formHelper.fetchFromObject(this, this.REQUIRED_FIELDS[i]);
+      //a bit weird because staff unionized can be false, but the other 3 check boxes must be true
+      if (val === null || val === undefined || (this.REQUIRED_FIELDS[i] !== "staffUnionized" && val === "false")) {
+        ret.push(this.REQUIRED_FIELDS[i]);
+      }
+    }
+    return ret;
   }
 }

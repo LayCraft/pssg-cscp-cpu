@@ -154,6 +154,15 @@ export class ProgramContactComponent implements OnInit, OnDestroy {
     }
     return true;
   }
+  getMissingFields() {
+    let ret = [];
+    for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
+      if (!this.formHelper.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
+        ret.push(this.REQUIRED_FIELDS[i]);
+      }
+    }
+    return ret;
+  }
   save(shouldExit: boolean = false): void {
     try {
 

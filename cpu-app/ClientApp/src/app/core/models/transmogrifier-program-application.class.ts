@@ -61,6 +61,7 @@ export class TransmogrifierProgramApplication {
         b.Contract.vsd_cpu_humanresourcepolices ? b.Contract.vsd_cpu_humanresourcepolices.includes("100000001") : false,
       compliantWorkersCompensation:
         b.Contract.vsd_cpu_humanresourcepolices ? b.Contract.vsd_cpu_humanresourcepolices.includes("100000002") : false,
+      awareOfCriminalRecordCheckRequirement: false,
       staffSubcontractedPersons: b.StaffCollection.map((s: iDynamicsCrmContact): iPerson => {
         return {
           email: s.emailaddress1 || null,
@@ -118,6 +119,7 @@ export class TransmogrifierProgramApplication {
     // when the board contact and the executive contact are the same person then we simply don't fill in executive contact information and set the flag to false
     if (b.BoardContact && (b.Contract._vsd_contactlookup1_value !== b.Contract._vsd_contactlookup2_value)) {
       c.boardContact = {
+        userId: b.BoardContact.contactid || null,
         email: b.BoardContact.emailaddress1 || null,
         fax: b.BoardContact.fax || null,
         firstName: b.BoardContact.firstname || null,
@@ -140,6 +142,7 @@ export class TransmogrifierProgramApplication {
     c.hasBoardContact = !!c.boardContact;
 
     if (b.ExecutiveContact) c.executiveContact = {
+      userId: b.ExecutiveContact.contactid || null,
       email: b.ExecutiveContact.emailaddress1 || null,
       fax: b.ExecutiveContact.fax || null,
       firstName: b.ExecutiveContact.firstname || null,
@@ -241,7 +244,7 @@ export class TransmogrifierProgramApplication {
       temp.isPoliceBased = programType ? programType.vsd_programcategory === 100000000 : false;
       temp.assignmentArea = g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrict_value === x.vsd_regiondistrictid).map(a => a.vsd_name)[0] || 'Unknown';
       temp.programLocation = p.vsd_cpu_program_location;
-      temp.hasPoliceContact = temp.policeContact && temp.policeContact.personId ? true : false;
+      temp.hasPoliceContact = temp.policeContact && temp.policeContact.personId && temp.policeContact.firstName && temp.policeContact.lastName ? true : false;
       // temp.hasSharedCostContact = temp.sharedCostContact ? true : false;
       temp.programTypeName = programType.vsd_name || "";
 

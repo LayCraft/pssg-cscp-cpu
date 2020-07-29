@@ -35,6 +35,16 @@ export class TransmogrifierNewUser {
         return true;
     }
 
+    getMissingFields() {
+        let ret = [];
+        for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
+            if (!this.formHelper.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
+                ret.push(this.REQUIRED_FIELDS[i]);
+            }
+        }
+        return ret;
+    }
+
     hasRequiredOrganizationFields() {
         for (let i = 0; i < this.REQUIRED_ORGANIZATION_FIELDS.length; ++i) {
             if (!this.formHelper.fetchFromObject(this, this.REQUIRED_ORGANIZATION_FIELDS[i])) {
@@ -42,6 +52,16 @@ export class TransmogrifierNewUser {
             }
         }
         return true;
+    }
+
+    getMissingOrganizationFields() {
+        let ret = [];
+        for (let i = 0; i < this.REQUIRED_ORGANIZATION_FIELDS.length; ++i) {
+            if (!this.formHelper.fetchFromObject(this, this.REQUIRED_ORGANIZATION_FIELDS[i])) {
+                ret.push(this.REQUIRED_ORGANIZATION_FIELDS[i]);
+            }
+        }
+        return ret;
     }
 
 }

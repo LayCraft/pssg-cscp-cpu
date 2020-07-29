@@ -162,6 +162,7 @@ export interface iDynamicsBlob {
   Businessbceid?: string; // represents the organization level BCeID.
   Contracts?: iDynamicsCrmContract[];
   ExecutiveContact?: iDynamicsCrmContact,
+  Invoices?: iDynamicsCrmInvoice[];
   IsSuccess: boolean;
   Messages?: iDynamicsCrmMessage[];
   MinistryUser?: iDynamicsMinistryUser;
@@ -173,6 +174,16 @@ export interface iDynamicsBlob {
   Userbceid?: string; // represents the user's BCeID.
   fortunecookiecontext?: string;
 };
+
+export interface iDynamicsCrmInvoice {
+  fortunecookietype?: string;
+  fortunecookieetag?: string;
+  _vsd_contractid_value?: string;
+  vsd_invoiceid?: string;
+  vsd_cpu_scheduledpaymentdate?: string;
+  statuscode?: string;
+  _vsd_programid_value?: string;
+}
 
 export interface iDynamicsScheduleG {
   fortunecookieetag?: string;
