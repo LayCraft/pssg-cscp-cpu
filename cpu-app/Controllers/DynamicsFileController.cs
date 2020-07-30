@@ -114,17 +114,17 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 data.SignedContract.filename = "Contract Package Signed by Service Provider.pdf";
 
                 //for testing the document combining
-                return StatusCode(200, data);
+                // return StatusCode(200, data);
 
                 //make options for the json serializer
-                // JsonSerializerOptions options = new JsonSerializerOptions();
-                // options.IgnoreNullValues = true;
-                // //turn the model into a string
-                // string modelString = System.Text.Json.JsonSerializer.Serialize(data, options);
+                JsonSerializerOptions options = new JsonSerializerOptions();
+                options.IgnoreNullValues = true;
+                //turn the model into a string
+                string modelString = System.Text.Json.JsonSerializer.Serialize(data, options);
 
-                // DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
 
-                // return StatusCode((int)result.statusCode, result.result.ToString());
+                return StatusCode((int)result.statusCode, result.result.ToString());
             }
             catch (Exception exception)
             {
