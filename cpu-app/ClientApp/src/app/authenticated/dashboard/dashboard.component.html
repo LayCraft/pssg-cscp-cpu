@@ -21,7 +21,7 @@
 
     </div>
   </div>
-  <div *ngIf="!upcomingContracts.length&&!currentContracts.length&&!pastContracts.length" class="row">
+  <div *ngIf="!upcomingContracts.length&&!currentContracts.length&&!pastContracts.length; else showContracts" class="row">
     <div class="col">
       <div class="card mb-4">
         <div class="card-header contracts-header">No active contracts</div>
@@ -35,73 +35,75 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <div class="card mb-4">
-        <div class="card-header current-contracts-header">Current Fiscal Year Contracts - {{currentYear}} to {{currentYear + 1}}</div>
-        <div *ngIf="currentContracts.length" class="card-body">
-          <span *ngFor="let contract of currentContracts">
+  <ng-template #showContracts>
+    <div class="row">
+      <div class="col">
+        <div class="card mb-4">
+          <div class="card-header current-contracts-header">Current Fiscal Year Contracts - {{currentYear}} to {{currentYear + 1}}</div>
+          <div *ngIf="currentContracts.length" class="card-body">
+            <span *ngFor="let contract of currentContracts">
+              <div class="row mb-1">
+                <div class="col">
+                  <app-task-list [contract]="contract"></app-task-list>
+                </div>
+              </div>
+            </span>
+          </div>
+          <div *ngIf="currentContracts.length==0" class="card-body">
             <div class="row mb-1">
               <div class="col">
-                <app-task-list [contract]="contract"></app-task-list>
+                No current contracts at this time.
               </div>
-            </div>
-          </span>
-        </div>
-        <div *ngIf="currentContracts.length==0" class="card-body">
-          <div class="row mb-1">
-            <div class="col">
-              No current contracts at this time.
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="card mb-4">
-        <div class="card-header upcoming-contracts-header">Upcoming Fiscal Year Contracts - {{currentYear + 1}} to {{currentYear + 2}}</div>
-        <div *ngIf="upcomingContracts.length" class="card-body">
-          <span *ngFor="let contract of upcomingContracts">
+    <div class="row">
+      <div class="col">
+        <div class="card mb-4">
+          <div class="card-header upcoming-contracts-header">Upcoming Fiscal Year Contracts - {{currentYear + 1}} to {{currentYear + 2}}</div>
+          <div *ngIf="upcomingContracts.length" class="card-body">
+            <span *ngFor="let contract of upcomingContracts">
+              <div class="row mb-1">
+                <div class="col">
+                  <app-task-list [contract]="contract"></app-task-list>
+                </div>
+              </div>
+            </span>
+          </div>
+          <div *ngIf="upcomingContracts.length==0" class="card-body">
             <div class="row mb-1">
               <div class="col">
-                <app-task-list [contract]="contract"></app-task-list>
+                No upcoming contracts at this time.
               </div>
-            </div>
-          </span>
-        </div>
-        <div *ngIf="upcomingContracts.length==0" class="card-body">
-          <div class="row mb-1">
-            <div class="col">
-              No upcoming contracts at this time.
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="card mb-4">
-        <div class="card-header previous-contracts-header">Previous Fiscal Years Contracts</div>
-        <div *ngIf="pastContracts.length" class="card-body">
-          <span *ngFor="let contract of pastContracts">
+    <div class="row">
+      <div class="col">
+        <div class="card mb-4">
+          <div class="card-header previous-contracts-header">Previous Fiscal Years Contracts</div>
+          <div *ngIf="pastContracts.length" class="card-body">
+            <span *ngFor="let contract of pastContracts">
+              <div class="row mb-1">
+                <div class="col">
+                  <app-task-list [contract]="contract"></app-task-list>
+                </div>
+              </div>
+            </span>
+          </div>
+          <div *ngIf="pastContracts.length==0" class="card-body">
             <div class="row mb-1">
               <div class="col">
-                <app-task-list [contract]="contract"></app-task-list>
+                No past contracts at this time.
               </div>
-            </div>
-          </span>
-        </div>
-        <div *ngIf="pastContracts.length==0" class="card-body">
-          <div class="row mb-1">
-            <div class="col">
-              No past contracts at this time.
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-template>
 </div>
