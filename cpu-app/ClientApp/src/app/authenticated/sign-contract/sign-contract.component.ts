@@ -126,13 +126,13 @@ export class SignContractComponent implements OnInit, OnDestroy {
 
           // console.log(r);
           //for testing document combining, see if it works - can setup backend to return the combined document instead of sending it forward to CRM
-          // let file = "data:application/pdf;base64," + r.signedContract.body;
-          // let obj = { fileData: file, fileName: r.signedContract.filename };
-          // this.stepperService.addStepperElement(obj, r.signedContract.filename, 'untouched', 'document');
+          let file = "data:application/pdf;base64," + r.signedContract.body;
+          let obj = { fileData: file, fileName: r.signedContract.filename };
+          this.stepperService.addStepperElement(obj, r.signedContract.filename, 'untouched', 'document');
 
-          this.notificationQueueService.addNotification(`You have successfully signed the contract.`, 'success');
-          this.stateService.refresh();
-          this.router.navigate(['/authenticated/dashboard']);
+          // this.notificationQueueService.addNotification(`You have successfully signed the contract.`, 'success');
+          // this.stateService.refresh();
+          // this.router.navigate(['/authenticated/dashboard']);
         },
         err => {
           console.log(err);
