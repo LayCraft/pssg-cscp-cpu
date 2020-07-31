@@ -90,7 +90,61 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     }
   }
 
-  save(person: iPerson) {
+  save() {
+    let person = this.trans.persons.find(p => p.personId == this.currentStepperElement.object['personId']);
+
+    if (!person) {
+      console.log("no one to save...");
+      return;
+    }
+
+    try {
+      if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+        return;
+      }
+      if (!person.employmentStatus || person.employmentStatus === "null") {
+        this.notificationQueueService.addNotification('Employment status is required.', 'warning');
+        return;
+      }
+
+      console.log(person);
+      this.saving = true;
+      let thisPerson = new Person(person);
+      if (thisPerson.hasRequiredFields()) {
+        this.missingFields = [];
+        const userId = this.stateService.main.getValue().userId;
+        const organizationId = this.stateService.main.getValue().organizationId;
+        const post = convertPersonnelToDynamics(userId, organizationId, [person]);
+        this.personService.setPersons(post).subscribe(
+          () => {
+            this.saving = false;
+            this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
+            // refresh the list of people on save
+            this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
+            this.stateService.refresh();
+            this.formHelper.makeFormClean();
+          },
+          err => {
+            this.notificationQueueService.addNotification(err, 'danger');
+            this.saving = false;
+          }
+        );
+      } else {
+        this.saving = false;
+        // notify the user that this user was not saved.
+        this.missingFields = thisPerson.getMissingFields();
+        // console.log(this.missingFields);
+        this.notificationQueueService.addNotification('Please fill in required fields.', 'warning');
+      }
+    }
+    catch (err) {
+      console.log(err);
+      this.notificationQueueService.addNotification('The agency staff could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+      this.saving = false;
+    }
+  }
+
+  saveAndExit(person: iPerson) {
     try {
       if (!this.formHelper.isFormValid(this.notificationQueueService)) {
         return;
@@ -113,10 +167,13 @@ export class PersonnelComponent implements OnInit, OnDestroy {
           () => {
             this.saving = false;
             this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
-            // refresh the list of people on save
-            this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
+
             this.stateService.refresh();
-            this.formHelper.makeFormClean();
+            this.router.navigate(['/authenticated/dashboard']);
+            // refresh the list of people on save
+            // this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
+            // this.stateService.refresh();
+            // this.formHelper.makeFormClean();
           },
           err => {
             this.notificationQueueService.addNotification(err, 'danger');
