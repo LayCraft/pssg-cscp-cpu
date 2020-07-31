@@ -8,7 +8,7 @@
           <app-icon-stepper></app-icon-stepper>
         </div>
         <button class="btn btn-primary mt-2 mr-2" (click)="add()">Add Staff</button>
-        <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
+        <button class="btn btn-primary mt-2" (click)="save()">Save</button>
       </section>
     </div>
 
@@ -23,7 +23,7 @@
             <app-person-editor [(person)]="person" [(invalidFields)]="missingFields" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
             <button *ngIf="!person.me" [class.is-disabled]="saving" class="btn btn-danger mt-2 mr-2" (click)="remove(person)">Deactivate Staff</button>
             <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" (click)="cancel(person)">Cancel</button>
-            <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" (click)="save(person)">Save</button>
+            <button [class.is-disabled]="saving" class="btn btn-primary mt-2 mr-2" (click)="saveAndExit(person)">Save and Exit</button>
           </span>
         </div>
       </div>

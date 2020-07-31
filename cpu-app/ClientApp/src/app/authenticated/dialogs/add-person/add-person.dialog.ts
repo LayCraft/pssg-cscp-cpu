@@ -50,8 +50,11 @@ export class AddPersonDialog {
             // console.log(this.person);
             this.saving = true;
 
+            let thisPerson = new Person(this.person);
             // a person needs minimum a first and last name to be submitted
-            if (this.person.firstName && this.person.lastName) {
+            if (thisPerson.hasRequiredFields()) {
+                // a person needs minimum a first and last name to be submitted
+                // if (this.person.firstName && this.person.lastName) {
                 const userId = this.stateService.main.getValue().userId;
                 const organizationId = this.stateService.main.getValue().organizationId;
                 const post = convertPersonnelToDynamics(userId, organizationId, [this.person]);
@@ -69,7 +72,7 @@ export class AddPersonDialog {
             } else {
                 this.saving = false;
                 // notify the user that this user was not saved.
-                this.notificationQueueService.addNotification('A person must have a first and last name.', 'warning');
+                this.notificationQueueService.addNotification('Please fill in required fields.', 'warning');
             }
         }
         catch (err) {

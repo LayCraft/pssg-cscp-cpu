@@ -120,8 +120,8 @@
   <!-- <app-address2 [(address)]="person.address"></app-address2> -->
 
   <div class="form-check">
-    <input [disabled]="isDisabled" [(ngModel)]="person.addressSameAsAgency" class="form-check-input" type="checkbox" (click)="setAddressSameAsAgency()">
-    <label class="form-check-label">
+    <input [disabled]="isDisabled" [(ngModel)]="person.addressSameAsAgency" class="form-check-input" type="checkbox" id="sameAsPrimaryAgencyAddress" name="sameAsPrimaryAgencyAddress" (click)="setAddressSameAsAgency()">
+    <label class="form-check-label" for="sameAsPrimaryAgencyAddress">
       Same as primary address of Agency.
     </label>
   </div>
