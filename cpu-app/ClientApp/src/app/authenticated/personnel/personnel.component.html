@@ -8,7 +8,7 @@
           <app-icon-stepper></app-icon-stepper>
         </div>
         <button class="btn btn-primary mt-2 mr-2" (click)="add()">Add Staff</button>
-        <button class="btn btn-primary mt-2" (click)="save()">Save</button>
+        <button class="btn btn-primary mt-2" [class.is-disabled]="saving" (click)="save()">Save</button>
       </section>
     </div>
 

@@ -25,7 +25,7 @@
         <span>
           <button *ngIf="!isCompleted" class="btn btn-primary mt-2 mr-2" [class.is-disabled]="saving || trans.signature.signatureDate" (click)="save(true)">Save and Exit</button>
         </span>
-        <button *ngIf="!isCompleted" class="btn btn-primary mt-2" (click)="save()">Save</button>
+        <button *ngIf="!isCompleted" class="btn btn-primary mt-2" [class.is-disabled]="saving" (click)="save()">Save</button>
         <button *ngIf="isCompleted" class="btn btn-primary mt-2" (click)="exit()">Exit</button>
       </section>
     </div>
