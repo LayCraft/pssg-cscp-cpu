@@ -20,6 +20,7 @@ export class PersonPickerComponent implements OnInit, OnDestroy {
   @Input() idNum: number = 0;
   @Output() personChange = new EventEmitter<iPerson>();
   @Input() showCard = true;
+  personId: string = null;
   public nameAssemble = nameAssemble;
   trans: Transmogrifier;
   private stateSubscription: Subscription;
@@ -32,6 +33,8 @@ export class PersonPickerComponent implements OnInit, OnDestroy {
     this.stateSubscription.unsubscribe();
   }
   ngOnInit() {
+    if (this.person && this.person.personId)
+      this.personId = this.person.personId;
     // make a new person object from what was handed to this picker.
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
@@ -39,18 +42,20 @@ export class PersonPickerComponent implements OnInit, OnDestroy {
       //if no person provided, initialize as empty person
       if (!this.person) {
         this.person = new Person();
+        this.personId = this.person.personId;
       }
       // load the person into the picker on initialization or just the first person in the list
-      this.setPerson(this.person.personId);
+      this.setPerson(this.personId);
     });
   }
   setPerson(personId: string): void {
     // assign the person into the person object
-    this.person = this.trans.persons.filter(p => p.personId === this.person.personId)[0];
+    this.person = this.trans.persons.find(p => p.personId === personId);
+    this.personId = personId;
   }
   onChange() {
     // set the person into the picker before emitting
-    this.setPerson(this.person.personId);
+    this.setPerson(this.personId);
     this.personChange.emit(this.person);
   }
 }

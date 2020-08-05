@@ -4,6 +4,7 @@ import { Transmogrifier } from '../../../core/models/transmogrifier.class';
 import { nameAssemble } from '../../../core/constants/name-assemble';
 import { iProgramApplication } from '../../../core/models/program-application.interface';
 import { Subscription } from 'rxjs';
+import { Roles } from '../../../core/models/user-settings.interface';
 
 @Component({
   selector: 'app-organization-profile-box',
@@ -16,11 +17,17 @@ export class OrganizationProfileBoxComponent implements OnInit, OnDestroy {
   public nameAssemble = nameAssemble;
   trans: Transmogrifier;
   contractNumber: string;
+
+  userRole = Roles.ProgramStaff
+  Roles = Roles;
+
   private stateSubscription: Subscription;
   constructor(
     private stateService: StateService
   ) { }
   ngOnInit() {
+    let userSettings = this.stateService.userSettings.getValue();
+    this.userRole = userSettings.userRole;
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
       if (this.type === "program-contact") {

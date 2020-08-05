@@ -7,7 +7,7 @@ import { iDynamicsBlob } from '../models/dynamics-blob';
 import { iPerson } from '../models/person.interface';
 import { UserDataService } from './user-data.service';
 import { Router } from '@angular/router';
-import { iUserSettings } from '../models/user-settings.interface';
+import { iUserSettings, Roles } from '../models/user-settings.interface';
 import { UserSettings } from '../models/user-settings.class';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
@@ -60,6 +60,8 @@ export class StateService {
       let settings = new UserSettings();
       settings.userId = userId;
       settings.accountId = orgId;
+      settings.userRole = Roles.ServiceProvider;
+      // settings.userRole = Roles.ProgramStaff;
       this.userSettings.next(settings);
     }
 

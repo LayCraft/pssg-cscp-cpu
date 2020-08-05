@@ -1,20 +1,21 @@
-import { iUserSettings } from "./user-settings.interface";
+import { iUserSettings, Roles } from "./user-settings.interface";
 
 export class UserSettings implements iUserSettings {
-    userAuthenticated: boolean;
-    userId: string;
-    siteMinderGuid: string;
-    siteMinderBusinessGuid: string;
-    userDisplayName: string;
-    businessLegalName: string;
-    userType: string;
-    user: any;
-    isNewUserRegistration: boolean;
-    isNewUserAndNewOrganizationRegistration: boolean;
-    contactExistsButNotApproved: boolean;
-    contactId: string;
-    accountId: string;
-    authenticatedUser: any;
+  userAuthenticated: boolean;
+  userId: string;
+  siteMinderGuid: string;
+  siteMinderBusinessGuid: string;
+  userDisplayName: string;
+  businessLegalName: string;
+  userType: string;
+  user: any;
+  isNewUserRegistration: boolean;
+  isNewUserAndNewOrganizationRegistration: boolean;
+  contactExistsButNotApproved: boolean;
+  contactId: string;
+  accountId: string;
+  authenticatedUser: any;
+  userRole: Roles;
   constructor(user?: iUserSettings) {
     if (user) {
       this.userAuthenticated = user.userAuthenticated || false;
@@ -31,6 +32,7 @@ export class UserSettings implements iUserSettings {
       this.contactId = user.contactId || null;
       this.accountId = user.accountId || null;
       this.authenticatedUser = user.authenticatedUser || null;
-    } 
+      this.userRole = user.userRole || Roles.ProgramStaff;
+    }
   }
 }

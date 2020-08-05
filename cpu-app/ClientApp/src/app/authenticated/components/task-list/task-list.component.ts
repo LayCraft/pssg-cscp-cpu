@@ -12,6 +12,7 @@ import { months } from '../../../core/constants/month-codes';
 import { iTask } from '../../../core/models/task.interface';
 import * as moment from 'moment';
 import { CRMPaymentStatusCode } from '../../../core/models/payment-status.interface';
+import { Roles } from '../../../core/models/user-settings.interface';
 
 enum StatusReasons {
   Received = 1,
@@ -53,6 +54,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
   StatusReasons = StatusReasons;
   PaymentStatusCode = CRMPaymentStatusCode;
 
+  userRole = Roles.ProgramStaff
+  Roles = Roles;
+
   constructor(private stateService: StateService,
     private statusReportService: StatusReportService,
     public fileService: FileService) {
@@ -71,6 +75,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    let userSettings = this.stateService.userSettings.getValue();
+    this.userRole = userSettings.userRole;
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
 
