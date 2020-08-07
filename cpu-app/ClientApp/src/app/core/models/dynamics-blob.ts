@@ -528,6 +528,7 @@ export interface iDynamicsFile {
 export interface iDynamicsDocument {
   filename: string;
   subject: string;
+  subjectOther: string;
   body: string;
   overwritetime?: string;
 }

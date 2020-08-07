@@ -41,9 +41,12 @@
           <tbody>
             <tr *ngFor="let task of contract.tasks">
               <td>
-                <a routerLink="/authenticated/{{task.formType}}/{{task.taskId}}">
-                  {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
-                </a>
+                <ng-container *ngIf="userRole === Roles.ServiceProvider || (userRole === Roles.ProgramStaff && task.formType == 'status_report'); else disabledCurrentContractTaskBlock">
+                  <a routerLink="/authenticated/{{task.formType}}/{{task.taskId}}">
+                    {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
+                  </a>
+                </ng-container>
+                <ng-template #disabledCurrentContractTaskBlock>{{task.taskName}}</ng-template>
               </td>
               <td>{{task.taskTitle}}</td>
               <td>{{task.taskDescription}}</td>
@@ -69,14 +72,14 @@
           </thead>
           <tbody>
             <tr *ngFor="let task of contract.completedTasks">
-              <!-- || task.formType == 'status_report' -->
-              <td *ngIf="task.formType == 'program_application' || task.formType == 'expense_report'  || task.formType == 'budget_proposal'">
-                <a routerLink="/authenticated/{{task.formType}}/{{task.taskId}}" [queryParams]="{completed: 'true'}">
-                  {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
-                </a>
+              <td>
+                <ng-container *ngIf="userRole === Roles.ServiceProvider && (task.formType == 'program_application' || task.formType == 'expense_report'  || task.formType == 'budget_proposal')">
+                  <a routerLink="/authenticated/{{task.formType}}/{{task.taskId}}" [queryParams]="{completed: 'true'}">
+                    {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
+                  </a>
+                </ng-container>
+                <ng-container *ngIf="userRole === Roles.ProgramStaff || (task.formType != 'program_application' && task.formType != 'expense_report'  && task.formType != 'budget_proposal')">{{task.taskName}}</ng-container>
               </td>
-              <!-- && task.formType != 'status_report' -->
-              <td *ngIf="task.formType != 'program_application' && task.formType != 'expense_report'  && task.formType != 'budget_proposal'">{{task.taskName}}</td>
               <td>{{task.taskTitle}}</td>
               <td>{{task.status}}</td>
               <td>{{task.taskDescription}}</td>

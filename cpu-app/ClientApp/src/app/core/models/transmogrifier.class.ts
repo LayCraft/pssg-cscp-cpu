@@ -177,11 +177,11 @@ export class Transmogrifier {
     return paymentStatus;
   }
   private findQuarter(date): string {
-    console.log(date);
+    // console.log(date);
     let thisDate = moment(date);
-    console.log("findQuarter");
-    console.log(thisDate);
-    console.log(thisDate.month(), thisDate.date());
+    // console.log("findQuarter");
+    // console.log(thisDate);
+    // console.log(thisDate.month(), thisDate.date());
     let quarter = PAYMENT_QUARTERS.find(q => q.month == thisDate.month() && q.day == thisDate.date());
     if (quarter) return quarter.quarter;
     return "oneTime";

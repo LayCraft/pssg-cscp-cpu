@@ -4,6 +4,7 @@ import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { iContract } from '../../core/models/contract.interface';
 import { Subscription } from 'rxjs';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
+import { Roles } from '../../core/models/user-settings.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   currentContracts: iContract[] = [];
   pastContracts: iContract[] = [];
   currentYear: number;
+
   private stateSubscription: Subscription;
   constructor(
     private stateService: StateService,

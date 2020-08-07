@@ -92,6 +92,13 @@ export class FormHelper {
     }
     return true;
   }
+  isDialogValid(notificationQueueService: NotificationQueueService = null) { //notificationQueueService: NotificationQueueService
+    if (document.querySelectorAll(".mat-dialog-container .ng-invalid").length > 0) {
+      if (notificationQueueService) notificationQueueService.addNotification('All fields must be in a valid format.', 'warning');
+      return false;
+    }
+    return true;
+  }
   getFormState() {
     if (document.getElementsByClassName("ng-invalid").length > 0) {
       return 'invalid';

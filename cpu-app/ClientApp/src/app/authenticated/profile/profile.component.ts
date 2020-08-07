@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ProfileService } from '../../core/services/profile.service';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
@@ -11,6 +11,8 @@ import { Subscription } from 'rxjs';
 import { Address } from '../../core/models/address.class';
 import { ContactInformation } from '../../core/models/contact-information.class';
 import { iContactInformation } from '../../core/models/contact-information.interface';
+import { PersonPickerComponent } from '../subforms/person-picker/person-picker.component';
+import { Roles } from '../../core/models/user-settings.interface';
 
 @Component({
   selector: 'app-profile',
@@ -18,12 +20,17 @@ import { iContactInformation } from '../../core/models/contact-information.inter
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
+  @ViewChild(PersonPickerComponent) contractorContactComp: PersonPickerComponent;
+  @ViewChild(PersonPickerComponent) boardContactComp: PersonPickerComponent;
   trans: Transmogrifier;
   saving: boolean = false;
   private stateSubscription: Subscription;
 
   private formHelper = new FormHelper();
   originalContactInfo: iContactInformation;
+  Roles = Roles;
+  userRole = Roles.ProgramStaff;
+
   constructor(
     private router: Router,
     private stateService: StateService,
@@ -32,6 +39,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    let userSettings = this.stateService.userSettings.getValue();
+    this.userRole = userSettings.userRole;
     // subscribe to main
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       // save the transmogrifier
@@ -45,6 +54,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   cancel() {
     this.trans.contactInformation = this.originalContactInfo;
     this.originalContactInfo = _.cloneDeep(this.trans.contactInformation);
+    if (this.trans.contactInformation.executiveContact && this.trans.contactInformation.executiveContact.personId) {
+      this.contractorContactComp.setPerson(this.trans.contactInformation.executiveContact.personId);
+    }
+    if (this.trans.contactInformation.boardContact && this.trans.contactInformation.boardContact.personId) {
+      this.boardContactComp.setPerson(this.trans.contactInformation.boardContact.personId);
+    }
   }
   save(shouldExit: boolean = false): void {
     try {
@@ -58,6 +73,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       if (contactInfo.hasRequiredFields()) {
         // post to the organization
         this.saving = true;
+        console.log(JSON.parse(JSON.stringify(this.trans)));
         this.profileService.updateOrg(convertContactInformationToDynamics(this.trans))
           .subscribe(
             (res: any) => {
@@ -73,6 +89,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           );
       }
       else {
+        console.log(contactInfo.getMissingFields());
         this.saving = false;
         this.notificationQueueService.addNotification('Please fill in required fields.', 'warning');
       }
@@ -84,17 +101,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.saving = false;
     }
   }
-  onExit() {
-    if (this.formHelper.isFormDirty()) {
-      if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
-        this.stateService.refresh();
-        this.router.navigate(['/authenticated/dashboard']);
-      }
-    }
-    else if (!this.formHelper.isFormDirty()) {
-      this.stateService.refresh();
-      this.router.navigate(['/authenticated/dashboard']);
-    }
+  exit() {
+    // if (this.formHelper.isFormDirty()) {
+    //   if (confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
+    this.stateService.refresh();
+    this.router.navigate(['/authenticated/dashboard']);
+    //   }
+    // }
+    // else if (!this.formHelper.isFormDirty()) {
+    //   this.stateService.refresh();
+    //   this.router.navigate(['/authenticated/dashboard']);
+    // }
   }
   setMailingAddressSameAsMainAddress() {
     if (!this.trans.contactInformation.mailingAddressSameAsMainAddress) {

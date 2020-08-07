@@ -47,7 +47,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   private stateSubscription: Subscription;
   isContractUpload: boolean = false;
 
-  private ORGANIZATION_DOCUMENT_TYPES: string[] = ["Insurance", "General Service Agreement", "Annual Reports", "AGM Minutes", "Audited Financial Statements"];
+  private ORGANIZATION_DOCUMENT_TYPES: string[] = ["Insurance", "General Service Agreement", "Annual Reports", "AGM Minutes", "Audited Financial Statements", "Counselor Support Plan", "Referral Protocol", "Financial", "Other", "Audit Letter for Contractor", "Audit Letter from Contractor", "Letter of Reference", "Invoice", "Direct Deposit Form"];
   private CONTRACT_DOCUMENT_TYPES: string[] = ["Referral Protocol", "Criminal Records Checks", "Custom Financial Report", "Expense Report (Invoices?)",
     "Activity Report", "Counsellor Support Plan", "Agency-run Statistics", "Surplus Plans"];
 
@@ -86,29 +86,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
         this.isContractUpload = true;
         this.contractNumber = this.trans.contracts.find(c => c.contractId == this.contractId).contractNumber;
       }
-
-      console.log("is contract upload? ", this.isContractUpload);
-
-
-      // this.fileService.download(this.organizationId, this.userId, this.contractId).subscribe(
-      //   (d: iDynamicsFile) => {
-      //     console.log(d);
-      //     if (d['error'] && d['error']['code']) {
-      //       // something has gone wrong. Show the developer the error
-      //       alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
-      //       console.log('Dynamics has returned: ', d);
-      //     } else {
-      //       this.documentCollection = d.DocumentCollection;
-      //     }
-      //   }
-      // );
-      //
     });
 
-  }
-
-  submit() {
-    this.notificationQueueService.addNotification(`TODO`, 'success');
   }
   exit() {
     if (this.formHelper.isFormDirty() && confirm("Are you sure you want to return to the dashboard? All unsaved work will be lost.")) {
@@ -130,6 +109,12 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   }
   upload() {
     this.saving = true;
+
+    this.documentsToAdd.forEach(doc => {
+      if (doc.subject === "Other" && doc.subjectOther) {
+        doc.subject = doc.subjectOther;
+      }
+    });
     // assemble the file into a collection to return to dynamics
     const file: iDynamicsPostFile = {
       Businessbceid: this.organizationId,
@@ -195,6 +180,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
             this.documentsToAdd.push({
               filename: files.item(i).name,
               subject: this.selectedDocumentType,
+              subjectOther: "",
               body: fileDataString
             });
           }

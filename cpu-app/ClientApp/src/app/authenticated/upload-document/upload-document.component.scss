@@ -42,8 +42,12 @@
   display: inline-block;
 }
 
-.file-name-container {
-  width: 30%;
+// .file-name-container {
+//   width: 30%;
+// }
+
+.list-group-item {
+  display: flex;
 }
 
 .file-type-container {
@@ -58,4 +62,10 @@
 .file-type-label {
   margin-bottom: 0;
   margin-top: 8px;
+  min-width: 65px;
+}
+
+.other-input {
+  margin-left: 10px;
+  margin-right: 10px;
 }

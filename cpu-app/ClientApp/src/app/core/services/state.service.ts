@@ -7,7 +7,7 @@ import { iDynamicsBlob } from '../models/dynamics-blob';
 import { iPerson } from '../models/person.interface';
 import { UserDataService } from './user-data.service';
 import { Router } from '@angular/router';
-import { iUserSettings } from '../models/user-settings.interface';
+import { iUserSettings, Roles } from '../models/user-settings.interface';
 import { UserSettings } from '../models/user-settings.class';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
@@ -60,6 +60,8 @@ export class StateService {
       let settings = new UserSettings();
       settings.userId = userId;
       settings.accountId = orgId;
+      // settings.userRole = Roles.ServiceProvider;
+      // settings.userRole = Roles.ProgramStaff;
       this.userSettings.next(settings);
     }
 
@@ -109,6 +111,15 @@ export class StateService {
           this.homeRoute.next('authenticated/new_user');
           this.loggedIn.next(true);
         } else {
+          console.log("we should get user role from CRM HERE!!!");
+          let updatedSettings = new UserSettings(userInfo);
+          updatedSettings.userRole = Roles.ServiceProvider;
+          this.userSettings.next(updatedSettings);
+
+          // console.log("settings");
+          // console.log(this.userSettings.getValue());
+
+
           // collect the blob into a useful object
           console.log("Dynamics blob");
           console.log(JSON.parse(JSON.stringify(m)));

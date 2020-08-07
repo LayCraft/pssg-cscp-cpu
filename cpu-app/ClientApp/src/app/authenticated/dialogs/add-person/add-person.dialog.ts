@@ -40,7 +40,7 @@ export class AddPersonDialog {
 
     save() {
         try {
-            if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+            if (!this.formHelper.isDialogValid(this.notificationQueueService)) {
                 return;
             }
             if (!this.person.employmentStatus || this.person.employmentStatus === "null") {
