@@ -38,9 +38,9 @@
                 <select class="form-control file-type-select" [(ngModel)]="doc.subject" #doctype="ngModel">
                   <option *ngFor="let type of document_types" [value]="type">{{type}}</option>
                 </select>
-                <!-- <ng-container *ngIf="doc.subject === 'Other'">
+                <ng-container *ngIf="doc.subject === 'Other'">
                   <input type="text" class="form-control other-input" [(ngModel)]="doc.subjectOther" #city="ngModel">
-                </ng-container> -->
+                </ng-container>
               </span>
               <span (click)="removeFile(i)">
                 <i class="fas fa-times-circle text-danger"></i>
