@@ -176,6 +176,7 @@ export class SignContractComponent implements OnInit, OnDestroy {
 
         this.documentCollection.push({
           subject: "signing page",
+          subjectOther: "",
           body: body,
           filename: "Signature Page",
           overwritetime: ''

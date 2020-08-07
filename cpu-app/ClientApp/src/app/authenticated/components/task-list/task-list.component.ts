@@ -77,6 +77,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     let userSettings = this.stateService.userSettings.getValue();
     this.userRole = userSettings.userRole;
+    console.log("task list, user role");
+    console.log(Roles[this.userRole]);
     this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
       this.trans = m;
 

@@ -4,50 +4,55 @@ export function contractCode(statuscode: number): [string, string] {
   switch (statuscode) {
     // upcoming
     case 100000000: {
-      textStatus = 'Sent';
       textCategory = 'upcoming';
+      textStatus = 'Sent';
       break;
     }
     case 100000001: {
-      textStatus = 'Received';
       textCategory = 'upcoming';
+      textStatus = 'Received';
       break;
     }
     case 100000002: {
-      textStatus = 'Processing';
       textCategory = 'upcoming';
+      textStatus = 'Processing';
       break;
     }
     case 100000003: {
-      textStatus = 'Recommended for Approval';
       textCategory = 'upcoming';
+      textStatus = 'Recommended for Approval';
       break;
     }
     case 100000004: {
-      textStatus = 'Escalated';
       textCategory = 'upcoming';
+      textStatus = 'Escalated';
       break;
     }
     case 100000005: {
-      textStatus = 'Information Denied';
       textCategory = 'upcoming';
+      textStatus = 'Information Denied';
       break;
     }
     // approved
     case 100000006: {
-      textStatus = 'Approved';
       textCategory = 'current'
+      textStatus = 'Approved';
+      break;
+    }
+    case 100000008: {
+      textCategory = 'current'
+      textStatus = 'Under Review';
       break;
     }
     // past
     case 2: {
-      textStatus = 'Archived';
       textCategory = 'past';
+      textStatus = 'Archived';
       break;
     }
     default: {
-      textStatus = 'No Status';
       textCategory = 'none';
+      textStatus = 'No Status';
       break;
     }
   }

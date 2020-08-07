@@ -41,7 +41,7 @@
           <tbody>
             <tr *ngFor="let task of contract.tasks">
               <td>
-                <ng-container *ngIf="userRole === Roles.ProgramStaff && task.formType == 'status_report'; else disabledCurrentContractTaskBlock">
+                <ng-container *ngIf="userRole === Roles.ServiceProvider || (userRole === Roles.ProgramStaff && task.formType == 'status_report'); else disabledCurrentContractTaskBlock">
                   <a routerLink="/authenticated/{{task.formType}}/{{task.taskId}}">
                     {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
                   </a>
@@ -78,7 +78,7 @@
                     {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
                   </a>
                 </ng-container>
-                <ng-container *ngIf="userRole === Roles.ProgramStaff || task.formType != 'program_application' && task.formType != 'expense_report'  && task.formType != 'budget_proposal'">{{task.taskName}}</ng-container>
+                <ng-container *ngIf="userRole === Roles.ProgramStaff || (task.formType != 'program_application' && task.formType != 'expense_report'  && task.formType != 'budget_proposal')">{{task.taskName}}</ng-container>
               </td>
               <td>{{task.taskTitle}}</td>
               <td>{{task.status}}</td>

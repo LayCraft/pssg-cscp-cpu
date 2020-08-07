@@ -111,7 +111,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     this.saving = true;
 
     this.documentsToAdd.forEach(doc => {
-      if (doc.subject === "Other") {
+      if (doc.subject === "Other" && doc.subjectOther) {
         doc.subject = doc.subjectOther;
       }
     });
