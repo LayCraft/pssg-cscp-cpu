@@ -49,6 +49,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy() {
+    if (!_.isEqual(this.originalContactInfo, this.trans.contactInformation)) {
+      console.log("setting trans contact info back to original");
+      this.trans.contactInformation = this.originalContactInfo;
+    }
     this.stateSubscription.unsubscribe();
   }
   cancel() {

@@ -81,7 +81,7 @@
         </div>
         <div *ngIf="programApplication.hasPoliceContact">
           <h5>Police Detachment / Department Supervisor</h5>
-          <app-person-editor [isDisabled]="isDisabled" [(person)]="programApplication.policeContact" [isPoliceContact]="true" [idNum]="1" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
+          <app-person-editor [isDisabled]="isDisabled" [(person)]="programApplication.policeContact" [isPoliceContact]="true" [idNum]="1" (setAddress)="setAddressSameAsAgency($event)" (clearAddress)="clearAddress($event)"></app-person-editor>
         </div>
       </div>
 
@@ -95,7 +95,7 @@
         <div *ngIf="programApplication.hasSharedCostContact">
           <label for="governmentFunder">Name of Government Funder / Agency</label>
           <input [disabled]="isDisabled" type="text" class="form-control" id="governmentFunder" name="governmentFunder" [(ngModel)]="programApplication.governmentFunder" #governmentFunder="ngModel">
-          <app-person-editor [isDisabled]="isDisabled" [(person)]="programApplication.sharedCostContact" [isPoliceContact]="true" [idNum]="2" (setAddress)="setAddressSameAsAgency($event)"></app-person-editor>
+          <app-person-editor [isDisabled]="isDisabled" [(person)]="programApplication.sharedCostContact" [isPoliceContact]="true" [idNum]="2" (setAddress)="setAddressSameAsAgency($event)" (clearAddress)="clearAddress($event)"></app-person-editor>
         </div>
       </div>
     </div>
