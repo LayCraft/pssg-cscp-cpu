@@ -16,6 +16,7 @@ import { FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { ConsoleLoggerService } from '../../core/services/logger.service';
+import { Address } from '../../core/models/address.class';
 
 @Component({
   selector: 'app-personnel',
@@ -65,6 +66,10 @@ export class PersonnelComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy() {
+    if (!_.isEqual(this.originalPersons, this.trans.persons)) {
+      console.log("setting persons back to original values")
+      this.trans.persons = this.originalPersons;
+    }
     this.stepperService.reset();
     this.stateSubscription.unsubscribe();
   }
@@ -262,6 +267,8 @@ export class PersonnelComponent implements OnInit, OnDestroy {
   setAddressSameAsAgency(person: iPerson) {
     let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
     person.address = addressCopy;
-    // console.log(this.originalPersons);
+  }
+  clearAddress(person: iPerson) {
+    person.address = new Address();
   }
 }

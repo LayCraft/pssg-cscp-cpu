@@ -16,6 +16,7 @@ export class PersonEditorComponent implements OnInit {
   @Input() invalidFields: string[] = [];
   @Output() personChange = new EventEmitter<iPerson>();
   @Output() setAddress = new EventEmitter<iPerson>();
+  @Output() clearAddress = new EventEmitter<iPerson>();
 
   // helpers for setting form state
   public formHelper = new FormHelper();
@@ -42,6 +43,9 @@ export class PersonEditorComponent implements OnInit {
     //currently false, is being set to true, but this fires first...
     if (!this.person.addressSameAsAgency) {
       this.setAddress.emit(this.person);
+    }
+    else {
+      this.clearAddress.emit(this.person)
     }
   }
 }

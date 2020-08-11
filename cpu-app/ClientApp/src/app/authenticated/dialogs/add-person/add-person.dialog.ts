@@ -10,6 +10,7 @@ import { NotificationQueueService } from '../../../core/services/notification-qu
 import { convertPersonnelToDynamics } from '../../../core/models/converters/personnel-to-dynamics';
 import { StateService } from '../../../core/services/state.service';
 import { PersonService } from '../../../core/services/person.service';
+import { Address } from '../../../core/models/address.class';
 
 @Component({
     selector: 'add-person.dialog',
@@ -36,6 +37,9 @@ export class AddPersonDialog {
     setAddressSameAsAgency(person: iPerson) {
         let addressCopy = _.cloneDeep(this.programApplication.mainAddress)
         person.address = addressCopy;
+    }
+    clearAddress(person: iPerson) {
+        person.address = new Address();
     }
 
     save() {

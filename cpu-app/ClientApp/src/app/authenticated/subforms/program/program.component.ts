@@ -166,15 +166,15 @@ export class ProgramComponent implements OnInit, OnDestroy {
     let addressCopy = _.cloneDeep(this.trans.contactInformation.mainAddress)
     person.address = addressCopy;
   }
+  clearAddress(person: iPerson) {
+    person.address = new Address();
+  }
   setMailingAddressSameAsMainAddress() {
     if (!this.programApplication.mailingAddressSameAsMainAddress) {
-      // let addressCopy = _.cloneDeep(this.programApplication.mainAddress)
-      // this.programApplication.mailingAddress = addressCopy;
       this.programApplication.mailingAddress = this.programApplication.mainAddress;
     }
     else {
-      let addressCopy = _.cloneDeep(this.programApplication.mailingAddress);
-      this.programApplication.mailingAddress = new Address(); //addressCopy;
+      this.programApplication.mailingAddress = new Address();
     }
   }
 }
