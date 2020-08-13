@@ -113,6 +113,7 @@ export class StateService {
         } else {
           console.log("we should get user role from CRM HERE!!!");
           let updatedSettings = new UserSettings(userInfo);
+          // updatedSettings.userRole = Roles.ProgramStaff;
           updatedSettings.userRole = Roles.ServiceProvider;
           this.userSettings.next(updatedSettings);
 
