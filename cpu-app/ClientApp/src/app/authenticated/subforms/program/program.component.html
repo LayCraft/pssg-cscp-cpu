@@ -100,8 +100,12 @@
       </div>
     </div>
   </div>
+  <ng-template #hoursOfOperation>
+    <p>If hours vary from day to day, please add on operation hours</p>
+  </ng-template>
   <div *ngIf="programApplication.currentTab===tabs[1]">
-    <h2 class="blue-header">Hours of Operation (not including on-call / stand-by hours)</h2>
+    <h2 class="blue-header">Hours of Operation (not including on-call / stand-by hours) <app-tool-tip iconColor="white" [trigger]="hoursOfOperation"></app-tool-tip>
+    </h2>
     <div *ngFor="let hours of programApplication.operationHours; let i=index">
       <ng-container *ngIf="hours.isActive">
         <app-hours [isDisabled]="isDisabled" [(hours)]="hours"></app-hours>

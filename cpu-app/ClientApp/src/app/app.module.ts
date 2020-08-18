@@ -61,6 +61,9 @@ import { ContractPackageAuthorizerComponent } from './authenticated/subforms/con
 import { SafePipe } from './core/pipes/safe.pipe';
 import { CompletedStatusReportComponent } from './authenticated/status-report/completed-status-report.component';
 import { UppercaseDirective } from './core/directives/uppercase.directive';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ToolTipTriggerComponent } from './shared/tool-tip/tool-tip.component';
+import { MatToolbarModule, MatTooltipModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -114,7 +117,8 @@ import { UppercaseDirective } from './core/directives/uppercase.directive';
     CoverLetterComponent,
     UppercaseDirective,
     PhonePipe,
-    SafePipe
+    SafePipe,
+    ToolTipTriggerComponent
   ],
   entryComponents: [
     AppendixADialog,
@@ -122,6 +126,8 @@ import { UppercaseDirective } from './core/directives/uppercase.directive';
   ],
   imports: [
     MatDialogModule,
+    MatToolbarModule,
+    MatTooltipModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
@@ -131,7 +137,13 @@ import { UppercaseDirective } from './core/directives/uppercase.directive';
     RouterModule,
     SharedModule,
     SignaturePadModule,
+    TooltipModule.forRoot(),
     NgxMaskModule.forRoot(),
+  ],
+  exports: [
+    MatToolbarModule,
+    TooltipModule,
+    MatTooltipModule
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
