@@ -20,7 +20,7 @@ import { Address } from '../../../core/models/address.class';
 @Component({
   selector: 'app-program',
   templateUrl: './program.component.html',
-  styleUrls: ['./program.component.css']
+  styleUrls: ['./program.component.scss']
 })
 export class ProgramComponent implements OnInit, OnDestroy {
   @Input() programApplication: iProgramApplication;
