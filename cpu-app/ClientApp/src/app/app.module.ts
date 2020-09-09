@@ -64,6 +64,7 @@ import { UppercaseDirective } from './core/directives/uppercase.directive';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ToolTipTriggerComponent } from './shared/tool-tip/tool-tip.component';
 import { MatToolbarModule, MatTooltipModule } from '@angular/material';
+import { ProgramSurplusComponent } from './authenticated/program-surplus/program-surplus.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { MatToolbarModule, MatTooltipModule } from '@angular/material';
     PrimaryContactInfoComponent,
     ProfileComponent,
     ProgramApplicationComponent,
+    ProgramSurplusComponent,
     ProgramAuthorizerComponent,
     ContractPackageAuthorizerComponent,
     ProgramBudgetComponent,

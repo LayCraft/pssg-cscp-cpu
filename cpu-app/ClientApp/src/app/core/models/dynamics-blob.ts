@@ -136,6 +136,7 @@ export interface iDynamicsCrmTask {
   _vsd_programid_value?: string,
   _vsd_schedulegid_value?: string;
   _vsd_tasktypeid_value?: string;
+  _vsd_surplusplanid_value?: string;
   activityid?: string;
   description?: string;
   fortunecookieetag: string;
@@ -287,6 +288,34 @@ export interface iDynamicsScheduleFResponse {
   StaffCollection?: iDynamicsCrmContact[];
   Userbceid?: string;
 }
+
+export interface iDynamicsProgramSurplusResponse {
+  IsSuccess?: boolean;
+  Result: string;
+  Businessbceid: string;
+  Userbceid?: string;
+  Organization?: iDynamicsOrganization;
+  Contract?: iDynamicsCrmContract;
+  Program?: iDynamicsCrmProgram;
+  SurplusPlan?: iDynamicsSurplusPlan;
+  SurplusPlanLineItems?: iDynamicsSurplusPlanLineItem[];
+}
+
+export interface iDynamicsSurplusPlan {
+  vsd_surplusplanreportid: string;
+  _vsd_programid_value: string;
+}
+
+export interface iDynamicsSurplusPlanLineItem {
+  vsd_surpluslineitemid: string;
+  _vsd_surplusplanid_value: string;
+  vsd_allocatedamount: number;
+  vsd_actualexpenditures: number;
+  vsd_actualexpenditures2: number;
+  vsd_actualexpenditures3: number;
+  vsd_actualexpenditures4: number;
+}
+
 
 export interface iDynamicsRegionDistrict {
   vsd_name: string;
