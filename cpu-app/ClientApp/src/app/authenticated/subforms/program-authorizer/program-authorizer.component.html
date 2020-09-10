@@ -1,4 +1,4 @@
-<p>
+<!-- <p>
   Before submitting the {{formType}} Form, the form must be signed by one of more authorized signing officers for the organization below. <strong>If the applicant is a "Society" (under BC's Societies Act), the signature of at least ONE Board Member is required.</strong>
 </p>
 
@@ -12,9 +12,9 @@
   <li>
     all of the information provided in this {{formType}}, including all documents submitted, is accurate and correct to the best of my knowledge.
   </li>
-</ul>
+</ul> -->
 <h2 class="blue-header">Authorization &amp; Signature</h2>
-<p>As a signing authority I understand that the organization may have this application or a resulting contract terminated if:</p>
+<p>As an authorized signing officer for the organization, I hereby certify that: (please check below as confirmation)</p>
 <div *ngFor="let term of terms; let i=index" class="form-group">
   <div class="form-check">
     <input [disabled]="isDisabled" class="form-check-input" type="checkbox" (input)="onInput()" name="term_{{i}}" id="term_{{i}}" [(ngModel)]="term[1]">

@@ -3,9 +3,11 @@ import { iSurplusItem } from "./surplus-item.interface";
 export class SurplusItem implements iSurplusItem {
     id: string;
     surplus_plan_id: string;
-    name: string;
+    name?: string;
+    expense_name?: string;
     allocated_amount: number;
-    justification: string;
+    allocated_amount_mask: string;
+    justification?: string;
     expenditures_q1?: number;
     expenditures_q2?: number;
     expenditures_q3?: number;

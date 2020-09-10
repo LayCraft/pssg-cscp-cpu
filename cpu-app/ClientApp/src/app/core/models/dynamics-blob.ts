@@ -290,15 +290,16 @@ export interface iDynamicsScheduleFResponse {
 }
 
 export interface iDynamicsProgramSurplusResponse {
-  IsSuccess?: boolean;
-  Result: string;
   Businessbceid: string;
-  Userbceid?: string;
-  Organization?: iDynamicsOrganization;
   Contract?: iDynamicsCrmContract;
+  EligibleExpenseItemCollection?: iDynamicsEligibleExpenseItem[];
+  IsSuccess?: boolean;
+  Organization?: iDynamicsOrganization;
   Program?: iDynamicsCrmProgram;
+  Result: string;
   SurplusPlan?: iDynamicsSurplusPlan;
   SurplusPlanLineItems?: iDynamicsSurplusPlanLineItem[];
+  Userbceid?: string;
 }
 
 export interface iDynamicsSurplusPlan {
@@ -307,13 +308,16 @@ export interface iDynamicsSurplusPlan {
 }
 
 export interface iDynamicsSurplusPlanLineItem {
-  vsd_surpluslineitemid: string;
+  _vsd_eligibleexpenseitemid_value: string;
   _vsd_surplusplanid_value: string;
-  vsd_allocatedamount: number;
+  vsd_name: string;
+  vsd_justificationdetails: string;
   vsd_actualexpenditures: number;
   vsd_actualexpenditures2: number;
   vsd_actualexpenditures3: number;
   vsd_actualexpenditures4: number;
+  vsd_allocatedamount: number;
+  vsd_surpluslineitemid: string;
 }
 
 

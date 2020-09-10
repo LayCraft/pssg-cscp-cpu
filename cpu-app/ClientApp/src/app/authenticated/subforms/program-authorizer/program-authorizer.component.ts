@@ -28,25 +28,17 @@ export class ProgramAuthorizerComponent implements OnInit {
   wasSigned: boolean = false;
   signatureData: string;
   signingDate: string;
-  terms: [string, boolean][] = [
-    ['I understand that the Application Program for Victim Services and Crime Prevention Division may notify the above authorities that I have submitted an application', false],
-    ['I have read and understood the above information', false]
-    // ['Termination may occur if the organization has late or outstanding reports.', false],
-    // ['Termination may occur if the organization fails to adhere Employment Standards Act of BC.', false],
-    // ['Termination may occur if the organization fails to adhere to the BC Human Rights Code.', false],
-    // ['Termination may occur if the organization fails to comply with the Worker\'s Compensation Act (WorkSafe BC).', false],
-    // ['Termination may occur if the organization does not provide or secure adequate commercial general liability insurance.', false],
-    // ['Termination may occur if the organization fails to comply with privacy legislation.', false],
-    // ['Termination may occur if any part of the application is found to be innacurate.', false],
-    // ['I understand that the Application Program for Victim Services and Crime Prevention Division may notify provincial authorities that I have submitted an application.', false],
-    // ['I have the authority to submit this application on behalf of this organization.', false],
-    // ['I have read, understood, and certify that the information being submitted is accurate to the best of my knowledge.', false],
-  ]
+  terms: [string, boolean][] = [];
+
   constructor(
     private stateService: StateService,
   ) { }
 
   ngOnInit() {
+    this.terms = [
+      [`I have reviewed the completed ${this.formType}; and that`, false],
+      [`all of the information provided in this ${this.formType}, including all attachments, is accurate and correct to the best of my knowledge.`, false]
+    ];
     if (!this.signature) {
       // set the signature from the application state if not set
       this.signature = {
