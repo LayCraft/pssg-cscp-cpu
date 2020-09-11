@@ -14,6 +14,7 @@ export class TransmogrifierProgramSurplus {
 
     surplusPlanId: string;
     surplusAmount: number;
+    pay_with_cheque: boolean;
     lineItems: iSurplusItem[];
 
     userId: string;
@@ -28,6 +29,7 @@ export class TransmogrifierProgramSurplus {
         this.userId = g.Userbceid;
         this.surplusPlanId = g.SurplusPlan.vsd_surplusplanreportid;
         this.surplusAmount = g.SurplusPlan.vsd_surplusamount || 0;
+        this.pay_with_cheque = g.SurplusPlan.vsd_surplusremittance;
         this.lineItems = this.buildSurplusLineItems(g);
     }
 
@@ -42,8 +44,8 @@ export class TransmogrifierProgramSurplus {
                 expense_name: this.getExpenseName(item._vsd_eligibleexpenseitemid_value, g.EligibleExpenseItemCollection),
                 justification: item.vsd_justificationdetails,
                 surplus_plan_id: item._vsd_surplusplanid_value,
-                allocated_amount: item.vsd_allocatedamount,
-                allocated_amount_mask: item.vsd_allocatedamount.toString(),
+                amount: item.vsd_proposedexpenditures,
+                amount_mask: item.vsd_proposedexpenditures ? item.vsd_proposedexpenditures.toString() : "0",
                 expenditures_q1: item.vsd_actualexpenditures,
                 expenditures_q2: item.vsd_actualexpenditures2,
                 expenditures_q3: item.vsd_actualexpenditures3,

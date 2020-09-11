@@ -23,7 +23,7 @@ export class ProgramSurplusComponent implements OnInit {
 
     pay_with_cheque: boolean = false;
     surplus_amount: number = 0;
-    total_allocated_amount: number = 0;
+    total_amount: number = 0;
     remaining_amount: number = 0;
 
     public formHelper = new FormHelper();
@@ -80,10 +80,10 @@ export class ProgramSurplusComponent implements OnInit {
 
     calculateTotals() {
         this.remaining_amount = this.surplus_amount;
-        this.total_allocated_amount = 0;
+        this.total_amount = 0;
         this.trans.lineItems.forEach(item => {
-            this.total_allocated_amount += item.allocated_amount;
-            this.remaining_amount -= item.allocated_amount;
+            this.total_amount += item.amount;
+            this.remaining_amount -= item.amount;
         });
     }
 

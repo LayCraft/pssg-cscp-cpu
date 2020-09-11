@@ -49,7 +49,7 @@
                             {{line.expense_name}}
                         </td>
                         <td>
-                            <input [disabled]="isCompleted" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'allocated_amount'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.allocated_amount_mask" min="0">
+                            <input [disabled]="isCompleted" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'amount'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.amount_mask" min="0">
                         </td>
                         <td>
                             <input [disabled]="isCompleted" class="form-control" type="text" [(ngModel)]="line.justification">
@@ -57,7 +57,7 @@
                     </tr>
                     <tr>
                         <th scope="col">Total</th>
-                        <td><strong>{{total_allocated_amount | currency}}</strong></td>
+                        <td><strong>{{total_amount | currency}}</strong></td>
                         <td></td>
                     </tr>
                 </tbody>
@@ -74,7 +74,7 @@
             </p>
 
             <div class="form-check mt-4">
-                <input [disabled]="isCompleted" [(ngModel)]="pay_with_cheque" type="checkbox" id="pay_with_cheque" name="pay_with_cheque" class="form-check-input">
+                <input [disabled]="isCompleted" [(ngModel)]="trans.pay_with_cheque" type="checkbox" id="pay_with_cheque" name="pay_with_cheque" class="form-check-input">
                 <label for="pay_with_cheque">
                     Select if you elect to return all surplus funds in cheque
                 </label>

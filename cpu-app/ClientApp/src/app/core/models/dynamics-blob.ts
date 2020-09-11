@@ -310,8 +310,9 @@ export interface iDynamicsProgramSurplusResponse {
 
 export interface iDynamicsSurplusPlan {
   vsd_surplusplanreportid: string;
-  _vsd_programid_value: string;
-  vsd_surplusamount: number;
+  _vsd_programid_value?: string;
+  vsd_surplusamount?: number;
+  vsd_surplusremittance: boolean;
 }
 
 export interface iDynamicsSurplusPlanLineItem {
@@ -324,7 +325,7 @@ export interface iDynamicsSurplusPlanLineItem {
   vsd_actualexpenditures2?: number;
   vsd_actualexpenditures3?: number;
   vsd_actualexpenditures4?: number;
-  vsd_allocatedamount: number;
+  vsd_proposedexpenditures: number;
   vsd_surpluslineitemid: string;
 }
 

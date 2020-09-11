@@ -1,4 +1,4 @@
-import { iDynamicsSurplusPlanLineItem } from "./dynamics-blob";
+import { iDynamicsSurplusPlan, iDynamicsSurplusPlanLineItem } from "./dynamics-blob";
 
 export interface iDynamicsPostScheduleG { //no controller setup to receive this yet
   UserBCeID: string;
@@ -72,6 +72,7 @@ export interface iDynamicsPostBudgetProposal { //maps to BudgetProposalPost
 export interface iDynamicsPostSurplusPlan {
   BusinessBCeID: string;
   UserBCeID: string;
+  SurplusPlanCollection: iDynamicsSurplusPlan[];
   SurplusPlanLineItemCollection: iDynamicsSurplusPlanLineItem[];
 }
 //------------------------------------------------------------------------------
