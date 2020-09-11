@@ -168,6 +168,7 @@ export interface iDynamicsBlob {
   Messages?: iDynamicsCrmMessage[];
   MinistryUser?: iDynamicsMinistryUser;
   Organization?: iDynamicsOrganization;
+  PortalRoles?: iDynamicsPortalRole[];
   Programs?: iDynamicsCrmProgram[];
   Result: string;
   Staff?: iDynamicsCrmContact[];
@@ -175,6 +176,11 @@ export interface iDynamicsBlob {
   Userbceid?: string; // represents the user's BCeID.
   fortunecookiecontext?: string;
 };
+
+export interface iDynamicsPortalRole {
+  vsd_name: string;
+  vsd_portalroleid: string;
+}
 
 export interface iDynamicsCrmInvoice {
   fortunecookietype?: string;
@@ -308,14 +314,15 @@ export interface iDynamicsSurplusPlan {
 }
 
 export interface iDynamicsSurplusPlanLineItem {
-  _vsd_eligibleexpenseitemid_value: string;
-  _vsd_surplusplanid_value: string;
-  vsd_name: string;
-  vsd_justificationdetails: string;
-  vsd_actualexpenditures: number;
-  vsd_actualexpenditures2: number;
-  vsd_actualexpenditures3: number;
-  vsd_actualexpenditures4: number;
+  _vsd_eligibleexpenseitemid_value?: string;
+  _vsd_surplusplanid_value?: string;
+  vsd_surplusplanid?: string;
+  vsd_name?: string;
+  vsd_justificationdetails?: string;
+  vsd_actualexpenditures?: number;
+  vsd_actualexpenditures2?: number;
+  vsd_actualexpenditures3?: number;
+  vsd_actualexpenditures4?: number;
   vsd_allocatedamount: number;
   vsd_surpluslineitemid: string;
 }
@@ -453,6 +460,7 @@ export interface iDynamicsMonthlyStatisticsQuestionsProgram {
 }
 export interface iDynamicsMonthlyStatisticsAnswersAnswer {
   vsd_questioncategory?: string;
+  vsd_datacollectionlineitemid?: string;
   _vsd_datacollectionid_value?: string;
   createdon?: Date;
   vsd_name?: string;

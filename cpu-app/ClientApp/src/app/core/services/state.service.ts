@@ -111,11 +111,7 @@ export class StateService {
           this.homeRoute.next('authenticated/new_user');
           this.loggedIn.next(true);
         } else {
-          console.log("we should get user role from CRM HERE!!!");
-          let updatedSettings = new UserSettings(userInfo);
-          // updatedSettings.userRole = Roles.ProgramStaff;
-          updatedSettings.userRole = Roles.ServiceProvider;
-          this.userSettings.next(updatedSettings);
+
 
           // console.log("settings");
           // console.log(this.userSettings.getValue());
@@ -125,6 +121,17 @@ export class StateService {
           console.log("Dynamics blob");
           console.log(JSON.parse(JSON.stringify(m)));
           const mainData = new Transmogrifier(m);
+
+          let updatedSettings = new UserSettings(userInfo);
+          updatedSettings.userRole = mainData.role;
+
+          if (window.location.href.includes("localhost")) {
+            // updatedSettings.userRole = Roles.ProgramStaff;
+            // updatedSettings.userRole = Roles.BoardContact;
+          }
+          this.userSettings.next(updatedSettings);
+
+
           // save the useful blob of viewmodels
           this.main.next(mainData);
           // save the user that matches the current bceid
