@@ -13,6 +13,7 @@ export class TransmogrifierProgramSurplus {
     programName: string;
 
     surplusPlanId: string;
+    surplusAmount: number;
     lineItems: iSurplusItem[];
 
     userId: string;
@@ -26,7 +27,8 @@ export class TransmogrifierProgramSurplus {
         this.programName = g.Program.vsd_name;
         this.userId = g.Userbceid;
         this.surplusPlanId = g.SurplusPlan.vsd_surplusplanreportid;
-        this.lineItems = this.buildSurplusLineItems(g)
+        this.surplusAmount = g.SurplusPlan.vsd_surplusamount || 0;
+        this.lineItems = this.buildSurplusLineItems(g);
     }
 
     buildSurplusLineItems(g: iDynamicsProgramSurplusResponse) {

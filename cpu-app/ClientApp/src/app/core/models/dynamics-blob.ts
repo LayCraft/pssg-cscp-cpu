@@ -311,6 +311,7 @@ export interface iDynamicsProgramSurplusResponse {
 export interface iDynamicsSurplusPlan {
   vsd_surplusplanreportid: string;
   _vsd_programid_value: string;
+  vsd_surplusamount: number;
 }
 
 export interface iDynamicsSurplusPlanLineItem {

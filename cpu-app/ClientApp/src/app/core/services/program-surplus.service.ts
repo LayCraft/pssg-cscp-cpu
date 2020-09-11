@@ -1,5 +1,5 @@
 import { retry, catchError } from 'rxjs/operators';
-import { iDynamicsScheduleFResponse } from '../models/dynamics-blob';
+import { iDynamicsProgramSurplusResponse, iDynamicsScheduleFResponse } from '../models/dynamics-blob';
 import { iDynamicsPostScheduleF } from '../models/dynamics-post';
 import { Observable, throwError, of } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -17,8 +17,8 @@ export class ProgramSurplusService {
     private http: HttpClient,
   ) { }
 
-  getProgramSurplus(organizationId: string, userId: string, scheduleFId: string): Observable<iDynamicsScheduleFResponse> {
-    return this.http.get<iDynamicsScheduleFResponse>(`${this.apiUrl}/${organizationId}/${userId}/${scheduleFId}`, { headers: this.headers }).pipe(
+  getProgramSurplus(organizationId: string, userId: string, scheduleFId: string): Observable<iDynamicsProgramSurplusResponse> {
+    return this.http.get<iDynamicsProgramSurplusResponse>(`${this.apiUrl}/${organizationId}/${userId}/${scheduleFId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

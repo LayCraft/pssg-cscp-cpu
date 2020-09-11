@@ -127,7 +127,8 @@ export class StateService {
 
           if (window.location.href.includes("localhost")) {
             // updatedSettings.userRole = Roles.ProgramStaff;
-            // updatedSettings.userRole = Roles.BoardContact;
+            console.log("setting localhost role to ExecutiveContact");
+            updatedSettings.userRole = Roles.ExecutiveContact;
           }
           this.userSettings.next(updatedSettings);
 

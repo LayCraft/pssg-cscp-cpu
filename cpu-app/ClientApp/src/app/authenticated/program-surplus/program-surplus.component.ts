@@ -22,7 +22,7 @@ export class ProgramSurplusComponent implements OnInit {
     isCompleted: boolean = false;
 
     pay_with_cheque: boolean = false;
-    surplus_amount: number = 10000;
+    surplus_amount: number = 0;
     total_allocated_amount: number = 0;
     remaining_amount: number = 0;
 
@@ -68,6 +68,7 @@ export class ProgramSurplusComponent implements OnInit {
                         this.trans = new TransmogrifierProgramSurplus(f);
                         console.log("Program surplus transmogrifier");
                         console.log(this.trans);
+                        this.surplus_amount = this.trans.surplusAmount;
 
                         this.calculateTotals();
 
