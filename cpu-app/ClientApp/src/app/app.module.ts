@@ -65,6 +65,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ToolTipTriggerComponent } from './shared/tool-tip/tool-tip.component';
 import { MatToolbarModule, MatTooltipModule } from '@angular/material';
 import { ProgramSurplusComponent } from './authenticated/program-surplus/program-surplus.component';
+import { SurplusReportComponent } from './authenticated/surplus-report/surplus-report.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { ProgramSurplusComponent } from './authenticated/program-surplus/program
     ProfileComponent,
     ProgramApplicationComponent,
     ProgramSurplusComponent,
+    SurplusReportComponent,
     ProgramAuthorizerComponent,
     ContractPackageAuthorizerComponent,
     ProgramBudgetComponent,

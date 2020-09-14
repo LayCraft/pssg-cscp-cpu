@@ -151,7 +151,7 @@ export class Transmogrifier {
     if (discriminator === 'cover_letter') {
       return contractId;
     }
-    if (discriminator === 'program_surplus') {
+    if (discriminator === 'program_surplus' || discriminator === 'surplus_report') {
       return t._vsd_surplusplanid_value;
     }
     return contractId;

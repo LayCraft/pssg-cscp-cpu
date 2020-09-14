@@ -49,7 +49,7 @@
                             {{line.expense_name}}
                         </td>
                         <td>
-                            <input [disabled]="isCompleted" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'amount'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.amount_mask" min="0">
+                            <input [disabled]="isCompleted" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'proposed_amount'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.proposed_amount_mask" min="0">
                         </td>
                         <td>
                             <input [disabled]="isCompleted" class="form-control" type="text" [(ngModel)]="line.justification">

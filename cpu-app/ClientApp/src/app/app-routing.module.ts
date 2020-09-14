@@ -22,6 +22,7 @@ import { NewUserNewOrganizationComponent } from './authenticated/new-user-new-or
 import { SignContractComponent } from './authenticated/sign-contract/sign-contract.component';
 import { CompletedStatusReportComponent } from './authenticated/status-report/completed-status-report.component';
 import { ProgramSurplusComponent } from './authenticated/program-surplus/program-surplus.component';
+import { SurplusReportComponent } from './authenticated/surplus-report/surplus-report.component';
 
 const routes: Routes = [
   {
@@ -64,6 +65,10 @@ const routes: Routes = [
       {
         path: 'program_surplus/:surplusId',
         component: ProgramSurplusComponent
+      },
+      {
+        path: 'surplus_report/:surplusId',
+        component: SurplusReportComponent
       },
       {
         path: 'status_report/:taskId',

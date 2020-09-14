@@ -44,12 +44,18 @@ export class TransmogrifierProgramSurplus {
                 expense_name: this.getExpenseName(item._vsd_eligibleexpenseitemid_value, g.EligibleExpenseItemCollection),
                 justification: item.vsd_justificationdetails,
                 surplus_plan_id: item._vsd_surplusplanid_value,
-                amount: item.vsd_proposedexpenditures,
-                amount_mask: item.vsd_proposedexpenditures ? item.vsd_proposedexpenditures.toString() : "0",
+                proposed_amount: item.vsd_proposedexpenditures,
+                proposed_amount_mask: item.vsd_proposedexpenditures ? item.vsd_proposedexpenditures.toString() : "0",
+                allocated_amount: item.vsd_allocatedamount,
+                allocated_amount_mask: item.vsd_allocatedamount ? item.vsd_allocatedamount.toString() : "0",
                 expenditures_q1: item.vsd_actualexpenditures,
+                q1_mask: item.vsd_actualexpenditures ? item.vsd_actualexpenditures.toString() : "0",
                 expenditures_q2: item.vsd_actualexpenditures2,
+                q2_mask: item.vsd_actualexpenditures2 ? item.vsd_actualexpenditures2.toString() : "0",
                 expenditures_q3: item.vsd_actualexpenditures3,
+                q3_mask: item.vsd_actualexpenditures3 ? item.vsd_actualexpenditures3.toString() : "0",
                 expenditures_q4: item.vsd_actualexpenditures4,
+                q4_mask: item.vsd_actualexpenditures4 ? item.vsd_actualexpenditures4.toString() : "0",
             }
             ret.push(obj)
         });

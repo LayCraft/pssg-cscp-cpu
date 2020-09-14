@@ -11,11 +11,11 @@ import { convertProgramSurplusToDynamics } from "../../core/models/converters/pr
 import { iSurplusItem } from "../../core/models/surplus-item.interface";
 
 @Component({
-    selector: 'app-program-surplus',
-    templateUrl: './program-surplus.component.html',
-    styleUrls: ['./program-surplus.component.scss']
+    selector: 'app-surplus-report',
+    templateUrl: './surplus-report.component.html',
+    styleUrls: ['./surplus-report.component.scss']
 })
-export class ProgramSurplusComponent implements OnInit {
+export class SurplusReportComponent implements OnInit {
     data: any;
     trans: TransmogrifierProgramSurplus;
 
@@ -24,7 +24,11 @@ export class ProgramSurplusComponent implements OnInit {
 
     pay_with_cheque: boolean = false;
     surplus_amount: number = 0;
-    total_amount: number = 0;
+    total_allocated_amount: number = 0;
+    q1_total: number = 0;
+    q2_total: number = 0;
+    q3_total: number = 0;
+    q4_total: number = 0;
     remaining_amount: number = 0;
 
     public formHelper = new FormHelper();
@@ -81,11 +85,51 @@ export class ProgramSurplusComponent implements OnInit {
 
     calculateTotals() {
         this.remaining_amount = this.surplus_amount;
-        this.total_amount = 0;
+        this.total_allocated_amount = 0;
+        this.q1_total = 0;
+        this.q2_total = 0;
+        this.q3_total = 0;
+        this.q4_total = 0;
         this.trans.lineItems.forEach((item: iSurplusItem) => {
-            this.total_amount += item.proposed_amount;
-            this.remaining_amount -= item.proposed_amount;
+            this.total_allocated_amount += item.allocated_amount;
+            this.q1_total += item.expenditures_q1;
+            this.q2_total += item.expenditures_q2;
+            this.q3_total += item.expenditures_q3;
+            this.q4_total += item.expenditures_q4;
+            this.remaining_amount -= (item.expenditures_q1 + item.expenditures_q2 + item.expenditures_q3 + item.expenditures_q4);
         });
+    }
+
+    saveAndExit() {
+        try {
+            if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+                return;
+            }
+            this.saving = true;
+            let data: iDynamicsPostSurplusPlan = convertProgramSurplusToDynamics(this.trans);
+            console.log("save and exit");
+            console.log(data);
+            this.programSurplusService.setProgramSurplus(data).subscribe(
+                r => {
+                    console.log(r);
+
+                    this.notificationQueueService.addNotification(`You have successfully saved the surplus plan.`, 'success');
+                    this.saving = false;
+                    this.stateService.refresh();
+                    this.router.navigate(['/authenticated/dashboard']);
+                },
+                err => {
+                    console.log(err);
+                    this.notificationQueueService.addNotification('The surplus plan could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+                    this.saving = false;
+                }
+            );
+        }
+        catch (err) {
+            console.log(err);
+            this.notificationQueueService.addNotification('The surplus plan could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+            this.saving = false;
+        }
     }
 
     submit() {
