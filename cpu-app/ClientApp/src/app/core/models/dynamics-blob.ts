@@ -136,6 +136,7 @@ export interface iDynamicsCrmTask {
   _vsd_programid_value?: string,
   _vsd_schedulegid_value?: string;
   _vsd_tasktypeid_value?: string;
+  _vsd_surplusplanid_value?: string;
   activityid?: string;
   description?: string;
   fortunecookieetag: string;
@@ -167,6 +168,7 @@ export interface iDynamicsBlob {
   Messages?: iDynamicsCrmMessage[];
   MinistryUser?: iDynamicsMinistryUser;
   Organization?: iDynamicsOrganization;
+  PortalRoles?: iDynamicsPortalRole[];
   Programs?: iDynamicsCrmProgram[];
   Result: string;
   Staff?: iDynamicsCrmContact[];
@@ -174,6 +176,11 @@ export interface iDynamicsBlob {
   Userbceid?: string; // represents the user's BCeID.
   fortunecookiecontext?: string;
 };
+
+export interface iDynamicsPortalRole {
+  vsd_name: string;
+  vsd_portalroleid: string;
+}
 
 export interface iDynamicsCrmInvoice {
   fortunecookietype?: string;
@@ -287,6 +294,42 @@ export interface iDynamicsScheduleFResponse {
   StaffCollection?: iDynamicsCrmContact[];
   Userbceid?: string;
 }
+
+export interface iDynamicsProgramSurplusResponse {
+  Businessbceid: string;
+  Contract?: iDynamicsCrmContract;
+  EligibleExpenseItemCollection?: iDynamicsEligibleExpenseItem[];
+  IsSuccess?: boolean;
+  Organization?: iDynamicsOrganization;
+  Program?: iDynamicsCrmProgram;
+  Result: string;
+  SurplusPlan?: iDynamicsSurplusPlan;
+  SurplusPlanLineItems?: iDynamicsSurplusPlanLineItem[];
+  Userbceid?: string;
+}
+
+export interface iDynamicsSurplusPlan {
+  vsd_surplusplanreportid: string;
+  _vsd_programid_value?: string;
+  vsd_surplusamount?: number;
+  vsd_surplusremittance: boolean;
+}
+
+export interface iDynamicsSurplusPlanLineItem {
+  _vsd_eligibleexpenseitemid_value?: string;
+  _vsd_surplusplanid_value?: string;
+  vsd_surplusplanid?: string;
+  vsd_name?: string;
+  vsd_justificationdetails?: string;
+  vsd_actualexpenditures?: number;
+  vsd_actualexpenditures2?: number;
+  vsd_actualexpenditures3?: number;
+  vsd_actualexpenditures4?: number;
+  vsd_proposedexpenditures: number;
+  vsd_allocatedamount: number;
+  vsd_surpluslineitemid: string;
+}
+
 
 export interface iDynamicsRegionDistrict {
   vsd_name: string;
@@ -420,6 +463,7 @@ export interface iDynamicsMonthlyStatisticsQuestionsProgram {
 }
 export interface iDynamicsMonthlyStatisticsAnswersAnswer {
   vsd_questioncategory?: string;
+  vsd_datacollectionlineitemid?: string;
   _vsd_datacollectionid_value?: string;
   createdon?: Date;
   vsd_name?: string;

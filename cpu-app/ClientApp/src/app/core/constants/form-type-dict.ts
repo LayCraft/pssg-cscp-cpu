@@ -5,7 +5,8 @@ export const formTypeDict = {
   'c84daf8d-e8f5-e911-b811-00505683fbf4': ['status_report', 'Statistics report'],
   '1581f216-5d48-ea11-b816-00505683fbf4': ['download_document', 'Download Documents'],
   '6da1d7cb-bb9a-ea11-b818-00505683fbf4': ['sign_contract', 'Sign Contract'],
-  '50eeb9ba-e8f5-e911-b811-00505683fbf4': ['surplus_plan', 'Program Surplus']
+  '50eeb9ba-e8f5-e911-b811-00505683fbf4': ['program_surplus', 'Program Surplus'],
+  '4e1831c6-d4dc-ea11-b81c-00505683fbf4': ['surplus_report', 'Surplus Expenditure Report'],
 }
 
 // '3e9826e5-e8f5-e911-b811-00505683fbf4': ['3e9826e5-e8f5-e911-b811-00505683fbf4', 'Financial Statement'],

@@ -22,7 +22,6 @@ namespace Gov.Cscp.Victims.Public.Models
         private string _vsd_EligibleExpenseItemIdfortunecookiebind;
         public string vsd_EligibleExpenseItemIdfortunecookiebind
         {
-            // executive contact on schedule f
             get
             {
                 if (_vsd_EligibleExpenseItemIdfortunecookiebind != null)
@@ -39,7 +38,6 @@ namespace Gov.Cscp.Victims.Public.Models
         private string _vsd_ProgramIdfortunecookiebind;
         public string vsd_ProgramIdfortunecookiebind
         {
-            // executive contact on schedule f
             get
             {
                 if (_vsd_ProgramIdfortunecookiebind != null)

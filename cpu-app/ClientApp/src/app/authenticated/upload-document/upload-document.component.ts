@@ -47,9 +47,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   private stateSubscription: Subscription;
   isContractUpload: boolean = false;
 
-  private ORGANIZATION_DOCUMENT_TYPES: string[] = ["Insurance", "General Service Agreement", "Annual Reports", "AGM Minutes", "Audited Financial Statements", "Counselor Support Plan", "Referral Protocol", "Financial", "Other", "Audit Letter for Contractor", "Audit Letter from Contractor", "Letter of Reference", "Invoice", "Direct Deposit Form"];
-  private CONTRACT_DOCUMENT_TYPES: string[] = ["Referral Protocol", "Criminal Records Checks", "Custom Financial Report", "Expense Report (Invoices?)",
-    "Activity Report", "Counsellor Support Plan", "Agency-run Statistics", "Surplus Plans"];
+  private ORGANIZATION_DOCUMENT_TYPES: string[] = ["AGM Minutes", "Annual Report", "Audit Letter", "Financial Statements (Audited/Unaudited)", "Certificate of Insurance", "General Service Agreement", "Referral Protocol (PBVS & CBVS)", "Other"];
+  private CONTRACT_DOCUMENT_TYPES: string[] = ["Custom Financial Report", "Custom Statistical Report", "Custom Activity Report", "Counselor Support Plan", "Letter of Reference", "Direct Deposit Form", "Invoice/Expense Report", "Other"];
 
   document_types: string[] = [];
   selectedDocumentType: string = "";

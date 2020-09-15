@@ -229,7 +229,9 @@ export class ProgramApplicationComponent implements OnInit {
             this.saving = false;
             this.stepperElements.forEach(s => {
               if (s.formState === 'complete') return;
-              this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+
+              if (s.formState !== 'untouched') this.stepperService.setStepperElementProperty(s.id, "formState", "complete");
+              else this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
             });
 
             if (shouldExit) this.router.navigate(['/authenticated/dashboard']);

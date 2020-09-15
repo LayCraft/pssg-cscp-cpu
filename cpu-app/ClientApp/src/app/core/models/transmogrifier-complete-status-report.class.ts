@@ -41,7 +41,7 @@ export class TransmogrifierCompleteStatusReport {
                     const a: iAnswer = {
                         label: d.vsd_name,
                         type: type,
-                        uuid: d._vsd_datacollectionid_value, // I was generating it but may as well use the one from master data.
+                        uuid: d.vsd_datacollectionlineitemid,
                         questionNumber: d.vsd_questionorder,
                         categoryName: d.vsd_questioncategory,
                         // multiChoiceAnswers: this.getMultipleChoice(d.vsd_cpustatisticsmasterdataid, g.MultipleChoiceCollection),

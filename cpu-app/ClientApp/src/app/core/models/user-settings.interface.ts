@@ -17,6 +17,7 @@ export interface iUserSettings {
 }
 
 export enum Roles {
-  ServiceProvider,
   ProgramStaff,
+  BoardContact,
+  ExecutiveContact,
 }

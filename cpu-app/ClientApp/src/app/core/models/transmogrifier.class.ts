@@ -16,6 +16,7 @@ import { employmentStatusTypeDict } from '../constants/employment-status-types';
 import { iPaymentStatus, CRMPaymentStatusCode, PaymentStatusDisplay } from './payment-status.interface';
 import * as moment from 'moment';
 import { PAYMENT_QUARTERS } from '../constants/reporting-period';
+import { Roles } from './user-settings.interface';
 
 export class Transmogrifier {
   // collections of viewmodels
@@ -28,6 +29,25 @@ export class Transmogrifier {
   public persons: iPerson[];
   public contracts: iContract[];
   public ministryContact: iMinistryUser;
+  public role: Roles;
+
+  private ROLES_LOOKUP = [
+    {
+      vsd_name: "Program Staff Role",
+      vsd_portalroleid: "286d3bd0-22e6-e911-b811-00505683fbf4",
+      role: Roles.ProgramStaff,
+    },
+    {
+      vsd_name: "Board Contact Role",
+      vsd_portalroleid: "71a24e72-b7f3-ea11-b81d-00505683fbf4",
+      role: Roles.BoardContact,
+    },
+    {
+      vsd_name: "Executive Contact Role",
+      vsd_portalroleid: "89b84866-b7f3-ea11-b81d-00505683fbf4",
+      role: Roles.ExecutiveContact,
+    }
+  ]
 
   constructor(b: iDynamicsBlob) {
     this.accountId = b.Organization.accountid || null; // the dynamics id must be included when posting back sometimes.
@@ -39,6 +59,14 @@ export class Transmogrifier {
     this.persons = this.buildPersons(b);
     this.ministryContact = this.buildMinistryContact(b);
     this.contracts = this.buildContracts(b);
+    this.role = Roles.ProgramStaff;
+    for (let i = 0; i < b.PortalRoles.length; ++i) {
+      let thisRole = this.ROLES_LOOKUP.find(r => r.vsd_portalroleid === b.PortalRoles[i].vsd_portalroleid);
+      if (thisRole) {
+        let roleLevel = thisRole.role;
+        if (roleLevel > this.role) this.role = roleLevel;
+      }
+    }
   }
   private buildTasks(b: iDynamicsBlob, contractId: string): iTask[] {
     const tasks: iTask[] = [];
@@ -122,6 +150,9 @@ export class Transmogrifier {
     }
     if (discriminator === 'cover_letter') {
       return contractId;
+    }
+    if (discriminator === 'program_surplus' || discriminator === 'surplus_report') {
+      return t._vsd_surplusplanid_value;
     }
     return contractId;
   }
