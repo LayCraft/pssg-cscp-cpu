@@ -90,7 +90,7 @@
     <div class="row mt-4">
         <div class="col-md-4"></div>
         <div class="col">
-            <button class="btn btn-primary ml-2" [class.is-disabled]="saving" (click)="saveAndExit()">Save and Exit</button>
+            <button class="btn btn-primary ml-2" [class.is-disabled]="saving" (click)="exit()">Exit</button>
             <button (click)="submit()" [class.is-disabled]="saving || remaining_amount !== 0" class="btn btn-primary submit-button">Submit Report</button>
         </div>
     </div>
