@@ -25,6 +25,7 @@ export interface iProgramApplication extends iContactInformation {
   subContractedStaff: iPerson[];
   removedStaff: iPerson[];
   removedSubContractedStaff: iPerson[];
+  isTransitionHouse: boolean;
   mailingAddress: iAddress;
   mainAddress: iAddress;
   mailingAddressSameAsMainAddress: boolean;

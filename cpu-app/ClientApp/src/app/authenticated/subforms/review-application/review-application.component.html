@@ -8,7 +8,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th colspan="2" scope="col" class="review-section-header">Primary Contact</th>
+        <th colspan="2" scope="col" class="review-section-header">Organization Details</th>
       </tr>
     </thead>
     <tbody>
@@ -143,7 +143,7 @@
     </tbody>
   </table>
 
-  <table class="table table-striped">
+  <!-- <table class="table table-striped">
     <thead>
       <tr>
         <th colspan="2" scope="col" class="review-section-header">Subcontracted Staff</th>
@@ -153,15 +153,15 @@
       <tr>
         <th scope="row">Staff are subcontracted</th>
         <td>{{trans?.administrativeInformation?.staffSubcontracted ?'Yes':'No'}}</td>
-      </tr>
+      </tr> -->
       <!-- <ng-container *ngIf="trans?.administrativeInformation?.staffSubcontracted">
         <tr *ngFor="let person of trans?.administrativeInformation?.staffSubcontractedPersons; let i=index">
           <th scope="row">Subcontractor {{i+1}}</th>
           <td>{{person.firstName}} {{person.middleName}} {{person.lastName}}{{person.title?' - '+person.title:''}}</td>
         </tr>
       </ng-container> -->
-    </tbody>
-  </table>
+    <!-- </tbody>
+  </table> -->
 
   <h2 class="blue-header">Commercial General Liability Insurance</h2>
   <table class="table table-striped">

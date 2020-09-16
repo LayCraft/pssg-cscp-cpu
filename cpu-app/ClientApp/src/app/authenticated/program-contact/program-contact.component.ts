@@ -206,7 +206,7 @@ export class ProgramContactComponent implements OnInit, OnDestroy {
     }
   }
   setMailingAddressSameAsMainAddress() {
-    if (!this.programApplication.mailingAddressSameAsMainAddress) {
+    if (this.programApplication.mailingAddressSameAsMainAddress) {
       // let addressCopy = _.cloneDeep(this.programApplication.mainAddress)
       // this.programApplication.mailingAddress = addressCopy;
       this.programApplication.mailingAddress = this.programApplication.mainAddress;

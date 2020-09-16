@@ -176,5 +176,4 @@ export class SurplusReportComponent implements OnInit {
             this.router.navigate(['/authenticated/dashboard']);
         }
     }
-
 }
