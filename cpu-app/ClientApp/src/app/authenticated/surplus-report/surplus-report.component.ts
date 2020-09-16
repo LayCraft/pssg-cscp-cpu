@@ -7,7 +7,7 @@ import { ProgramSurplusService } from "../../core/services/program-surplus.servi
 import { StateService } from "../../core/services/state.service";
 import { TransmogrifierProgramSurplus } from "../../core/models/transmogrifier-program-surplus.class";
 import { iDynamicsPostSurplusPlan } from "../../core/models/dynamics-post";
-import { convertProgramSurplusToDynamics } from "../../core/models/converters/program-surplus-to-dynamics";
+import { convertProgramSurplusToDynamics, SurplusTypes } from "../../core/models/converters/program-surplus-to-dynamics";
 import { iSurplusItem } from "../../core/models/surplus-item.interface";
 
 @Component({
@@ -100,45 +100,13 @@ export class SurplusReportComponent implements OnInit {
         });
     }
 
-    saveAndExit() {
-        try {
-            if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-                return;
-            }
-            this.saving = true;
-            let data: iDynamicsPostSurplusPlan = convertProgramSurplusToDynamics(this.trans);
-            console.log("save and exit");
-            console.log(data);
-            this.programSurplusService.setProgramSurplus(data).subscribe(
-                r => {
-                    console.log(r);
-
-                    this.notificationQueueService.addNotification(`You have successfully saved the surplus plan.`, 'success');
-                    this.saving = false;
-                    this.stateService.refresh();
-                    this.router.navigate(['/authenticated/dashboard']);
-                },
-                err => {
-                    console.log(err);
-                    this.notificationQueueService.addNotification('The surplus plan could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-                    this.saving = false;
-                }
-            );
-        }
-        catch (err) {
-            console.log(err);
-            this.notificationQueueService.addNotification('The surplus plan could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-            this.saving = false;
-        }
-    }
-
     submit() {
         try {
             if (!this.formHelper.isFormValid(this.notificationQueueService)) {
                 return;
             }
             this.saving = true;
-            let data: iDynamicsPostSurplusPlan = convertProgramSurplusToDynamics(this.trans);
+            let data: iDynamicsPostSurplusPlan = convertProgramSurplusToDynamics(this.trans, SurplusTypes.Report);
             console.log("attempting submit");
             console.log(data);
             this.programSurplusService.setProgramSurplus(data).subscribe(
