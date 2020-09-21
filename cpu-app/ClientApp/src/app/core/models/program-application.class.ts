@@ -28,6 +28,7 @@ export class ProgramApplication implements iProgramApplication {
     subContractedStaff: iPerson[];
     removedStaff: iPerson[];
     removedSubContractedStaff: iPerson[];
+    isTransitionHouse: boolean = false;
     mailingAddress: iAddress;
     mainAddress: iAddress;
     mailingAddressSameAsMainAddress: boolean;
@@ -52,9 +53,16 @@ export class ProgramApplication implements iProgramApplication {
 
     private REQUIRED_FIELDS: string[] = ["emailAddress", "phoneNumber", "mainAddress", "mainAddress.line1", "mainAddress.city", "mainAddress.postalCode",
         "mailingAddress", "mailingAddress.line1", "mailingAddress.city", "mailingAddress.postalCode"];
+    private REQUIRED_FIELDS_TRANSITION_HOUSE: string[] = ["emailAddress", "phoneNumber", "mailingAddress", "mailingAddress.line1", "mailingAddress.city",
+        "mailingAddress.postalCode"];
+
     hasRequiredFields() {
-        for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
-            if (!this.formHelper.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
+        let req_fields = this.REQUIRED_FIELDS;
+        if (this.isTransitionHouse) {
+            req_fields = this.REQUIRED_FIELDS_TRANSITION_HOUSE;
+        }
+        for (let i = 0; i < req_fields.length; ++i) {
+            if (!this.formHelper.fetchFromObject(this, req_fields[i])) {
                 return false;
             }
         }
@@ -82,10 +90,14 @@ export class ProgramApplication implements iProgramApplication {
         return true;
     }
     getMissingFields() {
+        let req_fields = this.REQUIRED_FIELDS;
+        if (this.isTransitionHouse) {
+            req_fields = this.REQUIRED_FIELDS_TRANSITION_HOUSE;
+        }
         let ret = [];
-        for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
-            if (!this.formHelper.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
-                ret.push(this.REQUIRED_FIELDS[i]);
+        for (let i = 0; i < req_fields.length; ++i) {
+            if (!this.formHelper.fetchFromObject(this, req_fields[i])) {
+                ret.push(req_fields[i]);
             }
         }
         let skip_employment_status_validation = true;

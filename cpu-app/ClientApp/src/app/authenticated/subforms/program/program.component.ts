@@ -153,7 +153,7 @@ export class ProgramComponent implements OnInit, OnDestroy {
     let dialogRef = this.dialog.open(AddPersonDialog, {
       autoFocus: false,
       width: '80vw',
-      data: { programApplication: this.programApplication }
+      data: { agencyAddress: this.programApplication.mainAddress }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -170,11 +170,27 @@ export class ProgramComponent implements OnInit, OnDestroy {
     person.address = new Address();
   }
   setMailingAddressSameAsMainAddress() {
-    if (!this.programApplication.mailingAddressSameAsMainAddress) {
+    if (this.programApplication.mailingAddressSameAsMainAddress) {
       this.programApplication.mailingAddress = this.programApplication.mainAddress;
     }
     else {
       this.programApplication.mailingAddress = new Address();
+    }
+  }
+  hasSubContractedStaffChange() {
+    console.log(this.programApplication.hasSubContractedStaff)
+    if (!this.programApplication.hasSubContractedStaff) {
+      for (let i = 0; i < this.programApplication.subContractedStaff.length; ++i) {
+        let person: iPerson = this.trans.persons.filter(p => p.personId === this.programApplication.subContractedStaff[i].personId)[0];
+        if (!person) {
+          person = this.persons.filter(p => p.personId === this.programApplication.subContractedStaff[i].personId)[0];
+        }
+
+        if (person) {
+          this.programApplication.removedSubContractedStaff.push(person);
+        }
+      }
+      this.programApplication.subContractedStaff = [];
     }
   }
 }

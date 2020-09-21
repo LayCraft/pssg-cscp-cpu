@@ -16,6 +16,8 @@ import { Hours } from '../../core/models/hours.class';
 import { ContactInformation } from '../../core/models/contact-information.class';
 import { AdministrativeInformation } from '../../core/models/administrative-information.class';
 import { ProgramApplication } from '../../core/models/program-application.class';
+import { MatDialog } from '@angular/material';
+import { AddPersonDialog } from '../dialogs/add-person/add-person.dialog';
 
 @Component({
   selector: 'app-program-application',
@@ -58,6 +60,7 @@ export class ProgramApplicationComponent implements OnInit {
     private stateService: StateService,
     private stepperService: IconStepperService,
     public ref: ChangeDetectorRef,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -471,7 +474,7 @@ export class ProgramApplicationComponent implements OnInit {
     this.currentReviewApplicationTab = tab;
   }
   setMailingAddressSameAsMainAddress() {
-    if (!this.trans.contactInformation.mailingAddressSameAsMainAddress) {
+    if (this.trans.contactInformation.mailingAddressSameAsMainAddress) {
       // let addressCopy = _.cloneDeep(this.programApplication.mainAddress)
       // this.programApplication.mailingAddress = addressCopy;
       this.trans.contactInformation.mailingAddress = this.trans.contactInformation.mainAddress;
@@ -480,5 +483,19 @@ export class ProgramApplicationComponent implements OnInit {
       let addressCopy = _.cloneDeep(this.trans.contactInformation.mailingAddress);
       this.trans.contactInformation.mailingAddress = new Address();//addressCopy;
     }
+  }
+
+  showAddPersonDialog() {
+    let dialogRef = this.dialog.open(AddPersonDialog, {
+      autoFocus: false,
+      width: '80vw',
+      data: { agencyAddress: this.trans.contactInformation.mainAddress }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.stateService.refresh();
+      }
+    });
   }
 }

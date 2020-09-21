@@ -1,7 +1,13 @@
+import { iDynamicsSurplusPlanLineItem } from "../dynamics-blob";
 import { iDynamicsPostSurplusPlan } from "../dynamics-post";
 import { TransmogrifierProgramSurplus } from "../transmogrifier-program-surplus.class";
 
-export function convertProgramSurplusToDynamics(trans: TransmogrifierProgramSurplus): iDynamicsPostSurplusPlan {
+export enum SurplusTypes {
+    Plan,
+    Report,
+}
+
+export function convertProgramSurplusToDynamics(trans: TransmogrifierProgramSurplus, type: SurplusTypes): iDynamicsPostSurplusPlan {
     let ret: iDynamicsPostSurplusPlan = {
         BusinessBCeID: trans.organizationId,
         UserBCeID: trans.userId,
@@ -13,17 +19,25 @@ export function convertProgramSurplusToDynamics(trans: TransmogrifierProgramSurp
     };
 
     trans.lineItems.forEach(item => {
-        ret.SurplusPlanLineItemCollection.push({
+        let dynamicsItem: iDynamicsSurplusPlanLineItem = {
             vsd_surpluslineitemid: item.id,
             vsd_surplusplanid: item.surplus_plan_id,
-            vsd_justificationdetails: item.justification,
-            vsd_proposedexpenditures: item.proposed_amount,
             vsd_allocatedamount: item.allocated_amount,
-            vsd_actualexpenditures: item.expenditures_q1,
-            vsd_actualexpenditures2: item.expenditures_q2,
-            vsd_actualexpenditures3: item.expenditures_q3,
-            vsd_actualexpenditures4: item.expenditures_q4,
-        });
+            // vsd_justificationdetails: item.justification,
+            // vsd_proposedexpenditures: item.proposed_amount,
+        };
+
+        if (type === SurplusTypes.Plan) {
+            dynamicsItem.vsd_justificationdetails = item.justification;
+            dynamicsItem.vsd_proposedexpenditures = item.proposed_amount;
+        }
+        if (type === SurplusTypes.Report) {
+            dynamicsItem.vsd_actualexpenditures = item.expenditures_q1;
+            dynamicsItem.vsd_actualexpenditures2 = item.expenditures_q2;
+            dynamicsItem.vsd_actualexpenditures3 = item.expenditures_q3;
+            dynamicsItem.vsd_actualexpenditures4 = item.expenditures_q4;
+        }
+        ret.SurplusPlanLineItemCollection.push(dynamicsItem);
     });
 
     return ret;

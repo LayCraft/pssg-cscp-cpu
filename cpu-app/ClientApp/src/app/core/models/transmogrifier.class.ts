@@ -71,30 +71,19 @@ export class Transmogrifier {
   private buildTasks(b: iDynamicsBlob, contractId: string): iTask[] {
     const tasks: iTask[] = [];
     for (let task of b.Tasks) {
-      // if the task matches the supplied contract return it
       if (task._regardingobjectid_value === contractId) {
-        // tasks.push({
         let thisTask: iTask =
-        {// convert the status from a meaningless dynamics number to a meaningful string
+        {
           status: taskCode(task.statuscode),
-          // convert the numeric completion state from meaningless dynamics number to a useful boolean
           isCompleted: this.isCompleted(task.statecode),
           taskName: decodeTaskType(task._vsd_tasktypeid_value, true),
           taskTitle: task.subject,
           taskDescription: task.description,
-          // make a date from the supplied date. TODO MomentJS
           deadline: task.scheduledend ? new Date(task.scheduledend) : null,
           submittedDate: task.modifiedon ? new Date(task.modifiedon) : null,
-
           taskId: this.getCorrectTaskIdByDiscriminator(contractId, task._vsd_programid_value, task, decodeTaskType(task._vsd_tasktypeid_value)),
-          // what kind of form is this?
           formType: decodeTaskType(task._vsd_tasktypeid_value)
         };
-
-        // if (thisTask.formType === "sign_contract") {
-        //   console.log("Skipping sign contract task!");
-        //   continue;
-        // }
 
         if (task._vsd_programid_value && (thisTask.formType === "expense_report" || thisTask.formType === "status_report")) {
           let programInfo = b.Programs.find(p => p.vsd_programid === task._vsd_programid_value);
@@ -129,10 +118,7 @@ export class Transmogrifier {
   }
 
   private getCorrectTaskIdByDiscriminator(contractId: string, programId: string, t: iDynamicsCrmTask, discriminator: string): string {
-    // lookups are dumb coming back from Dynamics we unify lookups so that we don't have Dynamics idiocy running wild in the forms.
     // sometimes we look up by a scheduleG ID, sometimes by a contractId, sometimes by a programId. :-(
-    // the front end doesn't need to handle guids differently. They all act as a lookup key.
-    // this is shorthand for an if statement in an if statement
     if (discriminator === 'budget_proposal') {
       return contractId;//works
     }
@@ -208,18 +194,14 @@ export class Transmogrifier {
     return paymentStatus;
   }
   private findQuarter(date): string {
-    // console.log(date);
     let thisDate = moment(date);
-    // console.log("findQuarter");
-    // console.log(thisDate);
-    // console.log(thisDate.month(), thisDate.date());
     let quarter = PAYMENT_QUARTERS.find(q => q.month == thisDate.month() && q.day == thisDate.date());
     if (quarter) return quarter.quarter;
     return "oneTime";
   }
   private isCompleted(code: number): boolean {
-    if (code === 1) {
-      return true; // this is completed
+    if (code === 1 || code === 2) {
+      return true; // 1 = completed, 2 = cancelled
     } else {
       return false; // this is not completed
     }

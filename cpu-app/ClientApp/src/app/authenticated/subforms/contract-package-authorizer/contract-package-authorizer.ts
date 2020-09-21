@@ -23,7 +23,7 @@ export class ContractPackageAuthorizerComponent implements OnInit {
   signatureData: string;
   signingDate: string;
   terms: [string, boolean][] = [
-    ['I understand that the Application Program for Victim Services and Crime Prevention Division may notify the above authorities that I have submitted an application', false],
+    ['I understand that the Application Program for Community Safety and Crime Prevention Branch may notify the above authorities that I have submitted an application', false],
     ['I have read and understood the above information', false]
     // ['Termination may occur if the organization has late or outstanding reports.', false],
     // ['Termination may occur if the organization fails to adhere Employment Standards Act of BC.', false],

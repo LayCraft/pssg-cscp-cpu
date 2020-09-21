@@ -50,7 +50,6 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 // turn the model into a string
                 string modelString = System.Text.Json.JsonSerializer.Serialize(model);
                 modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
-                // modelString = Helpers.Helpers.removeNullsForBudgetProposal(modelString);
 
                 DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
 

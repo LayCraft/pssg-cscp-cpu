@@ -69,13 +69,19 @@
         </div>
 
         <div>
-          <p class="address-info-message">*Street address not required if program is located in a transition house or safe home</p>
+          <div class="form-check">
+            <input [(ngModel)]="programApplication.isTransitionHouse" class="form-check-input" type="checkbox" id="isTransitionHouse" name="isTransitionHouse">
+            <label class="form-check-label" for="isTransitionHouse">
+              Is this Program location a transition house or safe home?
+            </label>
+          </div>
+          <!-- <p class="address-info-message">*Street address not required if program is located in a transition house or safe home</p> -->
         </div>
         <app-address2 [(address)]="programApplication.mainAddress"></app-address2>
 
         <h2 class="blue-header mt-4">Mailing Address</h2>
         <div class="form-check">
-          <input [(ngModel)]="programApplication.mailingAddressSameAsMainAddress" class="form-check-input" type="checkbox" id="mailingAddressSameAsMainAddress" name="mailingAddressSameAsMainAddress" (click)="setMailingAddressSameAsMainAddress()">
+          <input [(ngModel)]="programApplication.mailingAddressSameAsMainAddress" class="form-check-input" type="checkbox" id="mailingAddressSameAsMainAddress" name="mailingAddressSameAsMainAddress" (change)="setMailingAddressSameAsMainAddress()">
           <label class="form-check-label" for="mailingAddressSameAsMainAddress">
             Please select this check box if mailing address is the same as Primary Program Contact Address
           </label>

@@ -125,3 +125,21 @@
     </tr>
   </tbody>
 </table>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th colspan="2" scope="col" class="review-section-header">Subcontracted Staff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="!pa.subContractedStaff.length">
+      <th scope="row">Subcontracted Staff</th>
+      <td>No subcontracted staff declared on {{pa.name}}</td>
+    </tr>
+    <tr *ngFor="let person of pa.subContractedStaff;let i=index">
+      <th scope="row">Person {{i+1}}</th>
+      <td>{{person.firstName}} {{person.middleName}} {{person.lastName}}{{person.title?' - '+person.title:''}}</td>
+    </tr>
+  </tbody>
+</table>

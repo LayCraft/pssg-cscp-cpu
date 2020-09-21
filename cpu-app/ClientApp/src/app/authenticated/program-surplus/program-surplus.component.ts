@@ -7,7 +7,7 @@ import { ProgramSurplusService } from "../../core/services/program-surplus.servi
 import { StateService } from "../../core/services/state.service";
 import { TransmogrifierProgramSurplus } from "../../core/models/transmogrifier-program-surplus.class";
 import { iDynamicsPostSurplusPlan } from "../../core/models/dynamics-post";
-import { convertProgramSurplusToDynamics } from "../../core/models/converters/program-surplus-to-dynamics";
+import { convertProgramSurplusToDynamics, SurplusTypes } from "../../core/models/converters/program-surplus-to-dynamics";
 import { iSurplusItem } from "../../core/models/surplus-item.interface";
 
 @Component({
@@ -94,7 +94,7 @@ export class ProgramSurplusComponent implements OnInit {
                 return;
             }
             this.saving = true;
-            let data: iDynamicsPostSurplusPlan = convertProgramSurplusToDynamics(this.trans);
+            let data: iDynamicsPostSurplusPlan = convertProgramSurplusToDynamics(this.trans, SurplusTypes.Plan);
             console.log("attempting submit");
             console.log(data);
             this.programSurplusService.setProgramSurplus(data).subscribe(

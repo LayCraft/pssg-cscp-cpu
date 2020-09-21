@@ -11,6 +11,7 @@ import { convertPersonnelToDynamics } from '../../../core/models/converters/pers
 import { StateService } from '../../../core/services/state.service';
 import { PersonService } from '../../../core/services/person.service';
 import { Address } from '../../../core/models/address.class';
+import { iAddress } from '../../../core/models/address.interface';
 
 @Component({
     selector: 'add-person.dialog',
@@ -18,7 +19,7 @@ import { Address } from '../../../core/models/address.class';
     styleUrls: ['./add-person.dialog.scss']
 })
 export class AddPersonDialog {
-    programApplication: iProgramApplication;
+    agencyAddress: iAddress;
     person: iPerson;
 
     public nameAssemble = nameAssemble;
@@ -30,12 +31,12 @@ export class AddPersonDialog {
         private stateService: StateService,
         private personService: PersonService,
         private notificationQueueService: NotificationQueueService) {
-        this.programApplication = data.programApplication;
+        this.agencyAddress = data.agencyAddress;
         this.person = new Person();
     }
 
     setAddressSameAsAgency(person: iPerson) {
-        let addressCopy = _.cloneDeep(this.programApplication.mainAddress)
+        let addressCopy = _.cloneDeep(this.agencyAddress)
         person.address = addressCopy;
     }
     clearAddress(person: iPerson) {

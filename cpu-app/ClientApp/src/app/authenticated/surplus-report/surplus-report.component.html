@@ -46,7 +46,7 @@
                     </tr>
                     <tr>
                         <th scope="col">Program Delivery Expenditure</th>
-                        <th scope="col">AllocaAmount</th>
+                        <th scope="col">Allocated Amount</th>
                         <th scope="col" class="actual-expenditures-category quarter-expenditure-col">Q1</th>
                         <th scope="col" class="actual-expenditures-category quarter-expenditure-col">Q2</th>
                         <th scope="col" class="actual-expenditures-category quarter-expenditure-col">Q3</th>
@@ -59,19 +59,19 @@
                             {{line.expense_name}}
                         </td>
                         <td>
-                            <input [disabled]="isCompleted" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'allocated_amount'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.allocated_amount_mask" min="0">
+                            <input [disabled]="true" class="form-control is-disabled" (input)="formHelper.moneyMaskToNumber($event.target, line, 'allocated_amount'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.allocated_amount_mask" min="0">
                         </td>
-                        <td>
-                            <input [disabled]="isCompleted" class="form-control actual-expenditures-category" (input)="formHelper.moneyMaskToNumber($event.target, line, 'expenditures_q1'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.q1_mask" min="0">
+                        <td class="actual-expenditures-category">
+                            <input [disabled]="isCompleted" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'expenditures_q1'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.q1_mask" min="0">
                         </td>
-                        <td>
-                            <input [disabled]="isCompleted" class="form-control actual-expenditures-category" (input)="formHelper.moneyMaskToNumber($event.target, line, 'expenditures_q2'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.q2_mask" min="0">
+                        <td class="actual-expenditures-category">
+                            <input [disabled]="isCompleted" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'expenditures_q2'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.q2_mask" min="0">
                         </td>
-                        <td>
-                            <input [disabled]="isCompleted" class="form-control actual-expenditures-category" (input)="formHelper.moneyMaskToNumber($event.target, line, 'expenditures_q3'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.q3_mask" min="0">
+                        <td class="actual-expenditures-category">
+                            <input [disabled]="isCompleted" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'expenditures_q3'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.q3_mask" min="0">
                         </td>
-                        <td>
-                            <input [disabled]="isCompleted" class="form-control actual-expenditures-category" (input)="formHelper.moneyMaskToNumber($event.target, line, 'expenditures_q4'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.q4_mask" min="0">
+                        <td class="actual-expenditures-category">
+                            <input [disabled]="isCompleted" class="form-control" (input)="formHelper.moneyMaskToNumber($event.target, line, 'expenditures_q4'); calculateTotals()" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" [(ngModel)]="line.q4_mask" min="0">
                         </td>
                     </tr>
                     <tr>

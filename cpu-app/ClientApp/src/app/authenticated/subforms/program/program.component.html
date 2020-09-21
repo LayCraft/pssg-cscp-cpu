@@ -33,16 +33,22 @@
 
     <h2 class="blue-header">Primary Program Contact Information</h2>
     <app-primary-contact-info [isDisabled]="isDisabled" [(contactInformation)]="programApplication"></app-primary-contact-info>
-    <div>
-      <p class="address-info-message">*Street address not required if program is located in a transition house or safe home</p>
+    <div class="form-check">
+      <input [(ngModel)]="programApplication.isTransitionHouse" class="form-check-input" type="checkbox" id="isTransitionHouse" name="isTransitionHouse">
+      <label class="form-check-label" for="isTransitionHouse">
+        Is this Program location a transition house or safe home?
+      </label>
     </div>
+    <!-- <div>
+      <p class="address-info-message">*Street address not required if program is located in a transition house or safe home</p>
+    </div> -->
     <app-address2 [(address)]="programApplication.mainAddress" [isDisabled]="isDisabled"></app-address2>
 
 
 
     <h2 class="blue-header">Mailing Address</h2>
     <div class="form-check">
-      <input [disabled]="isDisabled" [(ngModel)]="programApplication.mailingAddressSameAsMainAddress" class="form-check-input" type="checkbox" id="mailingAddressSameAsMainAddress" name="mailingAddressSameAsMainAddress" (click)="setMailingAddressSameAsMainAddress()">
+      <input [disabled]="isDisabled" [(ngModel)]="programApplication.mailingAddressSameAsMainAddress" class="form-check-input" type="checkbox" id="mailingAddressSameAsMainAddress" name="mailingAddressSameAsMainAddress" (change)="setMailingAddressSameAsMainAddress()">
       <label class="form-check-label" for="mailingAddressSameAsMainAddress">
         Please select this check box if mailing address is the same as Primary Program Contact Address
       </label>
@@ -55,12 +61,12 @@
       </app-person-picker>
     </span>
     <h2 class="blue-header mt-2">Program Staff</h2>
-    <app-person-picker-list [isDisabled]="isDisabled" [label]="'Program Staff'" [(personsObj)]="personsObj" (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
+    <app-person-picker-list [isDisabled]="isDisabled" [label]="'Select Program Staff'" [(personsObj)]="personsObj" (personsChange)="onProgramStaffChange($event)"></app-person-picker-list>
     <button *ngIf="!isDisabled" class="btn btn-primary mt-2 btn-add-program-staff" (click)="showAddProgramStaffDialog()">Add Missing Program Staff or Sub-contractor</button>
 
     <h2 class="blue-header mt-2">Sub-contracted Staff</h2>
     <div class="form-check">
-      <input [disabled]="isDisabled" [(ngModel)]="programApplication.hasSubContractedStaff" class="form-check-input" type="checkbox" id="hasSubContractedStaff" name="hasSubContractedStaff">
+      <input [disabled]="isDisabled" [(ngModel)]="programApplication.hasSubContractedStaff" class="form-check-input" type="checkbox" id="hasSubContractedStaff" name="hasSubContractedStaff" (change)="hasSubContractedStaffChange()">
       <label class="form-check-label" for="hasSubContractedStaff">
         Select if this program employs sub-contractors
       </label>

@@ -74,7 +74,7 @@
           <tbody>
             <tr *ngFor="let task of contract.completedTasks">
               <td>
-                <ng-container *ngIf="userRole > Roles.ProgramStaff && (task.formType == 'program_application' || task.formType == 'expense_report'  || task.formType == 'budget_proposal')">
+                <ng-container *ngIf="task.status === 'Completed' && userRole > Roles.ProgramStaff && (task.formType == 'program_application' || task.formType == 'expense_report'  || task.formType == 'budget_proposal')">
                   <a routerLink="/authenticated/{{task.formType}}/{{task.taskId}}" [queryParams]="{completed: 'true'}">
                     {{task.taskName}} <span *ngIf="!task.taskId">(missing task id)</span>
                   </a>

@@ -2,6 +2,7 @@ using Gov.Cscp.Victims.Public.Models;
 using Gov.Cscp.Victims.Public.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Gov.Cscp.Victims.Public.Controllers
@@ -46,8 +47,10 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 }
 
                 string endpointUrl = "vsd_SetCPUOrgContracts";
+                JsonSerializerOptions options = new JsonSerializerOptions();
+                options.IgnoreNullValues = true;
                 // turn the model into a string
-                string modelString = System.Text.Json.JsonSerializer.Serialize(model);
+                string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
                 modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
                 DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
 

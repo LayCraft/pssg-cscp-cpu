@@ -325,8 +325,8 @@ export interface iDynamicsSurplusPlanLineItem {
   vsd_actualexpenditures2?: number;
   vsd_actualexpenditures3?: number;
   vsd_actualexpenditures4?: number;
-  vsd_proposedexpenditures: number;
-  vsd_allocatedamount: number;
+  vsd_proposedexpenditures?: number;
+  vsd_allocatedamount?: number;
   vsd_surpluslineitemid: string;
 }
 
