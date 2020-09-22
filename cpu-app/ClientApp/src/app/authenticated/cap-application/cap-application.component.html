@@ -43,12 +43,11 @@
                             <app-applicant-information [trans]="trans" [isCompleted]="isCompleted"></app-applicant-information>
                         </div>
                         <div *ngIf="item.discriminator === discriminators[2]">
-                            <p>cap programs</p>
-                            <!-- <span *ngFor="let program of trans.capPrograms">
+                            <span *ngFor="let program of trans.capPrograms">
                                 <span *ngIf="program.programId===item.object.data['programId']">
-                                    <app-program [(programApplication)]="program" [isDisabled]="isCompleted"></app-program>
+                                    <app-cap-program [(program)]="program" [isCompleted]="isCompleted"></app-cap-program>
                                 </span>
-                            </span> -->
+                            </span>
                         </div>
                         <div *ngIf="item.discriminator === discriminators[3]">
                             <app-program-authorizer [(signature)]="trans.signature" [isDisabled]="isCompleted" formType="Program Application"></app-program-authorizer>

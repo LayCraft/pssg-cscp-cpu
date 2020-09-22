@@ -62,6 +62,17 @@ export interface iDynamicsPostScheduleF { //maps to ProgramApplicationPost
   ScheduleCollection?: iDynamicsSchedulePost[];     //commented out on the controller side...
   StaffCollection?: iDynamicsProgramContactPost[];  //commented out on the controller side...
 }
+export interface iDynamicsPostScheduleFCAP { //maps to ProgramApplicationPost
+  BusinessBCeID: string;
+  UserBCeID: string;
+  AddProgramContactCollection?: iDynamicsProgramContactPost[];
+  ContactCollection?: iDynamicsCrmContactPost[];
+  ContractCollection?: iDynamicsCrmContractPost[];
+  Organization?: iDynamicsOrganizationPost;
+  ProgramCollection?: iDynamicsCrmProgramPost[];
+  RemoveProgramContactCollection?: iDynamicsRemoveProgramContactPost[];
+  StaffCollection?: iDynamicsProgramContactPost[];  //commented out on the controller side...
+}
 export interface iDynamicsPostBudgetProposal { //maps to BudgetProposalPost
   BusinessBCeID: string;
   UserBCeID: string;
@@ -301,6 +312,13 @@ export interface iDynamicsCrmProgramPost {
   vsd_provincestate?: string;
   vsd_totaloncallstandbyhours?: number;
   vsd_totalscheduledhours?: number;
+  vsd_cpu_fundingamountrequested?: number;
+  vsd_cpu_subtotalcomponentvalue?: number;
+  vsd_cpu_programmodeltypes?: string;
+  vsd_otherprogrammodels?: string;
+  vsd_cpu_programevaluationefforts?: number;
+  vsd_cpu_programevaluationdescription?: string;
+  vsd_cpu_capprogramoperationscomments?: string;
 }
 export interface iDynamicsSchedulePost {
   _vsd_programid_value?: string;

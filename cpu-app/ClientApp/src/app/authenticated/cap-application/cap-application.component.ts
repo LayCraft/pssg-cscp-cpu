@@ -12,6 +12,7 @@ import { CAPApplicationService } from '../../core/services/cap-application.servi
 import { TransmogrifierCAPApplication } from '../../core/models/transmogrifier-cap-application.class';
 import { CAPProgram } from '../../core/models/cap-program.class';
 import { iCAPProgram } from '../../core/models/cap-program.interface';
+import { convertCAPProgramToDynamics } from '../../core/models/converters/cap-program-to-dynamics';
 
 @Component({
     selector: 'app-cap-application',
@@ -160,36 +161,36 @@ export class CAPApplicationComponent implements OnInit {
     save(showNotification: boolean = true, shouldExit: boolean = false) {
         return new Promise((resolve, reject) => {
             try {
+                // resolve();
                 this.saving = true;
-                // console.log("saving...");
-                // console.log(_.cloneDeep(this.trans));
-                // this.out = convertProgramApplicationToDynamics(this.trans);
-                // this.programApplicationService.setProgramApplication(this.out).subscribe(
-                //     r => {
-                //         if (showNotification) {
-                //             this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
-                //         }
-                //         this.saving = false;
-                //         this.stepperElements.forEach(s => {
-                //             if (s.formState === 'complete') return;
+                console.log("saving...");
+                console.log(_.cloneDeep(this.trans));
+                this.capService.setCAPApplication(convertCAPProgramToDynamics(this.trans)).subscribe(
+                    r => {
+                        if (showNotification) {
+                            this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
+                        }
+                        this.saving = false;
+                        this.stepperElements.forEach(s => {
+                            if (s.formState === 'complete') return;
 
-                //             if (s.formState !== 'untouched') this.stepperService.setStepperElementProperty(s.id, "formState", "complete");
-                //             else this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
-                //         });
+                            if (s.formState !== 'untouched') this.stepperService.setStepperElementProperty(s.id, "formState", "complete");
+                            else this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+                        });
 
-                //         if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
+                        if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
 
-                //         this.formHelper.makeFormClean();
-                //         this.reloadProgramApplication();
-                //         resolve();
-                //     },
-                //     err => {
-                //         console.log(err);
-                //         this.notificationQueueService.addNotification('The cap application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
-                //         this.saving = false;
-                //         reject();
-                //     }
-                // );
+                        this.formHelper.makeFormClean();
+                        this.reloadProgramApplication();
+                        resolve();
+                    },
+                    err => {
+                        console.log(err);
+                        this.notificationQueueService.addNotification('The cap application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+                        this.saving = false;
+                        reject();
+                    }
+                );
             }
             catch (err) {
                 console.log(err);
@@ -215,26 +216,27 @@ export class CAPApplicationComponent implements OnInit {
     }
     submit() {
         try {
-            // if (!this.formHelper.isFormValid(this.notificationQueueService)) {
-            //     return;
-            // }
-            // this.saving = true;
-            // this.out = convertProgramApplicationToDynamics(this.trans);
-            // this.programApplicationService.setProgramApplication(this.out).subscribe(
-            //     r => {
-            //         // console.log(r);
+            if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+                return;
+            }
+            this.saving = true;
+            console.log("submitting...");
+            console.log(_.cloneDeep(this.trans));
+            this.capService.setCAPApplication(convertCAPProgramToDynamics(this.trans)).subscribe(
+                r => {
+                    // console.log(r);
 
-            //         this.notificationQueueService.addNotification(`You have successfully submitted the cap application.`, 'success');
-            //         this.saving = false;
-            //         this.stateService.refresh();
-            //         this.router.navigate(['/authenticated/dashboard']);
-            //     },
-            //     err => {
-            //         console.log(err);
-            //         this.notificationQueueService.addNotification('The cap application could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
-            //         this.saving = false;
-            //     }
-            // );
+                    this.notificationQueueService.addNotification(`You have successfully submitted the cap application.`, 'success');
+                    this.saving = false;
+                    this.stateService.refresh();
+                    this.router.navigate(['/authenticated/dashboard']);
+                },
+                err => {
+                    console.log(err);
+                    this.notificationQueueService.addNotification('The cap application could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
+                    this.saving = false;
+                }
+            );
         }
         catch (err) {
             console.log(err);

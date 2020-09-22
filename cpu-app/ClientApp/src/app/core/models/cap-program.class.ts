@@ -11,7 +11,8 @@ export class CAPProgram implements iCAPProgram {
     programLocation: string;
     maxAmount: number;
     applicationAmount: number;
-    typesOfModels: [];
+    typesOfModels: string;
+    otherModel: string;
     evaluation: boolean;
     evaluationDescription: string;
     additionalComments: string;
@@ -22,5 +23,38 @@ export class CAPProgram implements iCAPProgram {
 
     constructor(program?: iCAPProgram) {
         if (program) Object.assign(this, program);
+    }
+
+    private REQUIRED_FIELDS = ["applicationAmount",];
+    hasRequiredFields() {
+        for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
+            if (!this.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    getMissingFields() {
+        let ret = [];
+        for (let i = 0; i < this.REQUIRED_FIELDS.length; ++i) {
+            if (!this.fetchFromObject(this, this.REQUIRED_FIELDS[i])) {
+                ret.push(this.REQUIRED_FIELDS[i]);
+            }
+        }
+        return ret;
+    }
+
+    private fetchFromObject(obj, prop) {
+        if (typeof obj === 'undefined') {
+            return false;
+        }
+
+        var _index = prop.indexOf('.')
+        if (_index > -1) {
+            return this.fetchFromObject(obj[prop.substring(0, _index)], prop.substr(_index + 1));
+        }
+
+        return obj[prop];
     }
 }

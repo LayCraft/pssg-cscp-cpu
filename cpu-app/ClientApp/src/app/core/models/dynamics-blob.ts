@@ -125,6 +125,13 @@ export interface iDynamicsCrmProgram {
   vsd_provincestate?: string;
   vsd_totaloncallstandbyhours?: number;
   vsd_totalscheduledhours?: number;
+  vsd_cpu_fundingamountrequested?: number;
+  vsd_cpu_subtotalcomponentvalue?: number;
+  vsd_cpu_programmodeltypes?: string;
+  vsd_otherprogrammodels?: string;
+  vsd_cpu_programevaluationefforts?: number;
+  vsd_cpu_programevaluationdescription?: string;
+  vsd_cpu_capprogramoperationscomments?: string;
 }
 export interface iDynamicsCrmProgramType {
   vsd_programtypeid?: string;

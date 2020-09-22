@@ -46,7 +46,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SetCAPApplication([FromBody] ProgramApplicationPost model)
+        public async Task<IActionResult> SetCAPApplication([FromBody] CAPApplicationPost model)
         {
             try
             {

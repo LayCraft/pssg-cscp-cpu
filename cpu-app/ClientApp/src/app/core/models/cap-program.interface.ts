@@ -12,7 +12,8 @@ export interface iCAPProgram {
     programLocation: string;
     maxAmount: number;
     applicationAmount: number;
-    typesOfModels: string[];
+    typesOfModels: string;
+    otherModel: string;
     evaluation: boolean;
     evaluationDescription: string;
     additionalComments: string;

@@ -69,6 +69,7 @@ import { SurplusReportComponent } from './authenticated/surplus-report/surplus-r
 import { CAPApplicationComponent } from './authenticated/cap-application/cap-application.component';
 import { FundingCriteriaComponent } from './authenticated/subforms/funding-criteria/funding-criteria.component';
 import { ApplicantInformationComponent } from './authenticated/subforms/applicant-information/applicant-information.component';
+import { CAPProgramComponent } from './authenticated/subforms/cap-program/cap-program.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { ApplicantInformationComponent } from './authenticated/subforms/applican
     ApplicantInformationComponent,
     BudgetProposalComponent,
     CAPApplicationComponent,
+    CAPProgramComponent,
     CgLiabilityComponent,
     CompletedStatusReportComponent,
     ContactInformation2Component,

@@ -38,12 +38,13 @@ export class TransmogrifierCAPApplication {
         this.contractId = g.Contract.vsd_contractid;
         this.contractName = g.Contract.vsd_name;
         this.contractNumber = g.Contract.vsd_name;
+        this.applyingForInsurance = g.Contract.vsd_cpu_insuranceoptions === 100000001 ? true : g.Contract.vsd_cpu_insuranceoptions === 100000000 ? false : null;
+        this.insuranceProvider = ""; //TODO - get this field added in dynamics
         this.organizationId = g.Businessbceid;
         this.organizationName = g.Organization.name;
         this.userId = g.Userbceid;
         this.fiscalYear = "Calculate Fiscal Year";
         this.applicantInformation = this.buildApplicantInformation(g);
-        // this.contactInformation = this.buildContactInformation(g);
         this.capPrograms = this.buildPrograms(g);
         this.signature = this.buildSignature(g);
     }
@@ -130,25 +131,26 @@ export class TransmogrifierCAPApplication {
         return c;
     }
     private buildPrograms(g: iDynamicsScheduleFCAPResponse): iCAPProgram[] {
-        const applications: iCAPProgram[] = [];
+        const programs: iCAPProgram[] = [];
         for (let p of g.ProgramCollection) {
             let temp: iCAPProgram = {
                 contractId: p._vsd_contractid_value,
-                formState: 'untouched',// untouched	incomplete invalid complete info,
+                formState: 'untouched',
                 name: p.vsd_name,
                 programId: p.vsd_programid,
                 programContact: g.StaffCollection
                     .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
                     .map(s => this.makePerson(g, s.contactid))[0] || null,
-                maxAmount: 0,
-                applicationAmount: 0,
-                typesOfModels: ["test1", "test2"],
-                evaluation: false,
-                evaluationDescription: "",
-                additionalComments: "",
+                maxAmount: p.vsd_cpu_fundingamountrequested,
+                applicationAmount: p.vsd_cpu_subtotalcomponentvalue,
+                typesOfModels: p.vsd_cpu_programmodeltypes,
+                otherModel: p.vsd_otherprogrammodels, //TODO - get this added to API
+                evaluation: p.vsd_cpu_programevaluationefforts === 100000001 ? true : p.vsd_cpu_programevaluationefforts === 100000000 ? false : null,
+                evaluationDescription: p.vsd_cpu_programevaluationdescription,
+                additionalComments: p.vsd_cpu_capprogramoperationscomments,
                 additionalStaff: g.ProgramContactCollection
                     .filter((c: iDynamicsCrmContact) => c.vsd_programid === p.vsd_programid)
-                    .map(s => this.makePerson(g, s.contactid)) || null,// iPerson[];
+                    .map(s => this.makePerson(g, s.contactid)) || null,
                 removedStaff: [],
             } as iCAPProgram;
 
@@ -156,13 +158,11 @@ export class TransmogrifierCAPApplication {
             temp.programLocation = p.vsd_cpu_program_location;
             temp.programTypeName = programType.vsd_name || "";
 
-            // add to the collection of programs
-            applications.push(temp)
+            programs.push(temp)
         }
-        return applications;
+        return programs;
     }
     private makePerson(g: iDynamicsScheduleFCAPResponse, personId: string): iPerson {
-        // return whole person
         return g.StaffCollection
             .filter((p: iDynamicsCrmContact) => p.contactid === personId)
             .map((p: iDynamicsCrmContact): iPerson => {

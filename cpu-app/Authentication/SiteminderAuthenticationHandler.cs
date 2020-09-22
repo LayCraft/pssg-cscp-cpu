@@ -443,16 +443,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     var businessBceid = siteMinderBusinessGuid;
 
                     _logger.LogDebug("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
-
-                    // TODO: the Dynamics service should be hooked up to fetch the existin user information here.
-                    // DynamicsResult massiveGainsDoYouEvenLift = await _dynamicsResultService.GetResultAsync("some endpoint url", "{\"UserBCeID\":\"" + siteMinderGuid + "\",\"BusinessBCeID\":\"" + siteMinderBusinessGuid + "\"}");
-                    /*
-					From here on out what we have to do is to get the user information from Dynamics for this person
-					We determine if the person is an existing user that is valid and etc.
-					decide what to return if this is a new user. Probably redirect the user to a form in the front end to collect their information. We should know what their business is at minimum.
-					Set up the login and logout controllers to handle the things coming from siteminder.
-					If there are missing properties in the header that make this hard/impossible to look the user up we need siteminder configuration changes from WAM
-					*/
+                    
                     userSettings.AuthenticatedUser = new User(new Guid(siteMinderGuid), "Bill", "Octoroc", true, "BO", "octoroc@foo.gov", siteMinderGuid, siteMinderBusinessGuid, siteMinderUserType, null);
                     userSettings.UserAuthenticated = true;
 

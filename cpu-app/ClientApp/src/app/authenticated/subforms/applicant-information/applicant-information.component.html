@@ -49,7 +49,7 @@
             </div>
         </div>
         <div *ngIf="trans.applyingForInsurance === false" class="form-group">
-            <label for="staffUnion">Insurance Provider?</label>
+            <label for="insuranceProvider">Insurance Provider?</label>
             <input [disabled]="isCompleted" #insuranceProvider="ngModel" [(ngModel)]="trans.insuranceProvider" type="text" class="form-control" id="insuranceProvider" name="insuranceProvider">
             <div class="valid-feedback" [hidden]="formHelper.showValidFeedback(insuranceProvider)" style="display: inherit">
                 Ok
