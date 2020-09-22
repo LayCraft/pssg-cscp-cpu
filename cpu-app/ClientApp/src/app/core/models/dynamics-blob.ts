@@ -182,6 +182,11 @@ export interface iDynamicsPortalRole {
   vsd_portalroleid: string;
 }
 
+export interface iDynamicsProgramManagerLookup {
+  systemuserid: string;
+  ownerid: string;
+}
+
 export interface iDynamicsCrmInvoice {
   fortunecookietype?: string;
   fortunecookieetag?: string;
@@ -291,6 +296,22 @@ export interface iDynamicsScheduleFResponse {
   Result: string;
   ScheduleCollection?: iDynamicsSchedule[];
   ServiceAreaCollection?: iDynamicsServiceArea[];
+  StaffCollection?: iDynamicsCrmContact[];
+  Userbceid?: string;
+}
+export interface iDynamicsScheduleFCAPResponse {
+  BoardContact?: iDynamicsCrmContact;
+  Businessbceid: string;
+  Contract?: iDynamicsCrmContract;
+  ExecutiveContact?: iDynamicsCrmContact;
+  IsSuccess?: boolean;
+  Organization?: iDynamicsOrganization;
+  PortalRoles?: iDynamicsPortalRole[];
+  ProgramCollection?: iDynamicsCrmProgram[];
+  ProgramContactCollection?: iDynamicsCrmContact[];
+  ProgramManager?: iDynamicsProgramManagerLookup;
+  ProgramTypeCollection?: iDynamicsCrmProgramType[];
+  Result: string;
   StaffCollection?: iDynamicsCrmContact[];
   Userbceid?: string;
 }
