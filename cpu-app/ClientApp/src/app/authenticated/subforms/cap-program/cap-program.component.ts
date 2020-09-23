@@ -116,5 +116,8 @@ export class CAPProgramComponent implements OnInit, OnDestroy {
     selectedModelChange() {
         let selectedOptions = this.MODEL_LIST.filter(a => a.isChecked);
         this.program.typesOfModels = selectedOptions.map(a => a.val).toString();
+        if (!this.MODEL_LIST[6].isChecked) {
+            this.program.otherModel = "";
+        }
     }
 }

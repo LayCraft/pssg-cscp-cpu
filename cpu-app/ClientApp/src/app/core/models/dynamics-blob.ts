@@ -101,6 +101,7 @@ export interface iDynamicsCrmProgram {
   statuscode?: number;
   vsd_addressline1?: string;
   vsd_addressline2?: string;
+  vsd_addresstransitionorsafehome?: boolean;
   vsd_city?: string;
   vsd_costshare?: boolean;
   vsd_country?: string;

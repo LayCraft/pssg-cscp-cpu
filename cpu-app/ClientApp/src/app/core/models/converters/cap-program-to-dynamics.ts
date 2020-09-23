@@ -18,7 +18,6 @@ export function convertCAPProgramToDynamics(trans: TransmogrifierCAPApplication)
             vsd_signingofficersname: trans.signature.signer ? nameAssemble(trans.signature.signer.firstName, trans.signature.signer.middleName, trans.signature.signer.lastName) : null,
             vsd_signingofficertitle: trans.signature.signer ? trans.signature.signer.title : null,
             vsd_cpu_insuranceoptions: trans.applyingForInsurance ? 100000001 : 100000000,
-            //TODO - add provider text box
         }],
         Organization: {
             accountid: trans.accountId,
