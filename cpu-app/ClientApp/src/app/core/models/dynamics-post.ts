@@ -319,6 +319,7 @@ export interface iDynamicsCrmProgramPost {
   vsd_cpu_programevaluationefforts?: number;
   vsd_cpu_programevaluationdescription?: string;
   vsd_cpu_capprogramoperationscomments?: string;
+  vsd_addresstransitionorsafehome?: boolean;
 }
 export interface iDynamicsSchedulePost {
   _vsd_programid_value?: string;

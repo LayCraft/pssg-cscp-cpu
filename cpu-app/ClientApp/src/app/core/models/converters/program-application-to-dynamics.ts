@@ -140,6 +140,7 @@ export function convertProgramApplicationToDynamics(trans: TransmogrifierProgram
       vsd_provincestate: p.mainAddress.province,
       vsd_totaloncallstandbyhours: p.onCallHours,
       vsd_totalscheduledhours: p.scheduledHours,
+      vsd_addresstransitionorsafehome: p.isTransitionHouse,
     });
     // if there are elements in the array add the item.
     if (programCollection.length) post.ProgramCollection = programCollection;

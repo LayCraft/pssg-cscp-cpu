@@ -4,6 +4,7 @@ import { nameAssemble } from "../../constants/name-assemble";
 import * as _ from "lodash";
 import { TransmogrifierCAPApplication } from "../transmogrifier-cap-application.class";
 import { iCAPProgram } from "../cap-program.interface";
+import { boolOptionSet } from "../../constants/bool-optionset-values";
 
 export function convertCAPProgramToDynamics(trans: TransmogrifierCAPApplication): iDynamicsPostScheduleFCAP {
     const post: iDynamicsPostScheduleFCAP = {
@@ -62,7 +63,7 @@ export function convertCAPProgramToDynamics(trans: TransmogrifierCAPApplication)
             vsd_cpu_subtotalcomponentvalue: parseFloat(program.applicationAmount.toString()),
             vsd_cpu_programmodeltypes: program.typesOfModels,
             vsd_otherprogrammodels: program.otherModel,
-            vsd_cpu_programevaluationefforts: program.evaluation ? 100000001 : 100000000,
+            vsd_cpu_programevaluationefforts: program.evaluation ? boolOptionSet.isTrue : boolOptionSet.isFalse,
             vsd_cpu_programevaluationdescription: program.evaluationDescription,
             vsd_cpu_capprogramoperationscomments: program.additionalComments,
         });
