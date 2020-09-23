@@ -13,6 +13,8 @@ import { TransmogrifierCAPApplication } from '../../core/models/transmogrifier-c
 import { CAPProgram } from '../../core/models/cap-program.class';
 import { iCAPProgram } from '../../core/models/cap-program.interface';
 import { convertCAPProgramToDynamics } from '../../core/models/converters/cap-program-to-dynamics';
+import { CAPGuidelinesDialog } from '../dialogs/cap-guidelines/cap-guidelines.dialog';
+import { ProgramEgilibilityDialog } from '../dialogs/program-egilibility/program-egilibility.dialog';
 
 @Component({
     selector: 'app-cap-application',
@@ -331,5 +333,12 @@ export class CAPApplicationComponent implements OnInit {
                 this.stateService.refresh();
             }
         });
+    }
+
+    showCAPGuidelines() {
+        this.dialog.open(CAPGuidelinesDialog);
+    }
+    showProgramEligibility() {
+        this.dialog.open(ProgramEgilibilityDialog);
     }
 }

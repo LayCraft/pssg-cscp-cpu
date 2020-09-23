@@ -70,6 +70,8 @@ import { CAPApplicationComponent } from './authenticated/cap-application/cap-app
 import { FundingCriteriaComponent } from './authenticated/subforms/funding-criteria/funding-criteria.component';
 import { ApplicantInformationComponent } from './authenticated/subforms/applicant-information/applicant-information.component';
 import { CAPProgramComponent } from './authenticated/subforms/cap-program/cap-program.component';
+import { CAPGuidelinesDialog } from './authenticated/dialogs/cap-guidelines/cap-guidelines.dialog';
+import { ProgramEgilibilityDialog } from './authenticated/dialogs/program-egilibility/program-egilibility.dialog';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,7 @@ import { CAPProgramComponent } from './authenticated/subforms/cap-program/cap-pr
     ApplicantInformationComponent,
     BudgetProposalComponent,
     CAPApplicationComponent,
+    CAPGuidelinesDialog,
     CAPProgramComponent,
     CgLiabilityComponent,
     CompletedStatusReportComponent,
@@ -118,6 +121,7 @@ import { CAPProgramComponent } from './authenticated/subforms/cap-program/cap-pr
     ProgramComponent,
     ProgramContactComponent,
     ProgramContactInformationComponent,
+    ProgramEgilibilityDialog,
     ProgramSummaryTableComponent,
     ProgramSurplusComponent,
     RevenueSourceTableComponent,
@@ -133,18 +137,20 @@ import { CAPProgramComponent } from './authenticated/subforms/cap-program/cap-pr
     UppercaseDirective,
   ],
   entryComponents: [
+    AddPersonDialog,
     AppendixADialog,
-    AddPersonDialog
+    CAPGuidelinesDialog,
+    ProgramEgilibilityDialog,
   ],
   imports: [
-    MatDialogModule,
-    MatToolbarModule,
-    MatTooltipModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatTooltipModule,
     ReactiveFormsModule,
     RouterModule,
     SharedModule,
@@ -154,8 +160,8 @@ import { CAPProgramComponent } from './authenticated/subforms/cap-program/cap-pr
   ],
   exports: [
     MatToolbarModule,
+    MatTooltipModule,
     TooltipModule,
-    MatTooltipModule
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
