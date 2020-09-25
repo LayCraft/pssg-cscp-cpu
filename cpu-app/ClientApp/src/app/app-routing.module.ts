@@ -23,6 +23,7 @@ import { SignContractComponent } from './authenticated/sign-contract/sign-contra
 import { CompletedStatusReportComponent } from './authenticated/status-report/completed-status-report.component';
 import { ProgramSurplusComponent } from './authenticated/program-surplus/program-surplus.component';
 import { SurplusReportComponent } from './authenticated/surplus-report/surplus-report.component';
+import { CAPApplicationComponent } from './authenticated/cap-application/cap-application.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
       {
         path: 'program_application/:taskId',
         component: ProgramApplicationComponent
+      },
+      {
+        path: 'cap_program_application/:taskId',
+        component: CAPApplicationComponent
       },
       {
         path: 'program_surplus/:surplusId',

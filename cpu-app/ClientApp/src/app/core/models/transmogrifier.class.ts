@@ -120,16 +120,16 @@ export class Transmogrifier {
   private getCorrectTaskIdByDiscriminator(contractId: string, programId: string, t: iDynamicsCrmTask, discriminator: string): string {
     // sometimes we look up by a scheduleG ID, sometimes by a contractId, sometimes by a programId. :-(
     if (discriminator === 'budget_proposal') {
-      return contractId;//works
+      return contractId;
     }
     if (discriminator === 'expense_report') {
-      return t._vsd_schedulegid_value;//works
+      return t._vsd_schedulegid_value;
     }
     if (discriminator === 'status_report' || discriminator === 'sign_contract') {
       return t.activityid;
     }
-    if (discriminator === 'program_application') {
-      return contractId;//works
+    if (discriminator === 'program_application' || discriminator === 'cap_program_application') {
+      return contractId;
     }
     if (discriminator === 'download_document') {
       return contractId;

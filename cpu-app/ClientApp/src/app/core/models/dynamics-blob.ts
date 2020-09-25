@@ -101,6 +101,7 @@ export interface iDynamicsCrmProgram {
   statuscode?: number;
   vsd_addressline1?: string;
   vsd_addressline2?: string;
+  vsd_addresstransitionorsafehome?: boolean;
   vsd_city?: string;
   vsd_costshare?: boolean;
   vsd_country?: string;
@@ -125,6 +126,13 @@ export interface iDynamicsCrmProgram {
   vsd_provincestate?: string;
   vsd_totaloncallstandbyhours?: number;
   vsd_totalscheduledhours?: number;
+  vsd_cpu_fundingamountrequested?: number;
+  vsd_cpu_subtotalcomponentvalue?: number;
+  vsd_cpu_programmodeltypes?: string;
+  vsd_otherprogrammodels?: string;
+  vsd_cpu_programevaluationefforts?: number;
+  vsd_cpu_programevaluationdescription?: string;
+  vsd_cpu_capprogramoperationscomments?: string;
 }
 export interface iDynamicsCrmProgramType {
   vsd_programtypeid?: string;
@@ -180,6 +188,11 @@ export interface iDynamicsBlob {
 export interface iDynamicsPortalRole {
   vsd_name: string;
   vsd_portalroleid: string;
+}
+
+export interface iDynamicsProgramManagerLookup {
+  systemuserid: string;
+  ownerid: string;
 }
 
 export interface iDynamicsCrmInvoice {
@@ -291,6 +304,22 @@ export interface iDynamicsScheduleFResponse {
   Result: string;
   ScheduleCollection?: iDynamicsSchedule[];
   ServiceAreaCollection?: iDynamicsServiceArea[];
+  StaffCollection?: iDynamicsCrmContact[];
+  Userbceid?: string;
+}
+export interface iDynamicsScheduleFCAPResponse {
+  BoardContact?: iDynamicsCrmContact;
+  Businessbceid: string;
+  Contract?: iDynamicsCrmContract;
+  ExecutiveContact?: iDynamicsCrmContact;
+  IsSuccess?: boolean;
+  Organization?: iDynamicsOrganization;
+  PortalRoles?: iDynamicsPortalRole[];
+  ProgramCollection?: iDynamicsCrmProgram[];
+  ProgramContactCollection?: iDynamicsCrmContact[];
+  ProgramManager?: iDynamicsProgramManagerLookup;
+  ProgramTypeCollection?: iDynamicsCrmProgramType[];
+  Result: string;
   StaffCollection?: iDynamicsCrmContact[];
   Userbceid?: string;
 }

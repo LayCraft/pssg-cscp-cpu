@@ -7,14 +7,5 @@ export const formTypeDict = {
   '6da1d7cb-bb9a-ea11-b818-00505683fbf4': ['sign_contract', 'Sign Contract'],
   '50eeb9ba-e8f5-e911-b811-00505683fbf4': ['program_surplus', 'Program Surplus'],
   '4e1831c6-d4dc-ea11-b81c-00505683fbf4': ['surplus_report', 'Surplus Expenditure Report'],
+  'c8326a9a-f1f9-ea11-b81d-00505683fbf4': ['cap_program_application', 'CAP Contract Application'],
 }
-
-// '3e9826e5-e8f5-e911-b811-00505683fbf4': ['3e9826e5-e8f5-e911-b811-00505683fbf4', 'Financial Statement'],
-// '315b18c9-e8f5-e911-b811-00505683fbf4': ['315b18c9-e8f5-e911-b811-00505683fbf4', 'Modification Agreement'],
-// '50eeb9ba-e8f5-e911-b811-00505683fbf4': ['50eeb9ba-e8f5-e911-b811-00505683fbf4', 'Program Surplus'],
-
-//'90cbc7d7-e8f5-e911-b811-00505683fbf4': ['90cbc7d7-e8f5-e911-b811-00505683fbf4', 'AGM Reports/Annual Report'],
-//'e023659f-e8f5-e911-b811-00505683fbf4': ['sign_contract', 'Sign contract'],
-// 'b13ae814-1e33-ea11-b814-00505683fbf4': ['cover_letter', 'Estimated Budget Cover Letter'],
-// '4f044044-1e33-ea11-b814-00505683fbf4': ['cover_letter', 'Approved Budget Cover Letter'],
-// '8fa3b7ae-e8f5-e911-b811-00505683fbf4': ['profile', 'Update Contact Information'],

@@ -55,11 +55,13 @@ export class ProgramApplication implements iProgramApplication {
         "mailingAddress", "mailingAddress.line1", "mailingAddress.city", "mailingAddress.postalCode"];
     private REQUIRED_FIELDS_TRANSITION_HOUSE: string[] = ["emailAddress", "phoneNumber", "mailingAddress", "mailingAddress.line1", "mailingAddress.city",
         "mailingAddress.postalCode"];
+    private REQUIRED_FIELDS_TRANSITION_HOUSE_AND_SAME_MAILING_ADDRESS: string[] = ["emailAddress", "phoneNumber"];
 
     hasRequiredFields() {
         let req_fields = this.REQUIRED_FIELDS;
         if (this.isTransitionHouse) {
             req_fields = this.REQUIRED_FIELDS_TRANSITION_HOUSE;
+            if (this.mailingAddressSameAsMainAddress) req_fields = this.REQUIRED_FIELDS_TRANSITION_HOUSE_AND_SAME_MAILING_ADDRESS;
         }
         for (let i = 0; i < req_fields.length; ++i) {
             if (!this.formHelper.fetchFromObject(this, req_fields[i])) {
@@ -93,6 +95,7 @@ export class ProgramApplication implements iProgramApplication {
         let req_fields = this.REQUIRED_FIELDS;
         if (this.isTransitionHouse) {
             req_fields = this.REQUIRED_FIELDS_TRANSITION_HOUSE;
+            if (this.mailingAddressSameAsMainAddress) req_fields = this.REQUIRED_FIELDS_TRANSITION_HOUSE_AND_SAME_MAILING_ADDRESS;
         }
         let ret = [];
         for (let i = 0; i < req_fields.length; ++i) {

@@ -31,6 +31,8 @@ namespace Gov.Cscp.Victims.Public.Models
         public string vsd_postalcodezip { get; set; }
         public string vsd_programid { get; set; }
         public string vsd_provincestate { get; set; }
+        public bool vsd_addresstransitionorsafehome { get; set; }
+
         //program contact
         private string _vsd_ContactLookupfortunecookiebind;
         public string vsd_ContactLookupfortunecookiebind

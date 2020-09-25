@@ -169,13 +169,13 @@ export class TransmogrifierProgramApplication {
         contractId: p._vsd_contractid_value,
         emailAddress: p.vsd_emailaddress || g.Organization.emailaddress1 || null, // fallback to organization email address
         faxNumber: p.vsd_fax,
-        formState: 'untouched',// untouched	incomplete invalid complete info,
+        formState: 'untouched',
         name: p.vsd_name,
         phoneNumber: p.vsd_phonenumber,
         programId: p.vsd_programid,
         governmentFunder: p.vsd_governmentfunderagency,
         estimatedContractValue: p.vsd_cpu_estimatedsubtotalcomponentvalue,
-        // serviceArea: g.RegionDistrictCollection.filter(x => p._vsd_cpu_regiondistrictlookup2_value === x.vsd_regiondistrictid).map(a => a.vsd_name)[0] || 'Unknown', //p._vsd_cpu_regiondistrictlookup2_value,
+        isTransitionHouse: p.vsd_addresstransitionorsafehome,
         mainAddress: {
           line1: p.vsd_addressline1 || null,
           line2: p.vsd_addressline2 || null,
