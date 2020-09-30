@@ -149,7 +149,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     }
     // this.documentCollection = [];
     this.loadingDocuments = true;
-    this.fileService.download(this.trans.organizationId, this.trans.userId, contractId).subscribe(
+    this.fileService.getContractDocuments(this.trans.organizationId, this.trans.userId, contractId).subscribe(
       (d: iDynamicsFile) => {
         this.didLoadDocuments = true;
         this.loadingDocuments = false;
@@ -159,8 +159,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
           alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
           // console.log('Dynamics has returned: ', d);
         } else {
-          this.documentCollection = d.DocumentCollection;
-          this.documentCollection = this.documentCollection.filter(d => d.filename.indexOf(".pdf") > 0);
+          this.documentCollection = d.DocumentCollection.filter(d => d.filename.indexOf(".pdf") > 0);;
         }
       });
   }

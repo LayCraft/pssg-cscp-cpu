@@ -4,11 +4,12 @@ import { NotificationQueueService } from '../../core/services/notification-queue
 import { Router, ActivatedRoute } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { iDynamicsFile, iDynamicsDocument } from '../../core/models/dynamics-blob';
-import { iDynamicsPostFile, iDynamicsDocumentPost } from '../../core/models/dynamics-post';
-import { iStepperElement, IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
+import { iDynamicsPostFile } from '../../core/models/dynamics-post';
+import { IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { FormHelper } from '../../core/form-helper';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 
 interface FileBundle {
   // list of file names (same order as file array)
@@ -22,13 +23,15 @@ interface FileBundle {
   styleUrls: ['./upload-document.component.scss']
 })
 export class UploadDocumentComponent implements OnInit, OnDestroy {
-
   // collect the element reference from the child so that we can access native parts of the files element
   @ViewChild('files')
   myInputVariable: ElementRef;
 
   // is this uploading/saving
   saving: boolean = false;
+  loadingDocuments: boolean = false;
+  didLoadDocuments: boolean = false;
+  existingDocuments: iDynamicsDocument[] = [];
 
   documentCollection: iDynamicsDocument[] = [];
   documentsToAdd: iDynamicsDocument[] = [];
@@ -84,6 +87,11 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
         this.document_types = this.CONTRACT_DOCUMENT_TYPES;
         this.isContractUpload = true;
         this.contractNumber = this.trans.contracts.find(c => c.contractId == this.contractId).contractNumber;
+
+        this.getContractDocuments();
+      }
+      else {
+        this.getAccountDocuments();
       }
     });
 
@@ -124,6 +132,10 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     if (this.isContractUpload) {
       this.fileService.uploadContractDocuments(file, record_id).subscribe((d) => {
         this.saving = false;
+        this.documentsToAdd.forEach(doc => {
+          doc.overwritetime = new Date().toISOString();
+        });
+        this.existingDocuments = this.existingDocuments.concat(this.documentsToAdd);
         this.documentsToAdd = [];
         this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
         // console.log('Uploaded', d);
@@ -132,6 +144,10 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     else {
       this.fileService.uploadAccountDocuments(file, record_id).subscribe((d) => {
         this.saving = false;
+        this.documentsToAdd.forEach(doc => {
+          doc.overwritetime = new Date().toISOString();
+        });
+        this.existingDocuments = this.existingDocuments.concat(this.documentsToAdd);
         this.documentsToAdd = [];
         this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
         // console.log('Uploaded', d);
@@ -193,7 +209,7 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   }
 
   download() {
-    this.fileService.download(this.organizationId, this.userId, this.contractId)
+    this.fileService.getContractDocuments(this.organizationId, this.userId, this.contractId)
       .subscribe(
         (d: iDynamicsFile) => {
           // console.log(d);
@@ -233,5 +249,24 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     else if (bytes > 1) { fileSize = bytes + " bytes"; }
     else if (bytes == 1) { fileSize = bytes + " byte"; }
     return fileSize;
+  }
+
+  getContractDocuments() {
+    this.loadingDocuments = true;
+    this.fileService.getContractDocuments(this.organizationId, this.userId, this.contractId).subscribe(
+      (d: iDynamicsFile) => {
+        this.loadingDocuments = false;
+        this.didLoadDocuments = true;
+        if (d['error'] && d['error']['code']) {
+          // something has gone wrong. Show the developer the error
+          alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
+          // console.log('Dynamics has returned: ', d);
+        } else {
+          this.existingDocuments = d.DocumentCollection.filter(d => d.filename.indexOf(".pdf") > 0);
+        }
+      });
+  }
+  getAccountDocuments() {
+
   }
 }

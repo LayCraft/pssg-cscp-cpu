@@ -52,8 +52,43 @@
           <button class="btn btn-warning ml-2" [class.is-disabled]="documentsToAdd.length == 0 || saving" (click)="upload()">Upload Files</button>
         </div>
       </div>
+
+      <div class="row existing-documents-row" *ngIf="isContractUpload">
+        <div class="col-md-12">
+          <h4>Existing Documents</h4>
+          <ng-container *ngIf="loadingDocuments">
+            Loading... <i class="text-secondary spinner-border spinner-border-sm"></i>
+          </ng-container>
+
+          <ng-container *ngIf="didLoadDocuments && existingDocuments.length > 0">
+            <div class="row">
+              <div class="col">
+                Your Document
+              </div>
+              <div class="col">
+                Available Date
+              </div>
+            </div>
+            <div *ngFor="let doc of existingDocuments" class="row">
+              <div class="col">
+                {{doc.filename}}
+              </div>
+              <div class="col">
+                {{doc.overwritetime | date:'yyyy-MM-dd'}}
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="didLoadDocuments && existingDocuments.length === 0">
+            No documents
+          </ng-container>
+        </div>
+      </div>
+
     </div>
   </div>
+
+
 
   <div class="row min-row-height">
     <div class="col-md-12">

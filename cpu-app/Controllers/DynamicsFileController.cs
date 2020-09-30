@@ -31,7 +31,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
         }
 
         [HttpGet("{businessBceid}/{userBceid}/{contractId}")]
-        public async Task<IActionResult> GetFile(string userBceid, string businessBceid, string contractId)
+        public async Task<IActionResult> GetContractDocuments(string userBceid, string businessBceid, string contractId)
         {
             try
             {
