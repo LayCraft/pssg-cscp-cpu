@@ -43,7 +43,7 @@ export class TransmogrifierCAPApplication {
         this.organizationId = g.Businessbceid;
         this.organizationName = g.Organization.name;
         this.userId = g.Userbceid;
-        this.fiscalYear = "Calculate Fiscal Year";
+        this.fiscalYear = "";
         this.applicantInformation = this.buildApplicantInformation(g);
         this.capPrograms = this.buildPrograms(g);
         this.signature = this.buildSignature(g);
@@ -142,7 +142,9 @@ export class TransmogrifierCAPApplication {
                     .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
                     .map(s => this.makePerson(g, s.contactid))[0] || null,
                 maxAmount: p.vsd_cpu_fundingamountrequested,
+                maxAmountMask: p.vsd_cpu_fundingamountrequested ? p.vsd_cpu_fundingamountrequested.toString() : "",
                 applicationAmount: p.vsd_cpu_subtotalcomponentvalue,
+                applicationAmountMask: p.vsd_cpu_subtotalcomponentvalue ? p.vsd_cpu_subtotalcomponentvalue.toString() : "",
                 typesOfModels: p.vsd_cpu_programmodeltypes,
                 otherModel: p.vsd_otherprogrammodels, //TODO - get this added to API
                 evaluation: p.vsd_cpu_programevaluationefforts === 100000001 ? true : p.vsd_cpu_programevaluationefforts === 100000000 ? false : null,

@@ -10,7 +10,9 @@ export class CAPProgram implements iCAPProgram {
     programId: string;
     programLocation: string;
     maxAmount: number;
+    maxAmountMask: string;
     applicationAmount: number;
+    applicationAmountMask: string;
     typesOfModels: string;
     otherModel: string;
     evaluation: boolean;
