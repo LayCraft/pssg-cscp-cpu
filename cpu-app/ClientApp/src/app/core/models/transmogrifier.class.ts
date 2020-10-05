@@ -234,7 +234,7 @@ export class Transmogrifier {
       email: b.MinistryUser.internalemailaddress,
       phone: b.MinistryUser.address1_telephone1,
     };
-    mc.phone = mc.phone.replace(/[\s()-]/g, '');
+    mc.phone = mc.phone ? mc.phone.replace(/[\s()-]/g, '') : '';
     return mc;
   }
   private buildContactInformation(b: iDynamicsBlob): iContactInformation {

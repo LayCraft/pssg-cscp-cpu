@@ -5,18 +5,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { iDynamicsFile, iDynamicsDocument } from '../../core/models/dynamics-blob';
 import { iDynamicsPostFile } from '../../core/models/dynamics-post';
-import { IconStepperService } from '../../shared/icon-stepper/icon-stepper.service';
 import { FormHelper } from '../../core/form-helper';
 import { Transmogrifier } from '../../core/models/transmogrifier.class';
 import { Subscription } from 'rxjs';
-import * as moment from 'moment';
 
-interface FileBundle {
-  // list of file names (same order as file array)
-  fileName: string[];
-  // base64 encoded file turned into a string
-  fileData: string[];
-}
+
 @Component({
   selector: 'app-upload-document',
   templateUrl: './upload-document.component.html',
@@ -59,7 +52,6 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   private formHelper = new FormHelper();
   constructor(
     private fileService: FileService,
-    private stepperService: IconStepperService,
     private router: Router,
     private stateService: StateService,
     private notificationQueueService: NotificationQueueService,
@@ -88,9 +80,11 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
         this.isContractUpload = true;
         this.contractNumber = this.trans.contracts.find(c => c.contractId == this.contractId).contractNumber;
 
+        console.log("getContractDocuments");
         this.getContractDocuments();
       }
       else {
+        console.log("getAccountDocuments");
         this.getAccountDocuments();
       }
     });
@@ -267,6 +261,18 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
       });
   }
   getAccountDocuments() {
-
+    this.loadingDocuments = true;
+    this.fileService.getAccountDocuments(this.organizationId, this.userId, this.trans.accountId).subscribe(
+      (d: iDynamicsFile) => {
+        this.loadingDocuments = false;
+        this.didLoadDocuments = true;
+        if (d['error'] && d['error']['code']) {
+          // something has gone wrong. Show the developer the error
+          alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
+          // console.log('Dynamics has returned: ', d);
+        } else {
+          this.existingDocuments = d.DocumentCollection.filter(d => d.filename.indexOf(".pdf") > 0);
+        }
+      });
   }
 }

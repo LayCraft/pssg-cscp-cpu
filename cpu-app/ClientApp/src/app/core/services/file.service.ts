@@ -24,17 +24,17 @@ export class FileService {
     );
   }
   getContractDocuments(organizationId: string, userId: string, contractId: string): Observable<iDynamicsFile> {
-    return this.http.get<iDynamicsFile>(`${this.apiUrl}/${organizationId}/${userId}/${contractId}`, { headers: this.headers }).pipe(
+    return this.http.get<iDynamicsFile>(`${this.apiUrl}/${organizationId}/${userId}/documents/contract/${contractId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
-  // getAccountDocuments(organizationId: string, userId: string, contractId: string): Observable<iDynamicsFile> {
-  //   return this.http.get<iDynamicsFile>(`${this.apiUrl}/${organizationId}/${userId}/${contractId}`, { headers: this.headers }).pipe(
-  //     retry(3),
-  //     catchError(this.handleError)
-  //   );
-  // }
+  getAccountDocuments(organizationId: string, userId: string, accountId: string): Observable<iDynamicsFile> {
+    return this.http.get<iDynamicsFile>(`${this.apiUrl}/${organizationId}/${userId}/documents/account/${accountId}`, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
   uploadSignedContract(signedContract: iDynamicsPostSignedContract, taskId: string): Observable<any> {
     // may need to add the contract id into this postback
     return this.http.post<any>(`${this.apiUrl}/signed_contract/${taskId}`, signedContract, { headers: this.headers }).pipe(
