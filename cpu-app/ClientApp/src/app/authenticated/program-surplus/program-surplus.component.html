@@ -86,7 +86,7 @@
         <div class="col-md-4"></div>
         <div class="col">
             <button class="btn btn-primary ml-2" [class.is-disabled]="saving" (click)="exit()">Exit</button>
-            <button (click)="submit()" [class.is-disabled]="saving" class="btn btn-primary submit-button">Submit Surplus Plan</button>
+            <button (click)="submit()" *ngIf="!isCompleted" [class.is-disabled]="saving" class="btn btn-primary submit-button">Submit Surplus Plan</button>
         </div>
     </div>
 </div>
