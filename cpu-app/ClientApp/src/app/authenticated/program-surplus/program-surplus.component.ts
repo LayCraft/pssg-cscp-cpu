@@ -88,13 +88,47 @@ export class ProgramSurplusComponent implements OnInit {
         });
     }
 
-    submit() {
+    save(shouldExit: boolean = false) {
         try {
             if (!this.formHelper.isFormValid(this.notificationQueueService)) {
                 return;
             }
             this.saving = true;
             let data: iDynamicsPostSurplusPlan = convertProgramSurplusToDynamics(this.trans, SurplusTypes.Plan);
+            console.log("attempting submit");
+            console.log(data);
+            this.programSurplusService.setProgramSurplus(data).subscribe(
+                r => {
+                    console.log(r);
+
+                    this.notificationQueueService.addNotification(`You have successfully submitted the surplus plan.`, 'success');
+                    this.saving = false;
+                    this.stateService.refresh();
+                    if (shouldExit) {
+                        this.router.navigate(['/authenticated/dashboard']);
+                    }
+                },
+                err => {
+                    console.log(err);
+                    this.notificationQueueService.addNotification('The surplus plan could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
+                    this.saving = false;
+                }
+            );
+        }
+        catch (err) {
+            console.log(err);
+            this.notificationQueueService.addNotification('The surplus plan could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+            this.saving = false;
+        }
+    }
+
+    submit() {
+        try {
+            if (!this.formHelper.isFormValid(this.notificationQueueService)) {
+                return;
+            }
+            this.saving = true;
+            let data: iDynamicsPostSurplusPlan = convertProgramSurplusToDynamics(this.trans, SurplusTypes.Plan, true);
             console.log("attempting submit");
             console.log(data);
             this.programSurplusService.setProgramSurplus(data).subscribe(

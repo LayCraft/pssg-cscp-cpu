@@ -5,6 +5,7 @@ import { iSurplusItem } from './surplus-item.interface';
 import { iDynamicsProgramSurplusResponse, iDynamicsSurplusPlanLineItem, iDynamicsEligibleExpenseItem } from './dynamics-blob';
 
 export class TransmogrifierProgramSurplus {
+    submitDate: Date;
     contractId: string;
     contractNumber: string;
     organizationId: string;

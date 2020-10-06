@@ -342,6 +342,7 @@ export interface iDynamicsSurplusPlan {
   _vsd_programid_value?: string;
   vsd_surplusamount?: number;
   vsd_surplusremittance: boolean;
+  vsd_datesubmitted?: Date;
 }
 
 export interface iDynamicsSurplusPlanLineItem {
@@ -357,6 +358,7 @@ export interface iDynamicsSurplusPlanLineItem {
   vsd_proposedexpenditures?: number;
   vsd_allocatedamount?: number;
   vsd_surpluslineitemid: string;
+  vsd_datesubmitted?: Date;
 }
 
 
