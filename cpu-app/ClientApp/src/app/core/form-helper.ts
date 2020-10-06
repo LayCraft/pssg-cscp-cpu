@@ -141,8 +141,10 @@ export class FormHelper {
       e.value = "$" + this.numberWithCommas(val);
     }
     if (!val) val = 0;
-    let variable = this.fetchVarInfo(context, varName);
-    variable.obj[variable.prop] = val;
+    if (varName) {
+      let variable = this.fetchVarInfo(context, varName);
+      variable.obj[variable.prop] = val;
+    }
   }
   maskToNumber(e: any, context: any, varName) {
     let variable = this.fetchVarInfo(context, varName);

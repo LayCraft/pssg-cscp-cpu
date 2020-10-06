@@ -15,6 +15,9 @@ import { iCAPProgram } from '../../core/models/cap-program.interface';
 import { convertCAPProgramToDynamics } from '../../core/models/converters/cap-program-to-dynamics';
 import { CAPGuidelinesDialog } from '../dialogs/cap-guidelines/cap-guidelines.dialog';
 import { ProgramEgilibilityDialog } from '../dialogs/program-egilibility/program-egilibility.dialog';
+import { Subscription } from 'rxjs';
+import { Transmogrifier } from '../../core/models/transmogrifier.class';
+import { iContract } from '../../core/models/contract.interface';
 
 @Component({
     selector: 'app-cap-application',
@@ -32,8 +35,13 @@ export class CAPApplicationComponent implements OnInit {
     saving: boolean = false;
     isCompleted: boolean = false;
     discriminators: string[] = ['funding_criteria', 'applicant_information', 'program', 'authorization'];
+    baseFiscalYear: number;
+
+    private stateSubscription: Subscription;
 
     private formHelper = new FormHelper();
+    contracategory: string = "";
+    contracts: iContract[] = [];
 
     constructor(
         private notificationQueueService: NotificationQueueService,
@@ -46,6 +54,14 @@ export class CAPApplicationComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.stateSubscription = this.stateService.main.subscribe((m: Transmogrifier) => {
+            // save the transmogrifier
+            this.contracts = m.contracts;
+            if (this.trans) {
+                this.getFiscalYear();
+            }
+        });
+
         // get the right contract by route
         this.route.queryParams.subscribe(q => {
             // console.log(q);
@@ -75,6 +91,10 @@ export class CAPApplicationComponent implements OnInit {
 
                         this.constructDefaultstepperElements(this.trans);
 
+                        if (this.contracts) {
+                            this.getFiscalYear();
+                        }
+
                     }
                 }
             );
@@ -99,6 +119,23 @@ export class CAPApplicationComponent implements OnInit {
                 this.stepperIndex = this.stepperElements.findIndex(e => e.id === this.currentStepperElement.id);
             }
         });
+    }
+
+    getFiscalYear() {
+        let self = this;
+        self.baseFiscalYear = new Date().getFullYear();
+
+        let thisContract = self.contracts.find(c => c.contractId === self.trans.contractId);
+        if (thisContract) {
+            if (thisContract.category === 'upcoming') {
+                ++self.baseFiscalYear;
+            }
+            else if (thisContract.category === 'past') {
+                --self.baseFiscalYear;
+            }
+        }
+
+        self.trans.fiscalYear = `${self.baseFiscalYear} to ${self.baseFiscalYear + 1}`;
     }
 
     isCurrentStepperElement(item: iStepperElement): boolean {

@@ -7,7 +7,7 @@ export enum SurplusTypes {
     Report,
 }
 
-export function convertProgramSurplusToDynamics(trans: TransmogrifierProgramSurplus, type: SurplusTypes): iDynamicsPostSurplusPlan {
+export function convertProgramSurplusToDynamics(trans: TransmogrifierProgramSurplus, type: SurplusTypes, isSubmit: boolean = false): iDynamicsPostSurplusPlan {
     let ret: iDynamicsPostSurplusPlan = {
         BusinessBCeID: trans.organizationId,
         UserBCeID: trans.userId,
@@ -17,6 +17,10 @@ export function convertProgramSurplusToDynamics(trans: TransmogrifierProgramSurp
         }],
         SurplusPlanLineItemCollection: []
     };
+
+    if (isSubmit) {
+        ret.SurplusPlanCollection[0].vsd_datesubmitted = new Date();
+    }
 
     trans.lineItems.forEach(item => {
         let dynamicsItem: iDynamicsSurplusPlanLineItem = {
@@ -36,6 +40,9 @@ export function convertProgramSurplusToDynamics(trans: TransmogrifierProgramSurp
             dynamicsItem.vsd_actualexpenditures2 = item.expenditures_q2;
             dynamicsItem.vsd_actualexpenditures3 = item.expenditures_q3;
             dynamicsItem.vsd_actualexpenditures4 = item.expenditures_q4;
+        }
+        if (isSubmit) {
+            dynamicsItem.vsd_datesubmitted = new Date();
         }
         ret.SurplusPlanLineItemCollection.push(dynamicsItem);
     });

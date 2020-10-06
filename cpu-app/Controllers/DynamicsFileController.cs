@@ -30,8 +30,8 @@ namespace Gov.Cscp.Victims.Public.Controllers
             this._dynamicsResultService = dynamicsResultService;
         }
 
-        [HttpGet("{businessBceid}/{userBceid}/{contractId}")]
-        public async Task<IActionResult> GetFile(string userBceid, string businessBceid, string contractId)
+        [HttpGet("{businessBceid}/{userBceid}/documents/contract/{contractId}")]
+        public async Task<IActionResult> GetContractDocuments(string userBceid, string businessBceid, string contractId)
         {
             try
             {
@@ -39,6 +39,24 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 string requestJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
                 // set the endpoint action
                 string endpointUrl = "vsd_contracts(" + contractId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUContractDocuments";
+
+                // get the response
+                DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+
+                return StatusCode(200, result.result.ToString());
+            }
+            finally { }
+        }
+
+        [HttpGet("{businessBceid}/{userBceid}/documents/account/{accountId}")]
+        public async Task<IActionResult> GetAccountDocuments(string userBceid, string businessBceid, string accountId)
+        {
+            try
+            {
+                // convert the parameters to a json string
+                string requestJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
+                // set the endpoint action
+                string endpointUrl = "accounts(" + accountId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUAccountDocuments";
 
                 // get the response
                 DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);

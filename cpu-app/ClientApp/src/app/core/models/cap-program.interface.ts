@@ -1,7 +1,4 @@
 import { iPerson } from "./person.interface";
-import { iHours } from './hours.interface';
-import { iAddress } from "./address.interface";
-import { iContactInformation } from "./contact-information.interface";
 
 export interface iCAPProgram {
     contractId: string;
@@ -11,7 +8,9 @@ export interface iCAPProgram {
     programId: string;
     programLocation: string;
     maxAmount: number;
+    maxAmountMask: string;
     applicationAmount: number;
+    applicationAmountMask: string;
     typesOfModels: string;
     otherModel: string;
     evaluation: boolean;

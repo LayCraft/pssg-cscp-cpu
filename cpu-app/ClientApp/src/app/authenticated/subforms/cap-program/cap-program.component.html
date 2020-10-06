@@ -10,11 +10,11 @@
     </div>
     <div class="form-group">
         <label for="maxAmount">Maximum Amount that you could apply for</label>
-        <input [disabled]="isCompleted" class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," [(ngModel)]="program.maxAmount" id="maxAmount" name="maxAmount" disabled [validation]="false">
+        <input [disabled]="isCompleted" class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," [(ngModel)]="program.maxAmountMask" id="maxAmount" name="maxAmount" disabled [validation]="false">
     </div>
     <div class="form-group">
         <label for="applicationAmount">Please indicate the amount that you will be applying for</label>
-        <input [disabled]="isCompleted" class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," [(ngModel)]="program.applicationAmount" id="applicationAmount" name="applicationAmount">
+        <input [disabled]="isCompleted" class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," separatorLimit="10000000" (input)="formHelper.moneyMaskToNumber($event.target, program, 'applicationAmount', program.maxAmount)" [(ngModel)]="program.applicationAmountMask" id="applicationAmount" name="applicationAmount">
     </div>
 
     <div>
