@@ -85,6 +85,12 @@ export class StateService {
     // on login collect the information from the organization id
     this.mainService.getBlob(userId, orgId).subscribe(
       (m: iDynamicsBlob) => {
+        if (!m || !m.Result) {
+          this.notificationQueueService.addNotification('Error getting result from COAST', 'danger');
+          this.loading.next(false);
+          return;
+        }
+
         // check for actual error message
         if (m.Result.includes('BusinessBCeID doesn\'t match to which the Contact belongs to')) {
           this.notificationQueueService.addNotification('Your organization\'s BCeID does not match one in our records.', 'danger');
