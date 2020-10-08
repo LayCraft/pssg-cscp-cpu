@@ -175,6 +175,7 @@ export class TransmogrifierProgramApplication {
         programId: p.vsd_programid,
         governmentFunder: p.vsd_governmentfunderagency,
         estimatedContractValue: p.vsd_cpu_estimatedsubtotalcomponentvalue,
+        estimatedContractValueMask: p.vsd_cpu_estimatedsubtotalcomponentvalue ? p.vsd_cpu_estimatedsubtotalcomponentvalue.toFixed(2) : "",
         isTransitionHouse: p.vsd_addresstransitionorsafehome,
         mainAddress: {
           line1: p.vsd_addressline1 || null,

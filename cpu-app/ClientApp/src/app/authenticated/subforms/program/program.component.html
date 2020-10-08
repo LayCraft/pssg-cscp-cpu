@@ -24,10 +24,10 @@
     </div>
     <div class="form-group">
       <label for="estimatedContractValue">Estimated Contract Value</label>
-      <input [disabled]="isDisabled" class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," [(ngModel)]="programApplication.estimatedContractValue" id="estimatedContractValue" name="estimatedContractValue" disabled [validation]="false">
+      <input [disabled]="isDisabled" class="form-control" type="text" prefix="$" mask="separator.2" thousandSeparator="," [(ngModel)]="programApplication.estimatedContractValueMask" id="estimatedContractValue" name="estimatedContractValue" disabled [validation]="false">
     </div>
     <div class="form-group">
-      <label for="numberOfHours">Contracted Service Hours</label>
+      <label for="numberOfHours">Contracted Service Hours per Week</label>
       <input [disabled]="isDisabled" [(ngModel)]="programApplication.numberOfHours" suffix=" Hours" mask="0000" type="text" id="numberOfHours" name="numberOfHours" class="form-control" disabled [validation]="false">
     </div>
 
