@@ -47,8 +47,8 @@ export class StateService {
 
     if (window.location.href.includes("localhost")) {
       //Victimservices
-      userId = 'D7742187EC2347378704A200273F87D9';
-      orgId = '8859118D4FB54A74AEDFC4CD368C36B1';
+      // userId = 'D7742187EC2347378704A200273F87D9';
+      // orgId = '8859118D4FB54A74AEDFC4CD368C36B1';
 
       //Victimservices1
       // userId = 'FB55AB99F20E471186B8143B3F21F6E7';
@@ -57,6 +57,11 @@ export class StateService {
       //Victimservices2
       // userId = 'C0FD151410544705A39FAF2A5504D4E7';
       // orgId = 'D25E31FFC5AA4C3A9B7557CED3A5DDA5';
+
+      //Victimservices18
+      userId = '968458E00053498798D0D8D815A2DCB8';
+      orgId = '7B0C03E9C4C84068865655EE8EDD7DA3';
+      
       let settings = new UserSettings();
       settings.userId = userId;
       settings.accountId = orgId;

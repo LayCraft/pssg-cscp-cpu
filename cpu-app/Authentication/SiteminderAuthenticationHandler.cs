@@ -259,59 +259,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     return AuthenticateResult.NoResult();
                 }
 
-                // **************************************************
-                // Check if we have a Dev Environment Cookie or are using BC Services Card
-                // **************************************************
-                // if (!hostingEnv.IsProduction())
-                // {
-                //                 // check for a fake BCeID login in dev mode
-                // string temp = context.Request.Cookies[options.DevAuthenticationTokenKey];
-
-                // if (string.IsNullOrEmpty(temp)) // could be an automated test user.
-                // {
-                //     temp = context.Request.Headers["DEV-USER"];
-                // }
-
-                // if (!string.IsNullOrEmpty(temp))
-                // {
-                //     if (temp.Contains("::"))
-                //     {
-                //         var temp2 = temp.Split("::");
-                //         userId = temp2[0];
-                //         if (temp2.Length >= 2)
-                //             devCompanyId = temp2[1];
-                //         else
-                //             devCompanyId = temp2[0];
-                //     }
-                //     else
-                //     {
-                //         userId = temp;
-                //         devCompanyId = temp;
-                //     }
-                //     isDeveloperLogin = true;
-
-                //     _logger.LogDebug("Got user from dev cookie = " + userId + ", company = " + devCompanyId);
-                // }
-                // else
-                // {
-                //     // same set of tests for a BC Services Card dev login
-                //     temp = context.Request.Cookies[options.DevBCSCAuthenticationTokenKey];
-
-                //     if (string.IsNullOrEmpty(temp)) // could be an automated test user.
-                //     {
-                //         temp = context.Request.Headers["DEV-BCSC-USER"];
-                //     }
-
-                //     if (!string.IsNullOrEmpty(temp))
-                //     {
-                //         userId = temp;
-                //         isBCSCDeveloperLogin = true;
-
-                //         _logger.LogDebug("Got user from dev cookie = " + userId);
-                //     }
-                // }
-                // }
-                // The session is not created
+               
                 // **************************************************
                 // Check if the user session is already created
                 // **************************************************
@@ -353,9 +301,6 @@ namespace Gov.Cscp.Victims.Public.Authentication
                 // **************************************************
                 // Authenticate based on SiteMinder Headers
                 // **************************************************
-                //             _logger.LogDebug("Parsing the HTTP headers for SiteMinder authentication credential");
-
-                // At this point userID would only be set if we are logging in through as a DEV user
 
                 if (string.IsNullOrEmpty(userId))
                 {
@@ -400,26 +345,8 @@ namespace Gov.Cscp.Victims.Public.Authentication
                         userSettings.BusinessLegalName = devCompanyId + " BusinessProfileName";
                         userSettings.UserDisplayName = userId + " BCeIDContactType";
 
-                        // search for a matching user.
-                        // var existingContact = _dynamicsClient.GetContactByName(userId, "BCeIDContactType");
-
-                        // if (existingContact != null)
-                        // {
-                        //     siteMinderGuid = existingContact.Externaluseridentifier;
-                        // }
-                        // else
-                        // {
                         siteMinderGuid = GuidUtility.CreateIdForDynamics("contact", userSettings.UserDisplayName).ToString();
-                        // }
-
-                        // var existingBusiness = await _dynamicsClient.GetAccountByLegalName(userSettings.BusinessLegalName);
-                        // if (existingBusiness != null)
-                        // {
-                        //     siteMinderBusinessGuid = existingBusiness.BcgovBceid;
-                        // }
-                        // {
                         siteMinderBusinessGuid = GuidUtility.CreateIdForDynamics("account", userSettings.BusinessLegalName).ToString();
-                        // }
                         siteMinderUserType = "Business";
                     }
                     else if (isBCSCDeveloperLogin)
@@ -432,11 +359,6 @@ namespace Gov.Cscp.Victims.Public.Authentication
                         siteMinderUserType = "VerifiedIndividual";
                     }
                 }
-
-                // Previously the code would do a database lookup here.  However there is no backing database for the users table now,
-                // so we just do a Dynamics lookup on the siteMinderGuid.
-
-                //             _logger.LogDebug("Loading user external id = " + siteMinderGuid);
 
                 if (_dynamicsResultService != null)
                 {
@@ -468,7 +390,6 @@ namespace Gov.Cscp.Victims.Public.Authentication
 
                     //Error: No contact found with the supplied BCeID
 
-                    // if ((int)result.statusCode == 200)
                     string NEW_USER = "No contact found with the supplied BCeID";
                     string NEW_USER_AND_NEW_ORGANIZATION = "No organization and contact found with the supplied BCeID";
                     string CONTACT_NOT_APPROVED = "Contact is not approved for portal access";
@@ -514,182 +435,19 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     }
                     else
                     {
+                        //TODO - should verify we did in fact get a success response
+
                         Console.WriteLine("Found User Data");
-                        // Console.WriteLine(resultString);
                         Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
-                        // userSettings.UserType = siteMinderUserType;
-                        // userSettings.UserId = siteMinderGuid;
-                        // userSettings.AccountId = siteMinderBusinessGuid;
                         userSettings.IsNewUserRegistration = false;
                         userSettings.IsNewUserAndNewOrganizationRegistration = false;
                         Console.WriteLine("UserSettings: " + userSettings.GetJson());
-
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
-
-                        // string temp = userSettings.GetJson();
-                        // context.Session.SetString("UserSettings", temp);
                         UserSettings.SaveUserSettings(userSettings, context);
 
                         return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
                     }
                 }
-
-                // OLD CODE INCOMING
-                //             if (_dynamicsClient != null)
-                //             {
-                //                 userSettings.AuthenticatedUser = await _dynamicsClient.LoadUser(siteMinderGuid, context.Request.Headers, _logger);
-                //             }
-
-                //             _logger.LogDebug("After getting authenticated user = " + userSettings.GetJson());
-
-
-                //             // check that the potential new user is 19.
-                //             if (userSettings.AuthenticatedUser != null && userSettings.AuthenticatedUser.ContactId == null)
-                //             {
-                //                 string rawBirthDate = context.Request.Headers[options.SiteMinderBirthDate];
-                //                 // get the birthdate.
-                //                 if (DateTimeOffset.TryParse(rawBirthDate, out DateTimeOffset birthDate))
-                //                 {
-                //                     DateTimeOffset nineteenYears = DateTimeOffset.Now.AddYears(-19);
-                //                     if (birthDate > nineteenYears)
-                //                     {
-                //                         // younger than 19, cannot login.
-                //                         return AuthenticateResult.Fail(options.UnderageError);
-                //                     }
-                //                 }
-                //             }
-
-                //             if (userSettings.AuthenticatedUser != null && !userSettings.AuthenticatedUser.Active)
-                //             {
-
-                //                 _logger.LogError(options.InactivegDbUserIdError + " (" + userId + ")");
-                //                 return AuthenticateResult.Fail(options.InactivegDbUserIdError);
-                //             }
-
-                //             if (userSettings.AuthenticatedUser != null && !String.IsNullOrEmpty(siteMinderUserType))
-                //             {
-                //                 userSettings.AuthenticatedUser.UserType = siteMinderUserType;
-                //             }
-                //             userSettings.UserType = siteMinderUserType;
-
-                //             // This line gets the various claims for the current user.
-                //             ClaimsPrincipal userPrincipal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
-
-                //             // **************************************************
-                //             // Create authenticated user
-                //             // **************************************************
-                //             _logger.LogDebug("Authentication successful: " + userId);
-                //             _logger.LogDebug("Setting identity and creating session for: " + userId);
-
-                //             // create session info for the current user
-                //             userSettings.UserId = userId;
-                //             userSettings.UserAuthenticated = true;
-                //             userSettings.IsNewUserRegistration = (userSettings.AuthenticatedUser == null);
-
-                //             // set other session info
-                //             userSettings.SiteMinderGuid = siteMinderGuid;
-                //             userSettings.SiteMinderBusinessGuid = siteMinderBusinessGuid;
-                //             _logger.LogDebug("Before getting contact and account ids = " + userSettings.GetJson());
-
-                //             if (userSettings.AuthenticatedUser != null)
-                //             {
-                //                 userSettings.ContactId = userSettings.AuthenticatedUser.ContactId.ToString();
-
-                //                 if (siteMinderBusinessGuid != null) // BCeID user
-                //                 {
-                //                     var account = await _dynamicsClient.GetAccountBySiteminderBusinessGuid(siteMinderBusinessGuid);
-                //                     if (account != null && account.Accountid != null)
-                //                     {
-                //                         userSettings.AccountId = account.Accountid;
-                //                         userSettings.AuthenticatedUser.AccountId = Guid.Parse(account.Accountid);
-                //                     }
-                //                 }
-                //             }
-
-                //             if (!hostingEnv.IsProduction() && (isDeveloperLogin || isBCSCDeveloperLogin))
-                //             {
-                //                 _logger.LogError("DEV MODE Setting identity and creating session for: " + userId);
-
-                //                 if (isDeveloperLogin)
-                //                 {
-                //                     userSettings.BusinessLegalName = devCompanyId + " BusinessProfileName";
-                //                     userSettings.UserDisplayName = userId + " BCeIDContactType";
-
-                //                     // add generated guids
-                //                     userSettings.SiteMinderBusinessGuid = GuidUtility.CreateIdForDynamics("account", userSettings.BusinessLegalName).ToString();
-                //                     userSettings.SiteMinderGuid = GuidUtility.CreateIdForDynamics("contact", userSettings.UserDisplayName).ToString();
-                //                 }
-                //                 else if (isBCSCDeveloperLogin)
-                //                 {
-                //                     userSettings.BusinessLegalName = null;
-                //                     userSettings.UserDisplayName = userId + " Associate";
-
-                //                     // add generated guids
-                //                     userSettings.SiteMinderBusinessGuid = null;
-                //                     userSettings.SiteMinderGuid = GuidUtility.CreateIdForDynamics("bcsc", userSettings.UserDisplayName).ToString();
-                //                 }
-
-                //                 if (userSettings.IsNewUserRegistration)
-                //                 {
-                //                     if (isDeveloperLogin)
-                //                     {
-                //                         // add generated guids
-                //                         userSettings.AccountId = userSettings.SiteMinderBusinessGuid;
-                //                         userSettings.ContactId = userSettings.SiteMinderGuid;
-                //                     }
-                //                     else if (isBCSCDeveloperLogin)
-                //                     {
-                //                         // set to null for now
-                //                         userSettings.AccountId = null;
-                //                         userSettings.ContactId = null;
-                //                     }
-
-                //                     _logger.LogDebug("New user registration:" + userSettings.UserDisplayName);
-                //                     _logger.LogDebug("userSettings.SiteMinderBusinessGuid:" + userSettings.SiteMinderBusinessGuid);
-                //                     _logger.LogDebug("userSettings.SiteMinderGuid:" + userSettings.SiteMinderGuid);
-                //                     _logger.LogDebug("userSettings.AccountId:" + userSettings.AccountId);
-                //                     _logger.LogDebug("userSettings.ContactId:" + userSettings.ContactId);
-                //                 }
-                //                 // Set account ID from authenticated user
-                //                 else if (userSettings.AuthenticatedUser != null)
-                //                 {
-                //                     // populate the business GUID.
-                //                     if (string.IsNullOrEmpty(userSettings.AccountId))
-                //                     {
-                //                         userSettings.AccountId = userSettings.AuthenticatedUser.AccountId.ToString();
-                //                     }
-                //                     if (string.IsNullOrEmpty(userSettings.ContactId))
-                //                     {
-                //                         userSettings.ContactId = userSettings.AuthenticatedUser.ContactId.ToString();
-                //                     }
-                //                     _logger.LogDebug("Returning user:" + userSettings.UserDisplayName);
-                //                     _logger.LogDebug("userSettings.AccountId:" + userSettings.AccountId);
-                //                     _logger.LogDebug("userSettings.ContactId:" + userSettings.ContactId);
-                //                 }
-                //             }
-
-                //             // add the worker settings if it is a new user.
-                //             if (userSettings.IsNewUserRegistration && userSettings.NewWorker == null)
-                //             {
-                //                 userSettings.NewWorker = new ViewModels.Worker();
-                //                 userSettings.NewWorker.CopyHeaderValues(context.Request.Headers);
-                //             }
-
-                //             // add the worker settings if it is a new user.
-                //             if (userSettings.IsNewUserRegistration && userSettings.NewContact == null)
-                //             {
-                //                 userSettings.NewContact = new ViewModels.Contact();
-                //                 userSettings.NewContact.CopyHeaderValues(context.Request.Headers);
-                //             }
-
-                //             // **************************************************
-                //             // Update user settings
-                //             // **************************************************                
-                //             UserSettings.SaveUserSettings(userSettings, context);
-
-                //             // done!
-                //             principal = userPrincipal;
-                //             return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
             }
             catch (Exception exception)
             {

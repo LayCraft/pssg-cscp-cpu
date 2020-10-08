@@ -141,8 +141,8 @@ export class TransmogrifierCAPApplication {
                 programContact: g.StaffCollection
                     .filter((c: iDynamicsCrmContact): boolean => p._vsd_contactlookup_value === c.contactid)
                     .map(s => this.makePerson(g, s.contactid))[0] || null,
-                maxAmount: p.vsd_cpu_fundingamountrequested,
-                maxAmountMask: p.vsd_cpu_fundingamountrequested ? p.vsd_cpu_fundingamountrequested.toString() : "",
+                maxAmount: p.vsd_cpu_estimatedsubtotalcomponentvalue,
+                maxAmountMask: p.vsd_cpu_estimatedsubtotalcomponentvalue ? p.vsd_cpu_estimatedsubtotalcomponentvalue.toString() : "",
                 applicationAmount: p.vsd_cpu_subtotalcomponentvalue,
                 applicationAmountMask: p.vsd_cpu_subtotalcomponentvalue ? p.vsd_cpu_subtotalcomponentvalue.toString() : "",
                 typesOfModels: p.vsd_cpu_programmodeltypes,
