@@ -22,6 +22,7 @@ export class ProgramApplication implements iProgramApplication {
     isPoliceBased: boolean;
     governmentFunder: string;
     estimatedContractValue: number;
+    estimatedContractValueMask: string;
 
     // revenueSources: iRevenueSource[];
     additionalStaff: iPerson[];
