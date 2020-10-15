@@ -110,50 +110,14 @@ namespace Gov.Cscp.Victims.Public.Services
             try
             {
                 // ****************COLLECT CONFIGURATION*************
-                // Cloud AAD Tenant ID
-                string aadTenantId = _configuration["DYNAMICS_AAD_TENANT_ID"];
-                // Cloud Server App ID URI
-                string serverAppIdUri = _configuration["DYNAMICS_SERVER_APP_ID_URI"];
-                // Cloud App Registration Client Key
-                string appRegistrationClientKey = _configuration["DYNAMICS_APP_REG_CLIENT_KEY"];
-                // Cloud App Registration Client Id
-                string appRegistrationClientId = _configuration["DYNAMICS_APP_REG_CLIENT_ID"];
-
-                // One Premise ADFS (2016)
-                // ADFS OAUTH2 URI - usually /adfs/oauth2/token on STS
                 string adfsOauth2Uri = _configuration["ADFS_OAUTH2_URI"];
-                // ADFS 2016 Application Group resource (URI)
                 string applicationGroupResource = _configuration["DYNAMICS_APP_GROUP_RESOURCE"];
-                // ADFS 2016 Application Group Client ID
                 string applicationGroupClientId = _configuration["DYNAMICS_APP_GROUP_CLIENT_ID"];
-                // ADFS 2016 Application Group Secret
                 string applicationGroupSecret = _configuration["DYNAMICS_APP_GROUP_SECRET"];
-
-                // Service account username
                 string serviceAccountUsername = _configuration["DYNAMICS_USERNAME"];
-                // Service account password
                 string serviceAccountPassword = _configuration["DYNAMICS_PASSWORD"];
 
-                // API Gateway to NTLM user.  This is used in v8 environments.  Note that the SSG Username and password are not the same as the NTLM user.
-                // BASIC authentication username
-                string ssgUsername = _configuration["SSG_USERNAME"];
-                // BASIC authentication password
-                string ssgPassword = _configuration["SSG_PASSWORD"];
-
                 Microsoft.Rest.ServiceClientCredentials serviceClientCredentials = null;
-
-                // TODO: This is dead code because we are not using this part of the authentication
-                // if (!string.IsNullOrEmpty(appRegistrationClientId) && !string.IsNullOrEmpty(appRegistrationClientKey) && !string.IsNullOrEmpty(serverAppIdUri) && !string.IsNullOrEmpty(aadTenantId))
-                // // Cloud authentication - using an App Registration's client ID, client key.  Add the App Registration to Dynamics as an Application User.
-                // {
-                // 	var authenticationContext = new AuthenticationContext("https://login.windows.net/" + aadTenantId);
-                // 	var clientCredential = new ClientCredential(appRegistrationClientId, appRegistrationClientKey);
-                // 	var task = authenticationContext.AcquireTokenAsync(serverAppIdUri, clientCredential);
-                // 	task.Wait();
-                // 	var authenticationResult = task.Result;
-                // 	string token = authenticationResult.CreateAuthorizationHeader().Substring("Bearer ".Length);
-                // 	serviceClientCredentials = new TokenCredentials(token);
-                // }
 
                 // all credentials must be in place for ADFS authorization
                 if (!string.IsNullOrEmpty(adfsOauth2Uri) &&
@@ -221,15 +185,6 @@ namespace Gov.Cscp.Victims.Public.Services
                         // set the bearer token.
                         serviceClientCredentials = new TokenCredentials(token);
 
-                        // TODO: This looks like dead code. Comment out
-                        // // Code to perform Scheduled task
-                        // _client = new HttpClient();
-                        // _client.DefaultRequestHeaders.Add("x-client-SKU", "PCL.CoreCLR");
-                        // _client.DefaultRequestHeaders.Add("x-client-Ver", "5.1.0.0");
-                        // _client.DefaultRequestHeaders.Add("x-ms-PKeyAuth", "1.0");
-                        // _client.DefaultRequestHeaders.Add("client-request-id", Guid.NewGuid().ToString());
-                        // _client.DefaultRequestHeaders.Add("return-client-request-id", "true");
-                        // _client.DefaultRequestHeaders.Add("Accept", "application/json");
 
                         // Collect the client in the global client and save an expiration time in the global expiration
                         _client = new HttpClient();
