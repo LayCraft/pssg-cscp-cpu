@@ -606,6 +606,7 @@ export interface iDynamicsDocument {
   subjectOther: string;
   body: string;
   overwritetime?: string;
+  activitymimeattachmentid?: string;
 }
 
 export interface iDynamicsMonthlyStatistics {

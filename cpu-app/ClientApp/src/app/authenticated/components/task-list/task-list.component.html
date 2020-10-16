@@ -185,7 +185,7 @@
             <td><i class="text-secondary spinner-border spinner-border-sm"></i></td>
           </tr>
           <tr *ngFor="let doc of documentCollection; let i=index;">
-            <td><span class="download-link" (click)="downloadDocument(doc)">{{doc.filename}}</span></td>
+            <td><span class="download-link" (click)="download(doc)">{{doc.filename}}</span></td>
             <td>
               {{doc.overwritetime | date:'yyyy-MM-dd'}}
             </td>

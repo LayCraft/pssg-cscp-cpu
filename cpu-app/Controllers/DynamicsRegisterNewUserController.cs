@@ -35,12 +35,12 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
                 modelString = Helpers.Helpers.removeNullsForProgramApplication(modelString);
                 //_ownerid_value on the Organization is already ignored by the CRM API, so don't need to remove it
-                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, modelString);
 
                 return StatusCode((int)result.statusCode, result.result.ToString());
 
 
-                // return StatusCode(200, "test");
+                // return StatusCode((int)result.statusCode, "test");
             }
             finally { }
         }

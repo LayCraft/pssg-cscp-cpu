@@ -26,6 +26,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   didLoadDocuments: boolean = false;
   existingDocuments: iDynamicsDocument[] = [];
 
+  downloadingDocument: boolean = false;
+
   documentCollection: iDynamicsDocument[] = [];
   documentsToAdd: iDynamicsDocument[] = [];
   // what are the names of the files in the filedata array
@@ -101,6 +103,10 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     }
   }
 
+  refresh() {
+    this.isContractUpload ? this.getContractDocuments() : this.getAccountDocuments();
+  }
+
   removeFile(i: number) {
     //remove the file from the collection at this index
     this.fileData.splice(i, 1);
@@ -125,26 +131,22 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     let record_id = this.isContractUpload ? this.contractId : this.trans.accountId
     if (this.isContractUpload) {
       this.fileService.uploadContractDocuments(file, record_id).subscribe((d) => {
+        console.log("uploaded documents");
+        console.log(d);
         this.saving = false;
-        this.documentsToAdd.forEach(doc => {
-          doc.overwritetime = new Date().toISOString();
-        });
-        this.existingDocuments = this.existingDocuments.concat(this.documentsToAdd);
         this.documentsToAdd = [];
+        this.refresh();
         this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
-        // console.log('Uploaded', d);
       });
     }
     else {
       this.fileService.uploadAccountDocuments(file, record_id).subscribe((d) => {
+        console.log("uploaded documents");
+        console.log(d);
         this.saving = false;
-        this.documentsToAdd.forEach(doc => {
-          doc.overwritetime = new Date().toISOString();
-        });
-        this.existingDocuments = this.existingDocuments.concat(this.documentsToAdd);
         this.documentsToAdd = [];
+        this.refresh();
         this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
-        // console.log('Uploaded', d);
       });
     }
   }
@@ -202,39 +204,29 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     this.fileData = fileData;
   }
 
-  download() {
-    this.fileService.getContractDocuments(this.organizationId, this.userId, this.contractId)
-      .subscribe(
-        (d: iDynamicsFile) => {
-          // console.log(d);
-          if (d['error'] && d['error']['code']) {
-            // something has gone wrong. Show the developer the error
-            alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
-            // console.log('Dynamics has returned: ', d);
-          } else if (d.DocumentCollection.length === 0) {
-            this.notificationQueueService.addNotification('There are no files available to download. Please let your ministry contract know that you cannot download the contract.');
-            // console.log('No files to download');
-          } else {
-            let element = document.createElement('a');
-            element.setAttribute('href', 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + d.DocumentCollection[0].body);
-            element.setAttribute('download', d.DocumentCollection[0].filename);
-            element.style.display = 'none';
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
-          }
-        }
-      );
+  download(doc: iDynamicsDocument) {
+    this.downloadingDocument = true;
+
+    this.fileService.downloadDocument(this.organizationId, this.userId, doc.activitymimeattachmentid).subscribe(
+      (d: any) => {
+        this.downloadingDocument = false;
+        console.log(d);
+
+        let downloadLink = document.createElement("a");
+        downloadLink.href = "data:application/octet-stream;base64," + d.Body;
+        downloadLink.download = d.FileName;
+
+        // append the anchor to document body
+        document.body.appendChild(downloadLink);
+
+        // fire a click event on the anchor
+        downloadLink.click();
+
+        // cleanup: remove element and revoke object URL
+        document.body.removeChild(downloadLink);
+      });
   }
-  downloadDocument(doc: iDynamicsDocument) {
-    let element = document.createElement('a');
-    element.setAttribute('href', 'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,' + doc.body);
-    element.setAttribute('download', doc.filename);
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  }
+
   toFileSize(bytes: number): string {
     let fileSize: string = "0 bytes";
     if (bytes >= 1073741824) { fileSize = (bytes / 1073741824).toFixed(2) + " GB"; }

@@ -43,6 +43,7 @@ export class FileService {
     );
   }
   uploadAccountDocuments(file: iDynamicsPostFile, accountId: string): Observable<any> {
+    console.log(this);
     // may need to add the contract id into this postback
     return this.http.post<any>(`${this.apiUrl}/account/${accountId}`, file, { headers: this.headers }).pipe(
       retry(3),
@@ -52,6 +53,13 @@ export class FileService {
   uploadContractDocuments(file: iDynamicsPostFile, contractId: string): Observable<any> {
     // may need to add the contract id into this postback
     return this.http.post<any>(`${this.apiUrl}/contract/${contractId}`, file, { headers: this.headers }).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  downloadDocument(organizationId: string, userId: string, docId: string): Observable<iDynamicsFile> {
+    return this.http.get<iDynamicsFile>(`${this.apiUrl}/${organizationId}/${userId}/document/${docId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

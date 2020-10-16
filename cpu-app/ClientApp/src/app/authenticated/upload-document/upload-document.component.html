@@ -27,7 +27,32 @@
           <h1>{{isContractUpload ? "Upload Documents" : "Upload General Documents"}}</h1>
         </div>
         <div>
-          <ul *ngIf="documentsToAdd.length" class="list-group mb-2">
+
+          <div class="list-group list-container mb-2">
+            <div class="row list-group-item" *ngFor="let doc of documentsToAdd; let i=index">
+              <div class="col-md-3">
+                <span class="file-name-container">
+                  {{doc.filename}}
+                </span>
+              </div>
+              <div class="col-md-9 file-type-col">
+                <span class="file-type-container">
+                  <label class="file-type-label">File Type</label>
+                  <select class="form-control file-type-select" [(ngModel)]="doc.subject" #doctype="ngModel">
+                    <option *ngFor="let type of document_types" [value]="type">{{type}}</option>
+                  </select>
+                  <ng-container *ngIf="doc.subject === 'Other'">
+                    <input type="text" class="form-control other-input" [(ngModel)]="doc.subjectOther" #city="ngModel">
+                  </ng-container>
+                </span>
+                <span (click)="removeFile(i)">
+                  <i class="fas fa-times-circle text-danger"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- <ul *ngIf="documentsToAdd.length" class="list-group mb-2">
             <li *ngFor="let doc of documentsToAdd; let i=index" class="list-group-item d-flex justify-content-between align-items-center">
               <span class="file-name-container">
                 {{doc.filename}}
@@ -46,7 +71,7 @@
                 <i class="fas fa-times-circle text-danger"></i>
               </span>
             </li>
-          </ul>
+          </ul> -->
           <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)" multiple>
           <button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Add File</button>
           <button class="btn btn-warning ml-2" [class.is-disabled]="documentsToAdd.length == 0 || saving" (click)="upload()">Upload Files</button>
@@ -56,12 +81,34 @@
       <div class="row existing-documents-row">
         <div class="col-md-12">
           <h4>Existing Documents</h4>
-          <ng-container *ngIf="loadingDocuments">
+          <!-- <ng-container *ngIf="loadingDocuments">
             Loading... <i class="text-secondary spinner-border spinner-border-sm"></i>
-          </ng-container>
+          </ng-container> -->
+          <!-- *ngIf="didLoadDocuments && existingDocuments.length > 0" -->
+          <ng-container>
+            <table class="table table-sm table-striped">
+              <thead class="thead">
+                <tr>
+                  <th scope="col">Your Document</th>
+                  <th scope="col">Available Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="loadingDocuments">
+                  <td>Loading...</td>
+                  <td><i class="text-secondary spinner-border spinner-border-sm"></i></td>
+                </tr>
+                <tr *ngFor="let doc of existingDocuments; let i=index;">
+                  <td><span class="download-link" (click)="download(doc)">{{doc.filename}}</span></td>
+                  <td>
+                    {{doc.overwritetime | date:'yyyy-MM-dd'}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-          <ng-container *ngIf="didLoadDocuments && existingDocuments.length > 0">
-            <div class="row">
+
+            <!-- <div class="row">
               <div class="col">
                 Your Document
               </div>
@@ -76,12 +123,12 @@
               <div class="col">
                 {{doc.overwritetime | date:'yyyy-MM-dd'}}
               </div>
-            </div>
+            </div> -->
           </ng-container>
 
-          <ng-container *ngIf="didLoadDocuments && existingDocuments.length === 0">
+          <!-- <ng-container *ngIf="didLoadDocuments && existingDocuments.length === 0">
             No documents
-          </ng-container>
+          </ng-container> -->
         </div>
       </div>
 
