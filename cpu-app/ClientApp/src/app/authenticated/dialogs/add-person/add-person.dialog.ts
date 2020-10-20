@@ -64,10 +64,16 @@ export class AddPersonDialog {
                 const organizationId = this.stateService.main.getValue().organizationId;
                 const post = convertPersonnelToDynamics(userId, organizationId, [this.person]);
                 this.personService.setPersons(post).subscribe(
-                    () => {
-                        this.saving = false;
-                        this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(this.person.firstName, this.person.middleName, this.person.lastName)}`, 'success');
-                        this.dialogRef.close(true);
+                    (r) => {
+                        if (r.IsSuccess) {
+                            this.saving = false;
+                            this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(this.person.firstName, this.person.middleName, this.person.lastName)}`, 'success');
+                            this.dialogRef.close(true);
+                        }
+                        else {
+                            this.notificationQueueService.addNotification("There was a problem saving this person. If this problem is persisting please contact your ministry representative.", 'danger');
+                            this.saving = false;
+                        }
                     },
                     err => {
                         this.notificationQueueService.addNotification(err, 'danger');

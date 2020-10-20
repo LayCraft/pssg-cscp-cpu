@@ -121,13 +121,19 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         const organizationId = this.stateService.main.getValue().organizationId;
         const post = convertPersonnelToDynamics(userId, organizationId, [person]);
         this.personService.setPersons(post).subscribe(
-          () => {
-            this.saving = false;
-            this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
-            // refresh the list of people on save
-            this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
-            this.stateService.refresh();
-            this.formHelper.makeFormClean();
+          (r) => {
+            if (r.IsSuccess) {
+              this.saving = false;
+              this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
+              // refresh the list of people on save
+              this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
+              this.stateService.refresh();
+              this.formHelper.makeFormClean();
+            }
+            else {
+              this.notificationQueueService.addNotification("There was a problem saving this person. If this problem is persisting please contact your ministry representative.", 'danger');
+              this.saving = false;
+            }
           },
           err => {
             this.notificationQueueService.addNotification(err, 'danger');
@@ -169,16 +175,22 @@ export class PersonnelComponent implements OnInit, OnDestroy {
         const organizationId = this.stateService.main.getValue().organizationId;
         const post = convertPersonnelToDynamics(userId, organizationId, [person]);
         this.personService.setPersons(post).subscribe(
-          () => {
-            this.saving = false;
-            this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
+          (r) => {
+            if (r.IsSuccess) {
+              this.saving = false;
+              this.notificationQueueService.addNotification(`Information is saved for ${nameAssemble(person.firstName, person.middleName, person.lastName)}`, 'success');
 
-            this.stateService.refresh();
-            this.router.navigate(['/authenticated/dashboard']);
-            // refresh the list of people on save
-            // this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
-            // this.stateService.refresh();
-            // this.formHelper.makeFormClean();
+              this.stateService.refresh();
+              this.router.navigate(['/authenticated/dashboard']);
+              // refresh the list of people on save
+              // this.stepperIndex = this.stepperElements.findIndex(s => s.id === this.currentStepperElement.id) || 0;
+              // this.stateService.refresh();
+              // this.formHelper.makeFormClean();
+            }
+            else {
+              this.notificationQueueService.addNotification("There was a problem saving this person. If this problem is persisting please contact your ministry representative.", 'danger');
+              this.saving = false;
+            }
           },
           err => {
             this.notificationQueueService.addNotification(err, 'danger');
@@ -243,12 +255,18 @@ export class PersonnelComponent implements OnInit, OnDestroy {
           StaffCollection: [convertPersonToDynamics(person)]
         };
         // post the person
-        this.personService.setPersons(post).subscribe(p => {
-          this.saving = false;
+        this.personService.setPersons(post).subscribe(r => {
+          if (r.IsSuccess) {
+            this.saving = false;
 
-          if (this.stepperIndex > 0) --this.stepperIndex;
-          // refresh the results
-          this.stateService.refresh();
+            if (this.stepperIndex > 0) --this.stepperIndex;
+            // refresh the results
+            this.stateService.refresh();
+          }
+          else {
+            this.notificationQueueService.addNotification('The agency staff could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+            this.saving = false;
+          }
         });
       }
     }

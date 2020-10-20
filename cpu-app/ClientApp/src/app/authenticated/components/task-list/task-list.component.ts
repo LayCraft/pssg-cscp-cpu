@@ -13,6 +13,7 @@ import { iTask } from '../../../core/models/task.interface';
 import * as moment from 'moment';
 import { CRMPaymentStatusCode } from '../../../core/models/payment-status.interface';
 import { Roles } from '../../../core/models/user-settings.interface';
+import { NotificationQueueService } from '../../../core/services/notification-queue.service';
 
 enum StatusReasons {
   Received = 1,
@@ -46,6 +47,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   documentCollection: iDynamicsDocument[] = [];
   private stateSubscription: Subscription;
   loadingDocuments: boolean = false;
+  downloadingDocument: boolean = false;
 
   organizationId: string;
   userId: string;
@@ -59,6 +61,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   constructor(private stateService: StateService,
     private statusReportService: StatusReportService,
+    private notificationQueueService: NotificationQueueService,
     public fileService: FileService) {
     this.tabs = {
       'tasksDue': 'Tasks Due',
@@ -109,37 +112,45 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
 
     this.statusReportService.getMonthlyStats(this.organizationId, this.userId, contractId).subscribe((res: iDynamicsMonthlyStatistics) => {
-      console.log("Monthly Stats:");
-      console.log(res);
-      this.didLoadStats = true;
       this.loadingStats = false;
-      this.completedStats = res;
-      this.dataCollection = this.completedStats.DataCollection;
-      for (let data of this.dataCollection) {
-        data.reportingPeriod = Object.keys(months).find(key => months[key] === data.vsd_reportingperiod);
+      this.didLoadStats = true;
+      if (!res.IsSuccess) {
+        this.notificationQueueService.addNotification('There was an issue loading Monthly Stats information. If this problem is persisting please contact your ministry representative.', 'danger');
       }
-      console.log(this.dataCollection);
+      else {
+        console.log("Monthly Stats:");
+        console.log(res);
+        this.completedStats = res;
+        this.dataCollection = this.completedStats.DataCollection;
+        for (let data of this.dataCollection) {
+          data.reportingPeriod = Object.keys(months).find(key => months[key] === data.vsd_reportingperiod);
+        }
+        console.log(this.dataCollection);
+      }
     });
   }
 
+  download(doc: iDynamicsDocument) {
+    if (this.downloadingDocument) return;
+    this.downloadingDocument = true;
+    this.fileService.downloadDocument(this.organizationId, this.userId, doc.activitymimeattachmentid).subscribe(
+      (d: any) => {
+        this.downloadingDocument = false;
+        console.log(d);
+        if (!d.IsSuccess) {
+          this.notificationQueueService.addNotification('There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.', 'danger');
+        }
+        else {
 
+          let downloadLink = document.createElement("a");
+          downloadLink.href = "data:application/octet-stream;base64," + d.Body;
+          downloadLink.download = d.FileName;
 
-  downloadDocument(doc: iDynamicsDocument) {
-    // let file = "data:application/octet-stream;charset=utf-16le;base64," + doc.body;
-    // window.open(file);
-
-    let downloadLink = document.createElement("a");
-    downloadLink.href = "data:application/octet-stream;base64," + doc.body;
-    downloadLink.download = doc.filename;
-
-    // append the anchor to document body
-    document.body.appendChild(downloadLink);
-
-    // fire a click event on the anchor
-    downloadLink.click();
-
-    // cleanup: remove element and revoke object URL
-    document.body.removeChild(downloadLink);
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+        }
+      });
   }
 
   getContractDocuments(contractId: string) {
@@ -154,11 +165,10 @@ export class TaskListComponent implements OnInit, OnDestroy {
         this.didLoadDocuments = true;
         this.loadingDocuments = false;
         // console.log(d);
-        if (d['error'] && d['error']['code']) {
-          // something has gone wrong. Show the developer the error
-          alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
-          // console.log('Dynamics has returned: ', d);
-        } else {
+        if (!d.IsSuccess) {
+          this.notificationQueueService.addNotification('There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.', 'danger');
+        }
+        else {
           this.documentCollection = d.DocumentCollection.filter(d => d.filename.indexOf(".pdf") > 0);;
         }
       });

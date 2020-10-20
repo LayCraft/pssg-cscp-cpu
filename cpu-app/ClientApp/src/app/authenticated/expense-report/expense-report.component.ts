@@ -246,17 +246,24 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
         // console.log(this.out);
         this.expenseReportService.setExpenseReport(this.out).subscribe(
           r => {
-            // console.log(r);
-            this.notificationQueueService.addNotification(`You have successfully saved the expense report.`, 'success');
-            this.stateService.refresh();
-            if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
-            this.saving = false;
-            this.stepperElements.forEach(s => {
-              if (s.formState === 'complete') return;
-              this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
-            });
-            this.formHelper.makeFormClean();
-            resolve();
+            if (r.IsSuccess) {
+              // console.log(r);
+              this.notificationQueueService.addNotification(`You have successfully saved the expense report.`, 'success');
+              this.stateService.refresh();
+              if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
+              this.saving = false;
+              this.stepperElements.forEach(s => {
+                if (s.formState === 'complete') return;
+                this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+              });
+              this.formHelper.makeFormClean();
+              resolve();
+            }
+            else {
+              this.notificationQueueService.addNotification('The expense report could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+              this.saving = false;
+              reject();
+            }
           },
           err => {
             console.log(err);

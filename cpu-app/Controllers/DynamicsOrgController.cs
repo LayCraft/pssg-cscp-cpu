@@ -40,7 +40,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
             string modelString = System.Text.Json.JsonSerializer.Serialize(model);
             modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
             modelString = Helpers.Helpers.removeNullsForStaffUpdate(modelString);
-            DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+            DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, modelString);
 
             return StatusCode((int)result.statusCode, result.result.ToString());
         }
@@ -58,7 +58,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
             string modelString = System.Text.Json.JsonSerializer.Serialize(model);
             modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
             modelString = Helpers.Helpers.removeNullsForStaffUpdate(modelString);
-            DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+            DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, modelString);
 
             return StatusCode((int)result.statusCode, result.result.ToString());
         }

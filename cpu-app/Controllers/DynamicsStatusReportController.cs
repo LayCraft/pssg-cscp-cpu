@@ -29,9 +29,9 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 string endpointUrl = "tasks(" + taskId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUMonthlyStatisticsQuestions";
 
                 // get the response
-                DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, requestJson);
 
-                return StatusCode(200, result.result.ToString());
+                return StatusCode((int)result.statusCode, result.result.ToString());
             }
             finally { }
         }
@@ -46,9 +46,9 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 string endpointUrl = "vsd_contracts(" + contractId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUMonthlyStatistics";
 
                 // get the response
-                DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, requestJson);
 
-                return StatusCode(200, result.result.ToString());
+                return StatusCode((int)result.statusCode, result.result.ToString());
             }
             finally { }
         }
@@ -63,9 +63,9 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 string endpointUrl = "vsd_datacollections(" + dataCollectionId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUMonthlyStatisticsAnswers";
 
                 // get the response
-                DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, requestJson);
 
-                return StatusCode(200, result.result.ToString());
+                return StatusCode((int)result.statusCode, result.result.ToString());
             }
             finally { }
         }
@@ -82,7 +82,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 // turn the model into a string
                 string modelString = System.Text.Json.JsonSerializer.Serialize(model);
                 modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
-                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, modelString);
 
                 return StatusCode((int)result.statusCode, result.result.ToString());
             }

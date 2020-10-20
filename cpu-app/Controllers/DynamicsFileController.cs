@@ -41,9 +41,9 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 string endpointUrl = "vsd_contracts(" + contractId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUContractDocuments";
 
                 // get the response
-                DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, requestJson);
 
-                return StatusCode(200, result.result.ToString());
+                return StatusCode((int)result.statusCode, result.result.ToString());
             }
             finally { }
         }
@@ -59,9 +59,28 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 string endpointUrl = "accounts(" + accountId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUAccountDocuments";
 
                 // get the response
-                DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, requestJson);
 
-                return StatusCode(200, result.result.ToString());
+                return StatusCode((int)result.statusCode, result.result.ToString());
+            }
+            finally { }
+        }
+
+        [HttpGet("{businessBceid}/{userBceid}/document/{docId}")]
+        public async Task<IActionResult> DownloadDocument(string userBceid, string businessBceid, string docId)
+        {
+            try
+            {
+                // convert the parameters to a json string
+                // string requestJson = "{\"UserBCeID\":\"" + userBceid + "\",\"BusinessBCeID\":\"" + businessBceid + "\"}";
+                // set the endpoint action
+                string endpointUrl = "vsd_sharepointurls(" + docId + ")/Microsoft.Dynamics.CRM.vsd_DownloadDocumentFromSharePoint";
+
+                // get the response
+                //requestJson
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, "");
+
+                return StatusCode((int)result.statusCode, result.result.ToString());
             }
             finally { }
         }
@@ -77,9 +96,9 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 string endpointUrl = "tasks(" + taskId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUContractPackage";
 
                 // get the response
-                DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, requestJson);
 
-                return StatusCode(200, result.result.ToString());
+                return StatusCode((int)result.statusCode, result.result.ToString());
             }
             finally { }
         }
@@ -132,7 +151,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 data.SignedContract.filename = "Contract Package Signed by Service Provider.pdf";
 
                 //for testing the document combining
-                // return StatusCode(200, data);
+                // return StatusCode((int)result.statusCode, data);
 
                 //make options for the json serializer
                 JsonSerializerOptions options = new JsonSerializerOptions();
@@ -140,7 +159,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 //turn the model into a string
                 string modelString = System.Text.Json.JsonSerializer.Serialize(data, options);
 
-                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, modelString);
 
                 return StatusCode((int)result.statusCode, result.result.ToString());
             }
@@ -165,9 +184,9 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 options.IgnoreNullValues = true;
                 // turn the model into a string
                 string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
-                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, modelString);
 
-                return StatusCode(200, result.result.ToString());
+                return StatusCode((int)result.statusCode, result.result.ToString());
             }
             finally { }
         }
@@ -185,9 +204,9 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 options.IgnoreNullValues = true;
                 // turn the model into a string
                 string modelString = System.Text.Json.JsonSerializer.Serialize(model, options);
-                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, modelString);
 
-                return StatusCode(200, result.result.ToString());
+                return StatusCode((int)result.statusCode, result.result.ToString());
             }
             finally { }
         }

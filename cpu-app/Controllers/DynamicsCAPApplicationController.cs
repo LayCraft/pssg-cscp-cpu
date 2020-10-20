@@ -29,9 +29,9 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 string endpointUrl = "vsd_contracts(" + scheduleFId + ")/Microsoft.Dynamics.CRM.vsd_GetCPUScheduleF_CAP";
 
                 // get the response
-                DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, requestJson);
 
-                return StatusCode(200, result.result.ToString());
+                return StatusCode((int)result.statusCode, result.result.ToString());
             }
             finally { }
         }
@@ -52,7 +52,7 @@ namespace Gov.Cscp.Victims.Public.Controllers
                 modelString = Helpers.Helpers.updateFortunecookieBindNull(modelString);
                 modelString = Helpers.Helpers.removeNullsForProgramApplication(modelString);
                 //_ownerid_value on the Organization is already ignored by the CRM API, so don't need to remove it
-                DynamicsResult result = await _dynamicsResultService.SetDataAsync(endpointUrl, modelString);
+                DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, modelString);
 
                 return StatusCode((int)result.statusCode, result.result.ToString());
             }

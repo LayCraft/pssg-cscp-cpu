@@ -206,22 +206,29 @@ export class CAPApplicationComponent implements OnInit {
                 console.log(_.cloneDeep(this.trans));
                 this.capService.setCAPApplication(convertCAPProgramToDynamics(this.trans)).subscribe(
                     r => {
-                        if (showNotification) {
-                            this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
+                        if (r.IsSuccess) {
+                            if (showNotification) {
+                                this.notificationQueueService.addNotification(`You have successfully saved the program application.`, 'success');
+                            }
+                            this.saving = false;
+                            this.stepperElements.forEach(s => {
+                                if (s.formState === 'complete') return;
+
+                                if (s.formState !== 'untouched') this.stepperService.setStepperElementProperty(s.id, "formState", "complete");
+                                else this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
+                            });
+
+                            if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
+
+                            this.formHelper.makeFormClean();
+                            this.reloadProgramApplication();
+                            resolve();
                         }
-                        this.saving = false;
-                        this.stepperElements.forEach(s => {
-                            if (s.formState === 'complete') return;
-
-                            if (s.formState !== 'untouched') this.stepperService.setStepperElementProperty(s.id, "formState", "complete");
-                            else this.stepperService.setStepperElementProperty(s.id, "formState", "untouched");
-                        });
-
-                        if (shouldExit) this.router.navigate(['/authenticated/dashboard']);
-
-                        this.formHelper.makeFormClean();
-                        this.reloadProgramApplication();
-                        resolve();
+                        else {
+                            this.notificationQueueService.addNotification('The cap application could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+                            this.saving = false;
+                            reject();
+                        }
                     },
                     err => {
                         console.log(err);
@@ -263,12 +270,18 @@ export class CAPApplicationComponent implements OnInit {
             console.log(_.cloneDeep(this.trans));
             this.capService.setCAPApplication(convertCAPProgramToDynamics(this.trans)).subscribe(
                 r => {
-                    // console.log(r);
+                    if (r.IsSuccess) {
+                        // console.log(r);
 
-                    this.notificationQueueService.addNotification(`You have successfully submitted the cap application.`, 'success');
-                    this.saving = false;
-                    this.stateService.refresh();
-                    this.router.navigate(['/authenticated/dashboard']);
+                        this.notificationQueueService.addNotification(`You have successfully submitted the cap application.`, 'success');
+                        this.saving = false;
+                        this.stateService.refresh();
+                        this.router.navigate(['/authenticated/dashboard']);
+                    }
+                    else {
+                        this.notificationQueueService.addNotification('The cap application could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
+                        this.saving = false;
+                    }
                 },
                 err => {
                     console.log(err);

@@ -47,17 +47,23 @@ export class NewUserComponent implements OnInit {
       // console.log(this.trans);
       let data = convertNewUserToDynamics(this.trans);
       this.newUserService.saveNewUser(data).subscribe((res) => {
-        // console.log(res);
-        this.notificationQueueService.addNotification(`You have successfully registered a new user.`, 'success');
-        // this.notificationQueueService.addNotification(`Please return after new user has been approved for portal access.`, 'success');
-        // userSettings.isNewUserRegistration = false;
-        // userSettings.contactExistsButNotApproved = true;
-        // this.stateService.userSettings.next(userSettings);
-        // this.router.navigate([this.stateService.homeRoute.getValue()]);
-        this.saving = false;
-        setTimeout(() => {
-          this.stateService.logout();
-        }, 1200);
+        if (res.IsSuccess) {
+          // console.log(res);
+          this.notificationQueueService.addNotification(`You have successfully registered a new user.`, 'success');
+          // this.notificationQueueService.addNotification(`Please return after new user has been approved for portal access.`, 'success');
+          // userSettings.isNewUserRegistration = false;
+          // userSettings.contactExistsButNotApproved = true;
+          // this.stateService.userSettings.next(userSettings);
+          // this.router.navigate([this.stateService.homeRoute.getValue()]);
+          this.saving = false;
+          setTimeout(() => {
+            this.stateService.logout();
+          }, 1200);
+        }
+        else {
+          this.notificationQueueService.addNotification('The new user could not be saved. If this problem is persisting please contact your ministry representative.', 'danger');
+          this.saving = false;
+        }
       },
         (err) => {
           console.log(err);

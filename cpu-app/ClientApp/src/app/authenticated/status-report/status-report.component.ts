@@ -48,7 +48,7 @@ export class StatusReportComponent implements OnInit, OnDestroy {
       const userId: string = this.stateService.main.getValue().userId;
       // console.log(p);
       console.log(p['taskId']);
-      
+
       this.statusReportService.getStatusReportQuestions(organizationId, userId, p['taskId'])
         .subscribe(r => {
           if (!r.IsSuccess) {
@@ -61,7 +61,7 @@ export class StatusReportComponent implements OnInit, OnDestroy {
 
             // make the transmogrifier for this form
             this.data = r;
-            
+
             // construct the stepper
             this.trans = new TransmogrifierStatusReport(r);
             this.trans.taskId = p['taskId'];
@@ -205,15 +205,21 @@ export class StatusReportComponent implements OnInit, OnDestroy {
         this.statusReportService.setStatusReportAnswers(this.trans.taskId, statusReport)
           .subscribe(
             r => {
-              this.saving = false;
-              // console.log(r);
-              this.notificationQueueService.addNotification(`You have successfully submitted ${this.trans.reportingPeriod} statistics.`, 'success');
-              this.stateService.refresh();
-              this.router.navigate(['/authenticated/dashboard']);
+              if (r.IsSuccess) {
+                this.saving = false;
+                // console.log(r);
+                this.notificationQueueService.addNotification(`You have successfully submitted ${this.trans.reportingPeriod} statistics.`, 'success');
+                this.stateService.refresh();
+                this.router.navigate(['/authenticated/dashboard']);
+              }
+              else {
+                this.saving = false;
+                this.notificationQueueService.addNotification('Monthly statistics could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
+              }
             },
             err => {
-              this.saving = false;
               console.log(err);
+              this.saving = false;
               this.notificationQueueService.addNotification('Monthly statistics could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
             }
           );

@@ -99,13 +99,19 @@ export class ProgramSurplusComponent implements OnInit {
             console.log(data);
             this.programSurplusService.setProgramSurplus(data).subscribe(
                 r => {
-                    console.log(r);
+                    if (r.IsSuccess) {
+                        console.log(r);
 
-                    this.notificationQueueService.addNotification(`You have successfully submitted the surplus plan.`, 'success');
-                    this.saving = false;
-                    this.stateService.refresh();
-                    if (shouldExit) {
-                        this.router.navigate(['/authenticated/dashboard']);
+                        this.notificationQueueService.addNotification(`You have successfully submitted the surplus plan.`, 'success');
+                        this.saving = false;
+                        this.stateService.refresh();
+                        if (shouldExit) {
+                            this.router.navigate(['/authenticated/dashboard']);
+                        }
+                    }
+                    else {
+                        this.notificationQueueService.addNotification('The surplus plan could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
+                        this.saving = false;
                     }
                 },
                 err => {
@@ -133,12 +139,18 @@ export class ProgramSurplusComponent implements OnInit {
             console.log(data);
             this.programSurplusService.setProgramSurplus(data).subscribe(
                 r => {
-                    console.log(r);
+                    if (r.IsSuccess) {
+                        console.log(r);
 
-                    this.notificationQueueService.addNotification(`You have successfully submitted the surplus plan.`, 'success');
-                    this.saving = false;
-                    this.stateService.refresh();
-                    this.router.navigate(['/authenticated/dashboard']);
+                        this.notificationQueueService.addNotification(`You have successfully submitted the surplus plan.`, 'success');
+                        this.saving = false;
+                        this.stateService.refresh();
+                        this.router.navigate(['/authenticated/dashboard']);
+                    }
+                    else {
+                        this.notificationQueueService.addNotification('The surplus plan could not be submitted. If this problem is persisting please contact your ministry representative.', 'danger');
+                        this.saving = false;
+                    }
                 },
                 err => {
                     console.log(err);

@@ -46,12 +46,32 @@
   margin-top: 20px;
 }
 
+.list-container {
+  width: 98%;
+  padding-left: 15px;
+}
+
 .list-group-item {
   display: flex;
+  align-items: center;
+}
+
+.file-info-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file-type-col {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .file-type-container {
   display: flex;
+  margin-right: 15px;
 }
 
 .file-type-select {
@@ -69,4 +89,26 @@
 .other-input {
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.download-link {
+  text-decoration: underline !important;
+  cursor: pointer;
+  color: #1a5a96;
+}
+
+.download-link:hover {
+  color: #0000f3;
+}
+
+.upload-documents-page-container {
+  position: relative;
+}
+
+.loading-indicator {
+  position: absolute;
+}
+
+.dark-overlay {
+  opacity: 0.5;
 }

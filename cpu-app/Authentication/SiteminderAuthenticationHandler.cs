@@ -281,7 +281,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                          !string.IsNullOrEmpty(userSettings.UserId) && userSettings.UserId == userId))
                 {
                     _logger.LogDebug("User already authenticated with active session: " + userSettings.UserId);
-                    Console.WriteLine("User already authenticated with active session: " + userSettings.GetJson());
+                    // Console.WriteLine("User already authenticated with active session: " + userSettings.GetJson());
                     principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
                     return AuthenticateResult.Success(new AuthenticationTicket(principal, null, Options.Scheme));
                 }
@@ -372,17 +372,17 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     string requestJson = "{\"UserBCeID\":\"" + siteMinderGuid + "\",\"BusinessBCeID\":\"" + siteMinderBusinessGuid + "\"}";
                     // set the endpoint action
                     string endpointUrl = "vsd_GetCPUOrgContracts";
-                    DynamicsResult result = await _dynamicsResultService.GetResultAsync(endpointUrl, requestJson);
-                    Console.WriteLine("Dynamics result info:");
+                    DynamicsResult result = await _dynamicsResultService.Post(endpointUrl, requestJson);
+                    // Console.WriteLine("Dynamics result info:");
                     string resultString = result.ToString();
                     string resultResult = result.result.ToString();
                     string messageString = result.responseMessage.ToString();
                     int code = (int)result.statusCode;
 
-                    Console.WriteLine("resultResult");
-                    Console.WriteLine(resultResult);
-                    Console.WriteLine("messageString");
-                    Console.WriteLine(messageString);
+                    // Console.WriteLine("resultResult");
+                    // Console.WriteLine(resultResult);
+                    // Console.WriteLine("messageString");
+                    // Console.WriteLine(messageString);
 
                     userSettings.UserType = siteMinderUserType;
                     userSettings.UserId = siteMinderGuid;
@@ -397,7 +397,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
 
                     if (resultResult.Contains(NEW_USER))
                     {
-                        Console.WriteLine("New User Registration");
+                        // Console.WriteLine("New User Registration");
 
                         userSettings.IsNewUserRegistration = true;
                         userSettings.IsNewUserAndNewOrganizationRegistration = false;
@@ -407,7 +407,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     }
                     else if (resultResult.Contains(NEW_USER_AND_NEW_ORGANIZATION))
                     {
-                        Console.WriteLine("New User and New Organization Registration");
+                        // Console.WriteLine("New User and New Organization Registration");
 
                         userSettings.IsNewUserRegistration = false;
                         userSettings.IsNewUserAndNewOrganizationRegistration = true;
@@ -417,7 +417,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     }
                     else if (resultResult.Contains(CONTACT_NOT_APPROVED)) {
                         //error state - should hopefully never happen
-                        Console.WriteLine("Error, contact already exists but is not approved");
+                        // Console.WriteLine("Error, contact already exists but is not approved");
 
                         userSettings.ContactExistsButNotApproved = true;
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
@@ -426,7 +426,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     }
                     else if (resultResult.Contains(CONTACT_NOT_CPU)) {
                         //error state - should hopefully never happen
-                        Console.WriteLine("Error, contact does not belong to CPU...");
+                        // Console.WriteLine("Error, contact does not belong to CPU...");
 
                         userSettings.ContactExistsButNotApproved = true;
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
@@ -437,11 +437,11 @@ namespace Gov.Cscp.Victims.Public.Authentication
                     {
                         //TODO - should verify we did in fact get a success response
 
-                        Console.WriteLine("Found User Data");
-                        Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
+                        // Console.WriteLine("Found User Data");
+                        // Console.WriteLine("We're \"Logged in\", businessBCeID: " + siteMinderBusinessGuid + ", UserBCeID: " + siteMinderGuid);
                         userSettings.IsNewUserRegistration = false;
                         userSettings.IsNewUserAndNewOrganizationRegistration = false;
-                        Console.WriteLine("UserSettings: " + userSettings.GetJson());
+                        // Console.WriteLine("UserSettings: " + userSettings.GetJson());
                         principal = userSettings.AuthenticatedUser.ToClaimsPrincipal(options.Scheme, userSettings.UserType);
                         UserSettings.SaveUserSettings(userSettings, context);
 

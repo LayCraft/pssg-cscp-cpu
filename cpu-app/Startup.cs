@@ -39,16 +39,15 @@ namespace Gov.Cscp.Victims.Public
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // add singleton to allow Controllers to query the Request object
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<IDynamicsResultService, DynamicsResultService>();
+            services.AddSingleton<ICOASTAuthService, COASTAuthService>();
+            services.AddTransient<TokenHandler>();
+
+            services.AddHttpClient<IDynamicsResultService, DynamicsResultService>().AddHttpMessageHandler<TokenHandler>();
 
 
             // Add a memory cache
             services.AddMemoryCache();
-
-
-
 
             // for security reasons, the following headers are set.
             services.AddMvc(opts =>
