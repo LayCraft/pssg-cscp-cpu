@@ -131,22 +131,34 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
     let record_id = this.isContractUpload ? this.contractId : this.trans.accountId
     if (this.isContractUpload) {
       this.fileService.uploadContractDocuments(file, record_id).subscribe((d) => {
-        console.log("uploaded documents");
-        console.log(d);
-        this.saving = false;
-        this.documentsToAdd = [];
-        this.refresh();
-        this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
+        if (d.IsSuccess) {
+          console.log("uploaded documents");
+          console.log(d);
+          this.saving = false;
+          this.documentsToAdd = [];
+          this.refresh();
+          this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
+        }
+        else {
+          this.saving = false;
+          this.notificationQueueService.addNotification(`There was a problem uploading Documents.`, 'danger');
+        }
       });
     }
     else {
       this.fileService.uploadAccountDocuments(file, record_id).subscribe((d) => {
-        console.log("uploaded documents");
-        console.log(d);
-        this.saving = false;
-        this.documentsToAdd = [];
-        this.refresh();
-        this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
+        if (d.IsSuccess) {
+          console.log("uploaded documents");
+          console.log(d);
+          this.saving = false;
+          this.documentsToAdd = [];
+          this.refresh();
+          this.notificationQueueService.addNotification(`Documents successfully uploaded.`, 'success');
+        }
+        else {
+          this.saving = false;
+          this.notificationQueueService.addNotification(`There was a problem uploading Documents.`, 'danger');
+        }
       });
     }
   }
@@ -205,25 +217,24 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
   }
 
   download(doc: iDynamicsDocument) {
+    if (this.downloadingDocument) return;
     this.downloadingDocument = true;
-
     this.fileService.downloadDocument(this.organizationId, this.userId, doc.activitymimeattachmentid).subscribe(
       (d: any) => {
         this.downloadingDocument = false;
         console.log(d);
+        if (!d.IsSuccess) {
+          this.notificationQueueService.addNotification('There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.', 'danger');
+        }
+        else {
+          let downloadLink = document.createElement("a");
+          downloadLink.href = "data:application/octet-stream;base64," + d.Body;
+          downloadLink.download = d.FileName;
 
-        let downloadLink = document.createElement("a");
-        downloadLink.href = "data:application/octet-stream;base64," + d.Body;
-        downloadLink.download = d.FileName;
-
-        // append the anchor to document body
-        document.body.appendChild(downloadLink);
-
-        // fire a click event on the anchor
-        downloadLink.click();
-
-        // cleanup: remove element and revoke object URL
-        document.body.removeChild(downloadLink);
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+        }
       });
   }
 
@@ -243,10 +254,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
       (d: iDynamicsFile) => {
         this.loadingDocuments = false;
         this.didLoadDocuments = true;
-        if (d['error'] && d['error']['code']) {
-          // something has gone wrong. Show the developer the error
-          alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
-          // console.log('Dynamics has returned: ', d);
+        if (!d.IsSuccess) {
+          this.notificationQueueService.addNotification(`There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.`, 'danger');
         } else {
           this.existingDocuments = d.DocumentCollection.filter(d => d.filename.indexOf(".pdf") > 0);
         }
@@ -258,10 +267,8 @@ export class UploadDocumentComponent implements OnInit, OnDestroy {
       (d: iDynamicsFile) => {
         this.loadingDocuments = false;
         this.didLoadDocuments = true;
-        if (d['error'] && d['error']['code']) {
-          // something has gone wrong. Show the developer the error
-          alert(d['error']['code'] + ': There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.');
-          // console.log('Dynamics has returned: ', d);
+        if (!d.IsSuccess) {
+          this.notificationQueueService.addNotification(`There has been a data problem retrieving this file. Please let your ministry contact know that you have seen this error.`, 'danger');
         } else {
           this.existingDocuments = d.DocumentCollection.filter(d => d.filename.indexOf(".pdf") > 0);
         }

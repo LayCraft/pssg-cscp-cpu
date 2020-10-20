@@ -25,3 +25,15 @@
 .border-right {
     border-right: 3px solid #ced4da;
 }
+
+.loading-indicator {
+    position: absolute;
+}
+
+.dark-overlay {
+    opacity: 0.5;
+}
+
+.task-list-container {
+    position: relative;
+}

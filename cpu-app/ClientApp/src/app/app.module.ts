@@ -72,6 +72,7 @@ import { ApplicantInformationComponent } from './authenticated/subforms/applican
 import { CAPProgramComponent } from './authenticated/subforms/cap-program/cap-program.component';
 import { CAPGuidelinesDialog } from './authenticated/dialogs/cap-guidelines/cap-guidelines.dialog';
 import { ProgramEgilibilityDialog } from './authenticated/dialogs/program-egilibility/program-egilibility.dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -151,6 +152,7 @@ import { ProgramEgilibilityDialog } from './authenticated/dialogs/program-egilib
     MatDialogModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     RouterModule,
     SharedModule,

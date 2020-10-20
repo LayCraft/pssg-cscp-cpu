@@ -1,5 +1,8 @@
-<div class="container">
-  <div class="row">
+<div class="container upload-documents-page-container">
+  <div class="loading-indicator" *ngIf="downloadingDocument">
+    <mat-spinner mode="indeterminate"></mat-spinner>
+  </div>
+  <div class="row" [class.dark-overlay]="downloadingDocument">
     <div class="col-md-4">
       <section class="application-nav sticky-top">
         <div style="max-height: 90%;">
@@ -15,10 +18,7 @@
             </div>
           </div>
         </div>
-        <!-- <div style="max-height: 90%;">
-          <app-icon-stepper></app-icon-stepper>
-        </div> -->
-        <button class="btn btn-primary mt-2" (click)="exit()">Exit</button>
+        <button class="btn btn-primary mt-2" (click)="exit()" [class.is-disabled]="downloadingDocument">Exit</button>
       </section>
     </div>
     <div class="col">
@@ -52,39 +52,15 @@
             </div>
           </div>
 
-          <!-- <ul *ngIf="documentsToAdd.length" class="list-group mb-2">
-            <li *ngFor="let doc of documentsToAdd; let i=index" class="list-group-item d-flex justify-content-between align-items-center">
-              <span class="file-name-container">
-                {{doc.filename}}
-              </span>
-
-              <span class="file-type-container">
-                <label class="file-type-label">File Type</label>
-                <select class="form-control file-type-select" [(ngModel)]="doc.subject" #doctype="ngModel">
-                  <option *ngFor="let type of document_types" [value]="type">{{type}}</option>
-                </select>
-                <ng-container *ngIf="doc.subject === 'Other'">
-                  <input type="text" class="form-control other-input" [(ngModel)]="doc.subjectOther" #city="ngModel">
-                </ng-container>
-              </span>
-              <span (click)="removeFile(i)">
-                <i class="fas fa-times-circle text-danger"></i>
-              </span>
-            </li>
-          </ul> -->
           <input #files id="files" type="file" style="display: none" (change)="onFilesAdded($event.target.files)" multiple>
-          <button type="button" class="btn btn-warning" (click)="fakeBrowseClick()">Add File</button>
-          <button class="btn btn-warning ml-2" [class.is-disabled]="documentsToAdd.length == 0 || saving" (click)="upload()">Upload Files</button>
+          <button type="button" class="btn btn-warning" (click)="fakeBrowseClick()" [class.is-disabled]="downloadingDocument">Add File</button>
+          <button class="btn btn-warning ml-2" [class.is-disabled]="documentsToAdd.length == 0 || saving || downloadingDocument" (click)="upload()">Upload Files</button>
         </div>
       </div>
 
       <div class="row existing-documents-row">
         <div class="col-md-12">
           <h4>Existing Documents</h4>
-          <!-- <ng-container *ngIf="loadingDocuments">
-            Loading... <i class="text-secondary spinner-border spinner-border-sm"></i>
-          </ng-container> -->
-          <!-- *ngIf="didLoadDocuments && existingDocuments.length > 0" -->
           <ng-container>
             <table class="table table-sm table-striped">
               <thead class="thead">
@@ -106,36 +82,11 @@
                 </tr>
               </tbody>
             </table>
-
-
-            <!-- <div class="row">
-              <div class="col">
-                Your Document
-              </div>
-              <div class="col">
-                Available Date
-              </div>
-            </div>
-            <div *ngFor="let doc of existingDocuments" class="row">
-              <div class="col">
-                {{doc.filename}}
-              </div>
-              <div class="col">
-                {{doc.overwritetime | date:'yyyy-MM-dd'}}
-              </div>
-            </div> -->
           </ng-container>
-
-          <!-- <ng-container *ngIf="didLoadDocuments && existingDocuments.length === 0">
-            No documents
-          </ng-container> -->
         </div>
       </div>
-
     </div>
   </div>
-
-
 
   <div class="row min-row-height">
     <div class="col-md-12">

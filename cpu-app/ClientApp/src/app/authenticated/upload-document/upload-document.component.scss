@@ -100,3 +100,15 @@
 .download-link:hover {
   color: #0000f3;
 }
+
+.upload-documents-page-container {
+  position: relative;
+}
+
+.loading-indicator {
+  position: absolute;
+}
+
+.dark-overlay {
+  opacity: 0.5;
+}

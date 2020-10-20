@@ -61,7 +61,7 @@ export class StateService {
       //Victimservices18
       // userId = '968458E00053498798D0D8D815A2DCB8';
       // orgId = '7B0C03E9C4C84068865655EE8EDD7DA3';
-      
+
       let settings = new UserSettings();
       settings.userId = userId;
       settings.accountId = orgId;
@@ -198,10 +198,15 @@ export class StateService {
     if (userId && organizationId) {
       this.mainService.getBlob(userId, organizationId).subscribe(
         (m: iDynamicsBlob) => {
-          // collect the blob into a useful object
-          const mainData = new Transmogrifier(m);
-          // save the useful blob in a behaviourSubject
-          this.main.next(mainData);
+          if (!m.IsSuccess) {
+            this.notificationQueueService.addNotification('There was a problem loading dashboard data. If this problem is persisting please contact your ministry representative.', 'danger');
+          }
+          else {
+            // collect the blob into a useful object
+            const mainData = new Transmogrifier(m);
+            // save the useful blob in a behaviourSubject
+            this.main.next(mainData);
+          }
         }
       );
     }
@@ -280,10 +285,15 @@ export class StateService {
           });
 
         } else {
-          const mainData = new Transmogrifier(m);
-          // console.log("we did get some data");
-          // console.log(mainData);
-          this.currentUser.next(mainData.persons.filter(p => p.userId === userId)[0]);
+          if (!m.IsSuccess) {
+            this.notificationQueueService.addNotification('There was a problem loading dashboard data. If this problem is persisting please contact your ministry representative.', 'danger');
+          }
+          else {
+            const mainData = new Transmogrifier(m);
+            // console.log("we did get some data");
+            // console.log(mainData);
+            this.currentUser.next(mainData.persons.filter(p => p.userId === userId)[0]);
+          }
         }
       },
       err => { },
