@@ -4,7 +4,7 @@ import { iMessage } from "./message.interface";
 
 export interface iContract {
   // isCompleted: boolean; // basically useless
-  category: string; // upcoming, current, past
+  // category: string; // upcoming, current, past
   contractId: string;
   contractNumber: string;
   status: string;
