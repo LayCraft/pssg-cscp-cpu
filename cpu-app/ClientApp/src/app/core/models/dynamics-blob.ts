@@ -73,9 +73,11 @@ export interface iDynamicsCrmContract {
   vsd_cpu_humanresourcepolices?: string;
   vsd_cpu_insuranceoptions?: number;
   vsd_cpu_memberofcssea?: string;
-  vsd_cpu_subcontractedprogramstaff?: number;
   vsd_cpu_specificunion?: string;
+  vsd_cpu_subcontractedprogramstaff?: number;
   vsd_cpu_unionizedstaff?: number;
+  vsd_fiscalenddate?: string;
+  vsd_fiscalstartdate?: string;
   vsd_name?: string;
 }
 export interface iDynamicsMinistryUser {

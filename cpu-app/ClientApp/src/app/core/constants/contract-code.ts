@@ -33,7 +33,7 @@ export function contractCode(statuscode: number): [string, string] {
       textStatus = 'Information Denied';
       break;
     }
-    // approved
+    // current
     case 100000006: {
       textCategory = 'current'
       textStatus = 'Approved';

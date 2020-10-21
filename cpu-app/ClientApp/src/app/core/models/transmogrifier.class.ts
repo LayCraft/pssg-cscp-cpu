@@ -214,6 +214,7 @@ export class Transmogrifier {
         contracts.push({
           // upcoming, current, past
           category: status[0],
+          fiscalYearStart: contract.vsd_fiscalstartdate ? new Date(contract.vsd_fiscalstartdate).getFullYear() : 0,
           // Sent, Received, Processing, Recommended for Approval, Escalated, Information Denied, Approved, Archived, No Status
           contractId: contract.vsd_contractid,
           contractNumber: contract.vsd_name,

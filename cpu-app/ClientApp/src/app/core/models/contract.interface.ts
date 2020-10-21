@@ -11,5 +11,6 @@ export interface iContract {
   programs: iProgram[];
   tasks: iTask[];
   completedTasks: iTask[];
+  fiscalYearStart?: number;
   //messages: iMessage[]; // TODO: Will need to add this to the model
 }
