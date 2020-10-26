@@ -127,12 +127,7 @@ export class CAPApplicationComponent implements OnInit {
 
         let thisContract = self.contracts.find(c => c.contractId === self.trans.contractId);
         if (thisContract) {
-            if (thisContract.category === 'upcoming') {
-                ++self.baseFiscalYear;
-            }
-            else if (thisContract.category === 'past') {
-                --self.baseFiscalYear;
-            }
+            self.baseFiscalYear = thisContract.fiscalYearStart;
         }
 
         self.trans.fiscalYear = `${self.baseFiscalYear} to ${self.baseFiscalYear + 1}`;
