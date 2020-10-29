@@ -36,9 +36,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       console.log(this.trans);
       // split the contracts into something useful for the dashboard view
       if (m.contracts) {
-        this.upcomingContracts = m.contracts.filter((c: iContract) => c.category === this.categories[0]);
-        this.currentContracts = m.contracts.filter((c: iContract) => c.category === this.categories[1]);
-        this.pastContracts = m.contracts.filter((c: iContract) => c.category === this.categories[2]);
+        this.upcomingContracts = m.contracts.filter((c: iContract) => c.fiscalYearStart > this.currentYear);
+        this.currentContracts = m.contracts.filter((c: iContract) => c.fiscalYearStart == this.currentYear);
+        this.pastContracts = m.contracts.filter((c: iContract) => c.fiscalYearStart < this.currentYear);
       }
     });
   }

@@ -1,35 +1,32 @@
-import { taskCode } from '../constants/task-code';
-import { iTask } from './task.interface';
-import { iMessage } from './message.interface';
-import { iProgram } from './program.interface';
-import { iPerson } from './person.interface';
-import { iMinistryUser } from './ministry-user.interface';
-import { iDynamicsBlob, iDynamicsCrmTask } from './dynamics-blob';
-import { iContract } from './contract.interface';
-import { iContactInformation } from './contact-information.interface';
-
-import { contractCode } from '../constants/contract-code';
-import { decodeTaskType } from '../constants/decode-task-type';
-import { nameAssemble } from '../constants/name-assemble';
-import * as _ from 'lodash';
-import { employmentStatusTypeDict } from '../constants/employment-status-types';
-import { iPaymentStatus, CRMPaymentStatusCode, PaymentStatusDisplay } from './payment-status.interface';
-import * as moment from 'moment';
 import { PAYMENT_QUARTERS } from '../constants/reporting-period';
 import { Roles } from './user-settings.interface';
+import { contractStatus } from '../constants/contract-code';
+import { decodeTaskType } from '../constants/decode-task-type';
+import { employmentStatusTypeDict } from '../constants/employment-status-types';
+import { iContactInformation } from './contact-information.interface';
+import { iContract } from './contract.interface';
+import { iDynamicsBlob, iDynamicsCrmTask } from './dynamics-blob';
+import { iMessage } from './message.interface';
+import { iMinistryUser } from './ministry-user.interface';
+import { iPaymentStatus, PaymentStatusDisplay } from './payment-status.interface';
+import { iPerson } from './person.interface';
+import { iProgram } from './program.interface';
+import { iTask } from './task.interface';
+import { nameAssemble } from '../constants/name-assemble';
+import { taskCode } from '../constants/task-code';
+import * as _ from 'lodash';
+import * as moment from 'moment';
 
 export class Transmogrifier {
-  // collections of viewmodels
-
   public accountId: string; // this is the ID to identify an organization in dynamics. NOT A BCEID
   public contactInformation: iContactInformation;
-  public organizationId: string;
-  public organizationName: string;
-  public userId: string;
-  public persons: iPerson[];
   public contracts: iContract[];
   public ministryContact: iMinistryUser;
+  public organizationId: string;
+  public organizationName: string;
+  public persons: iPerson[];
   public role: Roles;
+  public userId: string;
 
   private ROLES_LOOKUP = [
     {
@@ -210,16 +207,12 @@ export class Transmogrifier {
     const contracts: iContract[] = [];
     if (b.Contracts.length > 0) {
       for (let contract of b.Contracts) {
-        const status: [string, string] = contractCode(contract.statuscode);
         contracts.push({
-          // upcoming, current, past
-          category: status[0],
-          // Sent, Received, Processing, Recommended for Approval, Escalated, Information Denied, Approved, Archived, No Status
+          fiscalYearStart: contract.vsd_fiscalstartdate ? new Date(contract.vsd_fiscalstartdate).getFullYear() : 0,
           contractId: contract.vsd_contractid,
           contractNumber: contract.vsd_name,
-          // isCompleted: this.isCompleted(contract.statecode), //TODO: Is this actually meaningful in the FE?
           programs: this.buildPrograms(b, contract.vsd_contractid),
-          status: status[1],
+          status: contractStatus[contract.statuscode] || 'No Status',
           tasks: this.buildTasks(b, contract.vsd_contractid).filter(t => !t.isCompleted) || [],
           completedTasks: this.buildTasks(b, contract.vsd_contractid).filter(t => t.isCompleted) || [],
         });
